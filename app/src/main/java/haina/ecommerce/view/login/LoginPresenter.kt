@@ -2,6 +2,7 @@ package haina.ecommerce.view.login
 
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.ResponseLogin
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
@@ -15,7 +16,8 @@ class LoginPresenter (val view: LoginContract){
                             view.getToken(response.body()?.data?.token.toString())
                             view.successLogin(response.body()?.message.toString())
                         } else {
-                            view.failedLogin(response.body()?.message.toString())
+                            val errorResponse = JSONObject(response.errorBody()?.string()!!)
+                            view.failedLogin(errorResponse.getString("message"))
                         }
                     }
 

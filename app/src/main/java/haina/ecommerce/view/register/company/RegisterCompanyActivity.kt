@@ -48,9 +48,6 @@ class RegisterCompanyActivity : AppCompatActivity(), View.OnClickListener, Regis
                 pickImageFromGallery()
             }
             R.id.btn_register_company -> {
-                binding.btnRegisterCompany.visibility = View.INVISIBLE
-                binding.relativeLoading.visibility = View.VISIBLE
-                binding.cvAddImage.isEnabled = false
                 checkRegisterCompany()
             }
         }
@@ -86,9 +83,15 @@ class RegisterCompanyActivity : AppCompatActivity(), View.OnClickListener, Regis
             val namePost: RequestBody = RequestBody.create(MultipartBody.FORM, name)
             val descriptionPost: RequestBody = RequestBody.create(MultipartBody.FORM, description)
             presenter.registerCompany(body, namePost, descriptionPost)
+            binding.btnRegisterCompany.visibility = View.INVISIBLE
+            binding.relativeLoading.visibility = View.VISIBLE
+            binding.cvAddImage.isEnabled = false
             isRunningRegister = true
         } else {
             Toast.makeText(applicationContext, "Please completed form", Toast.LENGTH_SHORT).show()
+            binding.ivLoading.visibility = View.INVISIBLE
+            binding.btnRegisterCompany.visibility = View.VISIBLE
+            binding.cvAddImage.isEnabled = true
         }
     }
 
@@ -151,9 +154,15 @@ class RegisterCompanyActivity : AppCompatActivity(), View.OnClickListener, Regis
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("loginStatus", "1")
             startActivity(intent)
+            binding.btnRegisterCompany.visibility = View.VISIBLE
+            binding.relativeLoading.visibility = View.INVISIBLE
+            binding.cvAddImage.isEnabled = true
             false
         } else{
             Toast.makeText(applicationContext, "Register Company Failed", Toast.LENGTH_SHORT).show()
+            binding.btnRegisterCompany.visibility = View.VISIBLE
+            binding.relativeLoading.visibility = View.INVISIBLE
+            binding.cvAddImage.isEnabled = true
             false
         }
     }

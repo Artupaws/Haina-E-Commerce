@@ -27,7 +27,9 @@ import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterJobLocation
 import haina.ecommerce.databinding.ActivityDetailJobBinding
+import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataItemHaina
+import haina.ecommerce.model.DataItemJob
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.applyjob.ApplyJobActivity
@@ -37,10 +39,12 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
     private lateinit var binding: ActivityDetailJobBinding
     private lateinit var presenter: DetailJobPresenter
     private lateinit var sharePref: SharedPreferenceHelper
+    private var helper: Helper = Helper()
     private var broadcaster: LocalBroadcastManager? = null
     private var saveJob:String =""
-    var idJobVacancy:Int = 0
+    var idJobVacancy:Int? = 0
     var refresh:String? = null
+    var salary:String = "0"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +54,38 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         broadcaster = LocalBroadcastManager.getInstance(this)
         sharePref = SharedPreferenceHelper(this)
         presenter = DetailJobPresenter(this, this)
-        idJobVacancy = intent.getIntExtra("idJobVacancy", 0)
-        presenter.checkAppliedJob(idJobVacancy)
+        val item = intent.getParcelableExtra<DataItemJob>("detailJob")
+        idJobVacancy = item?.id
+        idJobVacancy?.let { presenter.checkAppliedJob(it) }
+
+        binding.tvTitleJob.text = item?.title
+        binding.tvCompanyName.text = item?.company?.name
+        binding.tvLocationJob.text = item?.location
+        binding.tvDescriptionJob.text = item?.description
+        salary ="${helper.convertToFormatMoneySalary(item?.salaryFrom.toString())} - ${helper.convertToFormatMoneySalary(item?.salaryTo.toString())}"
+        binding.tvSalary.text = salary
+        binding.tvDatePublish.text = item?.date
+        binding.tvJobCategory.text = item?.jobCategory
+        Glide.with(applicationContext).load(item?.photoUrl).skipMemoryCache(true).diskCacheStrategy(
+                DiskCacheStrategy.NONE)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        binding.progressCircular.visibility = View.GONE
+                        return false
+                    }
+
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        binding.progressCircular.visibility = View.GONE
+                        return false
+                    }
+
+                })
+                .into(binding.ivImageCompany)
+
         binding.toolbarDetailJob.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailJob.setNavigationOnClickListener{onBackPressed()}
         binding.ivSaveJob.setOnClickListener(this)
         binding.btnApply.setOnClickListener(this)
-        setTextDetailJob()
     }
 
     override fun onClick(p0: View?) {
@@ -89,6 +118,11 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("successApplied"))
     }
 
+    override fun onResume() {
+        super.onResume()
+        idJobVacancy?.let { presenter.checkAppliedJob(it) }
+    }
+
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action){
@@ -97,7 +131,7 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
                     refresh = fromIntent
                     Log.d("", fromIntent!!)
                     if (refresh == "1"){
-                        presenter.checkAppliedJob(idJobVacancy)
+                        idJobVacancy?.let { presenter.checkAppliedJob(it) }
                     }
                 }
             }
@@ -119,39 +153,6 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         } else {
             binding.ivSaveJob.setImageResource(R.drawable.ic_bookmark_empty)
         }
-    }
-
-    private fun setTextDetailJob(){
-        val titleJob:String? = intent.getStringExtra("title")
-        val companyName:String? = intent.getStringExtra("nameCompany")
-        val description:String? = intent.getStringExtra("description")
-        val salary:String? = intent.getStringExtra("salary")
-        val location:String? = intent.getStringExtra("location")
-        val datePublish:String? = intent.getStringExtra("datePublish")
-        val jobCategory:String? = intent.getStringExtra("jobCategory")
-        val imageCompany:String? = intent.getStringExtra("imageCompany")
-        binding.tvTitleJob.text = titleJob
-        binding.tvCompanyName.text = companyName
-        binding.tvLocationJob.text = location
-        binding.tvDescriptionJob.text = description
-        binding.tvSalary.text = salary
-        binding.tvDatePublish.text = datePublish
-        binding.tvJobCategory.text = jobCategory
-        Glide.with(applicationContext).load(imageCompany).skipMemoryCache(true).diskCacheStrategy(
-            DiskCacheStrategy.NONE)
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                    binding.progressCircular.visibility = View.GONE
-                    return false
-                }
-
-                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                    binding.progressCircular.visibility = View.GONE
-                    return false
-                }
-
-            })
-            .into(binding.ivImageCompany)
     }
 
 

@@ -5,6 +5,7 @@ import haina.ecommerce.model.DataJobApplication
 interface HistorySubmitJobContract {
 
     fun getListSubmitJob(item:List<DataJobApplication?>?)
-    fun messageGetSubmitJob(msg:String)
+    fun messageGetSubmitJobSuccess(msg:String)
+    fun messageGetSubmitJobError(msg:String)
 
 }

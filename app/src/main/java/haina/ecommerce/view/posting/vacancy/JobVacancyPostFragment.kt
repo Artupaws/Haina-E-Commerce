@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import haina.ecommerce.R
@@ -54,6 +55,11 @@ class JobVacancyPostFragment : Fragment(), VacancyContract, View.OnClickListener
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.getDataMyPost()
+    }
+
     private fun refresh(){
         binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             presenter.getDataMyPost()
@@ -96,7 +102,6 @@ class JobVacancyPostFragment : Fragment(), VacancyContract, View.OnClickListener
             binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
             binding.swipeRefresh.isRefreshing = false
         } else {
-            binding.swipeRefresh.visibility = View.GONE
             binding.rvJobVacancy.visibility = View.VISIBLE
             binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
             binding.swipeRefresh.isRefreshing = false

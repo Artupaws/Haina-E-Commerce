@@ -2,6 +2,7 @@ package haina.ecommerce.view.register.account
 
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.ResponseRegister
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
@@ -15,7 +16,8 @@ class RegisterPresenter (val view: RegisterContract){
                         view.getTokenUser(response.body()?.data?.token.toString())
                         view.successCreateUser(response.body()?.message.toString())
                     } else {
-                        view.errorCreateUser(response.message())
+                        val error = JSONObject(response.errorBody()?.string()!!)
+                        view.errorCreateUser(error.getString("message"))
                     }
                 }
 

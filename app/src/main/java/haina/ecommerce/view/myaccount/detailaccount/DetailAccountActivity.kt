@@ -91,8 +91,12 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
 
     override fun onStart() {
         super.onStart()
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("refreshSkill"))
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("deleteSkill"))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.getSkillsUser()
     }
 
     override fun onStop() {

@@ -20,9 +20,7 @@
             android:layout_width="260dp"
             android:layout_height="wrap_content"
             android:layout_margin="50dp"
-            android:src="@drawable/app_text_logo"
-            >
-
+            android:src="@drawable/app_text_logo">
         </ImageView>
         <LinearLayout
             android:orientation="vertical"
@@ -40,27 +38,24 @@
                     android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
-
-                    android:src="@drawable/ic_baseline_account_circle_24"></ImageView>
+                    android:src="@drawable/ic_baseline_account_circle_24"/>
                 <EditText
                     android:id="@+id/et_email"
                     android:paddingTop="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:hint="Email"
+                    android:hint="@string/e_mail"
                     android:fontFamily="@font/poppins"
                     android:textFontWeight="500"
-                    android:textSize="15dp"
-                    android:inputType="textVisiblePassword"
+                    android:textSize="15sp"
+                    android:inputType="textEmailAddress"
                     android:background="#00ffffff"/>
             </LinearLayout>
 
-
-
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#ACACAC"></LinearLayout>
+                android:background="#ACACAC"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -69,16 +64,16 @@
                     android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
-                    android:src="@drawable/ic_baseline_lock_24"></ImageView>
+                    android:src="@drawable/ic_baseline_lock_24"/>
                 <EditText
                     android:id="@+id/et_password"
                     android:paddingTop="1dp"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:fontFamily="@font/poppins"
                     android:textFontWeight="500"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     android:inputType="textPassword"
                     android:background="#00ffffff"/>
             </LinearLayout>
@@ -114,7 +109,7 @@
                 android:background="@drawable/backgroundbutton"
                 android:backgroundTint="@color/colorAccent"
                 android:fontFamily="@font/poppinssemibold"
-                android:text="Login"
+                android:text="@string/login"
                 android:layout_centerInParent="true"
                 android:textSize="14sp"
                 android:textColor="#ffffff">

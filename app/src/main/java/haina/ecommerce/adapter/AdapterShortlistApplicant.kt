@@ -16,35 +16,32 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import haina.ecommerce.databinding.ListItemAddressCompanyBinding
 import haina.ecommerce.databinding.ListItemSortListBinding
-import haina.ecommerce.model.AddressItemCompany
-import haina.ecommerce.model.DataShortlistApplicant
-import haina.ecommerce.view.datacompany.address.AddAddressCompanyActivity
+import haina.ecommerce.model.DataShortlist
 
 
-class AdapterShortlistApplicant(val context: Context, private val listShortlistApplicant: List<DataShortlistApplicant?>?):
+class AdapterShortlistApplicant(val context: Context, private val listShortlistApplicant: List<DataShortlist?>?):
     RecyclerView.Adapter<AdapterShortlistApplicant.Holder>() {
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemSortListBinding.bind(view)
-        fun bind(itemHaina: DataShortlistApplicant){
+        fun bind(itemHaina: DataShortlist){
             with(binding){
-                tvName.text = itemHaina.user?.fullname
-                tvEmail.text = itemHaina.user?.email
-                tvGender.text = itemHaina.user?.gender
-                tvLocation.text = itemHaina.user?.address
-                tvNameJobVacancy.text = itemHaina.jobvacancy?.title
-                Glide.with(context).load(itemHaina.user?.photo.toString()).skipMemoryCache(false)
+                tvName.text = itemHaina.fullname
+                tvEmail.text = itemHaina.email
+                tvGender.text = itemHaina.gender
+                tvLocation.text = itemHaina.address
+                tvNameJobVacancy.text = itemHaina.jobVacancyTitle
+                Glide.with(context).load(itemHaina.photo).skipMemoryCache(false)
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .listener(object : RequestListener<Drawable>{
                             override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                                progressCircular.visibility = View.INVISIBLE
+                                progressCircular.visibility = View.GONE
                                 return false
                             }
 
                             override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                                progressCircular.visibility = View.INVISIBLE
+                                progressCircular.visibility = View.GONE
                                 return false
                             }
 
@@ -61,7 +58,7 @@ class AdapterShortlistApplicant(val context: Context, private val listShortlistA
     }
 
     override fun onBindViewHolder(holder: AdapterShortlistApplicant.Holder, position: Int) {
-        val item: DataShortlistApplicant = listShortlistApplicant?.get(position)!!
+        val item: DataShortlist = listShortlistApplicant?.get(position)!!
         holder.bind(item)
     }
 

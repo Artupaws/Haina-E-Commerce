@@ -73,7 +73,11 @@ class DataCompanyActivity : AppCompatActivity(), DataCompanyContract, View.OnCli
     override fun onStart() {
         super.onStart()
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("delete"))
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver2, IntentFilter("refresh"))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.getDataCompany()
     }
 
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -83,21 +87,6 @@ class DataCompanyActivity : AppCompatActivity(), DataCompanyContract, View.OnCli
                     val idImage = intent.getIntExtra("idImage", 0)
                     Log.d("idImage", idImage.toString())
                     presenter.deleteImageCompany(idImage)
-                }
-            }
-        }
-    }
-
-    private val mMessageReceiver2: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            when(intent.action){
-                "refresh" -> {
-                    val fromIntent = intent.getStringExtra("fromAddAddress")
-                    refresh = fromIntent
-                    Log.d("", fromIntent!!)
-                    if (refresh == "1"){
-                        presenter.getDataCompany()
-                    }
                 }
             }
         }

@@ -3,7 +3,7 @@ package haina.ecommerce.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import haina.ecommerce.view.history.historyshortlistapplicant.HistorySortListActivity
+import haina.ecommerce.view.history.historyshortlistapplicant.HistoryShortListFragment
 import haina.ecommerce.view.history.historysubmitapplication.HistorySubmitJobFragment
 
 class TabAdapterHistory (fm: FragmentManager, behavior: Int) : FragmentStatePagerAdapter(fm, behavior) {
@@ -11,7 +11,7 @@ class TabAdapterHistory (fm: FragmentManager, behavior: Int) : FragmentStatePage
 
     override fun getItem(position: Int): Fragment = when (position) {
         0 -> HistorySubmitJobFragment()
-        1 -> HistorySortListActivity()
+        1 -> HistoryShortListFragment()
         else -> HistorySubmitJobFragment()
     }
 

@@ -7,15 +7,14 @@ import haina.ecommerce.view.posting.vacancy.JobVacancyPostFragment
 import haina.ecommerce.view.history.historysubmitapplication.HistorySubmitJobFragment
 
 class TabAdapterPosting (fm: FragmentManager, behavior: Int) : FragmentStatePagerAdapter(fm, behavior) {
-    private val tabName: Array<String> = arrayOf("Job Vacancy", "News")
+    private val tabName: Array<String> = arrayOf("Job Vacancy")
 
     override fun getItem(position: Int): Fragment = when (position) {
         0 -> JobVacancyPostFragment()
-        1 -> HistorySubmitJobFragment()
         else -> JobVacancyPostFragment()
     }
 
-    override fun getCount(): Int = 2
+    override fun getCount(): Int = 1
 
     override fun getPageTitle(position: Int): CharSequence? = tabName[position]
 }

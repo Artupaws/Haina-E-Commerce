@@ -1,6 +1,7 @@
 package haina.ecommerce.fcm
 
 import android.util.Log
+import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -22,7 +23,6 @@ class NotifInstanceService() : FirebaseMessagingService() {
             val token = task.result.toString()
             sharedPrefHelper.save(Constants.PREF_TOKEN_FIREBASE, token)
             // Log and toast
-            Log.d("pesan", token)
         })
     }
 

@@ -8,6 +8,7 @@ import haina.ecommerce.model.ResponseApplyJob
 import haina.ecommerce.model.ResponseGetDataUser
 import haina.ecommerce.model.ResponseLoadDocumentUser
 import haina.ecommerce.util.Constants
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
@@ -23,7 +24,8 @@ class ApplyJobPresenter(val view: ApplyJobContract, val context: Context) {
                     view.getDocumentResume(data)
                     view.messagetGetDocument(response.body()?.message.toString())
                 } else {
-                    view.messagetGetDocument(response.body()?.message.toString())
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.messagetGetDocument(error.getString("message"))
                 }
             }
 

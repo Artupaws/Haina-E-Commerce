@@ -42,11 +42,11 @@ class Helper  {
         return formatter.format(formatMoney.toDouble())
     }
 
-    fun changeFormatMoneyToValue(formatRupiah: String?): String? {
-        val xRupiah = formatRupiah?.substring(1)
-        val doubleRupiah = xRupiah?.substring(1)
-        val valueRupiah = doubleRupiah?.replace("[-+.^:,]".toRegex(), "")
-        return valueRupiah?.replace(" ".toRegex(), "")
+    fun changeFormatMoneyToValue(formatRupiah: String): String {
+        val xRupiah = formatRupiah.substring(0)
+        val doubleRupiah = xRupiah.substring(0)
+        val valueRupiah = doubleRupiah.replace("[-+.^:,]".toRegex(), "")
+        return valueRupiah.replace(" ".toRegex(), "")
     }
 
     fun changeFormatMoneyToValueFilter(formatRupiah: String?): String? {

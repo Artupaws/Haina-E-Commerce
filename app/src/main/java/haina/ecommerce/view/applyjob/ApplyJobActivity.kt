@@ -78,7 +78,7 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
                 if (idDocumentResume == null || idJobVacancy == null){
                     Toast.makeText(applicationContext, "Please choose 1 resume for apply this job", Toast.LENGTH_SHORT).show()
                 } else {
-                    presenter.applyJob(idJobVacancy!!, idDocumentResume!!)
+                    presenter.applyJob(idJobVacancy, idDocumentResume!!)
                 }
             }
         }
@@ -95,15 +95,20 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
                 "idDocument" -> {
                     val fromIntent = intent.getIntExtra("resume", 0)
                     idDocumentResume = fromIntent
+                    Log.d("idDocument", idDocumentResume.toString())
                 }
             }
         }
-
     }
 
     override fun onStop() {
         super.onStop()
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.loadDocumentResume(1)
     }
 
     override fun messageGetDataPersonal(msg: String) {
@@ -131,9 +136,6 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
     }
 
     private fun move(){
-        val intent = Intent("successApplied")
-            .putExtra("refresh", refresh)
-        broadcaster?.sendBroadcast(intent)
         onBackPressed()
     }
 

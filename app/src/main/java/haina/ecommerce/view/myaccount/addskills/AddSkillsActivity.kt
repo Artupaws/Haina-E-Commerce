@@ -24,7 +24,7 @@ class AddSkillsActivity : AppCompatActivity(), AddSkillsContract, View.OnClickLi
     private lateinit var presenter: AddSkillPresenter
     private var isEmptySkills = true
     private var broadcaster: LocalBroadcastManager? = null
-    var statusAddSkill:Int = 0
+    var statusAddSkill: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,13 +40,13 @@ class AddSkillsActivity : AppCompatActivity(), AddSkillsContract, View.OnClickLi
         binding.toolbarAddSkills.title = "Add Skills"
         binding.btnAddSkill.setOnClickListener(this)
 
-        binding.etSkills.addTextChangedListener(object : TextWatcher{
+        binding.etSkills.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 false
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s!!.isNotEmpty()){
+                if (s!!.isNotEmpty()) {
                     binding.outlinedTextAddressCompany.error = null
                     true
                 }
@@ -65,9 +65,9 @@ class AddSkillsActivity : AppCompatActivity(), AddSkillsContract, View.OnClickLi
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("deleteSkill"))
     }
 
-    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver(){
+    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            when (intent?.action){
+            when (intent?.action) {
                 "deleteSkill" -> {
                     val deleteSkill = intent.getStringExtra("nameSkill")
                     presenter.deleteSkills(deleteSkill!!)
@@ -83,19 +83,18 @@ class AddSkillsActivity : AppCompatActivity(), AddSkillsContract, View.OnClickLi
     }
 
 
-
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.btn_add_skill ->{
-             checkSkillsValue()
+        when (v?.id) {
+            R.id.btn_add_skill -> {
+                checkSkillsValue()
             }
         }
     }
 
-    private fun checkSkillsValue(){
-       var skillName = binding.etSkills.text.toString()
+    private fun checkSkillsValue() {
+        var skillName = binding.etSkills.text.toString()
 
-        if (skillName.isEmpty()){
+        if (skillName.isEmpty()) {
             isEmptySkills = true
             binding.outlinedTextAddressCompany.error = "skill name, can't empty"
         } else {
@@ -103,7 +102,7 @@ class AddSkillsActivity : AppCompatActivity(), AddSkillsContract, View.OnClickLi
             skillName = binding.etSkills.text.toString()
         }
 
-        if (!isEmptySkills){
+        if (!isEmptySkills) {
             presenter.addSkills(skillName)
         } else {
             Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
@@ -111,15 +110,8 @@ class AddSkillsActivity : AppCompatActivity(), AddSkillsContract, View.OnClickLi
 
     }
 
-    private fun move(){
-        if (statusAddSkill == 1){
-            val refreshSkill = Intent("refreshSkill")
-                    .putExtra("addSkill", 1)
-            broadcaster?.sendBroadcast(refreshSkill)
-            onBackPressed()
-        } else {
-            onBackPressed()
-        }
+    private fun move() {
+        onBackPressed()
     }
 
     override fun getListSkills(data: List<DataSkillsUser?>?) {
@@ -131,8 +123,7 @@ class AddSkillsActivity : AppCompatActivity(), AddSkillsContract, View.OnClickLi
     }
 
     override fun messageAddSkills(msg: String) {
-        if (msg == "1"){
-            statusAddSkill = 1
+        if (msg == "1") {
             move()
             presenter.showListSkill()
         } else {
@@ -146,7 +137,7 @@ class AddSkillsActivity : AppCompatActivity(), AddSkillsContract, View.OnClickLi
     }
 
     override fun messageDeleteSkills(msg: String) {
-        if (msg.contains("Success!")){
+        if (msg.contains("Success!")) {
             presenter.showListSkill()
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         } else {

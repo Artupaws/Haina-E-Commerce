@@ -1,8 +1,11 @@
 package haina.ecommerce.view.posting.applyapplicant
 
 import android.content.Context
+import android.util.Log
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.ResponseAddShortlistApplicant
+import haina.ecommerce.model.ResponseLoadDocumentUser
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
@@ -25,5 +28,4 @@ class ApplyApplicantPresenter(val view: ApplyApplicantContract, val context: Con
 
         })
     }
-
 }

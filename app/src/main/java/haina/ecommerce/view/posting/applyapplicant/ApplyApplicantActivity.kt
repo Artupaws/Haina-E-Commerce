@@ -62,8 +62,8 @@ class ApplyApplicantActivity : AppCompatActivity(), View.OnClickListener, ApplyA
         binding.swipeRefresh.setOnRefreshListener {
             binding.swipeRefresh.isRefreshing = false
         }
-
     }
+
 
     override fun onClick(v: View?) {
         when (v?.id){

@@ -136,10 +136,6 @@ class AddAddressCompanyActivity : AppCompatActivity(), AddressCompanyContract, V
     }
 
     private fun move(){
-        val move = Intent("refresh")
-            .putExtra("fromAddAddress", refresh)
-        broadcaster?.sendBroadcast(move)
-        Log.d("isinya", broadcaster?.sendBroadcast(move).toString())
         onBackPressed()
     }
 

@@ -134,11 +134,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
     }
 
     override fun successLogin(msg: String) {
+        Log.d("successLogin", msg)
         Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         move()
     }
 
     override fun failedLogin(msg: String) {
+        Log.d("failedLogin", msg)
         Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         binding.btnLogin.visibility = View.VISIBLE
         binding.relativeLoading.visibility = View.INVISIBLE

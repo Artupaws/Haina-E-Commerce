@@ -14,14 +14,14 @@ class HistorySubmitJobPresenter(val view:HistorySubmitJobContract, val context: 
                 if (response.isSuccessful && response.body()?.value == 1){
                     val data = response.body()?.data
                     view.getListSubmitJob(data)
-                    view.messageGetSubmitJob(response.body()?.message.toString())
+                    view.messageGetSubmitJobSuccess(response.body()?.message.toString())
                 } else {
-                    view.messageGetSubmitJob(response.body()?.message.toString())
+                    view.messageGetSubmitJobError(response.body()?.message.toString())
                 }
             }
 
             override fun onFailure(call: Call<ResponseGetJobApplications>, t: Throwable) {
-                view.messageGetSubmitJob(t.localizedMessage.toString())
+                view.messageGetSubmitJobError(t.localizedMessage.toString())
             }
 
         })

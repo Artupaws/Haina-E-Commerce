@@ -124,13 +124,15 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
                 binding.btnPostingJob.visibility = View.INVISIBLE
                 binding.relativeLoading.visibility = View.VISIBLE
                 binding.cvAddImage.isEnabled = false
+//                Toast.makeText(applicationContext, "salary : ${helper.changeFormatMoneyToValue(binding.etSalaryFrom.text.toString())} " +
+//                        "+ ${helper.changeFormatMoneyToValue(binding.etSalaryTo.text.toString())}", Toast.LENGTH_SHORT).show()
                 checkingDataJob()
             }
         }
     }
 
     private fun checkingDataJob(){
-        var title = binding.etTitleJob.text.toString()
+        val title = binding.etTitleJob.text.toString()
         var location = idLocation
         var category = idCategory
         var description = binding.etDescriptionJob.text.toString()
@@ -394,7 +396,6 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
     override fun onResume() {
         super.onResume()
-        presenter.getDataCompany()
     }
 
     override fun getDataCompany(item: DataCompany) {

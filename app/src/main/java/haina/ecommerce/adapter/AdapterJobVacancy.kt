@@ -32,6 +32,7 @@ class AdapterJobVacancy(private val context: Context, private val jobList: List<
         fun bind(itemHaina: DataItemJob){
             with(binding){
                 tvTitleJob.text = itemHaina.title?.toUpperCase()
+                tvCompanyName.text = itemHaina.company?.name
                 tvDatePublish.text = ("Post : ${itemHaina.date}")
                 tvLocation.text = itemHaina.location
                 tvSalary.text = ("${helper.convertToFormatMoneySalary(itemHaina.salaryFrom.toString())} - ${helper.convertToFormatMoneySalary(itemHaina.salaryTo.toString())}")
@@ -52,15 +53,7 @@ class AdapterJobVacancy(private val context: Context, private val jobList: List<
                         .into(ivImageCompany)
                 linearJobVacancy.setOnClickListener {
                     val intent = Intent(context, DetailJobActivity::class.java)
-                    intent.putExtra("title",tvTitleJob.text)
-                    intent.putExtra("idJobVacancy",itemHaina.id)
-                    intent.putExtra("nameCompany", tvCompanyName.text)
-                    intent.putExtra("description",description == itemHaina.description)
-                    intent.putExtra("salary", tvSalary.text)
-                    intent.putExtra("datePublish", tvDatePublish.text)
-                    intent.putExtra("location", tvLocation.text)
-                    intent.putExtra("jobCategory", jobCategory == itemHaina.jobCategory)
-                    intent.putExtra("imageCompany", itemHaina.photoUrl)
+                    intent.putExtra("detailJob", itemHaina)
                     context.startActivity(intent)
                 }
             }
