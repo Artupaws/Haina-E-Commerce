@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="news">&#xf1ea;</string>
+    <string name="scan_qr">&#xf029;</string>
+    <string name="credit_card">&#xf09d;</string>
+    <string name="bill">&#xf555;</string>
+    <string name="receive">&#xf4c0;</string>
+    <string name="shipping">&#xf472;</string>
+    <string name="phone">&#xf3cd;</string>
+    <string name="job">&#xf0b1;</string>
+    <string name="other">&#xf009;</string>
+    <string name="apartment">&#xf1ad;</string>
+    <string name="car">&#xf1b9;</string>
+    <string name="plane">&#xf5b0;</string>
+
+</resources>

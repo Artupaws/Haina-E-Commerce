@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Haina E-Commerce</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Login</string>
+    <string name="e_mail">e-mail</string>
+    <string name="hint_email">e-mail@mail.com</string>
+    <string name="password">password</string>
+    <string name="register">Register</string>
+    <string name="explore">Explore</string>
+    <string name="history">History</string>
+    <string name="sell">Sell</string>
+    <string name="cart">Cart</string>
+    <string name="my_account">My Account</string>
+    <string name="hint_search">News Today, Covid-19 News...</string>
+    <string name="categories">Categories</string>
+    <string name="recomendations">RECOMENDATIONS</string>
+    <string name="news_title">News</string>
+    <string name="shipping_title">Shipping</string>
+    <string name="internet_title">Internet</string>
+    <string name="job_vacancy">Job</string>
+    <string name="other_title">Other</string>
+    <string name="rent_apartment">Apartment</string>
+    <string name="title_scan_qr">Scan QR</string>
+    <string name="credit_card_title">Credit Card</string>
+    <string name="send_money">Send Money</string>
+    <string name="e_wallet">E-Wallet</string>
+    <string name="today">Today</string>
+    <string name="covid_19_indonesia">Covid-19 | Indonesia</string>
+    <string name="total_cases">Total cases</string>
+    <string name="recover">Recover</string>
+    <string name="see_cases_other_countries"><u>See cases in other countries ></u></string>
+</resources>
