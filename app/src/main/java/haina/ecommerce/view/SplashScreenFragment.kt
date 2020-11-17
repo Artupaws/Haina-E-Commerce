@@ -15,19 +15,23 @@ class SplashScreenFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+        savedInstanceState: Bundle?): View? {
+
+        handler = Handler()
+        handler.postDelayed({
+            container?.let { Navigation.findNavController(it).navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToHomeFragment()) }
+        }, 2000)
+
         return inflater.inflate(R.layout.fragment_splash_screen, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        handler = Handler()
-        handler.postDelayed({
-            Navigation.findNavController(view).navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToExploreFragment())
-        }, 2000)
-
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        handler = Handler()
+//        handler.postDelayed({
+//            Navigation.findNavController(view).navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToHomeFragment())
+//        }, 2000)
+//
+//    }
 
 }

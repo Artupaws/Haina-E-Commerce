@@ -10,8 +10,8 @@
         android:name="haina.ecommerce.view.SplashScreenFragment"
         android:label="SplashScreenFragment">
         <action
-            android:id="@+id/action_splashScreenFragment_to_exploreFragment"
-            app:destination="@id/exploreFragment"
+            android:id="@+id/action_splashScreenFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/splashScreenFragment"
             app:popUpToInclusive="true"/>
@@ -30,4 +30,8 @@
         android:name="haina.ecommerce.view.ExploreFragment"
         android:label="fragment_explore"
         tools:layout="@layout/fragment_explore" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="haina.ecommerce.view.HomeFragment"
+        android:label="HomeFragment" />
 </navigation>
