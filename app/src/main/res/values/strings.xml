@@ -8,9 +8,7 @@
     <string name="password">password</string>
     <string name="register">Register</string>
     <string name="explore">Explore</string>
-    <string name="history">History</string>
     <string name="sell">Sell</string>
-    <string name="cart">Cart</string>
     <string name="my_account">My Account</string>
     <string name="hint_search">News Today, Covid-19 News...</string>
     <string name="categories">Categories</string>
@@ -30,4 +28,22 @@
     <string name="total_cases">Total cases</string>
     <string name="recover">Recover</string>
     <string name="see_cases_other_countries"><u>See cases in other countries ></u></string>
+    <string name="house_maid_title">House Maid</string>
+    <string name="car_service_title">Service Car</string>
+    <string name="visa_agent_title">Visa Agent</string>
+    <string name="payment_title">Payment</string>
+    <string name="wifi_title">Wifi</string>
+    <string name="electricity_title">Electricity</string>
+    <string name="water_title">Water</string>
+    <string name="ticket_title">Ticket</string>
+    <string name="flight_title">Flight</string>
+    <string name="bus_title">Bus</string>
+    <string name="train_title">Train</string>
+    <string name="travel_title">Travel</string>
+    <string name="rent_title">Rent</string>
+    <string name="car_title">Car</string>
+    <string name="house_title">House</string>
+    <string name="information_title">Information</string>
+    <string name="history">History</string>
+    <string name="cart">Cart</string>
 </resources>

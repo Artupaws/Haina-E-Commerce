@@ -36,10 +36,22 @@ class HomeFragment : Fragment() {
                         fragmentManager.beginTransaction().replace(R.id.view_botnav, exploreFragment).commit()
                         return true
                     }
-                    R.id.mainPageFragment -> {
-                        val mainPageFragment = MainPageFragment()
+                    R.id.historyFragment -> {
+                        val mainPageFragment = HistoryFragment()
                         val fragmentManager: FragmentManager = childFragmentManager
                         fragmentManager.beginTransaction().replace(R.id.view_botnav, mainPageFragment).commit()
+                        return true
+                    }
+                    R.id.sellFragment -> {
+                        val sellFragment = SellFragment()
+                        val fragmentManager: FragmentManager = childFragmentManager
+                        fragmentManager.beginTransaction().replace(R.id.view_botnav, sellFragment).commit()
+                        return true
+                    }
+                    R.id.cartFragment -> {
+                        val cartFragment = CartFragment()
+                        val fragmentManager: FragmentManager = childFragmentManager
+                        fragmentManager.beginTransaction().replace(R.id.view_botnav, cartFragment).commit()
                         return true
                     }
                     R.id.loginFragment ->{
@@ -59,6 +71,6 @@ class HomeFragment : Fragment() {
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         val fragmentManager: FragmentManager = childFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.view_botnav, ExploreFragment()).commit()
+        fragmentTransaction.replace(R.id.view_botnav, ExploreFragment()).commit()
     }
 }

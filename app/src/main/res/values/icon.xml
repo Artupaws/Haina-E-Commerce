@@ -13,5 +13,16 @@
     <string name="apartment">&#xf1ad;</string>
     <string name="car">&#xf1b9;</string>
     <string name="plane">&#xf5b0;</string>
+    <string name="tool_service_car">&#xf7d9;</string>
+    <string name="translator">&#xf1ab;</string>
+    <string name="blender">&#xf517;</string>
+    <string name="house">&#xf015;</string>
+    <string name="bold">&#xf0e7;</string>
+    <string name="wifi">&#xf1eb;</string>
+    <string name="water">&#xf043;</string>
+    <string name="book_visa">&#xf558;</string>
+    <string name="train">&#xf238;</string>
+    <string name="bus">&#xf207;</string>
+    <string name="travel">&#xf5b6;</string>
 
 </resources>

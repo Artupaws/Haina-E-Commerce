@@ -10,13 +10,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import haina.ecommerce.R
 
 
-class MainPageFragment : Fragment() {
+class HistoryFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
 
-        return inflater.inflate(R.layout.fragment_main_page, container, false)
+        return inflater.inflate(R.layout.fragment_history, container, false)
 
     }
 
