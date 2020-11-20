@@ -18,7 +18,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/myAccountFragment"
         android:name="haina.ecommerce.view.LoginFragment"
         android:label="LoginFragment" />
     <fragment
@@ -42,4 +42,8 @@
         android:id="@+id/otherFragment"
         android:name="haina.ecommerce.view.OtherFragment"
         android:label="OtherFragment" />
+    <fragment
+        android:id="@+id/sellFragment2"
+        android:name="haina.ecommerce.view.SellFragment"
+        android:label="SellFragment" />
 </navigation>

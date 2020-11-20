@@ -6,25 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import haina.ecommerce.R
-import haina.ecommerce.databinding.FragmentLoginBinding
+import haina.ecommerce.databinding.FragmentHistorySellBinding
 
-class LoginFragment : Fragment() {
+class HistorySellFragment : Fragment() {
 
-    private var _binding: FragmentLoginBinding? = null
+    private var _binding : FragmentHistorySellBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
-
+        _binding = FragmentHistorySellBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {

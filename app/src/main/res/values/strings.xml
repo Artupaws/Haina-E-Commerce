@@ -46,4 +46,10 @@
     <string name="information_title">Information</string>
     <string name="history">History</string>
     <string name="cart">Cart</string>
+    <string name="transaction_in_progress">Transaction in progress</string>
+    <string name="selling_active">Selling Active</string>
+    <string name="choose_all">Choose All</string>
+    <string name="delete"><u>Delete</u></string>
+    <string name="total_price">Total Price</string>
+    <string name="buy">Buy</string>
 </resources>

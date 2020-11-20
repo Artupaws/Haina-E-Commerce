@@ -10,20 +10,21 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import haina.ecommerce.R
-import kotlinx.android.synthetic.main.fragment_home.*
+import haina.ecommerce.databinding.FragmentHomeBinding
 
 
 class HomeFragment : Fragment() {
 
-    lateinit var botnav: BottomNavigationView
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return binding.root
     }
 
     private val mOnNavigationItemSelectedListener: BottomNavigationView.OnNavigationItemSelectedListener =
@@ -33,31 +34,51 @@ class HomeFragment : Fragment() {
                     R.id.exploreFragment -> {
                         val exploreFragment = ExploreFragment()
                         val fragmentManager: FragmentManager = childFragmentManager
-                        fragmentManager.beginTransaction().replace(R.id.view_botnav, exploreFragment).commit()
+                        fragmentManager.beginTransaction()
+                            .replace(R.id.view_botnav, exploreFragment).commit()
                         return true
                     }
                     R.id.historyFragment -> {
-                        val mainPageFragment = HistoryFragment()
+                        val historyFragment = HistoryFragment()
                         val fragmentManager: FragmentManager = childFragmentManager
-                        fragmentManager.beginTransaction().replace(R.id.view_botnav, mainPageFragment).commit()
+                        fragmentManager.beginTransaction()
+                            .replace(R.id.view_botnav, historyFragment).commit()
                         return true
                     }
                     R.id.sellFragment -> {
                         val sellFragment = SellFragment()
                         val fragmentManager: FragmentManager = childFragmentManager
-                        fragmentManager.beginTransaction().replace(R.id.view_botnav, sellFragment).commit()
+                        fragmentManager.beginTransaction().replace(R.id.view_botnav, sellFragment)
+                            .commit()
                         return true
                     }
                     R.id.cartFragment -> {
                         val cartFragment = CartFragment()
                         val fragmentManager: FragmentManager = childFragmentManager
-                        fragmentManager.beginTransaction().replace(R.id.view_botnav, cartFragment).commit()
+                        fragmentManager.beginTransaction().replace(R.id.view_botnav, cartFragment)
+                            .commit()
                         return true
                     }
-                    R.id.loginFragment ->{
-                        val loginFragment = LoginFragment()
+                    R.id.myAccountFragment -> {
+// kondisi untuk memastikan user telah login/belum
+//                        val loginStatus = "login"
+//                        return if (loginStatus == "login") {
+//                            val myAccountFragment = MyAccountFragment()
+//                            val fragmentManager: FragmentManager = childFragmentManager
+//                            fragmentManager.beginTransaction()
+//                                .replace(R.id.view_botnav, myAccountFragment).commit()
+//                            false
+//                        } else {
+//                            val cartFragment = CartFragment()
+//                            val fragmentManager: FragmentManager = childFragmentManager
+//                            fragmentManager.beginTransaction()
+//                                .replace(R.id.view_botnav, cartFragment).commit()
+//                            true
+//                        }
+                        val myAccountFragment = MyAccountFragment()
                         val fragmentManager: FragmentManager = childFragmentManager
-                        fragmentManager.beginTransaction().replace(R.id.view_botnav, loginFragment).commit()
+                        fragmentManager.beginTransaction()
+                            .replace(R.id.view_botnav, myAccountFragment).commit()
                         return true
                     }
                 }
@@ -68,9 +89,14 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         val fragmentManager: FragmentManager = childFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.view_botnav, ExploreFragment()).commit()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

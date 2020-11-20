@@ -11,18 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterNews
+import haina.ecommerce.databinding.FragmentExploreBinding
 import haina.ecommerce.model.News
-import kotlinx.android.synthetic.main.fragment_explore.*
-import kotlinx.android.synthetic.main.layout_menu_service.*
 
 class ExploreFragment : Fragment(), View.OnClickListener {
+
+    private var _binding: FragmentExploreBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentExploreBinding.inflate(inflater, container, false)
 
-        return inflater.inflate(R.layout.fragment_explore, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,12 +42,13 @@ class ExploreFragment : Fragment(), View.OnClickListener {
         )
 
         val newsAdapter = AdapterNews(listNews)
-        rv_news.apply {
+        binding.rvNews.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             adapter = newsAdapter
         }
 
-        linear_other.setOnClickListener(this)
+        binding.menuServices.linearOther.setOnClickListener(this)
+        binding.menuServices.linearNews.setOnClickListener(this)
 
     }
 
@@ -62,6 +66,18 @@ class ExploreFragment : Fragment(), View.OnClickListener {
             R.id.linear_other ->{
                 Navigation.findNavController(p0).navigate(HomeFragmentDirections.actionHomeFragmentToOtherFragment())
             }
+            R.id.linear_news ->{
+                binding.nestedScroll.post(Runnable {
+                    run(){
+                        binding.nestedScroll.smoothScrollTo(0,binding.rvNews.top)
+                    }
+                })
+            }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
