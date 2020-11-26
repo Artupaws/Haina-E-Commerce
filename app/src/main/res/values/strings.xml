@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Haina E-Commerce</string>
+
+    <!--  api token currency  -->
+    <string name="api_token_currency">960e475d7c3340c8bb54f12fd3fe9fbb</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">Login</string>
@@ -52,4 +56,11 @@
     <string name="delete"><u>Delete</u></string>
     <string name="total_price">Total Price</string>
     <string name="buy">Buy</string>
+    <string name="please_login_account">To view this page, please login first</string>
+    <string name="havent_transaction">You haven\'t done any transactions</string>
+    <string name="currency">Currency</string>
+    <string name="one">1</string>
+    <string name="idr">IDR</string>
+    <string name="cny">CNY</string>
+    <string name="eur">EUR</string>
 </resources>

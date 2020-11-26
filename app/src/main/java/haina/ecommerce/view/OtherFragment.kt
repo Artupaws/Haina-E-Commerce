@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.Navigation
 import haina.ecommerce.R
 import haina.ecommerce.databinding.FragmentOtherBinding
 
@@ -26,6 +27,9 @@ class OtherFragment : Fragment() {
 
         binding.toolbarOther.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarOther.title = "All Categories"
+        binding.toolbarOther.setNavigationOnClickListener {
+            Navigation.findNavController(it).navigateUp()
+        }
     }
 
     override fun onDestroyView() {

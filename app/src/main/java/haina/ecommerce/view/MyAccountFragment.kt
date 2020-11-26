@@ -6,22 +6,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
 import haina.ecommerce.R
+import haina.ecommerce.databinding.FragmentMyAccountBinding
 
-class MyAccountFragment : Fragment() {
+class MyAccountFragment : Fragment(), View.OnClickListener {
+
+    private var _binding: FragmentMyAccountBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_account, container, false)
+        _binding = FragmentMyAccountBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.includeLogin.btnLogin.setOnClickListener(this)
+//        binding.includeLogin.linearNotLogin.visibility = View.GONE
+    }
 
+    override fun onClick(p0: View?) {
+        when (p0?.id) {
+            R.id.btn_login -> {
+                Navigation.findNavController(p0).navigate(HomeFragmentDirections.actionHomeFragmentToLogin2Fragment())
+            }
+        }
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

@@ -93,6 +93,7 @@ class HomeFragment : Fragment() {
         val fragmentManager: FragmentManager = childFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.view_botnav, ExploreFragment()).commit()
+        binding.bottomNavigationView.selectedItemId = R.id.exploreFragment
     }
 
     override fun onDestroyView() {

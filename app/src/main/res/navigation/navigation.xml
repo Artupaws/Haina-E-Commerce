@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_homeFragment_to_otherFragment"
             app:destination="@id/otherFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_login2Fragment"
+            app:destination="@id/login2Fragment" />
     </fragment>
     <fragment
         android:id="@+id/otherFragment"
@@ -46,4 +49,12 @@
         android:id="@+id/sellFragment2"
         android:name="haina.ecommerce.view.SellFragment"
         android:label="SellFragment" />
+    <fragment
+        android:id="@+id/login2Fragment"
+        android:name="haina.ecommerce.view.Login2Fragment"
+        android:label="Login2Fragment" >
+        <action
+            android:id="@+id/action_login2Fragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

@@ -29,18 +29,18 @@ class HistoryBuyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val listBuy = arrayListOf(
-                HistoryBuy("Playstation 5 Digital Version 2020 Storage 1000 Giga Byte", "Rp12.000.000", R.drawable.ps5, "waiting seller"),
-                HistoryBuy("Playstation 5 Digital Version 2020 Storage 1000 Giga Byte", "Rp13.000.000", R.drawable.ps5, "waiting payment"),
-                HistoryBuy("Playstation 5 Digital Version 2020 Storage 1000 Giga Byte", "Rp0", R.drawable.ps5, "packing"),
-                HistoryBuy("Playstation 5 Digital Version 2020 Storage 1000 Giga Byte", "Rp11.000.000", R.drawable.ps5, "delivery"),
-                HistoryBuy("Playstation 5 Digital Version 2020 Storage 1000 Giga Byte", "Rp1", R.drawable.ps5, "received")
-        )
+        val listBuy = arrayListOf<HistoryBuy>()
 
         val buyAdapter = AdapterHistoryBuy(requireContext(),listBuy)
         binding.rvHistoryBuy.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             adapter = buyAdapter
+            if (listBuy.size == 0){
+                binding.rvHistoryBuy.visibility = View.GONE
+            } else {
+                binding.rvHistoryBuy.visibility = View.VISIBLE
+                binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+            }
         }
 
     }
