@@ -11,12 +11,19 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import haina.ecommerce.R
 import haina.ecommerce.databinding.FragmentHomeBinding
+import haina.ecommerce.view.explore.ExploreFragment
 
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val fragmentExplore: Fragment = ExploreFragment()
+    private val fragmentHistory: Fragment = HistoryFragment()
+    private val fragmentSell: Fragment = SellFragment()
+    private val fragmentCart: Fragment = CartFragment()
+    private val fragmentMyAccount: Fragment = MyAccountFragment()
+    private var activeFragment: Fragment = fragmentExplore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,27 +43,28 @@ class HomeFragment : Fragment() {
                         val fragmentManager: FragmentManager = childFragmentManager
                         fragmentManager.beginTransaction()
                             .replace(R.id.view_botnav, exploreFragment).commit()
+                        item.isChecked = true
                         return true
                     }
                     R.id.historyFragment -> {
                         val historyFragment = HistoryFragment()
                         val fragmentManager: FragmentManager = childFragmentManager
                         fragmentManager.beginTransaction()
-                            .replace(R.id.view_botnav, historyFragment).commit()
+                            .add(R.id.view_botnav, historyFragment).commit()
                         return true
                     }
                     R.id.sellFragment -> {
                         val sellFragment = SellFragment()
                         val fragmentManager: FragmentManager = childFragmentManager
-                        fragmentManager.beginTransaction().replace(R.id.view_botnav, sellFragment)
-                            .commit()
+                        fragmentManager.beginTransaction()
+                            .replace(R.id.view_botnav, sellFragment).commit()
                         return true
                     }
                     R.id.cartFragment -> {
                         val cartFragment = CartFragment()
                         val fragmentManager: FragmentManager = childFragmentManager
-                        fragmentManager.beginTransaction().replace(R.id.view_botnav, cartFragment)
-                            .commit()
+                        fragmentManager.beginTransaction()
+                            .replace(R.id.view_botnav, cartFragment).commit()
                         return true
                     }
                     R.id.myAccountFragment -> {
@@ -88,13 +96,18 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
         val fragmentManager: FragmentManager = childFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.view_botnav, ExploreFragment()).commit()
         binding.bottomNavigationView.selectedItemId = R.id.exploreFragment
+
+        binding.bottomNavigationView.setOnNavigationItemReselectedListener {
+
+        }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -18,16 +18,12 @@
     </fragment>
 
     <fragment
-        android:id="@+id/myAccountFragment"
-        android:name="haina.ecommerce.view.LoginFragment"
-        android:label="LoginFragment" />
-    <fragment
         android:id="@+id/historyFragment"
         android:name="haina.ecommerce.view.HistoryFragment"
         android:label="MainPageFragment" />
     <fragment
         android:id="@+id/exploreFragment"
-        android:name="haina.ecommerce.view.ExploreFragment"
+        android:name="haina.ecommerce.view.explore.ExploreFragment"
         android:label="fragment_explore"
         tools:layout="@layout/fragment_explore" />
     <fragment
