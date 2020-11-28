@@ -37,4 +37,6 @@ class OtherFragment : Fragment() {
         _binding = null
     }
 
+
+
 }

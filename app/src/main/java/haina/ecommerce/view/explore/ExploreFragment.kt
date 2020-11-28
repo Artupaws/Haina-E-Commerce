@@ -2,6 +2,7 @@ package haina.ecommerce.view.explore
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,11 +65,6 @@ class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
 
     override fun loadHeadlineNews(list: List<ArticlesItem?>?) {
         val newsAdapter = AdapterHeadlineNews(requireContext(), list)
-        if (list!!.isEmpty()){
-            binding.rvNews.visibility = View.GONE
-        } else {
-            binding.rvNews.visibility = View.VISIBLE
-        }
         binding.rvNews.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             adapter = newsAdapter
@@ -80,10 +76,10 @@ class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
     }
 
     override fun showShimmerHeadlineNews() {
-        Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
+        Log.i("Success", "gone shimmer")
     }
 
     override fun dismissShimmerHeadlineNews() {
-        Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+        Log.i("Failed", "gone shimmer")
     }
 }

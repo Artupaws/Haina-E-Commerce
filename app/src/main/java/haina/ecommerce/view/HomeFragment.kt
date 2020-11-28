@@ -97,15 +97,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        binding.bottomNavigationView.setOnNavigationItemReselectedListener {
+
+        }
 
         val fragmentManager: FragmentManager = childFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.view_botnav, ExploreFragment()).commit()
         binding.bottomNavigationView.selectedItemId = R.id.exploreFragment
 
-        binding.bottomNavigationView.setOnNavigationItemReselectedListener {
-
-        }
     }
 
 
