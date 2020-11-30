@@ -1,6 +1,7 @@
 package haina.ecommerce.view.explore
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,7 +15,7 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterHeadlineNews
 import haina.ecommerce.databinding.FragmentExploreBinding
 import haina.ecommerce.model.ArticlesItem
-import haina.ecommerce.view.HomeFragmentDirections
+import haina.ecommerce.view.other.OtherActivity
 
 class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
 
@@ -46,7 +47,8 @@ class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.linear_other -> {
-                Navigation.findNavController(p0).navigate(HomeFragmentDirections.actionHomeFragmentToOtherFragment())
+                val intent = Intent(activity, OtherActivity::class.java)
+                startActivity(intent)
             }
             R.id.linear_news -> {
                 binding?.nestedScroll?.post(Runnable {

@@ -63,4 +63,7 @@
     <string name="idr">IDR</string>
     <string name="cny">CNY</string>
     <string name="eur">EUR</string>
+    <string name="fullname">fullname</string>
+    <string name="phone_title">phone</string>
+    <string name="confirm_password">confirm password</string>
 </resources>

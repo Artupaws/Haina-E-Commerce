@@ -1,5 +1,6 @@
 package haina.ecommerce.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.Toast
 import androidx.navigation.Navigation
 import haina.ecommerce.R
 import haina.ecommerce.databinding.FragmentMyAccountBinding
+import haina.ecommerce.view.login.LoginActivity
 
 class MyAccountFragment : Fragment(), View.OnClickListener {
 
@@ -32,7 +34,8 @@ class MyAccountFragment : Fragment(), View.OnClickListener {
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.btn_login -> {
-                Navigation.findNavController(p0).navigate(HomeFragmentDirections.actionHomeFragmentToLogin2Fragment())
+                val intent = Intent(activity, LoginActivity::class.java)
+                startActivity(intent)
             }
         }
     }
