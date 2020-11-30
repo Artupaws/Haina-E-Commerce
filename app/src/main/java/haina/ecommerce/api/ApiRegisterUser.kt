@@ -32,8 +32,9 @@ interface ApiInterfaceRegister{
     fun registerUser(
         @Query("apiKey")apiKey: String,
         @Field("fullname")fullname: String,
-        @Field("fullname")fullname: String,
-        @Field("fullname")fullname: String,
-        @Field("fullname")fullname: String,
+        @Field("email")email: String,
+        @Field("username")username: String,
+        @Field("phone")phone: String,
+        @Field("password")password: String
     ): Call<ResponseRegister>
 }
