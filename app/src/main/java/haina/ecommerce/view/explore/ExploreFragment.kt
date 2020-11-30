@@ -19,7 +19,7 @@ import haina.ecommerce.view.HomeFragmentDirections
 class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
 
     private var _binding: FragmentExploreBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private lateinit var presenter: ExploreContract.Presenter
 
     override fun onCreateView(
@@ -29,7 +29,7 @@ class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
         _binding = FragmentExploreBinding.inflate(inflater, container, false)
         presenter = ExplorePresenter(this)
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onResume() {
@@ -39,8 +39,8 @@ class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.menuServices.linearOther.setOnClickListener(this)
-        binding.menuServices.linearNews.setOnClickListener(this)
+        binding?.menuServices?.linearOther?.setOnClickListener(this)
+        binding?.menuServices?.linearNews?.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
@@ -49,9 +49,9 @@ class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
                 Navigation.findNavController(p0).navigate(HomeFragmentDirections.actionHomeFragmentToOtherFragment())
             }
             R.id.linear_news -> {
-                binding.nestedScroll.post(Runnable {
+                binding?.nestedScroll?.post(Runnable {
                     run() {
-                        binding.nestedScroll.smoothScrollTo(0, binding.rvNews.top)
+                        binding?.nestedScroll?.smoothScrollTo(0, binding!!.rvNews.top)
                     }
                 })
             }
@@ -64,8 +64,8 @@ class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
     }
 
     override fun loadHeadlineNews(list: List<ArticlesItem?>?) {
-        val newsAdapter = AdapterHeadlineNews(requireContext(), list)
-        binding.rvNews.apply {
+        val newsAdapter = activity?.let { AdapterHeadlineNews(it, list) }
+        binding?.rvNews?.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             adapter = newsAdapter
         }

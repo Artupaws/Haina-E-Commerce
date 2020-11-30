@@ -68,21 +68,6 @@ class HomeFragment : Fragment() {
                         return true
                     }
                     R.id.myAccountFragment -> {
-// kondisi untuk memastikan user telah login/belum
-//                        val loginStatus = "login"
-//                        return if (loginStatus == "login") {
-//                            val myAccountFragment = MyAccountFragment()
-//                            val fragmentManager: FragmentManager = childFragmentManager
-//                            fragmentManager.beginTransaction()
-//                                .replace(R.id.view_botnav, myAccountFragment).commit()
-//                            false
-//                        } else {
-//                            val cartFragment = CartFragment()
-//                            val fragmentManager: FragmentManager = childFragmentManager
-//                            fragmentManager.beginTransaction()
-//                                .replace(R.id.view_botnav, cartFragment).commit()
-//                            true
-//                        }
                         val myAccountFragment = MyAccountFragment()
                         val fragmentManager: FragmentManager = childFragmentManager
                         fragmentManager.beginTransaction()
