@@ -1,6 +1,5 @@
 package haina.ecommerce.view.explore
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterHeadlineNews
 import haina.ecommerce.databinding.FragmentExploreBinding
+import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.ArticlesItem
+import haina.ecommerce.model.Rates
 import haina.ecommerce.view.other.OtherActivity
 
 class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
@@ -22,6 +22,7 @@ class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
     private var _binding: FragmentExploreBinding? = null
     private val binding get() = _binding
     private lateinit var presenter: ExploreContract.Presenter
+    private val helper: Helper = Helper()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +36,7 @@ class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        presenter.loadExplore()
+        presenter.loadDataExplore()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,5 +84,11 @@ class ExploreFragment : Fragment(), ExploreContract.View, View.OnClickListener {
 
     override fun dismissShimmerHeadlineNews() {
         Log.i("Failed", "gone shimmer")
+    }
+
+    override fun loadCurrency(item: Rates?) {
+        binding?.includeCurrency?.tvChnCurrency?.text = helper.convertToFormatMoneyCNY(item?.cNY.toString())
+        binding?.includeCurrency?.tvIdrCurrency?.text = helper.convertToFormatMoneyIDR(item?.iDR.toString())
+        binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item?.uSD.toString())
     }
 }

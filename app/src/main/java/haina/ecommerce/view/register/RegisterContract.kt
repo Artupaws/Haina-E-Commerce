@@ -1,13 +1,10 @@
 package haina.ecommerce.view.register
 
+import haina.ecommerce.model.Data
+
 interface RegisterContract {
 
-    interface Presenter{
-        fun loadRegister()
-    }
-
-    interface View{
-        fun registerUser()
-    }
+    fun successCreateUser(msg: String)
+    fun errorCreateUser(msg: String)
 
 }

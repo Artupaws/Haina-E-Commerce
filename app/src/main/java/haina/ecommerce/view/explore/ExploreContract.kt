@@ -1,11 +1,12 @@
 package haina.ecommerce.view.explore
 
 import haina.ecommerce.model.ArticlesItem
+import haina.ecommerce.model.Rates
 
 interface ExploreContract {
 
     interface Presenter{
-        fun loadExplore()
+        fun loadDataExplore()
     }
 
     interface View{
@@ -13,6 +14,7 @@ interface ExploreContract {
         fun errorMessage(msg: String?)
         fun showShimmerHeadlineNews()
         fun dismissShimmerHeadlineNews()
+        fun loadCurrency(item: Rates?)
     }
 
 }

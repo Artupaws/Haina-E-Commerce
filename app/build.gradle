@@ -44,7 +44,13 @@ android {
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    //firebase authentication
     implementation 'com.google.firebase:firebase-auth:19.2.0'
+
+    //firebase cloud messaging
+    implementation 'com.google.firebase:firebase-messaging:21.0.0'
+
     def nav_version = "2.3.1"
     def lottie_version = "3.4.0"
     def retrofit_version = "2.6.1"
@@ -90,4 +96,7 @@ dependencies {
 
     // Also declare the dependency for the Google Play services library and specify its version
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
+
+    //Interceptor logging test
+    implementation("com.squareup.okhttp3:logging-interceptor:4.2.0")
 }

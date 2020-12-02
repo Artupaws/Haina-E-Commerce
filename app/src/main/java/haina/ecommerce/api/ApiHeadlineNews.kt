@@ -17,13 +17,13 @@ class ApiHeadlineNews {
                 .build()
     }
 
-    fun getInstance(): ApiInterface{
-        return getHeadlineNews().create(ApiInterface::class.java)
+    fun getInstance(): ApiInterfaceHeadlineNews{
+        return getHeadlineNews().create(ApiInterfaceHeadlineNews::class.java)
     }
 
 }
 
-interface ApiInterface{
+interface ApiInterfaceHeadlineNews{
     @GET("v2/top-headlines?sources=bbc-news")
     fun getHeadlines(@Query("apiKey")apiKey: String): Call<ResponseHeadlineNews>
 

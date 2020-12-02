@@ -66,4 +66,6 @@
     <string name="fullname">fullname</string>
     <string name="phone_title">phone</string>
     <string name="confirm_password">confirm password</string>
+    <string name="username">username</string>
+    <string name="usd">USD</string>
 </resources>
