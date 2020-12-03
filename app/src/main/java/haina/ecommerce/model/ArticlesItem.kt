@@ -1,6 +1,11 @@
 package haina.ecommerce.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
+import org.jetbrains.annotations.NotNull
 
 data class ArticlesItem(
 
@@ -17,7 +22,7 @@ data class ArticlesItem(
 	val description: String? = null,
 
 	@field:SerializedName("source")
-	val source: Source? = null,
+	val source: @RawValue Source? = null,
 
 	@field:SerializedName("title")
 	val title: String? = null,
@@ -28,3 +33,4 @@ data class ArticlesItem(
 	@field:SerializedName("content")
 	val content: String? = null
 )
+

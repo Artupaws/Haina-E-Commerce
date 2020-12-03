@@ -4,9 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 data class Data(
 
-	@field:SerializedName("fullname")
-	val fullname: String? = null,
+	@field:SerializedName("date")
+	val date: String? = null,
 
-	@field:SerializedName("token")
-	val token: String? = null
+	@field:SerializedName("rates")
+	val rates: Rates? = null,
+
+	@field:SerializedName("base")
+	val base: String? = null
 )

@@ -17,7 +17,7 @@
     <string name="hint_search">News Today, Covid-19 News...</string>
     <string name="categories">Categories</string>
     <string name="recomendations">RECOMENDATIONS</string>
-    <string name="news_title">News</string>
+    <string name="news_title">Headlines News</string>
     <string name="shipping_title">Shipping</string>
     <string name="internet_title">Internet</string>
     <string name="job_vacancy">Job</string>
@@ -68,4 +68,5 @@
     <string name="confirm_password">confirm password</string>
     <string name="username">username</string>
     <string name="usd">USD</string>
+    <string name="news_full_title">News</string>
 </resources>

@@ -13,18 +13,19 @@ import haina.ecommerce.R
 import haina.ecommerce.databinding.LayoutCurrencyBinding
 import haina.ecommerce.databinding.LayoutSpinnerCurrencyBinding
 import haina.ecommerce.model.CountryCurrency
+import haina.ecommerce.model.DataCodeCurrency
 
-class AdapterSpinnerCurrency(val context: Context, private val listCountry: List<CountryCurrency>):
+class AdapterSpinnerCurrency(val context: Context, private val listCountry: List<DataCodeCurrency?>?):
     BaseAdapter() {
 
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getCount(): Int {
-        return listCountry.size
+        return listCountry?.size!!
     }
 
     override fun getItem(p0: Int): Any {
-        return listCountry[p0]
+        return listCountry?.get(p0)!!
     }
 
     override fun getItemId(p0: Int): Long {
@@ -43,16 +44,13 @@ class AdapterSpinnerCurrency(val context: Context, private val listCountry: List
             view = p1
             vh = view.tag as ItemHolder
         }
-        vh.label.text = listCountry[p0].name
-        vh.img.setBackgroundResource(listCountry[p0].image)
+        vh.label.text = listCountry?.get(p0)?.rates
 
         return view
     }
 
     private class ItemHolder(row: View?) {
         val label: TextView = row?.findViewById(R.id.tv_country) as TextView
-        val img: ImageView = row?.findViewById(R.id.iv_country) as ImageView
-
     }
 
 }

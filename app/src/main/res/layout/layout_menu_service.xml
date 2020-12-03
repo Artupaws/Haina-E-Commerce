@@ -42,8 +42,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
+                    style="@style/TextStyleMenuService"
                     android:text="@string/news_title"/>
 
             </LinearLayout>
@@ -66,8 +65,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
+                    style="@style/TextStyleMenuService"
                     android:text="@string/shipping_title"/>
 
             </LinearLayout>
@@ -90,9 +88,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
-                    android:textAlignment="center"
+                    style="@style/TextStyleMenuService"
                     android:text="@string/internet_title"/>
 
             </LinearLayout>
@@ -115,9 +111,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
-                    android:textAlignment="center"
+                    style="@style/TextStyleMenuService"
                     android:text="@string/job_vacancy"/>
 
             </LinearLayout>
@@ -155,9 +149,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/black"
-                        android:textAlignment="center"
+                        style="@style/TextStyleMenuService"
                         android:text="@string/rent_apartment"/>
 
                 </LinearLayout>
@@ -180,9 +172,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/black"
-                        android:textAlignment="center"
+                        style="@style/TextStyleMenuService"
                         android:text="Rent Car"/>
 
                 </LinearLayout>
@@ -205,9 +195,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/black"
-                        android:textAlignment="center"
+                        style="@style/TextStyleMenuService"
                         android:text="Flight Ticket"/>
 
                 </LinearLayout>
@@ -231,9 +219,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/black"
-                        android:textAlignment="center"
+                        style="@style/TextStyleMenuService"
                         android:text="@string/other_title"/>
 
                 </LinearLayout>

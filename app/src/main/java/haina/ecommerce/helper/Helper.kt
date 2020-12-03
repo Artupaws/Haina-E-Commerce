@@ -17,7 +17,7 @@ class Helper  {
 
     fun convertToFormatMoneyIDR(formatMoney: String): String? {
         val formatter: NumberFormat = NumberFormat.getCurrencyInstance()
-        formatter.maximumFractionDigits = 1
+        formatter.maximumFractionDigits = 0
         formatter.currency = Currency.getInstance("IDR")
         return formatter.format(formatMoney.toDouble())
     }
