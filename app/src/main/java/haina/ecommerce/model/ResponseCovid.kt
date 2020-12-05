@@ -4,6 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseCovid(
 
-	@field:SerializedName("data")
-	val data: List<DataCovid?>? = null
+		@field:SerializedName("data")
+		val data: List<DataCovid?>? = null,
+
+		@field:SerializedName("message")
+		val message: String? = null,
+
+		@field:SerializedName("value")
+		val value: Int? = null
 )

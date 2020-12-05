@@ -8,13 +8,13 @@ import retrofit2.Response
 class RegisterPresenter (val view: RegisterContract){
 
     fun createUser(fullname: String, email: String, username:String, phone: String, password: String, apiKey:String, deviceToken:String){
-        NetworkConfig().registerUser().createUser(fullname, email, username, phone, password, apiKey, deviceToken)
+        NetworkConfig().getConnectionHaina().createUser(fullname, email, username, phone, password, apiKey, deviceToken)
             .enqueue(object : retrofit2.Callback<ResponseRegister>{
                 override fun onResponse(call: Call<ResponseRegister>, response: Response<ResponseRegister>) {
                     if (response.isSuccessful && response.body()?.value == 1){
                         view.successCreateUser(response.body()?.message.toString())
                     } else {
-                        view.successCreateUser(response.body()?.message.toString())
+                        view.errorCreateUser(response.body()?.message.toString())
                     }
                 }
 
@@ -24,5 +24,4 @@ class RegisterPresenter (val view: RegisterContract){
 
             })
     }
-
 }

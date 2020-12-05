@@ -26,6 +26,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
     private var isEmptyUsername: Boolean = true
     private var isEmptyPhone: Boolean = true
     private var isEmptyPassword: Boolean = true
+    private var isEmptyDeviceToken: Boolean = true
     @SuppressLint("SetTextI18n")
     private lateinit var presenter: RegisterPresenter
 
@@ -50,7 +51,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
 
     private fun registerCheck() {
         val sharedPreference: SharedPreference = SharedPreference(this)
-        val deviceToken = sharedPreference.getValueString("preferences").toString()
+        val deviceToken = sharedPreference.getValueString("token_firebase").toString()
         var fullname = binding.etFullname.text.toString()
         var email = binding.etEmail.text.toString()
         var username = binding.etUsername.text.toString()
@@ -99,11 +100,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
             isEmptyPassword = false
         }
 
-        if (!isEmptyFullname && !isEmptyEmail && !isEmptyUsername && !isEmptyPhone && !isEmptyPassword) {
+        if (!isEmptyFullname && !isEmptyEmail && !isEmptyUsername && !isEmptyPhone && !isEmptyPassword && !isEmptyDeviceToken) {
             presenter.createUser(fullname, email, username, phone, password, Constants.APIKEY, deviceToken)
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            startActivity(intent)
-            finish()
         } else {
             Toast.makeText(applicationContext, "failed $deviceToken", Toast.LENGTH_SHORT).show()
         }
@@ -112,6 +110,9 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
 
     override fun successCreateUser(msg: String) {
         Log.d("success", msg)
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        startActivity(intent)
+        finish()
         val snackbar =Snackbar.make(binding.btnRegister, "Register Success", Snackbar.LENGTH_LONG)
         snackbar.show()
     }

@@ -12,7 +12,7 @@
     <string name="password">password</string>
     <string name="register">Register</string>
     <string name="explore">Explore</string>
-    <string name="sell">Sell</string>
+    <string name="posting">Posting</string>
     <string name="my_account">My Account</string>
     <string name="hint_search">News Today, Covid-19 News...</string>
     <string name="categories">Categories</string>
@@ -31,7 +31,7 @@
     <string name="covid_19_indonesia">Covid-19 | Indonesia</string>
     <string name="total_cases">Total cases</string>
     <string name="recover">Recover</string>
-    <string name="see_cases_other_countries"><u>See cases in other countries ></u></string>
+    <string name="see_cases_other_countries"><u>See cases in other province ></u></string>
     <string name="house_maid_title">House Maid</string>
     <string name="car_service_title">Service Car</string>
     <string name="visa_agent_title">Visa Agent</string>
@@ -51,14 +51,14 @@
     <string name="history">History</string>
     <string name="cart">Cart</string>
     <string name="transaction_in_progress">Transaction in progress</string>
-    <string name="selling_active">Selling Active</string>
+    <string name="your_post">Your Post</string>
     <string name="choose_all">Choose All</string>
     <string name="delete"><u>Delete</u></string>
     <string name="total_price">Total Price</string>
     <string name="buy">Buy</string>
     <string name="please_login_account">To view this page, please login first</string>
     <string name="havent_transaction">You haven\'t done any transactions</string>
-    <string name="currency">Currency</string>
+    <string name="currency">| Currency</string>
     <string name="one">1</string>
     <string name="idr">IDR</string>
     <string name="cny">CNY</string>
@@ -69,4 +69,16 @@
     <string name="username">username</string>
     <string name="usd">USD</string>
     <string name="news_full_title">News</string>
+    <string name="die_title">Die</string>
+    <string name="covid_19_info">| Covid-19 Info</string>
+    <string name="search_province_here">Search Province Here</string>
+    <string name="title_job">Title Job</string>
+    <string name="location_company">Location Company</string>
+    <string name="category_job">Category Job</string>
+    <string name="description">Description</string>
+    <string name="salary">Salary</string>
+    <string name="strip">-</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="posting_job">Posting Job</string>
 </resources>

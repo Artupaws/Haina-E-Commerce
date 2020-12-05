@@ -11,7 +11,7 @@ class SharedPreference(val context: Context) {
     fun save(KEY_NAME: String, text: String){
         val editor: SharedPreferences.Editor = sharedPref.edit()
         editor.putString(KEY_NAME, text)
-        editor.apply()
+        editor.commit()
     }
 
     fun save(KEY_NAME: String, value: Int) {

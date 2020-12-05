@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
@@ -20,25 +20,69 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+            <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="160dp"
+            android:background="@drawable/covid"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:drawablePadding="5dp"
-                android:gravity="center_vertical"
-                android:text="@string/covid_19_indonesia"
-                android:textColor="@color/black"
-                app:drawableEndCompat="@drawable/ic_indonesian_flag" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/tv_province"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:paddingTop="10dp"
+                    android:paddingStart="10dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="end"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_icon_haina_currency">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/app_text_logo" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/covid_19_info"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/background_form_white_rounded"
                 android:orientation="horizontal"
                 android:padding="10dp"
                 android:weightSum="3">
@@ -59,14 +103,9 @@
                         android:id="@+id/tv_total_cases"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="471K"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+3.535" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -85,13 +124,9 @@
                         android:id="@+id/tv_total_recover"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="395K"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -103,32 +138,30 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Die"
+                        android:text="@string/die_title"
                         android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/tv_total_die"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="15.296"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+85" />
                 </LinearLayout>
 
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_detail_covid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="10dp"
+                android:textStyle="bold"
                 android:text="@string/see_cases_other_countries"
-                android:textColor="@android:color/holo_blue_dark" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
 

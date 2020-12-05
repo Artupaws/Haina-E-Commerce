@@ -17,16 +17,7 @@ class NetworkConfig {
                 .build()
     }
 
-    fun registerUser(): NetworkService {
-        val retrofit: Retrofit = Retrofit.Builder()
-                .baseUrl(Constants.BASE_API_HAINA)
-                .client(getInterceptor())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        return retrofit.create(NetworkService::class.java)
-    }
-
-    fun getCurrency(): NetworkService {
+    fun getConnectionHaina(): NetworkService {
         val retrofit: Retrofit = Retrofit.Builder()
                 .baseUrl(Constants.BASE_API_HAINA)
                 .client(getInterceptor())
@@ -47,15 +38,6 @@ class NetworkConfig {
     fun getCovidIndo(): NetworkService {
         val retrofit: Retrofit = Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL_COVID_INDO)
-                .client(getInterceptor())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        return retrofit.create(NetworkService::class.java)
-    }
-
-    fun getListCodeCurrency(): NetworkService{
-        val retrofit: Retrofit = Retrofit.Builder()
-                .baseUrl(Constants.BASE_API_HAINA)
                 .client(getInterceptor())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

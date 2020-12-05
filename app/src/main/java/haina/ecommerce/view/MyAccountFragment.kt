@@ -28,6 +28,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.includeLogin.btnLogin.setOnClickListener(this)
+        Toast.makeText(activity, "dor", Toast.LENGTH_SHORT).show()
 //        binding.includeLogin.linearNotLogin.visibility = View.GONE
     }
 

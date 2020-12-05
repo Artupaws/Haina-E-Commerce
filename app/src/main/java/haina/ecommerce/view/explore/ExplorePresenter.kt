@@ -2,76 +2,15 @@ package haina.ecommerce.view.explore
 
 import android.util.Log
 import haina.ecommerce.api.NetworkConfig
-import haina.ecommerce.model.ResponseCodeCurrency
-import haina.ecommerce.model.ResponseCovid
-import haina.ecommerce.model.ResponseCurrency
-import haina.ecommerce.model.ResponseHeadlineNews
+import haina.ecommerce.model.*
 import haina.ecommerce.util.Constants
 import retrofit2.Call
 import retrofit2.Response
 
-class ExplorePresenter(val view: ExploreContract.View) : ExploreContract.Presenter {
+class ExplorePresenter(val view: ExploreContract) {
 
-    override fun loadDataExplore() {
-
-//        val callHeadlines = NetworkConfig().getHeadlineNews().getDataHeadlines(Constants.API_NEWS)
-//        callHeadlines.enqueue(object : retrofit2.Callback<ResponseHeadlineNews> {
-//            override fun onResponse(call: Call<ResponseHeadlineNews>, response: Response<ResponseHeadlineNews>) {
-//                if (response.isSuccessful) {
-//                    val data = response.body()?.articles
-//                    view.loadHeadlineNews(data)
-//                    view.dismissShimmerHeadlineNews()
-//
-//                } else {
-//                    view.errorMessage("Failed")
-//                    view.dismissShimmerHeadlineNews()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResponseHeadlineNews>, t: Throwable) {
-//                Log.d("ONFAILURE", t.toString())
-//                view.dismissShimmerHeadlineNews()
-//                view.errorMessage(t.toString())
-//            }
-//
-//        })
-
-        fun getCurrency(base: String){
-            NetworkConfig().getCurrency().getDataCurrency(base)
-            .enqueue(object : retrofit2.Callback<ResponseCurrency>{
-                override fun onResponse(call: Call<ResponseCurrency>, response: Response<ResponseCurrency>) {
-                    if (response.isSuccessful){
-                        val data = response.body()?.data
-                        view.loadCurrency(data)
-                        Log.d("currency", data.toString())
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseCurrency>, t: Throwable) {
-                    Log.d("currency", "fail")
-                }
-
-            })
-
-        }
-
-//        val callCovidIndo = NetworkConfig().getCovidIndo().getDataCovidIndo()
-//        callCovidIndo.enqueue(object : retrofit2.Callback<ResponseCovid>{
-//            override fun onResponse(call: Call<ResponseCovid>, response: Response<ResponseCovid>) {
-//                if (response.isSuccessful){
-//                    val data = response.body()?.data
-//                    view.loadCovidIndo(data)
-//                    Log.d("covid", data.toString())
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResponseCovid>, t: Throwable) {
-//                Log.d("covid", "fail")
-//            }
-//
-//        })
-//
-        val callListCodeCurrency = NetworkConfig().getListCodeCurrency().getDataListBaseCurrency()
+    fun loadListBaseCurrency(){
+        val callListCodeCurrency = NetworkConfig().getConnectionHaina().getDataListBaseCurrency()
         callListCodeCurrency.enqueue(object : retrofit2.Callback<ResponseCodeCurrency> {
             override fun onResponse(call: Call<ResponseCodeCurrency>, response: Response<ResponseCodeCurrency>) {
                 if (response.isSuccessful) {
@@ -87,5 +26,60 @@ class ExplorePresenter(val view: ExploreContract.View) : ExploreContract.Present
 
         })
     }
+
+    fun loadCurrency(base: String){
+        val callCurrency = NetworkConfig().getConnectionHaina().getDataCurrency(base)
+        callCurrency.enqueue(object : retrofit2.Callback<ResponseCurrency>{
+            override fun onResponse(call: Call<ResponseCurrency>, response: Response<ResponseCurrency>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    val data = response.body()?.data
+                    view.loadCurrency(data)
+                } else {
+                    view.errorMessage(response.body()?.message)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCurrency>, t: Throwable) {
+                view.errorMessage(t.localizedMessage)
+            }
+
+        })
+    }
+
+    fun loadCovidJkt(){
+        val callCovidJkt = NetworkConfig().getConnectionHaina().getDataCovidJkt()
+        callCovidJkt.enqueue(object : retrofit2.Callback<ResponseCovidJkt>{
+            override fun onResponse(call: Call<ResponseCovidJkt>, response: Response<ResponseCovidJkt>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    val data = response.body()?.dataJkt
+                    view.loadCovidJkt(data)
+                } else {
+                    view.errorMessage(response.body()?.message)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCovidJkt>, t: Throwable) {
+                view.errorMessage(t.localizedMessage)
+            }
+
+        })
+    }
+
+//    fun loadHeadlinesNews(apiKey:String){
+//        val callHeadlinesNews = NetworkConfig().getHeadlineNews().getDataHeadlines(apiKey)
+//        callHeadlinesNews.enqueue(object : retrofit2.Callback<ResponseHeadlineNews>{
+//            override fun onResponse(call: Call<ResponseHeadlineNews>, response: Response<ResponseHeadlineNews>) {
+//                if (response.isSuccessful && response.body()?.status == "ok"){
+//                    val data = response.body()?.articles
+//                    view.loadHeadlinesNews(data)
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ResponseHeadlineNews>, t: Throwable) {
+//                view.errorMessage(t.localizedMessage)
+//            }
+//
+//        })
+//    }
 
 }

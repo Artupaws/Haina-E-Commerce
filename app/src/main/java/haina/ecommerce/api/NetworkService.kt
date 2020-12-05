@@ -31,11 +31,19 @@ interface NetworkService {
     fun getDataHeadlines(@Query("apiKey")apiKey: String): Call<ResponseHeadlineNews>
 
     //Covid Indo
-    @GET("api/provinsi/")
+    @GET("api/covid")
     fun getDataCovidIndo(): Call<ResponseCovid>
+
+    //Covid Jakarta
+    @GET("api/covid/jkt")
+    fun getDataCovidJkt(): Call<ResponseCovidJkt>
 
     //Get List Base Currency
     @GET("api/currency/list")
     fun getDataListBaseCurrency(): Call<ResponseCodeCurrency>
+
+    //Get List Job Category
+    @GET ("api/jobs/category")
+    fun getDataListJobCategory(): Call<ResponseJobCategory>
 
 }
