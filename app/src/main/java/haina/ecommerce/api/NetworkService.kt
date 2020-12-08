@@ -40,10 +40,14 @@ interface NetworkService {
 
     //Get List Base Currency
     @GET("api/currency/list")
-    fun getDataListBaseCurrency(): Call<ResponseCodeCurrency>
+    fun getDataListBaseCurrency(): Call<ResponseBaseCurrency>
 
     //Get List Job Category
     @GET ("api/jobs/category")
     fun getDataListJobCategory(): Call<ResponseJobCategory>
+
+    //Get List Job Location
+    @GET ("api/location")
+    fun getDataListJobLocation(): Call<ResponseListJobLocation>
 
 }

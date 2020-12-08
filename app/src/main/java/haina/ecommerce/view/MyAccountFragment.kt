@@ -10,26 +10,35 @@ import android.widget.Toast
 import androidx.navigation.Navigation
 import haina.ecommerce.R
 import haina.ecommerce.databinding.FragmentMyAccountBinding
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.login.LoginActivity
 
 class MyAccountFragment : Fragment(), View.OnClickListener {
 
     private var _binding: FragmentMyAccountBinding? = null
     private val binding get() = _binding!!
+    lateinit var sharedPref: SharedPreferenceHelper
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMyAccountBinding.inflate(inflater, container, false)
+        sharedPref = SharedPreferenceHelper(requireContext())
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
+            binding.includeLogin.linearNotLogin.visibility = View.GONE
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.includeLogin.btnLogin.setOnClickListener(this)
-        Toast.makeText(activity, "dor", Toast.LENGTH_SHORT).show()
-//        binding.includeLogin.linearNotLogin.visibility = View.GONE
     }
 
     override fun onClick(p0: View?) {

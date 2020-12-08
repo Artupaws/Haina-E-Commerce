@@ -1,31 +1,43 @@
 package haina.ecommerce.view.postingjob
 
 import android.Manifest
-import android.R
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import haina.ecommerce.adapter.AdapterAutoJobCategory
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import haina.ecommerce.R
+import haina.ecommerce.adapter.AdapterJobCategory
+import haina.ecommerce.adapter.AdapterJobLocation
 import haina.ecommerce.databinding.ActivityPostingJobBinding
-import haina.ecommerce.model.DataItem
+import haina.ecommerce.model.DataItemHaina
 
 class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClickListener {
 
     private lateinit var binding: ActivityPostingJobBinding
     private lateinit var presenter: PostingJobPresenter
-    var suggestions: List<DataItem> = ArrayList()
+    private var popupCategory: AlertDialog? = null
+    private var popupLocation: AlertDialog? = null
+    private var broadcaster: LocalBroadcastManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostingJobBinding.inflate(layoutInflater)
         setContentView(binding.root)
         presenter = PostingJobPresenter(this)
+        broadcaster = LocalBroadcastManager.getInstance(this)
 
         binding.etDescriptionJob.setLines(5)
         binding.toolbar.title = "Posting Job"
@@ -33,15 +45,17 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
-
         binding.cvAddImage.setOnClickListener(this)
+        binding.etCategoryJob.setOnClickListener(this)
+        binding.etLocationCompany.setOnClickListener(this)
         presenter.loadListJobCategory()
+        presenter.loadListJobLocation()
 
     }
 
     override fun onClick(p0: View?) {
         when(p0?.id){
-            haina.ecommerce.R.id.cv_add_image -> {
+           R.id.cv_add_image -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                         val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -54,6 +68,15 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
                     //system OS is < Marshmallow
                     pickImageFromGallery()
                 }
+            }
+
+            R.id.et_category_job -> {
+                popupCategory?.show()
+            }
+
+            R.id.et_location_company -> {
+                popupLocation?.show()
+                Toast.makeText(this, "location", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -92,6 +115,42 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("jobCategory"))
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver2, IntentFilter("jobLocation"))
+    }
+
+    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            when(intent.action){
+                "jobCategory" -> {
+                    val data = intent.getStringExtra("Category")
+                    binding.etCategoryJob.setText(data)
+                    popupCategory?.dismiss()
+                }
+            }
+        }
+    }
+
+    private val mMessageReceiver2: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            when(intent.action){
+                "jobLocation" -> {
+                    val data = intent.getStringExtra("Location")
+                    binding.etLocationCompany.setText(data)
+                    popupLocation?.dismiss()
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver)
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver2)
+    }
+
     override fun successPostingJob(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
@@ -108,10 +167,48 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
-    override fun loadJobCategory(item: ArrayList<DataItem?>?) {
-        val adapterAutoTextJobCategory= AdapterAutoJobCategory(this,haina.ecommerce.R.layout.list_item_autotextcomplete, item)
-        binding.etCategoryJob.threshold = 1
-        binding.etCategoryJob.setAdapter(adapterAutoTextJobCategory)
+    @SuppressLint("SetTextI18n")
+    override fun loadJobCategory(itemHaina: List<DataItemHaina?>?) {
+        //POP UP Job Category
+        val popup = AlertDialog.Builder(this)
+        val view: View = layoutInflater.inflate(R.layout.layout_pop_up_list, null)
+        popup.setCancelable(true)
+        popup.setView(view)
+        val action = view.findViewById<TextView>(haina.ecommerce.R.id.tv_action)
+        val title = view.findViewById<TextView>(haina.ecommerce.R.id.tv_title)
+        val rvJob = view.findViewById<RecyclerView>(haina.ecommerce.R.id.rv_popup)
+        val jobCategoryAdapter = AdapterJobCategory(this, itemHaina)
+        popupCategory = popup.create()
+        popupCategory?.dismiss()
+        action.setOnClickListener{popupCategory?.dismiss()}
+        title.text = "Job Category"
+        rvJob.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = jobCategoryAdapter
+            jobCategoryAdapter.notifyDataSetChanged()
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun loadJobLocation(itemHaina: List<DataItemHaina?>?) {
+        //POP UP Job Location
+        val popup = AlertDialog.Builder(this)
+        val view: View = layoutInflater.inflate(R.layout.layout_pop_up_list, null)
+        popup.setCancelable(true)
+        popup.setView(view)
+        val action = view.findViewById<TextView>(haina.ecommerce.R.id.tv_action)
+        val title = view.findViewById<TextView>(haina.ecommerce.R.id.tv_title)
+        val rvJob = view.findViewById<RecyclerView>(haina.ecommerce.R.id.rv_popup)
+        val jobLocationAdapter = AdapterJobLocation(this, itemHaina)
+        popupLocation = popup.create()
+        popupLocation?.dismiss()
+        action.setOnClickListener{popupLocation?.dismiss()}
+        title.text = "Job Location"
+        rvJob.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = jobLocationAdapter
+            jobLocationAdapter.notifyDataSetChanged()
+        }
     }
 
 }

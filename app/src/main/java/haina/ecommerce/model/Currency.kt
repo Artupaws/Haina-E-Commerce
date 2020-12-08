@@ -2,7 +2,7 @@ package haina.ecommerce.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Rates(
+data class Currency(
 
 	@field:SerializedName("IDR")
 	val iDR: String? = null,

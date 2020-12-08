@@ -1,7 +1,6 @@
 package haina.ecommerce.view
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import haina.ecommerce.R
@@ -13,7 +12,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val fragmentExplore = ExploreFragment()
     private val fragmentHistory = HistoryFragment()
-    private val fragmentSell = SellFragment()
+    private val fragmentSell = PostingFragment()
     private val fragmentCart = CartFragment()
     private val fragmentMyAccount = MyAccountFragment()
     private val fragmentManager = supportFragmentManager

@@ -12,6 +12,7 @@ class RegisterPresenter (val view: RegisterContract){
             .enqueue(object : retrofit2.Callback<ResponseRegister>{
                 override fun onResponse(call: Call<ResponseRegister>, response: Response<ResponseRegister>) {
                     if (response.isSuccessful && response.body()?.value == 1){
+                        view.getTokenUser(response.body()?.data?.token.toString())
                         view.successCreateUser(response.body()?.message.toString())
                     } else {
                         view.errorCreateUser(response.body()?.message.toString())

@@ -3,7 +3,6 @@ package haina.ecommerce.view.explore
 import android.util.Log
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.*
-import haina.ecommerce.util.Constants
 import retrofit2.Call
 import retrofit2.Response
 
@@ -11,8 +10,8 @@ class ExplorePresenter(val view: ExploreContract) {
 
     fun loadListBaseCurrency(){
         val callListCodeCurrency = NetworkConfig().getConnectionHaina().getDataListBaseCurrency()
-        callListCodeCurrency.enqueue(object : retrofit2.Callback<ResponseCodeCurrency> {
-            override fun onResponse(call: Call<ResponseCodeCurrency>, response: Response<ResponseCodeCurrency>) {
+        callListCodeCurrency.enqueue(object : retrofit2.Callback<ResponseBaseCurrency> {
+            override fun onResponse(call: Call<ResponseBaseCurrency>, response: Response<ResponseBaseCurrency>) {
                 if (response.isSuccessful) {
                     val data = response.body()?.data
                     view.loadListCodeCurrency(data)
@@ -20,7 +19,7 @@ class ExplorePresenter(val view: ExploreContract) {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseCodeCurrency>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseBaseCurrency>, t: Throwable) {
                 Log.d("baseCurrency", "failed")
             }
 

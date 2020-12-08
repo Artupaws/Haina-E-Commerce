@@ -3,15 +3,20 @@ package haina.ecommerce.preference
 import android.content.Context
 import android.content.SharedPreferences
 
-class SharedPreference(val context: Context) {
+class SharedPreferenceHelper(context: Context) {
 
-    private val PREFS_NAME = "preferences"
-    private val sharedPref: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private val PREFS_NAME = "preferenceshaina"
+    private val sharedPref: SharedPreferences
+    val editor : SharedPreferences.Editor
+
+    init {
+        sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        editor = sharedPref.edit()
+    }
 
     fun save(KEY_NAME: String, text: String){
-        val editor: SharedPreferences.Editor = sharedPref.edit()
         editor.putString(KEY_NAME, text)
-        editor.commit()
+        editor.apply()
     }
 
     fun save(KEY_NAME: String, value: Int) {
@@ -23,11 +28,7 @@ class SharedPreference(val context: Context) {
     }
 
     fun save(KEY_NAME: String, status: Boolean) {
-
-        val editor: SharedPreferences.Editor = sharedPref.edit()
-
-        editor.putBoolean(KEY_NAME, status!!)
-
+        editor.putBoolean(KEY_NAME, status)
         editor.apply()
     }
 
@@ -40,10 +41,8 @@ class SharedPreference(val context: Context) {
         return sharedPref.getInt(KEY_NAME, 0)
     }
 
-    fun getValueBoolien(KEY_NAME: String, defaultValue: Boolean): Boolean {
-
-        return sharedPref.getBoolean(KEY_NAME, defaultValue)
-
+    fun getValueBoolien(KEY_NAME: String): Boolean {
+        return sharedPref.getBoolean(KEY_NAME, false)
     }
 
     fun clearSharedPreference() {

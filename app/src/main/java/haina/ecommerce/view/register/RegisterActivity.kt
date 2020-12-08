@@ -1,7 +1,6 @@
 package haina.ecommerce.view.register
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,11 +11,9 @@ import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityRegisterBinding
-import haina.ecommerce.preference.SharedPreference
+import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.MainActivity
-import haina.ecommerce.view.login.LoginActivity
-import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterContract {
 
@@ -27,8 +24,10 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
     private var isEmptyPhone: Boolean = true
     private var isEmptyPassword: Boolean = true
     private var isEmptyDeviceToken: Boolean = true
+    private var isEmptyConfirmPassword: Boolean = true
     @SuppressLint("SetTextI18n")
     private lateinit var presenter: RegisterPresenter
+    lateinit var sharedPreferenceHelper: SharedPreferenceHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,25 +37,29 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         presenter = RegisterPresenter(this)
         binding.btnRegister.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
-        val itemData = intent.getSerializableExtra("dataItem")
+        sharedPreferenceHelper = SharedPreferenceHelper(this)
     }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.btn_register -> {
+                binding.btnRegister.visibility = View.INVISIBLE
+                binding.relativeLoading.visibility = View.VISIBLE
+                binding.btnLoginGoogle.isEnabled = false
+                binding.btnLogin.isEnabled = false
                 registerCheck()
             }
         }
     }
 
     private fun registerCheck() {
-        val sharedPreference: SharedPreference = SharedPreference(this)
-        val deviceToken = sharedPreference.getValueString("token_firebase").toString()
+        val deviceToken = sharedPreferenceHelper.getValueString(Constants.PREF_TOKEN_FIREBASE).toString()
         var fullname = binding.etFullname.text.toString()
         var email = binding.etEmail.text.toString()
         var username = binding.etUsername.text.toString()
         var phone = binding.etPhone.text.toString()
         var password = binding.etPassword.text.toString()
+        var confirmPassword = binding.etConfirmPassword.text.toString()
         if (fullname.isEmpty()) {
             binding.outlinedTextFieldFullname.error = "Fullname can't empty"
             isEmptyFullname = true
@@ -100,25 +103,61 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
             isEmptyPassword = false
         }
 
-        if (!isEmptyFullname && !isEmptyEmail && !isEmptyUsername && !isEmptyPhone && !isEmptyPassword && !isEmptyDeviceToken) {
+        when {
+            confirmPassword.isEmpty() -> {
+                binding.outlinedTextFieldCPassword.error = "Confrim password can't empty"
+                isEmptyConfirmPassword = true
+            }
+            confirmPassword != password -> {
+                binding.outlinedTextFieldCPassword.error = "Confrim password must same with password"
+                isEmptyConfirmPassword = true
+            }
+            else -> {
+                confirmPassword = binding.etConfirmPassword.text.toString()
+                isEmptyConfirmPassword = false
+            }
+        }
+
+        isEmptyDeviceToken = deviceToken.equals(null)
+
+        if (!isEmptyFullname && !isEmptyEmail && !isEmptyUsername && !isEmptyPhone && !isEmptyPassword && !isEmptyConfirmPassword && !isEmptyDeviceToken) {
             presenter.createUser(fullname, email, username, phone, password, Constants.APIKEY, deviceToken)
         } else {
-            Toast.makeText(applicationContext, "failed $deviceToken", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "Please Complete Form Register", Toast.LENGTH_SHORT).show()
+            binding.btnRegister.visibility = View.VISIBLE
+            binding.relativeLoading.visibility = View.INVISIBLE
+            binding.btnLoginGoogle.isEnabled = true
+            binding.btnLogin.isEnabled = true
         }
 
     }
 
     override fun successCreateUser(msg: String) {
-        Log.d("success", msg)
-        val intent = Intent(applicationContext, MainActivity::class.java)
-        startActivity(intent)
-        finish()
-        val snackbar =Snackbar.make(binding.btnRegister, "Register Success", Snackbar.LENGTH_LONG)
-        snackbar.show()
+        Log.d("successRegister", msg)
+        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        move()
     }
 
     override fun errorCreateUser(msg: String) {
-        Log.d("failed", msg)
+        Log.d("failedRegister", msg)
+        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        binding.btnRegister.visibility = View.VISIBLE
+        binding.relativeLoading.visibility = View.INVISIBLE
+        binding.btnLoginGoogle.isEnabled = true
+        binding.btnLogin.isEnabled = true
+    }
+
+    override fun getTokenUser(token: String) {
+        sharedPreferenceHelper.save(Constants.PREF_TOKEN_USER, token)
+        Log.d("token", token)
+    }
+
+    private fun move(){
+        sharedPreferenceHelper.save(Constants.PREF_IS_LOGIN, true)
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        intent.putExtra("loginStatus", "1")
+        startActivity(intent)
+        finish()
     }
 
 }

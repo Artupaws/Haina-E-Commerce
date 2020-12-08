@@ -12,18 +12,21 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterSelling
-import haina.ecommerce.databinding.FragmentSellBinding
+import haina.ecommerce.databinding.FragmentPostingBinding
 import haina.ecommerce.model.Selling
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.postingjob.PostingJobActivity
 
-class SellFragment : Fragment(), View.OnClickListener {
+class PostingFragment : Fragment(), View.OnClickListener {
 
-    private var _binding: FragmentSellBinding? = null
+    private var _binding: FragmentPostingBinding? = null
     private val binding get() = _binding!!
     private val rotatePostIconOpen : Animation by lazy { AnimationUtils.loadAnimation(activity, R.anim.rotate_icon_post) }
     private val rotatePostIconClose : Animation by lazy { AnimationUtils.loadAnimation(activity, R.anim.rotate_close_post) }
     private val fromBottom : Animation by lazy { AnimationUtils.loadAnimation(activity, R.anim.fab_from_bottom) }
     private val toBottom : Animation by lazy { AnimationUtils.loadAnimation(activity, R.anim.fab_to_bottom) }
+    lateinit var sharedPref: SharedPreferenceHelper
     private var clicked = false
 
     override fun onCreateView(
@@ -31,15 +34,14 @@ class SellFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentSellBinding.inflate(inflater, container, false)
-
+        _binding = FragmentPostingBinding.inflate(inflater, container, false)
+        sharedPref = SharedPreferenceHelper(requireContext())
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.floatingActionButton.setOnClickListener(this)
         binding.floatingActionButton2.setOnClickListener(this)
         binding.floatingActionButton3.setOnClickListener(this)
@@ -51,8 +53,15 @@ class SellFragment : Fragment(), View.OnClickListener {
             layoutManager = GridLayoutManager(activity, 2)
             adapter = sellingAdapter
         }
+    }
 
-
+    override fun onStart() {
+        super.onStart()
+        if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
+            binding.includeLogin.linearNotLogin.visibility = View.GONE
+            binding.rvPost.visibility = View.VISIBLE
+            binding.floatingActionButton.visibility = View.VISIBLE
+        }
     }
 
     private fun onAddPostClicked(){

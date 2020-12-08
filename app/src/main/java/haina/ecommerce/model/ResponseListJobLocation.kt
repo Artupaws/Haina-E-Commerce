@@ -2,10 +2,10 @@ package haina.ecommerce.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseCodeCurrency(
+data class ResponseListJobLocation(
 
 		@field:SerializedName("data")
-	val data: List<DataCodeCurrency?>? = null,
+	val data: List<DataItemHaina?>? = null,
 
 		@field:SerializedName("message")
 	val message: String? = null,

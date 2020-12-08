@@ -81,4 +81,6 @@
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="posting_job">Posting Job</string>
+    <string name="cancel">Cancel</string>
+    <string name="please_wait">please wait</string>
 </resources>

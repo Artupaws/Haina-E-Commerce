@@ -1,7 +1,6 @@
 package haina.ecommerce.view.postingjob
 
-import android.widget.ArrayAdapter
-import haina.ecommerce.model.DataItem
+import haina.ecommerce.model.DataItemHaina
 
 interface PostingJobContract {
 
@@ -10,7 +9,8 @@ interface PostingJobContract {
     fun successLoadJobCategory(msg:String)
     fun errorLoadJobCategory(msg:String)
 
-    fun loadJobCategory(item: ArrayList<DataItem?>?)
+    fun loadJobCategory(itemHaina: List<DataItemHaina?>?)
+    fun loadJobLocation(itemHaina: List<DataItemHaina?>?)
 
 
 

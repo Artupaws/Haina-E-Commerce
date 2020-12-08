@@ -1,9 +1,14 @@
 package haina.ecommerce.view.splashscreen
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.databinding.ActivitySplashScreenBinding
 import haina.ecommerce.view.MainActivity
 
@@ -11,6 +16,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashScreenBinding
     lateinit var handler: Handler
+    private var broadcaster: LocalBroadcastManager? = null
+    private var firebaseToken: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,10 +26,45 @@ class SplashScreenActivity : AppCompatActivity() {
 
         handler = Handler()
         handler.postDelayed({
-            val intent  = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            if (isConnect()) {
+                goToExplore()
+            } else {
+                binding.viewLoading.visibility = View.INVISIBLE
+                val snackbar = Snackbar.make(binding.viewLoading, "No connection!", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Try Again", View.OnClickListener {
+                            checkConnection()
+                            binding.viewLoading.visibility = View.VISIBLE
+                        })
+                snackbar.show()
+            }
         }, 2000)
 
+    }
+
+    private fun checkConnection(){
+        handler = Handler()
+        handler.postDelayed({
+            if (isConnect()) {
+                goToExplore()
+            } else {
+                binding.viewLoading.visibility = View.INVISIBLE
+                val snackbar = Snackbar.make(binding.viewLoading, "No connection!", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Try Again", View.OnClickListener { checkConnection()
+                            binding.viewLoading.visibility = View.VISIBLE
+                        })
+                snackbar.show()
+            }
+        }, 2000)
+    }
+
+    private fun goToExplore() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun isConnect(): Boolean {
+        val connect: ConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return connect.activeNetworkInfo != null && connect.activeNetworkInfo.isConnected
     }
 }

@@ -46,7 +46,7 @@
                     android:id="@+id/iv_company"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_add" />
             </androidx.cardview.widget.CardView>
 
@@ -78,6 +78,7 @@
                     android:id="@+id/et_location_company"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -94,6 +95,7 @@
                     android:id="@+id/et_category_job"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -175,8 +177,9 @@
 
             <Button
                 android:id="@+id/button_posting_job"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:backgroundTint="@color/yellow"
                 android:text="@string/posting_job"
                 android:textColor="@color/black"

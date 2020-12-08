@@ -1,8 +1,5 @@
 package haina.ecommerce.util
 
-import android.content.SharedPreferences
-import haina.ecommerce.preference.SharedPreference
-
 class Constants {
 
     companion object{
@@ -14,6 +11,10 @@ class Constants {
         const val WEB_CLIENT_SECRET_FIREBASE = "NnwHdEVbiSpO5JaY1qyp_oB2"
         const val APIKEY = "HainaAPP"
         const val APIKEY_CURRENCY = "960e475d7c3340c8bb54f12fd3fe9fbb"
+        const val PREF_IS_LOGIN = "PREF_IS_LOGIN"
+        const val PREF_TOKEN_USER = "PREF_TOKEN_USER"
+        const val PREF_TOKEN_LOGIN = "PREF_TOKEN_LOGIN"
+        const val PREF_TOKEN_FIREBASE = "PREF_TOKEN_FIREBASE"
     }
 
 }

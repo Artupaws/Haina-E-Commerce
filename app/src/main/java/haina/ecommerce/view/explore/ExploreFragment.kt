@@ -8,19 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Toast
-import androidx.core.view.get
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterCodeCurrency
-import haina.ecommerce.adapter.AdapterHeadlineNews
 import haina.ecommerce.adapter.AdapterSpinnerCurrency
 import haina.ecommerce.databinding.FragmentExploreBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.*
-import haina.ecommerce.util.Constants
 import haina.ecommerce.view.covidlist.CovidListActivity
 import haina.ecommerce.view.other.OtherActivity
 
@@ -272,9 +265,9 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
     }
 
     override fun loadCurrency(item: Data?) {
-        binding?.includeCurrency?.tvChnCurrency?.text = helper.convertToFormatMoneyCNY(item?.rates?.cNY.toString())
-        binding?.includeCurrency?.tvIdrCurrency?.text = helper.convertToFormatMoneyIDR(item?.rates?.iDR.toString())
-        binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item?.rates?.uSD.toString())
+        binding?.includeCurrency?.tvChnCurrency?.text = helper.convertToFormatMoneyCNY(item?.currency?.cNY.toString())
+        binding?.includeCurrency?.tvIdrCurrency?.text = helper.convertToFormatMoneyIDR(item?.currency?.iDR.toString())
+        binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item?.currency?.uSD.toString())
     }
 
     override fun loadCovidJkt(item: DataCovidJkt?) {

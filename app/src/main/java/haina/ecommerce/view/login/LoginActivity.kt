@@ -26,11 +26,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         binding.btnRegister.setOnClickListener(this)
     }
 
-//    val gso: GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//        .requestIdToken(getString(R.string.default_web_client_id))
-//        .requestEmail()
-//        .build()
-
     override fun onBackPressed() {
         super.onBackPressed()
     }
