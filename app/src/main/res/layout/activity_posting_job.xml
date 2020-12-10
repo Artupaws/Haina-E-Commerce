@@ -175,16 +175,38 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button_posting_job"
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:backgroundTint="@color/yellow"
-                android:text="@string/posting_job"
-                android:textColor="@color/black"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp">
+
+                <RelativeLayout
+                    android:id="@+id/relative_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/background_loading"
+                    android:gravity="center"
+                    android:visibility="invisible">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/iv_loading"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/loading" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btn_posting_job"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/posting_job"
+                    android:textColor="@color/yellow" />
+            </FrameLayout>
 
         </LinearLayout>
 

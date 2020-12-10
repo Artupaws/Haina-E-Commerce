@@ -31,7 +31,7 @@ class ExplorePresenter(val view: ExploreContract) {
         callCurrency.enqueue(object : retrofit2.Callback<ResponseCurrency>{
             override fun onResponse(call: Call<ResponseCurrency>, response: Response<ResponseCurrency>) {
                 if (response.isSuccessful && response.body()?.value == 1){
-                    val data = response.body()?.data
+                    val data = response.body()?.dataCurrency
                     view.loadCurrency(data)
                 } else {
                     view.errorMessage(response.body()?.message)

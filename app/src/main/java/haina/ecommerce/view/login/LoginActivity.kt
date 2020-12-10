@@ -3,6 +3,7 @@ package haina.ecommerce.view.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
@@ -118,6 +119,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
 
     override fun getToken(token: String) {
         sharedPreferenceHelper.save(Constants.PREF_TOKEN_USER, token)
+        Log.d("token",token)
     }
 
 }

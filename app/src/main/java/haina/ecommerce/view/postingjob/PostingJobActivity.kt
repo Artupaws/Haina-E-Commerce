@@ -10,6 +10,7 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.SyncStateContract
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -23,6 +24,8 @@ import haina.ecommerce.adapter.AdapterJobCategory
 import haina.ecommerce.adapter.AdapterJobLocation
 import haina.ecommerce.databinding.ActivityPostingJobBinding
 import haina.ecommerce.model.DataItemHaina
+import haina.ecommerce.model.DataPostingJob
+import haina.ecommerce.util.Constants
 
 class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClickListener {
 
@@ -31,12 +34,18 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
     private var popupCategory: AlertDialog? = null
     private var popupLocation: AlertDialog? = null
     private var broadcaster: LocalBroadcastManager? = null
+    private var isEmptyTitle = true
+    private var isEmptyLocation = true
+    private var isEmptyCategory = true
+    private var isEmptyDescription = true
+    private var isEmptySalaryFrom = true
+    private var isEmptySalaryTo = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostingJobBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = PostingJobPresenter(this)
+        presenter = PostingJobPresenter(this, this)
         broadcaster = LocalBroadcastManager.getInstance(this)
 
         binding.etDescriptionJob.setLines(5)
@@ -48,6 +57,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         binding.cvAddImage.setOnClickListener(this)
         binding.etCategoryJob.setOnClickListener(this)
         binding.etLocationCompany.setOnClickListener(this)
+        binding.btnPostingJob.setOnClickListener(this)
         presenter.loadListJobCategory()
         presenter.loadListJobLocation()
 
@@ -78,7 +88,77 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
                 popupLocation?.show()
                 Toast.makeText(this, "location", Toast.LENGTH_SHORT).show()
             }
+
+            R.id.btn_posting_job ->{
+                binding.btnPostingJob.visibility = View.INVISIBLE
+                binding.relativeLoading.visibility = View.VISIBLE
+                binding.cvAddImage.isEnabled = false
+            }
         }
+    }
+
+    private fun checkingDataJob(){
+        var title = binding.etTitleJob.text.toString()
+        var location = binding.etLocationCompany.text.toString()
+        var category = binding.etCategoryJob.text.toString()
+        var description = binding.etDescriptionJob.text.toString()
+        var salaryFrom = binding.etSalaryFrom.text.toString()
+        var salaryTo = binding.etSalaryTo.text.toString()
+
+        if (title.isEmpty()){
+            binding.outlinedTextFieldTitleJob.error = "Title can't empty"
+            isEmptyTitle = true
+        } else {
+            binding.etTitleJob.text.toString()
+            isEmptyTitle = false
+        }
+
+        if (location.isEmpty()){
+            binding.outlinedFieldLocation.error = "Location can't empty"
+            isEmptyLocation = true
+        } else {
+            binding.etLocationCompany.text.toString()
+            isEmptyLocation = false
+        }
+
+        if (category.isEmpty()){
+            binding.outlinedFieldCategory.error = "Category can't empty"
+            isEmptyCategory = true
+        } else {
+            binding.etCategoryJob.text.toString()
+            isEmptyCategory = false
+        }
+
+        if (description.isEmpty()){
+            binding.outlinedFieldDescription.error = "Description can't empty"
+            isEmptyDescription = true
+        } else {
+            binding.etDescriptionJob.text.toString()
+            isEmptyDescription = false
+        }
+
+        if (salaryFrom.isEmpty()){
+            binding.outlinedFieldSalaryForm.error = "Salary from can't empty"
+            isEmptySalaryFrom = true
+        } else {
+            binding.etSalaryFrom.text.toString()
+            isEmptySalaryFrom = false
+        }
+
+        if (salaryTo.isEmpty()){
+            binding.outlinedFieldSalaryTo.error = "Salary to can't empty"
+            isEmptySalaryTo = true
+        } else {
+            binding.etSalaryTo.text.toString()
+            isEmptySalaryTo = false
+        }
+
+        if (!isEmptyTitle && !isEmptyLocation && !isEmptyCategory && !isEmptyDescription && !isEmptySalaryFrom && !isEmptySalaryTo){
+//            presenter.postingJobVacancy(imageCompany = binding.ivCompany.drawable, title,location,category,description,salaryFrom,salaryTo, Constants.APIKEY)
+        } else {
+            Toast.makeText(applicationContext, "Please Complete Form Login", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     private fun pickImageFromGallery() {
@@ -157,6 +237,10 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
     override fun errorPostingJob(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getValuePostingJob(item: DataPostingJob?) {
+        TODO("Not yet implemented")
     }
 
     override fun successLoadJobCategory(msg: String) {

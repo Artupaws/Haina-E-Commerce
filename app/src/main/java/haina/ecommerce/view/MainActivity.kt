@@ -1,11 +1,14 @@
 package haina.ecommerce.view
 
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityMainBinding
 import haina.ecommerce.view.explore.ExploreFragment
+import haina.ecommerce.view.myaccount.MyAccountFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private val fragmentMyAccount = MyAccountFragment()
     private val fragmentManager = supportFragmentManager
     private var activeFragment: Fragment = fragmentExplore
-//    var status: String = "0"
+    var doubleTap:Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,7 +114,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        if(doubleTap){
+            super.onBackPressed()
+        } else {
+            Toast.makeText(this, "Please click once again to exit", Toast.LENGTH_SHORT).show()
+            doubleTap = true
+            val handler:Handler = Handler()
+            handler.postDelayed({ doubleTap = false }, 500)
+        }
     }
 
 

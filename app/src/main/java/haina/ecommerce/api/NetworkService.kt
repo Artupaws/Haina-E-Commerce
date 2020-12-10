@@ -1,6 +1,7 @@
 package haina.ecommerce.api
 
 import haina.ecommerce.model.*
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -59,5 +60,37 @@ interface NetworkService {
     //Get List Job Location
     @GET ("api/location")
     fun getDataListJobLocation(): Call<ResponseListJobLocation>
+
+    //Get Data User
+    @FormUrlEncoded
+    @POST("api/detail")
+    @Headers("No-Authentication: true")
+    fun getDataUser(
+            @Field("api_key") apiKey: String
+    ): Call<ResponseGetDataUser>
+
+    //User Logout
+    @FormUrlEncoded
+    @POST("api/logout")
+    @Headers("No-Authentication: true")
+    fun userLogout(
+            @Field("api_key") apiKey: String
+    ): Call<ResponseLogout>
+
+    //Posting Job Vacancy
+    @Multipart
+    @FormUrlEncoded
+    @POST("api/jobs/vacancy/post")
+    @Headers("No-Authentication: true")
+    fun postingJobVacancy(
+            @Part imageCompany:MultipartBody.Part,
+            @Field("title")title:String,
+            @Field("id_location")idLocation:String,
+            @Field("id_category")idCategory:String,
+            @Field("description")description:String,
+            @Field("salary_from")salaryFrom:String,
+            @Field("salary_to")salaryTo:String,
+            @Field("api_key")apiKey:String
+    ): Call<ResponsePostingJobVacancy>
 
 }

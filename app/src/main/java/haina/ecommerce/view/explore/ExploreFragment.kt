@@ -264,7 +264,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.includeCurrency?.spnCountry?.setSelection(67)
     }
 
-    override fun loadCurrency(item: Data?) {
+    override fun loadCurrency(item: DataCurrency?) {
         binding?.includeCurrency?.tvChnCurrency?.text = helper.convertToFormatMoneyCNY(item?.currency?.cNY.toString())
         binding?.includeCurrency?.tvIdrCurrency?.text = helper.convertToFormatMoneyIDR(item?.currency?.iDR.toString())
         binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item?.currency?.uSD.toString())

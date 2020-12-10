@@ -1,12 +1,16 @@
 package haina.ecommerce.view.postingjob
 
+import android.content.Context
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.ResponseJobCategory
 import haina.ecommerce.model.ResponseListJobLocation
+import haina.ecommerce.model.ResponsePostingJobVacancy
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Response
+import java.io.File
 
-class PostingJobPresenter(val view: PostingJobContract) {
+class PostingJobPresenter(val view: PostingJobContract, val context: Context) {
 
     fun loadListJobCategory(){
         val callListJobCategory = NetworkConfig().getConnectionHaina().getDataListJobCategory()
@@ -43,6 +47,26 @@ class PostingJobPresenter(val view: PostingJobContract) {
 
             override fun onFailure(call: Call<ResponseListJobLocation>, t: Throwable) {
                 view.errorLoadJobCategory(t.localizedMessage)
+            }
+
+        })
+    }
+
+    fun postingJobVacancy(imageCompany:MultipartBody.Part, title:String, idLocation:String, idCategory:String, description:String, salaryFrom:String, salaryTo:String, apiKey:String){
+        val callPostingJobVacancy = NetworkConfig().getConnectionHainaHeaders(context).postingJobVacancy(imageCompany, title, idLocation, idCategory, description, salaryFrom, salaryTo, apiKey)
+        callPostingJobVacancy.enqueue(object : retrofit2.Callback<ResponsePostingJobVacancy>{
+            override fun onResponse(call: Call<ResponsePostingJobVacancy>, response: Response<ResponsePostingJobVacancy>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    val data = response.body()?.dataPostingJob
+                    view.getValuePostingJob(data)
+                    view.successPostingJob(response.body()?.message.toString())
+                } else {
+                    view.errorPostingJob(response.body()?.message.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponsePostingJobVacancy>, t: Throwable) {
+                view.errorPostingJob(t.localizedMessage)
             }
 
         })

@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseCurrency(
 
-	@field:SerializedName("data")
-	val data: Data? = null,
+        @field:SerializedName("data")
+	val dataCurrency: DataCurrency? = null,
 
-	@field:SerializedName("message")
+        @field:SerializedName("message")
 	val message: String? = null,
 
-	@field:SerializedName("value")
+        @field:SerializedName("value")
 	val value: Int? = null
 )
