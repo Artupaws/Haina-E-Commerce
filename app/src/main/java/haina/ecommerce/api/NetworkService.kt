@@ -19,6 +19,16 @@ interface NetworkService {
             @Field("device_token") deviceToken: String
     ): Call<ResponseRegister>
 
+    //Login
+    @FormUrlEncoded
+    @POST("api/login")
+    fun loginUser(
+            @Field("email") email: String,
+            @Field("password") password:String,
+            @Field("device_token") deviceToken:String,
+            @Field("api_key") apiKey: String
+    ): Call<ResponseLogin>
+
     //Currency
     @FormUrlEncoded
     @POST("api/currency")

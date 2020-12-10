@@ -83,4 +83,9 @@
     <string name="posting_job">Posting Job</string>
     <string name="cancel">Cancel</string>
     <string name="please_wait">please wait</string>
+    <string name="job_application">Job Application</string>
+    <string name="logout">Logout</string>
+    <string name="view_or_edit_profile"><u>view or edit profile ></u></string>
+    <string name="haina_help_support"><![CDATA[Haina Help & Support]]></string>
+    <string name="help_center"><![CDATA[Help center and term & conditions]]></string>
 </resources>

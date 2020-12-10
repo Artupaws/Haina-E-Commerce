@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class NetworkConfig {
 
-    fun getInterceptor(): OkHttpClient {
+    private fun getInterceptor(): OkHttpClient {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
 
