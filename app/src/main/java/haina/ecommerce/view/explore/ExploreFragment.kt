@@ -46,7 +46,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.menuServices?.linearOther?.setOnClickListener(this)
         binding?.menuServices?.linearNews?.setOnClickListener(this)
         binding?.covidNews?.tvDetailCovid?.setOnClickListener(this)
-        presenter.loadListBaseCurrency()
+//        presenter.loadListBaseCurrency()
         presenter.loadCovidJkt()
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
         setBaseCurrency()
@@ -211,7 +211,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
                         baseCurrency = "EUR"
                     }
                 }
-                presenter.loadCurrency(baseCurrency)
+//                presenter.loadCurrency(baseCurrency)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -258,17 +258,17 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         Log.i("Failed", "gone shimmer")
     }
 
-    override fun loadListCodeCurrency(list: List<DataCodeCurrency?>?) {
-        val adapterCodeCurrency = activity?.let { AdapterSpinnerCurrency(it, list) }
-        binding?.includeCurrency?.spnCountry?.adapter = adapterCodeCurrency
-        binding?.includeCurrency?.spnCountry?.setSelection(67)
-    }
-
-    override fun loadCurrency(item: DataCurrency?) {
-        binding?.includeCurrency?.tvChnCurrency?.text = helper.convertToFormatMoneyCNY(item?.currency?.cNY.toString())
-        binding?.includeCurrency?.tvIdrCurrency?.text = helper.convertToFormatMoneyIDR(item?.currency?.iDR.toString())
-        binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item?.currency?.uSD.toString())
-    }
+//    override fun loadListCodeCurrency(list: List<DataCodeCurrency?>?) {
+//        val adapterCodeCurrency = activity?.let { AdapterSpinnerCurrency(it, list) }
+//        binding?.includeCurrency?.spnCountry?.adapter = adapterCodeCurrency
+//        binding?.includeCurrency?.spnCountry?.setSelection(67)
+//    }
+//
+//    override fun loadCurrency(item: DataCurrency?) {
+//        binding?.includeCurrency?.tvChnCurrency?.text = helper.convertToFormatMoneyCNY(item?.currency?.cNY.toString())
+//        binding?.includeCurrency?.tvIdrCurrency?.text = helper.convertToFormatMoneyIDR(item?.currency?.iDR.toString())
+//        binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item?.currency?.uSD.toString())
+//    }
 
     override fun loadCovidJkt(item: DataCovidJkt?) {
         binding?.covidNews?.tvProvince?.text = item?.provinsi.toString()

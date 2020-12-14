@@ -8,9 +8,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.database.Cursor
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.SyncStateContract
+import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -26,6 +29,10 @@ import haina.ecommerce.databinding.ActivityPostingJobBinding
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataPostingJob
 import haina.ecommerce.util.Constants
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClickListener {
 
@@ -40,6 +47,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
     private var isEmptyDescription = true
     private var isEmptySalaryFrom = true
     private var isEmptySalaryTo = true
+    private lateinit var uri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +73,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
     override fun onClick(p0: View?) {
         when(p0?.id){
-           R.id.cv_add_image -> {
+            R.id.cv_add_image -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                         val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -89,21 +97,26 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
                 Toast.makeText(this, "location", Toast.LENGTH_SHORT).show()
             }
 
-            R.id.btn_posting_job ->{
+            R.id.btn_posting_job -> {
                 binding.btnPostingJob.visibility = View.INVISIBLE
                 binding.relativeLoading.visibility = View.VISIBLE
                 binding.cvAddImage.isEnabled = false
+                checkingDataJob()
             }
         }
     }
 
     private fun checkingDataJob(){
         var title = binding.etTitleJob.text.toString()
-        var location = binding.etLocationCompany.text.toString()
-        var category = binding.etCategoryJob.text.toString()
+        var location = "1"
+        var category = "2"
         var description = binding.etDescriptionJob.text.toString()
         var salaryFrom = binding.etSalaryFrom.text.toString()
         var salaryTo = binding.etSalaryTo.text.toString()
+        val filepath = getRealPathFromURIPath(uri, this)
+        val file = File(filepath)
+        val mFile: RequestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
+        val body = MultipartBody.Part.createFormData("photo", file.name, mFile)
 
         if (title.isEmpty()){
             binding.outlinedTextFieldTitleJob.error = "Title can't empty"
@@ -153,12 +166,26 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
             isEmptySalaryTo = false
         }
 
-        if (!isEmptyTitle && !isEmptyLocation && !isEmptyCategory && !isEmptyDescription && !isEmptySalaryFrom && !isEmptySalaryTo){
-//            presenter.postingJobVacancy(imageCompany = binding.ivCompany.drawable, title,location,category,description,salaryFrom,salaryTo, Constants.APIKEY)
+        if (!isEmptyTitle  && !isEmptyDescription && !isEmptySalaryFrom && !isEmptySalaryTo){
+             presenter.postingJobVacancy(body, title, location, category, description, salaryFrom, salaryTo, Constants.APIKEY)
         } else {
+            binding.btnPostingJob.visibility = View.VISIBLE
+            binding.relativeLoading.visibility = View.INVISIBLE
+            binding.cvAddImage.isEnabled = true
             Toast.makeText(applicationContext, "Please Complete Form Login", Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    private fun getRealPathFromURIPath(contentURI: Uri, activity: Activity): String? {
+        val cursor: Cursor? = activity.contentResolver.query(contentURI, null, null, null, null)
+        return if (cursor == null) {
+            contentURI.path
+        } else {
+            cursor.moveToFirst()
+            val idx: Int = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+            cursor.getString(idx)
+        }
     }
 
     private fun pickImageFromGallery() {
@@ -170,12 +197,17 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
     companion object {
         //image pick code
-        private val IMAGE_PICK_CODE = 1000;
+        private val IMAGE_PICK_CODE = 1000
+
         //Permission code
-        private val PERMISSION_CODE = 1001;
+        private val PERMISSION_CODE = 1001
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode){
             PERMISSION_CODE -> {
@@ -192,13 +224,20 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             binding.ivCompany.setImageURI(data?.data)
+            uri = data?.data!!
         }
     }
 
     override fun onStart() {
         super.onStart()
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("jobCategory"))
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver2, IntentFilter("jobLocation"))
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            mMessageReceiver,
+            IntentFilter("jobCategory")
+        )
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+            mMessageReceiver2,
+            IntentFilter("jobLocation")
+        )
     }
 
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -232,23 +271,29 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
     }
 
     override fun successPostingJob(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        binding.btnPostingJob.visibility = View.VISIBLE
+        binding.relativeLoading.visibility = View.INVISIBLE
+        binding.cvAddImage.isEnabled = true
+        Toast.makeText(applicationContext, "Please Complete Form Success", Toast.LENGTH_SHORT).show()
     }
 
     override fun errorPostingJob(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        binding.btnPostingJob.visibility = View.VISIBLE
+        binding.relativeLoading.visibility = View.INVISIBLE
+        binding.cvAddImage.isEnabled = true
+        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
     }
 
     override fun getValuePostingJob(item: DataPostingJob?) {
-        TODO("Not yet implemented")
+        Log.d("successLoadCategory", item?.date)
     }
 
     override fun successLoadJobCategory(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        Log.d("successLoadCategory", msg)
     }
 
     override fun errorLoadJobCategory(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        Log.d("errorLoadCategory", msg)
     }
 
     @SuppressLint("SetTextI18n")

@@ -2,6 +2,7 @@ package haina.ecommerce.view.covidlist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.adapter.AdapterCovid
@@ -27,7 +28,7 @@ class CovidListActivity : AppCompatActivity(), CovidListContract {
 
 
     override fun errorMessage(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        Log.d("message covid list", msg)
     }
 
     override fun loadListCovid(list: List<DataCovid?>?) {

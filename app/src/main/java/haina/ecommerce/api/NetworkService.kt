@@ -79,18 +79,17 @@ interface NetworkService {
 
     //Posting Job Vacancy
     @Multipart
-    @FormUrlEncoded
     @POST("api/jobs/vacancy/post")
     @Headers("No-Authentication: true")
     fun postingJobVacancy(
             @Part imageCompany:MultipartBody.Part,
-            @Field("title")title:String,
-            @Field("id_location")idLocation:String,
-            @Field("id_category")idCategory:String,
-            @Field("description")description:String,
-            @Field("salary_from")salaryFrom:String,
-            @Field("salary_to")salaryTo:String,
-            @Field("api_key")apiKey:String
+            @Part("title")title:String,
+            @Part("id_location")idLocation:String,
+            @Part("id_category")idCategory:String,
+            @Part("description")description:String,
+            @Part("salary_from")salaryFrom:String,
+            @Part("salary_to")salaryTo:String,
+            @Part("api_key")apiKey:String
     ): Call<ResponsePostingJobVacancy>
 
 }
