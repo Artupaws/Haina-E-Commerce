@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -26,13 +27,15 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterJobCategory
 import haina.ecommerce.adapter.AdapterJobLocation
 import haina.ecommerce.databinding.ActivityPostingJobBinding
+import haina.ecommerce.helper.Helper
+import haina.ecommerce.helper.NumberTextWatcher
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataPostingJob
-import haina.ecommerce.util.Constants
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.util.*
 
 class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClickListener {
 
@@ -41,13 +44,17 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
     private var popupCategory: AlertDialog? = null
     private var popupLocation: AlertDialog? = null
     private var broadcaster: LocalBroadcastManager? = null
+    private var isEmptyImage = true
     private var isEmptyTitle = true
     private var isEmptyLocation = true
     private var isEmptyCategory = true
     private var isEmptyDescription = true
     private var isEmptySalaryFrom = true
     private var isEmptySalaryTo = true
-    private lateinit var uri: Uri
+    private var uri: Uri = Uri.EMPTY
+    var idLocation:String = ""
+    var idCategory:String = ""
+    val helper:Helper = Helper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +73,12 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         binding.etCategoryJob.setOnClickListener(this)
         binding.etLocationCompany.setOnClickListener(this)
         binding.btnPostingJob.setOnClickListener(this)
+        val locale = Locale("es", "AR")
+        val numDecs = 2 // Let's use 2 decimals
+        val twSalaryFrom: TextWatcher = NumberTextWatcher(binding.etSalaryFrom, locale, numDecs)
+        val twSalaryTo: TextWatcher = NumberTextWatcher(binding.etSalaryTo, locale, numDecs)
+        binding.etSalaryFrom.addTextChangedListener(twSalaryFrom)
+        binding.etSalaryTo.addTextChangedListener(twSalaryTo)
         presenter.loadListJobCategory()
         presenter.loadListJobLocation()
 
@@ -94,7 +107,6 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
             R.id.et_location_company -> {
                 popupLocation?.show()
-                Toast.makeText(this, "location", Toast.LENGTH_SHORT).show()
             }
 
             R.id.btn_posting_job -> {
@@ -108,15 +120,17 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
     private fun checkingDataJob(){
         var title = binding.etTitleJob.text.toString()
-        var location = "1"
-        var category = "2"
+        var location = idLocation
+        var category = idCategory
         var description = binding.etDescriptionJob.text.toString()
         var salaryFrom = binding.etSalaryFrom.text.toString()
         var salaryTo = binding.etSalaryTo.text.toString()
         val filepath = getRealPathFromURIPath(uri, this)
         val file = File(filepath)
-        val mFile: RequestBody = RequestBody.create(MediaType.parse("image/jpeg"), file)
+        val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
         val body = MultipartBody.Part.createFormData("photo", file.name, mFile)
+
+        isEmptyImage = uri == Uri.EMPTY
 
         if (title.isEmpty()){
             binding.outlinedTextFieldTitleJob.error = "Title can't empty"
@@ -166,13 +180,19 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
             isEmptySalaryTo = false
         }
 
-        if (!isEmptyTitle  && !isEmptyDescription && !isEmptySalaryFrom && !isEmptySalaryTo){
-             presenter.postingJobVacancy(body, title, location, category, description, salaryFrom, salaryTo, Constants.APIKEY)
+        if (!isEmptyImage && !isEmptyTitle  && !isEmptyDescription && !isEmptySalaryFrom && !isEmptySalaryTo && !isEmptyLocation && !isEmptyCategory){
+            val titlePost: RequestBody = RequestBody.create(MultipartBody.FORM, title)
+            val descriptionPost: RequestBody = RequestBody.create(MultipartBody.FORM, description)
+            val salaryFromPost: RequestBody = RequestBody.create(MultipartBody.FORM, helper.changeFormatMoneyToValue(binding.etSalaryFrom.text.toString()))
+            val salaryToPost: RequestBody = RequestBody.create(MultipartBody.FORM, helper.changeFormatMoneyToValue(binding.etSalaryTo.text.toString()))
+            val idCategoryPost: RequestBody = RequestBody.create(MultipartBody.FORM, idCategory)
+            val idLocationPost: RequestBody = RequestBody.create(MultipartBody.FORM, idLocation)
+             presenter.postingJobVacancy(body, titlePost, idLocationPost, idCategoryPost, descriptionPost, salaryFromPost, salaryToPost)
         } else {
             binding.btnPostingJob.visibility = View.VISIBLE
             binding.relativeLoading.visibility = View.INVISIBLE
             binding.cvAddImage.isEnabled = true
-            Toast.makeText(applicationContext, "Please Complete Form Login", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -183,7 +203,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
             contentURI.path
         } else {
             cursor.moveToFirst()
-            val idx: Int = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+            val idx: Int = cursor.getColumnIndex(MediaStore.Images.Media.DATA)
             cursor.getString(idx)
         }
     }
@@ -204,9 +224,9 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode){
@@ -222,21 +242,23 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+        uri = if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             binding.ivCompany.setImageURI(data?.data)
-            uri = data?.data!!
+            data?.data!!
+        } else {
+            Uri.EMPTY
         }
     }
 
     override fun onStart() {
         super.onStart()
         LocalBroadcastManager.getInstance(this).registerReceiver(
-            mMessageReceiver,
-            IntentFilter("jobCategory")
+                mMessageReceiver,
+                IntentFilter("jobCategory")
         )
         LocalBroadcastManager.getInstance(this).registerReceiver(
-            mMessageReceiver2,
-            IntentFilter("jobLocation")
+                mMessageReceiver2,
+                IntentFilter("jobLocation")
         )
     }
 
@@ -244,8 +266,10 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         override fun onReceive(context: Context, intent: Intent) {
             when(intent.action){
                 "jobCategory" -> {
-                    val data = intent.getStringExtra("Category")
-                    binding.etCategoryJob.setText(data)
+                    val idCategoryFill = intent.getStringExtra("idCategory")
+                    val nameCategory = intent.getStringExtra("nameCategory")
+                    binding.etCategoryJob.setText(nameCategory)
+                    idCategory = idCategoryFill!!
                     popupCategory?.dismiss()
                 }
             }
@@ -256,8 +280,10 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         override fun onReceive(context: Context, intent: Intent) {
             when(intent.action){
                 "jobLocation" -> {
-                    val data = intent.getStringExtra("Location")
-                    binding.etLocationCompany.setText(data)
+                    val idLocationFill = intent.getStringExtra("idLocation")
+                    val nameLocation = intent.getStringExtra("nameLocation")
+                    binding.etLocationCompany.setText(nameLocation)
+                    idLocation = idLocationFill!!
                     popupLocation?.dismiss()
                 }
             }
@@ -271,10 +297,23 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
     }
 
     override fun successPostingJob(msg: String) {
+        binding.etTitleJob.text?.clear()
+        binding.etLocationCompany.text?.clear()
+        binding.etCategoryJob.text?.clear()
+        binding.etDescriptionJob.text?.clear()
+        binding.etSalaryFrom.text?.clear()
+        binding.etSalaryTo.text?.clear()
+        binding.ivCompany.setImageDrawable(getDrawable(R.drawable.ic_add))
         binding.btnPostingJob.visibility = View.VISIBLE
         binding.relativeLoading.visibility = View.INVISIBLE
         binding.cvAddImage.isEnabled = true
-        Toast.makeText(applicationContext, "Please Complete Form Success", Toast.LENGTH_SHORT).show()
+        binding.outlinedTextFieldTitleJob.error = null
+        binding.outlinedFieldLocation.error = null
+        binding.outlinedFieldCategory.error = null
+        binding.outlinedFieldDescription.error = null
+        binding.outlinedFieldSalaryForm.error = null
+        binding.outlinedFieldSalaryTo.error = null
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
     override fun errorPostingJob(msg: String) {

@@ -7,8 +7,8 @@ import retrofit2.Response
 
 class LoginPresenter (val view: LoginContract){
 
-    fun loginUser(email:String, password:String, deviceToken:String, apiKey:String){
-        NetworkConfig().getConnectionHaina().loginUser(email, password, deviceToken, apiKey)
+    fun loginUser(email:String, password:String, deviceToken:String){
+        NetworkConfig().getConnectionHaina().loginUser(email, password, deviceToken)
                 .enqueue(object : retrofit2.Callback<ResponseLogin>{
                     override fun onResponse(call: Call<ResponseLogin>, response: Response<ResponseLogin>) {
                         if (response.isSuccessful && response.body()?.value == 1){

@@ -1,5 +1,6 @@
 package haina.ecommerce.view.explore
 
+import android.content.Context
 import android.util.Log
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.*
@@ -45,24 +46,24 @@ class ExplorePresenter(val view: ExploreContract) {
 //        })
 //    }
 
-    fun loadCovidJkt(){
-        val callCovidJkt = NetworkConfig().getConnectionHaina().getDataCovidJkt()
-        callCovidJkt.enqueue(object : retrofit2.Callback<ResponseCovidJkt>{
-            override fun onResponse(call: Call<ResponseCovidJkt>, response: Response<ResponseCovidJkt>) {
-                if (response.isSuccessful && response.body()?.value == 1){
-                    val data = response.body()?.dataJkt
-                    view.loadCovidJkt(data)
-                } else {
-                    view.errorMessage(response.body()?.message)
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseCovidJkt>, t: Throwable) {
-                view.errorMessage(t.localizedMessage)
-            }
-
-        })
-    }
+//    fun loadCovidJkt(){
+//        val callCovidJkt = NetworkConfig().getConnectionHaina().getDataCovidJkt()
+//        callCovidJkt.enqueue(object : retrofit2.Callback<ResponseCovidJkt>{
+//            override fun onResponse(call: Call<ResponseCovidJkt>, response: Response<ResponseCovidJkt>) {
+//                if (response.isSuccessful && response.body()?.value == 1){
+//                    val data = response.body()?.dataJkt
+//                    view.loadCovidJkt(data)
+//                } else {
+//                    view.errorMessage(response.body()?.message)
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ResponseCovidJkt>, t: Throwable) {
+//                view.errorMessage(t.localizedMessage)
+//            }
+//
+//        })
+//    }
 
 //    fun loadHeadlinesNews(apiKey:String){
 //        val callHeadlinesNews = NetworkConfig().getHeadlineNews().getDataHeadlines(apiKey)

@@ -24,5 +24,6 @@
     <string name="train">&#xf238;</string>
     <string name="bus">&#xf207;</string>
     <string name="travel">&#xf5b6;</string>
+    <string name="bookmark">&#xf02e;</string>
 
 </resources>

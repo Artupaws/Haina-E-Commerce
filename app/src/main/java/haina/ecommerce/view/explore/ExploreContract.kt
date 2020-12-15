@@ -10,7 +10,7 @@ interface ExploreContract {
 
 //    fun loadListCodeCurrency(list: List<DataCodeCurrency?>?)
 //    fun loadCurrency(item: DataCurrency?)
-    fun loadCovidJkt(item: DataCovidJkt?)
+//    fun loadCovidJkt(item: DataCovidJkt?)
 //    fun loadHeadlinesNews(list: List<ArticlesItem?>?)
 
 }

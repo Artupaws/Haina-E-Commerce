@@ -4,10 +4,11 @@
     package="haina.ecommerce">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light">
-        <activity android:name=".view.postingjob.PostingJobActivity"></activity>
+        <activity android:name=".view.job.JobActivity"></activity>
+        <activity android:name=".view.postingjob.PostingJobActivity" />
         <activity android:name=".view.covidlist.CovidListActivity" />
         <activity android:name=".view.webview.WebViewActivity" />
 
@@ -47,10 +49,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.MainActivity"
-            android:launchMode="singleTop"
             android:screenOrientation="nosensor" />
 
         <provider
@@ -65,7 +65,5 @@
                 tools:replace="android:resource" />
         </provider>
     </application>
-
-
 
 </manifest>

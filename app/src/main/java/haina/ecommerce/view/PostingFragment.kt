@@ -20,6 +20,7 @@ import haina.ecommerce.databinding.FragmentPostingBinding
 import haina.ecommerce.model.Selling
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.login.LoginActivity
 import haina.ecommerce.view.postingjob.PostingJobActivity
 
 class PostingFragment : Fragment(), View.OnClickListener {
@@ -71,6 +72,7 @@ class PostingFragment : Fragment(), View.OnClickListener {
         binding.floatingActionButton.setOnClickListener(this)
         binding.floatingActionButton2.setOnClickListener(this)
         binding.floatingActionButton3.setOnClickListener(this)
+        binding.includeLogin.btnLogin.setOnClickListener(this)
 
         val listSelling = arrayListOf<Selling>()
 
@@ -145,6 +147,11 @@ class PostingFragment : Fragment(), View.OnClickListener {
             R.id.floatingActionButton2 -> {
 //                val intent = Intent(activity, PostingJobActivity::class.java)
 //                startActivity(intent)
+            }
+
+            R.id.btn_login ->{
+                val intent = Intent(activity, LoginActivity::class.java)
+                startActivity(intent)
             }
         }
     }

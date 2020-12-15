@@ -1,18 +1,26 @@
 package haina.ecommerce.view.myaccount
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.R
 import haina.ecommerce.databinding.FragmentMyAccountBinding
@@ -21,6 +29,10 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.login.LoginActivity
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
@@ -30,6 +42,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     private var broadcaster: LocalBroadcastManager? = null
     private var popupLogout: AlertDialog? = null
     private lateinit var presenter: MyAccountPresenter
+    private lateinit var uri: Uri
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +72,8 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         binding.includeLogin.btnLogin.setOnClickListener(this)
         binding.ivNotification.setOnClickListener(this)
         binding.linearLogout.setOnClickListener(this)
+        binding.ivProfile.setOnClickListener(this)
+        binding.tvActionEditProfile.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
@@ -69,22 +84,94 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             }
 
             R.id.iv_notification -> {
-                if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+                if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
                     val snackbar = Snackbar.make(binding.ivNotification, "You are logged", Snackbar.LENGTH_SHORT)
-                        .setAction("Close", null)
+                            .setAction("Close", null)
                     snackbar.show()
                 } else {
                     val snackbar = Snackbar.make(binding.ivNotification, "Please login for access notification", Snackbar.LENGTH_SHORT)
-                        .setAction("Close", null)
+                            .setAction("Close", null)
                     snackbar.show()
                 }
             }
 
-            R.id.linear_logout ->{
+            R.id.linear_logout -> {
                 showPopupLogout()
                 popupLogout?.show()
             }
+
+            R.id.iv_profile -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (activity?.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                        val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        requestPermissions(permissions, MyAccountFragment.PERMISSION_CODE)
+                    } else {
+                        //permission already granted
+                        pickImageFromGallery()
+                    }
+                } else {
+                    //system OS is < Marshmallow
+                    pickImageFromGallery()
+                }
+            }
+
+            R.id.tv_action_edit_profile -> {
+            }
         }
+    }
+
+    companion object {
+        //image pick code
+        private val IMAGE_PICK_CODE = 1000
+
+        //Permission code
+        private val PERMISSION_CODE = 1001
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode){
+            MyAccountFragment.PERMISSION_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    pickImageFromGallery()
+                } else {
+                    Toast.makeText(activity, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == MyAccountFragment.IMAGE_PICK_CODE){
+            binding.ivProfile.setImageURI(data?.data)
+            uri = data?.data!!
+            val filepath = getRealPathFromURIPath(uri, this)
+            val file = File(filepath)
+            val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+            val body = MultipartBody.Part.createFormData("photo", file.name, mFile)
+            val apiKey: RequestBody = RequestBody.create(
+                    MultipartBody.FORM, Constants.APIKEY)
+            presenter.changeImageProfile(apiKey, body)
+        }
+    }
+
+    private fun getRealPathFromURIPath(contentURI: Uri, activity: MyAccountFragment): String? {
+        val cursor: Cursor? = activity.requireContext().contentResolver.query(contentURI, null, null, null, null)
+        return if (cursor == null) {
+            contentURI.path
+        } else {
+            cursor.moveToFirst()
+            val idx: Int = cursor.getColumnIndex(MediaStore.Images.Media.DATA)
+            cursor.getString(idx)
+        }
+    }
+
+    private fun pickImageFromGallery() {
+        //Intent to pick image
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, MyAccountFragment.IMAGE_PICK_CODE)
     }
 
     @SuppressLint("InflateParams")
@@ -127,7 +214,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         sharedPref.save(Constants.PREF_EMAIL, data?.email.toString())
         sharedPref.save(Constants.PREF_FULLNAME, data?.fullname.toString())
         binding.tvNameUser.text = data?.fullname.toString()
-        activity?.let { Glide.with(it).load(data?.photo).into(binding.ivProfile) }
+        activity?.let { Glide.with(it).load(data?.photo).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding.ivProfile) }
     }
 
     override fun successLogout(msg: String) {
@@ -140,6 +227,15 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun resetTokenUser(data: String?) {
         sharedPref.save(Constants.PREF_TOKEN_LOGIN, data.toString())
+    }
+
+    override fun successChangeImageProfile(msg: String) {
+        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+        presenter.getDataUserProfile()
+    }
+
+    override fun errorChangeImageProfile(msg: String) {
+        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
     }
 
 }

@@ -12,5 +12,8 @@ interface MyAccountContract {
     fun errorLogout(msg:String)
     fun resetTokenUser(data: String?)
 
+    fun successChangeImageProfile(msg:String)
+    fun errorChangeImageProfile(msg:String)
+
 
 }

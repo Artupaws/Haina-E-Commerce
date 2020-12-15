@@ -1,6 +1,5 @@
 package haina.ecommerce.helper
 
-import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 
@@ -28,4 +27,12 @@ class Helper  {
         formatter.currency = Currency.getInstance("CNY")
         return formatter.format(formatMoney.toDouble())
     }
+
+    fun changeFormatMoneyToValue(formatRupiah: String?): String? {
+        val xRupiah = formatRupiah?.substring(1)
+        val doubleRupiah = xRupiah?.substring(1)
+        val valueRupiah = doubleRupiah?.replace("[-+.^:,]".toRegex(), "")
+        return valueRupiah?.replace(" ".toRegex(), "")
+    }
+
 }

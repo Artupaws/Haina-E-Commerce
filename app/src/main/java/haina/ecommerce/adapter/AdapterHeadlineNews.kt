@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import haina.ecommerce.databinding.ListItemNewsBinding
 import haina.ecommerce.model.ArticlesItem
 import haina.ecommerce.view.webview.WebViewActivity
@@ -21,7 +22,7 @@ class AdapterHeadlineNews (private val context: Context, private val newsList: L
                 url = item.url.toString()
                 tvTitleNews.text = item.title
                 tvMediaName.text = item.author
-                Glide.with(context).load(item.urlToImage).into(ivNews)
+                Glide.with(context).load(item.urlToImage).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivNews)
                 linearList.setOnClickListener {
                     val intent = Intent(context, WebViewActivity::class.java)
                     intent.putExtra("url", url)

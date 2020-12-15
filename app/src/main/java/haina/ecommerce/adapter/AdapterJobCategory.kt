@@ -21,7 +21,8 @@ class AdapterJobCategory(private val context: Context, private val jobList: List
                 tvName.text = itemHaina.name
                 tvName.setOnClickListener {
                     val setJobCategory = Intent("jobCategory")
-                            .putExtra("Category", tvName.text)
+                            .putExtra("idCategory", itemHaina.id.toString())
+                            .putExtra("nameCategory", tvName.text.toString())
                     broadcaster?.sendBroadcast(setJobCategory)
                 }
             }

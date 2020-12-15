@@ -1,17 +1,14 @@
 package haina.ecommerce.view.postingjob
 
 import android.content.Context
-import android.net.Uri
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.ResponseJobCategory
 import haina.ecommerce.model.ResponseListJobLocation
 import haina.ecommerce.model.ResponsePostingJobVacancy
-import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
-import java.io.File
 
 class PostingJobPresenter(val view: PostingJobContract, val context: Context) {
 
@@ -61,17 +58,10 @@ class PostingJobPresenter(val view: PostingJobContract, val context: Context) {
         })
     }
 
-    fun postingJobVacancy(imageCompany: MultipartBody.Part, title: String, idLocation: String, idCategory: String, description: String, salaryFrom: String, salaryTo: String, apiKey: String){
-//        val mFile: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
-//        val body = MultipartBody.Part.createFormData("file", file.name, mFile)
-        val callPostingJobVacancy = NetworkConfig().getConnectionHainaHeaders(context)
-            .postingJobVacancy(imageCompany, title, idLocation, idCategory, description, salaryFrom, salaryTo, apiKey
-        )
+    fun postingJobVacancy(imageCompany: MultipartBody.Part, title: RequestBody, idLocation: RequestBody, idCategory: RequestBody, description: RequestBody, salaryFrom: RequestBody, salaryTo: RequestBody){
+        val callPostingJobVacancy = NetworkConfig().getConnectionHainaBearer(context).postingJobVacancy(imageCompany, title, idLocation, idCategory, description, salaryFrom, salaryTo)
         callPostingJobVacancy.enqueue(object : retrofit2.Callback<ResponsePostingJobVacancy> {
-            override fun onResponse(
-                call: Call<ResponsePostingJobVacancy>,
-                response: Response<ResponsePostingJobVacancy>
-            ) {
+            override fun onResponse(call: Call<ResponsePostingJobVacancy>, response: Response<ResponsePostingJobVacancy>) {
                 if (response.isSuccessful && response.body()?.value == 1) {
                     val data = response.body()?.dataPostingJob
                     view.getValuePostingJob(data)

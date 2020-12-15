@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
             add(R.id.view_botnav, fragmentExplore).hide(fragmentExplore)
         }.commit()
 
+        initListeners()
+
         when (intent.extras?.getString("loginStatus").toString()) {
             "1" -> {
                 loadFragment(fragmentMyAccount)
@@ -49,7 +51,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        initListeners()
     }
 
     private fun initListeners() {
@@ -108,10 +109,11 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    override fun onPause() {
-        super.onPause()
-//        finish()
+    override fun onStop() {
+        super.onStop()
+        fragmentManager.popBackStack()
     }
+
 
     override fun onBackPressed() {
         if(doubleTap){
