@@ -1,17 +1,17 @@
 package haina.ecommerce.view.job
 
 import haina.ecommerce.api.NetworkConfig
-import haina.ecommerce.model.ResponseGetListJob
+import haina.ecommerce.model.ResponseGetJob
 import haina.ecommerce.model.ResponseJobCategory
 import retrofit2.Call
 import retrofit2.Response
 
 class JobPresenter (val view: JobContract){
 
-    fun loadListJobVacancy(apiKey:String){
-        val callListJobVacancy = NetworkConfig().getConnectionHaina().getListJobVacancy(apiKey)
-            .enqueue(object : retrofit2.Callback<ResponseGetListJob>{
-                override fun onResponse(call: Call<ResponseGetListJob>, response: Response<ResponseGetListJob>) {
+    fun loadListJobVacancy(){
+        val callListJobVacancy = NetworkConfig().getConnectionHaina().getListJobVacancy()
+            .enqueue(object : retrofit2.Callback<ResponseGetJob>{
+                override fun onResponse(call: Call<ResponseGetJob>, response: Response<ResponseGetJob>) {
                     if (response.isSuccessful && response.body()?.value == 1){
                         val data = response.body()?.data
                         view.getLoadListJob(data)
@@ -21,7 +21,7 @@ class JobPresenter (val view: JobContract){
                     }
                 }
 
-                override fun onFailure(call: Call<ResponseGetListJob>, t: Throwable) {
+                override fun onFailure(call: Call<ResponseGetJob>, t: Throwable) {
                     view.errorLoadListJob(t.localizedMessage)
                 }
 

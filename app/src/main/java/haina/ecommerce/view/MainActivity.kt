@@ -9,6 +9,7 @@ import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityMainBinding
 import haina.ecommerce.view.explore.ExploreFragment
 import haina.ecommerce.view.myaccount.MyAccountFragment
+import haina.ecommerce.view.posting.PostingFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -111,7 +112,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        fragmentManager.popBackStack()
+//        fragmentManager.popBackStack()
     }
 
 
@@ -125,6 +126,5 @@ class MainActivity : AppCompatActivity() {
             handler.postDelayed({ doubleTap = false }, 500)
         }
     }
-
 
 }

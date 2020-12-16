@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterSpinnerCurrency
 import haina.ecommerce.databinding.FragmentExploreBinding
@@ -49,7 +51,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.menuServices?.linearJob?.setOnClickListener(this)
         binding?.covidNews?.tvDetailCovid?.setOnClickListener(this)
 //        presenter.loadListBaseCurrency()
-//        presenter.loadCovidJkt()
+        presenter.loadCovidJkt()
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
         setBaseCurrency()
     }
@@ -247,17 +249,25 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         }
     }
 
+    private fun refresh(){
+        binding?.swipeRefresh?.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            presenter.loadCovidJkt()
+        })
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
     override fun errorMessage(msg: String?) {
-//        Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show()
     }
 
-    override fun showShimmerHeadlineNews() {
-        Log.i("Success", "gone shimmer")
+    override fun successMessage(msg: String?) {
+        if (msg != null){
+            binding?.swipeRefresh?.isRefreshing = false
+        }
     }
 
     override fun dismissShimmerHeadlineNews() {
@@ -276,12 +286,12 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
 //        binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item?.currency?.uSD.toString())
 //    }
 
-//    override fun loadCovidJkt(item: DataCovidJkt?) {
-//        binding?.covidNews?.tvProvince?.text = item?.provinsi.toString()
-//        binding?.covidNews?.tvTotalCases?.text = item?.kasusPosi.toString()
-//        binding?.covidNews?.tvTotalRecover?.text = item?.kasusSemb.toString()
-//        binding?.covidNews?.tvTotalDie?.text = item?.kasusMeni.toString()
-//    }
+    override fun loadCovidJkt(item: DataCovidJkt?) {
+        binding?.covidNews?.tvProvince?.text = item?.provinsi.toString()
+        binding?.covidNews?.tvTotalCases?.text = item?.kasusPosi.toString()
+        binding?.covidNews?.tvTotalRecover?.text = item?.kasusSemb.toString()
+        binding?.covidNews?.tvTotalDie?.text = item?.kasusMeni.toString()
+    }
 
 //    override fun loadHeadlinesNews(list: List<ArticlesItem?>?) {
 //        val newsAdapter = activity?.let { AdapterHeadlineNews(it, list) }

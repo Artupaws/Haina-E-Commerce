@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
-import haina.ecommerce.databinding.ListItemAutotextcompleteBinding
 import haina.ecommerce.databinding.ListItemJobCategoryBinding
 import haina.ecommerce.model.DataItemHaina
 
@@ -17,11 +16,10 @@ class AdapterJobCategoryOnJob(private val context: Context, private val jobList:
         private val binding = ListItemJobCategoryBinding.bind(itemView)
         fun bind(itemHaina: DataItemHaina){
             with(binding){
-                tvTitleCategoryJob.text = itemHaina.name
+                    tvTitleCategoryJob.text = itemHaina.displayName
             }
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterJobCategoryOnJob.Holder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemJobCategoryBinding.inflate(inflater)

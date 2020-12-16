@@ -1,31 +1,29 @@
-package haina.ecommerce.view
+package haina.ecommerce.view.posting
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterSelling
+import haina.ecommerce.adapter.AdapterMyPostJob
 import haina.ecommerce.databinding.FragmentPostingBinding
-import haina.ecommerce.model.Selling
+import haina.ecommerce.model.DataMyPost
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.login.LoginActivity
 import haina.ecommerce.view.postingjob.PostingJobActivity
 
-class PostingFragment : Fragment(), View.OnClickListener {
+class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
 
     private var _binding: FragmentPostingBinding? = null
+    private lateinit var presenter: PostingPresenter
     private val binding get() = _binding!!
     private val rotatePostIconOpen: Animation by lazy {
         AnimationUtils.loadAnimation(
@@ -63,24 +61,20 @@ class PostingFragment : Fragment(), View.OnClickListener {
         _binding = FragmentPostingBinding.inflate(inflater, container, false)
         sharedPref = SharedPreferenceHelper(requireContext())
         broadcaster = LocalBroadcastManager.getInstance(requireContext())
+        presenter = PostingPresenter(this, requireContext())
+
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presenter.getDataMyPost()
         binding.floatingActionButton.setOnClickListener(this)
         binding.floatingActionButton2.setOnClickListener(this)
         binding.floatingActionButton3.setOnClickListener(this)
         binding.includeLogin.btnLogin.setOnClickListener(this)
 
-        val listSelling = arrayListOf<Selling>()
-
-        val sellingAdapter = AdapterSelling(requireContext(), listSelling)
-        binding.rvPost.apply {
-            layoutManager = GridLayoutManager(activity, 2)
-            adapter = sellingAdapter
-        }
     }
 
     override fun onStart() {
@@ -145,8 +139,6 @@ class PostingFragment : Fragment(), View.OnClickListener {
             }
 
             R.id.floatingActionButton2 -> {
-//                val intent = Intent(activity, PostingJobActivity::class.java)
-//                startActivity(intent)
             }
 
             R.id.btn_login ->{
@@ -154,6 +146,30 @@ class PostingFragment : Fragment(), View.OnClickListener {
                 startActivity(intent)
             }
         }
+    }
+
+    override fun successLoadMyPost(msg: String) {
+        Log.d("successLoadPost", msg)
+    }
+
+    override fun errorLoadMyPost(msg: String) {
+        Log.d("errorLoadPost", msg)
+    }
+
+    override fun getListMyPost(list: List<DataMyPost?>?) {
+        val getMyPost = AdapterMyPostJob(requireContext(), list)
+        if (list?.size != 0){
+            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
+            binding.rvPost.apply {
+                layoutManager = GridLayoutManager(activity, 2)
+                adapter = getMyPost
+            }
+        } else {
+            binding.rvPost.visibility = View.INVISIBLE
+            binding.includeEmpty.tvEmpty.text = "You haven't posted anything yet"
+            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+        }
+
     }
 
 }

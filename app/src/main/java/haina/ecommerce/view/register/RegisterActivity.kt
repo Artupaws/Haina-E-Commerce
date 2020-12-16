@@ -121,7 +121,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         isEmptyDeviceToken = deviceToken.equals(null)
 
         if (!isEmptyFullname && !isEmptyEmail && !isEmptyUsername && !isEmptyPhone && !isEmptyPassword && !isEmptyConfirmPassword && !isEmptyDeviceToken) {
-            presenter.createUser(fullname, email, username, phone, password, Constants.APIKEY, deviceToken)
+            presenter.createUser(fullname, email, username, phone, password, deviceToken)
         } else {
             Toast.makeText(applicationContext, "Please Complete Form Register", Toast.LENGTH_SHORT).show()
             binding.btnRegister.visibility = View.VISIBLE

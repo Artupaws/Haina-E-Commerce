@@ -68,7 +68,7 @@ class MyAccountPresenter (val view: MyAccountContract, val context: Context){
             }
 
             override fun onFailure(call: Call<ResponseChangeImageProfile>, t: Throwable) {
-                view.errorChangeImageProfile(t.localizedMessage)
+                view.errorChangeImageProfile("Failed")
             }
 
         })

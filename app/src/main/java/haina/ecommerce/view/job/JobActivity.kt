@@ -1,16 +1,16 @@
 package haina.ecommerce.view.job
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import haina.ecommerce.adapter.AdapterJobCategory
+import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterJobCategoryOnJob
+import haina.ecommerce.adapter.AdapterJobVacancy
 import haina.ecommerce.databinding.ActivityJobBinding
 import haina.ecommerce.model.DataItemHaina
-import haina.ecommerce.model.DataJobVacancy
+import haina.ecommerce.model.DataItemJob
 
 class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
 
@@ -23,6 +23,9 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         setContentView(binding.root)
         presenter = JobPresenter(this)
         presenter.loadListJobCategory()
+        presenter.loadListJobVacancy()
+        binding.toolbarJob.setNavigationIcon(R.drawable.ic_back_black)
+        binding.toolbarJob.setNavigationOnClickListener { onBackPressed() }
     }
 
     override fun successLoadListJob(msg: String) {
@@ -33,8 +36,13 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         Log.d("loadlistJobError", msg)
     }
 
-    override fun getLoadListJob(list: List<DataJobVacancy?>?) {
-        Log.d("loadlistJobSuccess", list.toString())
+    override fun getLoadListJob(list: List<DataItemJob?>?) {
+        val listJobAdapter = AdapterJobVacancy(this, list)
+        binding.recyclerView2.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = listJobAdapter
+            listJobAdapter.notifyDataSetChanged()
+        }
     }
 
     override fun successLoadJobCategory(msg: String) {

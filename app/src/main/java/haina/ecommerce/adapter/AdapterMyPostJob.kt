@@ -5,21 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import haina.ecommerce.R
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import haina.ecommerce.databinding.ListItemSellingBinding
-import haina.ecommerce.model.HistoryBuy
+import haina.ecommerce.model.DataMyPost
 import haina.ecommerce.model.Selling
 
-class AdapterSelling(val context: Context, private val sellingList: List<Selling>): RecyclerView.Adapter<AdapterSelling.Holder>(){
+class AdapterMyPostJob(val context: Context, private val listJob: List<DataMyPost?>?): RecyclerView.Adapter<AdapterMyPostJob.Holder>(){
 
     inner class Holder (view:View): RecyclerView.ViewHolder(view){
         private val binding = ListItemSellingBinding.bind(view)
-        fun bin(item: Selling){
+        fun bin(item: DataMyPost?){
             with(binding){
-                ivProduct.setImageResource(item.image)
-                tvTitleProduct.text = item.title
-                tvPriceProduct.text = item.price
-                tvDescProduct.text = item.description
+                tvTitlePost.text = item?.title
+                tvDatePost.text = item?.photoUrl.toString()
+                Glide.with(context).load(item?.photoUrl).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivImagePost)
             }
         }
     }
@@ -31,9 +31,9 @@ class AdapterSelling(val context: Context, private val sellingList: List<Selling
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val selling: Selling = sellingList[position]
+        val selling: DataMyPost? = listJob?.get(position)!!
         holder.bin(selling)
     }
 
-    override fun getItemCount(): Int = sellingList.size
+    override fun getItemCount(): Int = listJob?.size!!
 }

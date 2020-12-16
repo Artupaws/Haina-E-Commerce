@@ -15,9 +15,9 @@ class AdapterCart (val context: Context, private val cartList: List<Cart>): Recy
         private val binding = ListItemCartBinding.bind(view)
         fun bind(item: Cart){
             with(binding){
-                tvTitleProduct.text = item.title
+//                tvTitleProduct.text = item.title
                 tvPriceProduct.text = item.price
-                ivProduct.setImageResource(item.image)
+//                ivProduct.setImageResource(item.image)
             }
         }
 

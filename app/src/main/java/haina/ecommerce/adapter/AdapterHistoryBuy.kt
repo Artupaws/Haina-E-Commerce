@@ -16,7 +16,7 @@ class AdapterHistoryBuy(val context: Context, private val historyBuyList: List<H
         fun bind(item: HistoryBuy){
             with(binding){
                 tvTitle.text = item.title
-                ivProduct.setImageResource(item.image)
+//                ivProduct.setImageResource(item.image)
                 tvPrice.text = item.price
                 when (item.status) {
                     "waiting seller" -> {

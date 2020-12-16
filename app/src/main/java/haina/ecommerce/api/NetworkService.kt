@@ -11,13 +11,13 @@ interface NetworkService {
     //Register
     @FormUrlEncoded
     @POST("api/register")
+    @Headers("No-Authentication: true")
     fun createUser(
             @Field("fullname") fullname: String,
             @Field("email") email: String,
             @Field("username") username: String,
             @Field("phone") phone: String,
             @Field("password") password: String,
-            @Field("api_key") apiKey: String,
             @Field("device_token") deviceToken: String
     ): Call<ResponseRegister>
 
@@ -95,9 +95,7 @@ interface NetworkService {
 
     //Get List Job Vacancy
     @POST("api/post")
-    fun getListJobVacancy(
-        @Field("api_key")apiKey:String
-    ):Call<ResponseGetListJob>
+    fun getListJobVacancy():Call<ResponseGetJob>
 
     //Change Image Profile
     @Multipart
@@ -107,4 +105,9 @@ interface NetworkService {
             @Part("api_key")apiKey:RequestBody,
         @Part file:MultipartBody.Part
     ):Call<ResponseChangeImageProfile>
+
+    //Get My Post
+    @POST("api/post/my")
+    @Headers("No-Authentication: true")
+    fun getMyPost():Call<ResponseGetMyPost>
 }

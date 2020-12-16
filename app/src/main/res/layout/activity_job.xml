@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="@+id/toolbar_job"
         app:layout_constraintStart_toStartOf="@+id/toolbar_job"
         app:layout_constraintTop_toTopOf="@+id/toolbar_job"
-        tools:text="Job" />
+        android:text="Job" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
@@ -80,6 +80,7 @@
                     android:id="@+id/cv_filter_job"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="invisible"
                     android:layout_gravity="center_horizontal"
                     app:cardCornerRadius="20dp"
                     android:layout_marginBottom="20dp"
@@ -113,9 +114,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView2"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/list_item_job_vacancy"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

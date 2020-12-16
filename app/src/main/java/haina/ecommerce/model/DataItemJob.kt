@@ -2,7 +2,7 @@ package haina.ecommerce.model
 
 import com.google.gson.annotations.SerializedName
 
-data class DataJobVacancy(
+data class DataItemJob(
 
 	@field:SerializedName("date")
 	val date: String? = null,
