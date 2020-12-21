@@ -53,8 +53,8 @@ class MyAccountPresenter (val view: MyAccountContract, val context: Context){
                 })
     }
 
-    fun changeImageProfile(apiKey:RequestBody, file:MultipartBody.Part){
-        val callChangeImageProfile = NetworkConfig().getConnectionHainaBearer(context).changeImageProfile(apiKey,file)
+    fun changeImageProfile(file:MultipartBody.Part){
+        val callChangeImageProfile = NetworkConfig().getConnectionHainaBearer(context).changeImageProfile(file)
         callChangeImageProfile.enqueue(object : retrofit2.Callback<ResponseChangeImageProfile>{
             override fun onResponse(
                 call: Call<ResponseChangeImageProfile>,

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseGetJob(
 
-        @field:SerializedName("data")
+		@field:SerializedName("data")
 	val data: List<DataItemJob?>? = null,
 
         @field:SerializedName("message")

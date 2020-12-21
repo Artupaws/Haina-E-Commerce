@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/linear_not_login"
-    android:background="@color/white">
+    android:id="@+id/linear_not_login">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -33,7 +32,7 @@
             android:textSize="16sp"/>
 
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_login_not_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

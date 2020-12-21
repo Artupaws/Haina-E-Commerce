@@ -1,4 +1,4 @@
-package haina.ecommerce.view.postingjob
+ package haina.ecommerce.view.postingjob
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -31,6 +31,7 @@ import haina.ecommerce.helper.Helper
 import haina.ecommerce.helper.NumberTextWatcher
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataPostingJob
+import haina.ecommerce.view.MainActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -81,7 +82,15 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         binding.etSalaryTo.addTextChangedListener(twSalaryTo)
         presenter.loadListJobCategory()
         presenter.loadListJobLocation()
+        refresh()
 
+    }
+
+    private fun refresh(){
+        binding.swipeRefresh.setOnRefreshListener {
+            presenter.loadListJobLocation()
+            presenter.loadListJobCategory()
+        }
     }
 
     override fun onClick(p0: View?) {
@@ -314,6 +323,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         binding.outlinedFieldSalaryForm.error = null
         binding.outlinedFieldSalaryTo.error = null
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        move()
     }
 
     override fun errorPostingJob(msg: String) {
@@ -329,10 +339,12 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
     override fun successLoadJobCategory(msg: String) {
         Log.d("successLoadCategory", msg)
+        binding.swipeRefresh.isRefreshing = false
     }
 
     override fun errorLoadJobCategory(msg: String) {
         Log.d("errorLoadCategory", msg)
+        binding.swipeRefresh.isRefreshing = false
     }
 
     @SuppressLint("SetTextI18n")
@@ -377,6 +389,13 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
             adapter = jobLocationAdapter
             jobLocationAdapter.notifyDataSetChanged()
         }
+    }
+
+    private fun move(){
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        intent.putExtra("loginStatus", "3")
+        startActivity(intent)
+        finish()
     }
 
 }

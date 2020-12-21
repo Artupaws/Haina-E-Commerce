@@ -9,14 +9,14 @@ import retrofit2.Response
 
 class PostingPresenter(val view: PostingContract, val context: Context) {
 
-    fun getDataMyPost(){
+    fun getDataMyPost() {
         NetworkConfig().getConnectionHainaBearer(context).getMyPost()
-                .enqueue(object : retrofit2.Callback<ResponseGetMyPost>{
+                .enqueue(object : retrofit2.Callback<ResponseGetMyPost> {
                     override fun onResponse(call: Call<ResponseGetMyPost>, response: Response<ResponseGetMyPost>) {
-                        if (response.isSuccessful && response.body()?.value == 1){
-                            val data = response.body()?.data
+                        if (response.isSuccessful && response.body()?.value == 1) {
+                            val data = response.body()!!.data
                             view.getListMyPost(data)
-                            view.successLoadMyPost(response.body()?.message.toString())
+                            view.successLoadMyPost(response.body()!!.message.toString())
                         } else {
                             view.errorLoadMyPost(response.body()?.message.toString())
                         }

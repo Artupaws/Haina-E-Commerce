@@ -7,7 +7,6 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityLoginBinding

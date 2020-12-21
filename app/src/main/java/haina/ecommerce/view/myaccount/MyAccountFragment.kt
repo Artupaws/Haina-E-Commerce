@@ -19,6 +19,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
@@ -69,7 +70,8 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getDataUserProfile()
-        binding.includeLogin.btnLogin.setOnClickListener(this)
+        refresh()
+        binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
         binding.ivNotification.setOnClickListener(this)
         binding.linearLogout.setOnClickListener(this)
         binding.ivProfile.setOnClickListener(this)
@@ -78,7 +80,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.btn_login -> {
+            R.id.btn_login_not_login -> {
                 val intent = Intent(activity, LoginActivity::class.java)
                 startActivity(intent)
             }
@@ -120,6 +122,12 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         }
     }
 
+    private fun refresh(){
+        binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            presenter.getDataUserProfile()
+        })
+    }
+
     companion object {
         //image pick code
         private val IMAGE_PICK_CODE = 1000
@@ -150,9 +158,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             val file = File(filepath)
             val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
             val body = MultipartBody.Part.createFormData("photo", file.name, mFile)
-            val apiKey: RequestBody = RequestBody.create(
-                    MultipartBody.FORM, Constants.APIKEY)
-            presenter.changeImageProfile(apiKey, body)
+            presenter.changeImageProfile(body)
         }
     }
 
@@ -203,10 +209,12 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun successGetDataUser(msg: String) {
         Log.d("getDataSuccess", msg)
+        binding.swipeRefresh.isRefreshing = false
     }
 
     override fun errorGetDataUSer(msg: String) {
         Log.d("getDataError", msg)
+        binding.swipeRefresh.isRefreshing = false
     }
 
     override fun getDataUser(data: DataUser?) {

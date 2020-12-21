@@ -31,8 +31,7 @@ class SplashScreenActivity : AppCompatActivity() {
             } else {
                 binding.viewLoading.visibility = View.INVISIBLE
                 val snackbar = Snackbar.make(binding.viewLoading, "No connection!", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Try Again", View.OnClickListener {
-                            checkConnection()
+                        .setAction("Try Again", View.OnClickListener { letMeIn()
                             binding.viewLoading.visibility = View.VISIBLE
                         })
                 snackbar.show()
@@ -41,7 +40,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     }
 
-    private fun checkConnection(){
+    private fun letMeIn(){
         handler = Handler()
         handler.postDelayed({
             if (isConnect()) {
@@ -49,7 +48,7 @@ class SplashScreenActivity : AppCompatActivity() {
             } else {
                 binding.viewLoading.visibility = View.INVISIBLE
                 val snackbar = Snackbar.make(binding.viewLoading, "No connection!", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Try Again", View.OnClickListener { checkConnection()
+                        .setAction("Let Me In", View.OnClickListener { goToExplore()
                             binding.viewLoading.visibility = View.VISIBLE
                         })
                 snackbar.show()

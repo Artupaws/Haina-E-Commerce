@@ -94,17 +94,18 @@ interface NetworkService {
     ): Call<ResponsePostingJobVacancy>
 
     //Get List Job Vacancy
-    @POST("api/post")
-    fun getListJobVacancy():Call<ResponseGetJob>
+    @FormUrlEncoded
+    @POST("api/jobs/vacancy")
+    @Headers("No-Authentication: true")
+    fun getListJobVacancy(
+        @FieldMap data:Map<String, Int>
+    ):Call<ResponseGetJob>
 
     //Change Image Profile
     @Multipart
     @POST("api/photo")
     @Headers("No-Authentication: true")
-    fun changeImageProfile(
-            @Part("api_key")apiKey:RequestBody,
-        @Part file:MultipartBody.Part
-    ):Call<ResponseChangeImageProfile>
+    fun changeImageProfile(@Part file:MultipartBody.Part):Call<ResponseChangeImageProfile>
 
     //Get My Post
     @POST("api/post/my")

@@ -72,7 +72,7 @@ class PostingJobPresenter(val view: PostingJobContract, val context: Context) {
             }
 
             override fun onFailure(call: Call<ResponsePostingJobVacancy>, t: Throwable) {
-                view.errorPostingJob(t.localizedMessage)
+                view.errorPostingJob(t.toString())
             }
 
         })

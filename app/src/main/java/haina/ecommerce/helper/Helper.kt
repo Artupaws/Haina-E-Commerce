@@ -28,6 +28,20 @@ class Helper  {
         return formatter.format(formatMoney.toDouble())
     }
 
+    fun convertToFormatMoneyIDRFilter(formatMoney: String): String? {
+        val formatter: NumberFormat = NumberFormat.getCurrencyInstance()
+        formatter.maximumFractionDigits = 0
+        formatter.currency = Currency.getInstance("IDR")
+        return formatter.format(formatMoney.toDouble())
+    }
+
+    fun convertToFormatMoneySalary(formatMoney: String): String? {
+        val formatter: NumberFormat = NumberFormat.getCurrencyInstance()
+        formatter.maximumFractionDigits = 0
+        formatter.currency = Currency.getInstance("IDR")
+        return formatter.format(formatMoney.toDouble())
+    }
+
     fun changeFormatMoneyToValue(formatRupiah: String?): String? {
         val xRupiah = formatRupiah?.substring(1)
         val doubleRupiah = xRupiah?.substring(1)
@@ -35,4 +49,10 @@ class Helper  {
         return valueRupiah?.replace(" ".toRegex(), "")
     }
 
+    fun changeFormatMoneyToValueFilter(formatRupiah: String?): String? {
+        val xRupiah = formatRupiah?.substring(1)
+        val doubleRupiah = xRupiah?.substring(2)
+        val valueRupiah = doubleRupiah?.replace("[-+.^:,]".toRegex(), "")
+        return valueRupiah?.replace(" ".toRegex(), "")
+    }
 }

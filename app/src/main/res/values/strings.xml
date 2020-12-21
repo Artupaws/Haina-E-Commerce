@@ -91,4 +91,17 @@
     <string name="yes">Yes, I want</string>
     <string name="sub_title_logout">Are you sure want to logout?</string>
     <string name="dash_line">-</string>
+    <string name="all_category">All Category</string>
+    <string name="filter">Filter</string>
+    <string name="company_name">Company Name</string>
+    <string name="colon">:</string>
+    <string name="date_publish">Date Publish</string>
+    <string name="apply_job">Apply Job</string>
+    <string name="location">Location</string>
+    <string name="job_title">Job</string>
+    <string name="detail_job">Detail Job</string>
+    <string name="start_salary">Start Salary :</string>
+    <string name="location_filter">Location :</string>
+    <string name="apply">Apply</string>
+    <string name="apply_filter">Apply Filter</string>
 </resources>

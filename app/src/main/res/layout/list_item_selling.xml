@@ -23,12 +23,41 @@
             android:background="@drawable/background_line_corner_input_text_black"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_image_post"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                tools:src="@drawable/ps5"
-                android:scaleType="fitXY"/>
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_image_post"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ps5" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:background="@color/black_60"
+                    android:padding="3dp"
+                    android:textColor="@color/yellow"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Blocked" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
             <TextView
                 android:id="@+id/tv_title_post"
@@ -40,7 +69,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"/>
 

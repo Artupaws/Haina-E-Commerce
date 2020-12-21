@@ -46,26 +46,26 @@ class ExplorePresenter(val view: ExploreContract) {
 //        })
 //    }
 
-    fun loadCovidJkt(){
-        val callCovidJkt = NetworkConfig().getConnectionHaina().getDataCovidJkt()
-        callCovidJkt.enqueue(object : retrofit2.Callback<ResponseCovidJkt>{
-            override fun onResponse(call: Call<ResponseCovidJkt>, response: Response<ResponseCovidJkt>) {
-                if (response.isSuccessful && response.body()?.value == 1){
-                    val data = response.body()?.dataJkt
-                    view.loadCovidJkt(data)
-                    view.successMessage(response.body()?.message.toString())
-                } else {
-                    view.errorMessage(response.body()?.message)
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseCovidJkt>, t: Throwable) {
-                view.errorMessage(t.localizedMessage)
-            }
-
-        })
-    }
-
+//    fun loadCovidJkt(){
+//        val callCovidJkt = NetworkConfig().getConnectionHaina().getDataCovidJkt()
+//        callCovidJkt.enqueue(object : retrofit2.Callback<ResponseCovidJkt>{
+//            override fun onResponse(call: Call<ResponseCovidJkt>, response: Response<ResponseCovidJkt>) {
+//                if (response.isSuccessful && response.body()?.value == 1){
+//                    val data = response.body()?.dataJkt
+//                    view.loadCovidJkt(data)
+//                    view.successMessage(response.body()?.message.toString())
+//                } else {
+//                    view.errorMessage(response.body()?.message)
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ResponseCovidJkt>, t: Throwable) {
+//                view.errorMessage(t.localizedMessage)
+//            }
+//
+//        })
+//    }
+//
 //    fun loadHeadlinesNews(apiKey:String){
 //        val callHeadlinesNews = NetworkConfig().getHeadlineNews().getDataHeadlines(apiKey)
 //        callHeadlinesNews.enqueue(object : retrofit2.Callback<ResponseHeadlineNews>{
@@ -73,6 +73,9 @@ class ExplorePresenter(val view: ExploreContract) {
 //                if (response.isSuccessful && response.body()?.status == "ok"){
 //                    val data = response.body()?.articles
 //                    view.loadHeadlinesNews(data)
+//                    view.successMessage(response.body()?.status.toString())
+//                } else {
+//                    view.errorMessage(response.body()?.status.toString())
 //                }
 //            }
 //

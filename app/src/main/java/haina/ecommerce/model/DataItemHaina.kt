@@ -12,5 +12,4 @@ data class DataItemHaina(
 
 		@field:SerializedName("id")
 		val id: Int? = null
-
 )
