@@ -30,6 +30,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.login.LoginActivity
+import haina.ecommerce.view.register.company.RegisterCompany
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -76,6 +77,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         binding.linearLogout.setOnClickListener(this)
         binding.ivProfile.setOnClickListener(this)
         binding.tvActionEditProfile.setOnClickListener(this)
+        binding.linearRegisterCompany.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
@@ -117,7 +119,9 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
                 }
             }
 
-            R.id.tv_action_edit_profile -> {
+            R.id.linear_register_company -> {
+                val intent = Intent(activity, RegisterCompany::class.java)
+                startActivity(intent)
             }
         }
     }

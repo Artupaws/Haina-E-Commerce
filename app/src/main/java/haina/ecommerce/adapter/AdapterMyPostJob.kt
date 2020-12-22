@@ -21,7 +21,7 @@ class AdapterMyPostJob(val context: Context, private val listJob: List<DataMyPos
                 tvTitlePost.text = item?.title
                 tvStatus.text = item?.status
                 tvDatePost.text = item?.photoUrl.toString()
-                Glide.with(context).load(item?.photoUrl).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivImagePost)
+                Glide.with(context).load(item?.photoUrl).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivImagePost)
             }
         }
     }

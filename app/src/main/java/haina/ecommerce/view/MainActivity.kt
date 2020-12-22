@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val fragmentMyAccount = MyAccountFragment()
     private val fragmentManager = supportFragmentManager
     private var activeFragment: Fragment = fragmentExplore
-    var doubleTap:Boolean = false
+    var doubleTap: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             add(R.id.view_botnav, fragmentPosting).hide(fragmentPosting)
             add(R.id.view_botnav, fragmentHistory).hide(fragmentHistory)
             add(R.id.view_botnav, fragmentExplore).hide(fragmentExplore)
-        }.commit()
+        }.disallowAddToBackStack().commit()
 
         initListeners()
 
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 activeFragment = fragmentMyAccount
                 binding.bottomNavigationView.menu.findItem(R.id.myAccountFragment).isChecked = true
             }
-            "3" ->{
+            "3" -> {
                 loadFragment(fragmentPosting)
                 hideFragment(fragmentExplore)
                 activeFragment = fragmentPosting
@@ -100,7 +100,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideFragment(fragment: Fragment?): Boolean {
-        if (fragment !=null){
+        if (fragment != null) {
             supportFragmentManager.beginTransaction().hide(fragment).commit()
             return true
         }
@@ -115,19 +115,13 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    override fun onStop() {
-        super.onStop()
-        fragmentManager.isDestroyed
-    }
-
-
     override fun onBackPressed() {
-        if(doubleTap){
+        if (doubleTap) {
             super.onBackPressed()
         } else {
             Toast.makeText(this, "Please click once again to exit", Toast.LENGTH_SHORT).show()
             doubleTap = true
-            val handler:Handler = Handler()
+            val handler: Handler = Handler()
             handler.postDelayed({ doubleTap = false }, 500)
         }
     }

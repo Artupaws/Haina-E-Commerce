@@ -104,4 +104,7 @@
     <string name="location_filter">Location :</string>
     <string name="apply">Apply</string>
     <string name="apply_filter">Apply Filter</string>
+    <string name="data_company">Data Company</string>
+    <string name="register_your_data_company_here">Register your data company here</string>
+    <string name="warning_data_company">You don\'t have data company, please register your company first for posting job vacancy.</string>
 </resources>

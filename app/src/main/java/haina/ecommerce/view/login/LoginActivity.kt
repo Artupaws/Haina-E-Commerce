@@ -3,17 +3,20 @@ package haina.ecommerce.view.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import com.google.firebase.auth.FirebaseAuth
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityLoginBinding
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.MainActivity
-import haina.ecommerce.view.register.RegisterActivity
+import haina.ecommerce.view.register.account.RegisterActivity
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
 
@@ -35,6 +38,24 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         binding.btnLogin.setOnClickListener(this)
         binding.btnRegister.setOnClickListener(this)
         sharedPreferenceHelper = SharedPreferenceHelper(this)
+
+        binding.etPassword.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                false
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0!!.isNotEmpty()){
+                    binding.outlinedTextFieldPassword.error = null
+                    true
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                false
+            }
+
+        })
     }
 
     override fun onBackPressed() {

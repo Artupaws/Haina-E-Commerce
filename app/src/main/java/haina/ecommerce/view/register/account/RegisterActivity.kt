@@ -1,4 +1,4 @@
-package haina.ecommerce.view.register
+package haina.ecommerce.view.register.account
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,7 +8,6 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityRegisterBinding
 import haina.ecommerce.preference.SharedPreferenceHelper

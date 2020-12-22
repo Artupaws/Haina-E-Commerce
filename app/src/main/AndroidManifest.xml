@@ -19,11 +19,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light">
-        <activity android:name=".view.detailjob.DetailJobActivity"></activity>
-        <activity android:name=".view.job.JobActivity" />
-        <activity android:name=".view.postingjob.PostingJobActivity" />
-        <activity android:name=".view.covidlist.CovidListActivity" />
-        <activity android:name=".view.webview.WebViewActivity" />
+        <activity android:name=".view.register.company.RegisterCompany"></activity>
+        <activity
+            android:name=".view.detailjob.DetailJobActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.job.JobActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.postingjob.PostingJobActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.covidlist.CovidListActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.webview.WebViewActivity"
+            android:screenOrientation="nosensor" />
 
         <service
             android:name=".fcm.NotifInstanceService"
@@ -34,7 +45,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".view.register.RegisterActivity" />
+        <activity
+            android:name=".view.register.account.RegisterActivity"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".view.login.LoginActivity"
             android:screenOrientation="nosensor" />

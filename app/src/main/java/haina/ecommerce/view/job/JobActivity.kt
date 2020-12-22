@@ -59,8 +59,8 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
     private fun refresh(){
         binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             presenter.loadListJobCategory()
-            loadPresenter()
             presenter.loadListJobLocation()
+            loadPresenter()
         })
     }
 
@@ -148,6 +148,17 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         }
     }
 
+    override fun getDataSize(list: Int?) {
+        if (list == 0){
+            Toast.makeText(applicationContext, list.toString(), Toast.LENGTH_SHORT).show()
+            binding.rvJob.visibility = View.INVISIBLE
+            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+        } else {
+            binding.rvJob.visibility = View.VISIBLE
+            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
+        }
+    }
+
     override fun successLoadJobCategory(msg: String) {
         Log.d("loadJobCategorySuccess", msg)
         binding.swipeRefresh.isRefreshing = false
@@ -192,6 +203,7 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         }
 
         action.setOnClickListener{
+            Toast.makeText(applicationContext, filterLocation.toString() + filterStartSalary, Toast.LENGTH_SHORT).show()
             popupLocation!!.dismiss()
             loadPresenter()
         }

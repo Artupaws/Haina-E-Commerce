@@ -17,8 +17,10 @@ class JobPresenter(val view: JobContract){
                     response: Response<ResponseGetJob>) {
                     if (response.isSuccessful && response.body()?.value == 1) {
                         val data = response.body()?.data
+                        val size = response.body()?.data?.size
                         view.getLoadListJob(data)
                         view.successLoadListJob(response.message().toString())
+                        view.getDataSize(size)
                     } else {
                         view.errorLoadListJob(response.message().toString())
                     }

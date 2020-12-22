@@ -111,4 +111,9 @@ interface NetworkService {
     @POST("api/post/my")
     @Headers("No-Authentication: true")
     fun getMyPost():Call<ResponseGetMyPost>
+
+    //Check Register Company
+    @POST("/api/company")
+    @Headers("No-Authentication: true")
+    fun checkRegisterCompany():Call<ResponseCheckRegisterCompany>
 }

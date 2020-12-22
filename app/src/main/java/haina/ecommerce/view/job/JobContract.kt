@@ -8,6 +8,7 @@ interface JobContract {
     fun successLoadListJob(msg:String)
     fun errorLoadListJob(msg:String)
     fun getLoadListJob(list: List<DataItemJob?>?)
+    fun getDataSize(list: Int?)
 
     fun successLoadJobCategory(msg:String)
     fun errorLoadJobCategory(msg:String)
