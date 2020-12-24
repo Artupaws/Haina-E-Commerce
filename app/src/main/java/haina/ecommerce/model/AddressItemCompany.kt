@@ -2,7 +2,7 @@ package haina.ecommerce.model
 
 import com.google.gson.annotations.SerializedName
 
-data class AddressItem(
+data class AddressItemCompany(
 
 	@field:SerializedName("address")
 	val address: String? = null,

@@ -107,8 +107,8 @@ interface NetworkService {
     @Headers("No-Authentication: true")
     fun changeImageProfile(@Part file:MultipartBody.Part):Call<ResponseChangeImageProfile>
 
-    //Get My Post
-    @POST("api/post/my")
+    //Get My Post Job Vacancy
+    @POST("api/company/jobs")
     @Headers("No-Authentication: true")
     fun getMyPost():Call<ResponseGetMyPost>
 
@@ -116,4 +116,19 @@ interface NetworkService {
     @POST("/api/company")
     @Headers("No-Authentication: true")
     fun checkRegisterCompany():Call<ResponseCheckRegisterCompany>
+
+    //Register Company
+    @Multipart
+    @POST("api/company/register")
+    @Headers("No-Authentication: true")
+    fun registerCompany(
+        @Part file:MultipartBody.Part,
+        @Part ("name") name:RequestBody,
+        @Part ("description") description:RequestBody
+    ):Call<ResponseRegisterCompany>
+
+    //Get Data Company
+    @POST("api/company")
+    @Headers("No-Authentication: true")
+    fun getDataCompany():Call<ResponseCheckRegisterCompany>
 }

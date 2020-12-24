@@ -11,5 +11,8 @@ data class DataItemHaina(
 		val displayName: String? = null,
 
 		@field:SerializedName("id")
-		val id: Int? = null
+		val id: Int? = null,
+
+		@field:SerializedName("photo_url")
+		val icon: String? = null
 )

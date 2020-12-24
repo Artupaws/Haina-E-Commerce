@@ -12,15 +12,13 @@ import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterJobCategory
 import haina.ecommerce.adapter.TabAdapter
 import haina.ecommerce.databinding.FragmentPostingBinding
+import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.postingjob.PostingJobActivity
-import haina.ecommerce.view.register.company.RegisterCompany
+import haina.ecommerce.view.register.company.RegisterCompanyActivity
 
 class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
 
@@ -28,6 +26,7 @@ class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
     private lateinit var presenter: PostingPresenter
     private val binding get() = _binding!!
     private var popupCheckDataCompany: AlertDialog? = null
+    lateinit var sharedPref: SharedPreferenceHelper
     private val rotatePostIconOpen: Animation by lazy {
         AnimationUtils.loadAnimation(
                 activity,
@@ -55,12 +54,10 @@ class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
 
     private var clicked = false
 
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentPostingBinding.inflate(inflater, container, false)
+        sharedPref = SharedPreferenceHelper(requireContext())
         presenter = PostingPresenter(this, requireContext())
-
         return binding.root
     }
 
@@ -130,7 +127,7 @@ class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
         }
     }
 
-    private fun showPopup(){
+    private fun showPopup() {
         val popup = AlertDialog.Builder(requireContext())
         val view: View = layoutInflater.inflate(R.layout.popup_check_register_company, null)
         popup.setCancelable(true)
@@ -139,19 +136,22 @@ class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
         val actionYes = view.findViewById<TextView>(haina.ecommerce.R.id.tv_action_yes)
         popupCheckDataCompany = popup.create()
         popupCheckDataCompany?.dismiss()
-        actionCancel.setOnClickListener{popupCheckDataCompany?.dismiss()}
-        actionYes.setOnClickListener { val intent = Intent(activity, RegisterCompany::class.java)
+        actionCancel.setOnClickListener { popupCheckDataCompany?.dismiss() }
+        actionYes.setOnClickListener {
+            val intent = Intent(activity, RegisterCompanyActivity::class.java)
             activity?.startActivity(intent)
             popupCheckDataCompany?.dismiss()
         }
     }
 
     override fun checkRegisterCompanyTrue(msg: String) {
-        if (msg == "Company Registered"){
-          val intent = Intent(activity, PostingJobActivity::class.java)
+        if (msg == "Company Registered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
+            val intent = Intent(activity, PostingJobActivity::class.java)
             startActivity(intent)
-        } else {
+        } else if (msg == "Company Unregistered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
             popupCheckDataCompany?.show()
+        } else {
+            Toast.makeText(requireContext(), "Please Login First", Toast.LENGTH_SHORT).show()
         }
     }
 

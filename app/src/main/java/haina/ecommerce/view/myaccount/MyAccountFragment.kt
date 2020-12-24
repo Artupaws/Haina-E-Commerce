@@ -28,9 +28,10 @@ import haina.ecommerce.databinding.FragmentMyAccountBinding
 import haina.ecommerce.model.DataUser
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.datacompany.DataCompanyActivity
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.login.LoginActivity
-import haina.ecommerce.view.register.company.RegisterCompany
+import haina.ecommerce.view.register.company.RegisterCompanyActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -120,8 +121,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             }
 
             R.id.linear_register_company -> {
-                val intent = Intent(activity, RegisterCompany::class.java)
-                startActivity(intent)
+              presenter.checkDataCompany()
             }
         }
     }
@@ -248,6 +248,18 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun errorChangeImageProfile(msg: String) {
         Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun checkDataCompany(msg: String) {
+        if (msg == "Company Registered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+            val intent = Intent(activity, DataCompanyActivity::class.java)
+            startActivity(intent)
+        } else if (msg == "Company Unregistered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+            val intent = Intent(activity, RegisterCompanyActivity::class.java)
+            startActivity(intent)
+        } else {
+            Toast.makeText(requireContext(), "Please Login First", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

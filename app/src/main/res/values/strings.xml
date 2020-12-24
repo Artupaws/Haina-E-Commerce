@@ -93,7 +93,6 @@
     <string name="dash_line">-</string>
     <string name="all_category">All Category</string>
     <string name="filter">Filter</string>
-    <string name="company_name">Company Name</string>
     <string name="colon">:</string>
     <string name="date_publish">Date Publish</string>
     <string name="apply_job">Apply Job</string>
@@ -104,7 +103,15 @@
     <string name="location_filter">Location :</string>
     <string name="apply">Apply</string>
     <string name="apply_filter">Apply Filter</string>
-    <string name="data_company">Data Company</string>
     <string name="register_your_data_company_here">Register your data company here</string>
     <string name="warning_data_company">You don\'t have data company, please register your company first for posting job vacancy.</string>
+    <string name="company_name">Company Name</string>
+    <string name="register_my_company">Register My Company</string>
+    <string name="data_company">Data Company</string>
+    <string name="description_company">Description Company</string>
+    <string name="address_company">Address Company</string>
+    <string name="photo_company">Photo Company</string>
+    <string name="save">Save</string>
+    <string name="add">Add</string>
+    <string name="add_address_company">Add Address Company</string>
 </resources>

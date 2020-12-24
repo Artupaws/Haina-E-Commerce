@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemJobCategoryBinding
 import haina.ecommerce.model.DataItemHaina
@@ -23,7 +25,12 @@ class AdapterJobCategoryOnJob(private val context: Context, private val jobList:
         private val binding = ListItemJobCategoryBinding.bind(itemView)
         fun bind(itemHaina: DataItemHaina){
             with(binding){
-                    tvTitleCategoryJob.text = itemHaina.displayName
+                tvTitleCategoryJob.text = itemHaina.displayName
+                if (tvTitleCategoryJob.text == "All Category"){
+                    ivImageCategory.setImageResource(R.drawable.ic_add)
+                } else {
+                    Glide.with(context).load(itemHaina.icon).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivImageCategory)
+                }
                 linearClick.setOnClickListener {index = adapterPosition
                     notifyDataSetChanged()
                     responseId = if(index==0){ 0
@@ -40,6 +47,7 @@ class AdapterJobCategoryOnJob(private val context: Context, private val jobList:
                 } else {
                     linearCategory.setBackgroundResource(R.drawable.background_card_edge)
                 }
+
             }
         }
     }

@@ -111,5 +111,4 @@ class JobVacancyPostFragment : Fragment(), VacancyContract, View.OnClickListener
             adapter = getMyPost
         }
     }
-
 }
