@@ -1,28 +1,52 @@
 package haina.ecommerce.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import haina.ecommerce.databinding.ListItemAddressCompanyBinding
-import haina.ecommerce.databinding.ListItemPhotoCompanyBinding
 import haina.ecommerce.model.AddressItemCompany
-import haina.ecommerce.model.PhotoItemDataCompany
+import haina.ecommerce.view.datacompany.address.AddAddressCompanyActivity
+
 
 class AdapterAddressCompany(val context: Context, private val listAddressCompanies: List<AddressItemCompany?>?):
     RecyclerView.Adapter<AdapterAddressCompany.Holder>() {
 
-    inner class Holder (view: View): RecyclerView.ViewHolder(view){
+    inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemAddressCompanyBinding.bind(view)
-        fun bind(item: AddressItemCompany){
+        fun bind(itemHaina: AddressItemCompany){
             with(binding){
-                tvAddress.text = item.address
-                tvCity.text = item.city
-                Log.d("photo", item.address.toString())
+                tvAddress.text = itemHaina.address
+                tvCity.text = itemHaina.city
+                Log.d("photo", itemHaina.address.toString())
+                ivAction.setOnClickListener {
+                    val popup = PopupMenu(context, ivAction)
+                    popup.inflate(haina.ecommerce.R.menu.menu_option_address_company)
+                    popup.setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            haina.ecommerce.R.id.action_edit ->{
+                                val intent = Intent(context, AddAddressCompanyActivity::class.java)
+                                intent.putExtra("address", itemHaina.address)
+                                intent.putExtra("idCompany", itemHaina.id)
+                                intent.putExtra("idLocation", itemHaina.idCity)
+                                intent.putExtra("nameLocation", itemHaina.city)
+                                context.startActivity(intent)
+                                true
+                            }
+                            haina.ecommerce.R.id.action_delete ->{
+                                Toast.makeText(context, "Item Deleted", Toast.LENGTH_SHORT).show()
+                                true
+                            }
+                            else -> false
+                        }
+                    }
+                    popup.show()
+                }
             }
         }
     }
@@ -39,4 +63,6 @@ class AdapterAddressCompany(val context: Context, private val listAddressCompani
     }
 
     override fun getItemCount(): Int = listAddressCompanies?.size!!
+
+
 }

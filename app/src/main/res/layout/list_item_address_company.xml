@@ -26,7 +26,7 @@
                 android:padding="5dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintEnd_toStartOf="@+id/iv_action"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -48,12 +48,12 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/iv_action"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
-                android:src="@drawable/ic_edit"
+                android:src="@drawable/ic_option"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

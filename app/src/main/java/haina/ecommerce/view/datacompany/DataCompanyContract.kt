@@ -9,5 +9,7 @@ interface DataCompanyContract {
     fun getDataCompany(item:DataCompany)
     fun loadJobLocation(itemHaina: List<DataItemHaina?>?)
     fun messageGetDataCompany(msg:String)
+    fun messageAddPhotoCompany(msg: String)
+    fun messageDeleteImageCompany(msg: String)
 
 }

@@ -67,8 +67,8 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/circleImageViewCompany"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:layout_margin="5dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -92,12 +92,13 @@
                             android:id="@+id/iv_action_edit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="20dp"
+                            android:layout_marginStart="10dp"
                             android:clickable="true"
                             android:focusable="true"
                             android:src="@drawable/ic_edit"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintBottom_toBottomOf="@+id/et_company_name"
+                            app:layout_constraintStart_toEndOf="@+id/et_company_name"
+                            app:layout_constraintTop_toTopOf="@+id/et_company_name" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -138,7 +139,19 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/textView5"
                             app:layout_constraintTop_toBottomOf="@+id/textView5"
-                            tools:text="asdasdasfasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas" />
+                            tools:text="asdasdasdasdasdasdasdasdasdas" />
+
+                        <ImageView
+                            android:id="@+id/iv_action_edit_description"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:src="@drawable/ic_edit"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/textView5" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -151,7 +164,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/title2"
@@ -182,11 +195,12 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_address_company"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginTop="10dp"
-                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="10dp"
                             android:orientation="horizontal"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/title2"
                             app:layout_constraintTop_toBottomOf="@+id/title2"
@@ -195,6 +209,7 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <View
+                        android:id="@+id/dash_line"
                         android:layout_width="match_parent"
                         android:layout_height="7dp"
                         android:layout_marginTop="5dp"
@@ -217,24 +232,35 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <FrameLayout
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="10dp"
+                            android:orientation="horizontal"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/title3">
 
+                                <ImageView
+                                    android:id="@+id/iv_add_image_company"
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:background="@drawable/background_line_corner_input_text_black"
+                                    android:padding="2dp"
+                                    android:layout_margin="5dp"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/ic_add" />
+
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/rv_photo_company"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 tools:listitem="@layout/list_item_photo_company" />
 
-                        </FrameLayout>
+                        </LinearLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -251,16 +277,5 @@
         </androidx.core.widget.NestedScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:enabled="false"
-        android:text="@string/save"
-        android:textColor="@color/yellow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/swipeRefreshLayout"
-        app:layout_constraintStart_toStartOf="@+id/swipeRefreshLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

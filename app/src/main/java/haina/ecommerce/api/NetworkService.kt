@@ -131,4 +131,32 @@ interface NetworkService {
     @POST("api/company")
     @Headers("No-Authentication: true")
     fun getDataCompany():Call<ResponseCheckRegisterCompany>
+
+    //Add Image Company
+    @Multipart
+    @POST("api/company/photo/register")
+    @Headers("No-Authentication: true")
+    fun addPhotoCompany(
+            @Part file:MultipartBody.Part,
+            @Part ("name") name:RequestBody,
+            @Part ("id_company") idCompany:RequestBody
+    ):Call<ResponseAddImageCompany>
+
+    //Add Address Company
+    @FormUrlEncoded
+    @POST("api/company/address/register")
+    @Headers("No-Authentication: true")
+    fun addAddressCompany(
+            @Field("id_company") idCompany:String,
+            @Field("address") address:String,
+            @Field("id_city") idCity:String
+    ):Call<ResponseAddAddressCompany>
+
+    //Delete Image Company
+    @FormUrlEncoded
+    @POST("api/company/photo/delete")
+    @Headers("No-Authentication: true")
+    fun deleteImageCompany(
+            @Field("id") id:Int
+    ):Call<ResponseDeletedPhotoCompany>
 }

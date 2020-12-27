@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light">
-        <activity android:name=".view.datacompany.DataCompanyActivity"></activity>
+        <activity android:name=".view.datacompany.address.AddAddressCompanyActivity"></activity>
+        <activity android:name=".view.datacompany.DataCompanyActivity" />
         <activity android:name=".view.register.company.RegisterCompanyActivity" />
         <activity
             android:name=".view.detailjob.DetailJobActivity"
