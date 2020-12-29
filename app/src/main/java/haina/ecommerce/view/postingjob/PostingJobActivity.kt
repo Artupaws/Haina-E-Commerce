@@ -20,18 +20,23 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
+import haina.ecommerce.adapter.AdapterAddressCompanyPostingJob
 import haina.ecommerce.adapter.AdapterJobCategory
 import haina.ecommerce.adapter.AdapterJobLocation
 import haina.ecommerce.databinding.ActivityPostingJobBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.helper.NumberTextWatcher
+import haina.ecommerce.model.DataCompany
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataPostingJob
 import haina.ecommerce.view.MainActivity
+import haina.ecommerce.view.datacompany.DataCompanyActivity
+import haina.ecommerce.view.register.company.RegisterCompanyActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -43,7 +48,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
     private lateinit var binding: ActivityPostingJobBinding
     private lateinit var presenter: PostingJobPresenter
     private var popupCategory: AlertDialog? = null
-    private var popupLocation: AlertDialog? = null
+    private var popupCheckDataCompany: AlertDialog? = null
     private var broadcaster: LocalBroadcastManager? = null
     private var isEmptyImage = true
     private var isEmptyTitle = true
@@ -53,7 +58,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
     private var isEmptySalaryFrom = true
     private var isEmptySalaryTo = true
     private var uri: Uri = Uri.EMPTY
-    var idLocation:String = ""
+    var idLocation:Int? = 0
     var idCategory:String = ""
     val helper:Helper = Helper()
 
@@ -72,7 +77,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         }
         binding.cvAddImage.setOnClickListener(this)
         binding.etCategoryJob.setOnClickListener(this)
-        binding.etLocationCompany.setOnClickListener(this)
+//        binding.etLocationCompany.setOnClickListener(this)
         binding.btnPostingJob.setOnClickListener(this)
         val locale = Locale("es", "AR")
         val numDecs = 2 // Let's use 2 decimals
@@ -81,15 +86,17 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         binding.etSalaryFrom.addTextChangedListener(twSalaryFrom)
         binding.etSalaryTo.addTextChangedListener(twSalaryTo)
         presenter.loadListJobCategory()
-        presenter.loadListJobLocation()
+        presenter.getDataCompany()
+        showPopup()
         refresh()
 
     }
 
     private fun refresh(){
         binding.swipeRefresh.setOnRefreshListener {
-            presenter.loadListJobLocation()
+//            presenter.loadListJobLocation()
             presenter.loadListJobCategory()
+            presenter.getDataCompany()
         }
     }
 
@@ -112,10 +119,6 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
             R.id.et_category_job -> {
                 popupCategory?.show()
-            }
-
-            R.id.et_location_company -> {
-                popupLocation?.show()
             }
 
             R.id.btn_posting_job -> {
@@ -149,11 +152,11 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
             isEmptyTitle = false
         }
 
-        if (location.isEmpty()){
-            binding.outlinedFieldLocation.error = "Location can't empty"
+        if (location == null){
+            Toast.makeText(applicationContext, "Please Choose Address Company", Toast.LENGTH_SHORT).show()
             isEmptyLocation = true
         } else {
-            binding.etLocationCompany.text.toString()
+            location = idLocation
             isEmptyLocation = false
         }
 
@@ -195,7 +198,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
             val salaryFromPost: RequestBody = RequestBody.create(MultipartBody.FORM, helper.changeFormatMoneyToValue(binding.etSalaryFrom.text.toString()))
             val salaryToPost: RequestBody = RequestBody.create(MultipartBody.FORM, helper.changeFormatMoneyToValue(binding.etSalaryTo.text.toString()))
             val idCategoryPost: RequestBody = RequestBody.create(MultipartBody.FORM, idCategory)
-            val idLocationPost: RequestBody = RequestBody.create(MultipartBody.FORM, idLocation)
+            val idLocationPost: RequestBody = RequestBody.create(MultipartBody.FORM, location.toString())
              presenter.postingJobVacancy(body, titlePost, idLocationPost, idCategoryPost, descriptionPost, salaryFromPost, salaryToPost)
         } else {
             binding.btnPostingJob.visibility = View.VISIBLE
@@ -267,7 +270,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         )
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 mMessageReceiver2,
-                IntentFilter("jobLocation")
+                IntentFilter("addressCompany")
         )
     }
 
@@ -288,12 +291,10 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
     private val mMessageReceiver2: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when(intent.action){
-                "jobLocation" -> {
-                    val idLocationFill = intent.getStringExtra("idLocation")
-                    val nameLocation = intent.getStringExtra("nameLocation")
-                    binding.etLocationCompany.setText(nameLocation)
-                    idLocation = idLocationFill!!
-                    popupLocation?.dismiss()
+                "addressCompany" -> {
+                    val idLocationFill = intent.getIntExtra("idAddress", 0)
+                    idLocation = idLocationFill
+                    Log.d("idAddress", idLocation.toString())
                 }
             }
         }
@@ -307,12 +308,11 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
     override fun successPostingJob(msg: String) {
         binding.etTitleJob.text?.clear()
-        binding.etLocationCompany.text?.clear()
         binding.etCategoryJob.text?.clear()
         binding.etDescriptionJob.text?.clear()
         binding.etSalaryFrom.text?.clear()
         binding.etSalaryTo.text?.clear()
-        binding.ivCompany.setImageDrawable(getDrawable(R.drawable.ic_add))
+        binding.ivCompany.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_add))
         binding.btnPostingJob.visibility = View.VISIBLE
         binding.relativeLoading.visibility = View.INVISIBLE
         binding.cvAddImage.isEnabled = true
@@ -347,6 +347,28 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         binding.swipeRefresh.isRefreshing = false
     }
 
+    private fun showPopup() {
+        val popup = AlertDialog.Builder(this)
+        val view: View = layoutInflater.inflate(R.layout.popup_check_register_company, null)
+        popup.setCancelable(false)
+        popup.setView(view)
+        val actionCancel = view.findViewById<TextView>(haina.ecommerce.R.id.tv_action_cancel)
+        val actionYes = view.findViewById<TextView>(haina.ecommerce.R.id.tv_action_yes)
+        val attention = view.findViewById<TextView>(haina.ecommerce.R.id.tv_popup)
+        popupCheckDataCompany = popup.create()
+        popupCheckDataCompany?.dismiss()
+        attention.text = "You have not added your company address, please add it first to continue posting job vacancies"
+        actionCancel.setOnClickListener {
+            onBackPressed()
+        }
+
+        actionYes.setOnClickListener {
+            val intent = Intent(applicationContext, DataCompanyActivity::class.java)
+            startActivity(intent)
+            popupCheckDataCompany?.dismiss()
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     override fun loadJobCategory(itemHaina: List<DataItemHaina?>?) {
         //POP UP Job Category
@@ -369,26 +391,28 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun loadJobLocation(itemHaina: List<DataItemHaina?>?) {
-        //POP UP Job Location
-        val popup = AlertDialog.Builder(this)
-        val view: View = layoutInflater.inflate(R.layout.layout_pop_up_list, null)
-        popup.setCancelable(true)
-        popup.setView(view)
-        val action = view.findViewById<TextView>(haina.ecommerce.R.id.tv_action)
-        val title = view.findViewById<TextView>(haina.ecommerce.R.id.tv_title)
-        val rvJob = view.findViewById<RecyclerView>(haina.ecommerce.R.id.rv_popup)
-        val jobLocationAdapter = AdapterJobLocation(this, itemHaina)
-        popupLocation = popup.create()
-        popupLocation?.dismiss()
-        action.setOnClickListener{popupLocation?.dismiss()}
-        title.text = "Job Location"
-        rvJob.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = jobLocationAdapter
-            jobLocationAdapter.notifyDataSetChanged()
+    override fun onResume() {
+        super.onResume()
+        presenter.getDataCompany()
+    }
+
+    override fun getDataCompany(item: DataCompany) {
+        val getListAddressCompany = AdapterAddressCompanyPostingJob(this, item.addressCompanies)
+        binding.rvAddressCompany.apply {
+            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+            adapter = getListAddressCompany
         }
+        if (item.addressCompanies?.isEmpty()!!){
+            popupCheckDataCompany?.show()
+        } else {
+            popupCheckDataCompany?.dismiss()
+        }
+    }
+
+
+    override fun messageGetDataCompany(msg: String) {
+        Log.d("messageCompany", msg)
+        binding.swipeRefresh.isRefreshing = false
     }
 
     private fun move(){

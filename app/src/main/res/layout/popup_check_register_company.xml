@@ -26,7 +26,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
     <TextView
-        android:id="@+id/rv_popup"
+        android:id="@+id/tv_popup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"

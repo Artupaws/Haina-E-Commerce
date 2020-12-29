@@ -38,10 +38,6 @@ class AdapterAddressCompany(val context: Context, private val listAddressCompani
                                 context.startActivity(intent)
                                 true
                             }
-                            haina.ecommerce.R.id.action_delete ->{
-                                Toast.makeText(context, "Item Deleted", Toast.LENGTH_SHORT).show()
-                                true
-                            }
                             else -> false
                         }
                     }

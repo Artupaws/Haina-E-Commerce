@@ -18,6 +18,8 @@ class Constants {
         const val PREF_FULLNAME = "PREF_FULLNAME"
         const val PREF_USERNAME = "PREF_USERNAME"
         const val PREF_EMAIL = "PREF_EMAIL"
+        const val PREF_PHONE = "PREF_PHONE"
+        const val PREF_PHOTO = "PREF_PHOTO"
     }
 
 }

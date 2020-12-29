@@ -30,26 +30,6 @@ class DataCompanyPresenter(val view: DataCompanyContract, val context: Context) 
         })
     }
 
-    fun loadListLocation(){
-        val loadListLocation = NetworkConfig().getConnectionHaina().getDataListJobLocation()
-        loadListLocation.enqueue(object : retrofit2.Callback<ResponseListJobLocation>{
-            override fun onResponse(call: Call<ResponseListJobLocation>, response: Response<ResponseListJobLocation>) {
-                if (response.isSuccessful && response.body()?.value == 1){
-                    val data = response.body()?.data
-                    view.loadJobLocation(data)
-                    view.messageGetDataCompany(response.body()?.message.toString())
-                } else {
-                    view.messageGetDataCompany(response.body()?.message.toString())
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseListJobLocation>, t: Throwable) {
-                view.messageGetDataCompany(t.localizedMessage.toString())
-            }
-
-        })
-    }
-
     fun addImageCompany(imageCompany: MultipartBody.Part, name: RequestBody, idCompany: RequestBody){
         val addImageCompany = NetworkConfig().getConnectionHainaBearer(context).addPhotoCompany(imageCompany, name, idCompany)
         addImageCompany.enqueue(object : retrofit2.Callback<ResponseAddImageCompany>{

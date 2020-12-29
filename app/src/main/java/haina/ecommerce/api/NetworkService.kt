@@ -86,7 +86,7 @@ interface NetworkService {
     fun postingJobVacancy(
             @Part photo:MultipartBody.Part,
             @Part("title")title:RequestBody,
-            @Part("id_location")idLocation:RequestBody,
+            @Part("id_address")idLocation:RequestBody,
             @Part("id_category")idCategory:RequestBody,
             @Part("description")description:RequestBody,
             @Part("salary_from")salaryFrom:RequestBody,

@@ -31,6 +31,7 @@ import haina.ecommerce.util.Constants
 import haina.ecommerce.view.datacompany.DataCompanyActivity
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.login.LoginActivity
+import haina.ecommerce.view.myaccount.detailaccount.DetailAccountActivity
 import haina.ecommerce.view.register.company.RegisterCompanyActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -79,6 +80,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         binding.ivProfile.setOnClickListener(this)
         binding.tvActionEditProfile.setOnClickListener(this)
         binding.linearRegisterCompany.setOnClickListener(this)
+        binding.tvActionEditProfile.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
@@ -122,6 +124,11 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
             R.id.linear_register_company -> {
               presenter.checkDataCompany()
+            }
+
+            R.id.tv_action_edit_profile -> {
+                val intent = Intent(activity, DetailAccountActivity::class.java)
+                startActivity(intent)
             }
         }
     }
@@ -225,6 +232,8 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         sharedPref.save(Constants.PREF_USERNAME, data?.username.toString())
         sharedPref.save(Constants.PREF_EMAIL, data?.email.toString())
         sharedPref.save(Constants.PREF_FULLNAME, data?.fullname.toString())
+        sharedPref.save(Constants.PREF_PHONE, data?.phone.toString())
+        sharedPref.save(Constants.PREF_PHOTO, data?.photo.toString())
         binding.tvNameUser.text = data?.fullname.toString()
         activity?.let { Glide.with(it).load(data?.photo).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding.ivProfile) }
     }

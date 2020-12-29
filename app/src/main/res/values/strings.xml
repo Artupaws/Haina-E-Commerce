@@ -114,4 +114,16 @@
     <string name="save">Save</string>
     <string name="add">Add</string>
     <string name="add_address_company">Add Address Company</string>
+    <string name="personal_data">Personal Data</string>
+    <string name="address">address</string>
+    <string name="resume">Resume</string>
+    <string name="birth_date">birth date</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="portfolio">Portfolio</string>
+    <string name="certificate">Certificate</string>
+    <string name="gender">gender</string>
+    <string name="title_upload_document">Click here for upload your document (.pdf)</string>
+    <string name="uploaded">Ready to upload :</string>
+    <string name="upload_document">Upload Document</string>
 </resources>

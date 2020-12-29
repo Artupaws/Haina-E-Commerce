@@ -1,5 +1,6 @@
 package haina.ecommerce.view.postingjob
 
+import haina.ecommerce.model.DataCompany
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataPostingJob
 
@@ -12,7 +13,10 @@ interface PostingJobContract {
     fun successLoadJobCategory(msg:String)
     fun errorLoadJobCategory(msg:String)
     fun loadJobCategory(itemHaina: List<DataItemHaina?>?)
-    fun loadJobLocation(itemHaina: List<DataItemHaina?>?)
+//    fun loadJobLocation(itemHaina: List<DataItemHaina?>?)
+
+    fun getDataCompany(item: DataCompany)
+    fun messageGetDataCompany(msg:String)
 
 
 

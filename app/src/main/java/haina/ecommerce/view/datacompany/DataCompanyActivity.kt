@@ -63,7 +63,6 @@ class DataCompanyActivity : AppCompatActivity(), DataCompanyContract, View.OnCli
         broadcaster = LocalBroadcastManager.getInstance(this)
         presenter = DataCompanyPresenter(this, this)
         presenter.getDataCompany()
-        presenter.loadListLocation()
         refresh()
         binding.toolbarDataCompany.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDataCompany.setNavigationOnClickListener { onBackPressed() }
@@ -189,44 +188,6 @@ class DataCompanyActivity : AppCompatActivity(), DataCompanyContract, View.OnCli
         }
     }
 
-    private fun popupAddAddress(itemHaina: List<DataItemHaina?>?){
-        val popup = AlertDialog.Builder(this)
-        val view: View = layoutInflater.inflate(R.layout.popup_address_data_company, null)
-        popup.setCancelable(true)
-        popup.setView(view)
-        val address = view.findViewById<EditText>(haina.ecommerce.R.id.et_address_company)
-        val btnAdd = view.findViewById<Button>(R.id.btn_add_address_company)
-        val location = view.findViewById<EditText>(R.id.et_location_company)
-        popupAddress = popup.create()
-        popupAddress?.dismiss()
-
-        btnAdd.setOnClickListener {
-            val intent = Intent(this, AddAddressCompanyActivity::class.java)
-            startActivity(intent)
-        }
-
-        location.setOnClickListener {
-            val popup = AlertDialog.Builder(this)
-            val view: View = layoutInflater.inflate(R.layout.layout_pop_up_list, null)
-            popup.setCancelable(true)
-            popup.setView(view)
-            val action = view.findViewById<TextView>(haina.ecommerce.R.id.tv_action)
-            val title = view.findViewById<TextView>(haina.ecommerce.R.id.tv_title)
-            val rvJob = view.findViewById<RecyclerView>(haina.ecommerce.R.id.rv_popup)
-            val jobLocationAdapter = AdapterJobLocation(this, itemHaina)
-            popupLocation = popup.create()
-            popupLocation?.show()
-            action.setOnClickListener{popupLocation?.dismiss()}
-            title.text = "Choose Location"
-            rvJob.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                adapter = jobLocationAdapter
-                jobLocationAdapter.notifyDataSetChanged()
-            }}
-
-        location.setText(nameLocation)
-    }
-
     override fun getDataCompany(item: DataCompany) {
         val getListPhotoCompany = AdapterPhotoCompany(this, item.photoDataCompany)
         val getListAddressCompany = AdapterAddressCompany(this, item.addressCompanies)
@@ -246,10 +207,6 @@ class DataCompanyActivity : AppCompatActivity(), DataCompanyContract, View.OnCli
         idCompany = RequestBody.create(MultipartBody.FORM, item.id.toString())
         idCompanyString = item.id.toString()
         Log.d("id", item.id.toString())
-    }
-
-    override fun loadJobLocation(itemHaina: List<DataItemHaina?>?) {
-        popupAddAddress(itemHaina)
     }
 
     override fun messageGetDataCompany(msg: String) {

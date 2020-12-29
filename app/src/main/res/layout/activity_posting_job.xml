@@ -77,18 +77,18 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/outlinedFieldLocation"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:hint="@string/location_company">
 
-                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                        android:id="@+id/et_location_company"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_address_company"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:inputType="text" />
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="horizontal"
+                        tools:listitem="@layout/list_item_address_company"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
