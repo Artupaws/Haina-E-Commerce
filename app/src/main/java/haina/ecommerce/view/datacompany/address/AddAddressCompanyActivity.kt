@@ -34,6 +34,7 @@ class AddAddressCompanyActivity : AppCompatActivity(), AddressCompanyContract, V
     var nameLocation:String? = ""
     var idCompany:String? = ""
     var address:String? = ""
+    val refresh:String?= "1"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +89,8 @@ class AddAddressCompanyActivity : AppCompatActivity(), AddressCompanyContract, V
             R.id.btn_add_address_company -> {
                 binding.btnAddAddressCompany.visibility = View.INVISIBLE
                 binding.relativeLoading.visibility = View.VISIBLE
-                presenter.addAddressCompany(idCompany!!, binding.etAddressCompany.text.toString(), idLocation.toString())
+                move()
+//                presenter.addAddressCompany(idCompany!!, binding.etAddressCompany.text.toString(), idLocation.toString())
             }
 
             R.id.et_location_company ->{
@@ -135,15 +137,17 @@ class AddAddressCompanyActivity : AppCompatActivity(), AddressCompanyContract, V
     }
 
     private fun move(){
-        val intent = Intent(this, DataCompanyActivity::class.java)
-        intent.putExtra("refresh", 1)
-        startActivity(intent)
-        finishAffinity()
+        val move = Intent("refresh")
+            .putExtra("fromAddAddress", refresh)
+        broadcaster?.sendBroadcast(move)
+        onBackPressed()
     }
 
     private fun setEditText(){
         binding.etAddressCompany.setText(address)
         binding.etLocationCompany.setText(nameLocation)
+        if (binding.etAddressCompany.text!!.isNotEmpty() && binding.etLocationCompany.text!!.isNotEmpty()){
+            binding.btnAddAddressCompany.text = "update address company"
+        }
     }
-
 }

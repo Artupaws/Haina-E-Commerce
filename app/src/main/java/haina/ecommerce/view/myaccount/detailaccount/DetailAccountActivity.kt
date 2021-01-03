@@ -5,6 +5,7 @@ import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,20 +13,28 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import haina.ecommerce.R
+import haina.ecommerce.adapter.AdapterDocumentUser
 import haina.ecommerce.databinding.ActivityDetailAccountBinding
+import haina.ecommerce.model.DataDocumentUser
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
-import haina.ecommerce.view.myaccount.MyAccountFragment
 import haina.ecommerce.view.myaccount.addrequirement.AddRequirementActivity
 import java.util.*
 
 
-class DetailAccountActivity : AppCompatActivity(), View.OnClickListener {
+class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailAccountContract {
 
     private lateinit var binding: ActivityDetailAccountBinding
+    private lateinit var presenter: DetailAccountPresenter
     lateinit var sharedPref: SharedPreferenceHelper
     private var dateSetListener: OnDateSetListener? = null
 
@@ -34,10 +43,14 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityDetailAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        presenter = DetailAccountPresenter(this, this)
         sharedPref = SharedPreferenceHelper(this)
         setDataProfile()
         radioGrroup()
         setTextBirthDate()
+        refresh()
+        loadAllDocument()
+
         binding.toolbarDetailAccount.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailAccount.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarDetailAccount.title = "Detail Account"
@@ -50,11 +63,39 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private fun refresh(){
+        binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            setDataProfile()
+            loadAllDocument()
+        })
+    }
+
+    private fun loadAllDocument(){
+        presenter.loadDocumentResume(1)
+        presenter.loadDocumentPortfolio(2)
+        presenter.loadDocumentCertificate(3)
+    }
+
     private fun setDataProfile() {
         Glide.with(this).load(sharedPref.getValueString(Constants.PREF_PHOTO))
             .skipMemoryCache(false).diskCacheStrategy(
                 DiskCacheStrategy.NONE
-            ).into(binding.ivProfile)
+            ).listener(object : RequestListener<Drawable>{
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean
+                ): Boolean {
+                    binding.progressCircular.visibility = View.GONE
+                    binding.swipeRefresh.isRefreshing = false
+                    return false
+                }
+
+                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean
+                ): Boolean {
+                    binding.progressCircular.visibility = View.GONE
+                    binding.swipeRefresh.isRefreshing = false
+                    return false
+                }
+
+            }).into(binding.ivProfile)
         binding.tvFullname.text = sharedPref.getValueString(Constants.PREF_FULLNAME)
         binding.etFullname.setText(sharedPref.getValueString(Constants.PREF_FULLNAME))
         binding.tvEmail.text = sharedPref.getValueString(Constants.PREF_EMAIL)
@@ -167,6 +208,34 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener {
         binding.tvBirthdate.visibility = View.VISIBLE
         binding.rdGroup.visibility = View.INVISIBLE
         binding.tvGender.visibility = View.VISIBLE
+    }
+
+    override fun getDocumentResume(item: List<DataDocumentUser?>?) {
+        val adapterDocument = AdapterDocumentUser(this, item)
+        binding.rvResume.apply {
+            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+            adapter = adapterDocument
+        }
+    }
+
+    override fun getDocumentPortfolio(item: List<DataDocumentUser?>?) {
+        val adapterDocument = AdapterDocumentUser(this, item)
+        binding.rvPortop.apply {
+            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+            adapter = adapterDocument
+        }
+    }
+
+    override fun getDocumentCertificate(item: List<DataDocumentUser?>?) {
+        val adapterDocument = AdapterDocumentUser(this, item)
+        binding.rvCertificate.apply {
+            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+            adapter = adapterDocument
+        }
+    }
+
+    override fun messageLoadDetailUser(msg: String) {
+        Log.d("loadDetailUser", msg)
     }
 
 }

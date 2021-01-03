@@ -8,34 +8,38 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_clicked"
         android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
+        android:layout_height="100dp"
         android:layout_margin="5dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:orientation="vertical"
+                android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/iv_action"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
 
                 <TextView
                     android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    tools:text="Address" />
+                    android:maxLines="4"
+                    android:ellipsize="end"
+                    tools:text="Address asdaksdnjkajnsdknaskjdnkasdnalnslknflajsndlaskdkasmd;la/ms;ldma;lsmd;lam;sldasaskdlajsdjlasadsdasdasdasdasd" />
 
                 <TextView
                     android:id="@+id/tv_city"

@@ -21,6 +21,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -51,9 +52,10 @@ class DataCompanyActivity : AppCompatActivity(), DataCompanyContract, View.OnCli
     private lateinit var uri: Uri
     var nameUser:RequestBody = RequestBody.create(MultipartBody.FORM, "")
     var idCompany:RequestBody = RequestBody.create(MultipartBody.FORM, "")
-    var idLocation:Int = 0
-    var nameLocation:String = ""
-    var idCompanyString:String = ""
+    var idLocation:Int? = null
+    var nameLocation:String? = null
+    var idCompanyString:String? = null
+    var refresh:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,32 +76,37 @@ class DataCompanyActivity : AppCompatActivity(), DataCompanyContract, View.OnCli
 
     override fun onStart() {
         super.onStart()
-        val refresh = intent.extras?.get("refresh")
-        if (refresh == 1){
-            presenter.getDataCompany()
-        }
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("jobLocation"))
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("delete"))
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver2, IntentFilter("refresh"))
     }
 
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            when(intent.action){
-                "jobLocation" -> {
-                    val idLocationFill = intent.getStringExtra("idLocation")!!
-                    val nameLocationFill = intent.getStringExtra("nameLocation")!!
-                    idLocation = idLocationFill.toInt()
-                    nameLocation = nameLocationFill
-                    Log.d("location", idLocation.toString()+nameLocation)
-                    popupLocation?.dismiss()
-                }
+            when (intent.action) {
                 "delete" -> {
                     val idImage = intent.getIntExtra("idImage", 0)
+                    Log.d("idImage", idImage.toString())
                     presenter.deleteImageCompany(idImage)
                 }
             }
         }
     }
+
+    private val mMessageReceiver2: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            when(intent.action){
+                "refresh" -> {
+                    val fromIntent = intent.getStringExtra("fromAddAddress")
+                    refresh = fromIntent
+                    Log.d("refresh", fromIntent!!)
+                    if (refresh == "1"){
+                        presenter.getDataCompany()
+                    }
+                }
+            }
+        }
+    }
+
 
     override fun onStop() {
         super.onStop()

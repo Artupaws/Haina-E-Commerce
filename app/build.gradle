@@ -112,4 +112,8 @@ dependencies {
     //RangeBar Salary
     implementation 'com.github.stfalcon:StfalconPriceRangeBar:0.1.0'
 
+    //Permission for file
+    implementation 'com.karumi:dexter:6.1.2'
+
+
 }

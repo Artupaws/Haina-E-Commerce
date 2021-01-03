@@ -1,7 +1,7 @@
 package haina.ecommerce.view.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,7 +9,7 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityLoginBinding
@@ -39,13 +39,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         binding.btnRegister.setOnClickListener(this)
         sharedPreferenceHelper = SharedPreferenceHelper(this)
 
-        binding.etPassword.addTextChangedListener(object :TextWatcher{
+        binding.etPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 false
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (p0!!.isNotEmpty()){
+                if (p0!!.isNotEmpty()) {
                     binding.outlinedTextFieldPassword.error = null
                     true
                 }
@@ -68,7 +68,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
                 binding.btnLogin.visibility = View.INVISIBLE
                 binding.relativeLoading.visibility = View.VISIBLE
                 binding.btnRegister.isEnabled = false
-                binding.btnLoginGoogle.isEnabled= false
+                binding.btnLoginGoogle.isEnabled = false
                 checkLogin()
             }
             R.id.btn_register -> {
@@ -76,6 +76,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
                 startActivity(intent)
             }
         }
+    }
+
+    private fun getDeviceName() {
+        val manufacturer: String = Build.MANUFACTURER
+//        Toast.makeText(context, manufacturer, Toast.LENGTH_SHORT).show()
     }
 
     private fun checkLogin(){
@@ -139,7 +144,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
 
     override fun getToken(token: String) {
         sharedPreferenceHelper.save(Constants.PREF_TOKEN_USER, token)
-        Log.d("token",token)
+        Log.d("token", token)
     }
 
 }
