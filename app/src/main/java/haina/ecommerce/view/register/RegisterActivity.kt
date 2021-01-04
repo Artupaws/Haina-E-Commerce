@@ -45,7 +45,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
             R.id.btn_register -> {
                 binding.btnRegister.visibility = View.INVISIBLE
                 binding.relativeLoading.visibility = View.VISIBLE
-                binding.btnLoginGoogle.isEnabled = false
+//                binding.btnLoginGoogle.isEnabled = false
                 binding.btnLogin.isEnabled = false
                 registerCheck()
             }
@@ -61,7 +61,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         var password = binding.etPassword.text.toString()
         var confirmPassword = binding.etConfirmPassword.text.toString()
         if (fullname.isEmpty()) {
-            binding.outlinedTextFieldFullname.error = "Fullname can't empty"
+            binding.etFullname.error = "Fullname can't empty"
             isEmptyFullname = true
         } else {
             fullname = binding.etFullname.text.toString()
@@ -69,10 +69,10 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         }
 
         if (email.isEmpty()) {
-            binding.outlinedTextFieldEmail.error = "Email can't empty"
+            binding.etEmail.error = "Email can't empty"
             isEmptyEmail = true
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.outlinedTextFieldEmail.error = "Email not valid"
+            binding.etEmail.error = "Email not valid"
             isEmptyEmail = true
         } else {
             email = binding.etEmail.text.toString()
@@ -80,7 +80,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         }
 
         if (username.isEmpty()) {
-            binding.outlinedTextFieldUsername.error = "Username can't empty"
+            binding.etUsername.error = "Username can't empty"
             isEmptyUsername = true
         } else {
             username = binding.etUsername.text.toString()
@@ -88,7 +88,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         }
 
         if (phone.isEmpty()) {
-            binding.outlinedTextFieldPhone.error = "Phone can't empty"
+            binding.etPhone.error = "Phone can't empty"
             isEmptyPhone = true
         } else {
             phone = binding.etPhone.text.toString()
@@ -96,7 +96,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         }
 
         if (password.isEmpty()) {
-            binding.outlinedTextFieldPassword.error = "Password can't empty"
+            binding.etPassword.error = "Password can't empty"
             isEmptyPassword = true
         } else {
             password = binding.etPassword.text.toString()
@@ -105,11 +105,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
 
         when {
             confirmPassword.isEmpty() -> {
-                binding.outlinedTextFieldCPassword.error = "Confrim password can't empty"
+                binding.etConfirmPassword.error = "Confrim password can't empty"
                 isEmptyConfirmPassword = true
             }
             confirmPassword != password -> {
-                binding.outlinedTextFieldCPassword.error = "Confrim password must same with password"
+                binding.etConfirmPassword.error = "Confrim password must same with password"
                 isEmptyConfirmPassword = true
             }
             else -> {
@@ -126,7 +126,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
             Toast.makeText(applicationContext, "Please Complete Form Register", Toast.LENGTH_SHORT).show()
             binding.btnRegister.visibility = View.VISIBLE
             binding.relativeLoading.visibility = View.INVISIBLE
-            binding.btnLoginGoogle.isEnabled = true
+//            binding.btnLoginGoogle.isEnabled = true
             binding.btnLogin.isEnabled = true
         }
 
@@ -143,7 +143,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         binding.btnRegister.visibility = View.VISIBLE
         binding.relativeLoading.visibility = View.INVISIBLE
-        binding.btnLoginGoogle.isEnabled = true
+//        binding.btnLoginGoogle.isEnabled = true
         binding.btnLogin.isEnabled = true
     }
 

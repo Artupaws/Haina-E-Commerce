@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
                 binding.btnLogin.visibility = View.INVISIBLE
                 binding.relativeLoading.visibility = View.VISIBLE
                 binding.btnRegister.isEnabled = false
-                binding.btnLoginGoogle.isEnabled= false
+//                binding.btnLoginGoogle.isEnabled= false
                 checkLogin()
             }
             R.id.btn_register -> {
@@ -64,10 +64,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         val deviceToken = sharedPreferenceHelper.getValueString(Constants.PREF_TOKEN_FIREBASE).toString()
 
         if (email.isEmpty()){
-            binding.outlinedTextFieldEmail.error = "Email can't empty"
+            binding.etEmail.error = "Email can't empty"
             isEmailEmpty = true
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            binding.outlinedTextFieldEmail.error = "Email not valid"
+            binding.etEmail.error = "Email not valid"
             isEmailEmpty = true
         } else {
             email = binding.etEmail.text.toString()
@@ -75,7 +75,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         }
 
         if (password.isEmpty()){
-            binding.outlinedTextFieldPassword.error = "Password can't empty"
+            binding.etPassword.error = "Password can't empty"
             isPasswordEmpty = true
         } else {
             password = binding.etPassword.text.toString()
@@ -91,7 +91,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
             binding.btnLogin.visibility = View.VISIBLE
             binding.relativeLoading.visibility = View.INVISIBLE
             binding.btnRegister.isEnabled = true
-            binding.btnLoginGoogle.isEnabled= true
+//            binding.btnLoginGoogle.isEnabled= true
         }
 
     }
@@ -113,7 +113,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         binding.btnLogin.visibility = View.VISIBLE
         binding.relativeLoading.visibility = View.INVISIBLE
         binding.btnRegister.isEnabled = true
-        binding.btnLoginGoogle.isEnabled= true
+//        binding.btnLoginGoogle.isEnabled= true
 
     }
 

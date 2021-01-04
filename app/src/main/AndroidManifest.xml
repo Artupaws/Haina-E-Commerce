@@ -32,15 +32,19 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".view.register.RegisterActivity" />
+        <activity
+            android:name=".view.register.RegisterActivity"
+            android:theme="@style/TranslucentStatusBar" />
         <activity
             android:name=".view.login.LoginActivity"
+            android:theme="@style/TranslucentStatusBar"
             android:screenOrientation="nosensor" />
         <activity
             android:name=".view.other.OtherActivity"
             android:screenOrientation="nosensor" />
         <activity
             android:name=".view.splashscreen.SplashScreenActivity"
+            android:theme="@style/TranslucentStatusBar"
             android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
