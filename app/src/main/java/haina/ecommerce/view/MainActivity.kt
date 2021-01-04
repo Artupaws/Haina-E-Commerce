@@ -16,12 +16,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val fragmentExplore = ExploreFragment()
     private val fragmentHistory = HistoryFragment()
-    private val fragmentSell = PostingFragment()
+    private val fragmentPosting = PostingFragment()
     private val fragmentCart = CartFragment()
     private val fragmentMyAccount = MyAccountFragment()
     private val fragmentManager = supportFragmentManager
     private var activeFragment: Fragment = fragmentExplore
-    var doubleTap:Boolean = false
+    var doubleTap: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +31,10 @@ class MainActivity : AppCompatActivity() {
         fragmentManager.beginTransaction().apply {
             add(R.id.view_botnav, fragmentMyAccount).hide(fragmentMyAccount)
             add(R.id.view_botnav, fragmentCart).hide(fragmentCart)
-            add(R.id.view_botnav, fragmentSell).hide(fragmentSell)
+            add(R.id.view_botnav, fragmentPosting).hide(fragmentPosting)
             add(R.id.view_botnav, fragmentHistory).hide(fragmentHistory)
             add(R.id.view_botnav, fragmentExplore).hide(fragmentExplore)
-        }.commit()
+        }.disallowAddToBackStack().commit()
 
         initListeners()
 
@@ -44,6 +44,12 @@ class MainActivity : AppCompatActivity() {
                 hideFragment(fragmentExplore)
                 activeFragment = fragmentMyAccount
                 binding.bottomNavigationView.menu.findItem(R.id.myAccountFragment).isChecked = true
+            }
+            "3" -> {
+                loadFragment(fragmentPosting)
+                hideFragment(fragmentExplore)
+                activeFragment = fragmentPosting
+                binding.bottomNavigationView.menu.findItem(R.id.postingFragment).isChecked = true
             }
             else -> {
                 loadFragment(fragmentExplore)
@@ -70,9 +76,9 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                R.id.sellFragment -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(fragmentSell).commit()
-                    activeFragment = fragmentSell
+                R.id.postingFragment -> {
+                    fragmentManager.beginTransaction().hide(activeFragment).show(fragmentPosting).commit()
+                    activeFragment = fragmentPosting
                     true
                 }
 
@@ -94,7 +100,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideFragment(fragment: Fragment?): Boolean {
-        if (fragment !=null){
+        if (fragment != null) {
             supportFragmentManager.beginTransaction().hide(fragment).commit()
             return true
         }
@@ -103,26 +109,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadFragment(fragment: Fragment?): Boolean {
         if (fragment != null) {
-            supportFragmentManager.beginTransaction().show(fragment)
-                    .commit()
+            supportFragmentManager.beginTransaction().show(fragment).commit()
             return true
         }
         return false
     }
 
-    override fun onStop() {
-        super.onStop()
-//        fragmentManager.popBackStack()
-    }
-
-
     override fun onBackPressed() {
-        if(doubleTap){
+        if (doubleTap) {
             super.onBackPressed()
         } else {
             Toast.makeText(this, "Please click once again to exit", Toast.LENGTH_SHORT).show()
             doubleTap = true
-            val handler:Handler = Handler()
+            val handler: Handler = Handler()
             handler.postDelayed({ doubleTap = false }, 500)
         }
     }

@@ -5,8 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
@@ -18,10 +17,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light">
-        <activity android:name=".view.job.JobActivity" />
-        <activity android:name=".view.postingjob.PostingJobActivity" />
-        <activity android:name=".view.covidlist.CovidListActivity" />
-        <activity android:name=".view.webview.WebViewActivity" />
+        <activity android:name=".view.myaccount.addrequirement.AddRequirementActivity"></activity>
+        <activity android:name=".view.myaccount.detailaccount.DetailAccountActivity" />
+        <activity android:name=".view.datacompany.address.AddAddressCompanyActivity" />
+        <activity android:name=".view.datacompany.DataCompanyActivity" />
+        <activity android:name=".view.register.company.RegisterCompanyActivity" />
+        <activity
+            android:name=".view.detailjob.DetailJobActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.job.JobActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.postingjob.PostingJobActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.covidlist.CovidListActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.webview.WebViewActivity"
+            android:screenOrientation="nosensor" />
 
         <service
             android:name=".fcm.NotifInstanceService"
@@ -35,6 +50,7 @@
         <activity
             android:name=".view.register.RegisterActivity"
             android:theme="@style/TranslucentStatusBar" />
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".view.login.LoginActivity"
             android:theme="@style/TranslucentStatusBar"

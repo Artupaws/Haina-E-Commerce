@@ -10,12 +10,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import haina.ecommerce.R
+import haina.ecommerce.adapter.AdapterHeadlineNews
 import haina.ecommerce.adapter.AdapterSpinnerCurrency
 import haina.ecommerce.databinding.FragmentExploreBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.*
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.covidlist.CovidListActivity
 import haina.ecommerce.view.job.JobActivity
 import haina.ecommerce.view.other.OtherActivity
@@ -25,6 +28,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
     private var _binding: FragmentExploreBinding? = null
     private val binding get() = _binding
     private val helper: Helper = Helper()
+
     @SuppressLint("SetTextI18n")
     private lateinit var presenter: ExplorePresenter
     private var baseCurrency: String = "USD"
@@ -51,13 +55,14 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.menuServices?.linearJob?.setOnClickListener(this)
         binding?.covidNews?.tvDetailCovid?.setOnClickListener(this)
 //        presenter.loadListBaseCurrency()
-        presenter.loadCovidJkt()
+//        presenter.loadCovidJkt()
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
         setBaseCurrency()
+        refresh()
     }
 
-    private fun setBaseCurrency(){
-        binding?.includeCurrency?.spnCountry?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+    private fun setBaseCurrency() {
+        binding?.includeCurrency?.spnCountry?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 baseCurrency = binding?.includeCurrency?.spnCountry?.selectedItem.toString()
                 when {
@@ -226,7 +231,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
     }
 
     override fun onClick(p0: View?) {
-        when(p0?.id){
+        when (p0?.id) {
             R.id.linear_other -> {
                 val intent = Intent(activity, OtherActivity::class.java)
                 startActivity(intent)
@@ -249,9 +254,10 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         }
     }
 
-    private fun refresh(){
+    private fun refresh() {
         binding?.swipeRefresh?.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            presenter.loadCovidJkt()
+//            presenter.loadCovidJkt()
+//            presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
         })
     }
 
@@ -261,13 +267,13 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
     }
 
     override fun errorMessage(msg: String?) {
-        Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show()
+        Log.d("errorExplore", msg)
+        binding?.swipeRefresh?.isRefreshing = false
     }
 
     override fun successMessage(msg: String?) {
-        if (msg != null){
-            binding?.swipeRefresh?.isRefreshing = false
-        }
+        Log.d("successExplore", msg)
+        binding?.swipeRefresh?.isRefreshing = false
     }
 
     override fun dismissShimmerHeadlineNews() {
@@ -286,13 +292,13 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
 //        binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item?.currency?.uSD.toString())
 //    }
 
-    override fun loadCovidJkt(item: DataCovidJkt?) {
-        binding?.covidNews?.tvProvince?.text = item?.provinsi.toString()
-        binding?.covidNews?.tvTotalCases?.text = item?.kasusPosi.toString()
-        binding?.covidNews?.tvTotalRecover?.text = item?.kasusSemb.toString()
-        binding?.covidNews?.tvTotalDie?.text = item?.kasusMeni.toString()
-    }
-
+//    override fun loadCovidJkt(item: DataCovidJkt?) {
+//        binding?.covidNews?.tvProvince?.text = item?.provinsi.toString()
+//        binding?.covidNews?.tvTotalCases?.text = item?.kasusPosi.toString()
+//        binding?.covidNews?.tvTotalRecover?.text = item?.kasusSemb.toString()
+//        binding?.covidNews?.tvTotalDie?.text = item?.kasusMeni.toString()
+//    }
+//
 //    override fun loadHeadlinesNews(list: List<ArticlesItem?>?) {
 //        val newsAdapter = activity?.let { AdapterHeadlineNews(it, list) }
 //        binding?.rvNews?.apply {

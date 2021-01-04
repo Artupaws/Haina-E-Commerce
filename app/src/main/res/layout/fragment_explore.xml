@@ -203,7 +203,7 @@
 
                 <include
                     android:id="@+id/menu_services"
-                    layout="@layout/layout_menu_service"></include>
+                    layout="@layout/layout_menu_service"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -220,7 +220,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"></include>
+                    android:layout_marginEnd="15dp"/>
 
                 <include
                     android:id="@+id/covid_news"
@@ -228,7 +228,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"></include>
+                    android:layout_marginEnd="15dp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_news"

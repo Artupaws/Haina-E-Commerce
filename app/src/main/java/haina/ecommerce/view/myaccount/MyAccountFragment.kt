@@ -19,6 +19,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
@@ -27,8 +28,11 @@ import haina.ecommerce.databinding.FragmentMyAccountBinding
 import haina.ecommerce.model.DataUser
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.datacompany.DataCompanyActivity
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.login.LoginActivity
+import haina.ecommerce.view.myaccount.detailaccount.DetailAccountActivity
+import haina.ecommerce.view.register.company.RegisterCompanyActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -69,16 +73,19 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getDataUserProfile()
-        binding.includeLogin.btnLogin.setOnClickListener(this)
+        refresh()
+        binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
         binding.ivNotification.setOnClickListener(this)
         binding.linearLogout.setOnClickListener(this)
         binding.ivProfile.setOnClickListener(this)
+        binding.tvActionEditProfile.setOnClickListener(this)
+        binding.linearRegisterCompany.setOnClickListener(this)
         binding.tvActionEditProfile.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.btn_login -> {
+            R.id.btn_login_not_login -> {
                 val intent = Intent(activity, LoginActivity::class.java)
                 startActivity(intent)
             }
@@ -115,9 +122,21 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
                 }
             }
 
+            R.id.linear_register_company -> {
+              presenter.checkDataCompany()
+            }
+
             R.id.tv_action_edit_profile -> {
+                val intent = Intent(activity, DetailAccountActivity::class.java)
+                startActivity(intent)
             }
         }
+    }
+
+    private fun refresh(){
+        binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            presenter.getDataUserProfile()
+        })
     }
 
     companion object {
@@ -150,9 +169,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             val file = File(filepath)
             val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
             val body = MultipartBody.Part.createFormData("photo", file.name, mFile)
-            val apiKey: RequestBody = RequestBody.create(
-                    MultipartBody.FORM, Constants.APIKEY)
-            presenter.changeImageProfile(apiKey, body)
+            presenter.changeImageProfile(body)
         }
     }
 
@@ -203,16 +220,20 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun successGetDataUser(msg: String) {
         Log.d("getDataSuccess", msg)
+        binding.swipeRefresh.isRefreshing = false
     }
 
     override fun errorGetDataUSer(msg: String) {
         Log.d("getDataError", msg)
+        binding.swipeRefresh.isRefreshing = false
     }
 
     override fun getDataUser(data: DataUser?) {
         sharedPref.save(Constants.PREF_USERNAME, data?.username.toString())
         sharedPref.save(Constants.PREF_EMAIL, data?.email.toString())
         sharedPref.save(Constants.PREF_FULLNAME, data?.fullname.toString())
+        sharedPref.save(Constants.PREF_PHONE, data?.phone.toString())
+        sharedPref.save(Constants.PREF_PHOTO, data?.photo.toString())
         binding.tvNameUser.text = data?.fullname.toString()
         activity?.let { Glide.with(it).load(data?.photo).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding.ivProfile) }
     }
@@ -236,6 +257,18 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun errorChangeImageProfile(msg: String) {
         Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun checkDataCompany(msg: String) {
+        if (msg == "Company Registered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+            val intent = Intent(activity, DataCompanyActivity::class.java)
+            startActivity(intent)
+        } else if (msg == "Company Unregistered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+            val intent = Intent(activity, RegisterCompanyActivity::class.java)
+            startActivity(intent)
+        } else {
+            Toast.makeText(requireContext(), "Please Login First", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

@@ -15,5 +15,7 @@ interface MyAccountContract {
     fun successChangeImageProfile(msg:String)
     fun errorChangeImageProfile(msg:String)
 
+    fun checkDataCompany(msg:String)
+
 
 }

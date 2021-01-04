@@ -60,7 +60,8 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -68,182 +69,233 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
-            <LinearLayout
-                android:id="@+id/linear_menu"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_profile"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"/>
+                android:layout_height="match_parent">
 
+                <LinearLayout
+                    android:id="@+id/linear_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_profile"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"/>
 
-                        <TextView
-                            android:id="@+id/tv_name_user"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="Putra"
-                            android:textSize="18sp"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"/>
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tv_action_edit_profile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/view_or_edit_profile"
-                            android:textColor="@color/black"/>
+                            <TextView
+                                android:id="@+id/tv_name_user"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="Putra"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"/>
+
+                            <TextView
+                                android:id="@+id/tv_action_edit_profile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/view_or_edit_profile"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+
                     </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linear_order"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:weightSum="3">
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:src="@drawable/ic_card"/>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:id="@+id/linear_order"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:weightSum="3">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="My Order"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"/>
-                        <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_weight="0.5"
+                            android:src="@drawable/ic_card"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Packages, invoice, order"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"/>
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="My Order"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Packages, invoice, order"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:src="@drawable/ic_next"/>
+
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:src="@drawable/ic_next"/>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/linear_help"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:weightSum="3">
-
-                    <haina.ecommerce.helper.FontAwesome
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:textSize="20sp"
-                        android:textAlignment="center"
-                        android:text="@string/support"/>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:id="@+id/linear_help"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:weightSum="3">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <haina.ecommerce.helper.FontAwesome
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/haina_help_support"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"/>
-                        <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_weight="0.5"
+                            android:textSize="20sp"
+                            android:textAlignment="center"
+                            android:text="@string/support"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/help_center"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"/>
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/haina_help_support"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/help_center"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:src="@drawable/ic_next"/>
+
                     </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:src="@drawable/ic_next"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linear_logout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:weightSum="3">
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:src="@drawable/ic_logout"/>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:id="@+id/linear_register_company"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2"
-                        android:orientation="vertical">
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:weightSum="3">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Logout"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"/>
-                        <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_weight="0.5"
+                            android:src="@drawable/ic_company"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Packages, invoice, order"
-                            android:textSize="13sp"
-                            android:textColor="@color/black"/>
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/data_company"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/register_your_data_company_here"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:src="@drawable/ic_next"/>
+
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:id="@+id/linear_logout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:src="@drawable/ic_next"/>
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:weightSum="3">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:src="@drawable/ic_logout"/>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Logout"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Packages, invoice, order"
+                                android:textSize="13sp"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:src="@drawable/ic_next"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
-        </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
         <include
             android:id="@+id/include_login"
@@ -254,7 +306,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

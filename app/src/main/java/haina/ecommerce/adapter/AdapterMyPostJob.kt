@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemSellingBinding
 import haina.ecommerce.model.DataMyPost
 import haina.ecommerce.model.Selling
@@ -18,8 +19,9 @@ class AdapterMyPostJob(val context: Context, private val listJob: List<DataMyPos
         fun bin(item: DataMyPost?){
             with(binding){
                 tvTitlePost.text = item?.title
+                tvStatus.text = item?.status
                 tvDatePost.text = item?.photoUrl.toString()
-                Glide.with(context).load(item?.photoUrl).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivImagePost)
+                Glide.with(context).load(item?.photoUrl).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivImagePost)
             }
         }
     }

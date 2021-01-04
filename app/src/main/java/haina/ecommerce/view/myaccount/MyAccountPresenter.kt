@@ -3,6 +3,7 @@ package haina.ecommerce.view.myaccount
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.ResponseChangeImageProfile
+import haina.ecommerce.model.ResponseCheckRegisterCompany
 import haina.ecommerce.model.ResponseGetDataUser
 import haina.ecommerce.model.ResponseLogout
 import haina.ecommerce.util.Constants
@@ -53,8 +54,8 @@ class MyAccountPresenter (val view: MyAccountContract, val context: Context){
                 })
     }
 
-    fun changeImageProfile(apiKey:RequestBody, file:MultipartBody.Part){
-        val callChangeImageProfile = NetworkConfig().getConnectionHainaBearer(context).changeImageProfile(apiKey,file)
+    fun changeImageProfile(file:MultipartBody.Part){
+        val callChangeImageProfile = NetworkConfig().getConnectionHainaBearer(context).changeImageProfile(file)
         callChangeImageProfile.enqueue(object : retrofit2.Callback<ResponseChangeImageProfile>{
             override fun onResponse(
                 call: Call<ResponseChangeImageProfile>,
@@ -69,6 +70,24 @@ class MyAccountPresenter (val view: MyAccountContract, val context: Context){
 
             override fun onFailure(call: Call<ResponseChangeImageProfile>, t: Throwable) {
                 view.errorChangeImageProfile("Failed")
+            }
+
+        })
+    }
+
+    fun checkDataCompany(){
+        val callCheckDataCompany = NetworkConfig().getConnectionHainaBearer(context).checkRegisterCompany()
+        callCheckDataCompany.enqueue(object : retrofit2.Callback<ResponseCheckRegisterCompany>{
+            override fun onResponse(call: Call<ResponseCheckRegisterCompany>, response: Response<ResponseCheckRegisterCompany>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.checkDataCompany("Company Registered")
+                } else {
+                    view.checkDataCompany("Company Unregistered")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCheckRegisterCompany>, t: Throwable) {
+                view.checkDataCompany(t.localizedMessage.toString())
             }
 
         })

@@ -11,7 +11,7 @@
         android:title="@string/history" />
 
     <item
-        android:id="@+id/sellFragment"
+        android:id="@+id/postingFragment"
         android:icon="@drawable/ic_add_posting"
         android:title="@string/posting" />
 

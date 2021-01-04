@@ -9,83 +9,68 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.recyclerview.widget.GridLayoutManager
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterMyPostJob
+import haina.ecommerce.adapter.TabAdapter
 import haina.ecommerce.databinding.FragmentPostingBinding
-import haina.ecommerce.model.DataMyPost
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
-import haina.ecommerce.view.login.LoginActivity
 import haina.ecommerce.view.postingjob.PostingJobActivity
+import haina.ecommerce.view.register.company.RegisterCompanyActivity
 
 class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
 
     private var _binding: FragmentPostingBinding? = null
     private lateinit var presenter: PostingPresenter
     private val binding get() = _binding!!
+    private var popupCheckDataCompany: AlertDialog? = null
+    lateinit var sharedPref: SharedPreferenceHelper
     private val rotatePostIconOpen: Animation by lazy {
         AnimationUtils.loadAnimation(
-            activity,
-            R.anim.rotate_icon_post
+                activity,
+                R.anim.rotate_icon_post
         )
     }
     private val rotatePostIconClose: Animation by lazy {
         AnimationUtils.loadAnimation(
-            activity,
-            R.anim.rotate_close_post
+                activity,
+                R.anim.rotate_close_post
         )
     }
     private val fromBottom: Animation by lazy {
         AnimationUtils.loadAnimation(
-            activity,
-            R.anim.fab_from_bottom
+                activity,
+                R.anim.fab_from_bottom
         )
     }
     private val toBottom: Animation by lazy {
         AnimationUtils.loadAnimation(
-            activity,
-            R.anim.fab_to_bottom
+                activity,
+                R.anim.fab_to_bottom
         )
     }
-    lateinit var sharedPref: SharedPreferenceHelper
+
     private var clicked = false
-    private var broadcaster: LocalBroadcastManager? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentPostingBinding.inflate(inflater, container, false)
         sharedPref = SharedPreferenceHelper(requireContext())
-        broadcaster = LocalBroadcastManager.getInstance(requireContext())
         presenter = PostingPresenter(this, requireContext())
-
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getDataMyPost()
         binding.floatingActionButton.setOnClickListener(this)
         binding.floatingActionButton2.setOnClickListener(this)
         binding.floatingActionButton3.setOnClickListener(this)
-        binding.includeLogin.btnLogin.setOnClickListener(this)
-
+        binding.viewPagerHistory.adapter = TabAdapter(requireActivity().supportFragmentManager, 0)
+        binding.tabLayout.setupWithViewPager(binding.viewPagerHistory)
+        showPopup()
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
-            binding.includeLogin.linearNotLogin.visibility = View.GONE
-            binding.rvPost.visibility = View.VISIBLE
-            binding.floatingActionButton.visibility = View.VISIBLE
-        }
-
-    }
     private fun onAddPostClicked() {
         setVisibility(clicked)
         setAnimation(clicked)
@@ -134,42 +119,44 @@ class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
             }
 
             R.id.floatingActionButton3 -> {
-                val intent = Intent(activity, PostingJobActivity::class.java)
-                startActivity(intent)
+                presenter.checkRegisterCompany()
             }
 
             R.id.floatingActionButton2 -> {
             }
-
-            R.id.btn_login ->{
-                val intent = Intent(activity, LoginActivity::class.java)
-                startActivity(intent)
-            }
         }
     }
 
-    override fun successLoadMyPost(msg: String) {
-        Log.d("successLoadPost", msg)
+    private fun showPopup() {
+        val popup = AlertDialog.Builder(requireContext())
+        val view: View = layoutInflater.inflate(R.layout.popup_check_register_company, null)
+        popup.setCancelable(true)
+        popup.setView(view)
+        val actionCancel = view.findViewById<TextView>(haina.ecommerce.R.id.tv_action_cancel)
+        val actionYes = view.findViewById<TextView>(haina.ecommerce.R.id.tv_action_yes)
+        popupCheckDataCompany = popup.create()
+        popupCheckDataCompany?.dismiss()
+        actionCancel.setOnClickListener { popupCheckDataCompany?.dismiss() }
+        actionYes.setOnClickListener {
+            val intent = Intent(activity, RegisterCompanyActivity::class.java)
+            activity?.startActivity(intent)
+            popupCheckDataCompany?.dismiss()
+        }
     }
 
-    override fun errorLoadMyPost(msg: String) {
-        Log.d("errorLoadPost", msg)
-    }
-
-    override fun getListMyPost(list: List<DataMyPost?>?) {
-        val getMyPost = AdapterMyPostJob(requireContext(), list)
-        if (list?.size != 0){
-            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
-            binding.rvPost.apply {
-                layoutManager = GridLayoutManager(activity, 2)
-                adapter = getMyPost
-            }
+    override fun checkRegisterCompanyTrue(msg: String) {
+        if (msg == "Company Registered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
+            val intent = Intent(activity, PostingJobActivity::class.java)
+            startActivity(intent)
+        } else if (msg == "Company Unregistered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
+            popupCheckDataCompany?.show()
         } else {
-            binding.rvPost.visibility = View.INVISIBLE
-            binding.includeEmpty.tvEmpty.text = "You haven't posted anything yet"
-            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+            Toast.makeText(requireContext(), "Please Login First", Toast.LENGTH_SHORT).show()
         }
+    }
 
+    override fun checkRegisterCompanyFalse(msg: String) {
+        Log.d("anjayani", msg)
     }
 
 }

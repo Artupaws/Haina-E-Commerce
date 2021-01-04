@@ -1,4 +1,4 @@
-package haina.ecommerce.view.register
+package haina.ecommerce.view.register.account
 
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.ResponseRegister
@@ -7,8 +7,8 @@ import retrofit2.Response
 
 class RegisterPresenter (val view: RegisterContract){
 
-    fun createUser(fullname: String, email: String, username:String, phone: String, password: String, deviceToken:String){
-        NetworkConfig().getConnectionHaina().createUser(fullname, email, username, phone, password, deviceToken)
+    fun createUser(fullname: String, email: String, username:String, phone: String, password: String, deviceToken:String, deviceName:String){
+        NetworkConfig().getConnectionHaina().createUser(fullname, email, username, phone, password, deviceToken, deviceName)
             .enqueue(object : retrofit2.Callback<ResponseRegister>{
                 override fun onResponse(call: Call<ResponseRegister>, response: Response<ResponseRegister>) {
                     if (response.isSuccessful && response.body()?.value == 1){

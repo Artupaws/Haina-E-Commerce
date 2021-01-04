@@ -1,4 +1,4 @@
-package haina.ecommerce.view.register
+package haina.ecommerce.view.register.account
 
 interface RegisterContract {
 

@@ -2,6 +2,7 @@ package haina.ecommerce.view.postingjob
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.model.ResponseCheckRegisterCompany
 import haina.ecommerce.model.ResponseJobCategory
 import haina.ecommerce.model.ResponseListJobLocation
 import haina.ecommerce.model.ResponsePostingJobVacancy
@@ -35,31 +36,8 @@ class PostingJobPresenter(val view: PostingJobContract, val context: Context) {
         })
     }
 
-    fun loadListJobLocation(){
-        val callListJobLocation = NetworkConfig().getConnectionHaina().getDataListJobLocation()
-        callListJobLocation.enqueue(object : retrofit2.Callback<ResponseListJobLocation> {
-            override fun onResponse(
-                call: Call<ResponseListJobLocation>,
-                response: Response<ResponseListJobLocation>
-            ) {
-                if (response.isSuccessful && response.body()?.value == 1) {
-                    val data = response.body()?.data
-                    view.loadJobLocation(data)
-                    view.successLoadJobCategory(response.body()?.message.toString())
-                } else {
-                    view.errorLoadJobCategory(response.body()?.message.toString())
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseListJobLocation>, t: Throwable) {
-                view.errorLoadJobCategory(t.localizedMessage)
-            }
-
-        })
-    }
-
-    fun postingJobVacancy(imageCompany: MultipartBody.Part, title: RequestBody, idLocation: RequestBody, idCategory: RequestBody, description: RequestBody, salaryFrom: RequestBody, salaryTo: RequestBody){
-        val callPostingJobVacancy = NetworkConfig().getConnectionHainaBearer(context).postingJobVacancy(imageCompany, title, idLocation, idCategory, description, salaryFrom, salaryTo)
+    fun postingJobVacancy(imageCompany: MultipartBody.Part, title: RequestBody, idAddress: RequestBody, idCategory: RequestBody, description: RequestBody, salaryFrom: RequestBody, salaryTo: RequestBody){
+        val callPostingJobVacancy = NetworkConfig().getConnectionHainaBearer(context).postingJobVacancy(imageCompany, title, idAddress, idCategory, description, salaryFrom, salaryTo)
         callPostingJobVacancy.enqueue(object : retrofit2.Callback<ResponsePostingJobVacancy> {
             override fun onResponse(call: Call<ResponsePostingJobVacancy>, response: Response<ResponsePostingJobVacancy>) {
                 if (response.isSuccessful && response.body()?.value == 1) {
@@ -72,7 +50,27 @@ class PostingJobPresenter(val view: PostingJobContract, val context: Context) {
             }
 
             override fun onFailure(call: Call<ResponsePostingJobVacancy>, t: Throwable) {
-                view.errorPostingJob(t.localizedMessage)
+                view.errorPostingJob(t.toString())
+            }
+
+        })
+    }
+
+    fun getDataCompany(){
+        val callGetDataCompany = NetworkConfig().getConnectionHainaBearer(context).getDataCompany()
+        callGetDataCompany.enqueue(object : retrofit2.Callback<ResponseCheckRegisterCompany>{
+            override fun onResponse(call: Call<ResponseCheckRegisterCompany>, response: Response<ResponseCheckRegisterCompany>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    val data = response.body()?.dataCompany
+                    view.getDataCompany(data!!)
+                    view.messageGetDataCompany(response.body()?.message.toString())
+                } else {
+                    view.messageGetDataCompany(response.body()?.message.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCheckRegisterCompany>, t: Throwable) {
+                view.messageGetDataCompany(t.localizedMessage.toString())
             }
 
         })

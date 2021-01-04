@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import haina.ecommerce.adapter.AdapterCovid
 import haina.ecommerce.databinding.ActivityCovidListBinding
 import haina.ecommerce.model.DataCovid
@@ -24,11 +25,18 @@ class CovidListActivity : AppCompatActivity(), CovidListContract {
         binding.toolbar.setNavigationIcon(haina.ecommerce.R.drawable.ic_back_black)
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
         presenter.loadCovidList()
+        refresh()
     }
 
+    private fun refresh(){
+        binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            presenter.loadCovidList()
+        })
+    }
 
     override fun errorMessage(msg: String) {
         Log.d("message covid list", msg)
+        binding.swipeRefresh.isRefreshing = false
     }
 
     override fun loadListCovid(list: List<DataCovid?>?) {

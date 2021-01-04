@@ -1,32 +1,30 @@
 package haina.ecommerce.view.posting
 
 import android.content.Context
-import android.view.View
+import android.util.Log
 import haina.ecommerce.api.NetworkConfig
-import haina.ecommerce.model.ResponseGetMyPost
+import haina.ecommerce.model.ResponseCheckRegisterCompany
 import retrofit2.Call
 import retrofit2.Response
 
-class PostingPresenter(val view: PostingContract, val context: Context) {
+class PostingPresenter(val view:PostingContract, val context: Context) {
 
-    fun getDataMyPost(){
-        NetworkConfig().getConnectionHainaBearer(context).getMyPost()
-                .enqueue(object : retrofit2.Callback<ResponseGetMyPost>{
-                    override fun onResponse(call: Call<ResponseGetMyPost>, response: Response<ResponseGetMyPost>) {
-                        if (response.isSuccessful && response.body()?.value == 1){
-                            val data = response.body()?.data
-                            view.getListMyPost(data)
-                            view.successLoadMyPost(response.body()?.message.toString())
-                        } else {
-                            view.errorLoadMyPost(response.body()?.message.toString())
-                        }
+    fun checkRegisterCompany(){
+        val callCheckRegisterCompany = NetworkConfig().getConnectionHainaBearer(context).checkRegisterCompany()
+            callCheckRegisterCompany.enqueue(object : retrofit2.Callback<ResponseCheckRegisterCompany>{
+                override fun onResponse(call: Call<ResponseCheckRegisterCompany>, response: Response<ResponseCheckRegisterCompany>) {
+                    if (response.isSuccessful && response.body()?.value == 1){
+                        view.checkRegisterCompanyTrue("Company Registered")
+                    } else {
+                        view.checkRegisterCompanyTrue("Company Unregistered")
                     }
+                }
+                override fun onFailure(call: Call<ResponseCheckRegisterCompany>, t: Throwable) {
+                    Log.d("failure", t.message)
+                    view.checkRegisterCompanyTrue(t.localizedMessage)
+                }
 
-                    override fun onFailure(call: Call<ResponseGetMyPost>, t: Throwable) {
-                        view.errorLoadMyPost(t.localizedMessage)
-                    }
-
-                })
+            })
     }
 
 }

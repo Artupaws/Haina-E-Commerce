@@ -16,8 +16,7 @@
     <color name="colorAccent">#28324b</color>
     <color name="baseColor">#ffffff</color>
     <color name="baseColorDark">#000000</color>
-
-
     <color name="google">#da4b42</color>
     <color name="facebook">#3a559f</color>
+    <color name="light_grey">#d3d3d3</color>
 </resources>
