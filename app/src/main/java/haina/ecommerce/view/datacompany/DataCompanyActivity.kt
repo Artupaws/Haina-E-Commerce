@@ -46,14 +46,10 @@ class DataCompanyActivity : AppCompatActivity(), DataCompanyContract, View.OnCli
 
     private lateinit var binding: ActivityDataCompanyBinding
     private lateinit var presenter: DataCompanyPresenter
-    private var popupAddress: AlertDialog? = null
-    private var popupLocation: AlertDialog? = null
     private var broadcaster: LocalBroadcastManager? = null
     private lateinit var uri: Uri
     var nameUser:RequestBody = RequestBody.create(MultipartBody.FORM, "")
     var idCompany:RequestBody = RequestBody.create(MultipartBody.FORM, "")
-    var idLocation:Int? = null
-    var nameLocation:String? = null
     var idCompanyString:String? = null
     var refresh:String? = null
 

@@ -89,8 +89,7 @@ class AddAddressCompanyActivity : AppCompatActivity(), AddressCompanyContract, V
             R.id.btn_add_address_company -> {
                 binding.btnAddAddressCompany.visibility = View.INVISIBLE
                 binding.relativeLoading.visibility = View.VISIBLE
-                move()
-//                presenter.addAddressCompany(idCompany!!, binding.etAddressCompany.text.toString(), idLocation.toString())
+                presenter.addAddressCompany(idCompany!!, binding.etAddressCompany.text.toString(), idLocation.toString())
             }
 
             R.id.et_location_company ->{

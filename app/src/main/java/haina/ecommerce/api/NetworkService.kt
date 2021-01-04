@@ -18,7 +18,8 @@ interface NetworkService {
             @Field("username") username: String,
             @Field("phone") phone: String,
             @Field("password") password: String,
-            @Field("device_token") deviceToken: String
+            @Field("device_token") deviceToken: String,
+            @Field("device_name") deviceName: String
     ): Call<ResponseRegister>
 
     //Login
@@ -28,8 +29,9 @@ interface NetworkService {
     fun loginUser(
             @Field("email") email: String,
             @Field("password") password: String,
-            @Field("device_token") deviceToken: String
-    ): Call<ResponseLogin>
+            @Field("device_token") deviceToken: String,
+            @Field("device_name") deviceName: String
+            ): Call<ResponseLogin>
 
     //Currency
     @FormUrlEncoded

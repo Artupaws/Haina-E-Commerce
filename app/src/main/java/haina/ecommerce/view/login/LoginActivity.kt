@@ -25,8 +25,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
     private var isEmailEmpty = true
     private var isPasswordEmpty = true
     private var isDeviceTokenEmpty = true
+    private var isDeviceNameEmpty = true
     lateinit var sharedPreferenceHelper: SharedPreferenceHelper
     private lateinit var presenter: LoginPresenter
+    private var manufacturer: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +40,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         binding.btnLogin.setOnClickListener(this)
         binding.btnRegister.setOnClickListener(this)
         sharedPreferenceHelper = SharedPreferenceHelper(this)
+        getDeviceName()
 
         binding.etPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -79,8 +82,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
     }
 
     private fun getDeviceName() {
-        val manufacturer: String = Build.MANUFACTURER
-//        Toast.makeText(context, manufacturer, Toast.LENGTH_SHORT).show()
+        manufacturer = Build.MANUFACTURER+" "+Build.MODEL
+        Log.d("deviceName", manufacturer)
     }
 
     private fun checkLogin(){
@@ -109,8 +112,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
 
         isDeviceTokenEmpty = deviceToken.equals(null)
 
-        if (!isEmailEmpty && !isPasswordEmpty && !isDeviceTokenEmpty){
-            presenter.loginUser(email, password, deviceToken)
+        isDeviceNameEmpty = manufacturer == ""
+
+        if (!isEmailEmpty && !isPasswordEmpty && !isDeviceTokenEmpty && !isDeviceNameEmpty){
+            presenter.loginUser(email, password, deviceToken, manufacturer)
         } else {
             Toast.makeText(applicationContext, "Please Complete Form Login", Toast.LENGTH_SHORT).show()
             binding.btnLogin.visibility = View.VISIBLE

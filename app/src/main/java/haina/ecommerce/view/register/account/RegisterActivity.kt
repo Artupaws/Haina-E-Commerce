@@ -2,6 +2,7 @@ package haina.ecommerce.view.register.account
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,10 +24,12 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
     private var isEmptyPhone: Boolean = true
     private var isEmptyPassword: Boolean = true
     private var isEmptyDeviceToken: Boolean = true
+    private var isDeviceNameEmpty = true
     private var isEmptyConfirmPassword: Boolean = true
     @SuppressLint("SetTextI18n")
     private lateinit var presenter: RegisterPresenter
     lateinit var sharedPreferenceHelper: SharedPreferenceHelper
+    private var manufacturer: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +40,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         binding.btnRegister.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
         sharedPreferenceHelper = SharedPreferenceHelper(this)
+        getDeviceName()
     }
 
     override fun onClick(p0: View?) {
@@ -119,8 +123,10 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
 
         isEmptyDeviceToken = deviceToken.equals(null)
 
-        if (!isEmptyFullname && !isEmptyEmail && !isEmptyUsername && !isEmptyPhone && !isEmptyPassword && !isEmptyConfirmPassword && !isEmptyDeviceToken) {
-            presenter.createUser(fullname, email, username, phone, password, deviceToken)
+        isDeviceNameEmpty = manufacturer == ""
+
+        if (!isEmptyFullname && !isEmptyEmail && !isEmptyUsername && !isEmptyPhone && !isEmptyPassword && !isEmptyConfirmPassword && !isEmptyDeviceToken && !isDeviceNameEmpty) {
+            presenter.createUser(fullname, email, username, phone, password, deviceToken, manufacturer)
         } else {
             Toast.makeText(applicationContext, "Please Complete Form Register", Toast.LENGTH_SHORT).show()
             binding.btnRegister.visibility = View.VISIBLE
@@ -129,6 +135,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
             binding.btnLogin.isEnabled = true
         }
 
+    }
+
+    private fun getDeviceName() {
+        manufacturer = Build.MANUFACTURER+" "+Build.MODEL
+        Log.d("deviceName", manufacturer)
     }
 
     override fun successCreateUser(msg: String) {
