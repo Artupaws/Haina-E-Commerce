@@ -44,6 +44,7 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
         presenter = ApplyJobPresenter(this, this)
         presenter.loadDocumentResume(1)
         presenter.getDataUserProfile()
+        refresh()
         binding.toolbarApplyJob.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarApplyJob.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarApplyJob.title = intent.getStringExtra("titleJob")
@@ -53,6 +54,13 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
         binding.tvAddResume.setOnClickListener(this)
         binding.tvActionReviewProfile.setOnClickListener(this)
 
+    }
+
+    private fun refresh(){
+        binding.swipeRefresh.setOnRefreshListener {
+            idDocumentResume?.let { presenter.loadDocumentResume(it) }
+            presenter.getDataUserProfile()
+        }
     }
 
     override fun onClick(v: View?) {
@@ -100,10 +108,16 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
 
     override fun messageGetDataPersonal(msg: String) {
         Log.d("getDataPersonal", msg)
+        if (msg.contains("Success")){
+            binding.swipeRefresh.isRefreshing = false
+        }
     }
 
     override fun messagetGetDocument(msg: String) {
         Log.d("getDocument", msg)
+        if (msg.contains("Success")){
+            binding.swipeRefresh.isRefreshing = false
+        }
     }
 
     override fun messageApplyJob(msg: String) {
