@@ -7,21 +7,30 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemSellingBinding
-import haina.ecommerce.model.DataMyPost
-import haina.ecommerce.model.Selling
+import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.DataMyJob
 
-class AdapterMyPostJob(val context: Context, private val listJob: List<DataMyPost?>?): RecyclerView.Adapter<AdapterMyPostJob.Holder>(){
+class AdapterJobPosting(val context: Context, private val listJob: List<DataMyJob?>?): RecyclerView.Adapter<AdapterJobPosting.Holder>(){
+
+    private var salary:String? = null
+    private var datePublish:String? = null
+    private val helper: Helper = Helper()
 
     inner class Holder (view:View): RecyclerView.ViewHolder(view){
         private val binding = ListItemSellingBinding.bind(view)
-        fun bin(item: DataMyPost?){
+        fun bin(item: DataMyJob?){
             with(binding){
                 tvTitlePost.text = item?.title
                 tvStatus.text = item?.status
-                tvDatePost.text = item?.photoUrl.toString()
-                Glide.with(context).load(item?.photoUrl).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivImagePost)
+                tvLocation.text = item?.location
+                tvCategory.text = item?.jobcategory
+                datePublish = "Posted : ${item?.date}"
+                tvDatePublish.text = datePublish
+                salary = "${helper.convertToFormatMoneySalary(item?.salaryFrom.toString())} - ${helper.convertToFormatMoneySalary(item?.salaryTo.toString())}"
+                tvSalary.text = salary
+                Glide.with(context).load(item?.photoUrl).skipMemoryCache(false).diskCacheStrategy(
+                    DiskCacheStrategy.NONE).into(ivImagePost)
             }
         }
     }
@@ -33,7 +42,7 @@ class AdapterMyPostJob(val context: Context, private val listJob: List<DataMyPos
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val selling: DataMyPost? = listJob?.get(position)!!
+        val selling: DataMyJob? = listJob?.get(position)!!
         holder.bin(selling)
     }
 

@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterMyPostJob
+import haina.ecommerce.adapter.AdapterJobPosting
 import haina.ecommerce.databinding.FragmentHistoryBuyBinding
-import haina.ecommerce.model.DataMyPost
+import haina.ecommerce.model.DataMyJob
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.login.LoginActivity
@@ -103,8 +103,8 @@ class JobVacancyPostFragment : Fragment(), VacancyContract, View.OnClickListener
         }
     }
 
-    override fun getListMyPost(list: List<DataMyPost?>?) {
-        val getMyPost = AdapterMyPostJob(requireContext(), list)
+    override fun getListMyPost(list: List<DataMyJob?>?) {
+        val getMyPost = AdapterJobPosting(requireContext(), list)
         binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
         binding.rvJobVacancy.apply {
             layoutManager = GridLayoutManager(activity, 2)

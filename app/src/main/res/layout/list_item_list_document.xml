@@ -17,6 +17,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_click"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -27,7 +28,7 @@
                     android:layout_margin="10dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="anjing"
+                    tools:text="list"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/iv_action_delete"
                     app:layout_constraintStart_toStartOf="parent"

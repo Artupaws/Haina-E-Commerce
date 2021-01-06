@@ -79,7 +79,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         binding.etCategoryJob.setOnClickListener(this)
 //        binding.etLocationCompany.setOnClickListener(this)
         binding.btnPostingJob.setOnClickListener(this)
-        val locale = Locale("es", "AR")
+        val locale = Locale("es", "IDR")
         val numDecs = 2 // Let's use 2 decimals
         val twSalaryFrom: TextWatcher = NumberTextWatcher(binding.etSalaryFrom, locale, numDecs)
         val twSalaryTo: TextWatcher = NumberTextWatcher(binding.etSalaryTo, locale, numDecs)

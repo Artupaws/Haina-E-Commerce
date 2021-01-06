@@ -2,7 +2,7 @@ package haina.ecommerce.view.posting.vacancy
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
-import haina.ecommerce.model.ResponseGetMyPost
+import haina.ecommerce.model.ResponseMyJob
 import retrofit2.Call
 import retrofit2.Response
 
@@ -10,8 +10,8 @@ class VacancyPresenter(val view: VacancyContract, val context: Context) {
 
     fun getDataMyPost() {
         NetworkConfig().getConnectionHainaBearer(context).getMyPost()
-                .enqueue(object : retrofit2.Callback<ResponseGetMyPost> {
-                    override fun onResponse(call: Call<ResponseGetMyPost>, response: Response<ResponseGetMyPost>) {
+                .enqueue(object : retrofit2.Callback<ResponseMyJob> {
+                    override fun onResponse(call: Call<ResponseMyJob>, response: Response<ResponseMyJob>) {
                         if (response.isSuccessful && response.body()?.value == 1) {
                             val data = response.body()!!.data
                             view.getListMyPost(data)
@@ -21,7 +21,7 @@ class VacancyPresenter(val view: VacancyContract, val context: Context) {
                         }
                     }
 
-                    override fun onFailure(call: Call<ResponseGetMyPost>, t: Throwable) {
+                    override fun onFailure(call: Call<ResponseMyJob>, t: Throwable) {
                         view.errorLoadMyPost(t.localizedMessage)
                     }
 

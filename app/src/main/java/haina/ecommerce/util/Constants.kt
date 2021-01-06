@@ -16,10 +16,7 @@ class Constants {
         const val PREF_TOKEN_LOGIN = "PREF_TOKEN_LOGIN"
         const val PREF_TOKEN_FIREBASE = "PREF_TOKEN_FIREBASE"
         const val PREF_FULLNAME = "PREF_FULLNAME"
-        const val PREF_USERNAME = "PREF_USERNAME"
-        const val PREF_EMAIL = "PREF_EMAIL"
-        const val PREF_PHONE = "PREF_PHONE"
-        const val PREF_PHOTO = "PREF_PHOTO"
+        const val PREF_PERSONAL_DATA = "PREF_PERSONAL_DATA"
     }
 
 }

@@ -17,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light">
-        <activity android:name=".view.myaccount.addrequirement.AddRequirementActivity"></activity>
+        <activity android:name=".view.applyjob.ApplyJobActivity"></activity>
+        <activity android:name=".view.myaccount.addskills.AddSkillsActivity" />
+        <activity android:name=".view.myaccount.addrequirement.AddRequirementActivity" />
         <activity android:name=".view.myaccount.detailaccount.DetailAccountActivity" />
         <activity android:name=".view.datacompany.address.AddAddressCompanyActivity" />
         <activity android:name=".view.datacompany.DataCompanyActivity" />
@@ -48,20 +50,20 @@
         </service>
 
         <activity
-            android:name=".view.register.RegisterActivity"
+            android:name=".view.register.account.RegisterActivity"
+            android:screenOrientation="nosensor"
             android:theme="@style/TranslucentStatusBar" />
-            android:screenOrientation="nosensor" />
         <activity
             android:name=".view.login.LoginActivity"
-            android:theme="@style/TranslucentStatusBar"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="nosensor"
+            android:theme="@style/TranslucentStatusBar" />
         <activity
             android:name=".view.other.OtherActivity"
             android:screenOrientation="nosensor" />
         <activity
             android:name=".view.splashscreen.SplashScreenActivity"
-            android:theme="@style/TranslucentStatusBar"
-            android:screenOrientation="nosensor">
+            android:screenOrientation="nosensor"
+            android:theme="@style/TranslucentStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

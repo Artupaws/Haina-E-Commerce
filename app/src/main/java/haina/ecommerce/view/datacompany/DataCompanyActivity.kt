@@ -94,7 +94,7 @@ class DataCompanyActivity : AppCompatActivity(), DataCompanyContract, View.OnCli
                 "refresh" -> {
                     val fromIntent = intent.getStringExtra("fromAddAddress")
                     refresh = fromIntent
-                    Log.d("refresh", fromIntent!!)
+                    Log.d("", fromIntent!!)
                     if (refresh == "1"){
                         presenter.getDataCompany()
                     }

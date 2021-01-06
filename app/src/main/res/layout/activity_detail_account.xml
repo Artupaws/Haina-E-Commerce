@@ -216,6 +216,8 @@
                                 android:id="@+id/et_email"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:enabled="false"
+                                android:focusable="false"
                                 android:background="@drawable/background_line_corner_input_text_black"
                                 android:inputType="textEmailAddress"
                                 android:padding="5dp"
@@ -262,6 +264,8 @@
                                 android:id="@+id/et_username"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:enabled="false"
+                                android:focusable="false"
                                 android:background="@drawable/background_line_corner_input_text_black"
                                 android:inputType="text"
                                 android:padding="5dp"
@@ -308,6 +312,8 @@
                                 android:id="@+id/et_phone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:enabled="false"
+                                android:focusable="false"
                                 android:background="@drawable/background_line_corner_input_text_black"
                                 android:inputType="phone"
                                 android:padding="5dp"
@@ -402,7 +408,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/background_line_corner_input_text_black"
                                 android:focusable="false"
-                                android:hint="Please enter your date of birth"
+                                android:hint="@string/please_enter_your_date_of_birth"
                                 android:inputType="text"
                                 android:padding="5dp"
                                 android:visibility="invisible" />
@@ -466,10 +472,113 @@
 
                             </RadioGroup>
 
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/about" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:text="@string/colon"
+                            android:textColor="@color/black" />
+
+                        <FrameLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.9">
+
+                            <TextView
+                                android:id="@+id/tv_about"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/black" />
+
+                            <EditText
+                                android:id="@+id/et_about"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_line_corner_input_text_black"
+                                android:inputType="textMultiLine"
+                                android:padding="5dp"
+                                android:visibility="invisible" />
 
                         </FrameLayout>
 
                     </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/light_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:src="@drawable/ic_resume" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="2.2"
+                            android:text="@string/your_skills"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_add_skills"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:drawablePadding="5dp"
+                            android:gravity="center"
+                            android:text="@string/add"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:drawableStartCompat="@drawable/ic_add" />
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_skills"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 </LinearLayout>
 

@@ -112,7 +112,7 @@ interface NetworkService {
     //Get My Post Job Vacancy
     @POST("api/company/jobs")
     @Headers("No-Authentication: true")
-    fun getMyPost():Call<ResponseGetMyPost>
+    fun getMyPost():Call<ResponseMyJob>
 
     //Check Register Company
     @POST("/api/company")
@@ -179,4 +179,55 @@ interface NetworkService {
     fun loadDocumentUser(
         @Field("id_docs_category") idDocsCategory:Int
     ):Call<ResponseLoadDocumentUser>
+
+    //Add Personal Data User
+    @FormUrlEncoded
+    @POST("api/profile")
+    @Headers("No-Authentication: true")
+    fun addPersonalDataUser(
+            @Field("fullname") fullname:String,
+            @Field("birthdate") birthdate:String,
+            @Field("gender") gender:String,
+            @Field("address") address:String,
+            @Field("about") about:String
+    ):Call<ResponseAddPersonalData>
+
+    //Add Skills
+    @FormUrlEncoded
+    @POST("api/skill/add")
+    @Headers("No-Authentication: true")
+    fun addSkillsUser(
+            @Field("skill_name") skillName:String
+    ):Call<ResponseAddSkills>
+
+    //Get List Skill User
+    @POST("api/skill")
+    @Headers("No-Authentication: true")
+    fun getListSkill():Call<ResponseGetUserSkills>
+
+    //Delete Skills User
+    @FormUrlEncoded
+    @POST("api/skill/delete")
+    @Headers("No-Authentication: true")
+    fun deleteSkills(
+            @Field("skill_name") skillName:String
+    ):Call<ResponseDeleteSkills>
+
+    //Apply Job
+    @FormUrlEncoded
+    @POST("api/jobs/application/post")
+    @Headers("No-Authentication: true")
+    fun applyJob(
+        @Field("id_job_vacancy")idJobVacancy:Int,
+        @Field("id_user_docs")idUserDocs:Int
+    ):Call<ResponseApplyJob>
+
+    //Check Applied Job Vacancy
+    @FormUrlEncoded
+    @POST("api/jobs/check")
+    @Headers("No-Authentication: true")
+    fun checkAppliedJob(
+        @Field("id_job")idJob:Int
+    ):Call<ResponseCheckAppliedJob>
+
 }

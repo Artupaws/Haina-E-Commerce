@@ -53,6 +53,7 @@ class AdapterJobVacancy(private val context: Context, private val jobList: List<
                 linearJobVacancy.setOnClickListener {
                     val intent = Intent(context, DetailJobActivity::class.java)
                     intent.putExtra("title",tvTitleJob.text)
+                    intent.putExtra("idJobVacancy",itemHaina.id)
                     intent.putExtra("nameCompany", tvCompanyName.text)
                     intent.putExtra("description",description == itemHaina.description)
                     intent.putExtra("salary", tvSalary.text)

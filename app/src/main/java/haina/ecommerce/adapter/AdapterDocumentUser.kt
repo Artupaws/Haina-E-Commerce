@@ -24,7 +24,7 @@ class AdapterDocumentUser(val context: Context, private val listDocumentUser: Li
         private var nameDocument:String? = null
         fun bind(itemHaina: DataDocumentUser){
             with(binding){
-                nameDocument = (itemHaina.docs_name+itemHaina.id.toString())
+                nameDocument = itemHaina.docs_name
                 tvTitleDocument.text = nameDocument
             }
         }

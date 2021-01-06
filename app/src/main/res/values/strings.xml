@@ -126,4 +126,12 @@
     <string name="title_upload_document">Click here for upload your document (.pdf)</string>
     <string name="uploaded">Ready to upload :</string>
     <string name="upload_document">Upload Document</string>
+    <string name="please_enter_your_date_of_birth">Please enter your date of birth</string>
+    <string name="about">about</string>
+    <string name="click_here_for_add_skill">Click here for add skill</string>
+    <string name="your_skills">Your skills :</string>
+    <string name="add_skills">Add Skills</string>
+    <string name="review_profile"><u>Review Profile</u></string>
+    <string name="submit">Submit</string>
+    <string name="the_job_you_wish_to_apply_for">the job you wish to apply for :</string>
 </resources>

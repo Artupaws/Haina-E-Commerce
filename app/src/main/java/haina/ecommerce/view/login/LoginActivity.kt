@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (p0!!.isNotEmpty()) {
-                    binding.outlinedTextFieldPassword.error = null
+                    binding.etPassword.error = null
                     true
                 }
             }
