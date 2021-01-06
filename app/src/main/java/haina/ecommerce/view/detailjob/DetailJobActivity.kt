@@ -77,9 +77,7 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
 
     private fun checkLogin(msg: String) {
         if (sharePref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
-            if (msg == "Available!") {
-                binding.btnApply.isEnabled = true
-            }
+            binding.btnApply.isEnabled = msg == "Available!"
         } else {
             binding.btnApply.isEnabled = false
             Toast.makeText(applicationContext, "Please login for apply this job!", Toast.LENGTH_SHORT).show()

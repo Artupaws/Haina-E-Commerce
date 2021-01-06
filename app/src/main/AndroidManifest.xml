@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light">
-        <activity android:name=".view.applyjob.ApplyJobActivity"></activity>
+        <activity android:name=".view.posting.detailvacancy.DetailPostingJobActivity"></activity>
+        <activity android:name=".view.applyjob.ApplyJobActivity" />
         <activity android:name=".view.myaccount.addskills.AddSkillsActivity" />
         <activity android:name=".view.myaccount.addrequirement.AddRequirementActivity" />
         <activity android:name=".view.myaccount.detailaccount.DetailAccountActivity" />

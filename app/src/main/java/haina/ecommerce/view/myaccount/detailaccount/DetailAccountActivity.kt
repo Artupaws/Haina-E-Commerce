@@ -174,10 +174,17 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         binding.tvBirthdate.text = birthdate
         binding.etBirthdate.setText(binding.tvBirthdate.text)
         binding.tvGender.text = gender
-        if (binding.tvGender.text.contains("Male")){
-            binding.rbMale.isChecked = true
-        } else {
-            binding.rbFemale.isChecked = true
+        when {
+            binding.tvGender.text.contains("Male") -> {
+                binding.rbMale.isChecked = true
+            }
+            binding.tvGender.text.contains("Female") -> {
+                binding.rbFemale.isChecked = true
+            }
+            else -> {
+                binding.rbFemale.isChecked = false
+                binding.rbMale.isChecked = false
+            }
         }
         binding.tvAbout.text = data?.about
         binding.etAbout.setText(binding.tvAbout.text)
@@ -249,6 +256,10 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
     private fun radioButton(view: View){
         val radio: RadioButton = findViewById(binding.rdGroup.checkedRadioButtonId)
         genderRadio = radio.text.toString()
+        if(genderRadio!!.isNotEmpty()){
+            binding.rbMale.error = null
+            binding.rbFemale.error = null
+        }
     }
 
     private fun stateEdit() {
@@ -309,8 +320,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
     private fun checkAddDataPersonal(){
         var fullname = binding.etFullname.text.toString()
         var birthdate = binding.etBirthdate.text.toString()
-        val radioButton : RadioButton = findViewById(binding.rdGroup.checkedRadioButtonId)
-        var genderString = gender
+        var genderString = genderRadio
         var address = binding.etAddress.text.toString()
         var about = binding.etAbout.text.toString()
 
@@ -330,12 +340,12 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
             isEmptyBirthdate = false
         }
 
-        if (genderString!!.isEmpty()){
+        if (genderString == null){
             binding.rbMale.error = "gender can't be empty"
             binding.rbFemale.error = "gender can't be empty"
             isEmptyGender = true
         } else {
-            genderString = radioButton.text.toString()
+            genderString = genderRadio
             isEmptyGender = false
         }
 
@@ -356,7 +366,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         }
 
         if (!isEmptyFullname && !isEmptyBirthdate && !isEmptyGender && !isEmptyAddress && !isEmptyAbout){
-            presenter.addDataPersonalUser(fullname, birthdate, genderString, address, about)
+            presenter.addDataPersonalUser(fullname, birthdate, genderString!!, address, about)
             binding.ivLoading.visibility = View.VISIBLE
             binding.ivActionSavePersonalData.visibility = View.INVISIBLE
         } else {

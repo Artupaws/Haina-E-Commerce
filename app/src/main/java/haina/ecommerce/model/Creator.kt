@@ -1,7 +1,10 @@
 package haina.ecommerce.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Creator(
 
 	@field:SerializedName("id")
@@ -12,4 +15,4 @@ data class Creator(
 
 	@field:SerializedName("username")
 	val username: String? = null
-)
+) : Parcelable

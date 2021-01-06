@@ -134,4 +134,9 @@
     <string name="review_profile"><u>Review Profile</u></string>
     <string name="submit">Submit</string>
     <string name="the_job_you_wish_to_apply_for">the job you wish to apply for :</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="requires_skill">Requires Skill</string>
+    <string name="edit_detail_job">Edit Detail Job</string>
+    <string name="applicant">Who has applied for this job :</string>
+    <string name="name">name</string>
 </resources>
