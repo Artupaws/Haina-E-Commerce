@@ -230,4 +230,20 @@ interface NetworkService {
         @Field("id_job")idJob:Int
     ):Call<ResponseCheckAppliedJob>
 
+    //Add Requires Skill Job
+    @FormUrlEncoded
+    @POST("api/jobs/vacancy/addskill")
+    @Headers("No-Authentication: true")
+    fun addRequiresSKill(
+        @Field("skill_name")skillName:String,
+        @Field("id_job_vacancy")idJobVacancy:Int
+    ):Call<ResponseAddSkills>
+
+    //Get SkillRequires
+    @FormUrlEncoded
+    @POST("api/jobs/vacancy/getskill")
+    @Headers("No-Authentication: true")
+    fun getSkillRequires(
+        @Field("id_job_vacancy")idJobVacancy:Int
+    ):Call<ResponseGetSkillRequires>
 }

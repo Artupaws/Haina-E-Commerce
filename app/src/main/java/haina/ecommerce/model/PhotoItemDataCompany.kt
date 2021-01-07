@@ -1,7 +1,10 @@
 package haina.ecommerce.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class PhotoItemDataCompany(
 
 	@field:SerializedName("name")
@@ -12,4 +15,4 @@ data class PhotoItemDataCompany(
 
 	@field:SerializedName("photo_url")
 	val photoUrl: String? = null
-)
+) : Parcelable

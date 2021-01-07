@@ -9,6 +9,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterAddressCompany
 import haina.ecommerce.adapter.AdapterApplicantJob
+import haina.ecommerce.adapter.AdapterSkillsRequires
+import haina.ecommerce.adapter.AdapterSkillsUser
 import haina.ecommerce.databinding.ActivityDetailPostingJobBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataMyJob
@@ -25,10 +27,20 @@ class DetailPostingJobActivity : AppCompatActivity(), DetailPostingJobContract, 
         setContentView(binding.root)
 
         presenter = DetailPostingJobPresenter(this, this)
+        binding.swipeRefresh.setOnRefreshListener {
+            binding.swipeRefresh.isRefreshing = false
+        }
         binding.toolbarDetailJob.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailJob.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarDetailJob.title = "Detail Job Vacancy"
         val item = intent.getParcelableExtra<DataMyJob>("item")
+        if (item?.skill?.size == 0){
+            binding.includeEmptySkill.clEmptySkill.visibility = View.VISIBLE
+            binding.rvSkills.visibility = View.GONE
+        } else {
+            binding.includeEmptySkill.clEmptySkill.visibility = View.GONE
+            binding.rvSkills.visibility = View.VISIBLE
+        }
         binding.etTitleJob.setText(item?.title)
         binding.etCategoryJob.setText(item?.jobcategory)
         binding.etDescriptionJob.setText(item?.description)
@@ -42,6 +54,12 @@ class DetailPostingJobActivity : AppCompatActivity(), DetailPostingJobContract, 
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
             adapter = adapterApplicant
             adapterApplicant.notifyDataSetChanged()
+        }
+        binding.rvSkills.apply {
+            val adapterSkillRequires = AdapterSkillsRequires(applicationContext, item?.skill)
+            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+            adapter = adapterSkillRequires
+            adapterSkillRequires.notifyDataSetChanged()
         }
 
     }

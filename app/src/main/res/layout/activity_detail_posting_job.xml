@@ -203,39 +203,54 @@
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_skills"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:listitem="@layout/list_item_list_document" />
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <include
+                                android:id="@+id/include_empty_skill"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                layout="@layout/layout_not_added_skill_requires"/>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_skills"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:listitem="@layout/list_item_list_document" />
+
+                        </FrameLayout>
+
+
                     </LinearLayout>
 
-                    <LinearLayout
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/applicant"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_applicant"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/applicant"
-                            android:textColor="@color/black"
-                            android:textStyle="bold" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_applicant"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="15dp"
-                            android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            tools:listitem="@layout/list_item_user_applicant" />
-                    </LinearLayout>
-
-
+                        android:layout_marginBottom="15dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/list_item_user_applicant" />
                 </LinearLayout>
 
             </LinearLayout>

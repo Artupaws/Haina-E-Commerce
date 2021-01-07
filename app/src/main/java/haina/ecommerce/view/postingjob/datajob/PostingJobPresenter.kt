@@ -1,10 +1,9 @@
-package haina.ecommerce.view.postingjob
+package haina.ecommerce.view.postingjob.datajob
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.ResponseCheckRegisterCompany
 import haina.ecommerce.model.ResponseJobCategory
-import haina.ecommerce.model.ResponseListJobLocation
 import haina.ecommerce.model.ResponsePostingJobVacancy
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

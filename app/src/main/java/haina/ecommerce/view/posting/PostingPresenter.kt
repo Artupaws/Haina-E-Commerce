@@ -14,14 +14,14 @@ class PostingPresenter(val view:PostingContract, val context: Context) {
             callCheckRegisterCompany.enqueue(object : retrofit2.Callback<ResponseCheckRegisterCompany>{
                 override fun onResponse(call: Call<ResponseCheckRegisterCompany>, response: Response<ResponseCheckRegisterCompany>) {
                     if (response.isSuccessful && response.body()?.value == 1){
-                        view.checkRegisterCompanyTrue("Company Registered")
+                        view.checkRegisterCompanyTrue("Company Registered", response.body()?.dataCompany)
                     } else {
-                        view.checkRegisterCompanyTrue("Company Unregistered")
+                        view.checkRegisterCompanyTrue("Company Unregistered", response.body()?.dataCompany)
                     }
                 }
                 override fun onFailure(call: Call<ResponseCheckRegisterCompany>, t: Throwable) {
                     Log.d("failure", t.message)
-                    view.checkRegisterCompanyTrue(t.localizedMessage)
+                    view.checkRegisterCompanyFalse(t.localizedMessage)
                 }
 
             })

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class SkillItem(
+data class SkillRequires(
 
 	@field:SerializedName("name")
 	val name: String? = null

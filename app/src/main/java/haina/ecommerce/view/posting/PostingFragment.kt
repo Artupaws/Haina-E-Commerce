@@ -15,9 +15,10 @@ import androidx.appcompat.app.AlertDialog
 import haina.ecommerce.R
 import haina.ecommerce.adapter.TabAdapter
 import haina.ecommerce.databinding.FragmentPostingBinding
+import haina.ecommerce.model.DataCompany
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
-import haina.ecommerce.view.postingjob.PostingJobActivity
+import haina.ecommerce.view.postingjob.datajob.PostingJobActivity
 import haina.ecommerce.view.register.company.RegisterCompanyActivity
 
 class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
@@ -144,7 +145,7 @@ class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
         }
     }
 
-    override fun checkRegisterCompanyTrue(msg: String) {
+    override fun checkRegisterCompanyTrue(msg: String, item:DataCompany?) {
         if (msg == "Company Registered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
             val intent = Intent(activity, PostingJobActivity::class.java)
             startActivity(intent)

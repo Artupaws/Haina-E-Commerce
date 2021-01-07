@@ -1,7 +1,10 @@
 package haina.ecommerce.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class ResponseCheckRegisterCompany(
 
     @field:SerializedName("data")
@@ -12,4 +15,4 @@ data class ResponseCheckRegisterCompany(
 
     @field:SerializedName("value")
 	val value: Int? = null
-)
+) : Parcelable

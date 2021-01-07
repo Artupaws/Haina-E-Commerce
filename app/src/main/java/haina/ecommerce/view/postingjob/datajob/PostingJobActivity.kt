@@ -1,4 +1,4 @@
- package haina.ecommerce.view.postingjob
+ package haina.ecommerce.view.postingjob.datajob
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -27,7 +27,6 @@ import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterAddressCompanyPostingJob
 import haina.ecommerce.adapter.AdapterJobCategory
-import haina.ecommerce.adapter.AdapterJobLocation
 import haina.ecommerce.databinding.ActivityPostingJobBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.helper.NumberTextWatcher
@@ -36,7 +35,7 @@ import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataPostingJob
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.datacompany.DataCompanyActivity
-import haina.ecommerce.view.register.company.RegisterCompanyActivity
+import haina.ecommerce.view.postingjob.skillrequires.AddSkillRequiresActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -59,6 +58,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
     private var isEmptySalaryTo = true
     private var uri: Uri = Uri.EMPTY
     var idLocation:Int? = 0
+    var idJobVacancy:Int? = 0
     var idCategory:String = ""
     val helper:Helper = Helper()
 
@@ -94,7 +94,6 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
     private fun refresh(){
         binding.swipeRefresh.setOnRefreshListener {
-//            presenter.loadListJobLocation()
             presenter.loadListJobCategory()
             presenter.getDataCompany()
         }
@@ -153,7 +152,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         }
 
         if (location == null){
-            Toast.makeText(applicationContext, "Please Choose Address Company", Toast.LENGTH_SHORT).show()
+            binding.tvChooseRv.error = "Please choose one your location company"
             isEmptyLocation = true
         } else {
             location = idLocation
@@ -317,13 +316,11 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         binding.relativeLoading.visibility = View.INVISIBLE
         binding.cvAddImage.isEnabled = true
         binding.outlinedTextFieldTitleJob.error = null
-        binding.outlinedFieldLocation.error = null
+        binding.tvChooseRv.error = null
         binding.outlinedFieldCategory.error = null
         binding.outlinedFieldDescription.error = null
         binding.outlinedFieldSalaryForm.error = null
         binding.outlinedFieldSalaryTo.error = null
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-        move()
     }
 
     override fun errorPostingJob(msg: String) {
@@ -334,7 +331,11 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
     }
 
     override fun getValuePostingJob(item: DataPostingJob?) {
-        Log.d("successLoadCategory", item?.date)
+        Log.d("successLoadCategory", item?.id.toString())
+        idJobVacancy = item?.id
+        if (item?.id != null){
+         move(item)
+        }
     }
 
     override fun successLoadJobCategory(msg: String) {
@@ -415,11 +416,10 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         binding.swipeRefresh.isRefreshing = false
     }
 
-    private fun move(){
-        val intent = Intent(applicationContext, MainActivity::class.java)
-        intent.putExtra("loginStatus", "3")
+    private fun move(item:DataPostingJob){
+        val intent = Intent(applicationContext, AddSkillRequiresActivity::class.java)
+        intent.putExtra("idJobVacancy", item.id)
         startActivity(intent)
-        finish()
     }
 
 }

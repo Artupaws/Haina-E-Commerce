@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light">
-        <activity android:name=".view.posting.detailvacancy.DetailPostingJobActivity"></activity>
+        <activity android:name=".view.postingjob.skillrequires.AddSkillRequiresActivity"></activity>
+        <activity android:name=".view.posting.detailvacancy.DetailPostingJobActivity" />
         <activity android:name=".view.applyjob.ApplyJobActivity" />
         <activity android:name=".view.myaccount.addskills.AddSkillsActivity" />
         <activity android:name=".view.myaccount.addrequirement.AddRequirementActivity" />
@@ -32,7 +33,7 @@
             android:name=".view.job.JobActivity"
             android:screenOrientation="nosensor" />
         <activity
-            android:name=".view.postingjob.PostingJobActivity"
+            android:name=".view.postingjob.datajob.PostingJobActivity"
             android:screenOrientation="nosensor" />
         <activity
             android:name=".view.covidlist.CovidListActivity"

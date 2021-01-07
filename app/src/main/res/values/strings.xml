@@ -74,7 +74,7 @@
     <string name="search_province_here">Search Province Here</string>
     <string name="title_job">Title Job</string>
     <string name="location_company">Location Company</string>
-    <string name="category_job">Category Job</string>
+    <string name="category_job">Job Category</string>
     <string name="description">Description</string>
     <string name="salary">Salary</string>
     <string name="strip">-</string>
@@ -135,8 +135,15 @@
     <string name="submit">Submit</string>
     <string name="the_job_you_wish_to_apply_for">the job you wish to apply for :</string>
     <string name="save_changes">Save Changes</string>
-    <string name="requires_skill">Requires Skill</string>
+    <string name="requires_skill">Requires Skill :</string>
     <string name="edit_detail_job">Edit Detail Job</string>
     <string name="applicant">Who has applied for this job :</string>
     <string name="name">name</string>
+    <string name="empty_skill_requires">You are not added skill requires, for add it you can click edit button on top.</string>
+    <string name="step_one_posting_job">Step One : Add Detail Job</string>
+    <string name="step_two_posting_job">Step Two : Add Requires</string>
+    <string name="choose_company_location">Choose your company location :</string>
+    <string name="image_company">Image Company</string>
+    <string name="next"><![CDATA[->]]></string>
+    <string name="finish">Finish</string>
 </resources>

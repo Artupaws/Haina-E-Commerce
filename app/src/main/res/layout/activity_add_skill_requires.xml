@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.myaccount.addskills.AddSkillsActivity">
+    tools:context=".view.postingjob.skillrequires.AddSkillRequiresActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_add_skills"
+        android:id="@+id/toolbar_add_skill_requires"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/yellow"
@@ -15,6 +15,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextAppearance="@style/ToolbarTitleStyle" />
+
+    <LinearLayout
+        android:id="@+id/linear_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_add_skill_requires">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/step_one_posting_job" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/next"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/step_two_posting_job"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextAddressCompany"
@@ -25,7 +58,7 @@
         android:hint="@string/add_skills"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_add_skills">
+        app:layout_constraintTop_toBottomOf="@+id/linear_title">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_skills"
@@ -41,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
-        android:text="@string/your_skills"
+        android:text="@string/requires_skill"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/outlinedTextAddressCompany"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
@@ -49,9 +82,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_skills"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textColor="@color/black"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btn_done"
         app:layout_constraintEnd_toEndOf="@+id/outlinedTextAddressCompany"
         app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -92,5 +126,17 @@
             android:text="@string/add_skills"
             android:textColor="@color/yellow" />
     </FrameLayout>
+
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/finish"
+        android:textColor="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
