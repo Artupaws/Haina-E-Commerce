@@ -251,4 +251,22 @@ interface NetworkService {
     @POST("api/jobs/application/my")
     @Headers("No-Authentiaction: true")
     fun getJobApplication():Call<ResponseGetJobApplications>
+
+    //Get List ShortList Applicant
+    @FormUrlEncoded
+    @POST("api/company/applicant")
+    @Headers("No-Authentication: true")
+    fun getShortlistApplicant(
+            @Field("status")status:String
+    ):Call<ResponseGetShortlistApplicant>
+
+    //Add Applicant to Shortlist
+    @FormUrlEncoded
+    @POST("api/company/jobs/applicant/status")
+    @Headers("No-Authentication: true")
+    fun addShortlistApplicant(
+            @Field("id_applicant")idApplicante:Int,
+            @Field("status")status:String
+    ):Call<ResponseAddShortlistApplicant>
+
 }

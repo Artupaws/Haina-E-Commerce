@@ -157,4 +157,6 @@
     <string name="description_accept">Action <b>Accept</b> : you hired applicant</string>
     <string name="description_decline">Action <b>Decline</b> : you decline applicant</string>
     <string name="application_status">Application Status :</string>
+    <string name="stand_dash">|</string>
+    <string name="applying_for">Applying For :</string>
 </resources>
