@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import haina.ecommerce.view.posting.vacancy.JobVacancyPostFragment
 import haina.ecommerce.view.HistorySellFragment
 
-class TabAdapter (fm: FragmentManager, behavior: Int) : FragmentStatePagerAdapter(fm, behavior) {
-    private val tabName: Array<String> = arrayOf("Vacancy", "News")
+class TabAdapterPosting (fm: FragmentManager, behavior: Int) : FragmentStatePagerAdapter(fm, behavior) {
+    private val tabName: Array<String> = arrayOf("Job Vacancy", "News")
 
     override fun getItem(position: Int): Fragment = when (position) {
         0 -> JobVacancyPostFragment()

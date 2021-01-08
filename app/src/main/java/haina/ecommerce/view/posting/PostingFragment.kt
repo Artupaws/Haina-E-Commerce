@@ -13,7 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import haina.ecommerce.R
-import haina.ecommerce.adapter.TabAdapter
+import haina.ecommerce.adapter.TabAdapterPosting
 import haina.ecommerce.databinding.FragmentPostingBinding
 import haina.ecommerce.model.DataCompany
 import haina.ecommerce.preference.SharedPreferenceHelper
@@ -67,8 +67,8 @@ class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
         binding.floatingActionButton.setOnClickListener(this)
         binding.floatingActionButton2.setOnClickListener(this)
         binding.floatingActionButton3.setOnClickListener(this)
-        binding.viewPagerHistory.adapter = TabAdapter(requireActivity().supportFragmentManager, 0)
-        binding.tabLayout.setupWithViewPager(binding.viewPagerHistory)
+        binding.viewPagerPosting.adapter = TabAdapterPosting(requireActivity().supportFragmentManager, 0)
+        binding.tabLayout.setupWithViewPager(binding.viewPagerPosting)
         showPopup()
     }
 

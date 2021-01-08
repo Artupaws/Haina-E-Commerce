@@ -246,4 +246,9 @@ interface NetworkService {
     fun getSkillRequires(
         @Field("id_job_vacancy")idJobVacancy:Int
     ):Call<ResponseGetSkillRequires>
+
+    //Get Job Application Applicant
+    @POST("api/jobs/application/my")
+    @Headers("No-Authentiaction: true")
+    fun getJobApplication():Call<ResponseGetJobApplications>
 }

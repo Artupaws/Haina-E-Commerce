@@ -31,17 +31,6 @@ class CartFragment : Fragment() {
 
         binding.toolbarCart.title = "Cart"
 
-        val listCart = arrayListOf(
-                Cart("Playstation 5 Digital Version 2020 Storage 1000 Giga Byte",R.drawable.ps5,"Rp10.000.000"),
-                Cart("Playstation 5 Digital Version 2020 Storage 1000 Giga Byte",R.drawable.ps5,"Rp10.000.000")
-        )
-
-        val cartAdapter = AdapterCart(requireContext(), listCart)
-        binding.rvCart.apply {
-            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            adapter = cartAdapter
-        }
-
     }
 
     override fun onDestroyView() {

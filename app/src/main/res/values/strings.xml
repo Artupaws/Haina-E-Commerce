@@ -146,4 +146,15 @@
     <string name="image_company">Image Company</string>
     <string name="next"><![CDATA[->]]></string>
     <string name="finish">Finish</string>
+    <string name="decline">Decline</string>
+    <string name="need_your_action">Need Your Action</string>
+    <string name="short_list">Short List</string>
+    <string name="pending">Pending</string>
+    <string name="interview">Interview</string>
+    <string name="accept">Accept</string>
+    <string name="description_short_list">Action <b>Short List</b> : enter applicants into your review queue</string>
+    <string name="description_interview">Action <b>Interview</b> : you invite applicants for an interview</string>
+    <string name="description_accept">Action <b>Accept</b> : you hired applicant</string>
+    <string name="description_decline">Action <b>Decline</b> : you decline applicant</string>
+    <string name="application_status">Application Status :</string>
 </resources>

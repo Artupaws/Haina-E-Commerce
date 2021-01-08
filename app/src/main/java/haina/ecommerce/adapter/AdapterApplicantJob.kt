@@ -13,10 +13,10 @@ import haina.ecommerce.databinding.ListItemUserApplicantBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataMyJob
 import haina.ecommerce.model.JobapplicantItem
+import haina.ecommerce.view.posting.applyapplicant.ApplyApplicantActivity
 import haina.ecommerce.view.posting.detailvacancy.DetailPostingJobActivity
 
 class AdapterApplicantJob(val context: Context, private val listJob: List<JobapplicantItem?>?): RecyclerView.Adapter<AdapterApplicantJob.Holder>(){
-
 
     inner class Holder (view:View): RecyclerView.ViewHolder(view){
         private val binding = ListItemUserApplicantBinding.bind(view)
@@ -28,6 +28,12 @@ class AdapterApplicantJob(val context: Context, private val listJob: List<Jobapp
                 tvGender.text = item?.gender
                 Glide.with(context).load(item?.photo).skipMemoryCache(false).diskCacheStrategy(
                     DiskCacheStrategy.NONE).into(ivImagePost)
+                cvClick.setOnClickListener {
+                    val intent = Intent(context, ApplyApplicantActivity::class.java)
+                        intent.putExtra("dataApplicant", item)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    context.startActivity(intent)
+                }
             }
         }
     }

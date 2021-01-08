@@ -39,6 +39,7 @@ class AdapterJobPosting(val context: Context, private val listJob: List<DataMyJo
                 cvClick.setOnClickListener {
                     val intent = Intent(context, DetailPostingJobActivity::class.java)
                     intent.putExtra("item", item)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)
                 }
             }
