@@ -4,6 +4,7 @@ import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.ResponseGetJob
 import haina.ecommerce.model.ResponseJobCategory
 import haina.ecommerce.model.ResponseListJobLocation
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
@@ -22,7 +23,8 @@ class JobPresenter(val view: JobContract){
                         view.successLoadListJob(response.message().toString())
                         view.getDataSize(size)
                     } else {
-                        view.errorLoadListJob(response.message().toString())
+                        val error = JSONObject(response.errorBody()?.string()!!)
+                        view.errorLoadListJob(error.getString("message"))
                     }
                 }
 
@@ -45,7 +47,8 @@ class JobPresenter(val view: JobContract){
                     view.getLoadJobCategory(data)
                     view.successLoadJobCategory(response.body()?.message.toString())
                 } else {
-                    view.errorLoadJobCategory(response.body()?.message.toString())
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.errorLoadJobCategory(error.getString("message"))
                 }
             }
 
@@ -68,7 +71,8 @@ class JobPresenter(val view: JobContract){
                     view.getLoadListLocation(data)
                     view.successLoadListLocation(response.body()?.message.toString())
                 } else {
-                    view.errorLoadListLocation(response.body()?.message.toString())
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.errorLoadListLocation(error.getString("message"))
                 }
             }
 

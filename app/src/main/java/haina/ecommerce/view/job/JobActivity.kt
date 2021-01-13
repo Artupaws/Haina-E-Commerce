@@ -32,6 +32,7 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
     private lateinit var binding: ActivityJobBinding
     private lateinit var presenter: JobPresenter
     private var popupLocation: AlertDialog? = null
+    private var popupLoading: AlertDialog? = null
     private val helper: Helper = Helper()
     private var broadcaster: LocalBroadcastManager? = null
     val data:MutableMap<String, Int> = HashMap()
@@ -51,6 +52,7 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         presenter.loadListJobCategory()
         presenter.loadListJobLocation()
         refresh()
+        loadingDialog()
         binding.toolbarJob.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarJob.setNavigationOnClickListener { onBackPressed() }
         binding.cvFilterJob.setOnClickListener(this)
@@ -62,6 +64,15 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
             presenter.loadListJobLocation()
             loadPresenter()
         })
+    }
+
+    private fun loadingDialog(){
+        val popup = AlertDialog.Builder(this)
+        val view: View = layoutInflater.inflate(R.layout.layout_popup_dialog, null)
+        popup.setCancelable(true)
+        popup.setView(view)
+        popupLoading = popup.create()
+        popupLoading?.show()
     }
 
     private fun loadPresenter(){
@@ -105,6 +116,7 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
                 "jobCategoryFilter" -> {
                     val idCategory = intent.getIntExtra("idCategoryJobFilter", 0)
                     filterCategory = idCategory
+                    popupLoading?.show()
                     loadPresenter()
                 }
             }
@@ -116,12 +128,12 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         broadcaster?.unregisterReceiver(mMessageReceiver)
     }
 
-
     override fun successLoadListJob(msg: String) {
         Log.d("loadlistJobSuccess", msg)
         data.clear()
         binding.swipeRefresh.isRefreshing = false
         binding.ivLoadingVacancy.visibility = View.INVISIBLE
+        popupLoading?.dismiss()
     }
 
     override fun errorLoadListJob(msg: String) {
@@ -131,6 +143,7 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         binding.ivLoadingVacancy.visibility = View.INVISIBLE
         binding.rvJob.visibility = View.INVISIBLE
         binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+        popupLoading?.dismiss()
     }
 
     override fun getLoadListJob(list: List<DataItemJob?>?) {
@@ -164,6 +177,7 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         binding.swipeRefresh.isRefreshing = false
         binding.ivLoadingCategory.visibility = View.INVISIBLE
         presenter.loadListJobVacancy(data)
+        popupLoading?.show()
     }
 
     override fun errorLoadJobCategory(msg: String) {
@@ -203,7 +217,6 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         }
 
         action.setOnClickListener{
-            Toast.makeText(applicationContext, filterLocation.toString() + filterStartSalary, Toast.LENGTH_SHORT).show()
             popupLocation!!.dismiss()
             loadPresenter()
         }

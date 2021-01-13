@@ -24,7 +24,6 @@ class LoginPresenter (val view: LoginContract){
                     override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
                         view.failedLogin(t.localizedMessage)
                     }
-
                 })
     }
 
