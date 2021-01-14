@@ -9,7 +9,7 @@ import retrofit2.Response
 class VacancyPresenter(val view: VacancyContract, val context: Context) {
 
     fun getDataMyPost() {
-        NetworkConfig().getConnectionHainaBearer(context).getMyPost()
+        NetworkConfig().getConnectionHainaBearer(context).getMyPostJob()
                 .enqueue(object : retrofit2.Callback<ResponseMyJob> {
                     override fun onResponse(call: Call<ResponseMyJob>, response: Response<ResponseMyJob>) {
                         if (response.isSuccessful && response.body()?.value == 1) {

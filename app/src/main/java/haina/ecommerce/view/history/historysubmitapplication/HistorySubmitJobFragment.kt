@@ -78,12 +78,12 @@ class HistorySubmitJobFragment : Fragment(), HistorySubmitJobContract, View.OnCl
 
     override fun getListSubmitJob(item: List<DataJobApplication?>?) {
         val adapterHistorySubmitJob = activity?.let { AdapterHistorySubmitJob(it, item) }
-        binding.rvHistoryJobSubmit.apply {
+        binding?.rvHistoryJobSubmit?.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = adapterHistorySubmitJob
             adapterHistorySubmitJob?.notifyDataSetChanged()
         }
-        totalSubmit = "Total submit : ${item?.size.toString()} App  lication"
+        totalSubmit = "Total submit : ${item?.size.toString()} Application"
         binding.tvTotalSubmit.text = totalSubmit
     }
 

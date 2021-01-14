@@ -393,10 +393,24 @@
                     android:weightSum="2"
                     android:orientation="horizontal">
 
-                    <FrameLayout
+                    <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/iv_loading_shortlist"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:visibility="invisible"
+                            app:lottie_autoPlay="true"
+                            app:lottie_loop="true"
+                            android:layout_gravity="center_horizontal"
+                            app:lottie_rawRes="@raw/load" />
 
                         <Button
                             android:id="@+id/btn_short_list"
@@ -407,39 +421,37 @@
                             android:text="@string/short_list"
                             android:textColor="@color/black" />
 
-                        <Button
-                            android:id="@+id/btn_interview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:backgroundTint="@android:color/holo_blue_dark"
-                            android:text="@string/interview"
-                            android:textColor="@color/black"
-                            android:visibility="invisible" />
 
-                        <Button
-                            android:id="@+id/btn_accept"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:backgroundTint="@android:color/holo_green_dark"
-                            android:text="@string/accept"
-                            android:textColor="@color/black"
-                            android:visibility="invisible" />
                     </FrameLayout>
+                    </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
-                        <Button
-                            android:id="@+id/btn_decline"
+                        <FrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@android:color/holo_red_dark"
-                            android:text="@string/decline"
-                            android:layout_centerInParent="true"/>
+                            android:layout_centerInParent="true">
+
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:id="@+id/iv_loading_decline"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:visibility="invisible"
+                                app:lottie_autoPlay="true"
+                                app:lottie_loop="true"
+                                android:layout_gravity="center_horizontal"
+                                app:lottie_rawRes="@raw/load" />
+
+                            <Button
+                                android:id="@+id/btn_decline"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:backgroundTint="@android:color/holo_red_dark"
+                                android:text="@string/decline"/>
+                        </FrameLayout>
 
                     </RelativeLayout>
 

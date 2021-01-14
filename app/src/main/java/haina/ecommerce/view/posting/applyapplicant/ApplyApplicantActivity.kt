@@ -1,10 +1,14 @@
 package haina.ecommerce.view.posting.applyapplicant
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -14,13 +18,19 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityApplyApplicantBinding
+import haina.ecommerce.model.DataMyJob
 import haina.ecommerce.model.JobapplicantItem
+import haina.ecommerce.model.StatusApplicant
+import haina.ecommerce.util.Constants
+import haina.ecommerce.view.MainActivity
 
 class ApplyApplicantActivity : AppCompatActivity(), View.OnClickListener, ApplyApplicantContract {
 
     private lateinit var binding: ActivityApplyApplicantBinding
     private val statusShortlist:String = "shortlisted"
+    private val statusDeclined:String = "declined"
     private var idApplicant:Int = 0
+    private var popupDeclined: AlertDialog? = null
     private lateinit var presenter: ApplyApplicantPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,14 +43,11 @@ class ApplyApplicantActivity : AppCompatActivity(), View.OnClickListener, ApplyA
         binding.toolbarApplyApplicant.title = "Apply Applicant"
         binding.btnShortList.setOnClickListener(this)
         presenter = ApplyApplicantPresenter(this, this)
-
+        popupDeclineApplicant()
+        stateButtonLoading()
         val item  = intent.getParcelableExtra<JobapplicantItem>("dataApplicant")
-        binding.tvApplicationStatus.text = item?.status
         idApplicant = item?.id!!
-        if (binding.tvApplicationStatus.text != "pending"){
-            binding.btnShortList.isEnabled = false
-            binding.btnDecline.isEnabled = false
-        }
+        presenter.getStatusApplicant(idApplicant)
         binding.tvFullname.text = item.fullname
         binding.tvEmail.text = item.email
         binding.tvPhone.text = item.phone
@@ -62,25 +69,85 @@ class ApplyApplicantActivity : AppCompatActivity(), View.OnClickListener, ApplyA
         binding.swipeRefresh.setOnRefreshListener {
             binding.swipeRefresh.isRefreshing = false
         }
+        binding.btnDecline.setOnClickListener(this)
     }
 
 
     override fun onClick(v: View?) {
         when (v?.id){
             R.id.btn_short_list -> {
+                stateButtonLoading()
                 presenter.addShortlistApplicant(idApplicant, statusShortlist)
             }
             R.id.btn_decline ->{
-
+                popupDeclined?.show()
             }
         }
     }
 
     override fun messageAddShortlistApplicant(msg: String) {
         Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        if (msg.contains("Update")){
+            stateFinishLoading()
+            presenter.getStatusApplicant(idApplicant)
+        }
+    }
+
+    override fun messageDeclineApplicant(msg: String) {
+        if (msg.contains("Update")){
+            stateFinishLoading()
+            presenter.getStatusApplicant(idApplicant)
+        }
+    }
+
+    override fun messageGetApplicantStatus(msg: String) {
         if (msg.contains("Success")){
+            stateFinishLoading()
+        } else {
+            stateFinishLoading()
+        }
+    }
+
+    override fun getApplicantStatus(item: StatusApplicant?) {
+        binding.tvApplicationStatus.text = item?.status
+        if (binding.tvApplicationStatus.text != "pending"){
             binding.btnShortList.isEnabled = false
             binding.btnDecline.isEnabled = false
         }
     }
+
+    private fun popupDeclineApplicant(){
+        val popup = AlertDialog.Builder(this)
+        val view: View = layoutInflater.inflate(R.layout.popup_logout, null)
+        popup.setCancelable(false)
+        popup.setView(view)
+        val actionCancel = view.findViewById<TextView>(R.id.tv_action_cancel)
+        val actionYes = view.findViewById<TextView>(R.id.tv_action_yes)
+        val title = view.findViewById<TextView>(R.id.tv_title)
+        val message = view.findViewById<TextView>(R.id.rv_popup)
+        popupDeclined = popup.create()
+        title.text = "Decline"
+        message.text = "Are you sure want to decline this applicant ?"
+        actionCancel.setOnClickListener { popupDeclined?.dismiss() }
+        actionYes.setOnClickListener {
+            popupDeclined?.dismiss()
+            stateButtonLoading()
+            presenter.declinedApplicant(idApplicant, statusDeclined)
+        }
+    }
+
+    private fun stateButtonLoading(){
+        binding.btnDecline.visibility = View.INVISIBLE
+        binding.btnShortList.visibility = View.INVISIBLE
+        binding.ivLoadingShortlist.visibility = View.VISIBLE
+        binding.ivLoadingDecline.visibility = View.VISIBLE
+    }
+
+    private fun stateFinishLoading(){
+        binding.btnDecline.visibility = View.VISIBLE
+        binding.btnShortList.visibility = View.VISIBLE
+        binding.ivLoadingShortlist.visibility = View.INVISIBLE
+        binding.ivLoadingDecline.visibility = View.INVISIBLE
+    }
+
 }

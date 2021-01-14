@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityMainBinding
 import haina.ecommerce.view.explore.ExploreFragment
+import haina.ecommerce.view.history.HistoryFragment
 import haina.ecommerce.view.myaccount.MyAccountFragment
 import haina.ecommerce.view.posting.PostingFragment
 

@@ -54,6 +54,7 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         broadcaster = LocalBroadcastManager.getInstance(this)
         sharePref = SharedPreferenceHelper(this)
         presenter = DetailJobPresenter(this, this)
+        stateLoading()
         val item = intent.getParcelableExtra<DataItemJob>("detailJob")
         idJobVacancy = item?.id
         idJobVacancy?.let { presenter.checkAppliedJob(it) }
@@ -155,6 +156,15 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         }
     }
 
+    private fun stateLoading(){
+        binding.btnApply.visibility = View.INVISIBLE
+        binding.ivLoading.visibility = View.VISIBLE
+    }
+
+    private fun stateFinishLoading(){
+        binding.btnApply.visibility = View.VISIBLE
+        binding.ivLoading.visibility = View.INVISIBLE
+    }
 
     override fun onBackPressed() {
         super.onBackPressed()
@@ -162,6 +172,7 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
 
     override fun messageCheckAppliedJob(msg: String) {
         checkLogin(msg)
+        stateFinishLoading()
     }
 
 }

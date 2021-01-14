@@ -112,7 +112,7 @@ interface NetworkService {
     //Get My Post Job Vacancy
     @POST("api/company/jobs")
     @Headers("No-Authentication: true")
-    fun getMyPost():Call<ResponseMyJob>
+    fun getMyPostJob():Call<ResponseMyJob>
 
     //Check Register Company
     @POST("/api/company")
@@ -276,5 +276,13 @@ interface NetworkService {
     fun getListJobApplicant(
             @Field("id_job")idJob:Int
     ):Call<ResponseGetListJobApplicant>
+
+    //Get Status Applicant
+    @FormUrlEncoded
+    @POST("api/company/applicant/status")
+    @Headers("No-Authentication: true")
+    fun getStatusApplicant(
+            @Field("id_applicant")idApplicant:Int
+    ):Call<ResponseGetApplicantStatus>
 
 }

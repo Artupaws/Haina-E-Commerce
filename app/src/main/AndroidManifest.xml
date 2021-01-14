@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light">
-        <activity android:name=".view.posting.applyapplicant.ApplyApplicantActivity"></activity>
+        <activity android:name=".view.history.historyinterviewapplicant.HistoryInterviewApplicantActivity"></activity>
+        <activity android:name=".view.posting.applyapplicant.ApplyApplicantActivity" />
         <activity android:name=".view.postingjob.skillrequires.AddSkillRequiresActivity" />
         <activity android:name=".view.posting.detailvacancy.DetailPostingJobActivity" />
         <activity android:name=".view.applyjob.ApplyJobActivity" />

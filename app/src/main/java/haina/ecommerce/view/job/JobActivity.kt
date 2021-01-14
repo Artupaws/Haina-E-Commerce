@@ -76,6 +76,7 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
     }
 
     private fun loadPresenter(){
+        popupLoading?.show()
         data.clear()
         isCategoryEmpty = filterCategory == 0
         isLocationEmpty = filterLocation == 0
