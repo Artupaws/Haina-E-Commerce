@@ -1,60 +1,118 @@
 package haina.ecommerce.view.history.historyacceptapplicant
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
+import haina.ecommerce.adapter.AdapterShortlistApplicant
+import haina.ecommerce.databinding.FragmentHistoryAcceptBinding
+import haina.ecommerce.model.DataShortlist
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
+import haina.ecommerce.view.history.historyinterviewapplicant.HistoryInterviewContract
+import haina.ecommerce.view.history.historyinterviewapplicant.HistoryInterviewPresenter
+import haina.ecommerce.view.login.LoginActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class HistoryAcceptFragment : Fragment(), HistoryInterviewContract, View.OnClickListener {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HistoryAcceptFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class HistoryAcceptFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding : FragmentHistoryAcceptBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var presenter : HistoryInterviewPresenter
+    private lateinit var sharedPref: SharedPreferenceHelper
+    private val status:String = "accepted"
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentHistoryAcceptBinding.inflate(inflater, container, false)
+        presenter = HistoryInterviewPresenter(this, requireContext())
+        sharedPref = SharedPreferenceHelper(requireContext())
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        presenter.getInterviewApplicant(status)
+        binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
+        if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
+            binding.includeLogin.linearNotLogin.visibility = View.INVISIBLE
+            binding.rvAccept.visibility = View.VISIBLE
+        } else {
+            binding.includeLogin.linearNotLogin.visibility = View.VISIBLE
+            binding.rvAccept.visibility = View.GONE
+        }
+        refresh()
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.btn_login_not_login -> {
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history_accept, container, false)
+    override fun onResume() {
+        super.onResume()
+        presenter.getInterviewApplicant(status)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HistoryAcceptFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HistoryAcceptFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun refresh(){
+        binding.swipeRefresh.setOnRefreshListener {
+            presenter.getInterviewApplicant(status)
+        }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    override fun messageStatusSuccess(msg: String) {
+        Log.d("acceptSuccess", msg)
+        if (msg.contains("Success")){
+            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
+            binding.rvAccept.visibility = View.VISIBLE
+            binding.swipeRefresh.isRefreshing = false
+        } else {
+            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+            binding.rvAccept.visibility = View.INVISIBLE
+            binding.swipeRefresh.isRefreshing = false
+        }
+    }
+
+    override fun messageStatusFailed(msg: String) {
+        Log.d("acceptFailed", msg)
+        if (msg == "null" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+            binding.includeEmpty.tvEmpty.text = "Empty"
+            binding.rvAccept.visibility = View.INVISIBLE
+            binding.swipeRefresh.isRefreshing = false
+        } else if (msg.contains("Doesn't Exist")){
+            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+            binding.includeEmpty.tvEmpty.text = "Empty"
+            binding.rvAccept.visibility = View.INVISIBLE
+            binding.swipeRefresh.isRefreshing = false
+        } else {
+            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
+            binding.rvAccept.visibility = View.VISIBLE
+            binding.swipeRefresh.isRefreshing = false
+        }
+    }
+
+    override fun getInterviewApplicant(item: List<DataShortlist?>?) {
+        val adapterInterview = AdapterShortlistApplicant(requireContext(), item)
+        binding.rvAccept.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = adapterInterview
+            adapterInterview.notifyDataSetChanged()
+        }
+    }
+
+
+
 }
