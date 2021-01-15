@@ -321,7 +321,7 @@
                         android:textColor="@color/black" />
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView2"
+                        android:id="@+id/cv_document"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"

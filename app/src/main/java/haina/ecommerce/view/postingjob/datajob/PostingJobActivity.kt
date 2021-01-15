@@ -185,12 +185,19 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
             isEmptySalaryFrom = false
         }
 
-        if (salaryTo.isEmpty()){
-            binding.outlinedFieldSalaryTo.error = "Salary to can't empty"
-            isEmptySalaryTo = true
-        } else {
-            binding.etSalaryTo.text.toString()
-            isEmptySalaryTo = false
+        when {
+            salaryTo.isEmpty() -> {
+                binding.outlinedFieldSalaryTo.error = "Salary to can't empty"
+                isEmptySalaryTo = true
+            }
+            salaryTo < salaryFrom -> {
+                binding.outlinedFieldSalaryTo.error = "Salary to must bigger than salary from"
+                isEmptySalaryTo = false
+            }
+            else -> {
+                binding.etSalaryTo.text.toString()
+                isEmptySalaryTo = false
+            }
         }
 
         if (!isEmptyImage && !isEmptyTitle  && !isEmptyDescription && !isEmptySalaryFrom && !isEmptySalaryTo && !isEmptyLocation && !isEmptyCategory){
@@ -360,7 +367,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         val attention = view.findViewById<TextView>(haina.ecommerce.R.id.tv_popup)
         popupCheckDataCompany = popup.create()
         popupCheckDataCompany?.dismiss()
-        attention.text = "You have not added your company address, please add it first to continue posting job vacancies"
+        attention.text = "You have not added your company address, please add it first to continue posting job vacancy"
         actionCancel.setOnClickListener {
             onBackPressed()
         }

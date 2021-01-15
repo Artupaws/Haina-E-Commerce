@@ -14,14 +14,14 @@ import haina.ecommerce.model.ArticlesItem
 class WebViewActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWebviewBinding
+    private var intentFrom:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWebviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val getUrl: String = intent.extras?.get("url").toString()
-
-        binding.toolbar3.title = "Headlines News"
+        intentFrom = intent.getStringExtra("intentFrom")
         binding.toolbar3.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbar3.setNavigationOnClickListener { onBackPressed() }
         binding.webView.settings.javaScriptEnabled = true
@@ -41,7 +41,13 @@ class WebViewActivity : AppCompatActivity() {
                 return
             }
         }
-        binding.webView.loadUrl(getUrl)
+        if (intentFrom == "document"){
+            binding.webView.loadUrl("http://docs.google.com/gview?embedded=true&url=${getUrl}")
+            binding.toolbar3.title = "Resume"
+        } else {
+            binding.toolbar3.title = "Headlines News"
+            binding.webView.loadUrl("http://docs.google.com/gview?embedded=true&url=https://hainaservice.com/storage/user/47/docs/Resume_28-12-2020_02-47-53.pdf")
+        }
 
     }
 }

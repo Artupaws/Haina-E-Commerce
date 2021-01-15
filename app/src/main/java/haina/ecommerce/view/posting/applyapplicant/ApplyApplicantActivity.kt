@@ -23,6 +23,7 @@ import haina.ecommerce.model.JobapplicantItem
 import haina.ecommerce.model.StatusApplicant
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.MainActivity
+import haina.ecommerce.view.webview.WebViewActivity
 
 class ApplyApplicantActivity : AppCompatActivity(), View.OnClickListener, ApplyApplicantContract {
 
@@ -30,6 +31,7 @@ class ApplyApplicantActivity : AppCompatActivity(), View.OnClickListener, ApplyA
     private val statusShortlist:String = "shortlisted"
     private val statusDeclined:String = "declined"
     private var idApplicant:Int = 0
+    private var docsUrl:String? = null
     private var popupDeclined: AlertDialog? = null
     private lateinit var presenter: ApplyApplicantPresenter
 
@@ -48,6 +50,7 @@ class ApplyApplicantActivity : AppCompatActivity(), View.OnClickListener, ApplyA
         val item  = intent.getParcelableExtra<JobapplicantItem>("dataApplicant")
         idApplicant = item?.id!!
         presenter.getStatusApplicant(idApplicant)
+        docsUrl = item.userDocument?.docsUrl
         binding.tvFullname.text = item.fullname
         binding.tvEmail.text = item.email
         binding.tvPhone.text = item.phone
@@ -70,6 +73,7 @@ class ApplyApplicantActivity : AppCompatActivity(), View.OnClickListener, ApplyA
             binding.swipeRefresh.isRefreshing = false
         }
         binding.btnDecline.setOnClickListener(this)
+        binding.cvDocument.setOnClickListener(this)
     }
 
 
@@ -81,6 +85,12 @@ class ApplyApplicantActivity : AppCompatActivity(), View.OnClickListener, ApplyA
             }
             R.id.btn_decline ->{
                 popupDeclined?.show()
+            }
+            R.id.cv_document ->{
+                val intent = Intent(applicationContext, WebViewActivity::class.java)
+                intent.putExtra("url", docsUrl)
+                intent.putExtra("intentFrom", "document")
+                startActivity(intent)
             }
         }
     }

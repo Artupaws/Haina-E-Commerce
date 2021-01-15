@@ -5,30 +5,22 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.CompoundButton
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterJobLocation
 import haina.ecommerce.databinding.ActivityDetailJobBinding
 import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataItemJob
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
@@ -58,7 +50,6 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         val item = intent.getParcelableExtra<DataItemJob>("detailJob")
         idJobVacancy = item?.id
         idJobVacancy?.let { presenter.checkAppliedJob(it) }
-
         binding.tvTitleJob.text = item?.title
         binding.tvCompanyName.text = item?.company?.name
         binding.tvLocationJob.text = item?.location
@@ -87,20 +78,34 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         binding.toolbarDetailJob.setNavigationOnClickListener{onBackPressed()}
         binding.ivSaveJob.setOnClickListener(this)
         binding.btnApply.setOnClickListener(this)
+        toggleSaveJob()
     }
 
     override fun onClick(p0: View?) {
         when(p0?.id){
-            R.id.iv_save_job -> {
-                saveJob = "job saved"
-                setSaveJobState()
-            }
-
-            R.id.btn_apply ->{
+            R.id.btn_apply -> {
                 val intent = Intent(applicationContext, ApplyJobActivity::class.java)
-                    .putExtra("titleJob", intent.getStringExtra("title"))
-                    .putExtra("idJobVacancy", idJobVacancy)
+                        .putExtra("titleJob", intent.getStringExtra("title"))
+                        .putExtra("idJobVacancy", idJobVacancy)
                 startActivity(intent)
+            }
+            R.id.iv_save_job -> {
+                if (sharePref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+                    toggleSaveJob()
+                } else {
+                    binding.ivSaveJob.isChecked = false
+                    Toast.makeText(applicationContext, "Login first for saving this job", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun toggleSaveJob(){
+        binding.ivSaveJob.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                Toast.makeText(applicationContext, "On", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(applicationContext, "Off", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -131,7 +136,7 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
                     val fromIntent = intent.getStringExtra("refresh")
                     refresh = fromIntent
                     Log.d("", fromIntent!!)
-                    if (refresh == "1"){
+                    if (refresh == "1") {
                         idJobVacancy?.let { presenter.checkAppliedJob(it) }
                     }
                 }
@@ -143,17 +148,6 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
     override fun onStop() {
         super.onStop()
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver)
-    }
-
-    private fun setSaveJobState(){
-        if(saveJob == "job saved"){
-            binding.ivSaveJob.setImageResource(R.drawable.ic_bookmarkfill)
-            val snackbar = Snackbar.make(binding.ivSaveJob, "Job Saved", Snackbar.LENGTH_SHORT)
-                .setAction("Close", null)
-            snackbar.show()
-        } else {
-            binding.ivSaveJob.setImageResource(R.drawable.ic_bookmark_empty)
-        }
     }
 
     private fun stateLoading(){

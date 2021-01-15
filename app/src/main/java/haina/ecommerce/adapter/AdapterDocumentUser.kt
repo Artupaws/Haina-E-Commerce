@@ -14,6 +14,7 @@ import haina.ecommerce.databinding.ListItemListDocumentBinding
 import haina.ecommerce.model.AddressItemCompany
 import haina.ecommerce.model.DataDocumentUser
 import haina.ecommerce.view.datacompany.address.AddAddressCompanyActivity
+import haina.ecommerce.view.webview.WebViewActivity
 
 
 class AdapterDocumentUser(val context: Context, private val listDocumentUser: List<DataDocumentUser?>?):
@@ -26,6 +27,12 @@ class AdapterDocumentUser(val context: Context, private val listDocumentUser: Li
             with(binding){
                 nameDocument = itemHaina.docs_name
                 tvTitleDocument.text = nameDocument
+                layoutClick.setOnClickListener {
+                    val intent = Intent(context, WebViewActivity::class.java)
+                    intent.putExtra("url", itemHaina.docs_url)
+                    intent.putExtra("intentFrom", "document")
+                    context.startActivity(intent)
+                }
             }
         }
     }
