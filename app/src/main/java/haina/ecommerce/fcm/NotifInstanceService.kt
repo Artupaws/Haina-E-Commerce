@@ -25,7 +25,6 @@ class NotifInstanceService() : FirebaseMessagingService() {
             val msg = task.result
             msg?.let { sharedPrefHelper.save(Constants.PREF_TOKEN_FIREBASE, it) }
             Log.d("tokenFirebase",msg)
-            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
             // Log and toast
         })
     }

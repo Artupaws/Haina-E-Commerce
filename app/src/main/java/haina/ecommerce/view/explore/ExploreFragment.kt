@@ -13,12 +13,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterHeadlineNews
 import haina.ecommerce.adapter.AdapterSpinnerCurrency
 import haina.ecommerce.databinding.FragmentExploreBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.*
+import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.covidlist.CovidListActivity
 import haina.ecommerce.view.job.JobActivity
@@ -30,6 +32,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
     private var _binding: FragmentExploreBinding? = null
     private val binding get() = _binding
     private val helper: Helper = Helper()
+    lateinit var sharedPref: SharedPreferenceHelper
 
     @SuppressLint("SetTextI18n")
     private lateinit var presenter: ExplorePresenter
@@ -41,6 +44,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
     ): View? {
         _binding = FragmentExploreBinding.inflate(inflater, container, false)
         presenter = ExplorePresenter(this)
+        sharedPref = SharedPreferenceHelper(requireContext())
 
         return binding?.root
     }
@@ -256,8 +260,15 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
                 startActivity(intent)
             }
             R.id.iv_notification -> {
-                val intent = Intent(activity, NotificationActivity::class.java)
-                startActivity(intent)
+                if(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+                    val intent = Intent(activity, NotificationActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    val snackbar = Snackbar.make(binding?.ivNotification!!, "Please login for access notification", Snackbar.LENGTH_SHORT)
+                        .setAction("Close", null)
+                    snackbar.show()
+                }
+
             }
         }
     }
