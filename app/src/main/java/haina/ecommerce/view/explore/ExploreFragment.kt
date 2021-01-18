@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,7 @@ import haina.ecommerce.model.*
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.covidlist.CovidListActivity
 import haina.ecommerce.view.job.JobActivity
+import haina.ecommerce.view.notification.NotificationActivity
 import haina.ecommerce.view.other.OtherActivity
 
 class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
@@ -54,6 +56,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.menuServices?.linearNews?.setOnClickListener(this)
         binding?.menuServices?.linearJob?.setOnClickListener(this)
         binding?.covidNews?.tvDetailCovid?.setOnClickListener(this)
+        binding?.ivNotification?.setOnClickListener(this)
 //        presenter.loadListBaseCurrency()
 //        presenter.loadCovidJkt()
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
@@ -235,6 +238,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
             R.id.linear_other -> {
                 val intent = Intent(activity, OtherActivity::class.java)
                 startActivity(intent)
+//                throw RuntimeException("Test Crash")
             }
             R.id.linear_news -> {
                 binding?.nestedScroll?.post(Runnable {
@@ -249,6 +253,10 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
             }
             R.id.linear_job -> {
                 val intent = Intent(activity, JobActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.iv_notification -> {
+                val intent = Intent(activity, NotificationActivity::class.java)
                 startActivity(intent)
             }
         }

@@ -159,4 +159,12 @@
     <string name="application_status">Application Status :</string>
     <string name="stand_dash">|</string>
     <string name="applying_for">Applying For :</string>
+    <string name="msg_token_fmt"></string>
+    <string name="edit">Edit</string>
+    <string name="change_password">Change Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="title_info_change_password">After success change password, you must to login with the new password</string>
+    <string name="title_info_old_password">We need your old password, to make sure you change your password</string>
 </resources>

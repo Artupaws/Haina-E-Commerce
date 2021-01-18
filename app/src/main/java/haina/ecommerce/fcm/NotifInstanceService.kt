@@ -3,8 +3,10 @@ package haina.ecommerce.fcm
 import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.Constants.TAG
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
+import haina.ecommerce.R
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 
@@ -20,8 +22,10 @@ class NotifInstanceService() : FirebaseMessagingService() {
                 return@OnCompleteListener
             }
             // Get new FCM registration token
-            val token = task.result.toString()
-            sharedPrefHelper.save(Constants.PREF_TOKEN_FIREBASE, token)
+            val msg = task.result
+            msg?.let { sharedPrefHelper.save(Constants.PREF_TOKEN_FIREBASE, it) }
+            Log.d("tokenFirebase",msg)
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
             // Log and toast
         })
     }

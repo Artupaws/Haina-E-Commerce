@@ -403,6 +403,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
     override fun onResume() {
         super.onResume()
+        presenter.getDataCompany()
     }
 
     override fun getDataCompany(item: DataCompany) {

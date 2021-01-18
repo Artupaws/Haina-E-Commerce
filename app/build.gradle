@@ -4,6 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -115,5 +116,14 @@ dependencies {
     //Permission for file
     implementation 'com.karumi:dexter:6.1.2'
 
+    //Firebase Crashlytics
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    //Firebase Cloud Messaging
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+
+    //Badge Icon
+    implementation "com.github.nikartm:image-support:1.0.0"
 
 }

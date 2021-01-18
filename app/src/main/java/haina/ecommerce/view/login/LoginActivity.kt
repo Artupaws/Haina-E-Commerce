@@ -117,7 +117,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         if (!isEmailEmpty && !isPasswordEmpty && !isDeviceTokenEmpty && !isDeviceNameEmpty){
             presenter.loginUser(email, password, deviceToken, manufacturer)
         } else {
-            Toast.makeText(applicationContext, "Please Complete Form Login", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "Please complete the form", Toast.LENGTH_SHORT).show()
             binding.btnLogin.visibility = View.VISIBLE
             binding.relativeLoading.visibility = View.INVISIBLE
             binding.btnRegister.isEnabled = true

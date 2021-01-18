@@ -17,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -30,8 +31,11 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.datacompany.DataCompanyActivity
 import haina.ecommerce.view.MainActivity
+import haina.ecommerce.view.datacompany.address.AddAddressCompanyActivity
 import haina.ecommerce.view.login.LoginActivity
+import haina.ecommerce.view.myaccount.changepassword.ChangePasswordActivity
 import haina.ecommerce.view.myaccount.detailaccount.DetailAccountActivity
+import haina.ecommerce.view.notification.NotificationActivity
 import haina.ecommerce.view.register.company.RegisterCompanyActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -75,12 +79,13 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         presenter.getDataUserProfile()
         refresh()
         binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
-        binding.ivNotification.setOnClickListener(this)
+        binding.ivNotificationAccount.setOnClickListener(this)
         binding.linearLogout.setOnClickListener(this)
         binding.ivProfile.setOnClickListener(this)
         binding.tvActionEditProfile.setOnClickListener(this)
         binding.linearRegisterCompany.setOnClickListener(this)
         binding.tvActionEditProfile.setOnClickListener(this)
+        binding.btnSetting.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
@@ -90,13 +95,12 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
                 startActivity(intent)
             }
 
-            R.id.iv_notification -> {
+            R.id.iv_notification_account -> {
                 if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
-                    val snackbar = Snackbar.make(binding.ivNotification, "You are logged", Snackbar.LENGTH_SHORT)
-                            .setAction("Close", null)
-                    snackbar.show()
+                    val intent = Intent(activity, NotificationActivity::class.java)
+                    startActivity(intent)
                 } else {
-                    val snackbar = Snackbar.make(binding.ivNotification, "Please login for access notification", Snackbar.LENGTH_SHORT)
+                    val snackbar = Snackbar.make(binding.ivNotificationAccount, "Please login for access notification", Snackbar.LENGTH_SHORT)
                             .setAction("Close", null)
                     snackbar.show()
                 }
@@ -129,6 +133,22 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             R.id.tv_action_edit_profile -> {
                 val intent = Intent(activity, DetailAccountActivity::class.java)
                 startActivity(intent)
+            }
+
+            R.id.btn_setting -> {
+                val popup = PopupMenu(requireContext(), binding.btnSetting)
+                popup.inflate(R.menu.menu_account)
+                popup.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.action_change_password ->{
+                            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
+                            startActivity(intent)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                popup.show()
             }
         }
     }

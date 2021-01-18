@@ -15,9 +15,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HainaECommerce.Light">
+        android:theme="@style/Theme.HainaECommerce.Light"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".view.myaccount.changepassword.ChangePasswordActivity"></activity>
+        <activity android:name=".view.notification.NotificationActivity" />
         <activity android:name=".view.posting.applyapplicant.ApplyApplicantActivity" />
         <activity android:name=".view.postingjob.skillrequires.AddSkillRequiresActivity" />
         <activity android:name=".view.posting.detailvacancy.DetailPostingJobActivity" />
@@ -43,16 +45,6 @@
         <activity
             android:name=".view.webview.WebViewActivity"
             android:screenOrientation="nosensor" />
-
-        <service
-            android:name=".fcm.NotifInstanceService"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
         <activity
             android:name=".view.register.account.RegisterActivity"
             android:screenOrientation="nosensor"
@@ -89,6 +81,24 @@
                 android:resource="@xml/file_path"
                 tools:replace="android:resource" />
         </provider>
+
+        <service
+            android:name=".fcm.NotifInstanceService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/app_logo" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/white" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_text_color"
+            android:resource="@color/yellow" />
     </application>
 
 </manifest>

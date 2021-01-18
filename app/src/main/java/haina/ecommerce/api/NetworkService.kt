@@ -285,4 +285,13 @@ interface NetworkService {
             @Field("id_applicant")idApplicant:Int
     ):Call<ResponseGetApplicantStatus>
 
+    //Change Password
+    @FormUrlEncoded
+    @POST("api/password")
+    @Headers("No-Authentication: true")
+    fun changePassword(
+            @Field("current_password")currentPassword:String,
+            @Field("new_password")newPassword:String
+    ):Call<ResponseChangePassword>
+
 }

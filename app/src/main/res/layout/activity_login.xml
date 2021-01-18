@@ -79,7 +79,7 @@
 
 
         </LinearLayout>
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_margin="20dp"
@@ -90,7 +90,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/background_loading"
-                android:layout_centerInParent="true"
                 android:visibility="invisible">
 
                 <com.airbnb.lottie.LottieAnimationView
@@ -114,7 +113,7 @@
                 android:textColor="#ffffff">
 
             </Button>
-        </RelativeLayout>
+        </FrameLayout>
 
 
 
