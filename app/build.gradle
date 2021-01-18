@@ -102,7 +102,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
 
     // Also declare the dependency for the Google Play services library and specify its version
-    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
     //Interceptor logging test
     implementation "com.squareup.okhttp3:logging-interceptor:3.11.0"

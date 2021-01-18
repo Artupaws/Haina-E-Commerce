@@ -159,7 +159,7 @@
     <string name="application_status">Application Status :</string>
     <string name="stand_dash">|</string>
     <string name="applying_for">Applying For :</string>
-    <string name="msg_token_fmt"></string>
+    <string name="web_client_id">1039590465685–1kdfumqufqj5r1cce102mjpueprp1fjq.apps.googleusercontent.com</string>
     <string name="edit">Edit</string>
     <string name="change_password">Change Password</string>
     <string name="old_password">Old Password</string>
@@ -167,4 +167,6 @@
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="title_info_change_password">After success change password, you must to login with the new password</string>
     <string name="title_info_old_password">We need your old password, to make sure you change your password</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
 </resources>

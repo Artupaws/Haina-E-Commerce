@@ -10,7 +10,14 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityLoginBinding
 import haina.ecommerce.preference.SharedPreferenceHelper
@@ -29,6 +36,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
     lateinit var sharedPreferenceHelper: SharedPreferenceHelper
     private lateinit var presenter: LoginPresenter
     private var manufacturer: String = ""
+    private var gsc:GoogleSignInClient? = null
+    private val RC_SIGN_IN = 9001
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +45,17 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
         presenter = LoginPresenter(this)
+        sharedPreferenceHelper = SharedPreferenceHelper(this)
+
+        val gso:GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestIdToken(applicationContext.getString(R.string.web_client_id))
+            .build()
+        gsc = GoogleSignIn.getClient(this, gso)
 
         binding.btnLogin.setOnClickListener(this)
         binding.btnRegister.setOnClickListener(this)
-        sharedPreferenceHelper = SharedPreferenceHelper(this)
+        binding.linearGoogle.setOnClickListener(this)
         getDeviceName()
 
         binding.etPassword.addTextChangedListener(object : TextWatcher {
@@ -78,7 +94,37 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
                 val intent = Intent(this, RegisterActivity::class.java)
                 startActivity(intent)
             }
+            R.id.linear_google -> {
+                val intentGoogle = Intent(gsc?.signInIntent)
+                startActivityForResult(intentGoogle, RC_SIGN_IN)
+            }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_SIGN_IN){
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)!!
+                Log.d("loginGoogle", account.email + account.displayName + account.idToken)
+                firebaseAuthWithGoogle(account.idToken)
+            } catch (e : ApiException){
+                Log.w("googleFail", e)
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String?) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if(task.isSuccessful){
+                    move()
+                } else {
+                    Snackbar.make(binding.linearGoogle, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
+                }
+            }
     }
 
     private fun getDeviceName() {
