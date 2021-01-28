@@ -1,7 +1,12 @@
 package haina.ecommerce.view
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
+import android.view.Gravity
+import android.view.Window
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -23,12 +28,17 @@ class MainActivity : AppCompatActivity() {
     private val fragmentManager = supportFragmentManager
     private var activeFragment: Fragment = fragmentExplore
     var doubleTap: Boolean = false
+    private var popupFillData: Dialog? = null
+    private var loginMethod:Int? = null
+    private var loginStatus:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        loginMethod = intent.getIntExtra("loginMethod", 0)
+        loginStatus = intent.getStringExtra("loginStatus")
         fragmentManager.beginTransaction().apply {
             add(R.id.view_botnav, fragmentMyAccount).hide(fragmentMyAccount)
             add(R.id.view_botnav, fragmentCart).hide(fragmentCart)
@@ -38,26 +48,9 @@ class MainActivity : AppCompatActivity() {
         }.disallowAddToBackStack().commit()
 
         initListeners()
-
-        when (intent.extras?.getString("loginStatus").toString()) {
-            "1" -> {
-                loadFragment(fragmentMyAccount)
-                hideFragment(fragmentExplore)
-                activeFragment = fragmentMyAccount
-                binding.bottomNavigationView.menu.findItem(R.id.myAccountFragment).isChecked = true
-            }
-            "3" -> {
-                loadFragment(fragmentPosting)
-                hideFragment(fragmentExplore)
-                activeFragment = fragmentPosting
-                binding.bottomNavigationView.menu.findItem(R.id.postingFragment).isChecked = true
-            }
-            else -> {
-                loadFragment(fragmentExplore)
-                activeFragment = fragmentExplore
-                binding.bottomNavigationView.menu.findItem(R.id.exploreFragment).isChecked = true
-            }
-        }
+        dialogFillData()
+        checkLoginMethod()
+        loginStatus()
 
     }
 
@@ -114,6 +107,53 @@ class MainActivity : AppCompatActivity() {
             return true
         }
         return false
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun dialogFillData(){
+        popupFillData = Dialog(this)
+        popupFillData?.setContentView(R.layout.popup_fill_personal_data)
+        popupFillData?.setCancelable(false)
+        popupFillData?.window?.setBackgroundDrawable(applicationContext.getDrawable(android.R.color.transparent))
+        val window:Window = popupFillData?.window!!
+        window.setGravity(Gravity.CENTER)
+        window.attributes.windowAnimations = R.style.DialogAnimation
+        val title = popupFillData?.findViewById<TextView>(R.id.tv_title)
+        val ok = popupFillData?.findViewById<TextView>(R.id.tv_action_yes)
+        title?.text  = applicationContext.getString(R.string.title_attention)
+        ok?.setOnClickListener {
+            popupFillData?.dismiss()
+        }
+    }
+
+    private fun loginStatus(){
+        when (loginStatus) {
+            "1" -> {
+                loadFragment(fragmentMyAccount)
+                hideFragment(fragmentExplore)
+                activeFragment = fragmentMyAccount
+                binding.bottomNavigationView.menu.findItem(R.id.myAccountFragment).isChecked = true
+            }
+            "3" -> {
+                loadFragment(fragmentPosting)
+                hideFragment(fragmentExplore)
+                activeFragment = fragmentPosting
+                binding.bottomNavigationView.menu.findItem(R.id.postingFragment).isChecked = true
+            }
+            else -> {
+                loadFragment(fragmentExplore)
+                activeFragment = fragmentExplore
+                binding.bottomNavigationView.menu.findItem(R.id.exploreFragment).isChecked = true
+            }
+        }
+    }
+
+    private fun checkLoginMethod(){
+        if (loginMethod == 0){
+            popupFillData?.dismiss()
+        } else if (loginMethod == 1){
+            popupFillData?.show()
+        }
     }
 
     override fun onBackPressed() {

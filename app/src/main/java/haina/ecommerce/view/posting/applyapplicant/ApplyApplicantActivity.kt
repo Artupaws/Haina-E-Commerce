@@ -134,10 +134,10 @@ class ApplyApplicantActivity : AppCompatActivity(), View.OnClickListener, ApplyA
         val actionCancel = view.findViewById<TextView>(R.id.tv_action_cancel)
         val actionYes = view.findViewById<TextView>(R.id.tv_action_yes)
         val title = view.findViewById<TextView>(R.id.tv_title)
-        val message = view.findViewById<TextView>(R.id.rv_popup)
+        val message = view.findViewById<TextView>(R.id.tv_popup)
         popupDeclined = popup.create()
-        title.text = "Decline"
-        message.text = "Are you sure want to decline this applicant ?"
+        title.text = applicationContext.getString(R.string.decline)
+        message.text = applicationContext.getString(R.string.ask_decline)
         actionCancel.setOnClickListener { popupDeclined?.dismiss() }
         actionYes.setOnClickListener {
             popupDeclined?.dismiss()

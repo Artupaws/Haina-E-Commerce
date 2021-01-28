@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
+import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityChangePasswordBinding
 import haina.ecommerce.preference.SharedPreferenceHelper
@@ -121,7 +122,9 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Change
         Log.d("changePassword", msg)
         if (msg.contains("Success")){
             move()
-            Toast.makeText(applicationContext, "Please login with new password", Toast.LENGTH_SHORT).show()
+            val snackbar = Snackbar.make(binding.btnChangePassword, "Please login for access notification", Snackbar.LENGTH_SHORT)
+                    .setAction("Close", null)
+            snackbar.show()
         }
     }
 

@@ -38,6 +38,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
     private var manufacturer: String = ""
     private var gsc:GoogleSignInClient? = null
     private val RC_SIGN_IN = 9001
+    private var loginMethod:Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +50,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
 
         val gso:GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
-            .requestIdToken(applicationContext.getString(R.string.web_client_id))
+            .requestIdToken(applicationContext.getString(R.string.default_web_client_id))
             .build()
         gsc = GoogleSignIn.getClient(this, gso)
 
@@ -107,7 +108,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
-                Log.d("loginGoogle", account.email + account.displayName + account.idToken)
+                Log.d("loginGoogle", account.idToken!!)
                 firebaseAuthWithGoogle(account.idToken)
             } catch (e : ApiException){
                 Log.w("googleFail", e)
@@ -120,8 +121,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if(task.isSuccessful){
-                    move()
+                    loginMethod = 1
+                    Toast.makeText(applicationContext, "Login", Toast.LENGTH_SHORT).show()
+                    move(loginMethod)
                 } else {
+                    loginMethod = null
                     Snackbar.make(binding.linearGoogle, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
                 }
             }
@@ -161,6 +165,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         isDeviceNameEmpty = manufacturer == ""
 
         if (!isEmailEmpty && !isPasswordEmpty && !isDeviceTokenEmpty && !isDeviceNameEmpty){
+            loginMethod = 0
             presenter.loginUser(email, password, deviceToken, manufacturer)
         } else {
             Toast.makeText(applicationContext, "Please complete the form", Toast.LENGTH_SHORT).show()
@@ -172,21 +177,32 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
 
     }
 
-    private fun move(){
-        sharedPreferenceHelper.save(Constants.PREF_IS_LOGIN, true)
-        val intent = Intent(applicationContext, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+    private fun move(method:Int?){
+        if (method == 0){
+            sharedPreferenceHelper.save(Constants.PREF_IS_LOGIN, true)
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else if (method == 1){
+            sharedPreferenceHelper.save(Constants.PREF_IS_LOGIN, true)
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            intent.putExtra("loginMethod", 1)
+            startActivity(intent)
+            finish()
+        }
+
     }
 
     override fun successLogin(msg: String) {
         Log.d("successLogin", msg)
+        loginMethod = 0
         Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
-        move()
+        move(loginMethod)
     }
 
     override fun failedLogin(msg: String) {
         Log.d("failedLogin", msg)
+        loginMethod = null
         Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         binding.btnLogin.visibility = View.VISIBLE
         binding.relativeLoading.visibility = View.INVISIBLE

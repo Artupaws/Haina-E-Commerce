@@ -52,7 +52,6 @@ class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
                 R.anim.fab_to_bottom
         )
     }
-
     private var clicked = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -24,6 +24,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import haina.ecommerce.R
 import haina.ecommerce.databinding.FragmentMyAccountBinding
 import haina.ecommerce.model.DataUser
@@ -141,8 +144,14 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.action_change_password ->{
-                            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
-                            startActivity(intent)
+                            if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
+                                val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                val snackbar = Snackbar.make(binding.ivNotificationAccount, "Please login for change password", Snackbar.LENGTH_SHORT)
+                                        .setAction("Close", null)
+                                snackbar.show()
+                            }
                             true
                         }
                         else -> false
@@ -151,6 +160,11 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
                 popup.show()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.getDataUserProfile()
     }
 
     private fun refresh(){
@@ -170,7 +184,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when(requestCode){
-            MyAccountFragment.PERMISSION_CODE -> {
+            PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     pickImageFromGallery()
                 } else {
@@ -182,7 +196,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == MyAccountFragment.IMAGE_PICK_CODE){
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             binding.ivProfile.setImageURI(data?.data)
             uri = data?.data!!
             val filepath = getRealPathFromURIPath(uri, this)
@@ -227,6 +241,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             sharedPref.removeValue(Constants.PREF_IS_LOGIN)
             presenter.resetTokenUser()
             val intent = Intent(requireContext(), MainActivity::class.java)
+            Firebase.auth.signOut()
             intent.putExtra("loginStatus", "1")
             startActivity(intent)
         activity?.finish()}

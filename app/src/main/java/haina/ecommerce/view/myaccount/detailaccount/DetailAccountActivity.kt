@@ -37,7 +37,6 @@ import haina.ecommerce.view.myaccount.addrequirement.AddRequirementActivity
 import haina.ecommerce.view.myaccount.addskills.AddSkillsActivity
 import java.util.*
 
-
 class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailAccountContract {
 
     private lateinit var binding: ActivityDetailAccountBinding

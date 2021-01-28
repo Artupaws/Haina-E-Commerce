@@ -56,6 +56,23 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         binding.toolbarJob.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarJob.setNavigationOnClickListener { onBackPressed() }
         binding.cvFilterJob.setOnClickListener(this)
+
+        binding.rvJob.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    binding.cvFilterJob.visibility = View.GONE
+                }
+                if (dy < 0) {
+                    binding.cvFilterJob.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+        })
+
     }
 
     private fun refresh(){

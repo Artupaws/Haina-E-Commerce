@@ -24,7 +24,6 @@ class NetworkConfig {
                 .build()
     }
 
-
     fun getConnectionHainaBearer(context: Context): NetworkService{
         sharedPrefHelper = SharedPreferenceHelper(context)
         val retrofit: Retrofit = Retrofit.Builder()

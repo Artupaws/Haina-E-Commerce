@@ -26,7 +26,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
     <TextView
-        android:id="@+id/rv_popup"
+        android:id="@+id/tv_popup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -51,7 +51,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tv_action_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_popup" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_popup" />
 
     <TextView
         android:id="@+id/tv_action_cancel"
