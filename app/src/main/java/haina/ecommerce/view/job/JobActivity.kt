@@ -1,12 +1,15 @@
 package haina.ecommerce.view.job
 
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -17,6 +20,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.gms.common.util.CollectionUtils.listOf
 import com.google.android.material.slider.RangeSlider
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterJobCategoryOnJob
@@ -26,18 +30,20 @@ import haina.ecommerce.databinding.ActivityJobBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataItemJob
+import java.util.*
 
 class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
 
     private lateinit var binding: ActivityJobBinding
     private lateinit var presenter: JobPresenter
-    private var popupLocation: AlertDialog? = null
-    private var popupLoading: AlertDialog? = null
+    private var popupFilter: Dialog? = null
+    private var popupLoading: Dialog? = null
     private val helper: Helper = Helper()
     private var broadcaster: LocalBroadcastManager? = null
     val data:MutableMap<String, Int> = HashMap()
     var filterCategory:Int = 0
     var filterLocation:Int = 0
+    private var listLocationFilter: List<DataItemHaina?>? = null
     private var filterStartSalary:Int = 0
     private var isCategoryEmpty = true
     private var isLocationEmpty = true
@@ -68,9 +74,6 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
                 }
             }
 
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-            }
         })
 
     }
@@ -79,20 +82,19 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             presenter.loadListJobCategory()
             presenter.loadListJobLocation()
-            loadPresenter()
         })
     }
 
     private fun loadingDialog(){
-        val popup = AlertDialog.Builder(this)
-        val view: View = layoutInflater.inflate(R.layout.layout_popup_dialog, null)
-        popup.setCancelable(true)
-        popup.setView(view)
-        popupLoading = popup.create()
-        popupLoading?.show()
+        popupLoading = Dialog(this)
+        popupLoading?.setContentView(R.layout.layout_popup_dialog)
+        popupLoading?.setCancelable(false)
+        popupLoading?.window?.setBackgroundDrawable(applicationContext.getDrawable(android.R.color.transparent))
+        val window: Window = popupLoading?.window!!
+        window.setGravity(Gravity.CENTER)
     }
 
-    private fun loadPresenter(){
+    private fun loadPresenterFilter(){
         popupLoading?.show()
         data.clear()
         isCategoryEmpty = filterCategory == 0
@@ -113,7 +115,7 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.cv_filter_job -> {
-                popupLocation?.show()
+                popupFilter?.show()
             }
         }
     }
@@ -128,14 +130,12 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         override fun onReceive(context: Context?, intent: Intent?) {
             when(intent?.action){
                 "jobLocationFilter" -> {
-                    val idLocation = intent.getStringExtra("idLocationFilter")
-                    filterLocation = idLocation.toInt()
+                    filterLocation = intent.getIntExtra("idLocationFilter", 0)
                 }
                 "jobCategoryFilter" -> {
-                    val idCategory = intent.getIntExtra("idCategoryJobFilter", 0)
-                    filterCategory = idCategory
+                    filterCategory = intent.getIntExtra("idCategoryJobFilter", 0)
                     popupLoading?.show()
-                    loadPresenter()
+                    loadPresenterFilter()
                 }
             }
         }
@@ -217,29 +217,37 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
     }
 
     override fun getLoadListLocation(itemHaina: List<DataItemHaina?>?) {
-        val popup = AlertDialog.Builder(this)
-        val view: View = layoutInflater.inflate(R.layout.popup_filter_job, null)
-        popup.setCancelable(true)
-        popup.setView(view)
-        val action = view.findViewById<Button>(haina.ecommerce.R.id.btn_apply)
-        val rvJobLocation = view.findViewById<RecyclerView>(haina.ecommerce.R.id.rv_job_location)
-        val relativeLoading = view.findViewById<RelativeLayout>(R.id.relative_loading)
-        val rSliderStartSalary = view.findViewById<RangeSlider>(R.id.rslider_start_salary)
-        val tvStartSalary = view.findViewById<TextView>(R.id.tv_start_salary)
+        Log.d("listJob", itemHaina?.size.toString())
+        listLocationFilter = itemHaina
+        dialogFilterJob(listLocationFilter)
+    }
+
+    private fun dialogFilterJob(itemHaina: List<DataItemHaina?>?){
+        popupFilter = Dialog(this)
+        popupFilter?.setContentView(R.layout.popup_filter_job)
+        popupFilter?.setCancelable(true)
+        popupFilter?.window?.setBackgroundDrawable(applicationContext.getDrawable(android.R.color.transparent))
+        val window: Window = popupFilter?.window!!
+        window.setGravity(Gravity.CENTER)
+        val action = popupFilter?.findViewById<Button>(haina.ecommerce.R.id.btn_apply)
+        val rvJobLocation = popupFilter?.findViewById<RecyclerView>(haina.ecommerce.R.id.rv_job_location)
+        val relativeLoading = popupFilter?.findViewById<RelativeLayout>(R.id.relative_loading)
+        val rSliderStartSalary = popupFilter?.findViewById<RangeSlider>(R.id.rslider_start_salary)
+        val tvStartSalary = popupFilter?.findViewById<TextView>(R.id.tv_start_salary)
         val jobLocationAdapter = AdapterLocationFilterJob(this, itemHaina)
-        popupLocation = popup.create()
-        popupLocation?.dismiss()
-        rSliderStartSalary.addOnChangeListener { slider, value, fromUser ->
-            tvStartSalary.text = helper.convertToFormatMoneyIDRFilter(value.toString())
-            filterStartSalary = helper.changeFormatMoneyToValueFilter(tvStartSalary.text.toString())!!.toInt()
+        rSliderStartSalary?.addOnChangeListener { slider, value, fromUser ->
+            action?.isEnabled = value.toString()!=""
+            tvStartSalary?.text = helper.convertToFormatMoneyIDRFilter(value.toString())
+            filterStartSalary = helper.changeFormatMoneyToValueFilter(tvStartSalary?.text.toString())!!.toInt()
         }
-
-        action.setOnClickListener{
-            popupLocation!!.dismiss()
-            loadPresenter()
+        jobLocationAdapter.onItemClick = {
+                action?.isEnabled = it.toString()!=""
         }
-
-        rvJobLocation.apply {
+        action?.setOnClickListener{
+            popupFilter!!.dismiss()
+            loadPresenterFilter()
+        }
+        rvJobLocation?.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = jobLocationAdapter
             jobLocationAdapter.notifyDataSetChanged()

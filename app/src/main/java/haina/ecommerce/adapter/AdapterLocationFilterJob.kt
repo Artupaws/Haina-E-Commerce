@@ -15,17 +15,20 @@ class AdapterLocationFilterJob(private val context: Context, private val jobList
 
     private var index:Int = -1
     private var broadcaster: LocalBroadcastManager? = null
+    var onItemClick: (Int) -> Unit = {}
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val binding = ListItemLocationFilterJobBinding.bind(itemView)
         fun bind(itemHaina: DataItemHaina){
             with(binding){
                 tvLocationJob.text = itemHaina.name
-                linearLocation.setOnClickListener {index = adapterPosition
+                linearLocation.setOnClickListener {
+                    onItemClick(adapterPosition)
+                    index = adapterPosition
                     notifyDataSetChanged()
                     val setJobLocation = Intent("jobLocationFilter")
                             .putExtra("nameLocationFilter", tvLocationJob.text.toString())
-                        .putExtra("idLocationFilter", itemHaina.id.toString())
+                        .putExtra("idLocationFilter", itemHaina.id)
                     broadcaster?.sendBroadcast(setJobLocation)
                 }
                 if (index == adapterPosition){
