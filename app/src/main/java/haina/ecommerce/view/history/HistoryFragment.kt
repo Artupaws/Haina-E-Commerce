@@ -25,7 +25,7 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.toolbarHistory.title = "History"
         binding.viewPagerHistory.adapter = TabAdapterHistory(requireActivity().supportFragmentManager, 0)
-        binding.viewPagerHistory.offscreenPageLimit = 4
+//        binding.viewPagerHistory.offscreenPageLimit = 4
         binding.tabLayoutHistory.setupWithViewPager(binding.viewPagerHistory)
 
     }

@@ -49,10 +49,6 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         return binding?.root
     }
 
-    override fun onResume() {
-        super.onResume()
-//        presenter.loadListBaseCurrency()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -277,6 +273,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.swipeRefresh?.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
 //            presenter.loadCovidJkt()
 //            presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
+            binding?.swipeRefresh?.isRefreshing = false
         })
     }
 

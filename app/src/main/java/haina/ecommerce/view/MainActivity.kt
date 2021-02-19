@@ -5,11 +5,13 @@ import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.view.Gravity
+import android.view.MenuItem
 import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityMainBinding
 import haina.ecommerce.view.explore.ExploreFragment
@@ -17,16 +19,9 @@ import haina.ecommerce.view.history.HistoryFragment
 import haina.ecommerce.view.myaccount.MyAccountFragment
 import haina.ecommerce.view.posting.PostingFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityMainBinding
-    private val fragmentExplore = ExploreFragment()
-    private val fragmentHistory = HistoryFragment()
-    private val fragmentPosting = PostingFragment()
-    private val fragmentCart = CartFragment()
-    private val fragmentMyAccount = MyAccountFragment()
-    private val fragmentManager = supportFragmentManager
-    private var activeFragment: Fragment = fragmentExplore
     var doubleTap: Boolean = false
     private var popupFillData: Dialog? = null
     private var loginMethod:Int? = null
@@ -38,72 +33,40 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         loginMethod = intent.getIntExtra("loginMethod", 0)
-        loginStatus = intent.getStringExtra("loginStatus")
-        fragmentManager.beginTransaction().apply {
-            add(R.id.view_botnav, fragmentMyAccount).hide(fragmentMyAccount)
-            add(R.id.view_botnav, fragmentCart).hide(fragmentCart)
-            add(R.id.view_botnav, fragmentPosting).hide(fragmentPosting)
-            add(R.id.view_botnav, fragmentHistory).hide(fragmentHistory)
-            add(R.id.view_botnav, fragmentExplore).hide(fragmentExplore)
-        }.disallowAddToBackStack().commit()
-
-        initListeners()
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
         dialogFillData()
         checkLoginMethod()
-        loginStatus()
+        stateOpenFragment()
 
     }
 
-    private fun initListeners() {
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.exploreFragment -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(fragmentExplore)
-                            .commit()
-                    activeFragment = fragmentExplore
-                    true
-                }
-
-                R.id.historyFragment -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(fragmentHistory).commit()
-                    activeFragment = fragmentHistory
-                    true
-                }
-
-                R.id.postingFragment -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(fragmentPosting).commit()
-                    activeFragment = fragmentPosting
-                    true
-                }
-
-                R.id.cartFragment -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(fragmentCart).commit()
-                    activeFragment = fragmentCart
-                    true
-                }
-
-                R.id.myAccountFragment -> {
-                    fragmentManager.beginTransaction().hide(activeFragment).show(fragmentMyAccount).commit()
-                    activeFragment = fragmentMyAccount
-                    true
-                }
-
-                else -> false
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        var fragment: Fragment? = null
+        when (item.itemId){
+            R.id.exploreFragment -> {
+                fragment = ExploreFragment()
+            }
+            R.id.historyFragment -> {
+                fragment = HistoryFragment()
+            }
+            R.id.postingFragment -> {
+                fragment = PostingFragment()
+            }
+            R.id.cartFragment -> {
+                fragment = CartFragment()
+            }
+            R.id.myAccountFragment -> {
+                fragment = MyAccountFragment()
             }
         }
-    }
-
-    private fun hideFragment(fragment: Fragment?): Boolean {
-        if (fragment != null) {
-            supportFragmentManager.beginTransaction().hide(fragment).commit()
-            return true
-        }
-        return false
+        return loadFragment(fragment)
     }
 
     private fun loadFragment(fragment: Fragment?): Boolean {
         if (fragment != null) {
-            supportFragmentManager.beginTransaction().show(fragment).commit()
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.view_botnav, fragment)
+                    .commit()
             return true
         }
         return false
@@ -126,26 +89,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loginStatus(){
-        when (loginStatus) {
+    private fun stateOpenFragment(){
+        when (intent.getStringExtra("loginStatus")){
             "1" -> {
-                loadFragment(fragmentMyAccount)
-                hideFragment(fragmentExplore)
-                activeFragment = fragmentMyAccount
+                loadFragment(MyAccountFragment())
                 binding.bottomNavigationView.menu.findItem(R.id.myAccountFragment).isChecked = true
             }
             "3" -> {
-                loadFragment(fragmentPosting)
-                hideFragment(fragmentExplore)
-                activeFragment = fragmentPosting
+                loadFragment(PostingFragment())
                 binding.bottomNavigationView.menu.findItem(R.id.postingFragment).isChecked = true
             }
             else -> {
-                loadFragment(fragmentExplore)
-                activeFragment = fragmentExplore
+                loadFragment(ExploreFragment())
                 binding.bottomNavigationView.menu.findItem(R.id.exploreFragment).isChecked = true
             }
         }
+
     }
 
     private fun checkLoginMethod(){
