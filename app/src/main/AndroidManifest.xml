@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light"
         android:requestLegacyExternalStorage="true"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:name=".view.OneSignal">
         <activity android:name=".view.myaccount.changepassword.ChangePasswordActivity"/>
         <activity android:name=".view.notification.NotificationActivity" />
         <activity android:name=".view.posting.applyapplicant.ApplyApplicantActivity" />

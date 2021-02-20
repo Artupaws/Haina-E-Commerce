@@ -5,6 +5,7 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
 android {
     compileSdkVersion 29
@@ -125,5 +126,8 @@ dependencies {
 
     //Badge Icon
     implementation "com.github.nikartm:image-support:1.0.0"
+
+    //OneSignal
+    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
 
 }
