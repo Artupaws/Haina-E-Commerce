@@ -48,7 +48,7 @@ import java.io.File
 class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     private var _binding: FragmentMyAccountBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     lateinit var sharedPref: SharedPreferenceHelper
     private var broadcaster: LocalBroadcastManager? = null
     private var popupLogout: AlertDialog? = null
@@ -63,17 +63,17 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         sharedPref = SharedPreferenceHelper(requireContext())
         broadcaster = LocalBroadcastManager.getInstance(requireContext())
         presenter = MyAccountPresenter(this, requireContext())
-        return binding.root
+        return binding?.root
     }
 
     override fun onStart() {
         super.onStart()
         if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
-            binding.includeLogin.linearNotLogin.visibility = View.GONE
-            binding.linearMenu.visibility = View.VISIBLE
+            binding?.includeLogin?.linearNotLogin?.visibility = View.GONE
+            binding?.linearMenu?.visibility = View.VISIBLE
         } else {
-            binding.includeLogin.linearNotLogin.visibility = View.VISIBLE
-            binding.linearMenu.visibility = View.INVISIBLE
+            binding?.includeLogin?.linearNotLogin?.visibility = View.VISIBLE
+            binding?.linearMenu?.visibility = View.INVISIBLE
         }
     }
 
@@ -81,14 +81,14 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         super.onViewCreated(view, savedInstanceState)
         presenter.getDataUserProfile()
         refresh()
-        binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
-        binding.ivNotificationAccount.setOnClickListener(this)
-        binding.linearLogout.setOnClickListener(this)
-        binding.ivProfile.setOnClickListener(this)
-        binding.tvActionEditProfile.setOnClickListener(this)
-        binding.linearRegisterCompany.setOnClickListener(this)
-        binding.tvActionEditProfile.setOnClickListener(this)
-        binding.btnSetting.setOnClickListener(this)
+        binding?.includeLogin?.btnLoginNotLogin?.setOnClickListener(this)
+        binding?.ivNotificationAccount?.setOnClickListener(this)
+        binding?.linearLogout?.setOnClickListener(this)
+        binding?.ivProfile?.setOnClickListener(this)
+        binding?.tvActionEditProfile?.setOnClickListener(this)
+        binding?.linearRegisterCompany?.setOnClickListener(this)
+        binding?.tvActionEditProfile?.setOnClickListener(this)
+        binding?.btnSetting?.setOnClickListener(this)
     }
 
     override fun onClick(p0: View?) {
@@ -103,7 +103,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
                     val intent = Intent(activity, NotificationActivity::class.java)
                     startActivity(intent)
                 } else {
-                    val snackbar = Snackbar.make(binding.ivNotificationAccount, "Please login for access notification", Snackbar.LENGTH_SHORT)
+                    val snackbar = Snackbar.make(binding?.ivNotificationAccount!!, "Please login for access notification", Snackbar.LENGTH_SHORT)
                             .setAction("Close", null)
                     snackbar.show()
                 }
@@ -139,7 +139,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             }
 
             R.id.btn_setting -> {
-                val popup = PopupMenu(requireContext(), binding.btnSetting)
+                val popup = PopupMenu(requireContext(), binding?.btnSetting!!)
                 popup.inflate(R.menu.menu_account)
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
@@ -148,7 +148,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
                                 val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
                                 startActivity(intent)
                             } else {
-                                val snackbar = Snackbar.make(binding.ivNotificationAccount, "Please login for change password", Snackbar.LENGTH_SHORT)
+                                val snackbar = Snackbar.make(binding?.ivNotificationAccount!!, "Please login for change password", Snackbar.LENGTH_SHORT)
                                         .setAction("Close", null)
                                 snackbar.show()
                             }
@@ -168,7 +168,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     }
 
     private fun refresh(){
-        binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+        binding?.swipeRefresh?.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             presenter.getDataUserProfile()
         })
     }
@@ -197,7 +197,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            binding.ivProfile.setImageURI(data?.data)
+            binding?.ivProfile?.setImageURI(data?.data)
             uri = data?.data!!
             val filepath = getRealPathFromURIPath(uri, this)
             val file = File(filepath)
@@ -255,17 +255,17 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun successGetDataUser(msg: String) {
         Log.d("getDataSuccess", msg)
-        binding.swipeRefresh.isRefreshing = false
+        binding?.swipeRefresh?.isRefreshing = false
     }
 
     override fun errorGetDataUSer(msg: String) {
         Log.d("getDataError", msg)
-        binding.swipeRefresh.isRefreshing = false
+        binding?.swipeRefresh?.isRefreshing = false
     }
 
     override fun getDataUser(data: DataUser?) {
-        binding.tvNameUser.text = data?.fullname.toString()
-        activity?.let { Glide.with(it).load(data?.photo).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding.ivProfile) }
+        binding?.tvNameUser?.text = data?.fullname.toString()
+        activity?.let { Glide.with(it).load(data?.photo).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding?.ivProfile!!) }
     }
 
     override fun successLogout(msg: String) {

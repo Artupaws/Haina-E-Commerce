@@ -24,7 +24,7 @@ import haina.ecommerce.view.login.LoginActivity
 class HistoryShortListFragment : Fragment(), HistoryShortListContract, View.OnClickListener {
 
     private var _binding: FragmentHistorySortListBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private lateinit var presenter: HistoryShortListPresenter
     private val status: String = "shortlisted"
     private val statusInterview: String = "interview"
@@ -42,25 +42,25 @@ class HistoryShortListFragment : Fragment(), HistoryShortListContract, View.OnCl
         presenter = HistoryShortListPresenter(this, requireContext())
         sharedPreferenceHelper = SharedPreferenceHelper(requireContext())
         broadcaster = LocalBroadcastManager.getInstance(requireContext())
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getShortlistApplicant(status)
-        binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
+        binding?.includeLogin?.btnLoginNotLogin?.setOnClickListener(this)
         if (sharedPreferenceHelper.getValueBoolien(Constants.PREF_IS_LOGIN)) {
-            binding.includeLogin.linearNotLogin.visibility = View.INVISIBLE
-            binding.rvShortList.visibility = View.VISIBLE
+            binding?.includeLogin?.linearNotLogin?.visibility = View.INVISIBLE
+            binding?.rvShortList?.visibility = View.VISIBLE
         } else {
-            binding.includeLogin.linearNotLogin.visibility = View.VISIBLE
-            binding.rvShortList.visibility = View.GONE
+            binding?.includeLogin?.linearNotLogin?.visibility = View.VISIBLE
+            binding?.rvShortList?.visibility = View.GONE
         }
         refresh()
     }
 
     private fun refresh() {
-        binding.swipeRefresh.setOnRefreshListener {
+        binding?.swipeRefresh?.setOnRefreshListener {
             presenter.getShortlistApplicant(status)
         }
     }
@@ -119,32 +119,32 @@ class HistoryShortListFragment : Fragment(), HistoryShortListContract, View.OnCl
     override fun messageGetShortListSuccess(msg: String) {
         Log.d("shortlistSuc", msg)
         if (msg.contains("Success")) {
-            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
-            binding.rvShortList.visibility = View.VISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.INVISIBLE
+            binding?.rvShortList?.visibility = View.VISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         } else {
-            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-            binding.rvShortList.visibility = View.INVISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
+            binding?.rvShortList?.visibility = View.INVISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         }
     }
 
     override fun messageGetShortListError(msg: String) {
         Log.d("shortlistErr", msg)
         if (msg == "null" && sharedPreferenceHelper.getValueBoolien(Constants.PREF_IS_LOGIN)) {
-            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-            binding.includeEmpty.tvEmpty.text = "Empty"
-            binding.rvShortList.visibility = View.INVISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
+            binding?.includeEmpty?.tvEmpty?.text = "Empty"
+            binding?.rvShortList?.visibility = View.INVISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         } else if (msg.contains("Doesn't Exist")){
-            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-            binding.includeEmpty.tvEmpty.text = "Empty"
-            binding.rvShortList.visibility = View.INVISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
+            binding?.includeEmpty?.tvEmpty?.text = "Empty"
+            binding?.rvShortList?.visibility = View.INVISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         } else {
-            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
-            binding.rvShortList.visibility = View.VISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.INVISIBLE
+            binding?.rvShortList?.visibility = View.VISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         }
     }
 
@@ -171,7 +171,7 @@ class HistoryShortListFragment : Fragment(), HistoryShortListContract, View.OnCl
 
     override fun getShortListApplicant(item: List<DataShortlist?>?) {
         val adapterShortList = AdapterShortlistApplicant(requireContext(), item)
-        binding.rvShortList.apply {
+        binding?.rvShortList?.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = adapterShortList

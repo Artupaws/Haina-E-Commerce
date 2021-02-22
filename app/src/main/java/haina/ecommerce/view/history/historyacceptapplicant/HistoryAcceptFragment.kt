@@ -21,7 +21,7 @@ import haina.ecommerce.view.login.LoginActivity
 class HistoryAcceptFragment : Fragment(), HistoryInterviewContract, View.OnClickListener {
 
     private var _binding : FragmentHistoryAcceptBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private lateinit var presenter : HistoryInterviewPresenter
     private lateinit var sharedPref: SharedPreferenceHelper
     private val status:String = "accepted"
@@ -30,19 +30,19 @@ class HistoryAcceptFragment : Fragment(), HistoryInterviewContract, View.OnClick
         _binding = FragmentHistoryAcceptBinding.inflate(inflater, container, false)
         presenter = HistoryInterviewPresenter(this, requireContext())
         sharedPref = SharedPreferenceHelper(requireContext())
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getInterviewApplicant(status)
-        binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
+        binding?.includeLogin?.btnLoginNotLogin?.setOnClickListener(this)
         if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
-            binding.includeLogin.linearNotLogin.visibility = View.INVISIBLE
-            binding.rvAccept.visibility = View.VISIBLE
+            binding?.includeLogin?.linearNotLogin?.visibility = View.INVISIBLE
+            binding?.rvAccept?.visibility = View.VISIBLE
         } else {
-            binding.includeLogin.linearNotLogin.visibility = View.VISIBLE
-            binding.rvAccept.visibility = View.GONE
+            binding?.includeLogin?.linearNotLogin?.visibility = View.VISIBLE
+            binding?.rvAccept?.visibility = View.GONE
         }
         refresh()
     }
@@ -62,7 +62,7 @@ class HistoryAcceptFragment : Fragment(), HistoryInterviewContract, View.OnClick
     }
 
     private fun refresh(){
-        binding.swipeRefresh.setOnRefreshListener {
+        binding?.swipeRefresh?.setOnRefreshListener {
             presenter.getInterviewApplicant(status)
         }
     }
@@ -75,38 +75,38 @@ class HistoryAcceptFragment : Fragment(), HistoryInterviewContract, View.OnClick
     override fun messageStatusSuccess(msg: String) {
         Log.d("acceptSuccess", msg)
         if (msg.contains("Success")){
-            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
-            binding.rvAccept.visibility = View.VISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.INVISIBLE
+            binding?.rvAccept?.visibility = View.VISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         } else {
-            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-            binding.rvAccept.visibility = View.INVISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
+            binding?.rvAccept?.visibility = View.INVISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         }
     }
 
     override fun messageStatusFailed(msg: String) {
         Log.d("acceptFailed", msg)
         if (msg == "null" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
-            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-            binding.includeEmpty.tvEmpty.text = "Empty"
-            binding.rvAccept.visibility = View.INVISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
+            binding?.includeEmpty?.tvEmpty?.text = "Empty"
+            binding?.rvAccept?.visibility = View.INVISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         } else if (msg.contains("Doesn't Exist")){
-            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-            binding.includeEmpty.tvEmpty.text = "Empty"
-            binding.rvAccept.visibility = View.INVISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
+            binding?.includeEmpty?.tvEmpty?.text = "Empty"
+            binding?.rvAccept?.visibility = View.INVISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         } else {
-            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
-            binding.rvAccept.visibility = View.VISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.INVISIBLE
+            binding?.rvAccept?.visibility = View.VISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         }
     }
 
     override fun getInterviewApplicant(item: List<DataShortlist?>?) {
         val adapterInterview = AdapterShortlistApplicant(requireContext(), item)
-        binding.rvAccept.apply {
+        binding?.rvAccept?.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = adapterInterview
             adapterInterview.notifyDataSetChanged()

@@ -20,7 +20,7 @@ import haina.ecommerce.view.login.LoginActivity
 class HistorySubmitJobFragment : Fragment(), HistorySubmitJobContract, View.OnClickListener {
 
     private var _binding: FragmentHistorySubmitApplicationBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding
     private lateinit var presenter: HistorySubmitJobPresenter
     private var totalSubmit:String = ""
     private lateinit var sharedPreferenceHelper: SharedPreferenceHelper
@@ -31,13 +31,13 @@ class HistorySubmitJobFragment : Fragment(), HistorySubmitJobContract, View.OnCl
         presenter = HistorySubmitJobPresenter(this, requireContext())
         sharedPreferenceHelper = SharedPreferenceHelper(requireContext())
         refresh()
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getJobSubmit()
-        binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
+        binding?.includeLogin?.btnLoginNotLogin?.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -50,7 +50,7 @@ class HistorySubmitJobFragment : Fragment(), HistorySubmitJobContract, View.OnCl
     }
 
     private fun refresh(){
-        binding.swipeRefresh.setOnRefreshListener {
+        binding?.swipeRefresh?.setOnRefreshListener {
             presenter.getJobSubmit()
         }
     }
@@ -58,11 +58,11 @@ class HistorySubmitJobFragment : Fragment(), HistorySubmitJobContract, View.OnCl
     override fun onStart() {
         super.onStart()
         if (sharedPreferenceHelper.getValueBoolien(Constants.PREF_IS_LOGIN)) {
-            binding.includeLogin.linearNotLogin.visibility = View.INVISIBLE
-            binding.rvHistoryJobSubmit.visibility = View.VISIBLE
+            binding?.includeLogin?.linearNotLogin?.visibility = View.INVISIBLE
+            binding?.rvHistoryJobSubmit?.visibility = View.VISIBLE
         } else {
-            binding.includeLogin.linearNotLogin.visibility = View.VISIBLE
-            binding.rvHistoryJobSubmit.visibility = View.GONE
+            binding?.includeLogin?.linearNotLogin?.visibility = View.VISIBLE
+            binding?.rvHistoryJobSubmit?.visibility = View.GONE
         }
     }
 
@@ -84,33 +84,33 @@ class HistorySubmitJobFragment : Fragment(), HistorySubmitJobContract, View.OnCl
             adapterHistorySubmitJob?.notifyDataSetChanged()
         }
         totalSubmit = "Total submit : ${item?.size.toString()} Application"
-        binding.tvTotalSubmit.text = totalSubmit
+        binding?.tvTotalSubmit?.text = totalSubmit
     }
 
     override fun messageGetSubmitJobSuccess(msg: String) {
         Log.d("historyJobSubmitSuccess", msg)
         if (msg.contains("Success")){
-            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
-            binding.rvHistoryJobSubmit.visibility = View.VISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.INVISIBLE
+            binding?.rvHistoryJobSubmit?.visibility = View.VISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         } else {
-            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-            binding.rvHistoryJobSubmit.visibility = View.INVISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
+            binding?.rvHistoryJobSubmit?.visibility = View.INVISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         }
     }
 
     override fun messageGetSubmitJobError(msg: String) {
         Log.d("historyJobSubmitError", msg)
         if (msg == "null" && sharedPreferenceHelper.getValueBoolien(Constants.PREF_IS_LOGIN)){
-            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-            binding.includeEmpty.tvEmpty.text = "You haven't applied"
-            binding.rvHistoryJobSubmit.visibility = View.INVISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
+            binding?.includeEmpty?.tvEmpty?.text = "You haven't applied"
+            binding?.rvHistoryJobSubmit?.visibility = View.INVISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         } else {
-            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
-            binding.rvHistoryJobSubmit.visibility = View.INVISIBLE
-            binding.swipeRefresh.isRefreshing = false
+            binding?.includeEmpty?.linearEmpty?.visibility = View.INVISIBLE
+            binding?.rvHistoryJobSubmit?.visibility = View.INVISIBLE
+            binding?.swipeRefresh?.isRefreshing = false
         }
     }
 
