@@ -28,13 +28,13 @@ class SplashScreenActivity : AppCompatActivity() {
         handler.postDelayed({
             if (isConnect()) {
                 goToExplore()
-            } else {
-                binding.viewLoading.visibility = View.INVISIBLE
-                val snackbar = Snackbar.make(binding.viewLoading, "No connection!", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Try Again", View.OnClickListener { letMeIn()
-                            binding.viewLoading.visibility = View.VISIBLE
-                        })
-                snackbar.show()
+//            } else {
+//                binding.viewLoading.visibility = View.INVISIBLE
+//                val snackbar = Snackbar.make(binding.viewLoading, "No connection!", Snackbar.LENGTH_INDEFINITE)
+//                        .setAction("Try Again", View.OnClickListener { letMeIn()
+//                            binding.viewLoading.visibility = View.VISIBLE
+//                        })
+//                snackbar.show()
             }
         }, 2000)
 

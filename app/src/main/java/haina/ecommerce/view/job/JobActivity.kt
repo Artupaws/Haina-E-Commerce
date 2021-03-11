@@ -75,6 +75,7 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
             }
 
         })
+        popupLoading?.show()
 
     }
 
@@ -124,6 +125,11 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         super.onStart()
         broadcaster?.registerReceiver(mMessageReceiver, IntentFilter("jobLocationFilter"))
         broadcaster?.registerReceiver(mMessageReceiver, IntentFilter("jobCategoryFilter"))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        popupLoading?.dismiss()
     }
 
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver(){
@@ -195,7 +201,6 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         binding.swipeRefresh.isRefreshing = false
         binding.ivLoadingCategory.visibility = View.INVISIBLE
         presenter.loadListJobVacancy(data)
-        popupLoading?.show()
     }
 
     override fun errorLoadJobCategory(msg: String) {

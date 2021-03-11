@@ -88,7 +88,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
                 binding.btnLogin.visibility = View.INVISIBLE
                 binding.relativeLoading.visibility = View.VISIBLE
                 binding.btnRegister.isEnabled = false
-//                binding.btnLoginGoogle.isEnabled= false
+                binding.linearGoogle.isClickable = false
                 checkLogin()
             }
             R.id.btn_register -> {
@@ -207,6 +207,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         binding.btnLogin.visibility = View.VISIBLE
         binding.relativeLoading.visibility = View.INVISIBLE
         binding.btnRegister.isEnabled = true
+        binding.linearGoogle.isEnabled = true
 //        binding.btnLoginGoogle.isEnabled= true
 
     }

@@ -54,6 +54,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     private var popupLogout: AlertDialog? = null
     private lateinit var presenter: MyAccountPresenter
     private lateinit var uri: Uri
+    private var phoneUser:String? = null
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -164,7 +165,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun onResume() {
         super.onResume()
-        presenter.getDataUserProfile()
+//        presenter.getDataUserProfile()
     }
 
     private fun refresh(){
@@ -264,6 +265,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     }
 
     override fun getDataUser(data: DataUser?) {
+        sharedPref.save(Constants.PREF_PHONE_NUMBER, data?.phone.toString())
         binding?.tvNameUser?.text = data?.fullname.toString()
         activity?.let { Glide.with(it).load(data?.photo).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding?.ivProfile!!) }
     }
@@ -293,7 +295,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         if (msg == "Company Registered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
             val intent = Intent(activity, DataCompanyActivity::class.java)
             startActivity(intent)
-        } else if (msg == "Company Unregistered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+        } else if (!msg.contains("Registered") && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
             val intent = Intent(activity, RegisterCompanyActivity::class.java)
             startActivity(intent)
         } else {

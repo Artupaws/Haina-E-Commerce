@@ -9,6 +9,7 @@ import haina.ecommerce.model.ResponseLogout
 import haina.ecommerce.util.Constants
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
@@ -23,7 +24,8 @@ class MyAccountPresenter (val view: MyAccountContract, val context: Context){
                             view.getDataUser(data)
                             view.successGetDataUser(response.body()?.message.toString())
                         } else {
-                            view.errorGetDataUSer(response.body()?.message.toString())
+                            val error = JSONObject(response.errorBody()?.string()!!)
+                            view.errorGetDataUSer(error.getString("message"))
                         }
                     }
 
@@ -43,7 +45,8 @@ class MyAccountPresenter (val view: MyAccountContract, val context: Context){
                             view.resetTokenUser(data)
                             view.successLogout(response.body()?.message.toString())
                         } else {
-                            view.errorLogout(response.body()?.message.toString())
+                            val error = JSONObject(response.errorBody()?.string()!!)
+                            view.errorLogout(error.getString("message"))
                         }
                     }
 
@@ -64,7 +67,8 @@ class MyAccountPresenter (val view: MyAccountContract, val context: Context){
                 if (response.isSuccessful && response.body()?.value == 1){
                     view.successChangeImageProfile(response.body()?.message.toString())
                 } else {
-                    view.errorChangeImageProfile(response.body()?.message.toString())
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.errorChangeImageProfile(error.getString("message"))
                 }
             }
 
@@ -82,7 +86,8 @@ class MyAccountPresenter (val view: MyAccountContract, val context: Context){
                 if (response.isSuccessful && response.body()?.value == 1){
                     view.checkDataCompany("Company Registered")
                 } else {
-                    view.checkDataCompany("Company Unregistered")
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.checkDataCompany(error.getString("message"))
                 }
             }
 

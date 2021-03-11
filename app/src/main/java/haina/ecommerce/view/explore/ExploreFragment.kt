@@ -23,6 +23,7 @@ import haina.ecommerce.model.*
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.covidlist.CovidListActivity
+import haina.ecommerce.view.internet.InternetActivity
 import haina.ecommerce.view.job.JobActivity
 import haina.ecommerce.view.notification.NotificationActivity
 import haina.ecommerce.view.other.OtherActivity
@@ -57,6 +58,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.menuServices?.linearJob?.setOnClickListener(this)
         binding?.covidNews?.tvDetailCovid?.setOnClickListener(this)
         binding?.ivNotification?.setOnClickListener(this)
+        binding?.menuServices?.linearInternet?.setOnClickListener(this)
 //        presenter.loadListBaseCurrency()
 //        presenter.loadCovidJkt()
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
@@ -264,7 +266,10 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
                         .setAction("Close", null)
                     snackbar.show()
                 }
-
+            }
+            R.id.linear_internet -> {
+                val intent = Intent(requireContext(), InternetActivity::class.java)
+                startActivity(intent)
             }
         }
     }
