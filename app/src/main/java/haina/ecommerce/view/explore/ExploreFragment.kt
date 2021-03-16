@@ -8,22 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterHeadlineNews
-import haina.ecommerce.adapter.AdapterSpinnerCurrency
 import haina.ecommerce.databinding.FragmentExploreBinding
 import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.*
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.covidlist.CovidListActivity
-import haina.ecommerce.view.internet.InternetActivity
+import haina.ecommerce.view.topup.TopupActivity
 import haina.ecommerce.view.job.JobActivity
 import haina.ecommerce.view.notification.NotificationActivity
 import haina.ecommerce.view.other.OtherActivity
@@ -58,7 +52,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.menuServices?.linearJob?.setOnClickListener(this)
         binding?.covidNews?.tvDetailCovid?.setOnClickListener(this)
         binding?.ivNotification?.setOnClickListener(this)
-        binding?.menuServices?.linearInternet?.setOnClickListener(this)
+        binding?.menuServices?.linearTopup?.setOnClickListener(this)
 //        presenter.loadListBaseCurrency()
 //        presenter.loadCovidJkt()
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
@@ -267,8 +261,8 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
                     snackbar.show()
                 }
             }
-            R.id.linear_internet -> {
-                val intent = Intent(requireContext(), InternetActivity::class.java)
+            R.id.linear_topup -> {
+                val intent = Intent(requireContext(), TopupActivity::class.java)
                 startActivity(intent)
             }
         }

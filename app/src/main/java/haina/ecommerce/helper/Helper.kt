@@ -51,6 +51,20 @@ class Helper  {
         return valueRupiah.replace(" ".toRegex(), "")
     }
 
+    fun formatPhoneNumber(number:String):String{
+        var newFormatNumber = number
+        if (number.substring(0, 3) == "+62" && number.length == 14) {
+            newFormatNumber = number.substring(0, 3).replace("+62", "0${number.substring(3, 14)}")
+        }
+        if (number.substring(0, 3) == "+62" && number.length == 15){
+            newFormatNumber = number.substring(0, 3).replace("+62", "0${number.substring(3, 15)}")
+        }
+        if (number.substring(0, 3) == "+62" && number.length == 13){
+            newFormatNumber = number.substring(0, 3).replace("+62", "0${number.substring(3, 13)}")
+        }
+        return newFormatNumber
+    }
+
     fun changeFormatMoneyToValueFilter(formatRupiah: String?): String? {
         val xRupiah = formatRupiah?.substring(1)
         val doubleRupiah = xRupiah?.substring(2)

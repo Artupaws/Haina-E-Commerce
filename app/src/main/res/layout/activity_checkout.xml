@@ -160,13 +160,14 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btn_payment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:backgroundTint="@color/yellow"
             android:text="@string/pay"
+            android:textSize="12sp"
             android:textColor="@color/black" />
-
 
     </LinearLayout>
 

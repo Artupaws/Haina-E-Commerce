@@ -187,6 +187,7 @@
                 android:weightSum="4">
 
                 <LinearLayout
+                    android:id="@+id/linear_topup"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -205,11 +206,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleMenuService"
-                        android:text="@string/internet_title" />
+                        android:text="@string/topup_title" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_internet_tv_services"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -228,11 +230,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleMenuService"
-                        android:text="@string/wifi_title" />
+                        android:text="@string/internet_tv_services" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_electricity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -256,6 +259,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_water"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
@@ -275,6 +279,63 @@
                         android:layout_height="wrap_content"
                         style="@style/TextStyleMenuService"
                         android:text="@string/water_title" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:id="@+id/linear_postpaid"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <haina.ecommerce.helper.FontAwesome
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/phone"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleMenuService"
+                        android:text="@string/postpaid" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_phone_house"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <haina.ecommerce.helper.FontAwesome
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/phoneHouse"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleMenuService"
+                        android:text="@string/telkom" />
 
                 </LinearLayout>
 

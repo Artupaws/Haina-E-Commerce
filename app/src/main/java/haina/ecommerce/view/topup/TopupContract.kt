@@ -1,8 +1,8 @@
-package haina.ecommerce.view.internet
+package haina.ecommerce.view.topup
 
 import haina.ecommerce.model.DataUser
 
-interface InternetContract {
+interface TopupContract {
 
     fun messageGetDataUser(msg:String)
     fun getDataUser(data:DataUser?)

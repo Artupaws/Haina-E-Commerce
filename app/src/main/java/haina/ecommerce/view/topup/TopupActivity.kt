@@ -1,7 +1,6 @@
-package haina.ecommerce.view.internet
+package haina.ecommerce.view.topup
 
 import android.Manifest
-import android.R.attr
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -20,39 +19,39 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.TabAdapterInternet
-import haina.ecommerce.databinding.ActivityInternetBinding
+import haina.ecommerce.databinding.ActivityTopupBinding
+import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataUser
 import haina.ecommerce.preference.SharedPreferenceHelper
-import haina.ecommerce.util.Constants
-import haina.ecommerce.view.myaccount.MyAccountFragment
 
-class InternetActivity : AppCompatActivity(), View.OnClickListener, InternetContract {
+class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
 
-    private lateinit var binding: ActivityInternetBinding
+    private lateinit var binding: ActivityTopupBinding
     private lateinit var sharedPref: SharedPreferenceHelper
-    private lateinit var presenter: InternetPresenter
+    private lateinit var presenter: TopupPresenter
     private val PICK_CONTACT = 0
     private var broadcaster: LocalBroadcastManager? = null
-    private var phoneNumber:String? = null
+    private var phoneNumber: String? = null
+    private val helper: Helper = Helper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityInternetBinding.inflate(layoutInflater)
+        binding = ActivityTopupBinding.inflate(layoutInflater)
         setContentView(binding.root)
         sharedPref = SharedPreferenceHelper(this)
-        presenter = InternetPresenter(this, this)
+        presenter = TopupPresenter(this, this)
         broadcaster = LocalBroadcastManager.getInstance(this)
 
         presenter.getDataUserProfile()
-        binding.toolbarInternet.setNavigationIcon(R.drawable.ic_back_black)
-        binding.toolbarInternet.setNavigationOnClickListener { onBackPressed() }
-        binding.toolbarInternet.title = "Internet"
+        binding.toolbarTopup.setNavigationIcon(R.drawable.ic_back_black)
+        binding.toolbarTopup.setNavigationOnClickListener { onBackPressed() }
+        binding.toolbarTopup.title = "Internet"
         binding.imagePhoneBook.setOnClickListener(this)
 
         binding.viewPagerInternet.adapter = TabAdapterInternet(supportFragmentManager, 0)
         binding.tabLayoutInternet.setupWithViewPager(binding.viewPagerInternet)
 
-        binding.etPhoneNumber.addTextChangedListener(object : TextWatcher{
+        binding.etPhoneNumber.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 false
             }
@@ -62,10 +61,10 @@ class InternetActivity : AppCompatActivity(), View.OnClickListener, InternetCont
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s?.isNotEmpty()!!){
+                if (s?.isNotEmpty()!!) {
                     phoneNumber = s.toString()
                     val sendPhoneNumber = Intent("phoneNumber")
-                            .putExtra("number", phoneNumber)
+                        .putExtra("number", phoneNumber)
                     broadcaster?.sendBroadcast(sendPhoneNumber)
                 } else {
                     val sendPhoneNumber = Intent("phoneNumber")
@@ -73,7 +72,6 @@ class InternetActivity : AppCompatActivity(), View.OnClickListener, InternetCont
                     broadcaster?.sendBroadcast(sendPhoneNumber)
                 }
             }
-
         })
 
         getPhoneNumber()
@@ -108,36 +106,36 @@ class InternetActivity : AppCompatActivity(), View.OnClickListener, InternetCont
         private val PERMISSION_CODE = 200
     }
 
-    private fun getPhoneNumber(){
+    private fun getPhoneNumber() {
         val tm = getSystemService(Context.TELEPHONY_SERVICE) as
                 TelephonyManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_DENIED) {
                 val permissions = arrayOf(Manifest.permission.READ_PHONE_STATE)
-                requestPermissions(permissions, InternetActivity.PERMISSION_CODE)
+                requestPermissions(permissions, TopupActivity.PERMISSION_CODE)
             } else {
                 //permission already granted
                 val phoneNumber = tm.line1Number
-                if (phoneNumber !=null){
+                if (phoneNumber != null) {
                     binding.etPhoneNumber.setText(phoneNumber)
                 }
             }
         } else {
             //system OS is < Marshmallow
             val phoneNumber = tm.line1Number
-            if (phoneNumber !=null){
+            if (phoneNumber != null) {
                 binding.etPhoneNumber.setText(phoneNumber)
             }
         }
     }
 
-    private fun refresh(){
+    private fun refresh() {
         binding.swipeRefresh.setOnRefreshListener {
             presenter.getDataUserProfile()
         }
     }
 
-    private fun setPhoneUser(phone:String?){
+    private fun setPhoneUser(phone: String?) {
         binding.etPhoneNumber.setText(phone)
     }
 
@@ -146,14 +144,19 @@ class InternetActivity : AppCompatActivity(), View.OnClickListener, InternetCont
         startActivityForResult(intent, PICK_CONTACT)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode){
+        when (requestCode) {
             PICK_CONTACT -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getContact()
                 } else {
-                    Toast.makeText(applicationContext, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Permission denied", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
@@ -179,9 +182,8 @@ class InternetActivity : AppCompatActivity(), View.OnClickListener, InternetCont
                             null
                         )
                         phones?.moveToFirst()
-                        val cNumber: String =
-                            phones?.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))!!
-                        setPhoneUser(cNumber)
+                        val cNumber: String = phones?.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER))!!
+                        setPhoneUser(helper.formatPhoneNumber(cNumber))
                     }
                 }
             }
@@ -197,7 +199,7 @@ class InternetActivity : AppCompatActivity(), View.OnClickListener, InternetCont
         setPhoneUser(data?.phone)
         phoneNumber = data?.phone
         val sendPhoneNumber = Intent("phoneNumber")
-                .putExtra("number", phoneNumber)
+            .putExtra("number", phoneNumber)
         broadcaster?.sendBroadcast(sendPhoneNumber)
     }
 }

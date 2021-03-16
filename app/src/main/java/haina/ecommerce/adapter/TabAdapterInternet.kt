@@ -3,12 +3,9 @@ package haina.ecommerce.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import haina.ecommerce.view.history.historyacceptapplicant.HistoryAcceptFragment
-import haina.ecommerce.view.history.historyinterviewapplicant.HistoryInterviewFragment
-import haina.ecommerce.view.history.historyshortlistapplicant.HistoryShortListFragment
 import haina.ecommerce.view.history.historysubmitapplication.HistorySubmitJobFragment
-import haina.ecommerce.view.internet.paketdata.PaketDataFragment
-import haina.ecommerce.view.internet.pulsa.PulsaFragment
+import haina.ecommerce.view.topup.paketdata.PaketDataFragment
+import haina.ecommerce.view.topup.pulsa.PulsaFragment
 
 class TabAdapterInternet (fm: FragmentManager, behavior: Int) : FragmentStatePagerAdapter(fm, behavior) {
     private val tabName: Array<String> = arrayOf("Pulsa", "Paket Data")

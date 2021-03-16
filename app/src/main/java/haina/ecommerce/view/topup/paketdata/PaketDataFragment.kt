@@ -1,4 +1,4 @@
-package haina.ecommerce.view.internet.pulsa
+package haina.ecommerce.view.topup.paketdata
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -9,49 +9,47 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterPulsa
-import haina.ecommerce.databinding.FragmentPulsaBinding
+import haina.ecommerce.adapter.AdapterPaketData
+import haina.ecommerce.databinding.FragmentPaketDataBinding
 import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.Pulsa
+import haina.ecommerce.model.PaketData
 import haina.ecommerce.view.checkout.CheckoutActivity
 
-class PulsaFragment : Fragment(), View.OnClickListener {
+class PaketDataFragment : Fragment(), View.OnClickListener {
 
-    private var _binding: FragmentPulsaBinding? = null
+    private var _binding:FragmentPaketDataBinding? = null
     private val binding get() = _binding
-    private val helper:Helper = Helper()
-    private val listPulsa = arrayListOf(Pulsa(nominal = "50.000", 50000),
-    Pulsa(nominal = "25.000", 25000),
-    Pulsa(nominal = "75.000", 75000),
-    Pulsa(nominal = "100.000", 100000))
-    private var broadcaster: LocalBroadcastManager? = null
+    private val listPaketData = arrayListOf(PaketData(title = "bronet 4g owsem 1gb", 50000, description = "1gb kuota utama"),
+            PaketData(title = "bronet 4g owsem 2gb", 25000, "2gb kuota utama"),
+            PaketData(title = "bronet 4g owsem 3gb", 75000, "3gb kuota utama"),
+            PaketData(title = "bronet 4g owsem 4gb", 100000, "4gb kuota utama"))
     private var totalPrice:String? = null
     private var phoneNumber:String? = null
+    private val helper:Helper = Helper()
+    private var broadcaster: LocalBroadcastManager? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentPulsaBinding.inflate(inflater, container, false)
+        _binding = FragmentPaketDataBinding.inflate(inflater, container, false)
 
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapterPulsa = AdapterPulsa(requireContext(), listPulsa)
-
         broadcaster = LocalBroadcastManager.getInstance(requireContext())
+        val adapterPaketData = AdapterPaketData(requireContext(), listPaketData)
+
         binding?.btnNext?.setOnClickListener(this)
 
-        binding?.rvPulsa?.apply {
-            adapter = adapterPulsa
-            layoutManager = GridLayoutManager(requireContext(), 2)
+        binding?.rvPaketData?.apply {
+            adapter = adapterPaketData
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
 
-        adapterPulsa.onItemClick = { i: Int, s: String ->
+        adapterPaketData.onItemClick = { i: Int, s: String ->
             totalPrice = helper.convertToFormatMoneyIDRFilter(i.toString())
             binding?.tvPrice?.text = totalPrice
             if (i!=0){
@@ -60,6 +58,12 @@ class PulsaFragment : Fragment(), View.OnClickListener {
                 binding?.linearTotalPrice?.visibility = View.GONE
             }
         }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     override fun onClick(v: View?) {
@@ -68,7 +72,7 @@ class PulsaFragment : Fragment(), View.OnClickListener {
                 val intent = Intent(requireContext(), CheckoutActivity::class.java)
                         .putExtra("totalPrice", totalPrice)
                         .putExtra("phoneNumber", phoneNumber)
-                        .putExtra("titleService", "Pulsa")
+                        .putExtra("titleService", "Paket Data")
                 startActivity(intent)
             }
         }
@@ -86,10 +90,10 @@ class PulsaFragment : Fragment(), View.OnClickListener {
                     phoneNumber = intent.getStringExtra("number")
                     if (phoneNumber != ""){
                         binding?.tvNumberEmpty?.visibility = View.GONE
-                        binding?.rvPulsa?.visibility = View.VISIBLE
+                        binding?.rvPaketData?.visibility = View.VISIBLE
                     }else{
                         binding?.tvNumberEmpty?.visibility = View.VISIBLE
-                        binding?.rvPulsa?.visibility = View.GONE
+                        binding?.rvPaketData?.visibility = View.GONE
                     }
                 }
             }
@@ -100,12 +104,6 @@ class PulsaFragment : Fragment(), View.OnClickListener {
         super.onStop()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mMessageReceiver)
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
 
 
 }

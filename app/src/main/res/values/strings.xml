@@ -19,7 +19,7 @@
     <string name="recomendations">RECOMENDATIONS</string>
     <string name="news_title">Headlines News</string>
     <string name="shipping_title">Shipping</string>
-    <string name="internet_title">Internet</string>
+    <string name="topup_title">Topup</string>
     <string name="job_vacancy">Job</string>
     <string name="other_title">Other</string>
     <string name="rent_apartment">Apartment</string>
@@ -180,6 +180,24 @@
     <string name="service_type">Service Type</string>
     <string name="number">Number</string>
     <string name="price">Price</string>
-    <string name="pay">Pay</string>
+    <string name="pay">Payment</string>
     <string name="total_payment">Total Payment</string>
+    <string name="types_electricity">types of electrical products</string>
+    <string name="meter_number">meter number/ID customer</string>
+    <string name="nominal">Nominal</string>
+    <string name="province">province</string>
+    <string name="customer_id">customer id</string>
+    <string name="water_management">water management</string>
+    <string name="phone_number">phone number</string>
+    <string name="internet_tv_services">internet/tv services</string>
+    <string name="customer_number_internet_tv">customer number internet/tv</string>
+    <string name="postpaid">Postpaid</string>
+    <string name="telkom">Telkom</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="choose_payment_method_here">Choose Payment Method Here</string>
+    <string name="payment_summary">Payment Summary</string>
+    <string name="total_bill">Total Bill</string>
+    <string name="discounts">Discounts</string>
+    <string name="service_fee">Service Fee</string>
+    <string name="filter_job">Filter Job</string>
 </resources>

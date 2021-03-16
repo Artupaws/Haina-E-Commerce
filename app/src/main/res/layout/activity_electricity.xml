@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.internetandtv.InternetActivity">
+    tools:context=".view.electricity.ElectricityActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
@@ -21,7 +21,7 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_internet"
+                android:id="@+id/toolbar_electricity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/yellow" />
@@ -44,10 +44,10 @@
                         style="@style/SmallTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/internet_tv_services" />
+                        android:text="@string/types_electricity" />
 
                     <Spinner
-                        android:id="@+id/spn_services"
+                        android:id="@+id/spn_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"/>
@@ -62,10 +62,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="@string/customer_number_internet_tv" />
+                        android:text="@string/meter_number" />
 
                     <EditText
-                        android:id="@+id/et_customer_number"
+                        android:id="@+id/et_phone_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
@@ -76,6 +76,27 @@
                         android:layout_height="0.5dp"
                         android:background="@color/black"/>
 
+                    <LinearLayout
+                        android:id="@+id/linear_type_token"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/SmallTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/nominal" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_nominal_token"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -84,29 +105,7 @@
 
                 </LinearLayout>
 
-
             </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearLayout7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp">
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout_internet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/view_pager_internet"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
 
         </LinearLayout>
 

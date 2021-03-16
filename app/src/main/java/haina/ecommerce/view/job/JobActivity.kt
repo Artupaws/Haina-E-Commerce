@@ -1,5 +1,6 @@
 package haina.ecommerce.view.job
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -227,11 +228,12 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         dialogFilterJob(listLocationFilter)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun dialogFilterJob(itemHaina: List<DataItemHaina?>?){
         popupFilter = Dialog(this)
         popupFilter?.setContentView(R.layout.popup_filter_job)
         popupFilter?.setCancelable(true)
-        popupFilter?.window?.setBackgroundDrawable(applicationContext.getDrawable(android.R.color.transparent))
+        popupFilter?.window?.setBackgroundDrawable(getDrawable(android.R.color.transparent))
         val window: Window = popupFilter?.window!!
         window.setGravity(Gravity.CENTER)
         val action = popupFilter?.findViewById<Button>(haina.ecommerce.R.id.btn_apply)

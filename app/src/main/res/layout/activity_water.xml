@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.internetandtv.InternetActivity">
+    tools:context=".view.water.WaterActivity">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
@@ -21,7 +21,7 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_internet"
+                android:id="@+id/toolbar_water"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/yellow" />
@@ -44,10 +44,10 @@
                         style="@style/SmallTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/internet_tv_services" />
+                        android:text="@string/province" />
 
                     <Spinner
-                        android:id="@+id/spn_services"
+                        android:id="@+id/spn_province"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"/>
@@ -62,10 +62,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="@string/customer_number_internet_tv" />
+                        android:text="@string/water_management" />
+
+                   <Spinner
+                        android:id="@+id/spn_water_management"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/black"/>
+
+                    <TextView
+                        style="@style/SmallTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/customer_id" />
 
                     <EditText
-                        android:id="@+id/et_customer_number"
+                        android:id="@+id/et_id_customer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"

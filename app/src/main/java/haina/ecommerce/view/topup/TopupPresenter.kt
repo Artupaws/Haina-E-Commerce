@@ -1,4 +1,4 @@
-package haina.ecommerce.view.internet
+package haina.ecommerce.view.topup
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
@@ -8,7 +8,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class InternetPresenter(val view: InternetContract, val context: Context) {
+class TopupPresenter(val view: TopupContract, val context: Context) {
 
     fun getDataUserProfile(){
         NetworkConfig().getConnectionHainaBearer(context).getDataUser(Constants.APIKEY)
