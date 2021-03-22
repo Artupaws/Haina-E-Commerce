@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemPulsaBinding
 import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.Pulsa
+import haina.ecommerce.model.pulsaanddata.PulsaItem
 
-class AdapterPulsa (val context: Context, private val listPulsa: List<Pulsa>): RecyclerView.Adapter<AdapterPulsa.Holder>(){
+class AdapterPulsa (val context: Context, private val listPulsa: List<PulsaItem?>?): RecyclerView.Adapter<AdapterPulsa.Holder>(){
 
     private var index:Int = -1
     var onItemClick: (Int, String) -> Unit = { i: Int, s: String -> }
@@ -18,13 +18,13 @@ class AdapterPulsa (val context: Context, private val listPulsa: List<Pulsa>): R
 
     inner class Holder (view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemPulsaBinding.bind(view)
-        fun bind(item: Pulsa){
+        fun bind(item: PulsaItem){
             with(binding){
-                tvNominal.text = item.nominal
-                tvPrice.text = helper.convertToFormatMoneyIDRFilter(item.price.toString())
+                tvNominal.text = item.description
+                tvPrice.text = helper.convertToFormatMoneyIDRFilter(item.sellPrice.toString())
                 linearClick.setOnClickListener {index = adapterPosition
                     notifyDataSetChanged()
-                    onItemClick(item.price, "pulsa")
+                    onItemClick(item.sellPrice!!, "pulsa")
                 }
                 if (index == adapterPosition){
                     linearPulsa.setBackgroundResource(R.drawable.background_internet_enable)
@@ -43,9 +43,9 @@ class AdapterPulsa (val context: Context, private val listPulsa: List<Pulsa>): R
     }
 
     override fun onBindViewHolder(holder: AdapterPulsa.Holder, position: Int) {
-        val pulsa: Pulsa = listPulsa[position]
+        val pulsa: PulsaItem = listPulsa?.get(position)!!
         holder.bind(pulsa)
     }
 
-    override fun getItemCount(): Int = listPulsa.size
+    override fun getItemCount(): Int = listPulsa?.size!!
 }

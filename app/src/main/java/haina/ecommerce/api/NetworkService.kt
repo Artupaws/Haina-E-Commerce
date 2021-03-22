@@ -1,6 +1,7 @@
 package haina.ecommerce.api
 
 import haina.ecommerce.model.*
+import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -294,4 +295,9 @@ interface NetworkService {
             @Field("new_password")newPassword:String
     ):Call<ResponseChangePassword>
 
+    //Check Provider And Get Product
+    @FormUrlEncoded
+    @POST("api/pulsa/providers")
+    fun checkProvider(
+            @Field("number")phoneNumber:String):Call<ResponseGetProductPhone>
 }

@@ -8,10 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemPaketDataBinding
 import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.PaketData
-import haina.ecommerce.model.Pulsa
+import haina.ecommerce.model.pulsaanddata.PaketDataItem
 
-class AdapterPaketData (val context: Context, private val listPaketData: List<PaketData>): RecyclerView.Adapter<AdapterPaketData.Holder>(){
+class AdapterPaketData (val context: Context, private val listPaketData: List<PaketDataItem?>?): RecyclerView.Adapter<AdapterPaketData.Holder>(){
 
     private var index:Int = -1
     var onItemClick: (Int, String) -> Unit = { i: Int, s: String -> }
@@ -19,14 +18,14 @@ class AdapterPaketData (val context: Context, private val listPaketData: List<Pa
 
     inner class Holder (view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemPaketDataBinding.bind(view)
-        fun bind(item: PaketData){
+        fun bind(item: PaketDataItem){
             with(binding){
-                tvTitle.text = item.title
+                tvTitle.text = item.description
                 tvDescription.text = item.description
-                tvPrice.text = helper.convertToFormatMoneyIDRFilter(item.price.toString())
+                tvPrice.text = helper.convertToFormatMoneyIDRFilter(item.sellPrice.toString())
                 linearClick.setOnClickListener {index = adapterPosition
                     notifyDataSetChanged()
-                    onItemClick(item.price, "paketData")
+//                    onItemClick(item.price, "paketData")
                 }
                 if (index == adapterPosition){
                     linearPulsa.setBackgroundResource(R.drawable.background_internet_enable)
@@ -45,9 +44,9 @@ class AdapterPaketData (val context: Context, private val listPaketData: List<Pa
     }
 
     override fun onBindViewHolder(holder: AdapterPaketData.Holder, position: Int) {
-        val paketData: PaketData = listPaketData[position]
+        val paketData: PaketDataItem = listPaketData?.get(position)!!
         holder.bind(paketData)
     }
 
-    override fun getItemCount(): Int = listPaketData.size
+    override fun getItemCount(): Int = listPaketData?.size!!
 }

@@ -180,7 +180,8 @@
     <string name="service_type">Service Type</string>
     <string name="number">Number</string>
     <string name="price">Price</string>
-    <string name="pay">Payment</string>
+    <string name="payment">Payment</string>
+    <string name="pay">Pay</string>
     <string name="total_payment">Total Payment</string>
     <string name="types_electricity">types of electrical products</string>
     <string name="meter_number">meter number/ID customer</string>
@@ -198,6 +199,11 @@
     <string name="payment_summary">Payment Summary</string>
     <string name="total_bill">Total Bill</string>
     <string name="discounts">Discounts</string>
-    <string name="service_fee">Service Fee</string>
+    <string name="service_fee">Admin Fee</string>
     <string name="filter_job">Filter Job</string>
+    <string name="how_to_payment">how to payment</string>
+    <string name="your_bank_account">Your Bank Account</string>
+    <string name="destination_bank_account">Destination Bank Account</string>
+    <string name="total">Total</string>
+    <string name="virtual_account_number">Virtual Account Number</string>
 </resources>

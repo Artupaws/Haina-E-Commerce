@@ -47,7 +47,6 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
         binding.toolbarTopup.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarTopup.title = "Internet"
         binding.imagePhoneBook.setOnClickListener(this)
-
         binding.viewPagerInternet.adapter = TabAdapterInternet(supportFragmentManager, 0)
         binding.tabLayoutInternet.setupWithViewPager(binding.viewPagerInternet)
 
@@ -55,11 +54,9 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 false
             }
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 false
             }
-
             override fun afterTextChanged(s: Editable?) {
                 if (s?.isNotEmpty()!!) {
                     phoneNumber = s.toString()
@@ -73,10 +70,8 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
                 }
             }
         })
-
         getPhoneNumber()
         refresh()
-
     }
 
     override fun onClick(v: View?) {
@@ -145,10 +140,7 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PICK_CONTACT -> {
@@ -165,25 +157,19 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            PICK_CONTACT -> if (resultCode === RESULT_OK) {
+            PICK_CONTACT -> if (resultCode == RESULT_OK) {
                 val contactData: Uri = data?.data!!
                 val c: Cursor = managedQuery(contactData, null, null, null, null)
                 if (c.moveToFirst()) {
-                    val id: String =
-                        c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID))
-                    val hasPhone: String =
-                        c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))
+                    val id: String = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID))
+                    val hasPhone: String = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))
                     if (hasPhone.equals("1", ignoreCase = true)) {
-                        val phones: Cursor? = contentResolver.query(
-                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
-                            null,
-                            null
-                        )
+                        val phones: Cursor? = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null, null)
                         phones?.moveToFirst()
                         val cNumber: String = phones?.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER))!!
                         setPhoneUser(helper.formatPhoneNumber(cNumber))
+                        intentPhoneNumber(helper.formatPhoneNumber(cNumber))
                     }
                 }
             }
@@ -198,8 +184,13 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
     override fun getDataUser(data: DataUser?) {
         setPhoneUser(data?.phone)
         phoneNumber = data?.phone
+        intentPhoneNumber(phoneNumber)
+
+    }
+
+    private fun intentPhoneNumber(phoneNumber:String?){
         val sendPhoneNumber = Intent("phoneNumber")
-            .putExtra("number", phoneNumber)
+                .putExtra("number", phoneNumber)
         broadcaster?.sendBroadcast(sendPhoneNumber)
     }
 }

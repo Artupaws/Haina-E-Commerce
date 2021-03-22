@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,21 +16,22 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterPaketData
 import haina.ecommerce.databinding.FragmentPaketDataBinding
 import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.PaketData
+import haina.ecommerce.model.pulsaanddata.PaketDataItem
 import haina.ecommerce.view.checkout.CheckoutActivity
 
-class PaketDataFragment : Fragment(), View.OnClickListener {
+class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
 
     private var _binding:FragmentPaketDataBinding? = null
     private val binding get() = _binding
-    private val listPaketData = arrayListOf(PaketData(title = "bronet 4g owsem 1gb", 50000, description = "1gb kuota utama"),
-            PaketData(title = "bronet 4g owsem 2gb", 25000, "2gb kuota utama"),
-            PaketData(title = "bronet 4g owsem 3gb", 75000, "3gb kuota utama"),
-            PaketData(title = "bronet 4g owsem 4gb", 100000, "4gb kuota utama"))
+//    private val listPaketData = arrayListOf(PaketData(title = "bronet 4g owsem 1gb", 50000, description = "1gb kuota utama"),
+//            PaketData(title = "bronet 4g owsem 2gb", 25000, "2gb kuota utama"),
+//            PaketData(title = "bronet 4g owsem 3gb", 75000, "3gb kuota utama"),
+//            PaketData(title = "bronet 4g owsem 4gb", 100000, "4gb kuota utama"))
     private var totalPrice:String? = null
     private var phoneNumber:String? = null
     private val helper:Helper = Helper()
     private var broadcaster: LocalBroadcastManager? = null
+    private lateinit var presenter: PaketDataPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentPaketDataBinding.inflate(inflater, container, false)
@@ -40,24 +42,23 @@ class PaketDataFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         broadcaster = LocalBroadcastManager.getInstance(requireContext())
-        val adapterPaketData = AdapterPaketData(requireContext(), listPaketData)
+        presenter = PaketDataPresenter(this, requireContext())
+
+//        val adapterPaketData = AdapterPaketData(requireContext(), listPaketData)
 
         binding?.btnNext?.setOnClickListener(this)
 
-        binding?.rvPaketData?.apply {
-            adapter = adapterPaketData
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        }
 
-        adapterPaketData.onItemClick = { i: Int, s: String ->
-            totalPrice = helper.convertToFormatMoneyIDRFilter(i.toString())
-            binding?.tvPrice?.text = totalPrice
-            if (i!=0){
-                binding?.linearTotalPrice?.visibility = View.VISIBLE
-            } else {
-                binding?.linearTotalPrice?.visibility = View.GONE
-            }
-        }
+
+//        adapterPaketData.onItemClick = { i: Int, s: String ->
+//            totalPrice = helper.convertToFormatMoneyIDRFilter(i.toString())
+//            binding?.tvPrice?.text = totalPrice
+//            if (i!=0){
+//                binding?.linearTotalPrice?.visibility = View.VISIBLE
+//            } else {
+//                binding?.linearTotalPrice?.visibility = View.GONE
+//            }
+//        }
 
     }
 
@@ -88,6 +89,7 @@ class PaketDataFragment : Fragment(), View.OnClickListener {
             when (intent?.action){
                 "phoneNumber" -> {
                     phoneNumber = intent.getStringExtra("number")
+                    presenter.checkProvider(phoneNumber!!)
                     if (phoneNumber != ""){
                         binding?.tvNumberEmpty?.visibility = View.GONE
                         binding?.rvPaketData?.visibility = View.VISIBLE
@@ -103,6 +105,18 @@ class PaketDataFragment : Fragment(), View.OnClickListener {
     override fun onStop() {
         super.onStop()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mMessageReceiver)
+    }
+
+    override fun messageCheckProviderAndProduct(msg: String) {
+        Log.d("paketData", msg)
+    }
+
+    override fun getProductPhone(data: List<PaketDataItem?>?) {
+        Log.d("paketDataItem", data?.size.toString())
+        binding?.rvPaketData?.apply {
+            adapter = AdapterPaketData(requireContext(), data)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
     }
 
 

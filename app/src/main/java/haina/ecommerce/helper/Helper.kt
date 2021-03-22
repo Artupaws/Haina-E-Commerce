@@ -8,7 +8,6 @@ import java.util.*
 
 class Helper  {
 
-    //
     fun convertToFormatMoneyUSD(formatMoney: String): String? {
         val formatter: NumberFormat = NumberFormat.getCurrencyInstance()
         formatter.maximumFractionDigits = 2
@@ -46,6 +45,14 @@ class Helper  {
 
     fun changeFormatMoneyToValue(formatRupiah: String): String {
         val xRupiah = formatRupiah.substring(0)
+        val doubleRupiah = xRupiah.substring(0)
+        val valueRupiah = doubleRupiah.replace("[-+.^:,]".toRegex(), "")
+        return valueRupiah.replace(" ".toRegex(), "")
+    }
+
+    fun changeMoneyToValue(formatRupiah: String): String {
+        val a = formatRupiah.substring(0, 3).replace("IDR", formatRupiah.substring(3, formatRupiah.length))
+        val xRupiah = a.substring(0)
         val doubleRupiah = xRupiah.substring(0)
         val valueRupiah = doubleRupiah.replace("[-+.^:,]".toRegex(), "")
         return valueRupiah.replace(" ".toRegex(), "")

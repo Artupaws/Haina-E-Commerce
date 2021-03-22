@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.view.View
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityCheckoutBinding
+import haina.ecommerce.helper.Helper
 import haina.ecommerce.view.payment.PaymentActivity
 
 class CheckoutActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityCheckoutBinding
     private var titleService:String? = null
+    private val helper:Helper = Helper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +30,6 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener {
         binding.tvPrice.text = intent.getStringExtra("totalPrice")
         titleService = intent.getStringExtra("titleService")
         binding.tvTitleService.text = titleService
-
     }
 
     override fun onClick(v: View?) {
@@ -38,6 +39,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener {
                     .putExtra("serviceType", binding.tvServiceType.text.toString())
                     .putExtra("numberCustomer", binding.tvNumber.text.toString())
                     .putExtra("nominal", binding.tvPrice.text.toString())
+                    .putExtra("titleService", binding.tvTitleService.text.toString())
                 startActivity(intent)
             }
         }

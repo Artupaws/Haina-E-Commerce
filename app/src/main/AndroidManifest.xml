@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.payment.PaymentActivity"></activity>
+        <activity android:name=".view.waitingpayment.WaitingPaymentActivity"></activity>
+        <activity android:name=".view.payment.PaymentActivity" />
         <activity android:name=".view.postpaid.PostpaidActivity" />
         <activity android:name=".view.internetandtv.InternetActivity" />
         <activity android:name=".view.housephone.HousePhoneActivity" />
