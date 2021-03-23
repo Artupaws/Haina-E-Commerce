@@ -22,7 +22,11 @@ import haina.ecommerce.adapter.TabAdapterInternet
 import haina.ecommerce.databinding.ActivityTopupBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataUser
+import haina.ecommerce.model.pulsaanddata.ProductPhone
+import haina.ecommerce.model.pulsaanddata.PulsaItem
 import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
+import haina.ecommerce.view.topup.pulsa.PulsaFragment
 
 class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
 
@@ -59,14 +63,13 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
             }
             override fun afterTextChanged(s: Editable?) {
                 if (s?.isNotEmpty()!!) {
-                    phoneNumber = s.toString()
-                    val sendPhoneNumber = Intent("phoneNumber")
-                        .putExtra("number", phoneNumber)
-                    broadcaster?.sendBroadcast(sendPhoneNumber)
-                } else {
-                    val sendPhoneNumber = Intent("phoneNumber")
-                        .putExtra("number", "")
-                    broadcaster?.sendBroadcast(sendPhoneNumber)
+                    if (s.length >= 10){
+                        phoneNumber = s.toString()
+                        presenter.getProviderName(phoneNumber!!)
+                        sharedPref.save(Constants.PREF_PHONE_NUMBER_PULSA, phoneNumber!!)
+                    } else {
+                        binding.etPhoneNumber.error = "input valid phone number"
+                    }
                 }
             }
         })
@@ -132,6 +135,8 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
 
     private fun setPhoneUser(phone: String?) {
         binding.etPhoneNumber.setText(phone)
+        presenter.getProviderName(phone!!)
+        sharedPref.save(Constants.PREF_PHONE_NUMBER_PULSA, phone)
     }
 
     private fun getContact() {
@@ -160,6 +165,7 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
             PICK_CONTACT -> if (resultCode == RESULT_OK) {
                 val contactData: Uri = data?.data!!
                 val c: Cursor = managedQuery(contactData, null, null, null, null)
+                var cNumber :String? = ""
                 if (c.moveToFirst()) {
                     val id: String = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID))
                     val hasPhone: String = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))
@@ -167,11 +173,13 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
                         val phones: Cursor? = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null, null)
                         phones?.moveToFirst()
-                        val cNumber: String = phones?.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER))!!
+                        cNumber = phones?.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))!!
                         setPhoneUser(helper.formatPhoneNumber(cNumber))
-                        intentPhoneNumber(helper.formatPhoneNumber(cNumber))
                     }
                 }
+                val intentResetPrice = Intent("resetPrice")
+                        .putExtra("reset","true")
+                broadcaster?.sendBroadcast(intentResetPrice)
             }
         }
     }
@@ -181,11 +189,21 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
         binding.swipeRefresh.isRefreshing = false
     }
 
+    override fun messageGetProviderName(msg: String) {
+        Log.d("getProviderName", msg)
+        binding.swipeRefresh.isRefreshing = false
+    }
+
     override fun getDataUser(data: DataUser?) {
         setPhoneUser(data?.phone)
         phoneNumber = data?.phone
-        intentPhoneNumber(phoneNumber)
+    }
 
+    override fun getProviderName(data: ProductPhone?) {
+        binding.tvNameProvider.text = data?.provider?.name
+        val sendPulsa = Intent("productPhone")
+                .putExtra("pulsa", data)
+        broadcaster?.sendBroadcast(sendPulsa)
     }
 
     private fun intentPhoneNumber(phoneNumber:String?){

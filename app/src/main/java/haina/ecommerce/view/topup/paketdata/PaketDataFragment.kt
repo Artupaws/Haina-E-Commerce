@@ -10,23 +10,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterPaketData
+import haina.ecommerce.adapter.AdapterPaketDataName
 import haina.ecommerce.databinding.FragmentPaketDataBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.pulsaanddata.DataItem
 import haina.ecommerce.model.pulsaanddata.PaketDataItem
+import haina.ecommerce.model.pulsaanddata.ProductPhone
 import haina.ecommerce.view.checkout.CheckoutActivity
 
 class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
 
     private var _binding:FragmentPaketDataBinding? = null
     private val binding get() = _binding
-//    private val listPaketData = arrayListOf(PaketData(title = "bronet 4g owsem 1gb", 50000, description = "1gb kuota utama"),
-//            PaketData(title = "bronet 4g owsem 2gb", 25000, "2gb kuota utama"),
-//            PaketData(title = "bronet 4g owsem 3gb", 75000, "3gb kuota utama"),
-//            PaketData(title = "bronet 4g owsem 4gb", 100000, "4gb kuota utama"))
     private var totalPrice:String? = null
     private var phoneNumber:String? = null
     private val helper:Helper = Helper()
@@ -47,8 +47,6 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
 //        val adapterPaketData = AdapterPaketData(requireContext(), listPaketData)
 
         binding?.btnNext?.setOnClickListener(this)
-
-
 
 //        adapterPaketData.onItemClick = { i: Int, s: String ->
 //            totalPrice = helper.convertToFormatMoneyIDRFilter(i.toString())
@@ -81,25 +79,40 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
 
     override fun onStart() {
         super.onStart()
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver, IntentFilter("phoneNumber"))
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver, IntentFilter("productPhone"))
     }
 
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action){
-                "phoneNumber" -> {
-                    phoneNumber = intent.getStringExtra("number")
-                    presenter.checkProvider(phoneNumber!!)
-                    if (phoneNumber != ""){
-                        binding?.tvNumberEmpty?.visibility = View.GONE
-                        binding?.rvPaketData?.visibility = View.VISIBLE
-                    }else{
-                        binding?.tvNumberEmpty?.visibility = View.VISIBLE
-                        binding?.rvPaketData?.visibility = View.GONE
-                    }
+
+                "productPhone" -> {
+                    val dataProductPhone = intent.getParcelableExtra<ProductPhone>("pulsa")
+                    getListPulsa(dataProductPhone)
                 }
             }
         }
+    }
+
+    private fun getListPulsa(data: ProductPhone?) {
+        val adapterPaketDataName = AdapterPaketDataName(requireContext(), data?.group?.data)
+        binding?.tvNumberEmpty?.visibility = View.GONE
+        binding?.rvPaketData?.visibility = View.VISIBLE
+        binding?.rvPaketData?.apply {
+            adapter = adapterPaketDataName
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+
+        adapterPaketDataName.onItemClick={i:Int, s:String ->
+            totalPrice = helper.convertToFormatMoneyIDRFilter(i.toString())
+            binding?.tvPrice?.text = totalPrice
+            if (i!=0){
+                binding?.linearTotalPrice?.visibility = View.VISIBLE
+            } else {
+                binding?.linearTotalPrice?.visibility = View.GONE
+            }
+        }
+
     }
 
     override fun onStop() {
@@ -111,10 +124,10 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
         Log.d("paketData", msg)
     }
 
-    override fun getProductPhone(data: List<PaketDataItem?>?) {
-        Log.d("paketDataItem", data?.size.toString())
+    override fun getProductPhone(data: ProductPhone?) {
+        Log.d("paketDataItem", data?.group?.data?.size.toString())
         binding?.rvPaketData?.apply {
-            adapter = AdapterPaketData(requireContext(), data)
+            adapter = AdapterPaketDataName(requireContext(), data?.group?.data)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }

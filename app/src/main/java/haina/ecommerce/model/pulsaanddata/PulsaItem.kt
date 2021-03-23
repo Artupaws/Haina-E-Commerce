@@ -1,7 +1,10 @@
 package haina.ecommerce.model.pulsaanddata
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class PulsaItem(
 
 	@field:SerializedName("id_product_group")
@@ -27,4 +30,4 @@ data class PulsaItem(
 
 	@field:SerializedName("product_code")
 	val productCode: String? = null
-)
+):Parcelable

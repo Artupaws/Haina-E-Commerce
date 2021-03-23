@@ -14,9 +14,9 @@ class PaketDataPresenter(val view:PaketDataContract, val context: Context) {
         checkProvider.enqueue(object : retrofit2.Callback<ResponseGetProductPhone>{
             override fun onResponse(call: Call<ResponseGetProductPhone>, response: Response<ResponseGetProductPhone>) {
                 if (response.isSuccessful && response.body()?.value == 1){
-//                    val data = response.body()?.productPhone?.group?.data
+                    val data = response.body()?.productPhone
                     view.messageCheckProviderAndProduct(response.body()?.message.toString())
-//                    view.getProductPhone(data)
+                    view.getProductPhone(data)
                 } else {
                     val error = JSONObject(response.errorBody()?.string()!!)
                     view.messageCheckProviderAndProduct(error.getString("message"))

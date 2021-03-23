@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
+import haina.ecommerce.databinding.ListItemNamePaketDataBinding
 import haina.ecommerce.databinding.ListItemPaketDataBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.pulsaanddata.PaketDataItem
@@ -19,18 +20,17 @@ class AdapterPaketData (val context: Context, private val listPaketData: List<Pa
     inner class Holder (view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemPaketDataBinding.bind(view)
         fun bind(item: PaketDataItem){
-            with(binding){
-                tvTitle.text = item.description
+            with(binding) {
                 tvDescription.text = item.description
                 tvPrice.text = helper.convertToFormatMoneyIDRFilter(item.sellPrice.toString())
                 linearClick.setOnClickListener {index = adapterPosition
                     notifyDataSetChanged()
-//                    onItemClick(item.price, "paketData")
+                    onItemClick(item.sellPrice!!, tvPrice.text.toString())
                 }
                 if (index == adapterPosition){
-                    linearPulsa.setBackgroundResource(R.drawable.background_internet_enable)
+                    linearClick.setBackgroundResource(R.drawable.background_internet_enable)
                 }else{
-                    linearPulsa.setBackgroundResource(R.drawable.background_internet_disable)
+                    linearClick.setBackgroundResource(R.drawable.background_internet_disable)
                 }
             }
         }

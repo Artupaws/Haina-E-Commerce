@@ -6,20 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.topup.paketdata.PaketDataFragment">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/linear_total_price"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/linear_total_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:orientation="vertical">
 
             <FrameLayout
@@ -30,8 +24,8 @@
                     android:id="@+id/rv_paket_data"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:listitem="@layout/list_item_paket_data" />
+                    android:visibility="visible"
+                    tools:listitem="@layout/list_item_name_paket_data" />
 
                 <TextView
                     android:id="@+id/tv_number_empty"
@@ -44,11 +38,9 @@
 
         </LinearLayout>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
     <LinearLayout
         android:id="@+id/linear_total_price"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@drawable/background_line_corner_input_text_black"

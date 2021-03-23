@@ -14,6 +14,7 @@ class AdapterPulsa (val context: Context, private val listPulsa: List<PulsaItem?
 
     private var index:Int = -1
     var onItemClick: (Int, String) -> Unit = { i: Int, s: String -> }
+    var indexChoose:(Int)-> Unit ={i:Int->}
     private val helper:Helper = Helper()
 
     inner class Holder (view: View): RecyclerView.ViewHolder(view){
@@ -24,16 +25,16 @@ class AdapterPulsa (val context: Context, private val listPulsa: List<PulsaItem?
                 tvPrice.text = helper.convertToFormatMoneyIDRFilter(item.sellPrice.toString())
                 linearClick.setOnClickListener {index = adapterPosition
                     notifyDataSetChanged()
-                    onItemClick(item.sellPrice!!, "pulsa")
+                    onItemClick(item.sellPrice!!, tvNominal.text.toString())
                 }
                 if (index == adapterPosition){
                     linearPulsa.setBackgroundResource(R.drawable.background_internet_enable)
                 }else{
                     linearPulsa.setBackgroundResource(R.drawable.background_internet_disable)
                 }
+                indexChoose(index)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterPulsa.Holder {
