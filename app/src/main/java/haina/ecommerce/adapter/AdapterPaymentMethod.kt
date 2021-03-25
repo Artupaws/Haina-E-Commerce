@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemPaymentMethodBinding
-import haina.ecommerce.model.DataPaymentMethod
+import haina.ecommerce.model.paymentmethod.DataPaymentMethod
+import haina.ecommerce.model.paymentmethod.PaymentmethodItem
 
 
 class AdapterPaymentMethod(val context: Context, private val list_payment_method: List<DataPaymentMethod?>?):
@@ -18,10 +20,8 @@ class AdapterPaymentMethod(val context: Context, private val list_payment_method
         private val binding = ListItemPaymentMethodBinding.bind(view)
         fun bind(itemHaina: DataPaymentMethod){
             with(binding){
-                tvNameBank.text = itemHaina.name
-                linearPaymentMethod.setOnClickListener {
-                    onItemClick(itemHaina.name, itemHaina.serviceFee)
-                }
+                tvPaymentMethod.text = itemHaina.name
+                setupListPaymentMethod(binding, itemHaina.paymentmethod)
             }
         }
     }
@@ -39,5 +39,11 @@ class AdapterPaymentMethod(val context: Context, private val list_payment_method
 
     override fun getItemCount(): Int = list_payment_method?.size!!
 
+    private fun setupListPaymentMethod(binding:ListItemPaymentMethodBinding, list: List<PaymentmethodItem?>?){
+        binding.rvPaymentMethod.apply {
+            adapter = AdapterListPaymentMethod(context, list)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+    }
 
 }

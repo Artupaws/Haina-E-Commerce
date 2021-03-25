@@ -115,14 +115,14 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
                 //permission already granted
                 val phoneNumber = tm.line1Number
                 if (phoneNumber != null) {
-                    binding.etPhoneNumber.setText(phoneNumber)
+                    binding.etPhoneNumber.setText(helper.formatPhoneNumber(phoneNumber))
                 }
             }
         } else {
             //system OS is < Marshmallow
             val phoneNumber = tm.line1Number
             if (phoneNumber != null) {
-                binding.etPhoneNumber.setText(phoneNumber)
+                binding.etPhoneNumber.setText(helper.formatPhoneNumber(phoneNumber))
             }
         }
     }
@@ -134,8 +134,8 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
     }
 
     private fun setPhoneUser(phone: String?) {
-        binding.etPhoneNumber.setText(phone)
-        presenter.getProviderName(phone!!)
+        binding.etPhoneNumber.setText(helper.formatPhoneNumber(phone!!))
+        presenter.getProviderName(phone)
         sharedPref.save(Constants.PREF_PHONE_NUMBER_PULSA, phone)
     }
 
@@ -165,7 +165,6 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
             PICK_CONTACT -> if (resultCode == RESULT_OK) {
                 val contactData: Uri = data?.data!!
                 val c: Cursor = managedQuery(contactData, null, null, null, null)
-                var cNumber :String? = ""
                 if (c.moveToFirst()) {
                     val id: String = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID))
                     val hasPhone: String = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))
@@ -173,13 +172,14 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
                         val phones: Cursor? = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null, null)
                         phones?.moveToFirst()
-                        cNumber = phones?.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))!!
+                        val cNumber = phones?.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))!!
+                        val valueRupiah = cNumber.replace("[-+.^:,]".toRegex(), "")
                         setPhoneUser(helper.formatPhoneNumber(cNumber))
                     }
                 }
-                val intentResetPrice = Intent("resetPrice")
-                        .putExtra("reset","true")
-                broadcaster?.sendBroadcast(intentResetPrice)
+//                val intentResetPrice = Intent("resetPrice")
+//                        .putExtra("reset","true")
+//                broadcaster?.sendBroadcast(intentResetPrice)
             }
         }
     }

@@ -13,7 +13,7 @@ import haina.ecommerce.model.pulsaanddata.PulsaItem
 class AdapterPulsa (val context: Context, private val listPulsa: List<PulsaItem?>?): RecyclerView.Adapter<AdapterPulsa.Holder>(){
 
     private var index:Int = -1
-    var onItemClick: (Int, String) -> Unit = { i: Int, s: String -> }
+    var onItemClick: (Int, String, Int) -> Unit = { i: Int, s: String, id:Int -> }
     var indexChoose:(Int)-> Unit ={i:Int->}
     private val helper:Helper = Helper()
 
@@ -25,7 +25,7 @@ class AdapterPulsa (val context: Context, private val listPulsa: List<PulsaItem?
                 tvPrice.text = helper.convertToFormatMoneyIDRFilter(item.sellPrice.toString())
                 linearClick.setOnClickListener {index = adapterPosition
                     notifyDataSetChanged()
-                    onItemClick(item.sellPrice!!, tvNominal.text.toString())
+                    onItemClick(item.sellPrice!!, tvNominal.text.toString(), item.id!!)
                 }
                 if (index == adapterPosition){
                     linearPulsa.setBackgroundResource(R.drawable.background_internet_enable)

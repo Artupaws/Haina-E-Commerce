@@ -34,6 +34,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
     private var totalPrice: String? = null
     private var phoneNumber: String? = null
     private var serviceType: String? = null
+    private var idProduct: Int? = null
     private lateinit var sharedPref: SharedPreferenceHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,6 +58,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
                         .putExtra("totalPrice", totalPrice)
                         .putExtra("titleService", "Pulsa")
                         .putExtra("serviceType", serviceType)
+                        .putExtra("idProduct", idProduct)
                 startActivity(intent)
             }
         }
@@ -65,7 +67,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
     override fun onStart() {
         super.onStart()
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver, IntentFilter("productPhone"))
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver, IntentFilter("resetPrice"))
+//        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver, IntentFilter("resetPrice"))
     }
 
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -75,14 +77,14 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
                     val dataProductPhone = intent.getParcelableExtra<ProductPhone>("pulsa")
                     getListPulsa(dataProductPhone)
                 }
-                "resetPrice" -> {
-                    val statusResetPrice = intent.getStringExtra("reset")
-                    Toast.makeText(activity, statusResetPrice, Toast.LENGTH_SHORT).show()
-                    if (statusResetPrice == "true") {
-                        binding?.linearTotalPrice?.visibility = View.GONE
-                        binding?.tvPrice?.text = ""
-                    }
-                }
+//                "resetPrice" -> {
+//                    val statusResetPrice = intent.getStringExtra("reset")
+//                    Toast.makeText(activity, statusResetPrice, Toast.LENGTH_SHORT).show()
+//                    if (statusResetPrice == "true") {
+//                        binding?.linearTotalPrice?.visibility = View.GONE
+//                        binding?.tvPrice?.text = ""
+//                    }
+//                }
             }
         }
     }
@@ -100,12 +102,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
     override fun messageCheckProviderAndProduct(msg: String) {
         Log.d("getPulsa", msg)
     }
-
-    fun resetPrice() {
-        binding?.linearTotalPrice?.visibility = View.GONE
-        binding?.tvPrice?.text = ""
-    }
-
+    
     fun getListPulsa(data: ProductPhone?) {
         Log.d("itemPulsa", data?.group?.pulsa?.size.toString())
         val adapterPulsa = AdapterPulsa(requireContext(), data?.group?.pulsa)
@@ -121,9 +118,10 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
             }
         }
 
-        adapterPulsa.onItemClick = { i: Int, s: String ->
+        adapterPulsa.onItemClick = { i: Int, s: String, id:Int ->
             totalPrice = helper.convertToFormatMoneyIDRFilter(i.toString())
             serviceType = s
+            idProduct = id
             binding?.tvPrice?.text = totalPrice
             if (i!= 0) {
                 binding?.linearTotalPrice?.visibility = View.VISIBLE

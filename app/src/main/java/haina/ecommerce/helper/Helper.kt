@@ -1,8 +1,5 @@
 package haina.ecommerce.helper
 
-import android.app.AlertDialog
-import android.content.Context
-import haina.ecommerce.R
 import java.text.NumberFormat
 import java.util.*
 
@@ -59,17 +56,17 @@ class Helper  {
     }
 
     fun formatPhoneNumber(number:String):String{
-        var newFormatNumber = number
-        if (number.substring(0, 3) == "+62" && number.length == 14) {
-            newFormatNumber = number.substring(0, 3).replace("+62", "0${number.substring(3, 14)}")
+        var phoneNumber = number.replace("[-+.^:,]".toRegex(), "")
+        if (phoneNumber.substring(0, 3) == "62 " && number.length == 14) {
+            phoneNumber = number.substring(0, 3).replace("62 ", "0${number.substring(3, 14)}")
         }
-        if (number.substring(0, 3) == "+62" && number.length == 15){
-            newFormatNumber = number.substring(0, 3).replace("+62", "0${number.substring(3, 15)}")
+        if (phoneNumber.substring(0, 3) == "62 " && number.length == 15){
+            phoneNumber = number.substring(0, 3).replace("62 ", "0${number.substring(3, 15)}")
         }
-        if (number.substring(0, 3) == "+62" && number.length == 13){
-            newFormatNumber = number.substring(0, 3).replace("+62", "0${number.substring(3, 13)}")
+        if (phoneNumber.substring(0, 3) == "62 " && number.length == 13){
+            phoneNumber = number.substring(0, 3).replace("62 ", "0${number.substring(3, 13)}")
         }
-        return newFormatNumber
+        return phoneNumber
     }
 
     fun changeFormatMoneyToValueFilter(formatRupiah: String?): String? {

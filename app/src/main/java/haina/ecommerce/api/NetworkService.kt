@@ -1,6 +1,8 @@
 package haina.ecommerce.api
 
 import haina.ecommerce.model.*
+import haina.ecommerce.model.checkout.ResponseCheckout
+import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -300,4 +302,16 @@ interface NetworkService {
     @POST("api/pulsa/providers")
     fun checkProvider(
             @Field("number")phoneNumber:String):Call<ResponseGetProductPhone>
+
+    //Checkout Product Phone
+    @FormUrlEncoded
+    @POST("api/pulsa/inquiry")
+    fun checkout(
+            @Field("customer_number") customerNumber:String,
+            @Field("id_product") idProduct:Int
+    ):Call<ResponseCheckout>
+
+    //Get Payment Method
+    @POST("api/payment/method")
+    fun getPaymentMethod():Call<ResponsePaymentMethod>
 }

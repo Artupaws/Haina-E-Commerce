@@ -14,12 +14,9 @@ import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterPaketData
 import haina.ecommerce.adapter.AdapterPaketDataName
 import haina.ecommerce.databinding.FragmentPaketDataBinding
 import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.pulsaanddata.DataItem
-import haina.ecommerce.model.pulsaanddata.PaketDataItem
 import haina.ecommerce.model.pulsaanddata.ProductPhone
 import haina.ecommerce.view.checkout.CheckoutActivity
 
@@ -31,7 +28,8 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
     private var phoneNumber:String? = null
     private val helper:Helper = Helper()
     private var broadcaster: LocalBroadcastManager? = null
-    private lateinit var presenter: PaketDataPresenter
+    private var serviceType: String? = null
+    private var statusResetPrice:String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentPaketDataBinding.inflate(inflater, container, false)
@@ -42,22 +40,7 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         broadcaster = LocalBroadcastManager.getInstance(requireContext())
-        presenter = PaketDataPresenter(this, requireContext())
-
-//        val adapterPaketData = AdapterPaketData(requireContext(), listPaketData)
-
         binding?.btnNext?.setOnClickListener(this)
-
-//        adapterPaketData.onItemClick = { i: Int, s: String ->
-//            totalPrice = helper.convertToFormatMoneyIDRFilter(i.toString())
-//            binding?.tvPrice?.text = totalPrice
-//            if (i!=0){
-//                binding?.linearTotalPrice?.visibility = View.VISIBLE
-//            } else {
-//                binding?.linearTotalPrice?.visibility = View.GONE
-//            }
-//        }
-
     }
 
     override fun onDestroy() {
@@ -71,6 +54,7 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
                 val intent = Intent(requireContext(), CheckoutActivity::class.java)
                         .putExtra("totalPrice", totalPrice)
                         .putExtra("phoneNumber", phoneNumber)
+                        .putExtra("serviceType", serviceType)
                         .putExtra("titleService", "Paket Data")
                 startActivity(intent)
             }
@@ -80,15 +64,28 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
     override fun onStart() {
         super.onStart()
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver, IntentFilter("productPhone"))
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver, IntentFilter("paketData"))
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver, IntentFilter("resetPrice"))
     }
 
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action){
-
                 "productPhone" -> {
                     val dataProductPhone = intent.getParcelableExtra<ProductPhone>("pulsa")
                     getListPulsa(dataProductPhone)
+                }
+                "paketData" -> {
+                    val nameService = intent.getStringExtra("serviceType")
+                    val price = intent.getStringExtra("sellPrice")
+                    serviceType = nameService
+                    totalPrice = price
+                    binding?.tvPrice?.text = helper.convertToFormatMoneyIDRFilter(totalPrice!!)
+                    showTotalPrice(totalPrice)
+                }
+                "resetPrice" -> {
+                    val statusReset = intent.getStringExtra("reset")
+                    resetPrice(statusReset)
                 }
             }
         }
@@ -102,17 +99,19 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
             adapter = adapterPaketDataName
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
+    }
 
-        adapterPaketDataName.onItemClick={i:Int, s:String ->
-            totalPrice = helper.convertToFormatMoneyIDRFilter(i.toString())
-            binding?.tvPrice?.text = totalPrice
-            if (i!=0){
-                binding?.linearTotalPrice?.visibility = View.VISIBLE
-            } else {
-                binding?.linearTotalPrice?.visibility = View.GONE
-            }
+    private fun showTotalPrice(totalPrice:String?){
+        if (totalPrice!="0"){
+            binding?.linearTotalPrice?.visibility = View.VISIBLE
         }
+    }
 
+    private fun resetPrice(statusReset:String?){
+        if (statusReset == "true"){
+            binding?.linearTotalPrice?.visibility = View.GONE
+            binding?.tvPrice?.text = ""
+        }
     }
 
     override fun onStop() {
@@ -131,6 +130,5 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }
-
 
 }
