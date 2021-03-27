@@ -207,4 +207,10 @@
     <string name="total">Total</string>
     <string name="virtual_account_number">Virtual Account Number</string>
     <string name="search">Search</string>
+    <string name="history_applying_job">History Applying Job</string>
+    <string name="history_transaction">History Transaction</string>
+    <string name="history_job_vacancy">History Job Vacancy</string>
+    <string name="transaction">Transaction</string>
+    <string name="transaction_pending">Transaction Pending</string>
+    <string name="border">|</string>
 </resources>

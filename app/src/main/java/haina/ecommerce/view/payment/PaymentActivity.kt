@@ -22,7 +22,7 @@ import haina.ecommerce.adapter.AdapterPaymentMethod
 import haina.ecommerce.databinding.ActivityPaymentBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.paymentmethod.DataPaymentMethod
-import haina.ecommerce.view.waitingpayment.WaitingPaymentActivity
+import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 
 class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContract {
 
@@ -39,6 +39,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     private lateinit var presenter: PaymentPresenter
     private var broadcaster: LocalBroadcastManager? = null
     private var idPaymentMethod: Int? = null
+    private var idProduct: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +53,6 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         binding.toolbarPayment.title = getString(R.string.payment)
         binding.frameChoosePaymentMethod.setOnClickListener(this)
         binding.btnPayment.setOnClickListener(this)
-        titleService = intent.getStringExtra("titleService")
         setDetailOrder()
     }
 
@@ -62,11 +62,12 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                 popupPaymentMethod?.show()
             }
             R.id.btn_payment -> {
-                val intent = Intent(applicationContext, WaitingPaymentActivity::class.java)
-                        .putExtra("titleService", titleService)
-                        .putExtra("totalPayment", valueTotalPayment)
-                        .putExtra("paymentMethod", paymentMethod)
-                startActivity(intent)
+                presenter.createTransaction(numberOrderCustomer!!, idProduct!!, idPaymentMethod!!)
+//                val intent = Intent(applicationContext, HistoryTransactionActivity::class.java)
+//                        .putExtra("titleService", titleService)
+//                        .putExtra("totalPayment", valueTotalPayment)
+//                        .putExtra("paymentMethod", paymentMethod)
+//                startActivity(intent)
             }
         }
     }
@@ -96,6 +97,8 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         price = intent.getStringExtra("nominal")
         numberOrderCustomer = intent.getStringExtra("numberCustomer")
         binding.tvTotalBill.text = price
+        titleService = intent.getStringExtra("titleService")
+        idProduct = intent.getIntExtra("idProduct", 0)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -147,6 +150,17 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
 
     override fun messageGetPaymentMethod(msg: String) {
         Log.d("paymentMethod", msg)
+    }
+
+    override fun messageCreateTransaction(msg: String) {
+        Log.d("transaction", msg)
+        if (msg.contains("Success")){
+            val intent = Intent(applicationContext, HistoryTransactionActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        } else {
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getDataPaymentMethod(data: List<DataPaymentMethod?>?) {

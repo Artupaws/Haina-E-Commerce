@@ -1,10 +1,9 @@
-package haina.ecommerce.view.history.historyshortlistapplicant
+package haina.ecommerce.view.history.historyjobvacancy.historyshortlistapplicant
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.ResponseAddShortlistApplicant
 import haina.ecommerce.model.ResponseGetShortList
-import haina.ecommerce.model.ResponseGetShortlistApplicant
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response

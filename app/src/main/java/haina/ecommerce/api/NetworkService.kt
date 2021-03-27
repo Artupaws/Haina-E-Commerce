@@ -4,6 +4,8 @@ import haina.ecommerce.model.*
 import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
+import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
+import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -314,4 +316,17 @@ interface NetworkService {
     //Get Payment Method
     @POST("api/payment/method")
     fun getPaymentMethod():Call<ResponsePaymentMethod>
+
+    //Get List Transaction
+    @POST("api/pulsa/list")
+    fun getListTransaction():Call<ResponseGetListTransaction>
+
+    //Transaction Product Phone
+    @FormUrlEncoded
+    @POST("api/pulsa/transaction")
+    fun createTransactionProductPhone(
+        @Field("customer_number")customerNumber:String,
+        @Field("id_product")idProduct:Int,
+        @Field("id_payment_method")idPaymentMethod:Int
+    ):Call<ResponseCreateTransactionProductPhone>
 }

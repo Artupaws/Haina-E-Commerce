@@ -1,4 +1,4 @@
-package haina.ecommerce.view.history.historyshortlistapplicant
+package haina.ecommerce.view.history.historyjobvacancy.historyshortlistapplicant
 
 import android.content.BroadcastReceiver
 import android.content.Context

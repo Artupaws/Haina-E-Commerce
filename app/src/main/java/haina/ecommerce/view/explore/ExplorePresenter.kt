@@ -4,10 +4,12 @@ import android.content.Context
 import android.util.Log
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.*
+import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class ExplorePresenter(val view: ExploreContract) {
+class ExplorePresenter(val view: ExploreContract, val context: Context) {
 
 //    fun loadListBaseCurrency(){
 //        val callListCodeCurrency = NetworkConfig().getConnectionHaina().getDataListBaseCurrency()
@@ -85,5 +87,26 @@ class ExplorePresenter(val view: ExploreContract) {
 //
 //        })
 //    }
+
+    fun getListUnfinishTransaction(){
+        val getListunfinishTransaction = NetworkConfig().getConnectionHainaBearer(context).getListTransaction()
+        getListunfinishTransaction.enqueue(object : retrofit2.Callback<ResponseGetListTransaction>{
+            override fun onResponse(call: Call<ResponseGetListTransaction>, response: Response<ResponseGetListTransaction>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    val data = response.body()?.dataTransaction
+                    view.getTransactionList(data)
+                    view.messageGetTransactionList(response.body()?.message)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.messageGetTransactionList(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetListTransaction>, t: Throwable) {
+                view.messageGetTransactionList(t.localizedMessage.toString())
+            }
+
+        })
+    }
 
 }

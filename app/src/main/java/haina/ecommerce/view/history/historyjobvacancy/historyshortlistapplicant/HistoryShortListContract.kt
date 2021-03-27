@@ -1,7 +1,6 @@
-package haina.ecommerce.view.history.historyshortlistapplicant
+package haina.ecommerce.view.history.historyjobvacancy.historyshortlistapplicant
 
 import haina.ecommerce.model.DataShortlist
-import haina.ecommerce.model.DataShortlistApplicant
 
 interface HistoryShortListContract {
 

@@ -8,12 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.R
+import haina.ecommerce.adapter.AdapterUnfinishTransactionExplore
 import haina.ecommerce.databinding.FragmentExploreBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.transactionlist.DataTransaction
+import haina.ecommerce.model.transactionlist.PendingItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.covidlist.CovidListActivity
@@ -38,7 +43,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
             savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentExploreBinding.inflate(inflater, container, false)
-        presenter = ExplorePresenter(this)
+        presenter = ExplorePresenter(this, requireContext())
         sharedPref = SharedPreferenceHelper(requireContext())
 
         return binding?.root
@@ -47,6 +52,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        presenter.getListUnfinishTransaction()
         binding?.menuServices?.linearOther?.setOnClickListener(this)
         binding?.menuServices?.linearNews?.setOnClickListener(this)
         binding?.menuServices?.linearJob?.setOnClickListener(this)
@@ -272,6 +278,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.swipeRefresh?.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
 //            presenter.loadCovidJkt()
 //            presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
+            presenter.getListUnfinishTransaction()
             binding?.swipeRefresh?.isRefreshing = false
         })
     }
@@ -291,8 +298,32 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.swipeRefresh?.isRefreshing = false
     }
 
+    override fun messageGetTransactionList(msg: String?) {
+        Log.d("getListTransaction", msg!!)
+        binding?.swipeRefresh?.isRefreshing = false
+        if (!msg.contains("Success")){
+            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun getTransactionList(data: DataTransaction?) {
+        showPendingTransaction(data?.pending?.size!!)
+        binding?.includeTransactionPending?.rvTransactionPending?.apply {
+            adapter = AdapterUnfinishTransactionExplore(requireContext(), data.pending)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
     override fun dismissShimmerHeadlineNews() {
         Log.i("Failed", "gone shimmer")
+    }
+
+    private fun showPendingTransaction(total:Int){
+        if (total == 0){
+            binding?.includeTransactionPending?.layoutTransactionPending?.visibility = View.GONE
+        } else {
+            binding?.includeTransactionPending?.layoutTransactionPending?.visibility = View.VISIBLE
+        }
     }
 
 //    override fun loadListCodeCurrency(list: List<DataCodeCurrency?>?) {

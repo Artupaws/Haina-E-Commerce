@@ -58,6 +58,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
     private fun move(status:String){
         if (status.contains("Success")){
             val intent = Intent(applicationContext, PaymentActivity::class.java)
+                    .putExtra("idProduct", idProduct)
                     .putExtra("serviceType", binding.tvServiceType.text.toString())
                     .putExtra("numberCustomer", binding.tvNumber.text.toString())
                     .putExtra("nominal", binding.tvPrice.text.toString())
