@@ -32,6 +32,7 @@ class AdapterPaketData(val context: Context, private val listPaketData: List<Pak
                     val intentPaketData = Intent("paketData")
                             .putExtra("serviceType",item.description)
                             .putExtra("sellPrice", item.sellPrice.toString())
+                            .putExtra("idProduct", item.id)
                     broadcaster?.sendBroadcast(intentPaketData)
                 }
                 if (index == adapterPosition){

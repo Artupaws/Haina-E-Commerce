@@ -1,6 +1,7 @@
 package haina.ecommerce.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import haina.ecommerce.databinding.ListItemTransactionPendingBinding
 import haina.ecommerce.databinding.ListItemUnfinishTransactionBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.transactionlist.PendingItem
+import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 
 
 class AdapterUnfinishTransactionExplore(val context: Context, private val listUnfinishTransaction: List<PendingItem?>?):
@@ -21,6 +23,10 @@ class AdapterUnfinishTransactionExplore(val context: Context, private val listUn
         fun bind(itemHaina: PendingItem){
             with(binding){
                 tvStatusTransaction.text = itemHaina.status
+                relativeClick.setOnClickListener {
+                    val intent = Intent(context, HistoryTransactionActivity::class.java)
+                    context.startActivity(intent)
+                }
                 tvTotalPayment.text = helper.convertToFormatMoneyIDRFilter(itemHaina.totalPayment.toString())
                 tvDueDate.text = itemHaina.payment?.settlementTime.toString()
             }

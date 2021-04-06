@@ -61,8 +61,11 @@
                         android:id="@+id/iv_option"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
                         android:src="@drawable/ic_option"
-                        android:layout_alignParentEnd="true"/>
+                        android:layout_alignParentEnd="true"
+                        android:focusable="true"
+                        android:contentDescription="@string/meter_number" />
                 </RelativeLayout>
 
                 <View
@@ -104,7 +107,7 @@
                 <Button
                     android:id="@+id/btn_how_pay"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/how_to_payment"
                     android:backgroundTint="@color/yellow"
                     android:textColor="@color/black"/>

@@ -50,4 +50,8 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="BottomSheetHowToPayment" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:backgroundTint">@android:color/transparent</item>
+    </style>
+
 </resources>

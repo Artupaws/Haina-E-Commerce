@@ -1,4 +1,4 @@
-package haina.ecommerce.view.payment
+package haina.ecommerce.view.paymentmethod
 
 import haina.ecommerce.model.paymentmethod.DataPaymentMethod
 

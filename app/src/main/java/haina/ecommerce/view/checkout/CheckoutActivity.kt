@@ -1,7 +1,6 @@
 package haina.ecommerce.view.checkout
 
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +11,7 @@ import haina.ecommerce.databinding.ActivityCheckoutBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
-import haina.ecommerce.view.payment.PaymentActivity
+import haina.ecommerce.view.paymentmethod.PaymentActivity
 
 class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutContract {
 

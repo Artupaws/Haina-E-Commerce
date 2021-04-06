@@ -1,4 +1,4 @@
-package haina.ecommerce.view.payment
+package haina.ecommerce.view.paymentmethod
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig

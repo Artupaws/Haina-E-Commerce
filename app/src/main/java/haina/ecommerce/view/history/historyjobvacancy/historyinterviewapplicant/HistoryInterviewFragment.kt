@@ -1,4 +1,4 @@
-package haina.ecommerce.view.history.historyinterviewapplicant
+package haina.ecommerce.view.history.historyjobvacancy.historyinterviewapplicant
 
 import android.content.Intent
 import android.os.Bundle

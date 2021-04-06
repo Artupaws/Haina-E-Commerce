@@ -1,60 +1,106 @@
 package haina.ecommerce.view.history.historytransaction.cancel
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
+import haina.ecommerce.adapter.AdapterTransactionCancel
+import haina.ecommerce.adapter.AdapterTransactionFinish
+import haina.ecommerce.databinding.FragmentTransactionCancelBinding
+import haina.ecommerce.model.transactionlist.DataTransaction
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
+import haina.ecommerce.view.login.LoginActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class FragmentTransactionCancel : Fragment(), View.OnClickListener {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [TransactionCancelFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class TransactionCancelFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding:FragmentTransactionCancelBinding? = null
+    private val binding get() = _binding
+    private var broadcaster : LocalBroadcastManager? = null
+    private lateinit var sharedPref: SharedPreferenceHelper
+    private var statusLogin = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentTransactionCancelBinding.inflate(inflater, container, false)
+        broadcaster = LocalBroadcastManager.getInstance(requireContext())
+        sharedPref = SharedPreferenceHelper(requireContext())
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        statusLogin = sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)
+        showNotLogin(statusLogin)
+
+        binding?.includeNotLogin?.btnLoginNotLogin?.setOnClickListener(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mMessageReceiver, IntentFilter("ListTransaction"))
+    }
+
+    private val mMessageReceiver : BroadcastReceiver = object : BroadcastReceiver(){
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when(intent?.action){
+                "ListTransaction" -> {
+                    val listTransactionFinish = intent.getParcelableExtra<DataTransaction>("Transaction")
+                    setupListTransactionCancel(listTransactionFinish)
+                }
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_transaction_cancel, container, false)
+    private fun showNotLogin(statusLogin:Boolean){
+        if (!statusLogin){
+            binding?.includeNotLogin?.linearNotLogin?.visibility = View.VISIBLE
+        } else {
+            binding?.includeNotLogin?.linearNotLogin?.visibility = View.GONE
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TransactionCancelFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TransactionCancelFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun showIsEmpty(listItem:Int?){
+        if (listItem == 0){
+            binding?.rvTransactionCancel?.visibility = View.GONE
+            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
+        }
     }
+
+    override fun onStop() {
+        super.onStop()
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mMessageReceiver)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    private fun setupListTransactionCancel(data:DataTransaction?){
+
+        showIsEmpty(data?.canceled?.size)
+
+        binding?.rvTransactionCancel?.apply {
+            adapter = AdapterTransactionCancel(requireContext(), data?.canceled)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.btn_login_not_login -> {
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
 }

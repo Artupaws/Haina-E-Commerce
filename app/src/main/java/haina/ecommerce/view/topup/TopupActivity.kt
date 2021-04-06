@@ -37,6 +37,7 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
     private var broadcaster: LocalBroadcastManager? = null
     private var phoneNumber: String? = null
     private val helper: Helper = Helper()
+    private var loadStatus:Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,7 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
         binding.toolbarTopup.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarTopup.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarTopup.title = "Internet"
+        stateIconLoad(loadStatus!!)
         binding.imagePhoneBook.setOnClickListener(this)
         binding.viewPagerInternet.adapter = TabAdapterInternet(supportFragmentManager, 0)
         binding.tabLayoutInternet.setupWithViewPager(binding.viewPagerInternet)
@@ -102,6 +104,16 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
 
         //Permission code
         private val PERMISSION_CODE = 200
+    }
+
+    private fun stateIconLoad(loadStatus:Int){
+        if (loadStatus == 1){
+            binding.linearInputNumber.visibility = View.VISIBLE
+            binding.iconLoad.visibility = View.GONE
+        } else {
+            binding.linearInputNumber.visibility = View.GONE
+            binding.iconLoad.visibility = View.VISIBLE
+        }
     }
 
     private fun getPhoneNumber() {
@@ -186,6 +198,8 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
 
     override fun messageGetDataUser(msg: String) {
         Log.d("getDataUser", msg)
+        loadStatus = 1
+        stateIconLoad(loadStatus!!)
         binding.swipeRefresh.isRefreshing = false
     }
 
@@ -204,11 +218,5 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
         val sendPulsa = Intent("productPhone")
                 .putExtra("pulsa", data)
         broadcaster?.sendBroadcast(sendPulsa)
-    }
-
-    private fun intentPhoneNumber(phoneNumber:String?){
-        val sendPhoneNumber = Intent("phoneNumber")
-                .putExtra("number", phoneNumber)
-        broadcaster?.sendBroadcast(sendPhoneNumber)
     }
 }

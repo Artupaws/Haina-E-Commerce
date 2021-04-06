@@ -1,4 +1,4 @@
-package haina.ecommerce.view.history.historyacceptapplicant
+package haina.ecommerce.view.history.historyjobvacancy.historyacceptapplicant
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,8 +14,8 @@ import haina.ecommerce.databinding.FragmentHistoryAcceptBinding
 import haina.ecommerce.model.DataShortlist
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
-import haina.ecommerce.view.history.historyinterviewapplicant.HistoryInterviewContract
-import haina.ecommerce.view.history.historyinterviewapplicant.HistoryInterviewPresenter
+import haina.ecommerce.view.history.historyjobvacancy.historyinterviewapplicant.HistoryInterviewContract
+import haina.ecommerce.view.history.historyjobvacancy.historyinterviewapplicant.HistoryInterviewPresenter
 import haina.ecommerce.view.login.LoginActivity
 
 class HistoryAcceptFragment : Fragment(), HistoryInterviewContract, View.OnClickListener {
@@ -112,7 +112,4 @@ class HistoryAcceptFragment : Fragment(), HistoryInterviewContract, View.OnClick
             adapterInterview.notifyDataSetChanged()
         }
     }
-
-
-
 }

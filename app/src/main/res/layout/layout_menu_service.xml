@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextStyleMenuService"
-                    android:text="@string/topup_title"/>
+                    android:text="@string/internet_credit"/>
 
             </LinearLayout>
 

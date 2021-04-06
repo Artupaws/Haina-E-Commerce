@@ -7,14 +7,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.history.historytransaction.finish.FragmentTransactionFinish">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_transaction_finish"
+    <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:listitem="@layout/list_item_finish_transaction"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_transaction_finish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/list_item_finish_transaction" />
+
+        <include
+            android:id="@+id/include_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/layout_empty"/>
+
+        <include
+            android:id="@+id/include_not_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/layout_not_login"/>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

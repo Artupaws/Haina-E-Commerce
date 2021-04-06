@@ -1,4 +1,4 @@
-package haina.ecommerce.view.payment
+package haina.ecommerce.view.paymentmethod
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -140,9 +140,9 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         if (idPaymentMethod != 0) {
             popupPaymentMethod?.dismiss()
             binding.linearTotalPrice.visibility = View.VISIBLE
-            val totalPayment = (helper.changeMoneyToValue(price!!).toInt() + serviceFee!! + discounts.toInt())
-            binding.tvTotalMustPay.text = totalPayment.toString()
-            valueTotalPayment = totalPayment
+//            val totalPayment = (helper.changeMoneyToValue(price!!).toInt() + serviceFee!! + discounts.toInt())
+            binding.tvTotalMustPay.text = price
+            valueTotalPayment = helper.changeFormatMoneyToValueFilter(price!!)?.toInt()
         } else {
             binding.linearTotalPrice.visibility = View.GONE
         }

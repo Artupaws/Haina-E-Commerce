@@ -12,9 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
@@ -54,7 +52,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     private var popupLogout: AlertDialog? = null
     private lateinit var presenter: MyAccountPresenter
     private lateinit var uri: Uri
-    private var phoneUser:String? = null
+    private var phoneUser: String? = null
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +63,27 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         broadcaster = LocalBroadcastManager.getInstance(requireContext())
         presenter = MyAccountPresenter(this, requireContext())
         return binding?.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_account, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_change_password -> {
+                if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
+                    val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    val snackbar = Snackbar.make(binding?.ivNotificationAccount!!, "Please login for change password", Snackbar.LENGTH_SHORT)
+                            .setAction("Close", null)
+                    snackbar.show()
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onStart() {
@@ -131,7 +150,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             }
 
             R.id.linear_register_company -> {
-              presenter.checkDataCompany()
+                presenter.checkDataCompany()
             }
 
             R.id.tv_action_edit_profile -> {
@@ -168,7 +187,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 //        presenter.getDataUserProfile()
     }
 
-    private fun refresh(){
+    private fun refresh() {
         binding?.swipeRefresh?.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             presenter.getDataUserProfile()
         })
@@ -184,7 +203,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when(requestCode){
+        when (requestCode) {
             PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     pickImageFromGallery()
@@ -197,7 +216,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             binding?.ivProfile?.setImageURI(data?.data)
             uri = data?.data!!
             val filepath = getRealPathFromURIPath(uri, this)
@@ -227,7 +246,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     }
 
     @SuppressLint("InflateParams")
-    private fun showPopupLogout(){
+    private fun showPopupLogout() {
         val popup = AlertDialog.Builder(activity)
         val view: View = layoutInflater.inflate(R.layout.popup_logout, null)
         popup.setCancelable(false)
@@ -245,7 +264,8 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             Firebase.auth.signOut()
             intent.putExtra("loginStatus", "1")
             startActivity(intent)
-        activity?.finish()}
+            activity?.finish()
+        }
     }
 
     override fun onDestroyView() {
@@ -292,15 +312,14 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     }
 
     override fun checkDataCompany(msg: String) {
-        if (msg == "Company Registered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+        if (msg == "Company Registered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
             val intent = Intent(activity, DataCompanyActivity::class.java)
             startActivity(intent)
-        } else if (!msg.contains("Registered") && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+        } else if (!msg.contains("Registered") && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
             val intent = Intent(activity, RegisterCompanyActivity::class.java)
             startActivity(intent)
         } else {
             Toast.makeText(requireContext(), "Please Login First", Toast.LENGTH_SHORT).show()
         }
     }
-
 }

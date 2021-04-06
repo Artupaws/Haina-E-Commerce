@@ -301,9 +301,9 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
     override fun messageGetTransactionList(msg: String?) {
         Log.d("getListTransaction", msg!!)
         binding?.swipeRefresh?.isRefreshing = false
-        if (!msg.contains("Success")){
-            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-        }
+//        if (!msg.contains("Success")){
+//            Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+//        }
     }
 
     override fun getTransactionList(data: DataTransaction?) {

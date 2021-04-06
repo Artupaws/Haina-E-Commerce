@@ -213,4 +213,21 @@
     <string name="transaction">Transaction</string>
     <string name="transaction_pending">Transaction Pending</string>
     <string name="border">|</string>
+    <string name="status">Status</string>
+    <string name="transaction_date">Transaction Date</string>
+    <string name="details">Details</string>
+    <string name="customer_number">Customer Number</string>
+    <string name="admin_fee">Admin Fee</string>
+    <string name="payment_information">Payment Information</string>
+    <string name="transaction_number">Transaction Number</string>
+    <string name="customer_name">Customer Name</string>
+    <string name="virtual_account">Virtual Account</string>
+    <string name="bank_transfer">Bank Transfer</string>
+    <string name="copy">Copy</string>
+    <string name="internet_credit">Internet Credit</string>
+    <string name="electronic_money_title">Electronic Money</string>
+    <string name="card_number">Card Number</string>
+    <string name="provider">Provider</string>
+    <string name="image_bank">Image Bank</string>
+    <string name="cancel_transaction">Cancel Transaction</string>
 </resources>

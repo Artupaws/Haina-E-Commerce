@@ -30,6 +30,7 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
     private var broadcaster: LocalBroadcastManager? = null
     private var serviceType: String? = null
     private var statusResetPrice:String? = null
+    private var idProduct:Int? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentPaketDataBinding.inflate(inflater, container, false)
@@ -55,6 +56,7 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
                         .putExtra("totalPrice", totalPrice)
                         .putExtra("phoneNumber", phoneNumber)
                         .putExtra("serviceType", serviceType)
+                        .putExtra("idProduct", idProduct)
                         .putExtra("titleService", "Paket Data")
                 startActivity(intent)
             }
@@ -78,6 +80,8 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
                 "paketData" -> {
                     val nameService = intent.getStringExtra("serviceType")
                     val price = intent.getStringExtra("sellPrice")
+                    val id = intent.getIntExtra("idProduct", 0)
+                    idProduct = id
                     serviceType = nameService
                     totalPrice = price
                     binding?.tvPrice?.text = helper.convertToFormatMoneyIDRFilter(totalPrice!!)

@@ -32,7 +32,7 @@ data class ProcessItem(
 	val transactionTime: String? = null,
 
 	@field:SerializedName("payment")
-	val payment: List<PaymentItem?>? = null,
+	val payment: PaymentItem? = null,
 
 	@field:SerializedName("id")
 	val id: Int? = null,

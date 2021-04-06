@@ -170,7 +170,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -185,30 +184,6 @@
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:weightSum="4">
-
-                <LinearLayout
-                    android:id="@+id/linear_topup"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <haina.ecommerce.helper.FontAwesome
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/phone"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="25sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/TextStyleMenuService"
-                        android:text="@string/topup_title" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/linear_internet_tv_services"
@@ -282,15 +257,6 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:weightSum="4">
-
                 <LinearLayout
                     android:id="@+id/linear_postpaid"
                     android:layout_width="0dp"
@@ -315,6 +281,15 @@
 
                 </LinearLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
                 <LinearLayout
                     android:id="@+id/linear_phone_house"
                     android:layout_width="0dp"
@@ -338,6 +313,72 @@
                         android:text="@string/telkom" />
 
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/topup_title"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:id="@+id/linear_topup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <haina.ecommerce.helper.FontAwesome
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/phone"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleMenuService"
+                        android:text="@string/topup_title" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_electronic_money"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <haina.ecommerce.helper.FontAwesome
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/electronicmoney"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/TextStyleMenuService"
+                        android:text="@string/electronic_money_title" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 

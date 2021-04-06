@@ -12,6 +12,7 @@ import haina.ecommerce.view.housephone.HousePhoneActivity
 import haina.ecommerce.view.internetandtv.InternetActivity
 import haina.ecommerce.view.postpaid.PostpaidActivity
 import haina.ecommerce.view.topup.TopupActivity
+import haina.ecommerce.view.topup.electronicmoney.ElectronicMoneyActivity
 import haina.ecommerce.view.water.WaterActivity
 import java.sql.RowId
 
@@ -36,6 +37,7 @@ class OtherActivity : AppCompatActivity(), View.OnClickListener {
         binding.linearPhoneHouse.setOnClickListener(this)
         binding.linearPostpaid.setOnClickListener(this)
         binding.linearWater.setOnClickListener(this)
+        binding.linearElectronicMoney.setOnClickListener(this)
 
     }
 
@@ -68,6 +70,11 @@ class OtherActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.linear_phone_house -> {
                 val intent = Intent(applicationContext, HousePhoneActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.linear_electronic_money -> {
+                val intent = Intent(applicationContext, ElectronicMoneyActivity::class.java)
                 startActivity(intent)
             }
         }
