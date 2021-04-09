@@ -18,7 +18,7 @@ class AdapterPaketData(val context: Context, private val listPaketData: List<Pak
     private var index:Int = -1
     var onItemClick: (Int, String) -> Unit = { i: Int, s: String -> }
     var indexChoose:(Int)-> Unit ={i:Int->}
-    private val helper:Helper = Helper()
+    private val helper:Helper = Helper
     private var broadcaster:LocalBroadcastManager? = null
 
     inner class Holder (view: View): RecyclerView.ViewHolder(view){

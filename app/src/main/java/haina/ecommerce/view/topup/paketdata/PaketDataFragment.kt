@@ -26,7 +26,7 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
     private val binding get() = _binding
     private var totalPrice:String? = null
     private var phoneNumber:String? = null
-    private val helper:Helper = Helper()
+    private val helper:Helper = Helper
     private var broadcaster: LocalBroadcastManager? = null
     private var serviceType: String? = null
     private var statusResetPrice:String? = null

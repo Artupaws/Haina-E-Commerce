@@ -1,9 +1,11 @@
 package haina.ecommerce.helper
 
+import android.annotation.SuppressLint
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
-class Helper  {
+object Helper {
 
     fun convertToFormatMoneyUSD(formatMoney: String): String? {
         val formatter: NumberFormat = NumberFormat.getCurrencyInstance()
@@ -74,5 +76,12 @@ class Helper  {
         val doubleRupiah = xRupiah?.substring(2)
         val valueRupiah = doubleRupiah?.replace("[-+.^:,]".toRegex(), "")
         return valueRupiah?.replace(" ".toRegex(), "")
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun Long.convertLongtoTime(dateFormat:String) :String {
+       val date = Date(this)
+       val format = SimpleDateFormat(dateFormat)
+       return format.format(date)
     }
 }

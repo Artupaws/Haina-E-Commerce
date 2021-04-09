@@ -39,7 +39,7 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
     private lateinit var presenter: JobPresenter
     private var popupFilter: Dialog? = null
     private var popupLoading: Dialog? = null
-    private val helper: Helper = Helper()
+    private val helper: Helper = Helper
     private var broadcaster: LocalBroadcastManager? = null
     val data:MutableMap<String, Int> = HashMap()
     var filterCategory:Int = 0

@@ -230,4 +230,17 @@
     <string name="provider">Provider</string>
     <string name="image_bank">Image Bank</string>
     <string name="cancel_transaction">Cancel Transaction</string>
+    <string name="history_hotels">History Hotels</string>
+    <string name="hotels">Hotels</string>
+    <string name="ratings_and_reviews">Ratings and Reviews</string>
+    <string name="see_all_reviews"><u>See All Reviews</u></string>
+    <string name="image_room_hotel">Image Room Hotel</string>
+    <string name="book_now">Book Now</string>
+    <string name="facilities">Facilities</string>
+    <string name="check_in_title">Check - In and Check - Out Dates</string>
+    <string name="check_in">Check in</string>
+    <string name="check_out">Check out</string>
+    <string name="type_room">Type Room</string>
+    <string name="address_hotel">Address Hotel</string>
+    <string name="night">Night(s)</string>
 </resources>

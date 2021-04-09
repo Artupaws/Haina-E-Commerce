@@ -15,7 +15,7 @@ class AdapterPulsa (val context: Context, private val listPulsa: List<PulsaItem?
     private var index:Int = -1
     var onItemClick: (Int, String, Int) -> Unit = { i: Int, s: String, id:Int -> }
     var indexChoose:(Int)-> Unit ={i:Int->}
-    private val helper:Helper = Helper()
+    private val helper:Helper = Helper
 
     inner class Holder (view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemPulsaBinding.bind(view)

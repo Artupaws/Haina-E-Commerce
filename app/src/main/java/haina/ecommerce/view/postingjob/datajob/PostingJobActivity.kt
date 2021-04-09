@@ -60,7 +60,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
     var idLocation:Int? = 0
     var idJobVacancy:Int? = 0
     var idCategory:String = ""
-    val helper:Helper = Helper()
+    val helper:Helper = Helper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -18,7 +18,7 @@ class AdapterJobPosting(val context: Context, private val listJob: List<DataMyJo
     private var salary:String? = null
     private var applicant:String? = null
     private var datePublish:String? = null
-    private val helper: Helper = Helper()
+    private val helper: Helper = Helper
 
     inner class Holder (view:View): RecyclerView.ViewHolder(view){
         private val binding = ListItemSellingBinding.bind(view)

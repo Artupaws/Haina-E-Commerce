@@ -22,7 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.topup.electronicmoney.ElectronicMoneyActivity"></activity>
+        <activity android:name=".view.hotels.selectdate.SelectDateHotelActivity"></activity>
+        <activity android:name=".view.hotels.DetailHotelsActivity" />
+        <activity android:name=".view.hotels.HotelsActivity" />
+        <activity android:name=".view.topup.electronicmoney.ElectronicMoneyActivity" />
         <activity android:name=".view.detailtransaction.DetailTransactionActivity" />
         <activity android:name=".view.history.historytransaction.HistoryTransactionActivity" />
         <activity android:name=".view.history.historyjobvacancy.HistoryJobVacancyActivity" />

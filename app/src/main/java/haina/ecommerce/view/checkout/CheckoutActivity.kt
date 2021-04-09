@@ -19,7 +19,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
     private var titleService:String? = null
     private var customerNumber:String? = null
     private var idProduct:Int? = null
-    private val helper:Helper = Helper()
+    private val helper:Helper = Helper
     private lateinit var sharedPref: SharedPreferenceHelper
     private lateinit var presenter: CheckoutPresenter
 

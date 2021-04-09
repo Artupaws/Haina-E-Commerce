@@ -22,6 +22,7 @@ import haina.ecommerce.model.transactionlist.PendingItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.covidlist.CovidListActivity
+import haina.ecommerce.view.hotels.HotelsActivity
 import haina.ecommerce.view.topup.TopupActivity
 import haina.ecommerce.view.job.JobActivity
 import haina.ecommerce.view.notification.NotificationActivity
@@ -31,7 +32,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
 
     private var _binding: FragmentExploreBinding? = null
     private val binding get() = _binding
-    private val helper: Helper = Helper()
+    private val helper: Helper = Helper
     lateinit var sharedPref: SharedPreferenceHelper
 
     @SuppressLint("SetTextI18n")
@@ -59,6 +60,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.covidNews?.tvDetailCovid?.setOnClickListener(this)
         binding?.ivNotification?.setOnClickListener(this)
         binding?.menuServices?.linearTopup?.setOnClickListener(this)
+        binding?.menuServices?.linearHotel?.setOnClickListener(this)
 //        presenter.loadListBaseCurrency()
 //        presenter.loadCovidJkt()
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
@@ -269,6 +271,10 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
             }
             R.id.linear_topup -> {
                 val intent = Intent(requireContext(), TopupActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.linear_hotel -> {
+                val intent = Intent(requireContext(), HotelsActivity::class.java)
                 startActivity(intent)
             }
         }

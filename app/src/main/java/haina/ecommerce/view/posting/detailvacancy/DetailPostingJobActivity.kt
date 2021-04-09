@@ -20,7 +20,7 @@ class DetailPostingJobActivity : AppCompatActivity(),View.OnClickListener, Detai
 
     private lateinit var binding: ActivityDetailPostingJobBinding
     private lateinit var presenter: DetailPostingJobPresenter
-    private val helper:Helper = Helper()
+    private val helper:Helper = Helper
     private var idJobVacancy:Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {

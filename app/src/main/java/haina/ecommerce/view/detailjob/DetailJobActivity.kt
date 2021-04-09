@@ -31,7 +31,7 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
     private lateinit var binding: ActivityDetailJobBinding
     private lateinit var presenter: DetailJobPresenter
     private lateinit var sharePref: SharedPreferenceHelper
-    private var helper: Helper = Helper()
+    private var helper: Helper = Helper
     private var broadcaster: LocalBroadcastManager? = null
     private var saveJob:String =""
     var idJobVacancy:Int? = 0

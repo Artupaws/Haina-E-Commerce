@@ -28,7 +28,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
 
     private var _binding: FragmentPulsaBinding? = null
     private val binding get() = _binding
-    private val helper: Helper = Helper()
+    private val helper: Helper = Helper
     private lateinit var presenter: PulsaPresenter
     private var broadcaster: LocalBroadcastManager? = null
     private var totalPrice: String? = null

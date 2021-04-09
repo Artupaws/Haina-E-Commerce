@@ -36,7 +36,7 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
     private val PICK_CONTACT = 0
     private var broadcaster: LocalBroadcastManager? = null
     private var phoneNumber: String? = null
-    private val helper: Helper = Helper()
+    private val helper: Helper = Helper
     private var loadStatus:Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {

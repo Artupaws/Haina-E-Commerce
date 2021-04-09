@@ -16,7 +16,7 @@ import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivit
 class AdapterUnfinishTransactionExplore(val context: Context, private val listUnfinishTransaction: List<PendingItem?>?):
     RecyclerView.Adapter<AdapterUnfinishTransactionExplore.Holder>() {
 
-    private val helper:Helper = Helper()
+    private val helper:Helper = Helper
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemTransactionPendingBinding.bind(view)

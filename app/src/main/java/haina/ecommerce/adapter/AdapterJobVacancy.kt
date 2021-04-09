@@ -23,7 +23,7 @@ import haina.ecommerce.view.detailjob.DetailJobActivity
 class AdapterJobVacancy(private val context: Context, private val jobList: List<DataItemJob?>?): RecyclerView.Adapter<AdapterJobVacancy.Holder>(){
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
-        private val helper:Helper = Helper()
+        private val helper:Helper = Helper
         private val binding = ListItemJobVacancyBinding.bind(itemView)
         private var description:String? = ""
         private var jobCategory:String? = ""

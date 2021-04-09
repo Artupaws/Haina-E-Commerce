@@ -34,7 +34,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     private var discounts: String = "0"
     private var valueTotalPayment: Int? = null
     private var titleService: String? = null
-    private val helper: Helper = Helper()
+    private val helper: Helper = Helper
     private var paymentMethod: String = ""
     private lateinit var presenter: PaymentPresenter
     private var broadcaster: LocalBroadcastManager? = null

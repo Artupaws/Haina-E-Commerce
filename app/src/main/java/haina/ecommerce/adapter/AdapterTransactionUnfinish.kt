@@ -33,7 +33,7 @@ class AdapterTransactionUnfinish(val context: Context, private val listTransacti
                 tvDateTransaction.text = itemHaina.transactionTime
                 tvDescriptionProduct.text = itemHaina.product?.description
                 tvDueDate.text = itemHaina.payment?.settlementTime.toString()
-                setLayoutPayment(idPaymentMethod!!, binding, itemHaina)
+                setLayoutPayment(idPaymentMethod, binding, itemHaina)
                 copyVirtualAccount(binding)
                 btnHowPay.setOnClickListener {
                     onItemClick(adapterPosition)
@@ -69,7 +69,7 @@ class AdapterTransactionUnfinish(val context: Context, private val listTransacti
 
     override fun getItemCount(): Int = listTransactionUnfinish?.size!!
 
-    private fun setLayoutPayment(idpaymentMethod: Int, binding: ListItemUnfinishTransactionBinding, data: PendingItem?) {
+    private fun setLayoutPayment(idpaymentMethod: Int?, binding: ListItemUnfinishTransactionBinding, data: PendingItem?) {
         if (idpaymentMethod == 1) {
             binding.includeVirtualAccount.linearVirtualAccount.visibility = View.VISIBLE
             binding.includeBankTransfer.linearBankTransfer.visibility = View.GONE
