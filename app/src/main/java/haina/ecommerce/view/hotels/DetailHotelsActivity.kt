@@ -3,6 +3,7 @@ package haina.ecommerce.view.hotels
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,10 +17,14 @@ import haina.ecommerce.adapter.hotel.AdapterListRoomHotel
 import haina.ecommerce.databinding.ActivityDetailHotelsBinding
 import haina.ecommerce.model.hotels.Facilities
 import haina.ecommerce.model.hotels.ImageRoom
+import haina.ecommerce.model.hotels.Reviews
 import haina.ecommerce.model.hotels.RoomHotel
+import haina.ecommerce.view.hotels.listphotohotels.ListPhotoHotelActivity
+import haina.ecommerce.view.hotels.listreviews.BottomSheetReviewsHotel
 import haina.ecommerce.view.hotels.selectdate.SelectDateHotelActivity
+import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
 
-class DetailHotelsActivity : AppCompatActivity() {
+class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener, BottomSheetReviewsHotel.ItemClickListener {
 
     private lateinit var binding:ActivityDetailHotelsBinding
 
@@ -39,31 +44,15 @@ class DetailHotelsActivity : AppCompatActivity() {
     )
 
     private val imagesListener = ImageListener{ position, imageView ->
-        Picasso.get().load(listImage[position]).placeholder(R.drawable.ps5).into(imageView)
-//        Glide.with(applicationContext).load(listImage[position]).placeholder(R.drawable.ps5).into(imageView)
+//        Picasso.get().load(listImage[position]).placeholder(R.drawable.ps5).into(imageView)
+        Glide.with(applicationContext).load(listImage[position]).placeholder(R.drawable.ps5).into(imageView)
     }
 
-    private val listHotelRoom = arrayListOf(RoomHotel("Economy","","Split",10,"IDR200,000"),
-            RoomHotel("Business","","Big Size",1,"IDR450,000"),
-            RoomHotel("VIP","","Queen",1,"IDR500,000"),
-            RoomHotel("VVIP","","Queen",1,"IDR600,000"),
-            RoomHotel("Presidential","","King Size",1,"IDR1,000,000"))
-
-//    val promos = listOf(
-//        ImageRoom(
-//            imageRoom = "https://s2.bukalapak.com/uploads/promo_partnerinfo_bloggy/2842/Bloggy_1_puncak.jpg"),
-//        ImageRoom(
-//            imageRoom = "https://s4.bukalapak.com/uploads/promo_partnerinfo_bloggy/5042/Bloggy_1.jpg"),
-//        ImageRoom(
-//            imageRoom = "https://s2.bukalapak.com/uploads/promo_partnerinfo_bloggy/2842/Bloggy_1_puncak.jpg"),
-//        ImageRoom(
-//            imageRoom = "https://s4.bukalapak.com/uploads/promo_partnerinfo_bloggy/5042/Bloggy_1.jpg"),
-//        ImageRoom(
-//            imageRoom = "https://s2.bukalapak.com/uploads/promo_partnerinfo_bloggy/2842/Bloggy_1_puncak.jpg"),
-//        ImageRoom(
-//            imageRoom = "https://s4.bukalapak.com/uploads/promo_partnerinfo_bloggy/5042/Bloggy_1.jpg"
-//        )
-//    )
+    private val listHotelRoom = arrayListOf(RoomHotel("Economy",null,"Split",10,"IDR200,000"),
+            RoomHotel("Business",null,"Big Size",1,"IDR450,000"),
+            RoomHotel("VIP",null,"Queen",1,"IDR500,000"),
+            RoomHotel("VVIP",null,"Queen",1,"IDR600,000"),
+            RoomHotel("Presidential",null,"King Size",1,"IDR1,000,000"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +64,7 @@ class DetailHotelsActivity : AppCompatActivity() {
         binding.toolbarDetailHotels.title = titleToolbar
         binding.toolbarDetailHotels.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailHotels.setNavigationOnClickListener { onBackPressed() }
+        binding.tvSeeAllReview.setOnClickListener(this)
 
         binding.rvFacilities.apply {
             adapter = AdapterListFacilities(applicationContext, listFacilities)
@@ -97,7 +87,26 @@ class DetailHotelsActivity : AppCompatActivity() {
         binding.vpImageHotel.setImageListener(imagesListener)
 
         binding.vpImageHotel.setImageClickListener {
-            position -> Toast.makeText(applicationContext, position.toString(), Toast.LENGTH_SHORT).show() }
-
+        val imageRoom = Intent(applicationContext, ListPhotoHotelActivity::class.java)
+            startActivity(imageRoom)
+        }
     }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.tv_see_all_review -> {
+                supportFragmentManager.let {
+                    BottomSheetReviewsHotel.newInstance(Bundle()).apply {
+                        show(it, tag)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onItemClick(item: String) {
+        TODO("Not yet implemented")
+    }
+
+
 }

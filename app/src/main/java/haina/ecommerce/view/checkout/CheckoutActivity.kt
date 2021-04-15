@@ -60,7 +60,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                     .putExtra("idProduct", idProduct)
                     .putExtra("serviceType", binding.tvServiceType.text.toString())
                     .putExtra("numberCustomer", binding.tvNumber.text.toString())
-                    .putExtra("nominal", binding.tvPrice.text.toString())
+                    .putExtra("totalPrice", binding.tvPrice.text.toString())
                     .putExtra("titleService", binding.tvTitleService.text.toString())
             startActivity(intent)
         } else {

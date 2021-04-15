@@ -22,7 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.hotels.selectdate.SelectDateHotelActivity"></activity>
+        <activity android:name=".view.hotels.listphotohotels.ListPhotoHotelActivity"></activity>
+        <activity android:name=".view.hotels.selectdate.SelectDateHotelActivity" />
         <activity android:name=".view.hotels.DetailHotelsActivity" />
         <activity android:name=".view.hotels.HotelsActivity" />
         <activity android:name=".view.topup.electronicmoney.ElectronicMoneyActivity" />

@@ -63,11 +63,6 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
             }
             R.id.btn_payment -> {
                 presenter.createTransaction(numberOrderCustomer!!, idProduct!!, idPaymentMethod!!)
-//                val intent = Intent(applicationContext, HistoryTransactionActivity::class.java)
-//                        .putExtra("titleService", titleService)
-//                        .putExtra("totalPayment", valueTotalPayment)
-//                        .putExtra("paymentMethod", paymentMethod)
-//                startActivity(intent)
             }
         }
     }
@@ -94,7 +89,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     }
 
     private fun setDetailOrder() {
-        price = intent.getStringExtra("nominal")
+        price = intent.getStringExtra("totalPrice")
         numberOrderCustomer = intent.getStringExtra("numberCustomer")
         binding.tvTotalBill.text = price
         titleService = intent.getStringExtra("titleService")

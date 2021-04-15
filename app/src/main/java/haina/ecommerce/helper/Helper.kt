@@ -84,4 +84,11 @@ object Helper {
        val format = SimpleDateFormat(dateFormat)
        return format.format(date)
     }
+
+    @SuppressLint("SimpleDateFormat")
+    fun Long.convertLongtoDate(dateFormat:String) :String {
+        val date = Date(this)
+        val format = SimpleDateFormat(dateFormat)
+        return format.format(date)
+    }
 }

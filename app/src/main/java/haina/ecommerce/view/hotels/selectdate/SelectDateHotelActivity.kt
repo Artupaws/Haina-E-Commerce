@@ -1,5 +1,7 @@
 package haina.ecommerce.view.hotels.selectdate
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,46 +13,97 @@ import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivitySelectDateHotelBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.helper.Helper.convertLongtoTime
+import haina.ecommerce.helper.RangeValidator
+import haina.ecommerce.view.paymentmethod.PaymentActivity
+import java.time.Month
+import java.time.Year
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var binding:ActivitySelectDateHotelBinding
-    val helper:Helper = Helper
-    private var totalNight :String? = null
+    private lateinit var binding: ActivitySelectDateHotelBinding
+    val helper: Helper = Helper
+    private var totalNight: Int = 0
+    private var totalGuests: Int = 1
+    private var maxTotalGuests: Int? = 3
+    private var priceRoomValue: Int? = null
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectDateHotelBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.cvCheckInDate.setOnClickListener(this)
+        binding.cvAddGuests.setOnClickListener(this)
+        binding.cvMinusGuests.setOnClickListener(this)
+        binding.btnNext.setOnClickListener(this)
 
         val priceRoom = intent.getStringExtra("priceRoom")
         val typeRoom = intent.getStringExtra("typeRoom")
-        totalNight = "0 ${getString(R.string.night)}"
+        val totalNightDefault = "$totalNight ${getString(R.string.night)}"
 
         binding.toolbarSelectDate.title = "Complete Order"
         binding.toolbarSelectDate.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarSelectDate.setNavigationIcon(R.drawable.ic_back_black)
         binding.tvPriceRoom.text = priceRoom
         binding.tvNameRoom.text = typeRoom
-        binding.tvTotalNight.text = totalNight
-
+        binding.tvTotalNight.text = "$totalNight ${getString(R.string.night)}"
+        binding.etTotalGuests.setText(totalGuests.toString())
+        priceRoomValue = helper.changeFormatMoneyToValueFilter(priceRoom)?.toInt()
 
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.cv_check_in_date -> {
                 setDateCheckIn()
+            }
+
+            R.id.btn_next -> {
+                val payment = Intent(applicationContext, PaymentActivity::class.java)
+                        .putExtra("totalPrice","${binding.tvTotalPayment.text}")
+                startActivity(payment)
+            }
+
+            R.id.cv_add_guests -> {
+                addGuests()
+            }
+
+            R.id.cv_minus_guests -> {
+                minusGuests()
             }
         }
     }
 
-    private fun setDateCheckIn(){
+    private fun addGuests() {
+        if (totalGuests < maxTotalGuests!!) {
+            totalGuests++
+            binding.etTotalGuests.setText(totalGuests.toString())
+        } else if (totalGuests == maxTotalGuests) {
+            totalGuests = 1
+            binding.etTotalGuests.setText(totalGuests.toString())
+        }
+    }
+
+    private fun minusGuests() {
+        if (totalGuests == 1) {
+            totalGuests = 1
+            binding.etTotalGuests.setText(totalGuests.toString())
+        } else if (totalGuests >= 1) {
+            totalGuests--
+            binding.etTotalGuests.setText(totalGuests.toString())
+        }
+    }
+
+    private fun setDateCheckIn() {
         val builder = MaterialDatePicker.Builder.dateRangePicker()
         val now = Calendar.getInstance()
-        builder.setSelection(androidx.core.util.Pair(now.timeInMillis, now.timeInMillis))
+        val tomorrow = Calendar.getInstance()
+        tomorrow.add(Calendar.DAY_OF_MONTH, 1)
+        builder.setTitleText(R.string.select_date_stay)
+        builder.setSelection(androidx.core.util.Pair(now.timeInMillis,tomorrow.timeInMillis))
+        builder.setCalendarConstraints(limitRange().build())
 
         val picker = builder.build()
         picker.show(supportFragmentManager, picker.toString())
@@ -58,15 +111,39 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         picker.addOnPositiveButtonClickListener {
             binding.tvCheckInDate.text = it.first?.convertLongtoTime("dd MMM")
             binding.tvCheckOutDate.text = it.second?.convertLongtoTime("dd MMM")
-            val checkindate = it.first?.convertLongtoTime("dd MMM")?.replace(
-                it.first?.convertLongtoTime("dd MMM")!!,
-                it.first?.convertLongtoTime("dd MMM")!!.substring(1,2))
-            val checkoutdate = it.second?.convertLongtoTime("dd MMM")?.replace(
-                it.second?.convertLongtoTime("dd MMM")!!,
-                it.second?.convertLongtoTime("dd MMM")!!.substring(1,2))
-            totalNight = "${checkoutdate?.toInt()?.minus(checkindate?.toInt()!!)} ${getString(R.string.night)}"
-            binding.tvTotalNight.text = totalNight
-            picker.dismiss()}
+            val totalDays:Long = (it.second?.minus(it.first!!)!!)
+            totalNight = TimeUnit.MILLISECONDS.toDays(totalDays).toInt()
+            binding.tvTotalNight.text = "$totalNight"
+            picker.dismiss()
+            setPriceRoom(binding.tvTotalNight.text.toString().toInt())
+        }
     }
 
+    private fun limitRange(): CalendarConstraints.Builder {
+        val constraintsBuilderRange = CalendarConstraints.Builder()
+        val calendarStart: Calendar = Calendar.getInstance()
+        val calendarEnd: Calendar = Calendar.getInstance()
+        val year = Calendar.getInstance().get(Calendar.YEAR)
+        val startMonth = Calendar.getInstance().get(Calendar.MONTH)
+        val startDate = 1
+        val endMonth = 12
+        val endDate = 31
+
+        calendarStart.set(year, startMonth - 1, startDate - 1)
+        calendarEnd.set(year, endMonth - 1, endDate)
+
+        val minDate = calendarStart.timeInMillis
+        val maxDate = calendarEnd.timeInMillis
+
+        constraintsBuilderRange.setStart(minDate)
+        constraintsBuilderRange.setEnd(maxDate)
+        constraintsBuilderRange.setValidator(RangeValidator(minDate, maxDate))
+        return constraintsBuilderRange
+    }
+
+    private fun setPriceRoom(totalNight: Int) {
+        binding.cvTotalPrice.visibility = View.VISIBLE
+        val totalPayment = helper.convertToFormatMoneyIDRFilter((totalNight * priceRoomValue!!).toString())
+        binding.tvTotalPayment.text = totalPayment
+    }
 }

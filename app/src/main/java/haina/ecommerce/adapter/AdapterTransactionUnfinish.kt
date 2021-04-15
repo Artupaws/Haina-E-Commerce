@@ -21,19 +21,16 @@ import haina.ecommerce.view.login.LoginActivity
 
 class AdapterTransactionUnfinish(val context: Context, private val listTransactionUnfinish: List<PendingItem?>?) :
         RecyclerView.Adapter<AdapterTransactionUnfinish.Holder>(), BottomSheetHowToPayment.ItemClickListener {
-
-    private var idPaymentMethod: Int? = null
     var onItemClick: (Int) -> Unit = { i: Int -> }
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemUnfinishTransactionBinding.bind(view)
         fun bind(itemHaina: PendingItem) {
             with(binding) {
-                idPaymentMethod = itemHaina.payment?.idPaymentMethod
                 tvDateTransaction.text = itemHaina.transactionTime
                 tvDescriptionProduct.text = itemHaina.product?.description
                 tvDueDate.text = itemHaina.payment?.settlementTime.toString()
-                setLayoutPayment(idPaymentMethod, binding, itemHaina)
+                setLayoutPayment(itemHaina.payment?.idPaymentMethod, binding, itemHaina)
                 copyVirtualAccount(binding)
                 btnHowPay.setOnClickListener {
                     onItemClick(adapterPosition)
@@ -43,8 +40,8 @@ class AdapterTransactionUnfinish(val context: Context, private val listTransacti
                     popup.inflate(R.menu.menu_cancel_transaction)
                         popup.setOnMenuItemClickListener { item ->
                             when (item.itemId) {
-                                R.id.action_cancel_transaction ->{
-                                    Toast.makeText(context, "Canceled", Toast.LENGTH_SHORT).show()
+                                R.id.action_cancel_transaction -> {
+                                    Toast.makeText(context, "${itemHaina.payment?.idPaymentMethod}", Toast.LENGTH_SHORT).show()
                                     true
                                 } else -> false
 

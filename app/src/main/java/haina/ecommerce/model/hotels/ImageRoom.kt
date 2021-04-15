@@ -1,3 +1,7 @@
 package haina.ecommerce.model.hotels
 
-data class ImageRoom (val imageRoom:String)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class ImageRoom (val imageRoom:String):Parcelable
