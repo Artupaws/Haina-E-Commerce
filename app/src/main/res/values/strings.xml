@@ -244,6 +244,7 @@
     <string name="check_out">Check out</string>
     <string name="type_room">Type Room</string>
     <string name="address_hotel">Address Hotel</string>
-    <string name="night">Night(s)</string>
+    <string name="night">Total Night(s)</string>
     <string name="see_on_map"><u>see on map</u></string>
+    <string name="give_your_rating">Give your rating</string>
 </resources>

@@ -148,6 +148,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_history_hotel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -164,10 +165,13 @@
                         android:orientation="horizontal"
                         android:gravity="center_vertical">
 
-                        <ImageView
+                        <haina.ecommerce.helper.FontAwesome
                             android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:src="@drawable/ic_setting"/>
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:text="@string/hotel"
+                            android:textColor="@color/white"
+                            android:textSize="40sp"/>
 
                         <TextView
                             android:layout_width="wrap_content"

@@ -9,28 +9,22 @@ import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemRoomHotelBinding
 import haina.ecommerce.model.hotels.Facilities
 import haina.ecommerce.model.hotels.RoomHotel
+import haina.ecommerce.view.hotels.DetailHotelsActivity
 import haina.ecommerce.view.hotels.selectdate.SelectDateHotelActivity
 
-class AdapterListRoomHotel(val context: Context, private val listRoom: List<RoomHotel?>?):
+class AdapterListRoomHotel(val context: Context, private val listRoom: List<RoomHotel?>?, private val itemAdapterCallback:ItemAdapterCallback):
     RecyclerView.Adapter<AdapterListRoomHotel.Holder>() {
-
-    var onItemClick:(String, String)-> Unit = {priceRoom:String, typeRoom:String ->}
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemRoomHotelBinding.bind(view)
-        fun bind(itemHaina: RoomHotel){
-            with(binding){
+        fun bind(itemHaina: RoomHotel, itemAdapterCallback: ItemAdapterCallback){
+            binding.apply {
                 tvNameRoom.text = itemHaina.typeRoom
                 val roomsLeft = "Room(s) Left : ${itemHaina.roomsLeft}"
                 tvRestRoom.text = roomsLeft
                 tvPriceRoom.text = itemHaina.price
                 tvTypeBed.text = itemHaina.typeBed
-                btnBookRoom.setOnClickListener {
-                    onItemClick(itemHaina.price, itemHaina.typeRoom)
-//                    val selectDate = Intent(context, SelectDateHotelActivity::class.java)
-//                            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                    context.startActivity(selectDate)
-                }
+                btnBookRoom.setOnClickListener{ itemAdapterCallback.onClick(binding, itemHaina) }
             }
         }
     }
@@ -43,10 +37,12 @@ class AdapterListRoomHotel(val context: Context, private val listRoom: List<Room
 
     override fun onBindViewHolder(holder: AdapterListRoomHotel.Holder, position: Int) {
         val photo: RoomHotel = listRoom?.get(position)!!
-        holder.bind(photo)
+        holder.bind(photo, itemAdapterCallback)
     }
 
     override fun getItemCount(): Int = listRoom?.size!!
 
-
+    interface ItemAdapterCallback{
+        fun onClick(binding: ListItemRoomHotelBinding, data:RoomHotel)
+    }
 }

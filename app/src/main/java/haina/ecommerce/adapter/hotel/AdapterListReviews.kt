@@ -39,6 +39,4 @@ class AdapterListReviews(val context: Context, private val listReviews: List<Rev
     }
 
     override fun getItemCount(): Int = listReviews?.size!!
-
-
 }

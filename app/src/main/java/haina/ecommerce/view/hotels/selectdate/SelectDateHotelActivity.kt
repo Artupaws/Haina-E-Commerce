@@ -48,7 +48,7 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         binding.toolbarSelectDate.setNavigationIcon(R.drawable.ic_back_black)
         binding.tvPriceRoom.text = priceRoom
         binding.tvNameRoom.text = typeRoom
-        binding.tvTotalNight.text = "$totalNight ${getString(R.string.night)}"
+        binding.tvTotalNight.text = "$totalNight"
         binding.etTotalGuests.setText(totalGuests.toString())
         priceRoomValue = helper.changeFormatMoneyToValueFilter(priceRoom)?.toInt()
 
@@ -81,7 +81,7 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
             totalGuests++
             binding.etTotalGuests.setText(totalGuests.toString())
         } else if (totalGuests == maxTotalGuests) {
-            totalGuests = 1
+            Toast.makeText(applicationContext, "Maximum total guests", Toast.LENGTH_SHORT).show()
             binding.etTotalGuests.setText(totalGuests.toString())
         }
     }
@@ -124,8 +124,8 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         val calendarStart: Calendar = Calendar.getInstance()
         val calendarEnd: Calendar = Calendar.getInstance()
         val year = Calendar.getInstance().get(Calendar.YEAR)
-        val startMonth = Calendar.getInstance().get(Calendar.MONTH)
-        val startDate = 1
+        val startMonth = Calendar.getInstance().get(Calendar.MONTH+1)
+        val startDate = Calendar.getInstance().get(Calendar.DATE)
         val endMonth = 12
         val endDate = 31
 

@@ -3,6 +3,7 @@ package haina.ecommerce.view.hotels.listphotohotels
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.AdapterListPhotoTypeRoom
 import haina.ecommerce.databinding.ActivityListPhotoHotelBinding
 import haina.ecommerce.model.hotels.ImageRoom
@@ -20,7 +21,10 @@ class ListPhotoHotelActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initDataTypeRoom()
-        initDataImageRoom()
+        binding.toolbarListPhotoHotel.title = "Detail Photo Rooms"
+        binding.toolbarListPhotoHotel.setNavigationIcon(R.drawable.ic_back_black)
+        binding.toolbarListPhotoHotel.setNavigationOnClickListener { onBackPressed() }
+
         binding.rvTypeRoom.apply {
             adapter = AdapterListPhotoTypeRoom(applicationContext, listTypeRoom)
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
@@ -35,11 +39,4 @@ class ListPhotoHotelActivity : AppCompatActivity() {
         listTypeRoom.add(RoomHotel("PRESIDENTIAL ROOM", listPhotoRoom, "", 0, ""))
     }
 
-    fun initDataImageRoom(){
-        listPhotoRoom = ArrayList()
-        listPhotoRoom.add(ImageRoom("https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_1.jpg"))
-        listPhotoRoom.add(ImageRoom("https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_2.jpg"))
-        listPhotoRoom.add(ImageRoom("https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_3.jpg"))
-        listPhotoRoom.add(ImageRoom("https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_4.jpg"))
-    }
 }

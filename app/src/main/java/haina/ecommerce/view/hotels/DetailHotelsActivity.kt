@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,7 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.AdapterListFacilities
 import haina.ecommerce.adapter.hotel.AdapterListRoomHotel
 import haina.ecommerce.databinding.ActivityDetailHotelsBinding
+import haina.ecommerce.databinding.ListItemRoomHotelBinding
 import haina.ecommerce.model.hotels.Facilities
 import haina.ecommerce.model.hotels.ImageRoom
 import haina.ecommerce.model.hotels.Reviews
@@ -24,7 +26,7 @@ import haina.ecommerce.view.hotels.listreviews.BottomSheetReviewsHotel
 import haina.ecommerce.view.hotels.selectdate.SelectDateHotelActivity
 import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
 
-class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener, BottomSheetReviewsHotel.ItemClickListener {
+class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener, BottomSheetReviewsHotel.ItemClickListener, AdapterListRoomHotel.ItemAdapterCallback {
 
     private lateinit var binding:ActivityDetailHotelsBinding
 
@@ -59,12 +61,13 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener, BottomSh
         binding = ActivityDetailHotelsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val adapterRoom = AdapterListRoomHotel(applicationContext, listHotelRoom)
+        val adapterRoom = AdapterListRoomHotel(applicationContext, listHotelRoom, this)
         val titleToolbar = intent.getStringExtra("nameHotel")
         binding.toolbarDetailHotels.title = titleToolbar
         binding.toolbarDetailHotels.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailHotels.setNavigationOnClickListener { onBackPressed() }
         binding.tvSeeAllReview.setOnClickListener(this)
+        toggleSaveHotel()
 
         binding.rvFacilities.apply {
             adapter = AdapterListFacilities(applicationContext, listFacilities)
@@ -74,13 +77,6 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener, BottomSh
         binding.rvRoomHotel.apply {
             adapter = adapterRoom
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
-        }
-
-        adapterRoom.onItemClick = {priceRoom:String, typeRoom:String ->
-            val intent = Intent(applicationContext, SelectDateHotelActivity::class.java)
-                .putExtra("priceRoom", priceRoom)
-                .putExtra("typeRoom", typeRoom)
-            startActivity(intent)
         }
 
         binding.vpImageHotel.pageCount = listImage.size
@@ -102,6 +98,23 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener, BottomSh
                 }
             }
         }
+    }
+
+    private fun toggleSaveHotel(){
+        binding.ivSaveHotel.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked){
+                Toast.makeText(applicationContext, "Hotel Saved", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(applicationContext, "Unsaved", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onClick(binding: ListItemRoomHotelBinding, data: RoomHotel) {
+            val intent = Intent(applicationContext, SelectDateHotelActivity::class.java)
+                    .putExtra("priceRoom", data.price)
+                    .putExtra("typeRoom", data.typeRoom)
+            startActivity(intent)
     }
 
     override fun onItemClick(item: String) {
