@@ -22,6 +22,7 @@ import haina.ecommerce.model.transactionlist.PendingItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.covidlist.CovidListActivity
+import haina.ecommerce.view.flight.FlightTicketActivity
 import haina.ecommerce.view.hotels.HotelsActivity
 import haina.ecommerce.view.topup.TopupActivity
 import haina.ecommerce.view.job.JobActivity
@@ -61,6 +62,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.ivNotification?.setOnClickListener(this)
         binding?.menuServices?.linearTopup?.setOnClickListener(this)
         binding?.menuServices?.linearHotel?.setOnClickListener(this)
+        binding?.menuServices?.linearFlightTicket?.setOnClickListener(this)
 //        presenter.loadListBaseCurrency()
 //        presenter.loadCovidJkt()
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
@@ -276,6 +278,11 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
             R.id.linear_hotel -> {
                 val intent = Intent(requireContext(), HotelsActivity::class.java)
                 startActivity(intent)
+            }
+
+            R.id.linear_flight_ticket -> {
+                val flight = Intent(requireContext(), FlightTicketActivity::class.java)
+                startActivity(flight)
             }
         }
     }

@@ -124,12 +124,12 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         val calendarStart: Calendar = Calendar.getInstance()
         val calendarEnd: Calendar = Calendar.getInstance()
         val year = Calendar.getInstance().get(Calendar.YEAR)
-        val startMonth = Calendar.getInstance().get(Calendar.MONTH+1)
+        val startMonth = Calendar.getInstance().get(Calendar.MONTH)
         val startDate = Calendar.getInstance().get(Calendar.DATE)
         val endMonth = 12
         val endDate = 31
 
-        calendarStart.set(year, startMonth - 1, startDate - 1)
+        calendarStart.set(year, startMonth, startDate-1)
         calendarEnd.set(year, endMonth - 1, endDate)
 
         val minDate = calendarStart.timeInMillis

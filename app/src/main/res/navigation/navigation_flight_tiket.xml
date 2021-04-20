@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_flight_tiket">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_flight_tiket"
+    app:startDestination="@id/scheduleFlightFragment">
 
+    <fragment
+        android:id="@+id/scheduleFlightFragment"
+        android:name="haina.ecommerce.view.flight.fragment.ScheduleFlightFragment"
+        android:label="fragment_schedule_flight"
+        tools:layout="@layout/fragment_schedule_flight" >
+        <action
+            android:id="@+id/action_scheduleFlightFragment_to_chooseAirlinesFragment"
+            app:destination="@id/chooseAirlinesFragment" />
+        <argument
+            android:name="destination"
+            app:argType="string" />
+        <argument
+            android:name="schedule"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseAirlinesFragment"
+        android:name="haina.ecommerce.view.flight.fragment.ChooseAirlinesFragment"
+        android:label="fragment_choose_airlines"
+        tools:layout="@layout/fragment_choose_airlines" />
 </navigation>
