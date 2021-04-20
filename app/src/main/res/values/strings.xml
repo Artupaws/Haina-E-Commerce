@@ -247,4 +247,7 @@
     <string name="night">Total Night(s)</string>
     <string name="see_on_map"><u>see on map</u></string>
     <string name="give_your_rating">Give your rating</string>
+    <string name="booking_id">Booking ID</string>
+    <string name="total_guest_s">Total Guest(s)</string>
+    <string name="taxes_service_charge"><![CDATA[Taxes & Service Charge]]></string>
 </resources>

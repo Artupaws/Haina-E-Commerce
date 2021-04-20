@@ -1,4 +1,4 @@
-package haina.ecommerce.view.hotels.bookings
+ package haina.ecommerce.view.hotels.bookings
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
