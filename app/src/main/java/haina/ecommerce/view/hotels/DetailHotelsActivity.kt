@@ -46,7 +46,6 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener, BottomSh
     )
 
     private val imagesListener = ImageListener{ position, imageView ->
-//        Picasso.get().load(listImage[position]).placeholder(R.drawable.ps5).into(imageView)
         Glide.with(applicationContext).load(listImage[position]).placeholder(R.drawable.ps5).into(imageView)
     }
 

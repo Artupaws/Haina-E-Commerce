@@ -63,11 +63,11 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(payment)
             }
 
-            R.id.cv_add_adult -> {
+            R.id.cv_add_guests -> {
                 addGuests()
             }
 
-            R.id.cv_minus_adult -> {
+            R.id.cv_minus_guests -> {
                 minusGuests()
             }
         }
