@@ -1,58 +1,85 @@
 package haina.ecommerce.view.flight.fragment
 
+import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
-import androidx.core.util.Pair
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
+import haina.ecommerce.adapter.flight.AdapterFlightDestinationCountry
+import haina.ecommerce.databinding.FragmentBottomsheetFlightBinding
 import haina.ecommerce.databinding.FragmentScheduleFlightBinding
 import haina.ecommerce.helper.Helper.convertLongtoTime
 import haina.ecommerce.helper.RangeValidator
+import haina.ecommerce.model.flight.DestinationCity
+import haina.ecommerce.model.flight.DestinationCountry
 import haina.ecommerce.model.flight.Request
 import haina.ecommerce.view.flight.FlightTicketActivity
-import java.time.Month
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class ScheduleFlightFragment : Fragment(), View.OnClickListener {
 
-    private lateinit var _binding:FragmentScheduleFlightBinding
+    private lateinit var _binding: FragmentScheduleFlightBinding
     private val binding get() = _binding
-    private var listImage = arrayOf("https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_1.jpg",
+    private var listImage = arrayOf(
+        "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_1.jpg",
         "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_2.jpg",
         "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_3.jpg",
         "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_4.jpg",
-        "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_5.jpg")
-    private lateinit var imagesListener :ImageListener
+        "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_5.jpg"
+    )
+    private lateinit var imagesListener: ImageListener
     private val rotatePostIconOpen: Animation by lazy {
         AnimationUtils.loadAnimation(
             activity,
             R.anim.rotate_icon_post
         )
     }
+    private var popupDestination: Dialog? = null
+    private var popupFlightClass: Dialog? = null
     private var clicked = false
     private var roundTrip = false
-    private var date:String = Calendar.getInstance().get(Calendar.DATE).toString()
-    private var month:String = Calendar.getInstance().get(Calendar.MONTH).toString()
+    private var date: String = Calendar.getInstance().get(Calendar.DATE).toString()
+    private var month: String = Calendar.getInstance().get(Calendar.MONTH).toString()
+    private var listDestination = listOf(
+        DestinationCountry("Indonesia", 1)
+    )
+    private lateinit var typeDestination: String
+    private var broadcaster:LocalBroadcastManager?=null
+    private var flightClass:String? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentScheduleFlightBinding.inflate(inflater, container, false)
         imagesListener = ImageListener { position, imageView ->
-            Glide.with(requireActivity()).load(listImage[position]).placeholder(R.drawable.ps5).into(imageView)
+            Glide.with(requireActivity()).load(listImage[position]).placeholder(R.drawable.ps5).into(
+                imageView
+            )
         }
-
+        broadcaster = LocalBroadcastManager.getInstance(requireActivity())
         return binding.root
     }
 
@@ -62,19 +89,25 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
         binding.btnFindTicket.setOnClickListener(this)
         binding.tvStartDate.setOnClickListener(this)
         binding.tvFinishDate.setOnClickListener(this)
+        binding.tvFromDestination.setOnClickListener(this)
+        binding.tvToDestination.setOnClickListener(this)
+        binding.tvTotalPassenger.setOnClickListener(this)
+        binding.tvFlightClass.setOnClickListener(this)
         binding.vpFlightTicket.setImageListener(imagesListener)
         binding.vpFlightTicket.pageCount = listImage.size
         binding.vpFlightTicket.setImageClickListener {
-         Toast.makeText(requireActivity(), "Clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), "Clicked", Toast.LENGTH_SHORT).show()
         }
         switchDestination()
+        popupDialogDestination(listDestination)
+        popupDialogFlightClass()
         binding.toolbarScheduleFlight.setNavigationOnClickListener {
             (activity as FlightTicketActivity).onBackPressed()
         }
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.iv_flip_destination -> {
                 onAddPostClicked()
                 flipDestination(clicked)
@@ -86,32 +119,36 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
                 val dateFinish = binding.tvFinishDate.text.toString()
                 val totalPassenger = binding.tvTotalPassenger.text.toString()
                 val flightClass = binding.tvFlightClass.text.toString()
-                when{
-                    fromDestination.isNullOrEmpty()->{
+                when {
+                    fromDestination.isNullOrEmpty() -> {
                         binding.tvFromDestination.error = "Please input from"
                     }
-                    toDestination.isNullOrEmpty()->{
+                    toDestination.isNullOrEmpty() -> {
                         binding.tvToDestination.error = "Please input to"
                     }
-                    dateFinish.isNullOrEmpty()->{
+                    dateFinish.isNullOrEmpty() -> {
                         binding.tvFinishDate.error = "Please input date finish"
                     }
-                    dateStart.isNullOrEmpty()->{
+                    dateStart.isNullOrEmpty() -> {
                         binding.tvFromDestination.error = "Please input date start"
                     }
-                    totalPassenger.isNullOrEmpty()->{
+                    totalPassenger.isNullOrEmpty() -> {
                         binding.tvTotalPassenger.error = "Please input total passenger"
                     }
-                    flightClass.isNullOrEmpty()->{
+                    flightClass.isNullOrEmpty() -> {
                         binding.tvFlightClass.error = "Please input flight class"
-                    } else -> {
-                        val data = Request(
-                            dateStart, dateFinish, fromDestination, toDestination, totalPassenger, flightClass,null,null
-                        )
-                    val bundle = Bundle()
-                    bundle.putParcelable("data", data)
-                    Navigation.findNavController(binding.btnFindTicket)
-                        .navigate(R.id.action_scheduleFlightFragment_to_chooseAirlinesFragment, bundle)
+                    }
+                    else -> {
+                        val data = Request(dateStart, dateFinish, fromDestination, toDestination, totalPassenger, flightClass,
+                            null,
+                            null)
+                        val bundle = Bundle()
+                        bundle.putParcelable("data", data)
+                        Navigation.findNavController(binding.btnFindTicket)
+                            .navigate(
+                                R.id.action_scheduleFlightFragment_to_chooseAirlinesFragment,
+                                bundle
+                            )
                     }
                 }
             }
@@ -123,28 +160,80 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
             R.id.tv_finish_date -> {
                 setDateFlight("Second")
             }
+            R.id.tv_from_destination -> {
+                typeDestination = "From"
+                popupDestination?.show()
+            }
+            R.id.tv_to_destination -> {
+                typeDestination = "To"
+                popupDestination?.show()
+            }
+            R.id.tv_total_passenger -> {
+                childFragmentManager.let {
+                    BottomSheetFlightFragment.newInstance(Bundle()).apply {
+                        show(it, tag)
+                    }
+                }
+            }
+            R.id.tv_flight_class -> {
+                popupFlightClass?.show()
+            }
         }
     }
 
-    private fun onAddPostClicked(){
+    override fun onStart() {
+        super.onStart()
+        LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(mMessageReceiver, IntentFilter("dataDestination"))
+        LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(mMessageReceiver, IntentFilter("dataPassenger"))
+    }
+
+    private val mMessageReceiver:BroadcastReceiver = object :BroadcastReceiver(){
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when(intent?.action){
+                "dataDestination" -> {
+                    val dataIntent = intent.getParcelableExtra<DestinationCity>("data")
+                    if (typeDestination == "From") {
+                        binding.tvFromDestination.text = dataIntent.codeCity
+                        binding.tvCityNameFrom.text = dataIntent.nameCity
+                        popupDestination?.dismiss()
+                    } else if (typeDestination == "To") {
+                        binding.tvToDestination.text = dataIntent.codeCity
+                        binding.tvCityNameTo.text = dataIntent.nameCity
+                        popupDestination?.dismiss()
+                    }
+                }
+                "dataPassenger" -> {
+                    val totalPassenger = intent.getStringExtra("total")
+                    binding.tvTotalPassenger.text = totalPassenger
+                }
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(mMessageReceiver)
+    }
+
+    private fun onAddPostClicked() {
         setAnimation(clicked)
         clicked = !clicked
     }
 
-    private fun setAnimation(clicked:Boolean){
-        if (!clicked){
+    private fun setAnimation(clicked: Boolean) {
+        if (!clicked) {
             binding.ivFlipDestination.startAnimation(rotatePostIconOpen)
         } else {
             binding.ivFlipDestination.startAnimation(rotatePostIconOpen)
         }
     }
 
-    private fun flipDestination(clickedParams: Boolean){
+    private fun flipDestination(clickedParams: Boolean) {
         val from = binding.tvFromDestination.text.toString()
         val to = binding.tvToDestination.text.toString()
         val cityFrom = binding.tvCityNameFrom.text.toString()
         val cityTo = binding.tvCityNameTo.text.toString()
-        if (!clickedParams){
+        if (!clickedParams) {
             binding.tvFromDestination.text = from
             binding.tvToDestination.text = to
             binding.tvCityNameFrom.text = cityFrom
@@ -158,9 +247,9 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
         clicked = !clicked
     }
 
-    private fun switchDestination(){
+    private fun switchDestination() {
         binding.switchDestination.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked){
+            if (isChecked) {
                 binding.clGoBack.visibility = View.VISIBLE
                 roundTrip = true
             } else {
@@ -169,7 +258,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    private fun setDateFlight(typeFlight:String) {
+    private fun setDateFlight(typeFlight: String) {
         val builder = MaterialDatePicker.Builder.datePicker()
         val now = Calendar.getInstance()
         builder.setTitleText("Select Date Flight")
@@ -180,13 +269,13 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
         picker.show(childFragmentManager, picker.toString())
         picker.addOnNegativeButtonClickListener { picker.dismiss() }
         picker.addOnPositiveButtonClickListener {
-           if (typeFlight == "First"){
-               binding.tvStartDate.text = it?.convertLongtoTime("dd MMM")
-               date = it?.convertLongtoTime("dd MMM").toString().substring(0,2)
-               month = it?.convertLongtoTime("dd MM").toString().substring(3,5)
-           } else if (typeFlight == "Second"){
-               binding.tvFinishDate.text = it?.convertLongtoTime("dd MMM")
-           }
+            if (typeFlight == "First") {
+                binding.tvStartDate.text = it?.convertLongtoTime("dd MMM")
+                date = it?.convertLongtoTime("dd MMM").toString().substring(0, 2)
+                month = it?.convertLongtoTime("dd MM").toString().substring(3, 5)
+            } else if (typeFlight == "Second") {
+                binding.tvFinishDate.text = it?.convertLongtoTime("dd MMM")
+            }
             picker.dismiss()
         }
     }
@@ -201,7 +290,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
         val endMonth = 12
         val endDate = 31
 
-        calendarStart.set(year, startMonth-1, startDate-1)
+        calendarStart.set(year, startMonth - 1, startDate - 1)
         calendarEnd.set(year, endMonth - 1, endDate)
 
         val minDate = calendarStart.timeInMillis
@@ -212,5 +301,43 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
         constraintsBuilderRange.setValidator(RangeValidator(minDate, maxDate))
         return constraintsBuilderRange
     }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun popupDialogDestination(listDestinationCountry: List<DestinationCountry>) {
+        popupDestination = Dialog(requireActivity())
+        popupDestination?.setContentView(R.layout.layout_popup_dialog_destination_flight)
+        popupDestination?.setCancelable(true)
+        popupDestination?.window?.setBackgroundDrawableResource(R.color.white)
+        val window: Window = popupDestination?.window!!
+        window.setGravity(Gravity.CENTER)
+        val actionClose = popupDestination?.findViewById<ImageView>(R.id.iv_close)
+        val rvDestination = popupDestination?.findViewById<RecyclerView>(R.id.rv_destination)
+        val searcView = popupDestination?.findViewById<SearchView>(R.id.sv_destination)
+        actionClose?.setOnClickListener { popupDestination?.dismiss() }
+        rvDestination?.apply {
+            adapter = AdapterFlightDestinationCountry(requireActivity(), listDestinationCountry)
+            layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun popupDialogFlightClass() {
+        popupFlightClass = Dialog(requireActivity())
+        popupFlightClass?.setContentView(R.layout.layout_select_flight_class)
+        popupFlightClass?.setCancelable(true)
+        popupFlightClass?.window?.setBackgroundDrawableResource(R.color.white)
+        val window: Window = popupDestination?.window!!
+        window.setGravity(Gravity.CENTER)
+        val rdGroup = popupFlightClass?.findViewById<RadioGroup>(R.id.rd_group)
+        rdGroup?.setOnCheckedChangeListener(
+            RadioGroup.OnCheckedChangeListener { group, checkedId ->
+                val radio: RadioButton? = popupFlightClass?.findViewById(rdGroup.checkedRadioButtonId)
+                flightClass = radio?.text.toString()
+                binding.tvFlightClass.text = flightClass
+                popupFlightClass?.dismiss()
+            }
+        )
+    }
+
 
 }

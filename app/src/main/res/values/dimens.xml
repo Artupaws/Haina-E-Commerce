@@ -3,5 +3,5 @@
     <dimen name="list_item_spacing">16dp</dimen>
     <dimen name="list_item_spacing_half">8dp</dimen>
     <dimen name="banner_height">170dp</dimen>
-    <dimen name="banner_flight">150dp</dimen>
+    <dimen name="banner_flight">120dp</dimen>
 </resources>

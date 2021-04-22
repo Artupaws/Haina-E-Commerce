@@ -21,7 +21,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_schedule_flight">
@@ -29,7 +29,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingBottom="20dp">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -48,9 +49,11 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginBottom="20dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="8sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/imageView"
                 app:layout_constraintStart_toStartOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="@+id/imageView">
@@ -98,7 +101,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="CGK"
+                            android:text="Choose"
                             android:textAllCaps="true" />
 
                         <ImageView
@@ -114,7 +117,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="DPS"
+                            android:text="Choose"
                             android:textAlignment="textEnd"
                             android:textAllCaps="true" />
 
@@ -131,7 +134,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Jakarta"
+                            android:text="-"
                             android:textColor="@color/black" />
 
                         <TextView
@@ -139,7 +142,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Denpasar"
+                            android:text="-"
                             android:textAlignment="textEnd"
                             android:textColor="@color/black" />
 
@@ -180,7 +183,7 @@
                             style="@style/TextView.Poppins14spBlack"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="23 Apr"
+                            android:text="select date"
                             app:layout_constraintEnd_toStartOf="@+id/switch_destination"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="@+id/textView7"
@@ -247,7 +250,7 @@
                             style="@style/TextView.Poppins14spBlack"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="23 Apr"
+                            android:text="select date"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="@+id/title_finish_date"
@@ -294,7 +297,7 @@
                             style="@style/TextView.Poppins14spBlack"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="2 Adults, 1 Child"
+                            android:text="select passenger"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="@+id/title_total_passenger"
@@ -342,7 +345,7 @@
                             style="@style/TextView.Poppins14spBlack"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Economi"
+                            android:text="select class"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="@+id/title_flight_class"
@@ -372,31 +375,29 @@
 
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/textView9"
-                style="@style/TextView.Poppins16spBlack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="20dp"
-                android:text="Benefits"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cv_schedule" />
-
-            <com.synnapps.carouselview.CarouselView
-                android:id="@+id/vp_flight_ticket"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/banner_flight"
-                app:autoPlay="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView9"
-                app:pageTransformer="slide_over" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </androidx.core.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/textView9"
+        style="@style/TextView.Poppins16spBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="Benefits"
+        app:layout_constraintBottom_toTopOf="@+id/vp_flight_ticket"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.synnapps.carouselview.CarouselView
+        android:id="@+id/vp_flight_ticket"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/banner_flight"
+        app:autoPlay="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:pageTransformer="slide_over" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

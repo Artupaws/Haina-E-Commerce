@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraint_select_type_class"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <RadioGroup
+        android:id="@+id/rd_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/rb_economy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="textStart"
+            style="@style/TextView.Poppins16spBlack"
+            android:textStyle="bold"
+            android:text="@string/economy"/>
+
+        <RadioButton
+            android:id="@+id/rb_business"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/TextView.Poppins16spBlack"
+            android:text="@string/business"
+            android:textStyle="bold"
+            android:textAlignment="textStart"/>
+
+        <RadioButton
+            android:id="@+id/rb_first_class"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/first_class"
+            android:textAlignment="textStart"
+            style="@style/TextView.Poppins16spBlack"
+            android:textStyle="bold"/>
+
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

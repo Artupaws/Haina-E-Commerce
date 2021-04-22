@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.DatePicker
 import android.widget.Toast
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -15,8 +14,6 @@ import haina.ecommerce.helper.Helper
 import haina.ecommerce.helper.Helper.convertLongtoTime
 import haina.ecommerce.helper.RangeValidator
 import haina.ecommerce.view.paymentmethod.PaymentActivity
-import java.time.Month
-import java.time.Year
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -66,11 +63,11 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(payment)
             }
 
-            R.id.cv_add_guests -> {
+            R.id.cv_add_adult -> {
                 addGuests()
             }
 
-            R.id.cv_minus_guests -> {
+            R.id.cv_minus_adult -> {
                 minusGuests()
             }
         }

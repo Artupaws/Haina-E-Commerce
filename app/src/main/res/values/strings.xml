@@ -119,6 +119,9 @@
     <string name="resume">Resume</string>
     <string name="birth_date">birth date</string>
     <string name="male">Male</string>
+    <string name="economy">Economy</string>
+    <string name="business">Bussines</string>
+    <string name="first_class">First Class</string>
     <string name="female">Female</string>
     <string name="portfolio">Portfolio</string>
     <string name="certificate">Certificate</string>
@@ -250,4 +253,5 @@
     <string name="booking_id">Booking ID</string>
     <string name="total_guest_s">Total Guest(s)</string>
     <string name="taxes_service_charge"><![CDATA[Taxes & Service Charge]]></string>
+    <string name="destination">Destination</string>
 </resources>
