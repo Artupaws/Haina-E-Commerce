@@ -19,7 +19,9 @@ class Request (
     @SerializedName("flightClass")
     var flightClass: String,
     @SerializedName("airlinesFirst")
-    var airlinesFirst: String?,
+    var airlinesFirst: Airlines?,
     @SerializedName("airlinesSecond")
-    var airlinesSecond: String?
+    var airlinesSecond: Airlines?,
+    @SerializedName("dataPassenger")
+    var dataPassenger: List<DataPassenger>?
 ):Parcelable

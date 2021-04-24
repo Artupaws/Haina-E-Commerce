@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.flight.fragment.ChooseAirlinesFragment">
+    tools:context=".view.flight.fragment.ChooseAirlinesSecondFlightFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_choose_airlines"
@@ -29,6 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <include
+                android:id="@+id/include_first_flight"
+                layout="@layout/layout_choosing_first_flight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_airlines"

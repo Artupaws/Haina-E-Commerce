@@ -17,6 +17,7 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterUnfinishTransactionExplore
 import haina.ecommerce.databinding.FragmentExploreBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.DataUser
 import haina.ecommerce.model.transactionlist.DataTransaction
 import haina.ecommerce.model.transactionlist.PendingItem
 import haina.ecommerce.preference.SharedPreferenceHelper
@@ -55,6 +56,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getListUnfinishTransaction()
+        presenter.getDataUserProfile()
         binding?.menuServices?.linearOther?.setOnClickListener(this)
         binding?.menuServices?.linearNews?.setOnClickListener(this)
         binding?.menuServices?.linearJob?.setOnClickListener(this)
@@ -329,6 +331,16 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
 
     override fun dismissShimmerHeadlineNews() {
         Log.i("Failed", "gone shimmer")
+    }
+
+    override fun messageGetDataUSer(msg: String) {
+        Log.d("getDataError", msg)
+    }
+
+    override fun getDataUser(data: DataUser?) {
+        sharedPref.save(Constants.PREF_FULLNAME, data?.fullname.toString())
+        sharedPref.save(Constants.PREF_PHONE_NUMBER, data?.phone.toString())
+        sharedPref.save(Constants.PREF_EMAIL, data?.email.toString())
     }
 
     private fun showPendingTransaction(total:Int){

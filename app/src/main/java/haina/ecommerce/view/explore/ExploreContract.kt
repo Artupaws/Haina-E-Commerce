@@ -11,6 +11,8 @@ interface ExploreContract {
     fun messageGetTransactionList(msg:String?)
     fun getTransactionList(data:DataTransaction?)
     fun dismissShimmerHeadlineNews()
+    fun messageGetDataUSer(msg:String)
+    fun getDataUser(data : DataUser?)
 
 //    fun loadListCodeCurrency(list: List<DataCodeCurrency?>?)
 //    fun loadCurrency(item: DataCurrency?)

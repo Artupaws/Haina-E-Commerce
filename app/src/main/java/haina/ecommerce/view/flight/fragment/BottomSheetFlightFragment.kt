@@ -26,7 +26,6 @@ class BottomSheetFlightFragment : BottomSheetDialogFragment(), View.OnClickListe
     private var totalKids: Int = 0
     private var totalBaby: Int = 0
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -150,7 +149,8 @@ class BottomSheetFlightFragment : BottomSheetDialogFragment(), View.OnClickListe
                 }
                 R.id.btn_save_total_passenger -> {
                     val intentDataPassenger =Intent("dataPassenger")
-                        .putExtra("total", "$totalAdults Adult(s), $totalKids Kid(s), $totalBaby Baby(s)")
+//                        .putExtra("total", "$totalAdults Adult(s), $totalKids Kid(s), $totalBaby Baby(s)")
+                        .putExtra("total", "${(totalAdults+totalKids+totalBaby)}")
                     broadcaster?.sendBroadcast(intentDataPassenger)
                     dismiss()
                 }

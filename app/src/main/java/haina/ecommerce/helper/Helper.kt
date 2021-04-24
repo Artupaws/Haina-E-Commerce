@@ -91,4 +91,9 @@ object Helper {
         val format = SimpleDateFormat(dateFormat)
         return format.format(date)
     }
+
+//    fun addPassenger(totalPassenger:Int, maxPassenger:Int){
+//        if (totalPassenger < maxPassenger){
+//        }
+//    }
 }

@@ -286,6 +286,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun getDataUser(data: DataUser?) {
         sharedPref.save(Constants.PREF_PHONE_NUMBER, data?.phone.toString())
+        sharedPref.save(Constants.PREF_EMAIL, data?.email.toString())
         binding?.tvNameUser?.text = data?.fullname.toString()
         activity?.let { Glide.with(it).load(data?.photo).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding?.ivProfile!!) }
     }

@@ -141,4 +141,7 @@ dependencies {
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //stepview vertical
+    implementation 'com.github.vinaygopinath:StepView:2.0.1'
+
 }

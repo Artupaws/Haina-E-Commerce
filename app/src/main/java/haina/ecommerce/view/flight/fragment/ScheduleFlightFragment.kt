@@ -141,7 +141,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
                     else -> {
                         val data = Request(dateStart, dateFinish, fromDestination, toDestination, totalPassenger, flightClass,
                             null,
-                            null)
+                            null, null)
                         val bundle = Bundle()
                         bundle.putParcelable("data", data)
                         Navigation.findNavController(binding.btnFindTicket)

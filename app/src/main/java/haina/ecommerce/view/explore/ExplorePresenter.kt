@@ -5,6 +5,7 @@ import android.util.Log
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.*
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
+import haina.ecommerce.util.Constants
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
@@ -87,6 +88,27 @@ class ExplorePresenter(val view: ExploreContract, val context: Context) {
 //
 //        })
 //    }
+
+    fun getDataUserProfile(){
+        NetworkConfig().getConnectionHainaBearer(context).getDataUser(Constants.APIKEY)
+            .enqueue(object : retrofit2.Callback<ResponseGetDataUser>{
+                override fun onResponse(call: Call<ResponseGetDataUser>, response: Response<ResponseGetDataUser>) {
+                    if (response.isSuccessful && response.body()?.value == 1){
+                        val data = response.body()?.data
+                        view.getDataUser(data)
+                        view.messageGetDataUSer(response.body()?.message.toString())
+                    } else {
+                        val error = JSONObject(response.errorBody()?.string()!!)
+                        view.messageGetDataUSer(error.getString("message"))
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseGetDataUser>, t: Throwable) {
+                    view.messageGetDataUSer(t.localizedMessage)
+                }
+
+            })
+    }
 
     fun getListUnfinishTransaction(){
         val getListunfinishTransaction = NetworkConfig().getConnectionHainaBearer(context).getListTransaction()

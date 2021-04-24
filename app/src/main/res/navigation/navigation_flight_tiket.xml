@@ -24,5 +24,21 @@
         android:id="@+id/chooseAirlinesFragment"
         android:name="haina.ecommerce.view.flight.fragment.ChooseAirlinesFragment"
         android:label="fragment_choose_airlines"
-        tools:layout="@layout/fragment_choose_airlines" />
+        tools:layout="@layout/fragment_choose_airlines" >
+        <action
+            android:id="@+id/action_chooseAirlinesFragment_to_chooseAirlinesSecondFlightFragment"
+            app:destination="@id/chooseAirlinesSecondFlightFragment" />
+        <action
+            android:id="@+id/action_chooseAirlinesFragment_to_fillDataPassengerFragment"
+            app:destination="@id/fillDataPassengerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseAirlinesSecondFlightFragment"
+        android:name="haina.ecommerce.view.flight.fragment.ChooseAirlinesSecondFlightFragment"
+        android:label="ChooseAirlinesSecondFlightFragment" />
+    <fragment
+        android:id="@+id/fillDataPassengerFragment"
+        android:name="haina.ecommerce.view.flight.fragment.FillDataPassengerFragment"
+        android:label="fragment_fill_data_passenger"
+        tools:layout="@layout/fragment_fill_data_passenger" />
 </navigation>
