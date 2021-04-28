@@ -14,9 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.R
+import haina.ecommerce.adapter.AdapterHeadlineNews
 import haina.ecommerce.adapter.AdapterUnfinishTransactionExplore
 import haina.ecommerce.databinding.FragmentExploreBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.ArticlesItem
+import haina.ecommerce.model.DataCovidJkt
 import haina.ecommerce.model.DataUser
 import haina.ecommerce.model.transactionlist.DataTransaction
 import haina.ecommerce.model.transactionlist.PendingItem

@@ -117,7 +117,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
                 val toDestination = binding.tvToDestination.text.toString()
                 val dateStart = binding.tvStartDate.text.toString()
                 val dateFinish = binding.tvFinishDate.text.toString()
-                val totalPassenger = binding.tvTotalPassenger.text.toString()
+                val totalPassenger = binding.tvTotalPassenger.text.toString().toInt()
                 val flightClass = binding.tvFlightClass.text.toString()
                 when {
                     fromDestination.isNullOrEmpty() -> {
@@ -132,7 +132,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
                     dateStart.isNullOrEmpty() -> {
                         binding.tvFromDestination.error = "Please input date start"
                     }
-                    totalPassenger.isNullOrEmpty() -> {
+                    totalPassenger == 0 -> {
                         binding.tvTotalPassenger.error = "Please input total passenger"
                     }
                     flightClass.isNullOrEmpty() -> {

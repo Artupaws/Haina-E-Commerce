@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_name_passenger"
+        style="@style/TextView.Poppins14spBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="266dp"
+        tools:text="Putra" />
+
+    <LinearLayout
+        android:id="@+id/linear_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_action_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/edit"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            style="@style/TextView.Poppins14spGrey"
+            android:text="@string/stand_dash"/>
+
+        <TextView
+            android:id="@+id/tv_action_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/delete"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_birthdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name_passenger"
+        style="@style/TextView.Poppins14spBlack"
+        tools:text="18-10-1997"/>
+
+    <TextView
+        android:id="@+id/tv_idcard_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_birthdate"
+        style="@style/TextView.Poppins14spBlack"
+        tools:text="31727274912971"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/tv_idcard_number"
+        android:layout_marginBottom="5dp"
+        android:background="@color/black" />
+
+</RelativeLayout>

@@ -34,8 +34,9 @@
                 android:id="@+id/rv_ticket"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:nestedScrollingEnabled="true"
-                android:padding="20dp"/>
+                android:padding="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -103,10 +104,40 @@
                 android:textStyle="bold"
                 android:text="Data Passenger"/>
 
-            <androidx.recyclerview.widget.RecyclerView
+
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="true" />
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="3sp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_data_passenger"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/list_item_data_passenger"
+                        android:nestedScrollingEnabled="true" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btn_add_data_passenger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/add_data_passenger"
+                android:drawableStart="@drawable/ic_add"
+                style="@style/Button.Secondary"/>
 
             <View
                 android:layout_width="match_parent"
@@ -162,6 +193,7 @@
                 android:background="@color/light_grey"/>
 
             <Button
+                android:id="@+id/btn_continue_payment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

@@ -1,3 +1,7 @@
 package haina.ecommerce.model.flight
 
-data class TimeFlight (val departureTime:String, val arrivedTime:String)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class TimeFlight (val departureTime:String, val arrivedTime:String):Parcelable

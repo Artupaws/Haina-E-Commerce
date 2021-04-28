@@ -2,7 +2,6 @@ package haina.ecommerce.adapter.flight
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +14,12 @@ import haina.ecommerce.adapter.hotel.AdapterListRoomHotel
 import haina.ecommerce.databinding.ListItemAirlinesBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.flight.Airlines
+import haina.ecommerce.model.flight.AirlinesFirst
 import haina.ecommerce.model.flight.DestinationCity
 import haina.ecommerce.model.flight.TimeFlight
 
 class AdapterAirlines(val context: Context, private val listAirlines: ArrayList<Airlines>,
-private val itemAdapterCallback: ItemAdapterCallback) :
+                      private val itemAdapterCallback: ItemAdapterCallback) :
         RecyclerView.Adapter<AdapterAirlines.Holder>() {
 
     private var broadcaster:LocalBroadcastManager? =null

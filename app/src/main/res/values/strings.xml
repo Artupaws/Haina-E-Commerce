@@ -254,4 +254,5 @@
     <string name="total_guest_s">Total Guest(s)</string>
     <string name="taxes_service_charge"><![CDATA[Taxes & Service Charge]]></string>
     <string name="destination">Destination</string>
+    <string name="add_data_passenger">Add Data Passenger</string>
 </resources>
