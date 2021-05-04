@@ -2,8 +2,15 @@ package haina.ecommerce.view
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
+import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.Window
@@ -11,13 +18,17 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityMainBinding
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.explore.ExploreFragment
 import haina.ecommerce.view.history.HistoryFragment
 import haina.ecommerce.view.myaccount.MyAccountFragment
 import haina.ecommerce.view.posting.PostingFragment
+import java.util.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -26,18 +37,22 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     private var popupFillData: Dialog? = null
     private var loginMethod:Int? = null
     private var loginStatus:String? = null
+    private var broadcaster:LocalBroadcastManager? = null
+    private lateinit var sharedPref:SharedPreferenceHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        sharedPref = SharedPreferenceHelper(this)
+        broadcaster = LocalBroadcastManager.getInstance(this)
         loginMethod = intent.getIntExtra("loginMethod", 0)
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
         dialogFillData()
         checkLoginMethod()
         stateOpenFragment()
-
+        setLanguageApp(sharedPref.getValueString(Constants.LANGUAGE_APP).toString())
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -87,6 +102,36 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         ok?.setOnClickListener {
             popupFillData?.dismiss()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("setLanguage"))
+    }
+
+    private val mMessageReceiver:BroadcastReceiver = object :BroadcastReceiver(){
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when(intent?.action){
+                "setLanguage" -> {
+                    val languageParams = intent.getStringExtra("language")
+                    sharedPref.save(Constants.LANGUAGE_APP, languageParams!!)
+                    setLanguageApp(languageParams)
+                }
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver)
+    }
+
+    private fun setLanguageApp(languageParams:String){
+        val resource:Resources = resources
+        val dm:DisplayMetrics = resource.displayMetrics
+        val config:Configuration = resource.configuration
+        config.setLocale(Locale(languageParams.toLowerCase()))
+        resource.updateConfiguration(config,dm)
     }
 
     private fun stateOpenFragment(){

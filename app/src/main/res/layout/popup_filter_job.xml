@@ -122,6 +122,7 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:background="@drawable/background_state_button_filter"
+            style="@style/Button.Primary"
             android:gravity="center"
             android:textSize="12sp"
             android:layout_gravity="center"

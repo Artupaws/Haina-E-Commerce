@@ -52,7 +52,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     private var popupLogout: AlertDialog? = null
     private lateinit var presenter: MyAccountPresenter
     private lateinit var uri: Uri
-    private var phoneUser: String? = null
+    private lateinit var language:String
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -100,7 +100,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getDataUserProfile()
-        refresh()
+
         binding?.includeLogin?.btnLoginNotLogin?.setOnClickListener(this)
         binding?.ivNotificationAccount?.setOnClickListener(this)
         binding?.linearLogout?.setOnClickListener(this)
@@ -109,6 +109,9 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         binding?.linearRegisterCompany?.setOnClickListener(this)
         binding?.tvActionEditProfile?.setOnClickListener(this)
         binding?.btnSetting?.setOnClickListener(this)
+        refresh()
+        setLanguage(sharedPref.getValueString(Constants.LANGUAGE_APP).toString())
+        switchLanguage()
     }
 
     override fun onClick(p0: View?) {
@@ -182,11 +185,6 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-//        presenter.getDataUserProfile()
-    }
-
     private fun refresh() {
         binding?.swipeRefresh?.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             presenter.getDataUserProfile()
@@ -242,7 +240,33 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         //Intent to pick image
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        startActivityForResult(intent, MyAccountFragment.IMAGE_PICK_CODE)
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+    }
+
+    private fun switchLanguage(){
+        binding?.switchLanguage?.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (buttonView.isChecked){
+                binding?.tvNameLanguage?.text = getString(R.string.chinese)
+                language = "zh"
+            } else {
+                binding?.tvNameLanguage?.text = getString(R.string.english)
+                language = "en"
+            }
+            val intentLanguage = Intent("setLanguage")
+                    .putExtra("language",language)
+            broadcaster?.sendBroadcast(intentLanguage)
+        }
+    }
+
+    private fun setLanguage(codeLanguage:String){
+        if (codeLanguage == "en"){
+            binding?.switchLanguage?.isChecked = false
+            binding?.tvNameLanguage?.text = getString(R.string.english)
+        } else if (codeLanguage == "zh"){
+            binding?.switchLanguage?.isChecked = true
+            binding?.tvNameLanguage?.text = getString(R.string.chinese)
+        }
+
     }
 
     @SuppressLint("InflateParams")
