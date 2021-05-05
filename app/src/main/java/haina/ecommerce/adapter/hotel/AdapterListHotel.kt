@@ -1,39 +1,30 @@
 package haina.ecommerce.adapter.hotel
 
 import android.content.Context
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import haina.ecommerce.databinding.ListItemAddressCompanyBinding
 import haina.ecommerce.databinding.ListItemHotelsBinding
-import haina.ecommerce.model.AddressItemCompany
-import haina.ecommerce.model.hotels.Hotels
-import haina.ecommerce.view.datacompany.address.AddAddressCompanyActivity
-import haina.ecommerce.view.hotels.DetailHotelsActivity
+import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.hotels.DataItem
 
 
-class AdapterListHotel(val context: Context, private val listHotel: List<Hotels?>?):
+class AdapterListHotel(val context: Context, private val listHotel: List<DataItem?>?,
+                       private val itemAdapterCallback:ItemAdapterCallBack):
     RecyclerView.Adapter<AdapterListHotel.Holder>() {
+
+    private val helper:Helper = Helper
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemHotelsBinding.bind(view)
-        fun bind(itemHaina: Hotels){
+        fun bind(itemHaina: DataItem, itemAdapterCallback:ItemAdapterCallBack){
             with(binding){
-                tvNameHotel.text = itemHaina.nameHotel
-                tvLocationHotel.text = itemHaina.location
-                val startPrice = "Start From : ${itemHaina.startPrice}"
+                tvNameHotel.text = itemHaina.hotelName
+                tvLocationHotel.text = itemHaina.hotelAddress
+                val startPrice = helper.convertToFormatMoneyIDRFilter(itemHaina.startingPrice!!)
                 tvStartPrice.text = startPrice
-                cvClick.setOnClickListener {
-                    val intent = Intent(context, DetailHotelsActivity::class.java)
-                        .putExtra("nameHotel", itemHaina.nameHotel)
-                        .setFlags(FLAG_ACTIVITY_NEW_TASK)
-                    context.startActivity(intent)
-                }
+                cvClick.setOnClickListener { itemAdapterCallback.onClick(binding.cvClick, itemHaina) }
             }
         }
     }
@@ -45,11 +36,15 @@ class AdapterListHotel(val context: Context, private val listHotel: List<Hotels?
     }
 
     override fun onBindViewHolder(holder: AdapterListHotel.Holder, position: Int) {
-        val photo: Hotels = listHotel?.get(position)!!
-        holder.bind(photo)
+        val photo: DataItem = listHotel?.get(position)!!
+        holder.bind(photo, itemAdapterCallback)
     }
 
     override fun getItemCount(): Int = listHotel?.size!!
+
+    interface ItemAdapterCallBack{
+        fun onClick(view: View, dataHotel: DataItem)
+    }
 
 
 }

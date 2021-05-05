@@ -9,21 +9,22 @@ import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemFacilitiesHotelBinding
 import haina.ecommerce.databinding.ListItemHotelsBinding
 import haina.ecommerce.model.hotels.Facilities
+import haina.ecommerce.model.hotels.FacilitiesItem
 import haina.ecommerce.model.hotels.Hotels
 
 
-class AdapterListFacilities(val context: Context, private val listFacilities: List<Facilities?>?):
+class AdapterListFacilities(val context: Context, private val listFacilities: List<FacilitiesItem?>?):
     RecyclerView.Adapter<AdapterListFacilities.Holder>() {
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemFacilitiesHotelBinding.bind(view)
-        fun bind(itemHaina: Facilities){
+        fun bind(itemHaina: FacilitiesItem){
             with(binding){
-                when(itemHaina.nameFacilities){
+                when(itemHaina.facilitiesName){
                     "Television" ->{
                         tvFacilities.text = context.getString(R.string.television)
                     }
-                    "Wifi" -> {
+                    "Free Wi-Fi" -> {
                         tvFacilities.text = context.getString(R.string.wifi)
                     }
                     "Parking" -> {
@@ -38,8 +39,14 @@ class AdapterListFacilities(val context: Context, private val listFacilities: Li
                     "Swimming Pool" -> {
                         tvFacilities.text = context.getString(R.string.swimmingpool)
                     }
+                    "Spa" -> {
+                        tvFacilities.text = context.getString(R.string.spa)
+                    }
+                    "Fitness Center" -> {
+                        tvFacilities.text = context.getString(R.string.dumbbell)
+                    }
                 }
-                tvNameFacilities.text = itemHaina.nameFacilities
+                tvNameFacilities.text = itemHaina.facilitiesName
             }
         }
     }
@@ -51,7 +58,7 @@ class AdapterListFacilities(val context: Context, private val listFacilities: Li
     }
 
     override fun onBindViewHolder(holder: AdapterListFacilities.Holder, position: Int) {
-        val photo: Facilities = listFacilities?.get(position)!!
+        val photo: FacilitiesItem = listFacilities?.get(position)!!
         holder.bind(photo)
     }
 

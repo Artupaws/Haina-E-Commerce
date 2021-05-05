@@ -14,8 +14,8 @@ interface ExploreContract {
     fun messageGetDataUSer(msg:String)
     fun getDataUser(data : DataUser?)
 
-//    fun loadListCodeCurrency(list: List<DataCodeCurrency?>?)
-//    fun loadCurrency(item: DataCurrency?)
+    fun loadListCodeCurrency(list: List<DataCodeCurrency?>?)
+    fun loadCurrency(item: DataCurrency?)
 //    fun loadCovidJkt(item: DataCovidJkt?)
 //    fun loadHeadlinesNews(list: List<ArticlesItem?>?)
 

@@ -19,7 +19,7 @@ class NetworkConfig {
     private fun getInterceptor(): OkHttpClient {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
-        return OkHttpClient.Builder()
+        return OkHttpClient.Builder().connectTimeout(2, TimeUnit.MINUTES)
                 .addInterceptor(logging)
                 .build()
     }
@@ -55,6 +55,23 @@ class NetworkConfig {
         return retrofit.create(NetworkService::class.java)
     }
 
+    fun getNetworkHotel(): NetworkService{
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl(Constants.BASE_API_HAINA_HOTEL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(getInterceptor())
+            .build()
+        return retrofit.create(NetworkService::class.java)
+    }
+
+    fun getNetworkCurrency(): NetworkService{
+        val retrofit: Retrofit = Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL_CURRENCY)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(getInterceptor())
+                .build()
+        return retrofit.create(NetworkService::class.java)
+    }
 
 //    fun getConnectionHaina(): NetworkService {
 //        val retrofit: Retrofit = Retrofit.Builder()

@@ -2,6 +2,8 @@ package haina.ecommerce.api
 
 import haina.ecommerce.model.*
 import haina.ecommerce.model.checkout.ResponseCheckout
+import haina.ecommerce.model.currency.ResponseGetCurrency
+import haina.ecommerce.model.hotels.ResponseGetListHotel
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
@@ -329,4 +331,23 @@ interface NetworkService {
         @Field("id_product")idProduct:Int,
         @Field("id_payment_method")idPaymentMethod:Int
     ):Call<ResponseCreateTransactionProductPhone>
+
+    //Get All Hotel
+    @GET("api/hotel")
+    fun getAllHotel():Call<ResponseGetListHotel>
+
+    //Get Detail Hotel
+//    @GET("api/hotel/{id_hotel}")
+//    fun getDetailHotel(
+//        @Path(value = "id_hotel", encoded = true)idHotel:Int
+//    ):Call<ResponseGetDetailHotel>
+
+    //Currency Exchange Rate
+    @FormUrlEncoded
+    @GET("v6/{api_key}/latest/{code_country}")
+    fun getCurrency(
+            @Path(value = "api_key", encoded = true)apiKey:String,
+            @Field(value = "code_country", encoded = true)codeCountry:String
+    ):Call<ResponseGetCurrency>
+
 }

@@ -3,21 +3,13 @@ package haina.ecommerce.adapter.hotel
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
-import haina.ecommerce.databinding.ListItemAddressCompanyBinding
 import haina.ecommerce.databinding.ListItemBookingHotelBinding
-import haina.ecommerce.databinding.ListItemHotelsBinding
-import haina.ecommerce.model.AddressItemCompany
 import haina.ecommerce.model.hotels.Bookings
-import haina.ecommerce.model.hotels.Hotels
-import haina.ecommerce.view.datacompany.address.AddAddressCompanyActivity
-import haina.ecommerce.view.hotels.DetailHotelsActivity
 import haina.ecommerce.view.hotels.bookings.DetailBookingsActivity
 
 

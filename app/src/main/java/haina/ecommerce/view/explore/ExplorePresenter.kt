@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.*
+import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
 import haina.ecommerce.util.Constants
 import org.json.JSONObject
@@ -12,42 +13,44 @@ import retrofit2.Response
 
 class ExplorePresenter(val view: ExploreContract, val context: Context) {
 
-//    fun loadListBaseCurrency(){
-//        val callListCodeCurrency = NetworkConfig().getConnectionHaina().getDataListBaseCurrency()
-//        callListCodeCurrency.enqueue(object : retrofit2.Callback<ResponseBaseCurrency> {
-//            override fun onResponse(call: Call<ResponseBaseCurrency>, response: Response<ResponseBaseCurrency>) {
-//                if (response.isSuccessful) {
-//                    val data = response.body()?.data
-//                    view.loadListCodeCurrency(data)
-//                    Log.d("baseCurrency", data.toString())
-//                }
-//            }
+    fun loadListBaseCurrency(){
+        val callListCodeCurrency = NetworkConfig().getConnectionHaina().getDataListBaseCurrency()
+        callListCodeCurrency.enqueue(object : retrofit2.Callback<ResponseBaseCurrency> {
+            override fun onResponse(call: Call<ResponseBaseCurrency>, response: Response<ResponseBaseCurrency>) {
+                if (response.isSuccessful) {
+                    val data = response.body()?.data
+                    view.loadListCodeCurrency(data)
+                    Log.d("baseCurrency", data.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBaseCurrency>, t: Throwable) {
+                Log.d("baseCurrency", "failed")
+            }
+
+        })
+    }
+
 //
-//            override fun onFailure(call: Call<ResponseBaseCurrency>, t: Throwable) {
-//                Log.d("baseCurrency", "failed")
-//            }
-//
-//        })
-//    }
-//
-//    fun loadCurrency(base: String){
-//        val callCurrency = NetworkConfig().getConnectionHaina().getDataCurrency(base)
-//        callCurrency.enqueue(object : retrofit2.Callback<ResponseCurrency>{
-//            override fun onResponse(call: Call<ResponseCurrency>, response: Response<ResponseCurrency>) {
-//                if (response.isSuccessful && response.body()?.value == 1){
-//                    val data = response.body()?.dataCurrency
-//                    view.loadCurrency(data)
-//                } else {
-//                    view.errorMessage(response.body()?.message)
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResponseCurrency>, t: Throwable) {
-//                view.errorMessage(t.localizedMessage)
-//            }
-//
-//        })
-//    }
+    fun loadCurrency(base: String){
+        val callCurrency = NetworkConfig().getConnectionHaina().getDataCurrency(base)
+        callCurrency.enqueue(object : retrofit2.Callback<ResponseCurrency>{
+            override fun onResponse(call: Call<ResponseCurrency>, response: Response<ResponseCurrency>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    val data = response.body()?.dataCurrency
+                    view.loadCurrency(data)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.errorMessage(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCurrency>, t: Throwable) {
+                view.errorMessage(t.localizedMessage.toString())
+            }
+
+        })
+    }
 
 //    fun loadCovidJkt(){
 //        val callCovidJkt = NetworkConfig().getConnectionHaina().getDataCovidJkt()
@@ -104,7 +107,7 @@ class ExplorePresenter(val view: ExploreContract, val context: Context) {
                 }
 
                 override fun onFailure(call: Call<ResponseGetDataUser>, t: Throwable) {
-                    view.messageGetDataUSer(t.localizedMessage)
+                    view.messageGetDataUSer(t.localizedMessage.toString())
                 }
 
             })

@@ -116,6 +116,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                     val languageParams = intent.getStringExtra("language")
                     sharedPref.save(Constants.LANGUAGE_APP, languageParams!!)
                     setLanguageApp(languageParams)
+                    loadFragment(MyAccountFragment())
+                    binding.bottomNavigationView.menu.findItem(R.id.myAccountFragment).isChecked = true
                 }
             }
         }

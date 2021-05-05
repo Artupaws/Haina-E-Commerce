@@ -27,8 +27,8 @@
         <activity android:name=".view.hotels.bookings.BookingsActivity" />
         <activity android:name=".view.hotels.listphotohotels.ListPhotoHotelActivity" />
         <activity android:name=".view.hotels.selectdate.SelectDateHotelActivity" />
-        <activity android:name=".view.hotels.DetailHotelsActivity" />
-        <activity android:name=".view.hotels.HotelsActivity" />
+        <activity android:name=".view.hotels.detailhotel.DetailHotelsActivity" />
+        <activity android:name=".view.hotels.dashboardhotel.HotelsActivity" />
         <activity android:name=".view.topup.electronicmoney.ElectronicMoneyActivity" />
         <activity android:name=".view.detailtransaction.DetailTransactionActivity" />
         <activity android:name=".view.history.historytransaction.HistoryTransactionActivity" />
