@@ -331,10 +331,11 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
     }
 
     override fun checkDataCompany(msg: String) {
+        Log.d("statusLogin", sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN).toString())
         if (msg == "Company Registered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
             val intent = Intent(requireContext(), DataCompanyActivity::class.java)
             startActivity(intent)
-        } else if (!msg.contains("Registered") && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
+        } else if (!msg.contains("Company Registered") && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
             val intent = Intent(requireContext(), RegisterCompanyActivity::class.java)
             startActivity(intent)
         } else {
