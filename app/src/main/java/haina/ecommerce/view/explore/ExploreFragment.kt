@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -66,177 +67,26 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.menuServices?.linearTopup?.setOnClickListener(this)
         binding?.menuServices?.linearHotel?.setOnClickListener(this)
         binding?.menuServices?.linearFlightTicket?.setOnClickListener(this)
-        presenter.loadListBaseCurrency()
+//        presenter.loadListBaseCurrency()
 //        presenter.loadCovidJkt()
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
-        setBaseCurrency()
         refresh()
     }
 
-    private fun setBaseCurrency() {
+    private fun setBaseCurrency(data:List<DataCodeCurrency?>?) {
+        val adapterSpinner =AdapterSpinnerCurrency(requireActivity(), data)
+        binding?.includeCurrency?.spnCountry?.adapter = adapterSpinner
         binding?.includeCurrency?.spnCountry?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                baseCurrency = binding?.includeCurrency?.spnCountry?.selectedItem.toString()
-//                when {
-//                    baseCurrency.contains("USD") -> {
-//                        baseCurrency = "USD"
-//                    }
-//                    baseCurrency.contains("FJD") -> {
-//                        baseCurrency = "FJD"
-//                    }
-//                    baseCurrency.contains("MXN") -> {
-//                        baseCurrency = "MXN"
-//                    }
-//                    baseCurrency.contains("STD") -> {
-//                        baseCurrency = "STD"
-//                    }
-//                    baseCurrency.contains("LVL") -> {
-//                        baseCurrency = "LVL"
-//                    }
-//                    baseCurrency.contains("SCR") -> {
-//                        baseCurrency = "SCR"
-//                    }
-//                    baseCurrency.contains("CDF") -> {
-//                        baseCurrency = "CDF"
-//                    }
-//                    baseCurrency.contains("BBD") -> {
-//                        baseCurrency = "BBD"
-//                    }
-//                    baseCurrency.contains("GTQ") -> {
-//                        baseCurrency = "GTQ"
-//                    }
-//                    baseCurrency.contains("CLP") -> {
-//                        baseCurrency = "CLP"
-//                    }
-//                    baseCurrency.contains("HNL") -> {
-//                        baseCurrency = "UGX"
-//                    }
-//                    baseCurrency.contains("ZAR") -> {
-//                        baseCurrency = "TND"
-//                    }
-//                    baseCurrency.contains("CUC") -> {
-//                        baseCurrency = "CUC"
-//                    }
-//                    baseCurrency.contains("BSD") -> {
-//                        baseCurrency = "BSD"
-//                    }
-//                    baseCurrency.contains("SSL") -> {
-//                        baseCurrency = "SDG"
-//                    }
-//                    baseCurrency.contains("SDG") -> {
-//                        baseCurrency = "SDG"
-//                    }
-//                    baseCurrency.contains("IQD") -> {
-//                        baseCurrency = "IQD"
-//                    }
-//                    baseCurrency.contains("CUP") -> {
-//                        baseCurrency = "CUP"
-//                    }
-//                    baseCurrency.contains("GMD") -> {
-//                        baseCurrency = "GMD"
-//                    }
-//                    baseCurrency.contains("TWD") -> {
-//                        baseCurrency = "TWD"
-//                    }
-//                    baseCurrency.contains("RSD") -> {
-//                        baseCurrency = "RSD"
-//                    }
-//                    baseCurrency.contains("DOP") -> {
-//                        baseCurrency = "DOP"
-//                    }
-//                    baseCurrency.contains("KMF") -> {
-//                        baseCurrency = "KMF"
-//                    }
-//                    baseCurrency.contains("BCH") -> {
-//                        baseCurrency = "BCH"
-//                    }
-//                    baseCurrency.contains("MYR") -> {
-//                        baseCurrency = "MYR"
-//                    }
-//                    baseCurrency.contains("FKP") -> {
-//                        baseCurrency = "FKP"
-//                    }
-//                    baseCurrency.contains("XOF") -> {
-//                        baseCurrency = "XOF"
-//                    }
-//                    baseCurrency.contains("GEL") -> {
-//                        baseCurrency = "GEL"
-//                    }
-//                    baseCurrency.contains("BTC") -> {
-//                        baseCurrency = "BTC"
-//                    }
-//                    baseCurrency.contains("UYU") -> {
-//                        baseCurrency = "MAD"
-//                    }
-//                    baseCurrency.contains("CVE") -> {
-//                        baseCurrency = "CVE"
-//                    }
-//                    baseCurrency.contains("TOP") -> {
-//                        baseCurrency = "TOP"
-//                    }
-//                    baseCurrency.contains("AZN") -> {
-//                        baseCurrency = "AZN"
-//                    }
-//                    baseCurrency.contains("OMR") -> {
-//                        baseCurrency = "OMR"
-//                    }
-//                    baseCurrency.contains("PGK") -> {
-//                        baseCurrency = "PGK"
-//                    }
-//                    baseCurrency.contains("KES") -> {
-//                        baseCurrency = "KES"
-//                    }
-//                    baseCurrency.contains("SEK") -> {
-//                        baseCurrency = "SEK"
-//                    }
-//                    baseCurrency.contains("BTN") -> {
-//                        baseCurrency = "BTN"
-//                    }
-//                    baseCurrency.contains("UAH") -> {
-//                        baseCurrency = "UAH"
-//                    }
-//                    baseCurrency.contains("GNF") -> {
-//                        baseCurrency = "GNF"
-//                    }
-//                    baseCurrency.contains("ERN") -> {
-//                        baseCurrency = "ERN"
-//                    }
-//                    baseCurrency.contains("MZN") -> {
-//                        baseCurrency = "MZN"
-//                    }
-//                    baseCurrency.contains("SVC") -> {
-//                        baseCurrency = "SVC"
-//                    }
-//                    baseCurrency.contains("ARS") -> {
-//                        baseCurrency = "ARS"
-//                    }
-//                    baseCurrency.contains("QAR") -> {
-//                        baseCurrency = "QAR"
-//                    }
-//                    baseCurrency.contains("IRR") -> {
-//                        baseCurrency = "IRR"
-//                    }
-//                    baseCurrency.contains("MRO") -> {
-//                        baseCurrency = "MRO"
-//                    }
-//                    baseCurrency.contains("XPD") -> {
-//                        baseCurrency = "XPD"
-//                    }
-//                    baseCurrency.contains("CNY") -> {
-//                        baseCurrency = "CNY"
-//                    }
-//                    baseCurrency.contains("THB") -> {
-//                        baseCurrency = "THB"
-//                    }
-//                    baseCurrency.contains("EUR") -> {
-//                        baseCurrency = "EUR"
-//                    }
-//                }
+                baseCurrency = data?.get(p2)?.rates.toString()
+                Log.d("currency", baseCurrency)
                 presenter.loadCurrency(baseCurrency)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
+                binding?.includeCurrency?.spnCountry?.setSelection(90)
                 baseCurrency = "USD"
+                presenter.loadCurrency(baseCurrency)
             }
 
         }
@@ -355,7 +205,8 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
     override fun loadListCodeCurrency(list: List<DataCodeCurrency?>?) {
         val adapterCodeCurrency = activity?.let { AdapterSpinnerCurrency(it, list) }
         binding?.includeCurrency?.spnCountry?.adapter = adapterCodeCurrency
-        binding?.includeCurrency?.spnCountry?.setSelection(67)
+        binding?.includeCurrency?.spnCountry?.setSelection(100)
+        setBaseCurrency(list)
     }
 
     override fun loadCurrency(item: DataCurrency?) {

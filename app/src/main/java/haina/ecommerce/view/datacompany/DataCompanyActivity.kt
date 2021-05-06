@@ -184,8 +184,8 @@ class DataCompanyActivity : AppCompatActivity(), DataCompanyContract, View.OnCli
         val getListPhotoCompany = AdapterPhotoCompany(this, item.photoDataCompany)
         val getListAddressCompany = AdapterAddressCompany(this, item.addressCompanies)
             binding.etCompanyName.setText(item.name)
-            Glide.with(this).load(item.iconUrl).skipMemoryCache(false).diskCacheStrategy(
-                DiskCacheStrategy.NONE).into(binding.circleImageViewCompany)
+//            Glide.with(this).load(item.iconUrl).skipMemoryCache(false).diskCacheStrategy(
+//                DiskCacheStrategy.NONE).into(binding.circleImageViewCompany)
             binding.etDescriptionCompany.setText(item.description)
             binding.rvPhotoCompany.apply {
                 layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)

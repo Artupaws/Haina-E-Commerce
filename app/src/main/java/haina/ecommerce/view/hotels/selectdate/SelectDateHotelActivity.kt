@@ -2,10 +2,11 @@ package haina.ecommerce.view.hotels.selectdate
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import haina.ecommerce.R
@@ -13,6 +14,7 @@ import haina.ecommerce.databinding.ActivitySelectDateHotelBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.helper.Helper.convertLongtoTime
 import haina.ecommerce.helper.RangeValidator
+import haina.ecommerce.model.hotels.RoomsItem
 import haina.ecommerce.view.paymentmethod.PaymentActivity
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -23,7 +25,7 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
     val helper: Helper = Helper
     private var totalNight: Int = 0
     private var totalGuests: Int = 1
-    private var maxTotalGuests: Int? = 3
+    private var maxTotalGuests:Int?=null
     private var priceRoomValue: Int? = null
 
     @SuppressLint("SetTextI18n")
@@ -36,16 +38,18 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         binding.cvMinusGuests.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
 
-        val priceRoom = intent.getStringExtra("priceRoom")
-        val typeRoom = intent.getStringExtra("typeRoom")
-        val totalNightDefault = "$totalNight ${getString(R.string.night)}"
+        val data = intent.getParcelableExtra<RoomsItem>("dataRoom")
 
         binding.toolbarSelectDate.title = "Complete Order"
         binding.toolbarSelectDate.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarSelectDate.setNavigationIcon(R.drawable.ic_back_black)
+        val priceRoom = helper.convertToFormatMoneyIDRFilter(data.roomPrice.toString())
         binding.tvPriceRoom.text = priceRoom
-        binding.tvNameRoom.text = typeRoom
+        binding.tvNameRoom.text = data.roomName
+        binding.tvMaximumGuest.text = "Maximum Guest(s) : ${data.roomMaxguest.toString()}"
         binding.tvTotalNight.text = "$totalNight"
+        binding.tvTypeBed.text = data.roomBedType
+        maxTotalGuests = data.roomMaxguest
         binding.etTotalGuests.setText(totalGuests.toString())
         priceRoomValue = helper.changeFormatMoneyToValueFilter(priceRoom)?.toInt()
 
@@ -142,5 +146,11 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         binding.cvTotalPrice.visibility = View.VISIBLE
         val totalPayment = helper.convertToFormatMoneyIDRFilter((totalNight * priceRoomValue!!).toString())
         binding.tvTotalPayment.text = totalPayment
+    }
+
+    private fun intentToMaps(lat:Double, long:Double){
+        val intent = Intent(Intent.ACTION_VIEW,
+            Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"))
+        startActivity(intent)
     }
 }

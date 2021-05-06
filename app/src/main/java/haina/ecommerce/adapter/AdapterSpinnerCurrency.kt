@@ -14,8 +14,7 @@ import haina.ecommerce.databinding.LayoutCurrencyBinding
 import haina.ecommerce.databinding.LayoutSpinnerCurrencyBinding
 import haina.ecommerce.model.DataCodeCurrency
 
-class AdapterSpinnerCurrency(val context: Context, private val listCountry: List<DataCodeCurrency?>?):
-    BaseAdapter() {
+class AdapterSpinnerCurrency(val context: Context, private val listCountry: List<DataCodeCurrency?>?): BaseAdapter() {
 
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -43,7 +42,8 @@ class AdapterSpinnerCurrency(val context: Context, private val listCountry: List
             view = p1
             vh = view.tag as ItemHolder
         }
-        vh.label.text = listCountry?.get(p0)?.rates
+        val baseCodeCurrency = "${listCountry?.get(p0)?.rates}"
+        vh.label.text = baseCodeCurrency
 
         return view
     }

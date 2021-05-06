@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemRoomHotelBinding
+import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.hotels.RoomHotel
 import haina.ecommerce.model.hotels.RoomsItem
 
 class AdapterListRoomHotel(val context: Context, private val listRoom: List<RoomsItem?>?, private val itemAdapterCallback:ItemAdapterCallback):
     RecyclerView.Adapter<AdapterListRoomHotel.Holder>() {
+
+    private val helper:Helper = Helper
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemRoomHotelBinding.bind(view)
@@ -19,7 +22,8 @@ class AdapterListRoomHotel(val context: Context, private val listRoom: List<Room
                 tvNameRoom.text = itemHaina.roomName
                 val roomsLeft = "Room(s) Left : ${itemHaina.roomTotal}"
                 tvRestRoom.text = roomsLeft
-                tvPriceRoom.text = itemHaina.roomPrice.toString()
+                val price = helper.convertToFormatMoneyIDRFilter(itemHaina.roomPrice.toString())
+                tvPriceRoom.text = price
                 tvTypeBed.text = itemHaina.roomBedType
                 btnBookRoom.setOnClickListener{ itemAdapterCallback.onClick(binding, itemHaina) }
             }

@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,13 +25,11 @@ import haina.ecommerce.util.Constants
 import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
 import haina.ecommerce.view.login.LoginActivity
 
-class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomSheetHowToPayment.ItemClickListener {
+class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomSheetHowToPayment.ItemClickListener,
+    AdapterTransactionUnfinish.ItemAdapterCallback {
 
     private var _binding:FragmentTransactionUnfinishBinding? = null
     private val binding get()= _binding
-    private var titleService:String = ""
-    private var totalPayment:String = ""
-    private var paymentMethod:String = ""
     private var broadcaster:LocalBroadcastManager? = null
     private lateinit var sharedPref:SharedPreferenceHelper
     private var statusLogin = false
@@ -59,6 +58,7 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
         override fun onReceive(context: Context?, intent: Intent?) {
             when(intent?.action){
                 "ListTransaction" -> {
+//                    Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
                     val dataTransactionUnfinish = intent.getParcelableExtra<DataTransaction>("Transaction")
                     setupListUnfinishTransaction(dataTransactionUnfinish.pending)
                 }
@@ -67,21 +67,11 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
     }
 
     private fun setupListUnfinishTransaction(data:List<PendingItem?>?){
-        val adapterUnfinish = AdapterTransactionUnfinish(requireContext(), data)
-
         showIsEmpty(data?.size)
 
         binding?.rvUnfinishTransaction?.apply {
-            adapter = adapterUnfinish
+            adapter = AdapterTransactionUnfinish(requireActivity(), data, this@FragmentTransactionUnfinish)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        }
-
-        adapterUnfinish.onItemClick = { i: Int ->
-            childFragmentManager.let {
-                BottomSheetHowToPayment.newInstance(Bundle()).apply {
-                    show(it, tag)
-                }
-            }
         }
     }
 
@@ -98,11 +88,6 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
             binding?.rvUnfinishTransaction?.visibility = View.GONE
             binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     override fun onStop() {
@@ -122,7 +107,31 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
     override fun onItemClick(item: String) {
         when(item){
             "" ->{
+            }
+        }
+    }
 
+    override fun onClick(view: View, data: PendingItem) {
+        when(view.id){
+            R.id.iv_option -> {
+                val popup = PopupMenu(requireContext(), view)
+                popup.inflate(R.menu.menu_cancel_transaction)
+                popup.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.action_cancel_transaction -> {
+                            Toast.makeText(context, "${data.payment?.idPaymentMethod}", Toast.LENGTH_SHORT).show()
+                            true
+                        } else -> false
+                    }
+                }
+                popup.show()
+            }
+            R.id.btn_how_pay -> {
+                childFragmentManager.let {
+                    BottomSheetHowToPayment.newInstance(Bundle()).apply {
+                        show(it, tag)
+                    }
+                }
             }
         }
     }

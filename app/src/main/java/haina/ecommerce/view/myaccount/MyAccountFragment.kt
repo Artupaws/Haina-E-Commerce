@@ -292,12 +292,6 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        popupLogout?.dismiss()
-    }
-
     override fun successGetDataUser(msg: String) {
         Log.d("getDataSuccess", msg)
         binding?.swipeRefresh?.isRefreshing = false
@@ -338,10 +332,10 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
 
     override fun checkDataCompany(msg: String) {
         if (msg == "Company Registered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
-            val intent = Intent(activity, DataCompanyActivity::class.java)
+            val intent = Intent(requireContext(), DataCompanyActivity::class.java)
             startActivity(intent)
         } else if (!msg.contains("Registered") && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
-            val intent = Intent(activity, RegisterCompanyActivity::class.java)
+            val intent = Intent(requireContext(), RegisterCompanyActivity::class.java)
             startActivity(intent)
         } else {
             Toast.makeText(requireContext(), "Please Login First", Toast.LENGTH_SHORT).show()

@@ -25,37 +25,11 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener, BottomSh
 
     private lateinit var binding:ActivityDetailHotelsBinding
 
-    private val listFacilities = arrayListOf(Facilities("Television"),
-    Facilities("Bathtub"),
-    Facilities("Parking"),
-    Facilities("Swimming Pool"),
-    Facilities("Breakfast"),
-    Facilities("Wifi"))
-
-//    private val listImage = arrayOf(
-//            "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_1.jpg",
-//            "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_2.jpg",
-//            "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_3.jpg",
-//            "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_4.jpg",
-//            "https://raw.githubusercontent.com/sayyam/carouselview/master/sample/src/main/res/drawable/image_5.jpg"
-//    )
-
-//    private val imagesListener = ImageListener{ position, imageView ->
-//        Glide.with(applicationContext).load(listImage[position]).placeholder(R.drawable.ps5).into(imageView)
-//    }
-
-    private val listHotelRoom = arrayListOf(RoomHotel("Economy",null,"Split",10,"IDR200,000"),
-            RoomHotel("Business",null,"Big Size",1,"IDR450,000"),
-            RoomHotel("VIP",null,"Queen",1,"IDR500,000"),
-            RoomHotel("VVIP",null,"Queen",1,"IDR600,000"),
-            RoomHotel("Presidential",null,"King Size",1,"IDR1,000,000"))
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailHotelsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val adapterRoom = AdapterListRoomHotel(applicationContext, listHotelRoom, this)
         val dataHotel = intent.getParcelableExtra<DataItem>("dataHotel")
         binding.toolbarDetailHotels.title = "Detail"
         binding.toolbarDetailHotels.setNavigationIcon(R.drawable.ic_back_black)
@@ -84,6 +58,7 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener, BottomSh
 
         binding.vpImageHotel.setImageClickListener {
         val imageRoom = Intent(applicationContext, ListPhotoHotelActivity::class.java)
+            .putExtra("dataHotel", dataHotel)
             startActivity(imageRoom)
         }
     }
@@ -117,6 +92,7 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener, BottomSh
 
     override fun onClick(binding: ListItemRoomHotelBinding, data: RoomsItem) {
             val intent = Intent(applicationContext, SelectDateHotelActivity::class.java)
+                .putExtra("dataRoom", data)
             startActivity(intent)
     }
 

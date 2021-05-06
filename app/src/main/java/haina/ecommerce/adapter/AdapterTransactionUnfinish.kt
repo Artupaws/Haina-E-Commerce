@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,35 +20,28 @@ import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
 import haina.ecommerce.view.login.LoginActivity
 
 
-class AdapterTransactionUnfinish(val context: Context, private val listTransactionUnfinish: List<PendingItem?>?) :
-        RecyclerView.Adapter<AdapterTransactionUnfinish.Holder>(), BottomSheetHowToPayment.ItemClickListener {
-    var onItemClick: (Int) -> Unit = { i: Int -> }
+class AdapterTransactionUnfinish(val context: Context, private val listTransactionUnfinish: List<PendingItem?>?, private var itemAdapterCallBack: ItemAdapterCallback) :
+        RecyclerView.Adapter<AdapterTransactionUnfinish.Holder>(){
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemUnfinishTransactionBinding.bind(view)
-        fun bind(itemHaina: PendingItem) {
+        fun bind(itemHaina: PendingItem, itemAdapterCallBack: ItemAdapterCallback) {
             with(binding) {
                 tvDateTransaction.text = itemHaina.transactionTime
                 tvDescriptionProduct.text = itemHaina.product?.description
                 tvDueDate.text = itemHaina.payment?.settlementTime.toString()
-                setLayoutPayment(itemHaina.payment?.idPaymentMethod, binding, itemHaina)
+
+                itemHaina.payment?.idPaymentMethod?.let {
+                    setLayoutPayment(binding,
+                        it, itemHaina.payment.vaNumber.toString(), itemHaina.totalPayment.toString())
+                }
+
                 copyVirtualAccount(binding)
                 btnHowPay.setOnClickListener {
-                    onItemClick(adapterPosition)
+                    itemAdapterCallBack.onClick(binding.btnHowPay, itemHaina)
                 }
                 ivOption.setOnClickListener {
-                    val popup = PopupMenu(context, ivOption)
-                    popup.inflate(R.menu.menu_cancel_transaction)
-                        popup.setOnMenuItemClickListener { item ->
-                            when (item.itemId) {
-                                R.id.action_cancel_transaction -> {
-                                    Toast.makeText(context, "${itemHaina.payment?.idPaymentMethod}", Toast.LENGTH_SHORT).show()
-                                    true
-                                } else -> false
-
-                            }
-                        }
-                        popup.show()
+                   itemAdapterCallBack.onClick(binding.ivOption, itemHaina)
                 }
             }
         }
@@ -61,23 +55,26 @@ class AdapterTransactionUnfinish(val context: Context, private val listTransacti
 
     override fun onBindViewHolder(holder: AdapterTransactionUnfinish.Holder, position: Int) {
         val transactionUnfinish: PendingItem = listTransactionUnfinish?.get(position)!!
-        holder.bind(transactionUnfinish)
+        holder.bind(transactionUnfinish, itemAdapterCallBack)
     }
 
     override fun getItemCount(): Int = listTransactionUnfinish?.size!!
 
-    private fun setLayoutPayment(idpaymentMethod: Int?, binding: ListItemUnfinishTransactionBinding, data: PendingItem?) {
-        if (idpaymentMethod == 1) {
+    private fun setLayoutPayment(binding: ListItemUnfinishTransactionBinding, idPaymentMethod:Int, vaNumber:String,
+    totalPayment:String) {
+        Log.d("idPaymentMethod", idPaymentMethod.toString())
+        if (idPaymentMethod == 1) {
             binding.includeVirtualAccount.linearVirtualAccount.visibility = View.VISIBLE
             binding.includeBankTransfer.linearBankTransfer.visibility = View.GONE
             binding.includeVirtualAccount.tvPaymentMethod.text = "Virtual Account"
-            binding.includeVirtualAccount.tvVirtualAccountNumber.text = data?.payment?.vaNumber
-            binding.includeVirtualAccount.tvTotalPay.text = data?.totalPayment.toString()
-        } else {
+            binding.includeVirtualAccount.tvVirtualAccountNumber.text = vaNumber
+            binding.includeVirtualAccount.tvTotalPay.text = totalPayment
+        }
+        else {
             binding.includeVirtualAccount.linearVirtualAccount.visibility = View.GONE
             binding.includeBankTransfer.linearBankTransfer.visibility = View.VISIBLE
 //            binding.includeBankTransfer.tvPaymentMethod.text = paymentMethod
-            binding.includeBankTransfer.tvTotalPay.text = data?.totalPayment.toString()
+            binding.includeBankTransfer.tvTotalPay.text = totalPayment
         }
     }
 
@@ -90,12 +87,8 @@ class AdapterTransactionUnfinish(val context: Context, private val listTransacti
         }
     }
 
-    override fun onItemClick(item: String) {
-        when (item) {
-            "" -> {
-
-            }
-        }
+    interface ItemAdapterCallback{
+        fun onClick(view: View, data:PendingItem)
     }
 
 }
