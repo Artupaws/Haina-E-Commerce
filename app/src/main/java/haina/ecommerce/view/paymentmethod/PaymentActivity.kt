@@ -21,6 +21,7 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterPaymentMethod
 import haina.ecommerce.databinding.ActivityPaymentBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.hotels.Requesthotel
 import haina.ecommerce.model.paymentmethod.DataPaymentMethod
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 
@@ -40,6 +41,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     private var broadcaster: LocalBroadcastManager? = null
     private var idPaymentMethod: Int? = null
     private var idProduct: Int? = null
+    private lateinit var dataBooking:Requesthotel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +50,13 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         presenter = PaymentPresenter(this, this)
         presenter.getPaymentMethod()
         broadcaster = LocalBroadcastManager.getInstance(this)
+        dataBooking = intent.getParcelableExtra("dataBooking")
         binding.toolbarPayment.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarPayment.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarPayment.title = getString(R.string.payment)
         binding.frameChoosePaymentMethod.setOnClickListener(this)
         binding.btnPayment.setOnClickListener(this)
-        setDetailOrder()
+        setDetailOrder(dataBooking)
     }
 
     override fun onClick(v: View?) {
@@ -62,7 +65,8 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                 popupPaymentMethod?.show()
             }
             R.id.btn_payment -> {
-                presenter.createTransaction(numberOrderCustomer!!, idProduct!!, idPaymentMethod!!)
+                presenter.createBookingHotel(dataBooking.hotelId!!, dataBooking.roomId!!, dataBooking.checkIn!!, dataBooking.checkOut!!, dataBooking.totalGuest!!, dataBooking.totalPrice!!)
+//                presenter.createTransaction(numberOrderCustomer!!, idProduct!!, idPaymentMethod!!)
             }
         }
     }
@@ -88,10 +92,10 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         }
     }
 
-    private fun setDetailOrder() {
-        price = intent.getStringExtra("totalPrice")
+    private fun setDetailOrder(dataBooking:Requesthotel) {
+        price = dataBooking.totalPrice
         numberOrderCustomer = intent.getStringExtra("numberCustomer")
-        binding.tvTotalBill.text = price
+        binding.tvTotalBill.text = dataBooking.totalPrice
         titleService = intent.getStringExtra("titleService")
         idProduct = intent.getIntExtra("idProduct", 0)
     }
@@ -135,7 +139,6 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         if (idPaymentMethod != 0) {
             popupPaymentMethod?.dismiss()
             binding.linearTotalPrice.visibility = View.VISIBLE
-//            val totalPayment = (helper.changeMoneyToValue(price!!).toInt() + serviceFee!! + discounts.toInt())
             binding.tvTotalMustPay.text = price
             valueTotalPayment = helper.changeFormatMoneyToValueFilter(price!!)?.toInt()
         } else {
@@ -160,5 +163,9 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
 
     override fun getDataPaymentMethod(data: List<DataPaymentMethod?>?) {
         dialogPaymentMethod(data)
+    }
+
+    override fun messageBookingHotel(msg: String) {
+        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
     }
 }

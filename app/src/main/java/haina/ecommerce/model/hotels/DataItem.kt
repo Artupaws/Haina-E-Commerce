@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class DataItem(
 
 	@field:SerializedName("hotel_image")
-	val hotelImage: List<HotelImageItem?>? = null,
+	val hotelImage: String? = null,
 
 	@field:SerializedName("hotel_city")
 	val hotelCity: String? = null,
@@ -38,5 +38,8 @@ data class DataItem(
 	val hotelLong: Double? = null,
 
 	@field:SerializedName("starting_price")
-	val startingPrice: String? = null
+	val startingPrice: String? = null,
+
+	@field:SerializedName("avg_rating")
+	val avgRating:Float? = null
 ) : Parcelable

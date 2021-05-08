@@ -64,6 +64,21 @@ class NetworkConfig {
         return retrofit.create(NetworkService::class.java)
     }
 
+    fun getNetworkHotelBearer(context: Context): NetworkService{
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl(Constants.BASE_API_HAINA_HOTEL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OkHttpClient.Builder().connectTimeout(2, TimeUnit.MINUTES).addInterceptor { chain ->
+                val request = chain.request().newBuilder()
+                    .addHeader("Accept", "application/json")
+                    .build()
+                chain.proceed(request)
+            }.build())
+            .build()
+        return retrofit.create(NetworkService::class.java)
+    }
+
+
     fun getNetworkCurrency(): NetworkService{
         val retrofit: Retrofit = Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL_CURRENCY)

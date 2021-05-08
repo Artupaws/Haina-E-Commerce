@@ -1,10 +1,12 @@
 package haina.ecommerce.adapter.hotel
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import haina.ecommerce.databinding.ListItemHotelsBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.hotels.DataItem
@@ -25,6 +27,8 @@ class AdapterListHotel(val context: Context, private val listHotel: List<DataIte
                 val startPrice = helper.convertToFormatMoneyIDRFilter(itemHaina.startingPrice!!)
                 tvStartPrice.text = startPrice
                 cvClick.setOnClickListener { itemAdapterCallback.onClick(binding.cvClick, itemHaina) }
+                Glide.with(context).load(itemHaina.hotelImage).into(ivHotels)
+                ratingBarHotel.rating = itemHaina.avgRating?.toFloat()!!
             }
         }
     }

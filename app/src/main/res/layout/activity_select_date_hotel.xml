@@ -163,40 +163,9 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_add_guests"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="5dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="3sp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:src="@drawable/ic_add"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                </androidx.cardview.widget.CardView>
-
-                <EditText
-                    android:id="@+id/et_total_guests"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:textColor="@color/black"
-                    tools:text="2" />
-
-                <androidx.cardview.widget.CardView
                     android:id="@+id/cv_minus_guests"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_margin="5dp"
                     android:clickable="true"
                     android:focusable="true"
@@ -212,6 +181,37 @@
                         android:paddingStart="4dp"
                         android:paddingEnd="4dp"
                         android:src="@drawable/ic_minus"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                </androidx.cardview.widget.CardView>
+
+                <EditText
+                    android:id="@+id/et_total_guests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:textColor="@color/black"
+                    tools:text="2" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_add_guests"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="5dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="3sp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:src="@drawable/ic_add"
                         android:textColor="@color/black"
                         android:textSize="20sp" />
 
@@ -329,10 +329,13 @@
                     android:text="@string/address_hotel"
                     android:textColor="@color/black" />
 
+
+
                 <TextView
                     android:id="@+id/tv_address_hotel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginTop="5dp"
                     android:text="Sans Hotel, Jalan Casablanka no.56, Jakarta Pusat "
                     android:textColor="@color/black"
@@ -342,8 +345,11 @@
                     android:id="@+id/tv_see_on_map"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:text="@string/see_on_map"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    app:drawableStartCompat="@drawable/ic_location" />
 
             </LinearLayout>
 

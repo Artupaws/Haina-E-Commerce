@@ -5,10 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import haina.ecommerce.R
-import haina.ecommerce.databinding.ListItemFacilitiesHotelBinding
 import haina.ecommerce.databinding.ListItemReviewHotelBinding
-import haina.ecommerce.model.hotels.Facilities
 import haina.ecommerce.model.hotels.Reviews
 
 

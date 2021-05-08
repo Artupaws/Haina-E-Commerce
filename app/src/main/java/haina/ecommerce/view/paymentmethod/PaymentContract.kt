@@ -7,5 +7,6 @@ interface PaymentContract {
     fun messageGetPaymentMethod(msg:String)
     fun messageCreateTransaction(msg:String)
     fun getDataPaymentMethod(data:List<DataPaymentMethod?>?)
+    fun messageBookingHotel(msg: String)
 
 }

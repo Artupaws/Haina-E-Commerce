@@ -48,39 +48,6 @@
         app:layout_constraintTop_toTopOf="@+id/title_adult">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_add_adult"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="5dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="3sp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:src="@drawable/ic_add"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-        </androidx.cardview.widget.CardView>
-
-        <EditText
-            android:id="@+id/et_total_adult"
-            style="@style/TextView.Poppins12spGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:text="0" />
-
-        <androidx.cardview.widget.CardView
             android:id="@+id/cv_minus_adult"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -99,6 +66,39 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"
                 android:src="@drawable/ic_minus"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+            android:id="@+id/et_total_adult"
+            style="@style/TextView.Poppins12spGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:text="0" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_add_adult"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="3sp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:src="@drawable/ic_add"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -158,39 +158,6 @@
         app:layout_constraintTop_toTopOf="@+id/title_kid">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_add_kid"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="5dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="3sp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:src="@drawable/ic_add"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-        </androidx.cardview.widget.CardView>
-
-        <EditText
-            android:id="@+id/et_total_kid"
-            style="@style/TextView.Poppins12spGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:text="0" />
-
-        <androidx.cardview.widget.CardView
             android:id="@+id/cv_minus_kid"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -209,6 +176,39 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"
                 android:src="@drawable/ic_minus"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+            android:id="@+id/et_total_kid"
+            style="@style/TextView.Poppins12spGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:text="0" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_add_kid"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="3sp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:src="@drawable/ic_add"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -267,39 +267,6 @@
         app:layout_constraintTop_toTopOf="@+id/title_baby">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_add_baby"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_margin="5dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="3sp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:src="@drawable/ic_add"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-        </androidx.cardview.widget.CardView>
-
-        <EditText
-            android:id="@+id/et_total_baby"
-            style="@style/TextView.Poppins12spGrey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:text="0" />
-
-        <androidx.cardview.widget.CardView
             android:id="@+id/cv_minus_baby"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -318,6 +285,39 @@
                 android:paddingStart="4dp"
                 android:paddingEnd="4dp"
                 android:src="@drawable/ic_minus"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+            android:id="@+id/et_total_baby"
+            style="@style/TextView.Poppins12spGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:text="0" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_add_baby"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="3sp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:src="@drawable/ic_add"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 

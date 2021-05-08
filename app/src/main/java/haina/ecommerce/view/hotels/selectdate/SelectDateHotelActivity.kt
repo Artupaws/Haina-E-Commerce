@@ -14,6 +14,8 @@ import haina.ecommerce.databinding.ActivitySelectDateHotelBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.helper.Helper.convertLongtoTime
 import haina.ecommerce.helper.RangeValidator
+import haina.ecommerce.model.hotels.DataItem
+import haina.ecommerce.model.hotels.Requesthotel
 import haina.ecommerce.model.hotels.RoomsItem
 import haina.ecommerce.view.paymentmethod.PaymentActivity
 import java.util.*
@@ -27,6 +29,9 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
     private var totalGuests: Int = 1
     private var maxTotalGuests:Int?=null
     private var priceRoomValue: Int? = null
+    private lateinit var dataHotel:DataItem
+    private lateinit var dataRoom:RoomsItem
+    private lateinit var totalPrice:String
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,19 +42,22 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         binding.cvAddGuests.setOnClickListener(this)
         binding.cvMinusGuests.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
+        binding.tvSeeOnMap.setOnClickListener(this)
 
-        val data = intent.getParcelableExtra<RoomsItem>("dataRoom")
+        dataRoom = intent.getParcelableExtra("dataRoom")
+        dataHotel = intent.getParcelableExtra("dataHotel")
 
         binding.toolbarSelectDate.title = "Complete Order"
         binding.toolbarSelectDate.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarSelectDate.setNavigationIcon(R.drawable.ic_back_black)
-        val priceRoom = helper.convertToFormatMoneyIDRFilter(data.roomPrice.toString())
+        val priceRoom = helper.convertToFormatMoneyIDRFilter(dataRoom.roomPrice.toString())
         binding.tvPriceRoom.text = priceRoom
-        binding.tvNameRoom.text = data.roomName
-        binding.tvMaximumGuest.text = "Maximum Guest(s) : ${data.roomMaxguest.toString()}"
+        binding.tvNameRoom.text = dataRoom.roomName
+        binding.tvMaximumGuest.text = "Maximum Guest(s) : ${dataRoom.roomMaxguest.toString()}"
         binding.tvTotalNight.text = "$totalNight"
-        binding.tvTypeBed.text = data.roomBedType
-        maxTotalGuests = data.roomMaxguest
+        binding.tvTypeBed.text = dataRoom.roomBedType
+        binding.tvAddressHotel.text = dataHotel.hotelAddress
+        maxTotalGuests = dataRoom.roomMaxguest
         binding.etTotalGuests.setText(totalGuests.toString())
         priceRoomValue = helper.changeFormatMoneyToValueFilter(priceRoom)?.toInt()
 
@@ -62,9 +70,7 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             R.id.btn_next -> {
-                val payment = Intent(applicationContext, PaymentActivity::class.java)
-                        .putExtra("totalPrice","${binding.tvTotalPayment.text}")
-                startActivity(payment)
+                checkDataBooking()
             }
 
             R.id.cv_add_guests -> {
@@ -74,6 +80,31 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
             R.id.cv_minus_guests -> {
                 minusGuests()
             }
+            R.id.tv_see_on_map -> {
+                intentToMaps(dataHotel.hotelLat!!, dataHotel.hotelLong!!)
+            }
+        }
+    }
+
+    private fun checkDataBooking(){
+        val hotelId = dataRoom.hotelId
+        val roomId = dataRoom.id
+        val checkIn = binding.tvCheckInDate.text.toString()
+        val checkOut = binding.tvCheckOutDate.text.toString()
+        val totalGuest = totalGuests
+        val totalPriceParams = totalPrice
+        when{
+         checkIn.isNullOrEmpty()->{
+             binding.tvCheckInDate.error = "Please choose your checkin date"
+         }
+         checkOut.isNullOrEmpty()->{
+             binding.tvCheckOutDate.error = "Please choose your checkin date"
+         }  else -> {
+            val dataBookingHotel = Requesthotel(hotelId, roomId, checkIn, checkOut, totalGuest, totalPriceParams)
+            val intentToPayment = Intent(applicationContext, PaymentActivity::class.java)
+                .putExtra("dataBooking", dataBookingHotel)
+            startActivity(intentToPayment)
+        }
         }
     }
 
@@ -144,13 +175,16 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setPriceRoom(totalNight: Int) {
         binding.cvTotalPrice.visibility = View.VISIBLE
-        val totalPayment = helper.convertToFormatMoneyIDRFilter((totalNight * priceRoomValue!!).toString())
-        binding.tvTotalPayment.text = totalPayment
+        totalPrice = helper.convertToFormatMoneyIDRFilter((totalNight * priceRoomValue!!).toString()).toString()
+        binding.tvTotalPayment.text = totalPrice
     }
 
     private fun intentToMaps(lat:Double, long:Double){
-        val intent = Intent(Intent.ACTION_VIEW,
-            Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"))
-        startActivity(intent)
+        val gmmIntentUri = Uri.parse("geo:0,0?q=${lat},${long},z=5")
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        mapIntent.setPackage("com.google.android.apps.maps")
+        mapIntent.resolveActivity(packageManager)?.let {
+            startActivity(mapIntent)
+        }
     }
 }

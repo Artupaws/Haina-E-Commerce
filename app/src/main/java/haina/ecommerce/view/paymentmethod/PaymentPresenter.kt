@@ -2,6 +2,7 @@ package haina.ecommerce.view.paymentmethod
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.model.hotels.ResponseBookingHotel
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
 import org.json.JSONObject
@@ -45,6 +46,24 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
 
             override fun onFailure(call: Call<ResponseCreateTransactionProductPhone>, t: Throwable) {
                 view.messageCreateTransaction(t.localizedMessage.toString())
+            }
+
+        })
+    }
+
+    fun createBookingHotel(hotelId:Int, roomId:Int, checkIn:String, checkOut:String, totalGuest:Int, totalPrice:String){
+        val createBooking = NetworkConfig().getNetworkHotelBearer(context).createBookingHotel(hotelId, roomId, checkIn, checkOut, totalGuest, totalPrice)
+        createBooking.enqueue(object : retrofit2.Callback<ResponseBookingHotel>{
+            override fun onResponse(call: Call<ResponseBookingHotel>, response: Response<ResponseBookingHotel>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageBookingHotel(response.body()?.message.toString())
+                } else {
+                    view.messageBookingHotel(response.body()?.message.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBookingHotel>, t: Throwable) {
+                view.messageBookingHotel(t.localizedMessage.toString())
             }
 
         })

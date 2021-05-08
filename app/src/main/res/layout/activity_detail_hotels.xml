@@ -76,12 +76,15 @@
 
                 <TextView
                     android:id="@+id/tv_location_hotel"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:textColor="@color/black"
                     android:layout_marginTop="5dp"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
-                    android:text="Jalan Jakarta Pusat"
+                    tools:text="Jalan Jakarta Pusat"
                     app:drawableStartCompat="@drawable/ic_location" />
 
             </LinearLayout>

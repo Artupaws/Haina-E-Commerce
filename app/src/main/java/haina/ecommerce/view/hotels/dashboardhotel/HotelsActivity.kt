@@ -3,7 +3,9 @@ package haina.ecommerce.view.hotels.dashboardhotel
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,25 +18,11 @@ import haina.ecommerce.model.hotels.Hotels
 import haina.ecommerce.model.hotels.LocationHotels
 import haina.ecommerce.view.hotels.detailhotel.DetailHotelsActivity
 
-class HotelsActivity : AppCompatActivity(), HotelContract, AdapterListHotel.ItemAdapterCallBack {
+class HotelsActivity : AppCompatActivity(), HotelContract, AdapterListHotel.ItemAdapterCallBack,
+    AdapterListLocationHotel.ItemAdapterCallback {
 
     private lateinit var binding:ActivityHotelsBinding
     private lateinit var presenter: HotelPresenter
-
-    private val listHotel = arrayListOf(
-        Hotels("Borobudur", "Jakarta Pusat", "IDR400,000"),
-        Hotels("Prambanan", "Jakarta Utara", "IDR400,000"),
-        Hotels("Grand Indonesia", "Jakarta Selatan", "IDR400,000"),
-        Hotels("Holiday Inn", "Jakarta Timur", "IDR400,000"),
-        Hotels("Holiday Inn", "Jakarta Timur", "IDR400,000")
-    )
-
-    private val listLocation = arrayListOf(
-        LocationHotels("Jakarta"),
-        LocationHotels("Bandung"),
-        LocationHotels("Yogyakarta"),
-        LocationHotels("Surabaya")
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,30 +31,49 @@ class HotelsActivity : AppCompatActivity(), HotelContract, AdapterListHotel.Item
 
         presenter = HotelPresenter(this)
         presenter.getAllHotel()
+        presenter.getListCity()
         binding.toolbarHotels.title = applicationContext.getString(R.string.hotels)
         binding.toolbarHotels.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarHotels.setNavigationOnClickListener { onBackPressed() }
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
 
-//        binding.rvHotels.apply {
-//            adapter = AdapterListHotel(applicationContext, listHotel)
-//            layoutManager = GridLayoutManager(applicationContext, 2)
-//        }
+            override fun onQueryTextChange(p0: String?): Boolean {
+                if (p0?.isNotEmpty()!!){
+                    presenter.getHotelByName(p0)
+                } else {
+                    presenter.getAllHotel()
+                }
+                return true
+            }
 
-        binding.rvLocationHotels.apply {
-            adapter = AdapterListLocationHotel(applicationContext, listLocation)
-            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
-        }
+        })
 
     }
 
     override fun getMessageHotel(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        Log.d("dataHotel", msg)
     }
 
     override fun getDataAllHotel(data: List<DataItem?>?) {
         binding.rvHotels.apply {
             adapter = AdapterListHotel(applicationContext, data, this@HotelsActivity)
             layoutManager = GridLayoutManager(applicationContext, 2)
+        }
+    }
+
+    override fun getListCity(data: MutableList<LocationHotels>?) {
+        val defaultCity = mutableListOf<LocationHotels>()
+        defaultCity.addAll(listOf(LocationHotels(-1, "All Location")))
+        defaultCity.addAll(data!!)
+        val adapterLocation = AdapterListLocationHotel(applicationContext, defaultCity, this)
+        binding.rvLocationHotels.apply {
+            adapter = adapterLocation
+            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+            adapterLocation.notifyDataSetChanged()
         }
     }
 
@@ -77,6 +84,16 @@ class HotelsActivity : AppCompatActivity(), HotelContract, AdapterListHotel.Item
                         .putExtra("dataHotel", dataHotel)
                 startActivity(intent)
             }
+        }
+    }
+
+    override fun onClick(data: LocationHotels) {
+        Log.d("idCity", data.toString())
+        val dataString = data.idCity.toString()
+        if (dataString.contains("-1")){
+            presenter.getAllHotel()
+        } else {
+            presenter.getHotelByCity(data.idCity)
         }
     }
 }

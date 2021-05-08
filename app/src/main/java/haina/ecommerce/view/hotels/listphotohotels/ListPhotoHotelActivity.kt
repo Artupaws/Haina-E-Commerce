@@ -14,7 +14,7 @@ import haina.ecommerce.model.hotels.RoomImageItem
 class ListPhotoHotelActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityListPhotoHotelBinding
-    private var listTypeRoom:ArrayList<RoomHotel> = ArrayList()
+//    private var listTypeRoom:ArrayList<RoomHotel> = ArrayList()
     private var listPhotoRoom:ArrayList<RoomImageItem> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +29,7 @@ class ListPhotoHotelActivity : AppCompatActivity() {
         binding.toolbarListPhotoHotel.setNavigationOnClickListener { onBackPressed() }
 
         binding.rvTypeRoom.apply {
-            adapter = AdapterListPhotoTypeRoom(applicationContext, listTypeRoom)
+            adapter = AdapterListPhotoTypeRoom(applicationContext, data?.rooms)
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         }
     }

@@ -7,10 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemFacilitiesHotelBinding
-import haina.ecommerce.databinding.ListItemHotelsBinding
-import haina.ecommerce.model.hotels.Facilities
 import haina.ecommerce.model.hotels.FacilitiesItem
-import haina.ecommerce.model.hotels.Hotels
 
 
 class AdapterListFacilities(val context: Context, private val listFacilities: List<FacilitiesItem?>?):

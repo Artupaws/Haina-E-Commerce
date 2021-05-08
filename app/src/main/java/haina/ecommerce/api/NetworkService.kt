@@ -3,7 +3,7 @@ package haina.ecommerce.api
 import haina.ecommerce.model.*
 import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.currency.ResponseGetCurrency
-import haina.ecommerce.model.hotels.ResponseGetListHotel
+import haina.ecommerce.model.hotels.*
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
@@ -350,4 +350,33 @@ interface NetworkService {
             @Field(value = "code_country", encoded = true)codeCountry:String
     ):Call<ResponseGetCurrency>
 
+    //Get Hotel By City
+    @FormUrlEncoded
+    @POST("api/hotel/by_city")
+    fun getHotelByCity(
+        @Field("city_id")cityId:Int
+    ):Call<ResponseGetHotelByCity>
+
+    //Get List City
+    @GET("api/hotel/cities")
+    fun getListCity():Call<ResponseGetListCity>
+
+    //Search Hotel By Name
+    @FormUrlEncoded
+    @POST("api/hotel/by_name")
+    fun getHotelByName(
+        @Field("search_query")searchQuery:String
+    ):Call<ResponseGetHotelByName>
+
+    //Create Booking Hotel
+    @FormUrlEncoded
+    @POST("api/hotel/book/new")
+    fun createBookingHotel(
+        @Field("hotel_id")hotelId:Int,
+        @Field("room_id")roomId:Int,
+        @Field("check_in")checkIn:String,
+        @Field("check_out")checkOut:String,
+        @Field("total_guest")totalGuest:Int,
+        @Field("total_price")totalPrice:String
+    ):Call<ResponseBookingHotel>
 }

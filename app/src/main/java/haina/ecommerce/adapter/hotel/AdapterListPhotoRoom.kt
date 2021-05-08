@@ -8,19 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import haina.ecommerce.databinding.ListItemPhotoRoomBinding
 import haina.ecommerce.databinding.ListItemTypeRoomBinding
-import haina.ecommerce.model.hotels.Hotels
-import haina.ecommerce.model.hotels.ImageRoom
-import haina.ecommerce.model.hotels.RoomHotel
+import haina.ecommerce.model.hotels.*
 
 
-class AdapterListPhotoRoom(val context: Context, private val listTypeRoom: List<ImageRoom?>?):
+class AdapterListPhotoRoom(val context: Context, private val listTypeRoom: List<RoomImageItem?>?):
     RecyclerView.Adapter<AdapterListPhotoRoom.Holder>() {
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemPhotoRoomBinding.bind(view)
-        fun bind(itemHaina: ImageRoom){
+        fun bind(itemHaina: RoomImageItem){
             with(binding){
-                Glide.with(context).load(itemHaina.imageRoom).into(ivPhotoRoom)
+                Glide.with(context).load(itemHaina.url).into(ivPhotoRoom)
             }
         }
     }
@@ -32,7 +30,7 @@ class AdapterListPhotoRoom(val context: Context, private val listTypeRoom: List<
     }
 
     override fun onBindViewHolder(holder: AdapterListPhotoRoom.Holder, position: Int) {
-        val photo: ImageRoom = listTypeRoom?.get(position)!!
+        val photo: RoomImageItem = listTypeRoom?.get(position)!!
         holder.bind(photo)
     }
 
