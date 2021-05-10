@@ -37,6 +37,7 @@
                 android:layout_marginBottom="5dp"
                 android:textSize="10sp"
                 tools:text="@string/wifi_title"
+                style="@style/TextView.Poppins12spGrey"
                 android:textColor="@color/white"
                 tools:ignore="SmallSp" />
 

@@ -49,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
+                        style="@style/TextView.Poppins16spBlack"
                         tools:text="Borobudur Hotel" />
 
                     <TextView
@@ -57,7 +57,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:textColor="@color/black"
+                        style="@style/TextView.Poppins14spGrey"
                         tools:text="VIP Room" />
 
                 </LinearLayout>
@@ -72,6 +72,7 @@
                         android:id="@+id/tv_city_hotel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/TextView.Poppins12spGrey"
                         tools:text="Bandung" />
 
                     <TextView
@@ -79,12 +80,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
+                        style="@style/TextView.Poppins12spGrey"
                         android:text="@string/stand_dash" />
 
                     <TextView
                         android:id="@+id/tv_checkin_checkout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/TextView.Poppins12spGrey"
                         tools:text="31 AUG - 1 SEP" />
 
                     <TextView
@@ -92,12 +95,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
+                        style="@style/TextView.Poppins12spGrey"
                         android:text="@string/stand_dash" />
 
                     <TextView
                         android:id="@+id/tv_total_guests"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/TextView.Poppins12spGrey"
                         tools:text="2 Guests" />
 
                 </LinearLayout>
@@ -107,6 +112,7 @@
                     android:id="@+id/tv_total_night"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins12spGrey"
                     tools:text="1 Nights" />
 
                 <LinearLayout
@@ -123,7 +129,7 @@
                         android:layout_weight="1"
                         android:textAlignment="textStart"
                         android:textColor="@color/yellow"
-                        android:textStyle="bold"
+                        style="@style/TextView.Poppins12spGrey"
                         tools:text="Waiting For You" />
 
                     <FrameLayout
@@ -137,10 +143,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
                             android:visibility="visible"
+                            style="@style/Button.Secondary"
+                            android:textColor="@color/black"
                             android:text="@string/give_your_rating"
-                            android:textAllCaps="false"
-                            android:backgroundTint="@color/yellow"
-                            android:textColor="@color/black"/>
+                            android:backgroundTint="@color/yellow"/>
 
                         <LinearLayout
                             android:id="@+id/linear_rating_user"

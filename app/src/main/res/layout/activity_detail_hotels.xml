@@ -70,9 +70,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Borobudur Hotel"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    style="@style/TextView.Poppins16spBlack"
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/tv_location_hotel"
@@ -105,8 +104,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/facilities"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    style="@style/TextView.Poppins14spBlack" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_facilities"
@@ -136,8 +134,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/ratings_and_reviews"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    style="@style/TextView.Poppins14spBlack"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -157,9 +154,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="5"
+                            android:text="@string/_5"
+                            style="@style/TextView.Poppins12spGrey"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                         <haina.ecommerce.helper.FontAwesome
@@ -175,9 +172,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Excelent"
-                            android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            android:text="@string/excelent"
+                            style="@style/TextView.Poppins12spGrey"
+                            android:textColor="@color/black" />
 
                     </LinearLayout>
 
@@ -198,9 +195,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:text="50"
+                        style="@style/TextView.Poppins12spGrey"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        android:textColor="@color/black" />
 
                 </LinearLayout>
 
@@ -222,10 +219,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="4"
+                            android:text="@string/_4"
+                            style="@style/TextView.Poppins12spGrey"
                             android:textColor="@color/black"
                             android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <haina.ecommerce.helper.FontAwesome
                             android:layout_width="wrap_content"
@@ -240,9 +238,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Very Good"
+                            android:text="@string/very_good"
                             android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            style="@style/TextView.Poppins12spGrey"/>
 
                     </LinearLayout>
 
@@ -263,6 +261,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:text="40"
+                        style="@style/TextView.Poppins12spGrey"
                         android:textAlignment="center"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
@@ -289,7 +288,7 @@
                             android:layout_height="wrap_content"
                             android:text="3"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
+                            style="@style/TextView.Poppins12spGrey"
                             android:textStyle="bold" />
 
                         <haina.ecommerce.helper.FontAwesome
@@ -305,9 +304,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Good"
+                            android:text="@string/good"
                             android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            style="@style/TextView.Poppins12spGrey" />
 
                     </LinearLayout>
 
@@ -330,7 +329,7 @@
                         android:text="30"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        style="@style/TextView.Poppins12spGrey" />
 
                 </LinearLayout>
 
@@ -354,7 +353,7 @@
                             android:layout_height="wrap_content"
                             android:text="2"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
+                            style="@style/TextView.Poppins12spGrey"
                             android:textStyle="bold" />
 
                         <haina.ecommerce.helper.FontAwesome
@@ -370,9 +369,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bad"
+                            android:text="@string/bad"
                             android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            style="@style/TextView.Poppins12spGrey" />
 
                     </LinearLayout>
 
@@ -395,7 +394,7 @@
                         android:text="20"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        style="@style/TextView.Poppins12spGrey" />
 
                 </LinearLayout>
 
@@ -419,7 +418,7 @@
                             android:layout_height="wrap_content"
                             android:text="1"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
+                            style="@style/TextView.Poppins12spGrey"
                             android:textStyle="bold" />
 
                         <haina.ecommerce.helper.FontAwesome
@@ -435,9 +434,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Worse"
+                            android:text="@string/worse"
                             android:textColor="@color/black"
-                            android:textSize="12sp" />
+                            style="@style/TextView.Poppins12spGrey" />
 
                     </LinearLayout>
 
@@ -460,7 +459,7 @@
                         android:text="0"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        android:textSize="12sp" />
+                        style="@style/TextView.Poppins12spGrey" />
 
                 </LinearLayout>
 
@@ -471,8 +470,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:text="@string/see_all_reviews"
-                    android:textColor="@color/black"
-                    android:textSize="12sp" />
+                    style="@style/TextView.Poppins12spGrey"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
