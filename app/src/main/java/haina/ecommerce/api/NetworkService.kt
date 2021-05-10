@@ -382,6 +382,6 @@ interface NetworkService {
     ):Call<ResponseBookingHotel>
 
     //Get List Transaction Hotel
-    @POST("api/hotel/book/get_booking")
+    @POST("api/hotel/book/user_booking")
     fun getListTransactionHotel():Call<ResponseGetListTransactionHotel>
 }
