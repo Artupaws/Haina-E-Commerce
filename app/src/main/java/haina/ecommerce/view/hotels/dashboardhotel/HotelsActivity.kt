@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
@@ -14,7 +13,6 @@ import haina.ecommerce.adapter.hotel.AdapterListHotel
 import haina.ecommerce.adapter.hotel.AdapterListLocationHotel
 import haina.ecommerce.databinding.ActivityHotelsBinding
 import haina.ecommerce.model.hotels.DataItem
-import haina.ecommerce.model.hotels.Hotels
 import haina.ecommerce.model.hotels.LocationHotels
 import haina.ecommerce.view.hotels.detailhotel.DetailHotelsActivity
 

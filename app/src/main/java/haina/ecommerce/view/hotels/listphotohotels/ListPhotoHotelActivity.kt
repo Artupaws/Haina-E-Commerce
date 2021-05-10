@@ -7,8 +7,6 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.AdapterListPhotoTypeRoom
 import haina.ecommerce.databinding.ActivityListPhotoHotelBinding
 import haina.ecommerce.model.hotels.DataItem
-import haina.ecommerce.model.hotels.ImageRoom
-import haina.ecommerce.model.hotels.RoomHotel
 import haina.ecommerce.model.hotels.RoomImageItem
 
 class ListPhotoHotelActivity : AppCompatActivity() {
