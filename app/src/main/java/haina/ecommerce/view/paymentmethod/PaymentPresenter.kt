@@ -51,8 +51,8 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
         })
     }
 
-    fun createBookingHotel(hotelId:Int, roomId:Int, checkIn:String, checkOut:String, totalGuest:Int, totalPrice:String){
-        val createBooking = NetworkConfig().getNetworkHotelBearer(context).createBookingHotel(hotelId, roomId, checkIn, checkOut, totalGuest, totalPrice)
+    fun createBookingHotel(hotelId:Int, roomId:Int, checkIn:String, checkOut:String, totalGuest:Int, totalPrice:Int, idPaymentMethod:Int){
+        val createBooking = NetworkConfig().getNetworkHotelBearer(context).createBookingHotel(hotelId, roomId, checkIn, checkOut, totalGuest, totalPrice, idPaymentMethod)
         createBooking.enqueue(object : retrofit2.Callback<ResponseBookingHotel>{
             override fun onResponse(call: Call<ResponseBookingHotel>, response: Response<ResponseBookingHotel>) {
                 if (response.isSuccessful && response.body()?.value == 1){

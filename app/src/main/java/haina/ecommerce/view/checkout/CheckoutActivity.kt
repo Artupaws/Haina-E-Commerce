@@ -9,6 +9,7 @@ import android.widget.Toast
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityCheckoutBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.pulsaanddata.RequestPulsa
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.paymentmethod.PaymentActivity
@@ -22,6 +23,8 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
     private val helper:Helper = Helper
     private lateinit var sharedPref: SharedPreferenceHelper
     private lateinit var presenter: CheckoutPresenter
+    private var typeTransaction:Int = 0
+    private lateinit var requestPulsa:RequestPulsa
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,31 +41,73 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
 
         customerNumber = sharedPref.getValueString(Constants.PREF_PHONE_NUMBER_PULSA)
         binding.tvNumber.text = customerNumber
-        binding.tvTotalPay.text = intent.getStringExtra("totalPrice")
-        binding.tvPrice.text = intent.getStringExtra("totalPrice")
-        titleService = intent.getStringExtra("titleService")
-        idProduct = intent.getIntExtra("idProduct", 0)
-        binding.tvServiceType.text = intent.getStringExtra("serviceType")
-        binding.tvTitleService.text = titleService
+        val typeTransactionParams = intent.getIntExtra("typeTransaction", 0)
+        typeTransaction(typeTransactionParams)
+//        binding.tvTotalPay.text = intent.getStringExtra("totalPrice")
+//        binding.tvPrice.text = intent.getStringExtra("totalPrice")
+//        titleService = intent.getStringExtra("titleService")
+//        idProduct = intent.getIntExtra("idProduct", 0)
+//        binding.tvServiceType.text = intent.getStringExtra("serviceType")
+//        binding.tvTitleService.text = titleService
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_payment -> {
-                presenter.checkout(customerNumber!!, idProduct!!)
+                when(typeTransaction){
+                    1 -> {
+                        presenter.checkout(requestPulsa.phoneNumber, requestPulsa.idProduct)
+                    }
+                    2 -> {
+                        presenter.checkout(requestPulsa.phoneNumber, requestPulsa.idProduct)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun typeTransaction(typeTransactionParams:Int){
+        when(typeTransactionParams){
+            1 -> {
+                requestPulsa = intent.getParcelableExtra("dataPulsa")
+                idProduct = requestPulsa.idProduct
+                binding.tvTotalPay.text = requestPulsa.totalPrice
+                binding.tvPrice.text = requestPulsa.totalPrice
+                binding.tvServiceType.text = requestPulsa.typeService
+                titleService = "Pulsa"
+                binding.tvTitleService.text = titleService
+                typeTransaction = 1
+            }
+            2 -> {
+                requestPulsa = intent.getParcelableExtra("dataPulsa")
+                idProduct = requestPulsa.idProduct
+                binding.tvTotalPay.text = requestPulsa.totalPrice
+                binding.tvPrice.text = requestPulsa.totalPrice
+                binding.tvServiceType.text = requestPulsa.typeService
+                titleService = "Paket Data"
+                binding.tvTitleService.text = titleService
+                typeTransaction = 1
             }
         }
     }
 
     private fun move(status:String){
         if (status.contains("Success")){
-            val intent = Intent(applicationContext, PaymentActivity::class.java)
-                    .putExtra("idProduct", idProduct)
-                    .putExtra("serviceType", binding.tvServiceType.text.toString())
-                    .putExtra("numberCustomer", binding.tvNumber.text.toString())
-                    .putExtra("totalPrice", binding.tvPrice.text.toString())
-                    .putExtra("titleService", binding.tvTitleService.text.toString())
-            startActivity(intent)
+            when(typeTransaction){
+                1 -> {
+                    val intent = Intent(applicationContext, PaymentActivity::class.java)
+                        .putExtra("dataPulsa", requestPulsa)
+                        .putExtra("typeTransaction", 1)
+                    startActivity(intent)
+                }
+                2->{
+                    val intent = Intent(applicationContext, PaymentActivity::class.java)
+                        .putExtra("dataPulsa", requestPulsa)
+                        .putExtra("typeTransaction", 2)
+                    startActivity(intent)
+                }
+            }
+
         } else {
             Toast.makeText(applicationContext, status, Toast.LENGTH_SHORT).show()
         }

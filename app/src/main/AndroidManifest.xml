@@ -23,8 +23,8 @@
         android:theme="@style/Theme.HainaECommerce.Light"
         android:usesCleartextTraffic="true">
         <activity android:name=".view.flight.FlightTicketActivity"></activity>
-        <activity android:name=".view.hotels.bookings.DetailBookingsActivity" />
-        <activity android:name=".view.hotels.bookings.BookingsActivity" />
+        <activity android:name=".view.hotels.transactionhotel.DetailBookingsActivity" />
+        <activity android:name=".view.hotels.transactionhotel.HistoryTransactionHotelActivity" />
         <activity android:name=".view.hotels.listphotohotels.ListPhotoHotelActivity" />
         <activity android:name=".view.hotels.selectdate.SelectDateHotelActivity" />
         <activity android:name=".view.hotels.detailhotel.DetailHotelsActivity" />

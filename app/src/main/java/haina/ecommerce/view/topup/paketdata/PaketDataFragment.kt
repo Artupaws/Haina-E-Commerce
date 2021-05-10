@@ -18,7 +18,9 @@ import haina.ecommerce.adapter.AdapterPaketDataName
 import haina.ecommerce.databinding.FragmentPaketDataBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.pulsaanddata.ProductPhone
+import haina.ecommerce.model.pulsaanddata.RequestPulsa
 import haina.ecommerce.view.checkout.CheckoutActivity
+import haina.ecommerce.view.topup.TopupActivity
 
 class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
 
@@ -31,6 +33,7 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
     private var serviceType: String? = null
     private var statusResetPrice:String? = null
     private var idProduct:Int? = null
+    private var typeTransaction:Int = 2
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentPaketDataBinding.inflate(inflater, container, false)
@@ -52,14 +55,36 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
     override fun onClick(v: View?) {
         when (v?.id){
             R.id.btn_next -> {
-                val intent = Intent(requireContext(), CheckoutActivity::class.java)
-                        .putExtra("totalPrice", totalPrice)
-                        .putExtra("phoneNumber", phoneNumber)
-                        .putExtra("serviceType", serviceType)
-                        .putExtra("idProduct", idProduct)
-                        .putExtra("titleService", "Paket Data")
-                startActivity(intent)
+//                val intent = Intent(requireContext(), CheckoutActivity::class.java)
+//                        .putExtra("totalPrice", totalPrice)
+//                        .putExtra("phoneNumber", phoneNumber)
+//                        .putExtra("serviceType", serviceType)
+//                        .putExtra("idProduct", idProduct)
+//                        .putExtra("titleService", "Paket Data")
+//                startActivity(intent)
+                checkDataPulsa()
             }
+        }
+    }
+
+    private fun checkDataPulsa(){
+        val phoneNumber = (activity as TopupActivity).getNumber()
+        val idProductParams = idProduct
+        val totalPriceParams = totalPrice
+        val typeService = serviceType
+        when {
+            phoneNumber.isNullOrEmpty()->{
+                Toast.makeText(requireActivity(), "Phone number empty", Toast.LENGTH_SHORT).show()
+            }
+            idProductParams == null ->{
+                Toast.makeText(requireActivity(), "Please choose product", Toast.LENGTH_SHORT).show()
+            } else -> {
+            val dataPulsa = RequestPulsa(phoneNumber, idProductParams, null, totalPriceParams!!, typeService!!)
+            val intentToCheckOut = Intent(requireActivity(), CheckoutActivity::class.java)
+                .putExtra("dataPulsa", dataPulsa)
+                .putExtra("typeTransaction", typeTransaction)
+            startActivity(intentToCheckOut)
+        }
         }
     }
 

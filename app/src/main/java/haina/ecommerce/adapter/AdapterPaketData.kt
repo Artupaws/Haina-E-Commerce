@@ -25,6 +25,7 @@ class AdapterPaketData(val context: Context, private val listPaketData: List<Pak
         private val binding = ListItemPaketDataBinding.bind(view)
         fun bind(item: PaketDataItem){
             with(binding) {
+                tvTitle.text = item.description
                 tvDescription.text = item.description
                 tvPrice.text = helper.convertToFormatMoneyIDRFilter(item.sellPrice.toString())
                 linearClick.setOnClickListener {index = adapterPosition

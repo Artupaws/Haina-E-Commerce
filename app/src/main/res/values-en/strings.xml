@@ -256,10 +256,15 @@
     <string name="add_data_passenger">Add Data Passenger</string>
     <string name="select_language">Select Language</string>
     <string name="english">English</string>
+    <string name="excelent">Excellent</string>
     <string name="chinese">Chinese</string>
     <string name="very_good">Very Good</string>
     <string name="good">Good</string>
     <string name="bad">Bad</string>
     <string name="worse">Worse</string>
     <string name="_5">5</string>
+    <string name="_4">4</string>
+    <string name="rent_car">Rent Car</string>
+    <string name="flight_ticket">Flight Ticket</string>
+    <string name="input_your_review_here">Add review</string>
 </resources>

@@ -176,7 +176,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleMenuService"
-                        android:text="Rent Car"/>
+                        android:text="@string/rent_car"/>
 
                 </LinearLayout>
 
@@ -200,7 +200,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleMenuService"
-                        android:text="Flight Ticket"/>
+                        android:text="@string/flight_ticket"/>
 
                 </LinearLayout>
 

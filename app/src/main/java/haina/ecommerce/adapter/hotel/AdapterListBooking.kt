@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemBookingHotelBinding
 import haina.ecommerce.model.hotels.Bookings
-import haina.ecommerce.view.hotels.bookings.DetailBookingsActivity
+import haina.ecommerce.view.hotels.transactionhotel.DetailBookingsActivity
 
 
-class AdapterListBooking(val context: Context, private val listHotel: List<Bookings?>?) :
+class AdapterListBooking(val context: Context, private val listHotel: List<Bookings?>?, private val itemAdapterCallback: ItemAdapterCallback) :
         RecyclerView.Adapter<AdapterListBooking.Holder>() {
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemBookingHotelBinding.bind(view)
-        fun bind(itemHaina: Bookings) {
+        fun bind(itemHaina: Bookings, itemAdapterCallback: ItemAdapterCallback) {
             with(binding) {
                 tvNameHotel.text = itemHaina.nameHotel
                 tvCityHotel.text = itemHaina.cityHotel
@@ -31,11 +31,17 @@ class AdapterListBooking(val context: Context, private val listHotel: List<Booki
                 tvTypeRoom.text = itemHaina.typeRoom
                 setColorTextStatus(itemHaina.bookingStatus, binding)
                 showRatingOrButtonRating(binding, itemHaina)
-                cvClick.setOnClickListener {
-                    val intent = Intent(context, DetailBookingsActivity::class.java)
-                            .setFlags(FLAG_ACTIVITY_NEW_TASK)
-                    context.startActivity(intent)
+                btnInputRating.setOnClickListener {
+                    itemAdapterCallback.onClick(binding.btnInputRating, itemHaina)
                 }
+                cvClick.setOnClickListener {
+                    itemAdapterCallback.onClick(binding.cvClick, itemHaina)
+                }
+//                cvClick.setOnClickListener {
+//                    val intent = Intent(context, DetailBookingsActivity::class.java)
+//                            .setFlags(FLAG_ACTIVITY_NEW_TASK)
+//                    context.startActivity(intent)
+//                }
             }
         }
     }
@@ -48,7 +54,7 @@ class AdapterListBooking(val context: Context, private val listHotel: List<Booki
 
     override fun onBindViewHolder(holder: AdapterListBooking.Holder, position: Int) {
         val photo: Bookings = listHotel?.get(position)!!
-        holder.bind(photo)
+        holder.bind(photo, itemAdapterCallback)
     }
 
     override fun getItemCount(): Int = listHotel?.size!!
@@ -77,6 +83,9 @@ class AdapterListBooking(val context: Context, private val listHotel: List<Booki
             binding.linearRatingUser.visibility = View.GONE
             binding.btnInputRating.visibility = View.GONE
         }
+    }
 
+    interface ItemAdapterCallback{
+        fun onClick(view: View, data:Bookings)
     }
 }

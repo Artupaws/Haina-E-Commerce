@@ -22,5 +22,8 @@ class Requesthotel (
     var totalGuest: Int?,
 
     @SerializedName("total_price")
-    var totalPrice: String?
+    var totalPrice: String?,
+
+    @SerializedName("id_payment_method")
+    var idPaymentMethod:Int?
     ):Parcelable

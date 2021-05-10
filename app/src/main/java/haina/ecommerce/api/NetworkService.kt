@@ -377,6 +377,11 @@ interface NetworkService {
         @Field("check_in")checkIn:String,
         @Field("check_out")checkOut:String,
         @Field("total_guest")totalGuest:Int,
-        @Field("total_price")totalPrice:String
+        @Field("total_price")totalPrice:Int,
+        @Field("id_payment_method")idPaymentMethod:Int
     ):Call<ResponseBookingHotel>
+
+    //Get List Transaction Hotel
+    @POST("api/hotel/book/get_booking")
+    fun getListTransactionHotel():Call<ResponseGetListTransactionHotel>
 }

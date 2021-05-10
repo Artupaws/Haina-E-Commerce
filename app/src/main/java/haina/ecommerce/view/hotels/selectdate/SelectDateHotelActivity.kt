@@ -100,9 +100,10 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
          checkOut.isNullOrEmpty()->{
              binding.tvCheckOutDate.error = "Please choose your checkin date"
          }  else -> {
-            val dataBookingHotel = Requesthotel(hotelId, roomId, checkIn, checkOut, totalGuest, totalPriceParams)
+            val dataBookingHotel = Requesthotel(hotelId, roomId, checkIn, checkOut, totalGuest, helper.convertToFormatMoneyIDRFilter(totalPriceParams), null)
             val intentToPayment = Intent(applicationContext, PaymentActivity::class.java)
                 .putExtra("dataBooking", dataBookingHotel)
+                .putExtra("typeTransaction", 3)
             startActivity(intentToPayment)
         }
         }
@@ -175,8 +176,9 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setPriceRoom(totalNight: Int) {
         binding.cvTotalPrice.visibility = View.VISIBLE
-        totalPrice = helper.convertToFormatMoneyIDRFilter((totalNight * priceRoomValue!!).toString()).toString()
-        binding.tvTotalPayment.text = totalPrice
+        totalPrice = (totalNight*priceRoomValue!!).toString()
+        val totalPriceText = helper.convertToFormatMoneyIDRFilter(totalPrice).toString()
+        binding.tvTotalPayment.text = totalPriceText
     }
 
     private fun intentToMaps(lat:Double, long:Double){

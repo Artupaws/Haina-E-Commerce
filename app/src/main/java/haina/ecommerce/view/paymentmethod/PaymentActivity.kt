@@ -23,25 +23,23 @@ import haina.ecommerce.databinding.ActivityPaymentBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.hotels.Requesthotel
 import haina.ecommerce.model.paymentmethod.DataPaymentMethod
+import haina.ecommerce.model.pulsaanddata.RequestPulsa
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
+import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
 
 class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContract {
 
     private lateinit var binding: ActivityPaymentBinding
     private var popupPaymentMethod: Dialog? = null
-    private var numberOrderCustomer: String? = null
     private var price: String? = null
-    private var serviceFee: Int? = 0
-    private var discounts: String = "0"
     private var valueTotalPayment: Int? = null
-    private var titleService: String? = null
     private val helper: Helper = Helper
-    private var paymentMethod: String = ""
     private lateinit var presenter: PaymentPresenter
     private var broadcaster: LocalBroadcastManager? = null
     private var idPaymentMethod: Int? = null
-    private var idProduct: Int? = null
-    private lateinit var dataBooking:Requesthotel
+    private var typeTransactionParams:Int = 0
+    private var dataPulsa:RequestPulsa? = null
+    private var dataBooking:Requesthotel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +48,13 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         presenter = PaymentPresenter(this, this)
         presenter.getPaymentMethod()
         broadcaster = LocalBroadcastManager.getInstance(this)
-        dataBooking = intent.getParcelableExtra("dataBooking")
         binding.toolbarPayment.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarPayment.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarPayment.title = getString(R.string.payment)
         binding.frameChoosePaymentMethod.setOnClickListener(this)
         binding.btnPayment.setOnClickListener(this)
-        setDetailOrder(dataBooking)
+        typeTransactionParams = intent.getIntExtra("typeTransaction", 0)
+        setDetailOrder(typeTransactionParams)
     }
 
     override fun onClick(v: View?) {
@@ -65,8 +63,17 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                 popupPaymentMethod?.show()
             }
             R.id.btn_payment -> {
-                presenter.createBookingHotel(dataBooking.hotelId!!, dataBooking.roomId!!, dataBooking.checkIn!!, dataBooking.checkOut!!, dataBooking.totalGuest!!, dataBooking.totalPrice!!)
-//                presenter.createTransaction(numberOrderCustomer!!, idProduct!!, idPaymentMethod!!)
+                when(typeTransactionParams){
+                    1 -> { presenter.createTransaction(dataPulsa?.phoneNumber!!, dataPulsa?.idProduct!!,
+                    idPaymentMethod!!)
+                    }
+                    2 -> {presenter.createTransaction(dataPulsa?.phoneNumber!!, dataPulsa?.idProduct!!,
+                        idPaymentMethod!!)
+                    }
+                    3 -> {  presenter.createBookingHotel(dataBooking?.hotelId!!, dataBooking?.roomId!!, dataBooking?.checkIn!!, dataBooking?.checkOut!!, dataBooking?.totalGuest!!,
+                   helper.changeFormatMoneyToValueFilter(dataBooking?.totalPrice)?.toInt()!!, idPaymentMethod!!)
+                    }
+                }
             }
         }
     }
@@ -92,12 +99,24 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         }
     }
 
-    private fun setDetailOrder(dataBooking:Requesthotel) {
-        price = dataBooking.totalPrice
-        numberOrderCustomer = intent.getStringExtra("numberCustomer")
-        binding.tvTotalBill.text = dataBooking.totalPrice
-        titleService = intent.getStringExtra("titleService")
-        idProduct = intent.getIntExtra("idProduct", 0)
+    private fun setDetailOrder(typeTransaction: Int) {
+        when(typeTransaction){
+            1 -> {
+                dataPulsa = intent.getParcelableExtra("dataPulsa")
+                binding.tvTotalBill.text = dataPulsa?.totalPrice
+                price = dataPulsa?.totalPrice
+            }
+            2 -> {
+                dataPulsa = intent.getParcelableExtra("dataPulsa")
+                binding.tvTotalBill.text = dataPulsa?.totalPrice
+                price = dataPulsa?.totalPrice
+            }
+            3 -> {
+                dataBooking = intent.getParcelableExtra("dataBooking")
+                binding.tvTotalBill.text = dataBooking?.totalPrice
+                price = dataBooking?.totalPrice
+            }
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -166,6 +185,13 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     }
 
     override fun messageBookingHotel(msg: String) {
-        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        Log.d("transactionHotel", msg)
+        if (msg.contains("Success")){
+            val intent = Intent(applicationContext, HistoryTransactionHotelActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        } else {
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        }
     }
 }

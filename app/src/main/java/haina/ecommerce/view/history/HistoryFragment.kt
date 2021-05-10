@@ -10,7 +10,7 @@ import haina.ecommerce.R
 import haina.ecommerce.databinding.FragmentHistoryBinding
 import haina.ecommerce.view.history.historyjobvacancy.HistoryJobVacancyActivity
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
-import haina.ecommerce.view.hotels.bookings.BookingsActivity
+import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
 
 
 class HistoryFragment : Fragment(), View.OnClickListener {
@@ -49,7 +49,7 @@ class HistoryFragment : Fragment(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.cv_history_hotel -> {
-                val intent = Intent(requireContext(), BookingsActivity::class.java)
+                val intent = Intent(requireContext(), HistoryTransactionHotelActivity::class.java)
                 startActivity(intent)
             }
         }

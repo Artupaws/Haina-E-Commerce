@@ -19,12 +19,14 @@ import haina.ecommerce.databinding.ActivityTopupBinding
 import haina.ecommerce.databinding.FragmentPulsaBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.pulsaanddata.ProductPhone
+import haina.ecommerce.model.pulsaanddata.PulsaItem
+import haina.ecommerce.model.pulsaanddata.RequestPulsa
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.checkout.CheckoutActivity
 import haina.ecommerce.view.topup.TopupActivity
 
-class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
+class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPulsa.ItemAdapterCallback {
 
     private var _binding: FragmentPulsaBinding? = null
     private val binding get() = _binding
@@ -36,6 +38,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
     private var serviceType: String? = null
     private var idProduct: Int? = null
     private lateinit var sharedPref: SharedPreferenceHelper
+    private var typeTransaction:Int = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentPulsaBinding.inflate(inflater, container, false)
@@ -54,12 +57,34 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_next -> {
-                val intent = Intent(requireContext(), CheckoutActivity::class.java)
-                        .putExtra("totalPrice", totalPrice)
-                        .putExtra("titleService", "Pulsa")
-                        .putExtra("serviceType", serviceType)
-                        .putExtra("idProduct", idProduct)
-                startActivity(intent)
+//                val intent = Intent(requireContext(), CheckoutActivity::class.java)
+//                        .putExtra("totalPrice", totalPrice)
+//                        .putExtra("titleService", "Pulsa")
+//                        .putExtra("serviceType", serviceType)
+//                        .putExtra("idProduct", idProduct)
+//                startActivity(intent)
+                checkDataPulsa()
+            }
+        }
+    }
+
+    private fun checkDataPulsa(){
+        val phoneNumber = (activity as TopupActivity).getNumber()
+        val idProductParams = idProduct
+        val totalPriceParams = totalPrice
+        val typeService = serviceType
+        when {
+            phoneNumber.isNullOrEmpty()->{
+                Toast.makeText(requireActivity(), "Phone number empty", Toast.LENGTH_SHORT).show()
+            }
+            idProductParams == null ->{
+                Toast.makeText(requireActivity(), "Please choose product", Toast.LENGTH_SHORT).show()
+            } else -> {
+            val dataPulsa = RequestPulsa(phoneNumber, idProductParams, null, totalPriceParams!!, typeService!!)
+            val intentToCheckOut = Intent(requireActivity(), CheckoutActivity::class.java)
+                .putExtra("dataPulsa", dataPulsa)
+                .putExtra("typeTransaction", typeTransaction)
+            startActivity(intentToCheckOut)
             }
         }
     }
@@ -105,7 +130,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
     
     fun getListPulsa(data: ProductPhone?) {
         Log.d("itemPulsa", data?.group?.pulsa?.size.toString())
-        val adapterPulsa = AdapterPulsa(requireContext(), data?.group?.pulsa)
+        val adapterPulsa = AdapterPulsa(requireContext(), data?.group?.pulsa, this@PulsaFragment)
         if (data?.group?.pulsa?.isEmpty() == true) {
             binding?.tvNumberEmpty?.visibility = View.VISIBLE
             binding?.rvPulsa?.visibility = View.GONE
@@ -115,18 +140,6 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
             binding?.rvPulsa?.apply {
                 adapter = adapterPulsa
                 layoutManager = GridLayoutManager(requireContext(), 2)
-            }
-        }
-
-        adapterPulsa.onItemClick = { i: Int, s: String, id:Int ->
-            totalPrice = helper.convertToFormatMoneyIDRFilter(i.toString())
-            serviceType = s
-            idProduct = id
-            binding?.tvPrice?.text = totalPrice
-            if (i!= 0) {
-                binding?.linearTotalPrice?.visibility = View.VISIBLE
-            } else {
-                binding?.linearTotalPrice?.visibility = View.GONE
             }
         }
 
@@ -140,6 +153,18 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract {
     }
 
     override fun getProductPhone(data: ProductPhone?) {
+    }
+
+    override fun onClickAdapter(view: View, data: PulsaItem) {
+        totalPrice = helper.convertToFormatMoneyIDRFilter(data.sellPrice.toString())
+        serviceType = data.description
+        idProduct = data.id
+        binding?.tvPrice?.text = totalPrice
+        if (data.sellPrice!= 0) {
+            binding?.linearTotalPrice?.visibility = View.VISIBLE
+        } else {
+            binding?.linearTotalPrice?.visibility = View.GONE
+        }
     }
 
 

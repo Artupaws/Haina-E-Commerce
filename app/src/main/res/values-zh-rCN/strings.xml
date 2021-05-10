@@ -254,12 +254,17 @@
     <string name="taxes_service_charge"><![CDATA[税金及服务费]]></string>
     <string name="destination">目的地</string>
     <string name="add_data_passenger">添加数据旅客</string>
-    <string name="select_language">Select Language</string>
+    <string name="select_language">选择语言</string>
     <string name="english">英语</string>
     <string name="chinese">中国人</string>
-    <string name="very_good">Very Good</string>
-    <string name="good">Good</string>
-    <string name="bad">Bad</string>
-    <string name="worse">Worse</string>
+    <string name="excelent">优秀的</string>
+    <string name="very_good">非常好</string>
+    <string name="good">好的</string>
+    <string name="bad">坏的</string>
+    <string name="worse">更差</string>
     <string name="_5">5</string>
+    <string name="_4">4</string>
+    <string name="rent_car">租车</string>
+    <string name="flight_ticket">飞机票</string>
+    <string name="input_your_review_here">添加评论</string>
 </resources>

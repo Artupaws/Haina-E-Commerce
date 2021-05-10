@@ -131,7 +131,7 @@ dependencies {
     implementation "com.github.nikartm:image-support:1.0.0"
 
     //OneSignal
-    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
+    implementation 'com.onesignal:OneSignal:4.3.4'
 
     //Android Material Design
     implementation 'com.google.android.material:material:1.3.0'
@@ -149,5 +149,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
+
+    //detect response code api on emulator
+    implementation 'com.readystatesoftware.chuck:library:1.1.0'
 
 }

@@ -98,6 +98,11 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
         }
     }
 
+    fun getNumber():String{
+        binding.etPhoneNumber.text.toString()
+        return binding.etPhoneNumber.text.toString()
+    }
+
     companion object {
         //image pick code
         private val PHONE_NUMBER = 100
