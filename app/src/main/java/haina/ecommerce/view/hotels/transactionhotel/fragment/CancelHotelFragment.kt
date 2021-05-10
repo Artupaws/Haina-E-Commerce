@@ -6,16 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import haina.ecommerce.R
-import haina.ecommerce.databinding.FragmentUnfinishBinding
+import haina.ecommerce.databinding.FragmentCancelHotelBinding
 
-class FinishHotelFragment : Fragment() {
+class CancelHotelFragment : Fragment() {
 
-    private lateinit var _binding:FragmentUnfinishBinding
+    private lateinit var _binding:FragmentCancelHotelBinding
     private val binding get() = _binding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentUnfinishBinding.inflate(inflater, container,false)
+        _binding = FragmentCancelHotelBinding.inflate(inflater, container,false)
         return binding.root
     }
 
