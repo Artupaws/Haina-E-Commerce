@@ -1,10 +1,10 @@
 package haina.ecommerce.view.hotels.transactionhotel
 
-import haina.ecommerce.model.transactionlist.DataTransaction
+import haina.ecommerce.model.hotels.transactionhotel.DataTransactionHotel
 
 interface HistoryTransactionHotelContract {
 
     fun messageGetListTransactionHotel(msg:String)
-    fun getListTransactionHotel(data:List<haina.ecommerce.model.hotels.DataTransaction?>?)
+    fun getListTransactionHotel(dataHotel: DataTransactionHotel?)
 
 }

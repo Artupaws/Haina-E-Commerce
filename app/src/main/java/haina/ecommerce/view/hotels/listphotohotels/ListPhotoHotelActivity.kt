@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.AdapterListPhotoTypeRoom
 import haina.ecommerce.databinding.ActivityListPhotoHotelBinding
-import haina.ecommerce.model.hotels.DataItem
+import haina.ecommerce.model.hotels.DataHotel
 import haina.ecommerce.model.hotels.RoomImageItem
 
 class ListPhotoHotelActivity : AppCompatActivity() {
@@ -21,7 +21,7 @@ class ListPhotoHotelActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 //        initDataTypeRoom()
-        val data = intent?.getParcelableExtra<DataItem>("dataHotel")
+        val data = intent?.getParcelableExtra<DataHotel>("dataHotel")
         binding.toolbarListPhotoHotel.title = "Detail Photo Rooms"
         binding.toolbarListPhotoHotel.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarListPhotoHotel.setNavigationOnClickListener { onBackPressed() }

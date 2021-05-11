@@ -12,7 +12,7 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.AdapterListHotel
 import haina.ecommerce.adapter.hotel.AdapterListLocationHotel
 import haina.ecommerce.databinding.ActivityHotelsBinding
-import haina.ecommerce.model.hotels.DataItem
+import haina.ecommerce.model.hotels.DataHotel
 import haina.ecommerce.model.hotels.LocationHotels
 import haina.ecommerce.view.hotels.detailhotel.DetailHotelsActivity
 
@@ -56,7 +56,7 @@ class HotelsActivity : AppCompatActivity(), HotelContract, AdapterListHotel.Item
         Log.d("dataHotel", msg)
     }
 
-    override fun getDataAllHotel(data: List<DataItem?>?) {
+    override fun getDataAllHotel(data: List<DataHotel?>?) {
         binding.rvHotels.apply {
             adapter = AdapterListHotel(applicationContext, data, this@HotelsActivity)
             layoutManager = GridLayoutManager(applicationContext, 2)
@@ -75,7 +75,7 @@ class HotelsActivity : AppCompatActivity(), HotelContract, AdapterListHotel.Item
         }
     }
 
-    override fun onClick(view: View, dataHotel: DataItem) {
+    override fun onClick(view: View, dataHotel: DataHotel) {
         when(view.id){
             R.id.cv_click -> {
                 val intent = Intent(this, DetailHotelsActivity::class.java)

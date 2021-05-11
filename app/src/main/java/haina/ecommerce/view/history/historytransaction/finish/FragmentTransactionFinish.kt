@@ -12,10 +12,9 @@ import android.view.ViewGroup
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterTransactionFinish
+import haina.ecommerce.adapter.AdapterTransactionPulsaFinish
 import haina.ecommerce.databinding.FragmentTransactionFinishBinding
 import haina.ecommerce.model.transactionlist.DataTransaction
-import haina.ecommerce.model.transactionlist.SuccessItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.login.LoginActivity
@@ -79,16 +78,12 @@ class FragmentTransactionFinish : Fragment(), View.OnClickListener {
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mMessageReceiver)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     private fun setupListTransactionFinish(data:DataTransaction?){
 
         showIsEmpty(data?.process?.size)
 
         binding?.rvTransactionFinish?.apply {
-            adapter = AdapterTransactionFinish(requireContext(), data?.process)
+            adapter = AdapterTransactionPulsaFinish(requireContext(), data?.process)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }

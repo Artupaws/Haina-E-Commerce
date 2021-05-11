@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.squareup.picasso.Picasso
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.AdapterListFacilities
@@ -24,7 +23,7 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener,
     BottomSheetReviewsHotel.ItemClickListener, AdapterListRoomHotel.ItemAdapterCallback {
 
     private lateinit var binding: ActivityDetailHotelsBinding
-    private lateinit var dataHotel: DataItem
+    private lateinit var dataHotel: DataHotel
     private lateinit var listParams: Array<String>
 
     private lateinit var listImageHotel: Array<String>
@@ -34,7 +33,7 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener,
         binding = ActivityDetailHotelsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        dataHotel = intent.getParcelableExtra<DataItem>("dataHotel")
+        dataHotel = intent.getParcelableExtra<DataHotel>("dataHotel")
         binding.toolbarDetailHotels.title = "Detail"
         binding.toolbarDetailHotels.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailHotels.setNavigationOnClickListener { onBackPressed() }
@@ -97,7 +96,7 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
-    private fun setupDetailHotel(data: DataItem) {
+    private fun setupDetailHotel(data: DataHotel) {
         binding.tvNameHotel.text = data.hotelName
         binding.tvLocationHotel.text = data.hotelAddress
     }

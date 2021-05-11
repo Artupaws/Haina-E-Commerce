@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class ResponseBookingHotel(
 
 	@field:SerializedName("data")
-	val data: Data? = null,
+	val dataBooking: DataBooking? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,

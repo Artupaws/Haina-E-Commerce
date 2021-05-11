@@ -5,18 +5,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemCancelTransactionBinding
-import haina.ecommerce.databinding.ListItemFinishTransactionBinding
-import haina.ecommerce.databinding.ListItemUnfinishTransactionBinding
 import haina.ecommerce.model.transactionlist.CancelItem
-import haina.ecommerce.model.transactionlist.SuccessItem
 import haina.ecommerce.view.detailtransaction.DetailTransactionActivity
 
 
-class AdapterTransactionCancel(val context: Context, private val listTransactionCancel: List<CancelItem?>?):
-    RecyclerView.Adapter<AdapterTransactionCancel.Holder>() {
+class AdapterTransactionPulsaCancel(val context: Context, private val listTransactionCancel: List<CancelItem?>?):
+    RecyclerView.Adapter<AdapterTransactionPulsaCancel.Holder>() {
 
     private var idPaymentMethod:Int? = null
 
@@ -40,13 +36,13 @@ class AdapterTransactionCancel(val context: Context, private val listTransaction
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterTransactionCancel.Holder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterTransactionPulsaCancel.Holder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemCancelTransactionBinding.inflate(inflater)
         return Holder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: AdapterTransactionCancel.Holder, position: Int) {
+    override fun onBindViewHolder(holder: AdapterTransactionPulsaCancel.Holder, position: Int) {
         val transactionCancel: CancelItem = listTransactionCancel?.get(position)!!
         holder.bind(transactionCancel)
     }

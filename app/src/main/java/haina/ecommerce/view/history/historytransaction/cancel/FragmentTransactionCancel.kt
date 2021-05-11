@@ -12,8 +12,7 @@ import android.view.ViewGroup
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterTransactionCancel
-import haina.ecommerce.adapter.AdapterTransactionFinish
+import haina.ecommerce.adapter.AdapterTransactionPulsaCancel
 import haina.ecommerce.databinding.FragmentTransactionCancelBinding
 import haina.ecommerce.model.transactionlist.DataTransaction
 import haina.ecommerce.preference.SharedPreferenceHelper
@@ -89,7 +88,7 @@ class FragmentTransactionCancel : Fragment(), View.OnClickListener {
         showIsEmpty(data?.canceled?.size)
 
         binding?.rvTransactionCancel?.apply {
-            adapter = AdapterTransactionCancel(requireContext(), data?.canceled)
+            adapter = AdapterTransactionPulsaCancel(requireContext(), data?.canceled)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }

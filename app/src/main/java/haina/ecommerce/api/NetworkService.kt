@@ -4,6 +4,7 @@ import haina.ecommerce.model.*
 import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.hotels.*
+import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
@@ -383,5 +384,14 @@ interface NetworkService {
 
     //Get List Transaction Hotel
     @POST("api/hotel/book/user_booking")
-    fun getListTransactionHotel():Call<ResponseGetListTransactionHotel>
+    fun getListTransactionHotel():Call<ResponseGetTransactionHotel>
+
+    //Input Rating and Review
+    @FormUrlEncoded
+    @POST("api/hotel/rating")
+    fun inputRating(
+        @Field("hotel_id")hotelId:Int,
+        @Field("rating")rating:Float,
+        @Field("review")review:String
+    ):Call<ResponseInputRating>
 }

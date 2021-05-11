@@ -5,17 +5,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemFinishTransactionBinding
-import haina.ecommerce.databinding.ListItemUnfinishTransactionBinding
 import haina.ecommerce.model.transactionlist.ProcessItem
-import haina.ecommerce.model.transactionlist.SuccessItem
 import haina.ecommerce.view.detailtransaction.DetailTransactionActivity
 
 
-class AdapterTransactionFinish(val context: Context, private val listTransactionFinish: List<ProcessItem?>?):
-    RecyclerView.Adapter<AdapterTransactionFinish.Holder>() {
+class AdapterTransactionPulsaFinish(val context: Context, private val listTransactionFinish: List<ProcessItem?>?):
+    RecyclerView.Adapter<AdapterTransactionPulsaFinish.Holder>() {
 
     private var idPaymentMethod:Int? = null
 
@@ -39,13 +36,13 @@ class AdapterTransactionFinish(val context: Context, private val listTransaction
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterTransactionFinish.Holder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterTransactionPulsaFinish.Holder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemFinishTransactionBinding.inflate(inflater)
         return Holder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: AdapterTransactionFinish.Holder, position: Int) {
+    override fun onBindViewHolder(holder: AdapterTransactionPulsaFinish.Holder, position: Int) {
         val transactionFinish: ProcessItem = listTransactionFinish?.get(position)!!
         holder.bind(transactionFinish)
     }

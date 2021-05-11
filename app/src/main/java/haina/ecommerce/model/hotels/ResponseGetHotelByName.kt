@@ -7,12 +7,12 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ResponseGetHotelByName(
 
-	@field:SerializedName("data")
-	val data: List<DataItem?>? = null,
+    @field:SerializedName("data")
+	val data: List<DataHotel?>? = null,
 
-	@field:SerializedName("message")
+    @field:SerializedName("message")
 	val message: String? = null,
 
-	@field:SerializedName("value")
+    @field:SerializedName("value")
 	val value: Int? = null
 ) : Parcelable

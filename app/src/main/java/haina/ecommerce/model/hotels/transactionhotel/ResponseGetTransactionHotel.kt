@@ -1,14 +1,14 @@
-package haina.ecommerce.model.hotels
+package haina.ecommerce.model.hotels.transactionhotel
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ResponseGetListHotel(
+data class ResponseGetTransactionHotel(
 
     @field:SerializedName("data")
-	val data: List<DataHotel?>? = null,
+	val dataTransactionHotel: DataTransactionHotel? = null,
 
     @field:SerializedName("message")
 	val message: String? = null,

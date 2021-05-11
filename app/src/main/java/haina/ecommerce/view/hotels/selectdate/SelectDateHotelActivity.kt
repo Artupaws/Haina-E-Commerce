@@ -14,7 +14,7 @@ import haina.ecommerce.databinding.ActivitySelectDateHotelBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.helper.Helper.convertLongtoTime
 import haina.ecommerce.helper.RangeValidator
-import haina.ecommerce.model.hotels.DataItem
+import haina.ecommerce.model.hotels.DataHotel
 import haina.ecommerce.model.hotels.Requesthotel
 import haina.ecommerce.model.hotels.RoomsItem
 import haina.ecommerce.view.paymentmethod.PaymentActivity
@@ -29,7 +29,7 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
     private var totalGuests: Int = 1
     private var maxTotalGuests:Int?=null
     private var priceRoomValue: Int? = null
-    private lateinit var dataHotel:DataItem
+    private lateinit var dataHotel:DataHotel
     private lateinit var dataRoom:RoomsItem
     private lateinit var totalPrice:String
 

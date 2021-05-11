@@ -4,24 +4,17 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
-import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemUnfinishTransactionBinding
-import haina.ecommerce.model.Login
 import haina.ecommerce.model.transactionlist.PendingItem
-import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
-import haina.ecommerce.view.login.LoginActivity
 
-
-class AdapterTransactionUnfinish(val context: Context, private val listTransactionUnfinish: List<PendingItem?>?, private var itemAdapterCallBack: ItemAdapterCallback) :
-        RecyclerView.Adapter<AdapterTransactionUnfinish.Holder>(){
+class AdapterTransactionPulsaUnfinish(val context: Context, private val listTransactionUnfinish: List<PendingItem?>?, private var itemAdapterCallBack: ItemAdapterCallback) :
+        RecyclerView.Adapter<AdapterTransactionPulsaUnfinish.Holder>(){
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemUnfinishTransactionBinding.bind(view)
@@ -40,6 +33,7 @@ class AdapterTransactionUnfinish(val context: Context, private val listTransacti
                 btnHowPay.setOnClickListener {
                     itemAdapterCallBack.onClick(binding.btnHowPay, itemHaina)
                 }
+
                 ivOption.setOnClickListener {
                    itemAdapterCallBack.onClick(binding.ivOption, itemHaina)
                 }
@@ -47,13 +41,13 @@ class AdapterTransactionUnfinish(val context: Context, private val listTransacti
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterTransactionUnfinish.Holder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterTransactionPulsaUnfinish.Holder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemUnfinishTransactionBinding.inflate(inflater)
         return Holder(binding.root)
     }
 
-    override fun onBindViewHolder(holder: AdapterTransactionUnfinish.Holder, position: Int) {
+    override fun onBindViewHolder(holder: AdapterTransactionPulsaUnfinish.Holder, position: Int) {
         val transactionUnfinish: PendingItem = listTransactionUnfinish?.get(position)!!
         holder.bind(transactionUnfinish, itemAdapterCallBack)
     }

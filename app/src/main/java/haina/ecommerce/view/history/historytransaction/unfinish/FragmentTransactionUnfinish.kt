@@ -4,9 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterTransactionUnfinish
+import haina.ecommerce.adapter.AdapterTransactionPulsaUnfinish
 import haina.ecommerce.databinding.FragmentTransactionUnfinishBinding
 import haina.ecommerce.model.transactionlist.DataTransaction
 import haina.ecommerce.model.transactionlist.PendingItem
@@ -26,7 +24,7 @@ import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
 import haina.ecommerce.view.login.LoginActivity
 
 class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomSheetHowToPayment.ItemClickListener,
-    AdapterTransactionUnfinish.ItemAdapterCallback {
+    AdapterTransactionPulsaUnfinish.ItemAdapterCallback {
 
     private var _binding:FragmentTransactionUnfinishBinding? = null
     private val binding get()= _binding
@@ -70,7 +68,7 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
         showIsEmpty(data?.size)
 
         binding?.rvUnfinishTransaction?.apply {
-            adapter = AdapterTransactionUnfinish(requireActivity(), data, this@FragmentTransactionUnfinish)
+            adapter = AdapterTransactionPulsaUnfinish(requireActivity(), data, this@FragmentTransactionUnfinish)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }

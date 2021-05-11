@@ -5,14 +5,14 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ResponseGetListTransactionHotel(
+data class ResponseInputRating(
 
-	@field:SerializedName("data")
-	val data: List<DataTransaction?>? = null,
+    @field:SerializedName("data")
+	val dataInputRating: DataInputRating? = null,
 
-	@field:SerializedName("message")
+    @field:SerializedName("message")
 	val message: String? = null,
 
-	@field:SerializedName("value")
+    @field:SerializedName("value")
 	val value: Int? = null
 ) : Parcelable

@@ -267,4 +267,5 @@
     <string name="input_your_review_here">Add review</string>
     <string name="rent_car">Rent Car</string>
     <string name="flight_ticket">Flight Ticket</string>
+    <string name="id_booking">ID Booking</string>
 </resources>

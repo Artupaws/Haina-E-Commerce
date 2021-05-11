@@ -1,9 +1,8 @@
 package haina.ecommerce.view.hotels.transactionhotel
 
 import android.content.Context
-import android.view.View
 import haina.ecommerce.api.NetworkConfig
-import haina.ecommerce.model.hotels.ResponseGetListTransactionHotel
+import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
 import retrofit2.Call
 import retrofit2.Response
 
@@ -11,10 +10,10 @@ class HistoryTransactionHotelPresenter(val view: HistoryTransactionHotelContract
 
     fun getListTransactionHotel(){
         val getListTransaction = NetworkConfig().getNetworkHotelBearer(context).getListTransactionHotel()
-        getListTransaction.enqueue(object : retrofit2.Callback<ResponseGetListTransactionHotel>{
-            override fun onResponse(call: Call<ResponseGetListTransactionHotel>, response: Response<ResponseGetListTransactionHotel>) {
+        getListTransaction.enqueue(object : retrofit2.Callback<ResponseGetTransactionHotel>{
+            override fun onResponse(call: Call<ResponseGetTransactionHotel>, response: Response<ResponseGetTransactionHotel>) {
                 if (response.isSuccessful && response.body()?.value == 1){
-                    val data = response.body()?.data
+                    val data = response.body()?.dataTransactionHotel
                     view.getListTransactionHotel(data)
                     view.messageGetListTransactionHotel(response.body()?.message.toString())
                 } else {
@@ -22,7 +21,7 @@ class HistoryTransactionHotelPresenter(val view: HistoryTransactionHotelContract
                 }
             }
 
-            override fun onFailure(call: Call<ResponseGetListTransactionHotel>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseGetTransactionHotel>, t: Throwable) {
                 view.messageGetListTransactionHotel(t.localizedMessage.toString())
             }
 
