@@ -6,7 +6,9 @@ import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.hotels.*
 import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
+import haina.ecommerce.model.productservice.ResponseGetProductService
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
+import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
 import okhttp3.MultipartBody
@@ -394,4 +396,15 @@ interface NetworkService {
         @Field("rating")rating:Float,
         @Field("review")review:String
     ):Call<ResponseInputRating>
+
+    //Get List Service
+    @POST("api/category/service")
+    fun getListService():Call<ResponseGetService>
+
+    //Get Product Service
+    @FormUrlEncoded
+    @POST("api/category/group")
+    fun getProductService(
+        @Field("id_product_category")idProductCategory:Int
+    ):Call<ResponseGetProductService>
 }

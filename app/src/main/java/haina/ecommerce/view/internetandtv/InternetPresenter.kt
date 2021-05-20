@@ -1,0 +1,33 @@
+package haina.ecommerce.view.internetandtv
+
+import android.content.Context
+import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.model.productservice.ResponseGetProductService
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Response
+
+class InternetPresenter(val view:InternetContract, val context: Context) {
+
+    fun getProductService(idProductCategory:Int){
+        val getProductService = NetworkConfig().getConnectionHaina().getProductService(idProductCategory)
+        getProductService.enqueue(object : retrofit2.Callback<ResponseGetProductService>{
+            override fun onResponse(call: Call<ResponseGetProductService>, response: Response<ResponseGetProductService>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageGetProductService(response.body()?.message.toString())
+                    val data = response.body()?.data
+                    view.getDataProductService(data)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.messageGetProductService(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetProductService>, t: Throwable) {
+                view.messageGetProductService(t.localizedMessage.toString())
+            }
+
+        })
+    }
+
+}

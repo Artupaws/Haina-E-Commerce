@@ -9,6 +9,7 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.TabAdapterHistoryHotelTransaction
 import haina.ecommerce.databinding.ActivityHistoryTransactionBinding
 import haina.ecommerce.model.hotels.transactionhotel.DataTransactionHotel
+import haina.ecommerce.view.MainActivity
 
 class HistoryTransactionHotelActivity : AppCompatActivity(), HistoryTransactionHotelContract {
 
@@ -26,11 +27,21 @@ class HistoryTransactionHotelActivity : AppCompatActivity(), HistoryTransactionH
 
         binding.toolbarTransaction.title = "Transaction Hotel"
         binding.toolbarTransaction.setNavigationIcon(R.drawable.ic_back_black)
-        binding.toolbarTransaction.setNavigationOnClickListener { onBackPressed() }
+        binding.toolbarTransaction.setNavigationOnClickListener { moveToDashboard() }
         binding.vpTransaction.adapter = TabAdapterHistoryHotelTransaction(supportFragmentManager, 0)
         binding.vpTransaction.offscreenPageLimit = 3
         binding.tabTransaction.setupWithViewPager(binding.vpTransaction)
 
+    }
+
+    override fun onBackPressed() {
+        moveToDashboard()
+    }
+
+    private fun moveToDashboard(){
+        val intent = Intent(applicationContext, MainActivity::class.java)
+        startActivity(intent)
+        finishAffinity()
     }
 
     override fun messageGetListTransactionHotel(msg: String) {

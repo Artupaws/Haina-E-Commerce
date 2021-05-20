@@ -193,8 +193,8 @@
     <string name="select_date_stay">Select the date of stay</string>
     <string name="water_management">water management</string>
     <string name="phone_number">phone number</string>
-    <string name="internet_tv_services">internet/tv services</string>
-    <string name="customer_number_internet_tv">customer number internet/tv</string>
+    <string name="internet_tv_services">internet provider</string>
+    <string name="customer_number_internet_tv">customer number internet</string>
     <string name="postpaid">Postpaid</string>
     <string name="telkom">Telkom</string>
     <string name="payment_method">Payment Method</string>
@@ -267,4 +267,7 @@
     <string name="rent_car">Rent Car</string>
     <string name="flight_ticket">Flight Ticket</string>
     <string name="input_your_review_here">Add review</string>
+    <string name="name_customer">Name Customer</string>
+    <string name="bill_title">Bill</string>
+    <string name="bill_date">Bill Date</string>
 </resources>

@@ -17,11 +17,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextAppearance="@style/ToolbarTitleStyle" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_service_category"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        tools:listitem="@layout/list_item_service_category"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_other" />
+
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -221,7 +235,7 @@
                     <haina.ecommerce.helper.FontAwesome
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/bold"
+                        android:text="@string/bolt"
                         android:textColor="@android:color/holo_red_dark"
                         android:textSize="25sp" />
 

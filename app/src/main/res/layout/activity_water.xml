@@ -44,23 +44,6 @@
                         style="@style/SmallTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/province" />
-
-                    <Spinner
-                        android:id="@+id/spn_province"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@color/black"/>
-
-                    <TextView
-                        style="@style/SmallTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="@string/water_management" />
 

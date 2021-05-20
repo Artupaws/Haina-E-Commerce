@@ -70,7 +70,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                     2 -> {presenter.createTransaction(dataPulsa?.phoneNumber!!, dataPulsa?.idProduct!!,
                         idPaymentMethod!!)
                     }
-                    3 -> {  presenter.createBookingHotel(dataBooking?.hotelId!!, dataBooking?.roomId!!, dataBooking?.checkIn!!, dataBooking?.checkOut!!, dataBooking?.totalGuest!!,
+                    3 -> { presenter.createBookingHotel(dataBooking?.hotelId!!, dataBooking?.roomId!!, dataBooking?.checkIn!!, dataBooking?.checkOut!!, dataBooking?.totalGuest!!,
                    helper.changeFormatMoneyToValueFilter(dataBooking?.totalPrice)?.toInt()!!, idPaymentMethod!!)
                     }
                 }
@@ -137,21 +137,6 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
             adapter = AdapterPaymentMethod(applicationContext, list)
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         }
-//        adapterPaymentMethod.onItemClick = {bankName:String, serviceFeeValue:String ->
-//            serviceFee = serviceFeeValue
-//            popupPaymentMethod?.dismiss()
-//            binding.tvChoosePaymentMethod.visibility = View.GONE
-//            binding.linearPaymentMethod.visibility = View.VISIBLE
-//            binding.tvServiceFee.text = helper.convertToFormatMoneyIDRFilter(serviceFee!!)
-//            binding.tvNameBank.text = bankName
-//            paymentMethod = bankName
-//            if (serviceFee?.isNotEmpty()!!){
-//                setTotalPayment()
-//                binding.linearTotalPrice.visibility = View.VISIBLE
-//            }else{
-//                binding.linearTotalPrice.visibility = View.GONE
-//            }
-//        }
     }
 
     private fun setTotalPayment(idPaymentMethod: Int?) {
@@ -170,7 +155,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     }
 
     override fun messageCreateTransaction(msg: String) {
-        Log.d("transaction", msg)
+        Log.d("transactionPulsa", msg)
         if (msg.contains("Success")){
             val intent = Intent(applicationContext, HistoryTransactionActivity::class.java)
             startActivity(intent)
@@ -189,7 +174,6 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         if (msg.contains("Success")){
             val intent = Intent(applicationContext, HistoryTransactionHotelActivity::class.java)
             startActivity(intent)
-            finishAffinity()
         } else {
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         }

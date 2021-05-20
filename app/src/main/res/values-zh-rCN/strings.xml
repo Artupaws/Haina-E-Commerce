@@ -193,8 +193,8 @@
     <string name="select_date_stay">选择入住日期</string>
     <string name="water_management">水管理</string>
     <string name="phone_number">电话号码</string>
-    <string name="internet_tv_services">互联网/电视服务</string>
-    <string name="customer_number_internet_tv">客户编号互联网/电视</string>
+    <string name="internet_tv_services">网络供应商</string>
+    <string name="customer_number_internet_tv">客户编号互联网</string>
     <string name="postpaid">后付</string>
     <string name="telkom">Telkom</string>
     <string name="payment_method">付款方法</string>
@@ -267,4 +267,7 @@
     <string name="rent_car">租车</string>
     <string name="flight_ticket">飞机票</string>
     <string name="input_your_review_here">添加评论</string>
+    <string name="name_customer">Name Customer</string>
+    <string name="bill_title">Bill</string>
+    <string name="bill_date">Bill Date</string>
 </resources>

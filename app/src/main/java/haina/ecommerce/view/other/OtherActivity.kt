@@ -3,10 +3,14 @@ package haina.ecommerce.view.other
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
+import haina.ecommerce.adapter.service.AdapterServiceCategory
 import haina.ecommerce.databinding.ActivityOtherBinding
+import haina.ecommerce.model.service.DataService
 import haina.ecommerce.view.electricity.ElectricityActivity
 import haina.ecommerce.view.housephone.HousePhoneActivity
 import haina.ecommerce.view.internetandtv.InternetActivity
@@ -16,15 +20,18 @@ import haina.ecommerce.view.topup.electronicmoney.ElectronicMoneyActivity
 import haina.ecommerce.view.water.WaterActivity
 import java.sql.RowId
 
-class OtherActivity : AppCompatActivity(), View.OnClickListener {
+class OtherActivity : AppCompatActivity(), View.OnClickListener, OtherContract {
 
     private lateinit var binding: ActivityOtherBinding
+    private lateinit var presenter: OtherPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtherBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        presenter = OtherPresenter(this, this)
+        presenter.getListService()
         binding.toolbarOther.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarOther.title = "All Categories"
         binding.toolbarOther.setNavigationOnClickListener {
@@ -77,6 +84,17 @@ class OtherActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(applicationContext, ElectronicMoneyActivity::class.java)
                 startActivity(intent)
             }
+        }
+    }
+
+    override fun messageGetListService(msg: String) {
+        Log.d("getPresenter", msg)
+    }
+
+    override fun getListService(data: List<DataService?>?) {
+        binding.rvServiceCategory.apply {
+            adapter = AdapterServiceCategory(applicationContext, data)
+            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         }
     }
 }

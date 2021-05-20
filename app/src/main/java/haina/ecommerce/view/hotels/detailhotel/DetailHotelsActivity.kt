@@ -18,15 +18,16 @@ import haina.ecommerce.model.hotels.*
 import haina.ecommerce.view.hotels.listphotohotels.ListPhotoHotelActivity
 import haina.ecommerce.view.hotels.listreviews.BottomSheetReviewsHotel
 import haina.ecommerce.view.hotels.selectdate.SelectDateHotelActivity
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener,
     BottomSheetReviewsHotel.ItemClickListener, AdapterListRoomHotel.ItemAdapterCallback {
 
     private lateinit var binding: ActivityDetailHotelsBinding
     private lateinit var dataHotel: DataHotel
-    private lateinit var listParams: Array<String>
-
-    private lateinit var listImageHotel: Array<String>
+    private lateinit var listParams: ArrayList<String>
+    private var  imagesListener : ImageListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,26 +55,17 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener,
                 LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         }
 
-//       listParams = arrayOf((
-//            dataHotel.rooms?.forEach { ut ->
-//                ut?.roomImage?.forEach {
-//                    it?.url}.toString()
-//            }
-//        ).toString())
-//        Log.d("urlImageHotel", listParams.toString())
-
+        listParams = ArrayList()
         for (i in dataHotel.rooms!!) {
-            i?.roomImage?.map { listParams = arrayOf(it?.url as String) }?.toTypedArray()
+            i?.roomImage?.forEach { listParams.add(it?.url!!) }
             Log.d("urlImageHotel", listParams.toString())
         }
-
-        val imagesListener = ImageListener { position, imageView ->
-//                    Glide.with(applicationContext).load(dataHotel.hotelImage?.map { it?.url as String }?.toTypedArray()
-//                        ?.get(position)).into(imageView)
-            Glide.with(applicationContext).load(listParams[position]).into(imageView)
-        }
-
         binding.vpImageHotel.pageCount = listParams.size
+
+        imagesListener = ImageListener { position, imageView ->
+                    Glide.with(applicationContext).load(listParams[position]).into(imageView)
+                }
+
         binding.vpImageHotel.setImageListener(imagesListener)
 
         binding.vpImageHotel.setImageListener(imagesListener)

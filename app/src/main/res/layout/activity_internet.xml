@@ -41,10 +41,12 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/SmallTextView"
+                        android:id="@+id/tv_title_provider"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/internet_tv_services" />
+                        tools:text="@string/internet_tv_services" />
 
                     <Spinner
                         android:id="@+id/spn_services"
@@ -58,11 +60,13 @@
                         android:background="@color/black"/>
 
                     <TextView
-                        style="@style/SmallTextView"
+                        android:id="@+id/tv_title_customer_number"
+                        style="@style/TextView.Poppins12spGrey"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/black"
                         android:layout_marginTop="10dp"
-                        android:text="@string/customer_number_internet_tv" />
+                        tools:text="@string/customer_number_internet_tv" />
 
                     <EditText
                         android:id="@+id/et_customer_number"
@@ -77,6 +81,7 @@
                         android:background="@color/black"/>
 
                     <Button
+                        android:id="@+id/btn_next"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"

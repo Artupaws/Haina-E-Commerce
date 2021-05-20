@@ -42,6 +42,9 @@ class AdapterListFacilities(val context: Context, private val listFacilities: Li
                     "Fitness Center" -> {
                         tvFacilities.text = context.getString(R.string.dumbbell)
                     }
+                    "City Tour" -> {
+                        tvFacilities.text = context.getString(R.string.city_tour)
+                    }
                 }
                 tvNameFacilities.text = itemHaina.facilitiesName
             }

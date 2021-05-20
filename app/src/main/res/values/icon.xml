@@ -17,7 +17,7 @@
     <string name="translator">&#xf1ab;</string>
     <string name="blender">&#xf517;</string>
     <string name="house">&#xf015;</string>
-    <string name="bold">&#xf0e7;</string>
+    <string name="bolt">&#xf0e7;</string>
     <string name="wifi">&#xf1eb;</string>
     <string name="water">&#xf043;</string>
     <string name="book_visa">&#xf558;</string>
@@ -39,5 +39,7 @@
     <string name="television">&#xf26c;</string>
     <string name="spa">&#xf5bb;</string>
     <string name="dumbbell">&#xf44b;</string>
+    <string name="city_tour">&#xf5b6;</string>
+    <string name="insurance">&#xf6f1;</string>
 
 </resources>

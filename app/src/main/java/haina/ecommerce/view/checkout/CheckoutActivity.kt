@@ -41,14 +41,10 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
 
         customerNumber = sharedPref.getValueString(Constants.PREF_PHONE_NUMBER_PULSA)
         binding.tvNumber.text = customerNumber
+        val productCode = intent?.getIntExtra("productCode", 0)
+        val customerNumber = intent?.getStringExtra("customerNumber")
         val typeTransactionParams = intent.getIntExtra("typeTransaction", 0)
         typeTransaction(typeTransactionParams)
-//        binding.tvTotalPay.text = intent.getStringExtra("totalPrice")
-//        binding.tvPrice.text = intent.getStringExtra("totalPrice")
-//        titleService = intent.getStringExtra("titleService")
-//        idProduct = intent.getIntExtra("idProduct", 0)
-//        binding.tvServiceType.text = intent.getStringExtra("serviceType")
-//        binding.tvTitleService.text = titleService
     }
 
     override fun onClick(v: View?) {
@@ -87,6 +83,10 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                 titleService = "Paket Data"
                 binding.tvTitleService.text = titleService
                 typeTransaction = 1
+            }
+            3 -> {
+                binding.linearDataProductTopup.visibility = View.GONE
+                binding.includeDataProductBill.linearDataProductBill.visibility = View.VISIBLE
             }
         }
     }

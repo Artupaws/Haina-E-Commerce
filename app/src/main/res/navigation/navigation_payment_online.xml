@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_payment_online"
+    app:startDestination="@id/internetServiceFragment">
+
+    <fragment
+        android:id="@+id/internetServiceFragment"
+        android:name="haina.ecommerce.view.onlinepayment.fragment.InternetServiceFragment"
+        android:label="fragment_internet_service"
+        tools:layout="@layout/fragment_internet_service" />
+</navigation>
