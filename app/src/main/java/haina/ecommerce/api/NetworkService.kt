@@ -1,6 +1,7 @@
 package haina.ecommerce.api
 
 import haina.ecommerce.model.*
+import haina.ecommerce.model.bill.ResponseGetBillAmount
 import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.hotels.*
@@ -306,7 +307,7 @@ interface NetworkService {
 
     //Check Provider And Get Product
     @FormUrlEncoded
-    @POST("api/pulsa/providers")
+    @POST("api/providers")
     fun checkProvider(
             @Field("number")phoneNumber:String):Call<ResponseGetProductPhone>
 
@@ -403,8 +404,16 @@ interface NetworkService {
 
     //Get Product Service
     @FormUrlEncoded
-    @POST("api/category/group")
+    @POST("api/group")
     fun getProductService(
         @Field("id_product_category")idProductCategory:Int
     ):Call<ResponseGetProductService>
+
+    //Get Bill Amount
+    @FormUrlEncoded
+    @POST("api/bills/amountbill")
+    fun getBillAmount(
+        @Field("order_id")orderId:String,
+        @Field("product_code")productCode:String
+    ):Call<ResponseGetBillAmount>
 }

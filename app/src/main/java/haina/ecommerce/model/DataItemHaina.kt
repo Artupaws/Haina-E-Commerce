@@ -7,6 +7,9 @@ data class DataItemHaina(
 		@field:SerializedName("name")
 		val name: String? = null,
 
+		@field:SerializedName("name_zh")
+		val nameZh: String? = null,
+
 		@field:SerializedName("display_name")
 		val displayName: String? = null,
 

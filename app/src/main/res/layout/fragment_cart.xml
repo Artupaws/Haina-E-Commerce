@@ -58,6 +58,7 @@
             android:orientation="horizontal"
             android:weightSum="2"
             android:padding="15dp"
+            android:visibility="gone"
             android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

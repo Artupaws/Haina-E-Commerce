@@ -212,7 +212,7 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
 
     override fun getLoadJobCategory(itemHaina: MutableList<DataItemHaina?>?) {
         val category = mutableListOf<DataItemHaina?>()
-        category.addAll(listOf(DataItemHaina("All Category", "All Category", -1)))
+        category.addAll(listOf(DataItemHaina("All Category", "All Category", "",-1)))
         category.addAll(itemHaina!!)
         val jobCategoryAdapter = AdapterJobCategoryOnJob(this, category)
         binding.rvCategoryJob.apply {

@@ -13,13 +13,18 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemJobCategoryBinding
+import haina.ecommerce.databinding.ListItemServiceBinding
 import haina.ecommerce.model.DataItemHaina
+import haina.ecommerce.model.service.CategoryService
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 
 class AdapterJobCategoryOnJob(private val context: Context, private val jobList: MutableList<DataItemHaina?>?): RecyclerView.Adapter<AdapterJobCategoryOnJob.Holder>(){
 
     private var index:Int = 0
     private var responseId:Int =0
     private var broadcaster: LocalBroadcastManager? = null
+    private lateinit var sharedPref: SharedPreferenceHelper
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val binding = ListItemJobCategoryBinding.bind(itemView)
@@ -42,6 +47,9 @@ class AdapterJobCategoryOnJob(private val context: Context, private val jobList:
                     broadcaster?.sendBroadcast(setJobCategory)
                 }
 
+                val codeLanguage = sharedPref.getValueString(Constants.LANGUAGE_APP)
+                setLanguage(codeLanguage!!, binding, itemHaina)
+
                 if (index == adapterPosition){
                     linearCategory.setBackgroundResource(R.drawable.background_line_corner_input_text_black)
                 } else {
@@ -55,6 +63,7 @@ class AdapterJobCategoryOnJob(private val context: Context, private val jobList:
         broadcaster = LocalBroadcastManager.getInstance(context)
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemJobCategoryBinding.inflate(inflater)
+        sharedPref = SharedPreferenceHelper(context)
         return Holder(binding.root)
     }
 
@@ -64,4 +73,16 @@ class AdapterJobCategoryOnJob(private val context: Context, private val jobList:
     }
 
     override fun getItemCount(): Int = jobList?.size!!
+
+    private fun setLanguage(codeLanguage:String, binding: ListItemJobCategoryBinding, data: DataItemHaina){
+        when (codeLanguage){
+            "zh" -> {
+                binding.tvTitleCategoryJob.text = data.nameZh
+            }
+            "en" -> {
+                binding.tvTitleCategoryJob.text = data.name
+            }
+        }
+
+    }
 }

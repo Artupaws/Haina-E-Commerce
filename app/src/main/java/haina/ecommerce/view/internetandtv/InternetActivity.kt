@@ -12,6 +12,7 @@ import android.widget.Toast
 import haina.ecommerce.R
 import haina.ecommerce.adapter.service.AdapterSpinnerProductService
 import haina.ecommerce.databinding.ActivityInternetBinding
+import haina.ecommerce.model.bill.DataBill
 import haina.ecommerce.model.productservice.DataProductService
 import haina.ecommerce.model.productservice.Product
 import haina.ecommerce.view.checkout.CheckoutActivity

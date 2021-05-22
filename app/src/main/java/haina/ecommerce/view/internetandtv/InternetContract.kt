@@ -1,5 +1,6 @@
 package haina.ecommerce.view.internetandtv
 
+import haina.ecommerce.model.bill.DataBill
 import haina.ecommerce.model.productservice.DataProductService
 
 interface InternetContract {

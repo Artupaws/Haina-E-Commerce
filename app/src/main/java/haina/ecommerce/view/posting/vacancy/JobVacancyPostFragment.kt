@@ -75,11 +75,6 @@ class JobVacancyPostFragment : Fragment(), VacancyContract, View.OnClickListener
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     override fun successLoadMyPost(msg: String) {
         Log.d("MyPost", msg)
         if (msg.isEmpty()) {

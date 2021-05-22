@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemServiceCategoryBinding
 import haina.ecommerce.model.service.DataService
+import haina.ecommerce.preference.SharedPreferenceHelper
 
 
 class AdapterServiceCategory(val context: Context, private val listServiceCategory: List<DataService?>?):
@@ -40,7 +41,6 @@ class AdapterServiceCategory(val context: Context, private val listServiceCatego
         binding.rvService.apply {
             adapter = AdapterService(context, dataService.category)
             layoutManager = GridLayoutManager(context, 4)
-
         }
     }
 

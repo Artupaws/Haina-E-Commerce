@@ -2,6 +2,7 @@ package haina.ecommerce.view.internetandtv
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.model.bill.ResponseGetBillAmount
 import haina.ecommerce.model.productservice.ResponseGetProductService
 import org.json.JSONObject
 import retrofit2.Call
@@ -29,5 +30,4 @@ class InternetPresenter(val view:InternetContract, val context: Context) {
 
         })
     }
-
 }

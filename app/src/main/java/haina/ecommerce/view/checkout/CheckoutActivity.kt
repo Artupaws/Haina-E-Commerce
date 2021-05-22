@@ -9,9 +9,13 @@ import android.widget.Toast
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityCheckoutBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.Login
+import haina.ecommerce.model.bill.DataBill
 import haina.ecommerce.model.pulsaanddata.RequestPulsa
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.MainActivity
+import haina.ecommerce.view.login.LoginActivity
 import haina.ecommerce.view.paymentmethod.PaymentActivity
 
 class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutContract {
@@ -25,6 +29,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
     private lateinit var presenter: CheckoutPresenter
     private var typeTransaction:Int = 0
     private lateinit var requestPulsa:RequestPulsa
+    private var backTo:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +43,17 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         binding.toolbarCheckout.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarCheckout.title = "Checkout"
         binding.btnPayment.setOnClickListener(this)
+        binding.btnLogin.setOnClickListener(this)
 
         customerNumber = sharedPref.getValueString(Constants.PREF_PHONE_NUMBER_PULSA)
         binding.tvNumber.text = customerNumber
-        val productCode = intent?.getIntExtra("productCode", 0)
+        val productCode = intent?.getStringExtra("productCode")
+        Toast.makeText(applicationContext, productCode, Toast.LENGTH_SHORT).show()
         val customerNumber = intent?.getStringExtra("customerNumber")
+//        presenter.getBillAmount(productCode!!, customerNumber!!)
         val typeTransactionParams = intent.getIntExtra("typeTransaction", 0)
         typeTransaction(typeTransactionParams)
+        statusLogin(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
     }
 
     override fun onClick(v: View?) {
@@ -59,6 +68,19 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                     }
                 }
             }
+            R.id.btn_login -> {
+                val intent = Intent(applicationContext, LoginActivity::class.java)
+                    .putExtra("loginMethod", 0)
+                startActivity(intent)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        statusLogin(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
+        if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+            backTo = 1
         }
     }
 
@@ -91,6 +113,19 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         }
     }
 
+    private fun statusLogin(status:Boolean){
+        when(status){
+            true -> {
+                binding.btnLogin.visibility = View.GONE
+                binding.btnPayment.visibility = View.VISIBLE
+            }
+            else -> {
+                binding.btnLogin.visibility = View.VISIBLE
+                binding.btnPayment.visibility = View.GONE
+            }
+        }
+    }
+
     private fun move(status:String){
         if (status.contains("Success")){
             when(typeTransaction){
@@ -107,14 +142,39 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                     startActivity(intent)
                 }
             }
-
         } else {
             Toast.makeText(applicationContext, status, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onBackPressed() {
+        when(backTo) {
+            1 -> {
+                val intent = Intent(applicationContext, MainActivity::class.java)
+                startActivity(intent)
+                finishAffinity()
+            }
+            0 -> {
+                super.onBackPressed()
+            }
         }
     }
 
     override fun messageCheckout(msg: String) {
         Log.d("checkout", msg)
         move(msg)
+    }
+
+    override fun messageGetBillAmount(msg: String) {
+        Log.d("getBillAmount", msg)
+    }
+
+    override fun getDataBillAmount(data: DataBill) {
+        binding.includeDataProductBill.tvCustomerNumber.text = data.customerId
+        binding.includeDataProductBill.tvNameCustomer.text = data.customerName
+        binding.includeDataProductBill.tvBill.text = data.billAmount
+        binding.includeDataProductBill.tvBillDate.text = data.billPeriod
+        binding.includeDataProductBill.tvAdminFee.text = "0"
+        binding.tvTotalPay.text = data.totalBill
     }
 }

@@ -18,6 +18,7 @@ import haina.ecommerce.databinding.ListItemJobCategoryBinding
 import haina.ecommerce.databinding.ListItemJobVacancyBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataItemJob
+import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.view.detailjob.DetailJobActivity
 
 class AdapterJobVacancy(private val context: Context, private val jobList: List<DataItemJob?>?): RecyclerView.Adapter<AdapterJobVacancy.Holder>(){

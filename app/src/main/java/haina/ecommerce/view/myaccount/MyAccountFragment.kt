@@ -191,6 +191,11 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.getDataUserProfile()
+    }
+
     companion object {
         //image pick code
         private val IMAGE_PICK_CODE = 1000

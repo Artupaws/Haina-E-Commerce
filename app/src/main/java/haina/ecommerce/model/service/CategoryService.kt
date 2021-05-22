@@ -10,6 +10,9 @@ data class CategoryService(
 	@field:SerializedName("name")
 	val name: String? = null,
 
+	@field:SerializedName("name_zh")
+	val nameZh: String? = null,
+
 	@field:SerializedName("icon")
 	val iconCode: String? = null,
 

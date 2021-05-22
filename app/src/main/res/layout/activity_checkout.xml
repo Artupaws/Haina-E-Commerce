@@ -198,15 +198,33 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_payment"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:backgroundTint="@color/yellow"
-            android:text="@string/payment"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
+            android:layout_weight="0.5">
+
+            <Button
+                android:id="@+id/btn_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Button.Primary"
+                android:backgroundTint="@color/yellow"
+                android:text="@string/payment"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Button.Primary"
+                android:visibility="gone"
+                android:backgroundTint="@color/yellow"
+                android:text="@string/login"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+        </FrameLayout>
 
     </LinearLayout>
 

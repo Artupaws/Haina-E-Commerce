@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
             .requestIdToken(applicationContext.getString(R.string.default_web_client_id))
             .build()
         gsc = GoogleSignIn.getClient(this, gso)
-
+        loginMethod = intent?.getIntExtra("loginMethod", 0)
         binding.btnLogin.setOnClickListener(this)
         binding.btnRegister.setOnClickListener(this)
         binding.linearGoogle.setOnClickListener(this)
@@ -125,7 +125,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
                     Toast.makeText(applicationContext, "Login", Toast.LENGTH_SHORT).show()
                     move(loginMethod)
                 } else {
-                    loginMethod = null
+                    loginMethod = 0
                     Snackbar.make(binding.linearGoogle, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
                 }
             }
@@ -180,9 +180,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
     private fun move(method:Int?){
         if (method == 0){
             sharedPreferenceHelper.save(Constants.PREF_IS_LOGIN, true)
-            val intent = Intent(applicationContext, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            onBackPressed()
+//            val intent = Intent(applicationContext, MainActivity::class.java)
+//            startActivity(intent)
+//            finish()
         } else if (method == 1){
             sharedPreferenceHelper.save(Constants.PREF_IS_LOGIN, true)
             val intent = Intent(applicationContext, MainActivity::class.java)

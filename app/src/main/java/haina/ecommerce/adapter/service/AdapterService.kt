@@ -14,7 +14,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.caverock.androidsvg.SVG
 import haina.ecommerce.databinding.ListItemServiceBinding
+import haina.ecommerce.databinding.ListItemServiceCategoryBinding
 import haina.ecommerce.model.service.CategoryService
+import haina.ecommerce.model.service.DataService
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.electricity.ElectricityActivity
 import haina.ecommerce.view.housephone.HousePhoneActivity
 import haina.ecommerce.view.internetandtv.InternetActivity
@@ -26,6 +30,8 @@ import java.net.URL
 class AdapterService(val context: Context, private val listService: List<CategoryService?>?):
     RecyclerView.Adapter<AdapterService.Holder>() {
 
+    private lateinit var sharedPref: SharedPreferenceHelper
+
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemServiceBinding.bind(view)
         fun bind(itemHaina: CategoryService){
@@ -33,6 +39,8 @@ class AdapterService(val context: Context, private val listService: List<Categor
                 tvTitleService.text = itemHaina.name
                 val icon = HtmlCompat.fromHtml("${itemHaina.iconCode}",HtmlCompat.FROM_HTML_MODE_LEGACY)
                 ivIconService.text = icon
+                val codeLanguage = sharedPref.getValueString(Constants.LANGUAGE_APP)
+                setLanguage(codeLanguage!!, binding, itemHaina)
                 itemView.setOnClickListener {
                     when(itemHaina.name){
                         "Internet Service Provider" -> {
@@ -88,6 +96,7 @@ class AdapterService(val context: Context, private val listService: List<Categor
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterService.Holder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemServiceBinding.inflate(inflater)
+        sharedPref = SharedPreferenceHelper(context)
         return Holder(binding.root)
     }
 
@@ -97,5 +106,17 @@ class AdapterService(val context: Context, private val listService: List<Categor
     }
 
     override fun getItemCount(): Int = listService?.size!!
+
+    private fun setLanguage(codeLanguage:String, binding: ListItemServiceBinding, data: CategoryService){
+        when (codeLanguage){
+            "zh" -> {
+                binding.tvTitleService.text = data.nameZh
+            }
+            "en" -> {
+                binding.tvTitleService.text = data.name
+            }
+        }
+
+    }
 
 }

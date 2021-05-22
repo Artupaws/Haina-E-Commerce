@@ -15,10 +15,10 @@
         android:icon="@drawable/ic_add_posting"
         android:title="@string/posting" />
 
-    <item
-        android:id="@+id/cartFragment"
-        android:icon="@drawable/ic_cart"
-        android:title="@string/cart" />
+<!--    <item-->
+<!--        android:id="@+id/cartFragment"-->
+<!--        android:icon="@drawable/ic_cart"-->
+<!--        android:title="@string/cart" />-->
 
     <item
         android:id="@+id/myAccountFragment"

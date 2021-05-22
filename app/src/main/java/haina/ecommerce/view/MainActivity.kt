@@ -67,9 +67,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             R.id.postingFragment -> {
                 fragment = PostingFragment()
             }
-            R.id.cartFragment -> {
-                fragment = CartFragment()
-            }
+//            R.id.cartFragment -> {
+//                fragment = CartFragment()
+//            }
             R.id.myAccountFragment -> {
                 fragment = MyAccountFragment()
             }
