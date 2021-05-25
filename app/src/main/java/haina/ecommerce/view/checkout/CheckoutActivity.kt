@@ -6,11 +6,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.text.HtmlCompat
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityCheckoutBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.helper.Helper.convertLongtoDate
 import haina.ecommerce.model.Login
 import haina.ecommerce.model.bill.DataBill
+import haina.ecommerce.model.bill.DataInquiry
+import haina.ecommerce.model.bill.RequestBill
 import haina.ecommerce.model.pulsaanddata.RequestPulsa
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
@@ -48,10 +52,11 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         customerNumber = sharedPref.getValueString(Constants.PREF_PHONE_NUMBER_PULSA)
         binding.tvNumber.text = customerNumber
         val productCode = intent?.getStringExtra("productCode")
-        Toast.makeText(applicationContext, productCode, Toast.LENGTH_SHORT).show()
         val customerNumber = intent?.getStringExtra("customerNumber")
-//        presenter.getBillAmount(productCode!!, customerNumber!!)
+        val requestBill = intent?.getParcelableExtra<RequestBill>("requestBill")
+        val dataBill = intent?.getParcelableExtra<DataInquiry>("dataBill")
         val typeTransactionParams = intent.getIntExtra("typeTransaction", 0)
+        dataBill?.let { setDetailBillToView(it, sharedPref.getValueString(Constants.LANGUAGE_APP)!!) }
         typeTransaction(typeTransactionParams)
         statusLogin(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
     }
@@ -64,8 +69,12 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                         presenter.checkout(requestPulsa.phoneNumber, requestPulsa.idProduct)
                     }
                     2 -> {
-                        presenter.checkout(requestPulsa.phoneNumber, requestPulsa.idProduct)
+                        val intent = Intent(applicationContext, PaymentActivity::class.java)
+                            .putExtra("dataPulsa", requestPulsa)
+                            .putExtra("typeTransaction", 1)
+                        startActivity(intent)
                     }
+
                 }
             }
             R.id.btn_login -> {
@@ -160,21 +169,45 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         }
     }
 
+//    override fun messageCheckout(msg: String) {
+//        Log.d("checkout", msg)
+//        move(msg)
+//    }
+//
+//    override fun messageGetBillAmount(msg: String) {
+//        Log.d("getBillAmount", msg)
+//    }
+//
+//    override fun getDataBillAmount(data: DataInquiry) {
+//        binding.includeDataProductBill.tvCustomerNumber.text = data.dataBill?.customerId
+//        binding.includeDataProductBill.tvNameCustomer.text = data.dataBill?.customerName
+//        binding.includeDataProductBill.tvBill.text = helper.convertToFormatMoneyIDRFilter(data.billAmount.toString())
+//        binding.includeDataProductBill.tvBillDate.text = data.dataBill?.billPeriod
+//        binding.includeDataProductBill.tvAdminFee.text = "0"
+//        binding.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(data.amount.toString())
+//    }
+
+    private fun setDetailBillToView(data:DataInquiry, codeLanguage:String){
+        binding.includeDataProductBill.tvCustomerNumber.text = data.dataBill?.customerId
+        binding.includeDataProductBill.tvNameCustomer.text = data.dataBill?.customerName
+        binding.includeDataProductBill.tvBill.text = data.billAmount.toString()
+        binding.includeDataProductBill.tvBillDate.text = data.dataBill?.billDate
+        binding.includeDataProductBill.tvAdminFee.text = "0"
+        binding.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(data.amount.toString())
+        val icon = HtmlCompat.fromHtml("${data.iconCode}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+        binding.faIcon.text = icon
+        when(codeLanguage){
+            "en" -> {
+                binding.tvTitleService.text = data.category
+            }
+            "zh" -> {
+                binding.tvTitleService.text = data.categoryZh
+            }
+        }
+    }
+
     override fun messageCheckout(msg: String) {
         Log.d("checkout", msg)
         move(msg)
-    }
-
-    override fun messageGetBillAmount(msg: String) {
-        Log.d("getBillAmount", msg)
-    }
-
-    override fun getDataBillAmount(data: DataBill) {
-        binding.includeDataProductBill.tvCustomerNumber.text = data.customerId
-        binding.includeDataProductBill.tvNameCustomer.text = data.customerName
-        binding.includeDataProductBill.tvBill.text = data.billAmount
-        binding.includeDataProductBill.tvBillDate.text = data.billPeriod
-        binding.includeDataProductBill.tvAdminFee.text = "0"
-        binding.tvTotalPay.text = data.totalBill
     }
 }

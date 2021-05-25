@@ -13,7 +13,7 @@ import haina.ecommerce.model.productservice.DataProductService
 import haina.ecommerce.view.internetandtv.InternetContract
 import haina.ecommerce.view.internetandtv.InternetPresenter
 
-class WaterActivity : AppCompatActivity(), InternetContract {
+class WaterActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityWaterBinding
     private lateinit var presenter: InternetPresenter
@@ -25,7 +25,6 @@ class WaterActivity : AppCompatActivity(), InternetContract {
         setContentView(binding.root)
 
         val idProductCategory = intent?.getIntExtra("idProductCategory", 0)
-        presenter = InternetPresenter(this, this)
         presenter.getProductService(idProductCategory!!)
         binding.toolbarWater.title = "Water PDAM"
         binding.toolbarWater.setNavigationIcon(R.drawable.ic_back_black)
@@ -48,11 +47,4 @@ class WaterActivity : AppCompatActivity(), InternetContract {
         }
     }
 
-    override fun messageGetProductService(msg: String) {
-        Log.d("productService", msg)
-    }
-
-    override fun getDataProductService(data: List<DataProductService?>?) {
-        setSpinnerProduct(data)
-    }
 }

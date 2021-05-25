@@ -2,6 +2,7 @@ package haina.ecommerce.api
 
 import haina.ecommerce.model.*
 import haina.ecommerce.model.bill.ResponseGetBillAmount
+import haina.ecommerce.model.bill.ResponseGetBillDirect
 import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.hotels.*
@@ -340,12 +341,6 @@ interface NetworkService {
     @GET("api/hotel")
     fun getAllHotel():Call<ResponseGetListHotel>
 
-    //Get Detail Hotel
-//    @GET("api/hotel/{id_hotel}")
-//    fun getDetailHotel(
-//        @Path(value = "id_hotel", encoded = true)idHotel:Int
-//    ):Call<ResponseGetDetailHotel>
-
     //Currency Exchange Rate
     @FormUrlEncoded
     @GET("v6/{api_key}/latest/{code_country}")
@@ -416,4 +411,12 @@ interface NetworkService {
         @Field("order_id")orderId:String,
         @Field("product_code")productCode:String
     ):Call<ResponseGetBillAmount>
+
+    //Get Bill Direct (no inquiry)
+    @FormUrlEncoded
+    @POST("api/bills/directbill")
+    fun getDirectBill(
+        @Field("order_id")orderId:String,
+        @Field("product_code")productCode:String
+    ):Call<ResponseGetBillDirect>
 }

@@ -33,7 +33,7 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
     private var serviceType: String? = null
     private var statusResetPrice:String? = null
     private var idProduct:Int? = null
-    private var typeTransaction:Int = 2
+    private var typeTransaction:Int = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentPaketDataBinding.inflate(inflater, container, false)

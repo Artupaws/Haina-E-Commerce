@@ -37,55 +37,84 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:padding="10dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
                     <TextView
                         android:id="@+id/tv_title_provider"
                         style="@style/TextView.Poppins12spGrey"
-                        android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/black"
                         tools:text="@string/internet_tv_services" />
 
                     <Spinner
                         android:id="@+id/spn_services"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_marginTop="5dp" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:background="@color/black"/>
+                        android:background="@color/black" />
 
                     <TextView
                         android:id="@+id/tv_title_customer_number"
                         style="@style/TextView.Poppins12spGrey"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
                         android:layout_marginTop="10dp"
+                        android:textColor="@color/black"
                         tools:text="@string/customer_number_internet_tv" />
 
                     <EditText
                         android:id="@+id/et_customer_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:layout_marginTop="5dp"/>
+                        android:inputType="number"
+                        android:layout_marginTop="5dp"
+                        android:background="@android:color/transparent" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:background="@color/black"/>
+                        android:background="@color/black" />
 
-                    <Button
-                        android:id="@+id/btn_next"
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/next_title"/>
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp">
+
+                        <RelativeLayout
+                            android:id="@+id/relative_loading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/background_loading"
+                            android:visibility="invisible">
+
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:id="@+id/iv_loading"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                app:lottie_autoPlay="true"
+                                app:lottie_loop="true"
+                                app:lottie_rawRes="@raw/loading" />
+                        </RelativeLayout>
+
+                        <Button
+                            android:id="@+id/btn_next"
+                            style="@style/Button.Primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:backgroundTint="@color/black"
+                            android:text="@string/next_title"
+                            android:textColor="@color/white" />
+                    </FrameLayout>
+
 
                 </LinearLayout>
 

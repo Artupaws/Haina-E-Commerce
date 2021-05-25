@@ -49,13 +49,13 @@ class AdapterService(val context: Context, private val listService: List<Categor
                                 .putExtra("category", itemHaina.name)
                             context.startActivity(intent)
                         }
-                        "PLN" -> {
+                        "Electricity" -> {
                             val intent = Intent(context, InternetActivity::class.java)
                                 .putExtra("idProductCategory", itemHaina.id)
                                 .putExtra("category", itemHaina.name)
                             context.startActivity(intent)
                         }
-                        "PDAM" -> {
+                        "Water" -> {
                             val intent = Intent(context, InternetActivity::class.java)
                                 .putExtra("idProductCategory", itemHaina.id)
                                 .putExtra("category", itemHaina.name)
@@ -67,7 +67,7 @@ class AdapterService(val context: Context, private val listService: List<Categor
                                 .putExtra("category", itemHaina.name)
                             context.startActivity(intent)
                         }
-                        "Pulsa" -> {
+                        "Mobile Credits" -> {
                             val intent = Intent(context, TopupActivity::class.java)
                             context.startActivity(intent)
                         }
@@ -116,7 +116,6 @@ class AdapterService(val context: Context, private val listService: List<Categor
                 binding.tvTitleService.text = data.name
             }
         }
-
     }
 
 }

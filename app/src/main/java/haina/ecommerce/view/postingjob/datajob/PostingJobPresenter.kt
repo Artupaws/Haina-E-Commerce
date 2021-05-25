@@ -7,6 +7,7 @@ import haina.ecommerce.model.ResponseJobCategory
 import haina.ecommerce.model.ResponsePostingJobVacancy
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
@@ -44,7 +45,8 @@ class PostingJobPresenter(val view: PostingJobContract, val context: Context) {
                     view.getValuePostingJob(data)
                     view.successPostingJob(response.body()?.message.toString())
                 } else {
-                    view.errorPostingJob(response.body()?.message.toString())
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.errorPostingJob(error.getString("message"))
                 }
             }
 

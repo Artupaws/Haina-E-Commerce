@@ -1,5 +1,6 @@
 package haina.ecommerce.view.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -90,6 +92,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
                 binding.btnRegister.isEnabled = false
                 binding.linearGoogle.isClickable = false
                 checkLogin()
+                this.currentFocus?.let { view ->
+                    val imm = applicationContext.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                    imm?.hideSoftInputFromWindow(view.windowToken, 0)
+                }
             }
             R.id.btn_register -> {
                 val intent = Intent(this, RegisterActivity::class.java)

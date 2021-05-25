@@ -100,7 +100,11 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
             when (intent?.action) {
                 "productPhone" -> {
                     val dataProductPhone = intent.getParcelableExtra<ProductPhone>("pulsa")
-                    getListPulsa(dataProductPhone)
+                    if (dataProductPhone.provider?.name.isNullOrEmpty()){
+                        binding?.tvNumberEmpty?.visibility = View.VISIBLE
+                    } else {
+                        getListPulsa(dataProductPhone)
+                    }
                 }
 //                "resetPrice" -> {
 //                    val statusResetPrice = intent.getStringExtra("reset")
@@ -131,16 +135,16 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
     fun getListPulsa(data: ProductPhone?) {
         Log.d("itemPulsa", data?.group?.pulsa?.size.toString())
         val adapterPulsa = AdapterPulsa(requireContext(), data?.group?.pulsa, this@PulsaFragment)
-        if (data?.group?.pulsa?.isEmpty() == true) {
-            binding?.tvNumberEmpty?.visibility = View.VISIBLE
-            binding?.rvPulsa?.visibility = View.GONE
-        } else {
+//        if (data?.group?.pulsa?.isEmpty() == true) {
+//            binding?.tvNumberEmpty?.visibility = View.VISIBLE
+//            binding?.rvPulsa?.visibility = View.GONE
+//        } else {
             binding?.tvNumberEmpty?.visibility = View.GONE
             binding?.rvPulsa?.visibility = View.VISIBLE
             binding?.rvPulsa?.apply {
                 adapter = adapterPulsa
                 layoutManager = GridLayoutManager(requireContext(), 2)
-            }
+//            }
         }
 
         adapterPulsa.indexChoose = {i:Int->

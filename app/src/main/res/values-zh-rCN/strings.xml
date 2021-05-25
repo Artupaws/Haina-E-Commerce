@@ -228,7 +228,7 @@
     <string name="virtual_account">虚拟帐号</string>
     <string name="bank_transfer">银行转帐</string>
     <string name="copy">复制</string>
-    <string name="internet_credit">互联网信用</string>
+    <string name="internet_credit">流动方案</string>
     <string name="electronic_money_title">电子货币</string>
     <string name="card_number">卡号</string>
     <string name="provider">提供者</string>

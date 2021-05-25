@@ -13,7 +13,7 @@ import haina.ecommerce.model.productservice.DataProductService
 import haina.ecommerce.view.internetandtv.InternetContract
 import haina.ecommerce.view.internetandtv.InternetPresenter
 
-class ElectricityActivity : AppCompatActivity(), InternetContract {
+class ElectricityActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityElectricityBinding
     private lateinit var presenter: InternetPresenter
@@ -25,7 +25,7 @@ class ElectricityActivity : AppCompatActivity(), InternetContract {
         setContentView(binding.root)
 
         val idProductCategory = intent?.getIntExtra("idProductCategory", 0)
-        presenter = InternetPresenter(this, this)
+//        presenter = InternetPresenter(this, this)
         presenter.getProductService(idProductCategory!!)
         binding.toolbarElectricity.title = "PLN Electricity"
         binding.toolbarElectricity.setNavigationIcon(R.drawable.ic_back_black)
@@ -49,11 +49,11 @@ class ElectricityActivity : AppCompatActivity(), InternetContract {
         }
     }
 
-    override fun messageGetProductService(msg: String) {
-        Log.d("productService", msg)
-    }
-
-    override fun getDataProductService(data: List<DataProductService?>?) {
-        setSpinnerProduct(data)
-    }
+//    override fun messageGetProductService(msg: String) {
+//        Log.d("productService", msg)
+//    }
+//
+//    override fun getDataProductService(data: List<DataProductService?>?) {
+//        setSpinnerProduct(data)
+//    }
 }

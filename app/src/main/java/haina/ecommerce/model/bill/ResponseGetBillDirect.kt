@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ResponseGetBillAmount(
+data class ResponseGetBillDirect(
 
     @field:SerializedName("value")
     val value: Int? = null,

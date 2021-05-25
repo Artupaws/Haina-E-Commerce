@@ -106,11 +106,6 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                 binding.tvTotalBill.text = dataPulsa?.totalPrice
                 price = dataPulsa?.totalPrice
             }
-            2 -> {
-                dataPulsa = intent.getParcelableExtra("dataPulsa")
-                binding.tvTotalBill.text = dataPulsa?.totalPrice
-                price = dataPulsa?.totalPrice
-            }
             3 -> {
                 dataBooking = intent.getParcelableExtra("dataBooking")
                 binding.tvTotalBill.text = dataBooking?.totalPrice
