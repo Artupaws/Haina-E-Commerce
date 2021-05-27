@@ -57,12 +57,6 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_next -> {
-//                val intent = Intent(requireContext(), CheckoutActivity::class.java)
-//                        .putExtra("totalPrice", totalPrice)
-//                        .putExtra("titleService", "Pulsa")
-//                        .putExtra("serviceType", serviceType)
-//                        .putExtra("idProduct", idProduct)
-//                startActivity(intent)
                 checkDataPulsa()
             }
         }

@@ -21,6 +21,7 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterPaymentMethod
 import haina.ecommerce.databinding.ActivityPaymentBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.bill.RequestBill
 import haina.ecommerce.model.hotels.Requesthotel
 import haina.ecommerce.model.paymentmethod.DataPaymentMethod
 import haina.ecommerce.model.pulsaanddata.RequestPulsa
@@ -39,6 +40,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     private var idPaymentMethod: Int? = null
     private var typeTransactionParams:Int = 0
     private var dataPulsa:RequestPulsa? = null
+    private var requestBill:RequestBill? = null
     private var dataBooking:Requesthotel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,8 +69,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                     1 -> { presenter.createTransaction(dataPulsa?.phoneNumber!!, dataPulsa?.idProduct!!,
                     idPaymentMethod!!)
                     }
-                    2 -> {presenter.createTransaction(dataPulsa?.phoneNumber!!, dataPulsa?.idProduct!!,
-                        idPaymentMethod!!)
+                    2 -> {presenter.createBillTransaction(requestBill?.productCode!!, requestBill?.amount!!, requestBill?.adminFee!!, requestBill?.customerNumber!!, idPaymentMethod!!)
                     }
                     3 -> { presenter.createBookingHotel(dataBooking?.hotelId!!, dataBooking?.roomId!!, dataBooking?.checkIn!!, dataBooking?.checkOut!!, dataBooking?.totalGuest!!,
                    helper.changeFormatMoneyToValueFilter(dataBooking?.totalPrice)?.toInt()!!, idPaymentMethod!!)
@@ -105,6 +106,14 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                 dataPulsa = intent.getParcelableExtra("dataPulsa")
                 binding.tvTotalBill.text = dataPulsa?.totalPrice
                 price = dataPulsa?.totalPrice
+            }
+            2 -> {
+                requestBill = intent.getParcelableExtra("request")
+                Log.d("dataBill", requestBill.toString())
+                Toast.makeText(applicationContext, requestBill.toString(), Toast.LENGTH_SHORT).show()
+                binding.tvTotalBill.text = dataPulsa?.totalPrice
+                val totalPrice = requestBill?.adminFee?.toInt()?.plus(requestBill?.amount?.toInt()!!)
+                price = totalPrice.toString()
             }
             3 -> {
                 dataBooking = intent.getParcelableExtra("dataBooking")
@@ -151,6 +160,17 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
 
     override fun messageCreateTransaction(msg: String) {
         Log.d("transactionPulsa", msg)
+        if (msg.contains("Success")){
+            val intent = Intent(applicationContext, HistoryTransactionActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
+        } else {
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun messageCreateBillTransaction(msg: String) {
+        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         if (msg.contains("Success")){
             val intent = Intent(applicationContext, HistoryTransactionActivity::class.java)
             startActivity(intent)

@@ -1,6 +1,7 @@
 package haina.ecommerce.api
 
 import haina.ecommerce.model.*
+import haina.ecommerce.model.bill.ResponseAddBillTransaction
 import haina.ecommerce.model.bill.ResponseGetBillAmount
 import haina.ecommerce.model.bill.ResponseGetBillDirect
 import haina.ecommerce.model.checkout.ResponseCheckout
@@ -419,4 +420,15 @@ interface NetworkService {
         @Field("order_id")orderId:String,
         @Field("product_code")productCode:String
     ):Call<ResponseGetBillDirect>
+
+    //Add Bill Transaction
+    @FormUrlEncoded
+    @POST("api/bills/transaction")
+    fun addBillTransaction(
+        @Field("product_code")productCode:String,
+        @Field("amount")amount:String,
+        @Field("adminfee")adminFee:String,
+        @Field("customer_number")customerNumber: String,
+        @Field("id_payment_method")idPaymentMethod: Int
+    ):Call<ResponseAddBillTransaction>
 }

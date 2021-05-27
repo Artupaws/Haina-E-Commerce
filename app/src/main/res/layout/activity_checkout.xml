@@ -48,9 +48,18 @@
                 android:layout_margin="10dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"
+                style="@style/TextView.Poppins14spBlack"
                 tools:text="Pulsa" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/black"
+            style="@style/TextView.Poppins14spBlack"
+            tools:text="Pulsa" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -84,6 +93,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/service_type"
+                        style="@style/TextView.Poppins12spGrey"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -112,6 +122,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/number"
+                        style="@style/TextView.Poppins12spGrey"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -140,6 +151,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/price"
+                        style="@style/TextView.Poppins12spGrey"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -185,6 +197,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/total_payment"
+                style="@style/TextView.Poppins12spGrey"
                 android:textColor="@color/black" />
 
             <TextView

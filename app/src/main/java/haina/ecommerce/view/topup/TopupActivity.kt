@@ -194,9 +194,6 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
                         setPhoneUser(helper.formatPhoneNumber(cNumber))
                     }
                 }
-//                val intentResetPrice = Intent("resetPrice")
-//                        .putExtra("reset","true")
-//                broadcaster?.sendBroadcast(intentResetPrice)
             }
         }
     }

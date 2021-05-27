@@ -60,7 +60,7 @@ class InternetPresenter(val view:InternetContract, val context: Context) {
                 if (response.isSuccessful){
                     view.messageGetBillAmount(response.body()?.message.toString())
                     val data = response.body()?.dataInquiry
-                    view.getDataBillAmount(data!!)
+                    view.getDataBillDirect(data!!)
                 } else {
                     val error = JSONObject(response.errorBody()?.string()!!)
                     view.messageGetBillAmount(error.getString("message"))

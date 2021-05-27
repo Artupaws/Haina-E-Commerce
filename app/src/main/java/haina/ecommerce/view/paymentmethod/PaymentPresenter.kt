@@ -2,6 +2,7 @@ package haina.ecommerce.view.paymentmethod
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.model.bill.ResponseAddBillTransaction
 import haina.ecommerce.model.hotels.ResponseBookingHotel
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
@@ -50,6 +51,26 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
 
         })
     }
+
+    fun createBillTransaction(productCode:String, amount:String, adminFee:String, customerNumber:String, idPaymentMethod:Int){
+        val createTransaction = NetworkConfig().getConnectionHainaBearer(context).addBillTransaction(productCode, amount, adminFee, customerNumber, idPaymentMethod)
+        createTransaction.enqueue(object : retrofit2.Callback<ResponseAddBillTransaction>{
+            override fun onResponse(call: Call<ResponseAddBillTransaction>, response: Response<ResponseAddBillTransaction>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageCreateBillTransaction(response.body()?.message.toString())
+                } else {
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.messageCreateBillTransaction(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseAddBillTransaction>, t: Throwable) {
+                view.messageCreateBillTransaction(t.localizedMessage.toString())
+            }
+
+        })
+    }
+
 
     fun createBookingHotel(hotelId:Int, roomId:Int, checkIn:String, checkOut:String, totalGuest:Int, totalPrice:Int, idPaymentMethod:Int){
         val createBooking = NetworkConfig().getNetworkHotelBearer(context).createBookingHotel(hotelId, roomId, checkIn, checkOut, totalGuest, totalPrice, idPaymentMethod)

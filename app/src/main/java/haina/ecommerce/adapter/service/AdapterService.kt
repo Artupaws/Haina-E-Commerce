@@ -71,7 +71,7 @@ class AdapterService(val context: Context, private val listService: List<Categor
                             val intent = Intent(context, TopupActivity::class.java)
                             context.startActivity(intent)
                         }
-                        "Paket Data" -> {
+                        "Data Plan" -> {
                             val intent = Intent(context, TopupActivity::class.java)
                             context.startActivity(intent)
                         }

@@ -22,11 +22,14 @@ data class DataNoInquiry (
     @field:SerializedName ("order_id")
     val orderId:String? = null,
 
-    @field:SerializedName ("amount")
-    val amount:Long? = null,
-
     @field:SerializedName ("bill_amount")
-    val billAmount:Long? = null,
+    val billAmount:String? = null,
+
+    @field:SerializedName ("admin_fee")
+    val adminFee:String? = null,
+
+    @field:SerializedName ("product")
+    val product:String? = null,
 
     @field:SerializedName ("category")
     val category:String? = null,
@@ -37,9 +40,6 @@ data class DataNoInquiry (
     @field:SerializedName ("icon_code")
     val iconCode:String? = null,
 
-    @field:SerializedName ("admin_fee")
-    val adminFee:Long? = null,
-
-    @field:SerializedName ("data")
-    val dataBill: DataBill? = null
+    @field:SerializedName ("bill_data")
+    val billData: DataBillNoInquiry? = null
 ):Parcelable

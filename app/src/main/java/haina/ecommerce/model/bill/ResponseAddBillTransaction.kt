@@ -5,14 +5,14 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ResponseGetBillDirect(
-
-    @field:SerializedName("value")
-    val value: Int? = null,
-
-    @field:SerializedName("message")
-    val message: String? = null,
+data class ResponseAddBillTransaction(
 
     @field:SerializedName("data")
-	val dataInquiry: DataNoInquiry? = null
+	val dataBillTransaction: DataBillTransaction? = null,
+
+    @field:SerializedName("message")
+	val message: String? = null,
+
+    @field:SerializedName("value")
+	val value: Int? = null
 ) : Parcelable

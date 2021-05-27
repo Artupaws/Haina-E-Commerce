@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/customer_number"
+            style="@style/TextView.Poppins12spGrey"
             android:textColor="@color/black"/>
 
         <TextView
@@ -36,6 +37,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linear_name_customer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -50,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/name_customer"
+            style="@style/TextView.Poppins12spGrey"
             android:textColor="@color/black"/>
 
         <TextView
@@ -78,6 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/bill_title"
+            style="@style/TextView.Poppins12spGrey"
             android:textColor="@color/black"/>
 
         <TextView
@@ -92,6 +96,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linear_bill_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -106,6 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/bill_date"
+            style="@style/TextView.Poppins12spGrey"
             android:textColor="@color/black"/>
 
         <TextView
@@ -135,6 +141,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/admin_fee"
+            style="@style/TextView.Poppins12spGrey"
             android:textColor="@color/black"/>
 
         <TextView

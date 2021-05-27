@@ -14,6 +14,7 @@ import haina.ecommerce.helper.Helper.convertLongtoDate
 import haina.ecommerce.model.Login
 import haina.ecommerce.model.bill.DataBill
 import haina.ecommerce.model.bill.DataInquiry
+import haina.ecommerce.model.bill.DataNoInquiry
 import haina.ecommerce.model.bill.RequestBill
 import haina.ecommerce.model.pulsaanddata.RequestPulsa
 import haina.ecommerce.preference.SharedPreferenceHelper
@@ -32,7 +33,9 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
     private lateinit var sharedPref: SharedPreferenceHelper
     private lateinit var presenter: CheckoutPresenter
     private var typeTransaction:Int = 0
-    private lateinit var requestPulsa:RequestPulsa
+    private var requestPulsa:RequestPulsa? = null
+    private var requestBill:RequestBill? = null
+    private var requestBillFromCheckout:RequestBill? = null
     private var backTo:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,12 +54,8 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
 
         customerNumber = sharedPref.getValueString(Constants.PREF_PHONE_NUMBER_PULSA)
         binding.tvNumber.text = customerNumber
-        val productCode = intent?.getStringExtra("productCode")
-        val customerNumber = intent?.getStringExtra("customerNumber")
-        val requestBill = intent?.getParcelableExtra<RequestBill>("requestBill")
-        val dataBill = intent?.getParcelableExtra<DataInquiry>("dataBill")
+
         val typeTransactionParams = intent.getIntExtra("typeTransaction", 0)
-        dataBill?.let { setDetailBillToView(it, sharedPref.getValueString(Constants.LANGUAGE_APP)!!) }
         typeTransaction(typeTransactionParams)
         statusLogin(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
     }
@@ -66,12 +65,12 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
             R.id.btn_payment -> {
                 when(typeTransaction){
                     1 -> {
-                        presenter.checkout(requestPulsa.phoneNumber, requestPulsa.idProduct)
+                        requestPulsa?.idProduct?.let { requestPulsa?.phoneNumber?.let { it1 -> presenter.checkout(it1, it) } }
                     }
                     2 -> {
                         val intent = Intent(applicationContext, PaymentActivity::class.java)
-                            .putExtra("dataPulsa", requestPulsa)
-                            .putExtra("typeTransaction", 1)
+                            .putExtra("requestasda", requestBill)
+                            .putExtra("typeTransaction", typeTransaction)
                         startActivity(intent)
                     }
 
@@ -83,6 +82,11 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                 startActivity(intent)
             }
         }
+    }
+
+    private fun completeDataBill(data: DataInquiry){
+        val totalAmount = data.billAmount.plus(data.adminFee)
+        requestBill = RequestBill(this.requestBill?.productCode, totalAmount, data.adminFee, this.requestBill?.customerNumber, null)
     }
 
     override fun onResume() {
@@ -97,23 +101,23 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         when(typeTransactionParams){
             1 -> {
                 requestPulsa = intent.getParcelableExtra("dataPulsa")
-                idProduct = requestPulsa.idProduct
-                binding.tvTotalPay.text = requestPulsa.totalPrice
-                binding.tvPrice.text = requestPulsa.totalPrice
-                binding.tvServiceType.text = requestPulsa.typeService
+                idProduct = requestPulsa?.idProduct
+                binding.tvTotalPay.text = requestPulsa?.totalPrice
+                binding.tvPrice.text = requestPulsa?.totalPrice
+                binding.tvServiceType.text = requestPulsa?.typeService
                 titleService = "Pulsa"
                 binding.tvTitleService.text = titleService
                 typeTransaction = 1
             }
             2 -> {
-                requestPulsa = intent.getParcelableExtra("dataPulsa")
-                idProduct = requestPulsa.idProduct
-                binding.tvTotalPay.text = requestPulsa.totalPrice
-                binding.tvPrice.text = requestPulsa.totalPrice
-                binding.tvServiceType.text = requestPulsa.typeService
-                titleService = "Paket Data"
-                binding.tvTitleService.text = titleService
-                typeTransaction = 1
+                val dataBill = intent?.getParcelableExtra<DataInquiry>("dataBill")
+                val dataBillNoInquiry = intent?.getParcelableExtra<DataNoInquiry>("dataBillNoInquiry")
+                dataBill?.let { setDetailBillToView(it, sharedPref.getValueString(Constants.LANGUAGE_APP)) }
+                dataBillNoInquiry?.let { setDetailBillToView(it, sharedPref.getValueString(Constants.LANGUAGE_APP)) }
+                completeDataBill(dataBill!!)
+                requestBill = intent?.getParcelableExtra("request")
+                Log.d("dataBillCheckout", requestBill.toString())
+                typeTransaction = 2
             }
             3 -> {
                 binding.linearDataProductTopup.visibility = View.GONE
@@ -144,12 +148,12 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                         .putExtra("typeTransaction", 1)
                     startActivity(intent)
                 }
-                2->{
-                    val intent = Intent(applicationContext, PaymentActivity::class.java)
-                        .putExtra("dataPulsa", requestPulsa)
-                        .putExtra("typeTransaction", 2)
-                    startActivity(intent)
-                }
+//                2->{
+//                    val intent = Intent(applicationContext, PaymentActivity::class.java)
+//                        .putExtra("request", requestBill)
+//                        .putExtra("typeTransaction", 2)
+//                    startActivity(intent)
+//                }
             }
         } else {
             Toast.makeText(applicationContext, status, Toast.LENGTH_SHORT).show()
@@ -169,31 +173,39 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         }
     }
 
-//    override fun messageCheckout(msg: String) {
-//        Log.d("checkout", msg)
-//        move(msg)
-//    }
-//
-//    override fun messageGetBillAmount(msg: String) {
-//        Log.d("getBillAmount", msg)
-//    }
-//
-//    override fun getDataBillAmount(data: DataInquiry) {
-//        binding.includeDataProductBill.tvCustomerNumber.text = data.dataBill?.customerId
-//        binding.includeDataProductBill.tvNameCustomer.text = data.dataBill?.customerName
-//        binding.includeDataProductBill.tvBill.text = helper.convertToFormatMoneyIDRFilter(data.billAmount.toString())
-//        binding.includeDataProductBill.tvBillDate.text = data.dataBill?.billPeriod
-//        binding.includeDataProductBill.tvAdminFee.text = "0"
-//        binding.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(data.amount.toString())
-//    }
-
-    private fun setDetailBillToView(data:DataInquiry, codeLanguage:String){
-        binding.includeDataProductBill.tvCustomerNumber.text = data.dataBill?.customerId
-        binding.includeDataProductBill.tvNameCustomer.text = data.dataBill?.customerName
-        binding.includeDataProductBill.tvBill.text = data.billAmount.toString()
-        binding.includeDataProductBill.tvBillDate.text = data.dataBill?.billDate
+    private fun setDetailBillToView(data:DataInquiry, codeLanguage:String?){
+        binding.linearDataProductTopup.visibility = View.GONE
+        binding.includeDataProductBill.linearDataProductBill.visibility = View.VISIBLE
+        binding.includeDataProductBill.tvCustomerNumber.text = data.billData?.customerId
+        binding.includeDataProductBill.tvNameCustomer.text = data.billData?.customerName
+        binding.includeDataProductBill.tvBill.text = data.billAmount
+        binding.includeDataProductBill.tvBillDate.text = data.billData?.billDate
         binding.includeDataProductBill.tvAdminFee.text = "0"
-        binding.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(data.amount.toString())
+        binding.tvProductName.text = data.product
+        binding.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(data.billAmount.toString())
+        val icon = HtmlCompat.fromHtml("${data.iconCode}", HtmlCompat.FROM_HTML_MODE_LEGACY)
+        binding.faIcon.text = icon
+        when(codeLanguage){
+            "en" -> {
+                binding.tvTitleService.text = data.category
+            }
+            "zh" -> {
+                binding.tvTitleService.text = data.categoryZh
+            }
+        }
+        requestBill = RequestBill(this.requestBill?.productCode, data.billAmount, data.adminFee, this.requestBill?.customerNumber, null)
+    }
+
+    private fun setDetailBillToView(data:DataNoInquiry, codeLanguage:String?){
+        binding.linearDataProductTopup.visibility = View.GONE
+        binding.includeDataProductBill.linearDataProductBill.visibility = View.VISIBLE
+        binding.includeDataProductBill.tvCustomerNumber.text = data.billData?.customerId
+        binding.includeDataProductBill.linearNameCustomer.visibility = View.GONE
+        binding.includeDataProductBill.linearBillDate.visibility = View.GONE
+        binding.includeDataProductBill.tvBill.text = data.billAmount?.let { helper.convertToFormatMoneyIDRFilter(it) }
+        binding.includeDataProductBill.tvAdminFee.text = "0"
+        binding.tvProductName.text = data.product
+        binding.tvTotalPay.text = data.billAmount?.let { helper.convertToFormatMoneyIDRFilter(it) }
         val icon = HtmlCompat.fromHtml("${data.iconCode}", HtmlCompat.FROM_HTML_MODE_LEGACY)
         binding.faIcon.text = icon
         when(codeLanguage){

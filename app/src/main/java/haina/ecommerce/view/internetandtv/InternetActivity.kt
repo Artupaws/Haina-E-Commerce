@@ -16,6 +16,7 @@ import haina.ecommerce.adapter.service.AdapterSpinnerProductService
 import haina.ecommerce.databinding.ActivityInternetBinding
 import haina.ecommerce.model.bill.DataBill
 import haina.ecommerce.model.bill.DataInquiry
+import haina.ecommerce.model.bill.DataNoInquiry
 import haina.ecommerce.model.bill.RequestBill
 import haina.ecommerce.model.productservice.DataProductService
 import haina.ecommerce.model.productservice.Product
@@ -28,7 +29,7 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
     private var productCode: String = ""
     private var customerNumber: String = ""
     private var nameCategory: String = ""
-    private var requestBill:RequestBill? = RequestBill()
+    private var requestBill:RequestBill? = null
     private var nameProduct:String=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -128,7 +129,15 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
         val intentToCheckout = Intent(applicationContext, CheckoutActivity::class.java)
             .putExtra("dataBill", data)
             .putExtra("request", requestBill)
-            .putExtra("typeTransaction", 3)
+            .putExtra("typeTransaction", 2)
+        startActivity(intentToCheckout)
+    }
+
+    private fun moveDirect(data:DataNoInquiry) {
+        val intentToCheckout = Intent(applicationContext, CheckoutActivity::class.java)
+            .putExtra("dataBillNoInquiry", data)
+            .putExtra("request", requestBill)
+            .putExtra("typeTransaction", 2)
         startActivity(intentToCheckout)
     }
 
@@ -152,9 +161,21 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
         binding.btnNext.visibility = View.VISIBLE
     }
 
+    override fun messageGetBillDirect(msg: String) {
+        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+    }
+
     override fun getDataBillAmount(data: DataInquiry) {
         if (!data.equals(null)){
             move(data)
+        } else {
+            Toast.makeText(applicationContext, "Not Found!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun getDataBillDirect(data: DataNoInquiry) {
+        if (!data.equals(null)){
+            moveDirect(data)
         } else {
             Toast.makeText(applicationContext, "Not Found!", Toast.LENGTH_SHORT).show()
         }
@@ -174,15 +195,9 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
 
                 if (!customerNumberParams.isNullOrEmpty()) {
                     setPresenter(nameProduct, customerNumberParams, productCodeParams)
-//                    presenter.getBillAmount(customerNumberParams, productCodeParams)
-                    requestBill = RequestBill(customerNumberParams, productCodeParams)
+                    requestBill = RequestBill(productCodeParams, null, null, customerNumberParams, null)
                     binding.relativeLoading.visibility = View.VISIBLE
                     binding.btnNext.visibility = View.GONE
-//                    val intentToCheckout = Intent(applicationContext, CheckoutActivity::class.java)
-//                        .putExtra("productCode", productCodeParams)
-//                        .putExtra("customerNumber", customerNumberParams)
-//                        .putExtra("typeTransaction", 3)
-//                    startActivity(intentToCheckout)
                 }
                 this.currentFocus?.let { view ->
                     val imm = applicationContext.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -206,7 +221,25 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
             "indosatnet" -> {
                 presenter.getDirectBill(orderId, productCode)
             }
-            "centrinet" -> {
+            "centrinnet" -> {
+                presenter.getDirectBill(orderId, productCode)
+            }
+            "pln" -> {
+                presenter.getBillAmount(orderId, productCode)
+            }
+            "aetra" ->{
+                presenter.getBillAmount(orderId, productCode)
+            }
+            "palyja" ->{
+                presenter.getBillAmount(orderId, productCode)
+            }
+            "firstmedia" ->{
+                presenter.getDirectBill(orderId, productCode)
+            }
+            "prudential" -> {
+                presenter.getDirectBill(orderId, productCode)
+            }
+            "sinarmas life" -> {
                 presenter.getDirectBill(orderId, productCode)
             }
         }
