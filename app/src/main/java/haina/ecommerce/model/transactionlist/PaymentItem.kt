@@ -32,5 +32,5 @@ data class PaymentItem(
 	val vaNumber:String? = null,
 
 	@field:SerializedName("settlement_time")
-	val settlementTime: Any? = null
+	val settlementTime: String? = null
 ) : Parcelable

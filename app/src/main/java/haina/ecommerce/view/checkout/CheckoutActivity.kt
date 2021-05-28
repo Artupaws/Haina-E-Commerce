@@ -35,7 +35,10 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
     private var typeTransaction:Int = 0
     private var requestPulsa:RequestPulsa? = null
     private var requestBill:RequestBill? = null
-    private var requestBillFromCheckout:RequestBill? = null
+    private var billAmount:String = ""
+    private var adminFee:String = ""
+    private var totalAmount:String = ""
+    private var dataBill: DataInquiry? = null
     private var backTo:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,12 +71,12 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                         requestPulsa?.idProduct?.let { requestPulsa?.phoneNumber?.let { it1 -> presenter.checkout(it1, it) } }
                     }
                     2 -> {
+                        val requestBillFromCheckout = RequestBill(requestBill?.productCode, billAmount, adminFee, this.requestBill?.customerNumber, null)
                         val intent = Intent(applicationContext, PaymentActivity::class.java)
-                            .putExtra("requestasda", requestBill)
+                            .putExtra("request", requestBillFromCheckout)
                             .putExtra("typeTransaction", typeTransaction)
                         startActivity(intent)
                     }
-
                 }
             }
             R.id.btn_login -> {
@@ -110,11 +113,13 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                 typeTransaction = 1
             }
             2 -> {
-                val dataBill = intent?.getParcelableExtra<DataInquiry>("dataBill")
-                val dataBillNoInquiry = intent?.getParcelableExtra<DataNoInquiry>("dataBillNoInquiry")
+                dataBill = intent?.getParcelableExtra("dataBill")
                 dataBill?.let { setDetailBillToView(it, sharedPref.getValueString(Constants.LANGUAGE_APP)) }
-                dataBillNoInquiry?.let { setDetailBillToView(it, sharedPref.getValueString(Constants.LANGUAGE_APP)) }
-                completeDataBill(dataBill!!)
+                billAmount = dataBill?.billAmount!!
+                adminFee = dataBill?.adminFee!!
+                Log.d("billAmount", billAmount)
+//                val dataBillNoInquiry = intent?.getParcelableExtra<DataNoInquiry>("dataBillNoInquiry")
+//                dataBillNoInquiry?.let { setDetailBillToView(it, sharedPref.getValueString(Constants.LANGUAGE_APP)) }
                 requestBill = intent?.getParcelableExtra("request")
                 Log.d("dataBillCheckout", requestBill.toString())
                 typeTransaction = 2
@@ -193,7 +198,6 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                 binding.tvTitleService.text = data.categoryZh
             }
         }
-        requestBill = RequestBill(this.requestBill?.productCode, data.billAmount, data.adminFee, this.requestBill?.customerNumber, null)
     }
 
     private fun setDetailBillToView(data:DataNoInquiry, codeLanguage:String?){

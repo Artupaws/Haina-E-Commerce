@@ -166,6 +166,7 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
     }
 
     override fun getDataBillAmount(data: DataInquiry) {
+        Log.d("dataFromInternet", data.billAmount.toString())
         if (!data.equals(null)){
             move(data)
         } else {
@@ -196,6 +197,11 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
                 if (!customerNumberParams.isNullOrEmpty()) {
                     setPresenter(nameProduct, customerNumberParams, productCodeParams)
                     requestBill = RequestBill(productCodeParams, null, null, customerNumberParams, null)
+//                    val intentToCheckout = Intent(applicationContext, CheckoutActivity::class.java)
+////                        .putExtra("dataBill", data)
+//                        .putExtra("request", requestBill)
+//                        .putExtra("typeTransaction", 2)
+//                    startActivity(intentToCheckout)
                     binding.relativeLoading.visibility = View.VISIBLE
                     binding.btnNext.visibility = View.GONE
                 }

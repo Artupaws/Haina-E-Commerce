@@ -110,8 +110,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
             2 -> {
                 requestBill = intent.getParcelableExtra("request")
                 Log.d("dataBill", requestBill.toString())
-                Toast.makeText(applicationContext, requestBill.toString(), Toast.LENGTH_SHORT).show()
-                binding.tvTotalBill.text = dataPulsa?.totalPrice
+                binding.tvTotalBill.text = requestBill?.amount
                 val totalPrice = requestBill?.adminFee?.toInt()?.plus(requestBill?.amount?.toInt()!!)
                 price = totalPrice.toString()
             }

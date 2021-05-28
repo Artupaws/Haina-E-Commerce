@@ -32,6 +32,9 @@ class AdapterTransactionFinish(val context: Context, private val listHotel: List
                 Glide.with(context).load(itemHaina.hotel?.hotelImage).into(ivImageRoom)
                 tvIdBooking.text = itemHaina.id.toString()
                 tvTotalGuest.text = itemHaina.totalGuest.toString()
+                btnInputRating.setOnClickListener {
+                    itemAdapterCallback.onClick(btnInputRating, itemHaina)
+                }
                 showRatingOrButtonRating(binding, itemHaina)
             }
         }

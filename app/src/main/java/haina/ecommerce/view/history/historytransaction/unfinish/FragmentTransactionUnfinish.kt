@@ -66,7 +66,6 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
 
     private fun setupListUnfinishTransaction(data:List<PendingItem?>?){
         showIsEmpty(data?.size)
-
         binding?.rvUnfinishTransaction?.apply {
             adapter = AdapterTransactionPulsaUnfinish(requireActivity(), data, this@FragmentTransactionUnfinish)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

@@ -131,6 +131,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:weightSum="2">
@@ -155,6 +156,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:weightSum="2">

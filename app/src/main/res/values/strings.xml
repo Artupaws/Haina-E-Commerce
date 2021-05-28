@@ -271,4 +271,5 @@
     <string name="name_customer">Name Customer</string>
     <string name="bill_title">Bill</string>
     <string name="bill_date">Bill Date</string>
+    <string name="total_amount">Total Amount</string>
 </resources>
