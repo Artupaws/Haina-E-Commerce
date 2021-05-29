@@ -15,14 +15,12 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterPulsa
-import haina.ecommerce.databinding.ActivityTopupBinding
 import haina.ecommerce.databinding.FragmentPulsaBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.pulsaanddata.ProductPhone
 import haina.ecommerce.model.pulsaanddata.PulsaItem
 import haina.ecommerce.model.pulsaanddata.RequestPulsa
 import haina.ecommerce.preference.SharedPreferenceHelper
-import haina.ecommerce.util.Constants
 import haina.ecommerce.view.checkout.CheckoutActivity
 import haina.ecommerce.view.topup.TopupActivity
 
@@ -36,7 +34,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
     private var totalPrice: String? = null
     private var phoneNumber: String? = null
     private var serviceType: String? = null
-    private var idProduct: Int? = null
+    private var productCode: String? = null
     private lateinit var sharedPref: SharedPreferenceHelper
     private var typeTransaction:Int = 1
 
@@ -64,7 +62,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
 
     private fun checkDataPulsa(){
         val phoneNumber = (activity as TopupActivity).getNumber()
-        val idProductParams = idProduct
+        val idProductParams = productCode
         val totalPriceParams = totalPrice
         val typeService = serviceType
         when {
@@ -156,7 +154,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
     override fun onClickAdapter(view: View, data: PulsaItem) {
         totalPrice = helper.convertToFormatMoneyIDRFilter(data.sellPrice.toString())
         serviceType = data.description
-        idProduct = data.id
+        productCode = data.productCode
         binding?.tvPrice?.text = totalPrice
         if (data.sellPrice!= 0) {
             binding?.linearTotalPrice?.visibility = View.VISIBLE

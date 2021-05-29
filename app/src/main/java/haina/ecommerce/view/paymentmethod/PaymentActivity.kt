@@ -66,7 +66,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
             }
             R.id.btn_payment -> {
                 when(typeTransactionParams){
-                    1 -> { presenter.createTransaction(dataPulsa?.phoneNumber!!, dataPulsa?.idProduct!!,
+                    1 -> { presenter.createTransaction(dataPulsa?.phoneNumber!!, dataPulsa?.productCode!!,
                     idPaymentMethod!!)
                     }
                     2 -> {presenter.createBillTransaction(requestBill?.productCode!!, requestBill?.amount!!, requestBill?.adminFee!!, requestBill?.customerNumber!!, idPaymentMethod!!)
@@ -110,6 +110,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
             2 -> {
                 requestBill = intent.getParcelableExtra("request")
                 Log.d("dataBill", requestBill.toString())
+//                price = requestBill?.amount
                 binding.tvTotalBill.text = requestBill?.amount
                 val totalPrice = requestBill?.adminFee?.toInt()?.plus(requestBill?.amount?.toInt()!!)
                 price = totalPrice.toString()

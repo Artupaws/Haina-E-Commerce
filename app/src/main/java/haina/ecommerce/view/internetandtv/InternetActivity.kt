@@ -1,5 +1,7 @@
 package haina.ecommerce.view.internetandtv
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,19 +9,18 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
-import android.widget.Toast
+import android.widget.*
 import haina.ecommerce.R
 import haina.ecommerce.adapter.service.AdapterSpinnerProductService
 import haina.ecommerce.databinding.ActivityInternetBinding
-import haina.ecommerce.model.bill.DataBill
 import haina.ecommerce.model.bill.DataInquiry
 import haina.ecommerce.model.bill.DataNoInquiry
 import haina.ecommerce.model.bill.RequestBill
 import haina.ecommerce.model.productservice.DataProductService
-import haina.ecommerce.model.productservice.Product
 import haina.ecommerce.view.checkout.CheckoutActivity
 
 class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickListener {
@@ -31,6 +32,7 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
     private var nameCategory: String = ""
     private var requestBill:RequestBill? = null
     private var nameProduct:String=""
+    private var popupInputAmountBill:Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,11 +169,21 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
 
     override fun getDataBillAmount(data: DataInquiry) {
         Log.d("dataFromInternet", data.billAmount.toString())
-        if (!data.equals(null)){
-            move(data)
-        } else {
-            Toast.makeText(applicationContext, "Not Found!", Toast.LENGTH_SHORT).show()
+        when(data.inquiry){
+            0 -> {
+                dialogInputAmountBill(data)
+                popupInputAmountBill?.show()
+            }
+            1 -> {
+                move(data)
+            }
         }
+//        if (data.inquiry == 1){
+//            popupInputAmountBill?.show()
+//            move(data)
+//        } else {
+//            Toast.makeText(applicationContext, "Not Found!", Toast.LENGTH_SHORT).show()
+//        }
     }
 
     override fun getDataBillDirect(data: DataNoInquiry) {
@@ -195,8 +207,9 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
                 }
 
                 if (!customerNumberParams.isNullOrEmpty()) {
-                    setPresenter(nameProduct, customerNumberParams, productCodeParams)
-                    requestBill = RequestBill(productCodeParams, null, null, customerNumberParams, null)
+                    presenter.getBillInquiry(customerNumberParams, productCodeParams)
+//                    setPresenter(nameProduct, customerNumberParams, productCodeParams)
+                    requestBill = RequestBill(productCodeParams, null, null, customerNumberParams, null, null)
 //                    val intentToCheckout = Intent(applicationContext, CheckoutActivity::class.java)
 ////                        .putExtra("dataBill", data)
 //                        .putExtra("request", requestBill)
@@ -213,40 +226,30 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
         }
     }
 
-    private fun setPresenter(productNameParams:String, orderId:String, productCode:String){
-        when(productNameParams){
-            "indovision" -> {
-                presenter.getDirectBill(orderId, productCode)
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun dialogInputAmountBill(data: DataInquiry){
+        popupInputAmountBill = Dialog(this)
+        popupInputAmountBill?.setContentView(R.layout.popup_input_amount_bill)
+        popupInputAmountBill?.setCancelable(true)
+        popupInputAmountBill?.window?.setBackgroundDrawable(applicationContext.getDrawable(R.color.white))
+        val window: Window = popupInputAmountBill?.window!!
+        window.setGravity(Gravity.CENTER)
+        val etInputAmountBill = popupInputAmountBill?.findViewById<EditText>(R.id.et_input_amount_bill)
+        val btnInputAmountBill = popupInputAmountBill?.findViewById<Button>(R.id.btn_input_amount_bill)
+
+        btnInputAmountBill?.setOnClickListener {
+            var amountBill = etInputAmountBill?.text.toString()
+            if (amountBill.isNullOrEmpty()){
+                etInputAmountBill?.error = getString(R.string.please_input_amount_bill)
+            } else {
+                amountBill = etInputAmountBill?.text.toString()
             }
-            "indihome" -> {
-                presenter.getBillAmount(orderId, productCode)
-            }
-            "cbn" -> {
-                presenter.getDirectBill(orderId, productCode)
-            }
-            "indosatnet" -> {
-                presenter.getDirectBill(orderId, productCode)
-            }
-            "centrinnet" -> {
-                presenter.getDirectBill(orderId, productCode)
-            }
-            "pln" -> {
-                presenter.getBillAmount(orderId, productCode)
-            }
-            "aetra" ->{
-                presenter.getBillAmount(orderId, productCode)
-            }
-            "palyja" ->{
-                presenter.getBillAmount(orderId, productCode)
-            }
-            "firstmedia" ->{
-                presenter.getDirectBill(orderId, productCode)
-            }
-            "prudential" -> {
-                presenter.getDirectBill(orderId, productCode)
-            }
-            "sinarmas life" -> {
-                presenter.getDirectBill(orderId, productCode)
+
+            if (!amountBill.isNullOrEmpty()){
+                requestBill = RequestBill(productCode, amountBill, null, customerNumber, null, 0)
+                move(data)
+            } else {
+                Toast.makeText(applicationContext, getString(R.string.please_input_amount_bill), Toast.LENGTH_SHORT).show()
             }
         }
     }

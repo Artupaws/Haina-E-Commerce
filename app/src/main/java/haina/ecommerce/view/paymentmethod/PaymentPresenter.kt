@@ -33,8 +33,8 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
         })
     }
 
-    fun createTransaction(customerNumber:String, idProduct:Int, idPaymentMethod:Int){
-        val createTransaction = NetworkConfig().getConnectionHainaBearer(context).createTransactionProductPhone(customerNumber, idProduct, idPaymentMethod)
+    fun createTransaction(customerNumber:String, productCode:String, idPaymentMethod:Int){
+        val createTransaction = NetworkConfig().getConnectionHainaBearer(context).createTransactionProductPhone(customerNumber, productCode, idPaymentMethod)
         createTransaction.enqueue(object : retrofit2.Callback<ResponseCreateTransactionProductPhone>{
             override fun onResponse(call: Call<ResponseCreateTransactionProductPhone>, response: Response<ResponseCreateTransactionProductPhone>) {
                 if (response.isSuccessful && response.body()?.value == 1){

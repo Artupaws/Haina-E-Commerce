@@ -272,4 +272,6 @@
     <string name="bill_title">Bill</string>
     <string name="bill_date">Bill Date</string>
     <string name="total_amount">Total Amount</string>
+    <string name="send_review">Send Review</string>
+    <string name="please_input_amount_bill">Please input your amount bill</string>
 </resources>

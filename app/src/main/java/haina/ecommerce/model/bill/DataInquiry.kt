@@ -7,20 +7,9 @@ import java.math.BigInteger
 
 @Parcelize
 data class DataInquiry (
-    @field:SerializedName ("rq_uuid")
-    val rqUuid:String? = null,
 
-    @field:SerializedName ("rs_datetime")
-    val rsDatetime:String? = null,
-
-    @field:SerializedName ("error_code")
-    val errorCode:Int? = null,
-
-    @field:SerializedName ("error_desc")
-    val errorDesc:String? = null,
-
-    @field:SerializedName ("order_id")
-    val orderId:String? = null,
+    @field:SerializedName ("datetime")
+    val dateTime:String? = null,
 
     @field:SerializedName ("bill_amount")
     val billAmount:String? = null,
@@ -30,6 +19,9 @@ data class DataInquiry (
 
     @field:SerializedName ("product")
     val product:String? = null,
+
+    @field:SerializedName("product_code")
+    val productCode: String? = null,
 
     @field:SerializedName ("category")
     val category:String? = null,
@@ -41,5 +33,8 @@ data class DataInquiry (
     val iconCode:String? = null,
 
     @field:SerializedName ("bill_data")
-    val billData: DataBill? = null
+    val billData: DataBill? = null,
+
+    @field:SerializedName("inquiry")
+    val inquiry:Int? = null
 ):Parcelable

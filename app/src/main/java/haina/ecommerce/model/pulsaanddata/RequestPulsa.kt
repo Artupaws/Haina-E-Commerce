@@ -11,8 +11,8 @@ class RequestPulsa (
     @SerializedName("phone_number")
     var phoneNumber:String,
 
-    @SerializedName("id_product")
-    var idProduct:Int,
+    @SerializedName("product_code")
+    var productCode:String,
 
     @SerializedName("id_payment_method")
     var idPaymentMethod:Int?,

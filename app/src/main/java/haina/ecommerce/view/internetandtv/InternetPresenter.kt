@@ -32,8 +32,8 @@ class InternetPresenter(val view:InternetContract, val context: Context) {
         })
     }
 
-    fun getBillAmount(orderId:String, productCode:String){
-        val getBillAmount = NetworkConfig().getConnectionHainaBearer(context).getBillAmount(orderId, productCode)
+    fun getBillInquiry(orderId:String, productCode:String){
+        val getBillAmount = NetworkConfig().getConnectionHainaBearer(context).getBillInquiry(orderId, productCode)
         getBillAmount.enqueue(object : retrofit2.Callback<ResponseGetBillAmount>{
             override fun onResponse(call: Call<ResponseGetBillAmount>, response: Response<ResponseGetBillAmount>) {
                 if (response.isSuccessful){

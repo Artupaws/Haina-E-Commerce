@@ -20,5 +20,8 @@ data class RequestBill(
 	val customerNumber: String? = null,
 
 	@field:SerializedName("id_payment_method")
-	val paymentMethod: Int? = null
+	val paymentMethod: Int? = null,
+
+	@field:SerializedName("inquiry")
+	val inquiry: Int? = null
 ) : Parcelable

@@ -32,7 +32,7 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
     private var broadcaster: LocalBroadcastManager? = null
     private var serviceType: String? = null
     private var statusResetPrice:String? = null
-    private var idProduct:Int? = null
+    private var productCode:String? = null
     private var typeTransaction:Int = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -69,17 +69,17 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
 
     private fun checkDataPulsa(){
         val phoneNumber = (activity as TopupActivity).getNumber()
-        val idProductParams = idProduct
+        val productCodeParams = productCode
         val totalPriceParams = totalPrice
         val typeService = serviceType
         when {
             phoneNumber.isNullOrEmpty()->{
                 Toast.makeText(requireActivity(), "Phone number empty", Toast.LENGTH_SHORT).show()
             }
-            idProductParams == null ->{
+            productCodeParams == null ->{
                 Toast.makeText(requireActivity(), "Please choose product", Toast.LENGTH_SHORT).show()
             } else -> {
-            val dataPulsa = RequestPulsa(phoneNumber, idProductParams, null, totalPriceParams!!, typeService!!)
+            val dataPulsa = RequestPulsa(phoneNumber, productCodeParams, null, totalPriceParams!!, typeService!!)
             val intentToCheckOut = Intent(requireActivity(), CheckoutActivity::class.java)
                 .putExtra("dataPulsa", dataPulsa)
                 .putExtra("typeTransaction", typeTransaction)
@@ -105,8 +105,8 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
                 "paketData" -> {
                     val nameService = intent.getStringExtra("serviceType")
                     val price = intent.getStringExtra("sellPrice")
-                    val id = intent.getIntExtra("idProduct", 0)
-                    idProduct = id
+                    val productCodeParams = intent.getStringExtra("productCode")
+                    productCode = productCodeParams
                     serviceType = nameService
                     totalPrice = price
                     binding?.tvPrice?.text = helper.convertToFormatMoneyIDRFilter(totalPrice!!)

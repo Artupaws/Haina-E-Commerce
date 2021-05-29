@@ -10,8 +10,8 @@ import retrofit2.Response
 
 class CheckoutPresenter (val view:CheckoutContract, val context: Context) {
 
-    fun checkout(customerNumber:String, idProduct:Int){
-        val checkout = NetworkConfig().getConnectionHainaBearer(context).checkout(customerNumber, idProduct)
+    fun checkout(customerNumber:String, productCode:String){
+        val checkout = NetworkConfig().getConnectionHainaBearer(context).checkout(customerNumber, productCode)
         checkout.enqueue(object : retrofit2.Callback<ResponseCheckout>{
             override fun onResponse(call: Call<ResponseCheckout>, response: Response<ResponseCheckout>) {
                 if (response.isSuccessful && response.body()?.value == 1){

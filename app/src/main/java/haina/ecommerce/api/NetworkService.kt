@@ -318,7 +318,7 @@ interface NetworkService {
     @POST("api/pulsa/inquiry")
     fun checkout(
             @Field("customer_number") customerNumber:String,
-            @Field("id_product") idProduct:Int
+            @Field("product_code") productCode:String
     ):Call<ResponseCheckout>
 
     //Get Payment Method
@@ -334,7 +334,7 @@ interface NetworkService {
     @POST("api/pulsa/transaction")
     fun createTransactionProductPhone(
         @Field("customer_number")customerNumber:String,
-        @Field("id_product")idProduct:Int,
+        @Field("product_code")productCode:String,
         @Field("id_payment_method")idPaymentMethod:Int
     ):Call<ResponseCreateTransactionProductPhone>
 
@@ -409,6 +409,14 @@ interface NetworkService {
     @FormUrlEncoded
     @POST("api/bills/amountbill")
     fun getBillAmount(
+        @Field("order_id")orderId:String,
+        @Field("product_code")productCode:String
+    ):Call<ResponseGetBillAmount>
+
+    //Get Bill Inquiry
+    @FormUrlEncoded
+    @POST("api/bills/inquiry")
+    fun getBillInquiry(
         @Field("order_id")orderId:String,
         @Field("product_code")productCode:String
     ):Call<ResponseGetBillAmount>

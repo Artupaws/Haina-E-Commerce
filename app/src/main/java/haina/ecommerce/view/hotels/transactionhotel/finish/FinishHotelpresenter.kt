@@ -24,7 +24,6 @@ class FinishHotelpresenter(val view:FinishHotelContract, val context: Context) {
             }
 
         })
-
     }
 
 }
