@@ -27,13 +27,14 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.covidlist.CovidListActivity
 import haina.ecommerce.view.flight.FlightTicketActivity
+import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 import haina.ecommerce.view.hotels.dashboardhotel.HotelsActivity
 import haina.ecommerce.view.topup.TopupActivity
 import haina.ecommerce.view.job.JobActivity
 import haina.ecommerce.view.notification.NotificationActivity
 import haina.ecommerce.view.other.OtherActivity
 
-class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
+class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, AdapterUnfinishTransactionExplore.ItemAdapterCallback {
 
     private var _binding: FragmentExploreBinding? = null
     private val binding get() = _binding
@@ -176,7 +177,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
     override fun getTransactionPending(data: List<DataAllTransactionPending?>?) {
         showPendingTransaction(data?.size!!)
         binding?.includeTransactionPending?.rvTransactionPending?.apply {
-            adapter = AdapterUnfinishTransactionExplore(requireContext(), data)
+            adapter = AdapterUnfinishTransactionExplore(requireContext(), data, this@ExploreFragment)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
     }
@@ -214,6 +215,12 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.includeCurrency?.tvChnCurrency?.text = helper.convertToFormatMoneyCNY(item?.currency?.cNY.toString())
         binding?.includeCurrency?.tvIdrCurrency?.text = helper.convertToFormatMoneyIDR(item?.currency?.iDR.toString())
         binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item?.currency?.uSD.toString())
+    }
+
+    override fun onClickAdapterPending(view: View, data: DataAllTransactionPending) {
+        val intent = Intent(context, HistoryTransactionActivity::class.java)
+            .putExtra("id", data.orderId)
+        requireActivity().startActivity(intent)
     }
 
 //    override fun loadCovidJkt(item: DataCovidJkt?) {

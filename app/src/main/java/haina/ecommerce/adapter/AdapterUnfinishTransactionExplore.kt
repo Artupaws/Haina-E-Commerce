@@ -15,22 +15,20 @@ import haina.ecommerce.model.transactionlist.PendingItem
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 
 
-class AdapterUnfinishTransactionExplore(val context: Context, private val listUnfinishTransaction: List<DataAllTransactionPending?>?):
+class AdapterUnfinishTransactionExplore(val context: Context, private val listUnfinishTransaction: List<DataAllTransactionPending?>?,
+private val itemAdapterCallback: ItemAdapterCallback):
     RecyclerView.Adapter<AdapterUnfinishTransactionExplore.Holder>() {
 
     private val helper:Helper = Helper
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemTransactionPendingBinding.bind(view)
-        fun bind(itemHaina: DataAllTransactionPending){
+        fun bind(itemHaina: DataAllTransactionPending, itemAdapterCallback: ItemAdapterCallback){
             with(binding){
                 val icon = HtmlCompat.fromHtml("${itemHaina.icon}", HtmlCompat.FROM_HTML_MODE_LEGACY)
                 ivIconMethodPayment.text = icon
                 tvStatusTransaction.text = itemHaina.product
-                relativeClick.setOnClickListener {
-                    val intent = Intent(context, HistoryTransactionActivity::class.java)
-                    context.startActivity(intent)
-                }
+                relativeClick.setOnClickListener { itemAdapterCallback.onClickAdapterPending(itemView, itemHaina) }
                 tvTotalPayment.text = helper.convertToFormatMoneyIDRFilter(itemHaina.totalAmount.toString())
                 tvDueDate.text = itemHaina.paymentMethod
             }
@@ -45,10 +43,14 @@ class AdapterUnfinishTransactionExplore(val context: Context, private val listUn
 
     override fun onBindViewHolder(holder: AdapterUnfinishTransactionExplore.Holder, position: Int) {
         val list: DataAllTransactionPending = listUnfinishTransaction?.get(position)!!
-        holder.bind(list)
+        holder.bind(list, itemAdapterCallback)
     }
 
     override fun getItemCount(): Int = listUnfinishTransaction?.size!!
+
+    interface ItemAdapterCallback{
+        fun onClickAdapterPending(view: View, data:DataAllTransactionPending)
+    }
 
 
 }

@@ -66,10 +66,13 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
 
     private fun setupListUnfinishTransaction(data:List<PendingItem?>?){
         showIsEmpty(data?.size)
+        val adapterParams = AdapterTransactionPulsaUnfinish(requireActivity(), data, this)
         binding?.rvUnfinishTransaction?.apply {
-            adapter = AdapterTransactionPulsaUnfinish(requireActivity(), data, this@FragmentTransactionUnfinish)
+//            adapter = AdapterTransactionPulsaUnfinish(requireActivity(), data, this@FragmentTransactionUnfinish)
+            adapter = adapterParams
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
+//        binding?.rvUnfinishTransaction?.smoothScrollToPosition(adapterParams.getItemId(3).toInt())
     }
 
     private fun showNotLogin(statusLogin:Boolean){

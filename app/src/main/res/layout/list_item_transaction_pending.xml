@@ -28,7 +28,10 @@
                 android:id="@+id/iv_icon_method_payment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:layout_gravity="top"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:textSize="18sp"
                 tools:text="&#xf1eb;"
                 android:textColor="@android:color/holo_red_dark"/>
 
@@ -36,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginStart="10dp">
+                android:layout_marginStart="5dp">
 
                 <TextView
                     android:id="@+id/tv_status_transaction"
@@ -44,8 +47,7 @@
                     android:layout_height="wrap_content"
                     tools:text="Waiting Payment"
                     android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"/>
+                    style="@style/TextView.Poppins14spBlack"/>
 
                 <TextView
                     android:id="@+id/tv_total_payment"
@@ -53,6 +55,7 @@
                     android:layout_height="wrap_content"
                     tools:text="IDR 100,000"
                     android:textSize="12sp"
+                    style="@style/TextView.Poppins12spGrey"
                     android:textColor="@color/black"/>
 
                 <TextView
@@ -61,9 +64,10 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:textSize="12sp"
+                    style="@style/TextView.Poppins12spGrey"
                     android:ellipsize="end"
                     tools:text="Pay Before 27-03-2021, 13:00"
-                    android:textColor="@android:color/holo_red_dark"/>
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
