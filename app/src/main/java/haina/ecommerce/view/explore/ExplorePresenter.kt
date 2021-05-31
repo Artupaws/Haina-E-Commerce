@@ -6,6 +6,7 @@ import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.*
 import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
+import haina.ecommerce.model.transactionlist.ResponseGetListTransactionPending
 import haina.ecommerce.util.Constants
 import org.json.JSONObject
 import retrofit2.Call
@@ -113,13 +114,34 @@ class ExplorePresenter(val view: ExploreContract, val context: Context) {
             })
     }
 
-    fun getListUnfinishTransaction(){
-        val getListunfinishTransaction = NetworkConfig().getConnectionHainaBearer(context).getListTransaction()
-        getListunfinishTransaction.enqueue(object : retrofit2.Callback<ResponseGetListTransaction>{
-            override fun onResponse(call: Call<ResponseGetListTransaction>, response: Response<ResponseGetListTransaction>) {
+//    fun getListUnfinishTransaction(){
+//        val getListunfinishTransaction = NetworkConfig().getConnectionHainaBearer(context).getListTransaction()
+//        getListunfinishTransaction.enqueue(object : retrofit2.Callback<ResponseGetListTransaction>{
+//            override fun onResponse(call: Call<ResponseGetListTransaction>, response: Response<ResponseGetListTransaction>) {
+//                if (response.isSuccessful && response.body()?.value == 1){
+//                    val data = response.body()?.dataTransaction
+//                    view.getTransactionList(data)
+//                    view.messageGetTransactionList(response.body()?.message)
+//                } else {
+//                    val error = JSONObject(response.errorBody()?.string()!!)
+//                    view.messageGetTransactionList(error.getString("message"))
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<ResponseGetListTransaction>, t: Throwable) {
+//                view.messageGetTransactionList(t.localizedMessage.toString())
+//            }
+//
+//        })
+//    }
+
+    fun getListPendingTransaction(){
+        val getListPendingTransaction = NetworkConfig().getConnectionHainaBearer(context).getAllTransactionPending()
+        getListPendingTransaction.enqueue(object : retrofit2.Callback<ResponseGetListTransactionPending>{
+            override fun onResponse(call: Call<ResponseGetListTransactionPending>, response: Response<ResponseGetListTransactionPending>) {
                 if (response.isSuccessful && response.body()?.value == 1){
-                    val data = response.body()?.dataTransaction
-                    view.getTransactionList(data)
+                    val data = response.body()?.data
+                    view.getTransactionPending(data)
                     view.messageGetTransactionList(response.body()?.message)
                 } else {
                     val error = JSONObject(response.errorBody()?.string()!!)
@@ -127,7 +149,7 @@ class ExplorePresenter(val view: ExploreContract, val context: Context) {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseGetListTransaction>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseGetListTransactionPending>, t: Throwable) {
                 view.messageGetTransactionList(t.localizedMessage.toString())
             }
 

@@ -56,6 +56,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         binding.frameChoosePaymentMethod.setOnClickListener(this)
         binding.btnPayment.setOnClickListener(this)
         typeTransactionParams = intent.getIntExtra("typeTransaction", 0)
+        Log.d("typeTransaction", typeTransactionParams.toString())
         setDetailOrder(typeTransactionParams)
     }
 
@@ -108,12 +109,12 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                 price = dataPulsa?.totalPrice
             }
             2 -> {
-                requestBill = intent.getParcelableExtra("request")
-                Log.d("dataBill", requestBill.toString())
-//                price = requestBill?.amount
+                requestBill = intent?.getParcelableExtra("request")
+                Log.d("dataBillPayment", requestBill.toString())
+                price = requestBill?.amount
                 binding.tvTotalBill.text = requestBill?.amount
-                val totalPrice = requestBill?.adminFee?.toInt()?.plus(requestBill?.amount?.toInt()!!)
-                price = totalPrice.toString()
+//                val totalPrice = requestBill?.adminFee?.toInt()?.plus(requestBill?.amount?.toInt()!!)
+//                price = totalPrice.toString()
             }
             3 -> {
                 dataBooking = intent.getParcelableExtra("dataBooking")
@@ -148,7 +149,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
             popupPaymentMethod?.dismiss()
             binding.linearTotalPrice.visibility = View.VISIBLE
             binding.tvTotalMustPay.text = price
-            valueTotalPayment = helper.changeFormatMoneyToValueFilter(price!!)?.toInt()
+//            valueTotalPayment = helper.changeFormatMoneyToValueFilter(price!!)?.toInt()
         } else {
             binding.linearTotalPrice.visibility = View.GONE
         }

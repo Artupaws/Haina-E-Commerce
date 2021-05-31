@@ -14,6 +14,7 @@ import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
 import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
+import haina.ecommerce.model.transactionlist.ResponseGetListTransactionPending
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -439,4 +440,8 @@ interface NetworkService {
         @Field("customer_number")customerNumber: String,
         @Field("id_payment_method")idPaymentMethod: Int
     ):Call<ResponseAddBillTransaction>
+
+    //Get All Transaction Pending List
+    @POST("api/pending_transaction")
+    fun getAllTransactionPending():Call<ResponseGetListTransactionPending>
 }

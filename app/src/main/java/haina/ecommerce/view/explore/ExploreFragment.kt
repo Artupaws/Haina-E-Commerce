@@ -21,6 +21,7 @@ import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataCodeCurrency
 import haina.ecommerce.model.DataCurrency
 import haina.ecommerce.model.DataUser
+import haina.ecommerce.model.transactionlist.DataAllTransactionPending
 import haina.ecommerce.model.transactionlist.DataTransaction
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
@@ -57,7 +58,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter.getListUnfinishTransaction()
+        presenter.getListPendingTransaction()
         presenter.getDataUserProfile()
         binding?.menuServices?.linearOther?.setOnClickListener(this)
         binding?.menuServices?.linearNews?.setOnClickListener(this)
@@ -144,7 +145,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
         binding?.swipeRefresh?.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
 //            presenter.loadCovidJkt()
 //            presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
-            presenter.getListUnfinishTransaction()
+            presenter.getListPendingTransaction()
             binding?.swipeRefresh?.isRefreshing = false
         })
     }
@@ -172,10 +173,10 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener {
 //        }
     }
 
-    override fun getTransactionList(data: DataTransaction?) {
-        showPendingTransaction(data?.pending?.size!!)
+    override fun getTransactionPending(data: List<DataAllTransactionPending?>?) {
+        showPendingTransaction(data?.size!!)
         binding?.includeTransactionPending?.rvTransactionPending?.apply {
-            adapter = AdapterUnfinishTransactionExplore(requireContext(), data.pending)
+            adapter = AdapterUnfinishTransactionExplore(requireContext(), data)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
     }

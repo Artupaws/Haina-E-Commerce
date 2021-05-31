@@ -33,6 +33,7 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
     private var requestBill:RequestBill? = null
     private var nameProduct:String=""
     private var popupInputAmountBill:Dialog? = null
+    private var typeInquiry:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,9 +129,19 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
     }
 
     private fun move(data:DataInquiry) {
+        requestBill = RequestBill(productCode, data.billAmount, null, customerNumber, null, typeInquiry)
         val intentToCheckout = Intent(applicationContext, CheckoutActivity::class.java)
             .putExtra("dataBill", data)
             .putExtra("request", requestBill)
+            .putExtra("typeTransaction", 2)
+        startActivity(intentToCheckout)
+    }
+
+    private fun moveNoInquiry(data:DataInquiry, requestBillParams: RequestBill?) {
+//        requestBill = RequestBill(productCode, data.billAmount, null, customerNumber, null, typeInquiry)
+        val intentToCheckout = Intent(applicationContext, CheckoutActivity::class.java)
+            .putExtra("dataBill", data)
+            .putExtra("request", requestBillParams)
             .putExtra("typeTransaction", 2)
         startActivity(intentToCheckout)
     }
@@ -168,7 +179,8 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
     }
 
     override fun getDataBillAmount(data: DataInquiry) {
-        Log.d("dataFromInternet", data.billAmount.toString())
+        typeInquiry = data.inquiry!!
+        Log.d("dataFromInternet", data.inquiry.toString())
         when(data.inquiry){
             0 -> {
                 dialogInputAmountBill(data)
@@ -209,7 +221,7 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
                 if (!customerNumberParams.isNullOrEmpty()) {
                     presenter.getBillInquiry(customerNumberParams, productCodeParams)
 //                    setPresenter(nameProduct, customerNumberParams, productCodeParams)
-                    requestBill = RequestBill(productCodeParams, null, null, customerNumberParams, null, null)
+//                    requestBill = RequestBill(productCodeParams, null, null, customerNumberParams, null, 1)
 //                    val intentToCheckout = Intent(applicationContext, CheckoutActivity::class.java)
 ////                        .putExtra("dataBill", data)
 //                        .putExtra("request", requestBill)
@@ -246,8 +258,8 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
             }
 
             if (!amountBill.isNullOrEmpty()){
-                requestBill = RequestBill(productCode, amountBill, null, customerNumber, null, 0)
-                move(data)
+                requestBill = RequestBill(productCode, amountBill, null, customerNumber, null, data.inquiry)
+                moveNoInquiry(data, requestBill!!)
             } else {
                 Toast.makeText(applicationContext, getString(R.string.please_input_amount_bill), Toast.LENGTH_SHORT).show()
             }
