@@ -110,30 +110,8 @@ class ExplorePresenter(val view: ExploreContract, val context: Context) {
                 override fun onFailure(call: Call<ResponseGetDataUser>, t: Throwable) {
                     view.messageGetDataUSer(t.localizedMessage.toString())
                 }
-
             })
     }
-
-//    fun getListUnfinishTransaction(){
-//        val getListunfinishTransaction = NetworkConfig().getConnectionHainaBearer(context).getListTransaction()
-//        getListunfinishTransaction.enqueue(object : retrofit2.Callback<ResponseGetListTransaction>{
-//            override fun onResponse(call: Call<ResponseGetListTransaction>, response: Response<ResponseGetListTransaction>) {
-//                if (response.isSuccessful && response.body()?.value == 1){
-//                    val data = response.body()?.dataTransaction
-//                    view.getTransactionList(data)
-//                    view.messageGetTransactionList(response.body()?.message)
-//                } else {
-//                    val error = JSONObject(response.errorBody()?.string()!!)
-//                    view.messageGetTransactionList(error.getString("message"))
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<ResponseGetListTransaction>, t: Throwable) {
-//                view.messageGetTransactionList(t.localizedMessage.toString())
-//            }
-//
-//        })
-//    }
 
     fun getListPendingTransaction(){
         val getListPendingTransaction = NetworkConfig().getConnectionHainaBearer(context).getAllTransactionPending()
@@ -155,5 +133,4 @@ class ExplorePresenter(val view: ExploreContract, val context: Context) {
 
         })
     }
-
 }
