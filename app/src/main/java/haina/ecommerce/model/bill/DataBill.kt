@@ -10,6 +10,9 @@ data class DataBill(
 	@field:SerializedName("customer_id")
 	val customerId: String? = null,
 
+	@field:SerializedName("phone_no")
+	val phoneNo: String? = null,
+
 	@field:SerializedName("customer_name")
 	val customerName: String? = null,
 

@@ -49,29 +49,45 @@ class HotelsActivity : AppCompatActivity(), HotelContract, AdapterListHotel.Item
             }
 
         })
+        refresh()
+    }
 
+    private fun refresh(){
+        binding.swipeRefresh.setOnRefreshListener {
+            presenter.getListCity()
+            presenter.getAllHotel()
+        }
     }
 
     override fun getMessageHotel(msg: String) {
         Log.d("dataHotel", msg)
+        binding.swipeRefresh.isRefreshing = false
     }
 
     override fun getDataAllHotel(data: List<DataHotel?>?) {
-        binding.rvHotels.apply {
-            adapter = AdapterListHotel(applicationContext, data, this@HotelsActivity)
-            layoutManager = GridLayoutManager(applicationContext, 2)
+        if (!data.isNullOrEmpty()){
+            binding.shimmerHotel.visibility = View.GONE
+            binding.rvHotels.visibility = View.VISIBLE
+            binding.rvHotels.apply {
+                adapter = AdapterListHotel(applicationContext, data, this@HotelsActivity)
+                layoutManager = GridLayoutManager(applicationContext, 2)
+            }
         }
     }
 
     override fun getListCity(data: MutableList<LocationHotels>?) {
-        val defaultCity = mutableListOf<LocationHotels>()
-        defaultCity.addAll(listOf(LocationHotels(-1, "All Location")))
-        defaultCity.addAll(data!!)
-        val adapterLocation = AdapterListLocationHotel(applicationContext, defaultCity, this)
-        binding.rvLocationHotels.apply {
-            adapter = adapterLocation
-            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
-            adapterLocation.notifyDataSetChanged()
+        if (!data.isNullOrEmpty()){
+            binding.shimmerCity.visibility = View.GONE
+            binding.rvLocationHotels.visibility = View.VISIBLE
+            val defaultCity = mutableListOf<LocationHotels>()
+            defaultCity.addAll(listOf(LocationHotels(-1, "All Location")))
+            defaultCity.addAll(data)
+            val adapterLocation = AdapterListLocationHotel(applicationContext, defaultCity, this)
+            binding.rvLocationHotels.apply {
+                adapter = adapterLocation
+                layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+                adapterLocation.notifyDataSetChanged()
+            }
         }
     }
 

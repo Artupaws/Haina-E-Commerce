@@ -273,4 +273,6 @@
     <string name="total_amount">总金额</string>
     <string name="send_review">发送评论</string>
     <string name="please_input_amount_bill">请输入您的账单</string>
+    <string name="bill_has_paid">帐单已付</string>
+
 </resources>

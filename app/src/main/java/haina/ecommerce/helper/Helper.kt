@@ -28,11 +28,11 @@ object Helper {
         return formatter.format(formatMoney.toDouble())
     }
 
-    fun convertToFormatMoneyIDRFilter(formatMoney: String): String? {
+    fun convertToFormatMoneyIDRFilter(formatMoney: String?): String? {
         val formatter: NumberFormat = NumberFormat.getCurrencyInstance()
         formatter.maximumFractionDigits = 0
         formatter.currency = Currency.getInstance("IDR")
-        return formatter.format(formatMoney.toDouble())
+        return formatter.format(formatMoney?.toDouble())
     }
 
     fun convertToFormatMoneySalary(formatMoney: String): String? {

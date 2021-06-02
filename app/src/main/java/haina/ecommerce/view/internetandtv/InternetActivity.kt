@@ -251,13 +251,13 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
 
         btnInputAmountBill?.setOnClickListener {
             var amountBill = etInputAmountBill?.text.toString()
-            if (amountBill.isNullOrEmpty()){
+            if (amountBill.isNullOrEmpty() && amountBill.toInt() < 10000){
                 etInputAmountBill?.error = getString(R.string.please_input_amount_bill)
             } else {
                 amountBill = etInputAmountBill?.text.toString()
             }
 
-            if (!amountBill.isNullOrEmpty()){
+            if (!amountBill.isNullOrEmpty() && amountBill.toInt() >= 10000){
                 requestBill = RequestBill(productCode, amountBill, null, customerNumber, null, data.inquiry)
                 moveNoInquiry(data, requestBill!!)
             } else {

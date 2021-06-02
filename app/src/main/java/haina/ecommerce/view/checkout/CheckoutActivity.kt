@@ -202,12 +202,18 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         binding.linearDataProductTopup.visibility = View.GONE
         binding.includeDataProductBill.linearDataProductBill.visibility = View.VISIBLE
         binding.includeDataProductBill.tvCustomerNumber.text = data.billData?.customerId
+        binding.includeDataProductBill.tvCustomerNumber.text = data.billData?.phoneNo
         binding.includeDataProductBill.tvNameCustomer.text = data.billData?.customerName
         binding.includeDataProductBill.tvBill.text = data.billAmount
         binding.includeDataProductBill.tvBillDate.text = data.billData?.billDate
         binding.includeDataProductBill.tvAdminFee.text = "0"
         binding.tvProductName.text = data.product
-        binding.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(data.billAmount.toString())
+        if (data.billAmount == null){
+            binding.tvTotalPay.text = getString(R.string.bill_has_paid)
+        } else {
+//            binding.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(data.billAmount)
+            binding.tvTotalPay.text = data.billAmount
+        }
         val icon = HtmlCompat.fromHtml("${data.iconCode}", HtmlCompat.FROM_HTML_MODE_LEGACY)
         binding.faIcon.text = icon
         when (codeLanguage) {

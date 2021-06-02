@@ -19,6 +19,7 @@ import haina.ecommerce.adapter.AdapterUnfinishTransactionExplore
 import haina.ecommerce.databinding.FragmentExploreBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataCodeCurrency
+import haina.ecommerce.model.DataCovidJkt
 import haina.ecommerce.model.DataCurrency
 import haina.ecommerce.model.DataUser
 import haina.ecommerce.model.transactionlist.DataAllTransactionPending
@@ -76,21 +77,23 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
     }
 
     private fun setBaseCurrency(data:List<DataCodeCurrency?>?) {
-        val adapterSpinner =AdapterSpinnerCurrency(requireActivity(), data)
-        binding?.includeCurrency?.spnCountry?.adapter = adapterSpinner
-        binding?.includeCurrency?.spnCountry?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                baseCurrency = data?.get(p2)?.rates.toString()
-                Log.d("currency", baseCurrency)
-                presenter.loadCurrency(baseCurrency)
-            }
+        if (!data.isNullOrEmpty()){
+            val adapterSpinner =AdapterSpinnerCurrency(requireActivity(), data)
+            binding?.includeCurrency?.spnCountry?.adapter = adapterSpinner
+            binding?.includeCurrency?.spnCountry?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    baseCurrency = data?.get(p2)?.rates.toString()
+                    Log.d("currency", baseCurrency)
+                    presenter.loadCurrency(baseCurrency)
+                }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                binding?.includeCurrency?.spnCountry?.setSelection(90)
-                baseCurrency = "USD"
-                presenter.loadCurrency(baseCurrency)
-            }
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    binding?.includeCurrency?.spnCountry?.setSelection(90)
+                    baseCurrency = "USD"
+                    presenter.loadCurrency(baseCurrency)
+                }
 
+            }
         }
     }
 
@@ -145,9 +148,9 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
     private fun refresh() {
         binding?.swipeRefresh?.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
 //            presenter.loadCovidJkt()
+//            presenter.loadListBaseCurrency()
 //            presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
             presenter.getListPendingTransaction()
-            binding?.swipeRefresh?.isRefreshing = false
         })
     }
 
@@ -198,24 +201,34 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
 
     private fun showPendingTransaction(total:Int){
         if (total == 0){
+            binding?.shimmerTransactionPending?.visibility = View.VISIBLE
             binding?.includeTransactionPending?.layoutTransactionPending?.visibility = View.GONE
         } else {
+            binding?.shimmerTransactionPending?.visibility = View.GONE
             binding?.includeTransactionPending?.layoutTransactionPending?.visibility = View.VISIBLE
         }
     }
 
     override fun loadListCodeCurrency(list: List<DataCodeCurrency?>?) {
-        val adapterCodeCurrency = activity?.let { AdapterSpinnerCurrency(it, list) }
-        binding?.includeCurrency?.spnCountry?.adapter = adapterCodeCurrency
-        binding?.includeCurrency?.spnCountry?.setSelection(100)
-        setBaseCurrency(list)
+        if (!list.isNullOrEmpty()){
+            binding?.shimmerCurrency?.visibility = View.GONE
+            binding?.includeCurrency?.constraintCurrency?.visibility = View.VISIBLE
+            val adapterCodeCurrency = activity?.let { AdapterSpinnerCurrency(it, list) }
+            binding?.includeCurrency?.spnCountry?.adapter = adapterCodeCurrency
+            binding?.includeCurrency?.spnCountry?.setSelection(100)
+            setBaseCurrency(list)
+        }
+
     }
 
     override fun loadCurrency(item: DataCurrency?) {
-        binding?.includeCurrency?.tvChnCurrency?.text = helper.convertToFormatMoneyCNY(item?.currency?.cNY.toString())
-        binding?.includeCurrency?.tvIdrCurrency?.text = helper.convertToFormatMoneyIDR(item?.currency?.iDR.toString())
-        binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item?.currency?.uSD.toString())
+        if (item != null){
+            binding?.includeCurrency?.tvChnCurrency?.text = helper.convertToFormatMoneyCNY(item.currency?.cNY.toString())
+            binding?.includeCurrency?.tvIdrCurrency?.text = helper.convertToFormatMoneyIDR(item.currency?.iDR.toString())
+            binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item.currency?.uSD.toString())
+        }
     }
+
 
     override fun onClickAdapterPending(view: View, data: DataAllTransactionPending) {
         val intent = Intent(context, HistoryTransactionActivity::class.java)
@@ -223,12 +236,16 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
         requireActivity().startActivity(intent)
     }
 
-//    override fun loadCovidJkt(item: DataCovidJkt?) {
-//        binding?.covidNews?.tvProvince?.text = item?.provinsi.toString()
-//        binding?.covidNews?.tvTotalCases?.text = item?.kasusPosi.toString()
-//        binding?.covidNews?.tvTotalRecover?.text = item?.kasusSemb.toString()
-//        binding?.covidNews?.tvTotalDie?.text = item?.kasusMeni.toString()
-//    }
+    override fun loadCovidJkt(item: DataCovidJkt?) {
+        if (item != null){
+            binding?.shimmerCovid?.visibility = View.GONE
+            binding?.covidNews?.constraintCovid?.visibility = View.VISIBLE
+            binding?.covidNews?.tvProvince?.text = item.provinsi.toString()
+            binding?.covidNews?.tvTotalCases?.text = item.kasusPosi.toString()
+            binding?.covidNews?.tvTotalRecover?.text = item.kasusSemb.toString()
+            binding?.covidNews?.tvTotalDie?.text = item.kasusMeni.toString()
+        }
+    }
 //
 //    override fun loadHeadlinesNews(list: List<ArticlesItem?>?) {
 //        val newsAdapter = activity?.let { AdapterHeadlineNews(it, list) }

@@ -21,5 +21,6 @@
     <color name="light_grey">#d3d3d3</color>
     <color name="dark_gray">#c1c1c1</color>
     <color name="broken_white">#F4F4F4</color>
+    <color name="gray_shimmer">#dddddd</color>
 
 </resources>

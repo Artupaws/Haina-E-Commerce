@@ -154,4 +154,7 @@ dependencies {
     //detect response code api on emulator
     implementation 'com.readystatesoftware.chuck:library:1.1.0'
 
+    //Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0@aar'
+
 }

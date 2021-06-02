@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import haina.ecommerce.R
 import haina.ecommerce.adapter.service.AdapterServiceCategory
 import haina.ecommerce.databinding.ActivityOtherBinding
@@ -20,7 +22,7 @@ import haina.ecommerce.view.topup.electronicmoney.ElectronicMoneyActivity
 import haina.ecommerce.view.water.WaterActivity
 import java.sql.RowId
 
-class OtherActivity : AppCompatActivity(), View.OnClickListener, OtherContract {
+class OtherActivity : AppCompatActivity(), OtherContract {
 
     private lateinit var binding: ActivityOtherBinding
     private lateinit var presenter: OtherPresenter
@@ -37,64 +39,35 @@ class OtherActivity : AppCompatActivity(), View.OnClickListener, OtherContract {
         binding.toolbarOther.setNavigationOnClickListener {
             onBackPressed()
         }
-
-        binding.linearTopup.setOnClickListener(this)
-        binding.linearElectricity.setOnClickListener(this)
-        binding.linearInternetTvServices.setOnClickListener(this)
-        binding.linearPhoneHouse.setOnClickListener(this)
-        binding.linearPostpaid.setOnClickListener(this)
-        binding.linearWater.setOnClickListener(this)
-        binding.linearElectronicMoney.setOnClickListener(this)
-
+        refresh()
     }
 
-    override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.linear_topup -> {
-                val intent = Intent(applicationContext, TopupActivity::class.java)
-                startActivity(intent)
-            }
-
-            R.id.linear_internet_tv_services -> {
-                val intent = Intent(applicationContext, InternetActivity::class.java)
-                startActivity(intent)
-            }
-
-            R.id.linear_electricity -> {
-                val intent = Intent(applicationContext, ElectricityActivity::class.java)
-                startActivity(intent)
-            }
-
-            R.id.linear_water -> {
-                val intent = Intent(applicationContext, WaterActivity::class.java)
-                startActivity(intent)
-            }
-
-            R.id.linear_postpaid -> {
-                val intent = Intent(applicationContext, PostpaidActivity::class.java)
-                startActivity(intent)
-            }
-
-            R.id.linear_phone_house -> {
-                val intent = Intent(applicationContext, HousePhoneActivity::class.java)
-                startActivity(intent)
-            }
-
-            R.id.linear_electronic_money -> {
-                val intent = Intent(applicationContext, ElectronicMoneyActivity::class.java)
-                startActivity(intent)
-            }
-        }
+    private fun refresh() {
+        binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            binding.frameShimmer.visibility = View.VISIBLE
+            binding.rvServiceCategory.visibility = View.GONE
+            presenter.getListService()
+            binding.swipeRefresh.isRefreshing = false
+        })
     }
 
     override fun messageGetListService(msg: String) {
         Log.d("getPresenter", msg)
+        binding.swipeRefresh.isRefreshing = false
+        if (!msg.contains("Success")){
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getListService(data: List<DataService?>?) {
-        binding.rvServiceCategory.apply {
-            adapter = AdapterServiceCategory(applicationContext, data)
-            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+        if (!data.isNullOrEmpty()){
+            binding.frameShimmer.visibility = View.GONE
+            binding.rvServiceCategory.apply {
+                adapter = AdapterServiceCategory(applicationContext, data)
+                layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+            }
+            binding.rvServiceCategory.visibility = View.VISIBLE
         }
+
     }
 }
