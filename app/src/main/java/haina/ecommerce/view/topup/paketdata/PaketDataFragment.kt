@@ -72,7 +72,7 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
             productCodeParams == null ->{
                 Toast.makeText(requireActivity(), "Please choose product", Toast.LENGTH_SHORT).show()
             } else -> {
-            val dataPulsa = RequestPulsa(phoneNumber, productCodeParams, null, totalPriceParams!!, typeService!!)
+            val dataPulsa = RequestPulsa(phoneNumber, productCodeParams, null, totalPriceParams!!, typeService!!, 0)
             val intentToCheckOut = Intent(requireActivity(), CheckoutActivity::class.java)
                 .putExtra("dataPulsa", dataPulsa)
                 .putExtra("typeTransaction", typeTransaction)
