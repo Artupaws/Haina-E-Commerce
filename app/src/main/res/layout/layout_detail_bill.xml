@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="gone"
+    android:visibility="visible"
     tools:visibility="visible"
     android:orientation="vertical">
 
@@ -69,6 +69,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linear_customer_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -119,6 +120,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linear_total_bill"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -144,6 +146,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linear_admin_fee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

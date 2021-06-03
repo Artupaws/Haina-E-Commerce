@@ -37,6 +37,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
     private var productCode: String? = null
     private lateinit var sharedPref: SharedPreferenceHelper
     private var typeTransaction:Int = 1
+    private var idInquiry:Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentPulsaBinding.inflate(inflater, container, false)
@@ -72,7 +73,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
             idProductParams == null ->{
                 Toast.makeText(requireActivity(), "Please choose product", Toast.LENGTH_SHORT).show()
             } else -> {
-            val dataPulsa = RequestPulsa(phoneNumber, idProductParams, null, totalPriceParams!!, typeService!!)
+            val dataPulsa = RequestPulsa(phoneNumber, idProductParams, null, totalPriceParams!!, typeService!!, idInquiry)
             val intentToCheckOut = Intent(requireActivity(), CheckoutActivity::class.java)
                 .putExtra("dataPulsa", dataPulsa)
                 .putExtra("typeTransaction", typeTransaction)
@@ -161,6 +162,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
         } else {
             binding?.linearTotalPrice?.visibility = View.GONE
         }
+        idInquiry = data.idInquiry
     }
 
 

@@ -14,7 +14,7 @@ data class PulsaItem(
 	val updatedAt: String? = null,
 
 	@field:SerializedName("sell_price")
-	val sellPrice: Int? = null,
+	val   sellPrice: Int? = null,
 
 	@field:SerializedName("base_price")
 	val basePrice: Int? = null,
@@ -29,5 +29,9 @@ data class PulsaItem(
 	val id: Int? = null,
 
 	@field:SerializedName("product_code")
-	val productCode: String? = null
+	val productCode: String? = null,
+
+	@field:SerializedName("id_inquiry")
+	val idInquiry: Int
+
 ):Parcelable

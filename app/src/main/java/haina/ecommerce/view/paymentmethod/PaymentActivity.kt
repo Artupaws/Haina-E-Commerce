@@ -68,9 +68,9 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
             R.id.btn_payment -> {
                 when(typeTransactionParams){
                     1 -> { presenter.createTransaction(dataPulsa?.phoneNumber!!, dataPulsa?.productCode!!,
-                    idPaymentMethod!!)
+                    idPaymentMethod!!, 0)
                     }
-                    2 -> {presenter.createBillTransaction(requestBill?.productCode!!, requestBill?.amount!!, requestBill?.adminFee!!, requestBill?.customerNumber!!, idPaymentMethod!!)
+                    2 -> {presenter.createBillTransaction(requestBill?.productCode!!, requestBill?.amount!!, requestBill?.customerNumber!!, idPaymentMethod!!, requestBill?.inquiry)
                     }
                     3 -> { presenter.createBookingHotel(dataBooking?.hotelId!!, dataBooking?.roomId!!, dataBooking?.checkIn!!, dataBooking?.checkOut!!, dataBooking?.totalGuest!!,
                    helper.changeFormatMoneyToValueFilter(dataBooking?.totalPrice)?.toInt()!!, idPaymentMethod!!)
@@ -111,8 +111,8 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
             2 -> {
                 requestBill = intent?.getParcelableExtra("request")
                 Log.d("dataBillPayment", requestBill.toString())
-                price = requestBill?.amount
-                binding.tvTotalBill.text = requestBill?.amount
+                price = helper.convertToFormatMoneyIDRFilter(requestBill?.amount)
+                binding.tvTotalBill.text = price
 //                val totalPrice = requestBill?.adminFee?.toInt()?.plus(requestBill?.amount?.toInt()!!)
 //                price = totalPrice.toString()
             }

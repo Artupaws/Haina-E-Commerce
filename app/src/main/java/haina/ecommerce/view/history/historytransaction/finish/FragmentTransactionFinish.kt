@@ -15,11 +15,14 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterTransactionPulsaFinish
 import haina.ecommerce.databinding.FragmentTransactionFinishBinding
 import haina.ecommerce.model.transactionlist.DataTransaction
+import haina.ecommerce.model.transactionlist.ProcessItem
+import haina.ecommerce.model.transactionlist.SuccessItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.detailtransaction.DetailTransactionActivity
 import haina.ecommerce.view.login.LoginActivity
 
-class FragmentTransactionFinish : Fragment(), View.OnClickListener {
+class FragmentTransactionFinish : Fragment(), View.OnClickListener, AdapterTransactionPulsaFinish.ItemAdapterCallback {
 
     private var _binding:FragmentTransactionFinishBinding? = null
     private val binding get() = _binding
@@ -79,11 +82,9 @@ class FragmentTransactionFinish : Fragment(), View.OnClickListener {
     }
 
     private fun setupListTransactionFinish(data:DataTransaction?){
-
         showIsEmpty(data?.process?.size)
-
         binding?.rvTransactionFinish?.apply {
-            adapter = AdapterTransactionPulsaFinish(requireContext(), data?.process)
+            adapter = AdapterTransactionPulsaFinish(requireContext(), data?.success, this@FragmentTransactionFinish)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }
@@ -97,4 +98,14 @@ class FragmentTransactionFinish : Fragment(), View.OnClickListener {
         }
     }
 
+    override fun onClickAdapter(view: View, data: SuccessItem) {
+        when(view.id){
+            R.id.relative_click -> {
+                val intent = Intent(context, DetailTransactionActivity::class.java)
+                    .putExtra("transaction", "finish")
+                    .putExtra("dataFinish", data)
+                startActivity(intent)
+            }
+        }
+    }
 }

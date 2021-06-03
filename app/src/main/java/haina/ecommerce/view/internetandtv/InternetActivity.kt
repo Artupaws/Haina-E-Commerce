@@ -185,17 +185,10 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
             0 -> {
                 dialogInputAmountBill(data)
                 popupInputAmountBill?.show()
-            }
-            1 -> {
+            } else -> {
                 move(data)
             }
         }
-//        if (data.inquiry == 1){
-//            popupInputAmountBill?.show()
-//            move(data)
-//        } else {
-//            Toast.makeText(applicationContext, "Not Found!", Toast.LENGTH_SHORT).show()
-//        }
     }
 
     override fun getDataBillDirect(data: DataNoInquiry) {
@@ -220,13 +213,6 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
 
                 if (!customerNumberParams.isNullOrEmpty()) {
                     presenter.getBillInquiry(customerNumberParams, productCodeParams)
-//                    setPresenter(nameProduct, customerNumberParams, productCodeParams)
-//                    requestBill = RequestBill(productCodeParams, null, null, customerNumberParams, null, 1)
-//                    val intentToCheckout = Intent(applicationContext, CheckoutActivity::class.java)
-////                        .putExtra("dataBill", data)
-//                        .putExtra("request", requestBill)
-//                        .putExtra("typeTransaction", 2)
-//                    startActivity(intentToCheckout)
                     binding.relativeLoading.visibility = View.VISIBLE
                     binding.btnNext.visibility = View.GONE
                 }

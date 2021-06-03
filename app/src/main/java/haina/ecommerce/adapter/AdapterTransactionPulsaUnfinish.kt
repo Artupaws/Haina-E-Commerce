@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemUnfinishTransactionBinding
+import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.transactionlist.PendingItem
 
 class AdapterTransactionPulsaUnfinish(
@@ -20,33 +21,39 @@ class AdapterTransactionPulsaUnfinish(
 ) :
     RecyclerView.Adapter<AdapterTransactionPulsaUnfinish.Holder>() {
 
+    private val helper:Helper = Helper
+
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemUnfinishTransactionBinding.bind(view)
         fun bind(itemHaina: PendingItem, itemAdapterCallBack: ItemAdapterCallback) {
             with(binding) {
                 tvDateTransaction.text = itemHaina.transactionTime
                 tvDescriptionProduct.text = itemHaina.product?.description
-                tvDueDate.text = itemHaina.payment?.settlementTime.toString()
+                tvDueDate.text = itemHaina.payment?.paymentStatus
                 Log.d(
                     "dataTransaction",
                     "${itemHaina.payment?.vaNumber}, ${itemHaina.payment?.idPaymentMethod}"
                 )
-
-                if (itemHaina.payment?.idPaymentMethod == 1){
-                    setLayoutVirtualAccount(binding, itemHaina.payment.vaNumber.toString(), itemHaina.totalPayment.toString())
-                }
-
-                if (itemHaina.payment?.idPaymentMethod != 1){
-                    setLayoutBankTransfer(binding, itemHaina.payment?.vaNumber.toString(), itemHaina.totalPayment.toString())
+                when(itemHaina.payment?.idPaymentMethod){
+                    1 -> {
+                        setLayoutVirtualAccount(binding, itemHaina.payment.vaNumber.toString(), itemHaina.totalPayment.toString())
+                    }
+                    2 -> {
+                        setLayoutBankTransfer(binding, itemHaina.payment?.vaNumber.toString(), itemHaina.totalPayment.toString())
+                    }
                 }
 
                 copyVirtualAccount(binding)
                 btnHowPay.setOnClickListener {
-                    itemAdapterCallBack.onClick(binding.btnHowPay, itemHaina)
+                    itemAdapterCallBack.onClickAdapter(binding.btnHowPay, itemHaina)
                 }
 
                 ivOption.setOnClickListener {
-                    itemAdapterCallBack.onClick(binding.ivOption, itemHaina)
+                    itemAdapterCallBack.onClickAdapter(binding.ivOption, itemHaina)
+                }
+
+                relativeClick.setOnClickListener {
+                    itemAdapterCallBack.onClickAdapter(binding.relativeClick, itemHaina)
                 }
             }
         }
@@ -97,31 +104,27 @@ class AdapterTransactionPulsaUnfinish(
         binding.includeBankTransfer.linearBankTransfer.visibility = View.GONE
         binding.includeVirtualAccount.tvPaymentMethod.text = "Virtual Account"
         binding.includeVirtualAccount.tvVirtualAccountNumber.text = vaNumber
-        binding.includeVirtualAccount.tvTotalPay.text = totalPayment
+        binding.includeVirtualAccount.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(totalPayment)
     }
 
     private fun setLayoutBankTransfer(binding: ListItemUnfinishTransactionBinding, vaNumber: String, totalPayment: String) {
         binding.includeVirtualAccount.linearVirtualAccount.visibility = View.GONE
         binding.includeBankTransfer.linearBankTransfer.visibility = View.VISIBLE
 //            binding.includeBankTransfer.tvPaymentMethod.text = paymentMethod
-        binding.includeBankTransfer.tvTotalPay.text = totalPayment
+        binding.includeBankTransfer.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(totalPayment)
     }
 
     private fun copyVirtualAccount(binding: ListItemUnfinishTransactionBinding) {
         binding.includeVirtualAccount.cvCopyVirtualAccount.setOnClickListener {
-            val myClipboard: ClipboardManager =
-                context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager;
-            val myClip = ClipData.newPlainText(
-                "text",
-                binding.includeVirtualAccount.tvVirtualAccountNumber.text
-            )
+            val myClipboard: ClipboardManager = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            val myClip = ClipData.newPlainText("text", binding.includeVirtualAccount.tvVirtualAccountNumber.text)
             myClipboard.setPrimaryClip(myClip)
             Toast.makeText(context, "Virtual Account Copied", Toast.LENGTH_SHORT).show()
         }
     }
 
     interface ItemAdapterCallback {
-        fun onClick(view: View, data: PendingItem)
+        fun onClickAdapter(view: View, data: PendingItem)
     }
 
 }

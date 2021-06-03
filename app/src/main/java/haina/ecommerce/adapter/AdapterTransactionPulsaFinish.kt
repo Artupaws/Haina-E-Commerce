@@ -1,31 +1,25 @@
 package haina.ecommerce.adapter
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemFinishTransactionBinding
 import haina.ecommerce.model.transactionlist.ProcessItem
-import haina.ecommerce.view.detailtransaction.DetailTransactionActivity
+import haina.ecommerce.model.transactionlist.SuccessItem
 
 
-class AdapterTransactionPulsaFinish(val context: Context, private val listTransactionFinish: List<ProcessItem?>?):
+class AdapterTransactionPulsaFinish(val context: Context, private val listTransactionFinish: List<SuccessItem?>?,
+private val itemAdapterCallback: ItemAdapterCallback):
     RecyclerView.Adapter<AdapterTransactionPulsaFinish.Holder>() {
-
-    private var idPaymentMethod:Int? = null
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemFinishTransactionBinding.bind(view)
-        fun bind(itemHaina: ProcessItem){
+        fun bind(itemHaina: SuccessItem, itemAdapterCallback: ItemAdapterCallback){
             with(binding){
                 relativeClick.setOnClickListener {
-                    val intent = Intent(context, DetailTransactionActivity::class.java)
-                            .putExtra("transaction", "finish")
-                            .putExtra("dataFinish", itemHaina)
-                    context.startActivity(intent)
+                    itemAdapterCallback.onClickAdapter(binding.relativeClick, itemHaina)
                 }
                 tvTitleService.text = itemHaina.product?.description
                 tvDateTransaction.text = itemHaina.transactionTime
@@ -44,9 +38,13 @@ class AdapterTransactionPulsaFinish(val context: Context, private val listTransa
     }
 
     override fun onBindViewHolder(holder: AdapterTransactionPulsaFinish.Holder, position: Int) {
-        val transactionFinish: ProcessItem = listTransactionFinish?.get(position)!!
-        holder.bind(transactionFinish)
+        val transactionFinish: SuccessItem = listTransactionFinish?.get(position)!!
+        holder.bind(transactionFinish, itemAdapterCallback)
     }
 
     override fun getItemCount(): Int = listTransactionFinish?.size!!
+
+    interface ItemAdapterCallback{
+        fun onClickAdapter(view: View, data:SuccessItem)
+    }
 }

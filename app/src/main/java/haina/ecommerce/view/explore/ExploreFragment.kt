@@ -82,7 +82,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
             binding?.includeCurrency?.spnCountry?.adapter = adapterSpinner
             binding?.includeCurrency?.spnCountry?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    baseCurrency = data?.get(p2)?.rates.toString()
+                    baseCurrency = data[p2]?.rates.toString()
                     Log.d("currency", baseCurrency)
                     presenter.loadCurrency(baseCurrency)
                 }
@@ -178,6 +178,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
     }
 
     override fun getTransactionPending(data: List<DataAllTransactionPending?>?) {
+        Log.d("dataTransactionPending", data?.size.toString())
         showPendingTransaction(data?.size!!)
         binding?.includeTransactionPending?.rvTransactionPending?.apply {
             adapter = AdapterUnfinishTransactionExplore(requireContext(), data, this@ExploreFragment)

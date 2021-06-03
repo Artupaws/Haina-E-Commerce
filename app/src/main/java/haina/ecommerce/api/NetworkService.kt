@@ -336,7 +336,8 @@ interface NetworkService {
     fun createTransactionProductPhone(
         @Field("customer_number")customerNumber:String,
         @Field("product_code")productCode:String,
-        @Field("id_payment_method")idPaymentMethod:Int
+        @Field("id_payment_method")idPaymentMethod:Int,
+        @Field("id_inquiry")idInquiry: Int
     ):Call<ResponseCreateTransactionProductPhone>
 
     //Get All Hotel
@@ -436,9 +437,9 @@ interface NetworkService {
     fun addBillTransaction(
         @Field("product_code")productCode:String,
         @Field("amount")amount:String,
-        @Field("adminfee")adminFee:String,
         @Field("customer_number")customerNumber: String,
-        @Field("id_payment_method")idPaymentMethod: Int
+        @Field("id_payment_method")idPaymentMethod: Int,
+        @Field("id_inquiry")idInquiry:Int?
     ):Call<ResponseAddBillTransaction>
 
     //Get All Transaction Pending List

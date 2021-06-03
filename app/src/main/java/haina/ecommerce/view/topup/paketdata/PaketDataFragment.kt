@@ -55,13 +55,6 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
     override fun onClick(v: View?) {
         when (v?.id){
             R.id.btn_next -> {
-//                val intent = Intent(requireContext(), CheckoutActivity::class.java)
-//                        .putExtra("totalPrice", totalPrice)
-//                        .putExtra("phoneNumber", phoneNumber)
-//                        .putExtra("serviceType", serviceType)
-//                        .putExtra("idProduct", idProduct)
-//                        .putExtra("titleService", "Paket Data")
-//                startActivity(intent)
                 checkDataPulsa()
             }
         }
@@ -70,7 +63,7 @@ class PaketDataFragment : Fragment(), View.OnClickListener, PaketDataContract {
     private fun checkDataPulsa(){
         val phoneNumber = (activity as TopupActivity).getNumber()
         val productCodeParams = productCode
-        val totalPriceParams = totalPrice
+        val totalPriceParams = helper.convertToFormatMoneyIDRFilter(totalPrice)
         val typeService = serviceType
         when {
             phoneNumber.isNullOrEmpty()->{

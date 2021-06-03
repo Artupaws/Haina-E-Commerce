@@ -110,14 +110,10 @@
 
                 <include
                     android:id="@+id/include_detail_bill"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     layout="@layout/layout_detail_bill"/>
 
                 <include
                     android:id="@+id/include_detail_product_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     layout="@layout/layout_detail_product_phone"/>
 
             </FrameLayout>

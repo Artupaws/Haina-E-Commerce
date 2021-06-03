@@ -33,8 +33,8 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
         })
     }
 
-    fun createTransaction(customerNumber:String, productCode:String, idPaymentMethod:Int){
-        val createTransaction = NetworkConfig().getConnectionHainaBearer(context).createTransactionProductPhone(customerNumber, productCode, idPaymentMethod)
+    fun createTransaction(customerNumber:String, productCode:String, idPaymentMethod:Int, idInquiry: Int){
+        val createTransaction = NetworkConfig().getConnectionHainaBearer(context).createTransactionProductPhone(customerNumber, productCode, idPaymentMethod, idInquiry)
         createTransaction.enqueue(object : retrofit2.Callback<ResponseCreateTransactionProductPhone>{
             override fun onResponse(call: Call<ResponseCreateTransactionProductPhone>, response: Response<ResponseCreateTransactionProductPhone>) {
                 if (response.isSuccessful && response.body()?.value == 1){
@@ -52,8 +52,8 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
         })
     }
 
-    fun createBillTransaction(productCode:String, amount:String, adminFee:String, customerNumber:String, idPaymentMethod:Int){
-        val createTransaction = NetworkConfig().getConnectionHainaBearer(context).addBillTransaction(productCode, amount, adminFee, customerNumber, idPaymentMethod)
+    fun createBillTransaction(productCode:String, amount:String, customerNumber:String, idPaymentMethod:Int, idInquiry:Int?){
+        val createTransaction = NetworkConfig().getConnectionHainaBearer(context).addBillTransaction(productCode, amount, customerNumber, idPaymentMethod, idInquiry)
         createTransaction.enqueue(object : retrofit2.Callback<ResponseAddBillTransaction>{
             override fun onResponse(call: Call<ResponseAddBillTransaction>, response: Response<ResponseAddBillTransaction>) {
                 if (response.isSuccessful && response.body()?.value == 1){

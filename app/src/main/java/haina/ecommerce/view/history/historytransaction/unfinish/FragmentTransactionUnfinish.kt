@@ -20,6 +20,7 @@ import haina.ecommerce.model.transactionlist.DataTransaction
 import haina.ecommerce.model.transactionlist.PendingItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.detailtransaction.DetailTransactionActivity
 import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
 import haina.ecommerce.view.login.LoginActivity
 
@@ -111,7 +112,7 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
         }
     }
 
-    override fun onClick(view: View, data: PendingItem) {
+    override fun onClickAdapter(view: View, data: PendingItem) {
         when(view.id){
             R.id.iv_option -> {
                 val popup = PopupMenu(requireContext(), view)
@@ -132,6 +133,12 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
                         show(it, tag)
                     }
                 }
+            }
+            R.id.relative_click -> {
+                val intent = Intent(context, DetailTransactionActivity::class.java)
+                    .putExtra("transaction", "finish")
+                    .putExtra("dataFinish", data)
+                startActivity(intent)
             }
         }
     }

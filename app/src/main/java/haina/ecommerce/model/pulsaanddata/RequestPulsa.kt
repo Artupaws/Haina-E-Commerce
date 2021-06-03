@@ -21,5 +21,8 @@ class RequestPulsa (
     var totalPrice:String,
 
     @SerializedName("type_service")
-    var typeService:String
+    var typeService:String,
+
+    @SerializedName("id_inquiry")
+    var idInquiry:Int
         ):Parcelable

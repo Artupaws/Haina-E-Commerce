@@ -26,7 +26,6 @@ class AdapterPulsa (val context: Context, private val listPulsa: List<PulsaItem?
                 itemView.setOnClickListener {index = adapterPosition
                     notifyDataSetChanged()
                     itemAdapterCallback.onClickAdapter(itemView, item)
-//                    onItemClick(item.sellPrice!!, tvNominal.text.toString(), item.id!!)
                 }
                 if (index == adapterPosition){
                     linearPulsa.setBackgroundResource(R.drawable.background_internet_enable)
