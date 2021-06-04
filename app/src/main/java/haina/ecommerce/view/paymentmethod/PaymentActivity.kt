@@ -68,7 +68,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
             R.id.btn_payment -> {
                 when(typeTransactionParams){
                     1 -> { presenter.createTransaction(dataPulsa?.phoneNumber!!, dataPulsa?.productCode!!,
-                    idPaymentMethod!!, 0)
+                    idPaymentMethod!!, dataPulsa!!.idInquiry)
                     }
                     2 -> {presenter.createBillTransaction(requestBill?.productCode!!, requestBill?.amount!!, requestBill?.customerNumber!!, idPaymentMethod!!, requestBill?.inquiry)
                     }
@@ -105,6 +105,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         when(typeTransaction){
             1 -> {
                 dataPulsa = intent.getParcelableExtra("dataPulsa")
+                Log.d("id_inquiry", dataPulsa?.idInquiry.toString())
                 binding.tvTotalBill.text = dataPulsa?.totalPrice
                 price = dataPulsa?.totalPrice
             }

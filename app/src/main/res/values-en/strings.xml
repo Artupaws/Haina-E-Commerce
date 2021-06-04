@@ -16,7 +16,7 @@
     <string name="hint_search">News Today, Covid-19 News...</string>
     <string name="categories">Categories</string>
     <string name="recomendations">RECOMENDATIONS</string>
-    <string name="news_title">Headlines News</string>
+    <string name="news_title">News</string>
     <string name="shipping_title">Shipping</string>
     <string name="topup_title">Topup</string>
     <string name="job_vacancy">Job</string>
@@ -274,4 +274,6 @@
     <string name="send_review">Send Review</string>
     <string name="please_input_amount_bill">Please input your amount bill</string>
     <string name="bill_has_paid">The bill has been paid</string>
+    <string name="detail_news">Detail News</string>
+    <string name="the_number_of_guests">The Number of Guests</string>
 </resources>

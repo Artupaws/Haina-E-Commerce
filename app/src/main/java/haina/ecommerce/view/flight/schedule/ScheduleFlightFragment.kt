@@ -1,4 +1,4 @@
-package haina.ecommerce.view.flight.fragment
+package haina.ecommerce.view.flight.schedule
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -31,13 +31,15 @@ import haina.ecommerce.databinding.FragmentBottomsheetFlightBinding
 import haina.ecommerce.databinding.FragmentScheduleFlightBinding
 import haina.ecommerce.helper.Helper.convertLongtoTime
 import haina.ecommerce.helper.RangeValidator
+import haina.ecommerce.model.flight.DataAirport
 import haina.ecommerce.model.flight.DestinationCity
 import haina.ecommerce.model.flight.DestinationCountry
 import haina.ecommerce.model.flight.Request
 import haina.ecommerce.view.flight.FlightTicketActivity
+import haina.ecommerce.view.flight.fragment.BottomSheetFlightFragment
 import java.util.*
 
-class ScheduleFlightFragment : Fragment(), View.OnClickListener {
+class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContract {
 
     private lateinit var _binding: FragmentScheduleFlightBinding
     private val binding get() = _binding
@@ -67,6 +69,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
     private lateinit var typeDestination: String
     private var broadcaster:LocalBroadcastManager?=null
     private var flightClass:String? = null
+    private lateinit var presenter: ScheduleFlightPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,11 +102,13 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
             Toast.makeText(requireActivity(), "Clicked", Toast.LENGTH_SHORT).show()
         }
         switchDestination()
-        popupDialogDestination(listDestination)
+//        popupDialogDestination(listDestination)
         popupDialogFlightClass()
         binding.toolbarScheduleFlight.setNavigationOnClickListener {
             (activity as FlightTicketActivity).onBackPressed()
         }
+        presenter = ScheduleFlightPresenter(this, requireActivity())
+        presenter.getDataAirport()
     }
 
     override fun onClick(v: View?) {
@@ -303,7 +308,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun popupDialogDestination(listDestinationCountry: List<DestinationCountry>) {
+    private fun popupDialogDestination(listDestinationCountry: List<DataAirport?>?) {
         popupDestination = Dialog(requireActivity())
         popupDestination?.setContentView(R.layout.layout_popup_dialog_destination_flight)
         popupDestination?.setCancelable(true)
@@ -326,7 +331,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
         popupFlightClass?.setContentView(R.layout.layout_select_flight_class)
         popupFlightClass?.setCancelable(true)
         popupFlightClass?.window?.setBackgroundDrawableResource(R.color.white)
-        val window: Window = popupDestination?.window!!
+        val window: Window = popupFlightClass?.window!!
         window.setGravity(Gravity.CENTER)
         val rdGroup = popupFlightClass?.findViewById<RadioGroup>(R.id.rd_group)
         rdGroup?.setOnCheckedChangeListener(
@@ -337,6 +342,14 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener {
                 popupFlightClass?.dismiss()
             }
         )
+    }
+
+    override fun messageGetAirport(msg: String) {
+        Log.d("airportData", msg)
+    }
+
+    override fun getDataAirport(data: List<DataAirport?>?) {
+        popupDialogDestination(data)
     }
 
 

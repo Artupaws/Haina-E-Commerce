@@ -40,7 +40,7 @@ class AdapterService(val context: Context, private val listService: List<Categor
                 val icon = HtmlCompat.fromHtml("${itemHaina.iconCode}",HtmlCompat.FROM_HTML_MODE_LEGACY)
                 ivIconService.text = icon
                 val codeLanguage = sharedPref.getValueString(Constants.LANGUAGE_APP)
-                setLanguage(codeLanguage!!, binding, itemHaina)
+                setLanguage(codeLanguage, binding, itemHaina)
                 itemView.setOnClickListener {
                     when(itemHaina.name){
                         "Internet Service Provider" -> {
@@ -107,7 +107,7 @@ class AdapterService(val context: Context, private val listService: List<Categor
 
     override fun getItemCount(): Int = listService?.size!!
 
-    private fun setLanguage(codeLanguage:String, binding: ListItemServiceBinding, data: CategoryService){
+    private fun setLanguage(codeLanguage:String?, binding: ListItemServiceBinding, data: CategoryService){
         when (codeLanguage){
             "zh" -> {
                 binding.tvTitleService.text = data.nameZh

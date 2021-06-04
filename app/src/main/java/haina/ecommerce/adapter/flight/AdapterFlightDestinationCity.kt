@@ -13,23 +13,24 @@ import haina.ecommerce.adapter.hotel.AdapterListRoomHotel
 import haina.ecommerce.databinding.ListItemAddressCompanyBinding
 import haina.ecommerce.databinding.ListItemDestinationCityBinding
 import haina.ecommerce.model.AddressItemCompany
+import haina.ecommerce.model.flight.DataAirport
 import haina.ecommerce.model.flight.DestinationCity
 import haina.ecommerce.view.datacompany.address.AddAddressCompanyActivity
 
 
-class AdapterFlightDestinationCity(val context: Context, private val listDestinationCity: List<DestinationCity?>?) :
+class AdapterFlightDestinationCity(val context: Context, private val listDestinationCity: List<DataAirport?>?) :
         RecyclerView.Adapter<AdapterFlightDestinationCity.Holder>() {
 
     private var broadcaster:LocalBroadcastManager? =null
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemDestinationCityBinding.bind(view)
-        fun bind(itemHaina: DestinationCity) {
+        fun bind(itemHaina: DataAirport) {
             with(binding) {
-                val nameCityAndCountry = "${itemHaina.nameCity}, ${itemHaina.nameCountry}"
+                val nameCityAndCountry = "${itemHaina.city}, ${itemHaina.country}"
                 binding.tvNameCityAndCountry.text = nameCityAndCountry
-                binding.tvCodeCity.text = itemHaina.codeCity
-                val nameAirport = " - ${itemHaina.nameAirport}"
+                binding.tvCodeCity.text = itemHaina.iata
+                val nameAirport = " - ${itemHaina.name}"
                 binding.tvNameAirpot.text = nameAirport
                 binding.rvClick.setOnClickListener {
                     val dataIntent = Intent("dataDestination")
@@ -48,7 +49,7 @@ class AdapterFlightDestinationCity(val context: Context, private val listDestina
     }
 
     override fun onBindViewHolder(holder: AdapterFlightDestinationCity.Holder, position: Int) {
-        val photo: DestinationCity = listDestinationCity?.get(position)!!
+        val photo: DataAirport = listDestinationCity?.get(position)!!
         holder.bind(photo)
     }
 

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/scheduleFlightFragment"
-        android:name="haina.ecommerce.view.flight.fragment.ScheduleFlightFragment"
+        android:name="haina.ecommerce.view.flight.schedule.ScheduleFlightFragment"
         android:label="fragment_schedule_flight"
         tools:layout="@layout/fragment_schedule_flight" >
         <action

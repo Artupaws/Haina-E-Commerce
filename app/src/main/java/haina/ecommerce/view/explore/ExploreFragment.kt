@@ -32,6 +32,7 @@ import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivit
 import haina.ecommerce.view.hotels.dashboardhotel.HotelsActivity
 import haina.ecommerce.view.topup.TopupActivity
 import haina.ecommerce.view.job.JobActivity
+import haina.ecommerce.view.news.NewsActivity
 import haina.ecommerce.view.notification.NotificationActivity
 import haina.ecommerce.view.other.OtherActivity
 
@@ -74,6 +75,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
 //        presenter.loadCovidJkt()
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
         refresh()
+        hideOrShowPendingTransaction(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
     }
 
     private fun setBaseCurrency(data:List<DataCodeCurrency?>?) {
@@ -97,6 +99,14 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
         }
     }
 
+    private fun hideOrShowPendingTransaction(statusLogin:Boolean){
+        if (!statusLogin){
+            binding?.shimmerTransactionPending?.visibility = View.GONE
+            binding?.includeTransactionPending?.layoutTransactionPending?.visibility = View.GONE
+            binding?.includeTransactionPending?.layoutTransactionPending?.visibility = View.GONE
+        }
+    }
+
     override fun onClick(p0: View?) {
         when (p0?.id) {
             R.id.linear_other -> {
@@ -105,11 +115,13 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
 //                throw RuntimeException("Test Crash")
             }
             R.id.linear_news -> {
-                binding?.nestedScroll?.post(Runnable {
-                    run() {
-                        binding?.nestedScroll?.smoothScrollTo(0, binding!!.rvNews.top)
-                    }
-                })
+                val intent = Intent(activity, NewsActivity::class.java)
+                startActivity(intent)
+//                binding?.nestedScroll?.post(Runnable {
+//                    run() {
+//                        binding?.nestedScroll?.smoothScrollTo(0, binding!!.rvNews.top)
+//                    }
+//                })
             }
             R.id.tv_detail_covid -> {
                 val intent = Intent(activity, CovidListActivity::class.java)
@@ -179,10 +191,16 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
 
     override fun getTransactionPending(data: List<DataAllTransactionPending?>?) {
         Log.d("dataTransactionPending", data?.size.toString())
-        showPendingTransaction(data?.size!!)
-        binding?.includeTransactionPending?.rvTransactionPending?.apply {
-            adapter = AdapterUnfinishTransactionExplore(requireContext(), data, this@ExploreFragment)
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        if (data?.isEmpty()!! && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+            binding?.shimmerTransactionPending?.visibility = View.GONE
+            binding?.includeTransactionPending?.layoutTransactionPending?.visibility = View.GONE
+        } else {
+            binding?.shimmerTransactionPending?.visibility = View.GONE
+            binding?.includeTransactionPending?.layoutTransactionPending?.visibility = View.VISIBLE
+            binding?.includeTransactionPending?.rvTransactionPending?.apply {
+                adapter = AdapterUnfinishTransactionExplore(requireContext(), data, this@ExploreFragment)
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            }
         }
     }
 

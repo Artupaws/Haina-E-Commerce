@@ -1,13 +1,16 @@
 package haina.ecommerce.api
 
+import androidx.annotation.RawRes
 import haina.ecommerce.model.*
 import haina.ecommerce.model.bill.ResponseAddBillTransaction
 import haina.ecommerce.model.bill.ResponseGetBillAmount
 import haina.ecommerce.model.bill.ResponseGetBillDirect
 import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.currency.ResponseGetCurrency
+import haina.ecommerce.model.flight.ResponseGetListAirport
 import haina.ecommerce.model.hotels.*
 import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
+import haina.ecommerce.model.news.ResponseGetListNews
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.productservice.ResponseGetProductService
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
@@ -57,6 +60,12 @@ interface NetworkService {
     //Headlines
 //    @GET("v2/top-headlines?sources=bbc-news")
 //    fun getDataHeadlines(@Query("apiKey")apiKey: String): Call<ResponseHeadlineNews>
+
+    //Get News
+    @GET("api/news/get")
+    fun getNews(
+        @Query("lang")lang:String
+    ):Call<ResponseGetListNews>
 
     //Covid Indo
     @GET("api/covid")
@@ -445,4 +454,7 @@ interface NetworkService {
     //Get All Transaction Pending List
     @POST("api/pending_transaction")
     fun getAllTransactionPending():Call<ResponseGetListTransactionPending>
+
+    @POST("api/ticket/airport")
+    fun getAirport():Call<ResponseGetListAirport>
 }

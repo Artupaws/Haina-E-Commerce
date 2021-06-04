@@ -30,16 +30,14 @@ class AdapterTransactionPulsaUnfinish(
                 tvDateTransaction.text = itemHaina.transactionTime
                 tvDescriptionProduct.text = itemHaina.product?.description
                 tvDueDate.text = itemHaina.payment?.paymentStatus
-                Log.d(
-                    "dataTransaction",
-                    "${itemHaina.payment?.vaNumber}, ${itemHaina.payment?.idPaymentMethod}"
+                Log.d("dataTransaction", "${itemHaina.payment?.vaNumber}, ${itemHaina.payment?.idPaymentMethod}"
                 )
                 when(itemHaina.payment?.idPaymentMethod){
                     1 -> {
                         setLayoutVirtualAccount(binding, itemHaina.payment.vaNumber.toString(), itemHaina.totalPayment.toString())
                     }
                     2 -> {
-                        setLayoutBankTransfer(binding, itemHaina.payment?.vaNumber.toString(), itemHaina.totalPayment.toString())
+                        setLayoutBankTransfer(binding, itemHaina.payment.vaNumber.toString(), itemHaina.totalPayment.toString())
                     }
                 }
 

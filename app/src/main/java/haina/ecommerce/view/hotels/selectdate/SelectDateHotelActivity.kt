@@ -17,6 +17,9 @@ import haina.ecommerce.helper.RangeValidator
 import haina.ecommerce.model.hotels.DataHotel
 import haina.ecommerce.model.hotels.Requesthotel
 import haina.ecommerce.model.hotels.RoomsItem
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
+import haina.ecommerce.view.login.LoginActivity
 import haina.ecommerce.view.paymentmethod.PaymentActivity
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -32,6 +35,7 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var dataHotel:DataHotel
     private lateinit var dataRoom:RoomsItem
     private lateinit var totalPrice:String
+    private lateinit var sharedPref:SharedPreferenceHelper
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +47,9 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         binding.cvMinusGuests.setOnClickListener(this)
         binding.btnNext.setOnClickListener(this)
         binding.tvSeeOnMap.setOnClickListener(this)
+        binding.btnLogin.setOnClickListener(this)
 
+        sharedPref = SharedPreferenceHelper(this)
         dataRoom = intent.getParcelableExtra("dataRoom")
         dataHotel = intent.getParcelableExtra("dataHotel")
 
@@ -60,6 +66,7 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         maxTotalGuests = dataRoom.roomMaxguest
         binding.etTotalGuests.setText(totalGuests.toString())
         priceRoomValue = helper.changeFormatMoneyToValueFilter(priceRoom)?.toInt()
+        statusLogin(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
 
     }
 
@@ -83,7 +90,17 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
             R.id.tv_see_on_map -> {
                 intentToMaps(dataHotel.hotelLat!!, dataHotel.hotelLong!!)
             }
+            R.id.btn_login -> {
+                val intent = Intent(applicationContext, LoginActivity::class.java)
+                    .putExtra("loginMethod", 0)
+                startActivity(intent)
+            }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        statusLogin(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
     }
 
     private fun checkDataBooking(){
@@ -126,6 +143,19 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         } else if (totalGuests >= 1) {
             totalGuests--
             binding.etTotalGuests.setText(totalGuests.toString())
+        }
+    }
+
+    private fun statusLogin(status: Boolean) {
+        when (status) {
+            true -> {
+                binding.btnLogin.visibility = View.GONE
+                binding.btnNext.visibility = View.VISIBLE
+            }
+            else -> {
+                binding.btnLogin.visibility = View.VISIBLE
+                binding.btnNext.visibility = View.GONE
+            }
         }
     }
 

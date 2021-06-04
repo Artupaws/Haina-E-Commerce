@@ -45,8 +45,8 @@ class WebViewActivity : AppCompatActivity() {
             binding.webView.loadUrl("http://docs.google.com/gview?embedded=true&url=${getUrl}")
             binding.toolbar3.title = "Resume"
         } else {
-            binding.toolbar3.title = "Headlines News"
-            binding.webView.loadUrl("http://docs.google.com/gview?embedded=true&url=https://hainaservice.com/storage/user/47/docs/Resume_28-12-2020_02-47-53.pdf")
+            binding.toolbar3.title = getString(R.string.detail_news)
+            binding.webView.loadUrl(getUrl)
         }
 
     }

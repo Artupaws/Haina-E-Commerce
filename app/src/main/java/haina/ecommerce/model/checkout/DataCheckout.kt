@@ -25,6 +25,12 @@ data class DataCheckout(
 	@field:SerializedName("id")
 	val id: Int? = null,
 
+	@field:SerializedName("inquiry_type")
+	val inquiryType: String? = null,
+
 	@field:SerializedName("product_code")
-	val productCode: String? = null
+	val productCode: String? = null,
+
+	@field:SerializedName("id_inquiry")
+	val idInquiry:Int
 )

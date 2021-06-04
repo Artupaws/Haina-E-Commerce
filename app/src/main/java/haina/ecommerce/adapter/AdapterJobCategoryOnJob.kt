@@ -48,7 +48,7 @@ class AdapterJobCategoryOnJob(private val context: Context, private val jobList:
                 }
 
                 val codeLanguage = sharedPref.getValueString(Constants.LANGUAGE_APP)
-                setLanguage(codeLanguage!!, binding, itemHaina)
+                setLanguage(codeLanguage, binding, itemHaina)
 
                 if (index == adapterPosition){
                     linearCategory.setBackgroundResource(R.drawable.background_line_corner_input_text_black)
@@ -74,7 +74,7 @@ class AdapterJobCategoryOnJob(private val context: Context, private val jobList:
 
     override fun getItemCount(): Int = jobList?.size!!
 
-    private fun setLanguage(codeLanguage:String, binding: ListItemJobCategoryBinding, data: DataItemHaina){
+    private fun setLanguage(codeLanguage:String?, binding: ListItemJobCategoryBinding, data: DataItemHaina){
         when (codeLanguage){
             "zh" -> {
                 binding.tvTitleCategoryJob.text = data.nameZh

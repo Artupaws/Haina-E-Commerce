@@ -16,6 +16,8 @@ class CheckoutPresenter (val view:CheckoutContract, val context: Context) {
             override fun onResponse(call: Call<ResponseCheckout>, response: Response<ResponseCheckout>) {
                 if (response.isSuccessful && response.body()?.value == 1){
                     view.messageCheckout(response.body()?.message.toString())
+                    val data = response.body()?.dataCheckout
+                    view.getDataCheckoutTopup(data)
                 } else {
                     val error = JSONObject(response.errorBody()?.string()!!)
                     view.messageCheckout(error.getString("message"))

@@ -1,25 +1,22 @@
 package haina.ecommerce.adapter.flight
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import haina.ecommerce.databinding.ListItemAddressCompanyBinding
 import haina.ecommerce.databinding.ListItemDestinationCountryBinding
 import haina.ecommerce.model.AddressItemCompany
+import haina.ecommerce.model.flight.DataAirport
 import haina.ecommerce.model.flight.DestinationCity
 import haina.ecommerce.model.flight.DestinationCountry
 import haina.ecommerce.view.datacompany.address.AddAddressCompanyActivity
-import haina.ecommerce.view.flight.fragment.ScheduleFlightFragment
+import haina.ecommerce.view.flight.schedule.ScheduleFlightFragment
 
 
-class AdapterFlightDestinationCountry(val context: Context, private val listDestinationCountry: List<DestinationCountry?>?):
+class AdapterFlightDestinationCountry(val context: Context, private val listDestinationCountry: List<DataAirport?>?):
     RecyclerView.Adapter<AdapterFlightDestinationCountry.Holder>(){
 
     private var listCity = listOf(
@@ -35,10 +32,11 @@ class AdapterFlightDestinationCountry(val context: Context, private val listDest
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemDestinationCountryBinding.bind(view)
-        fun bind(itemHaina: DestinationCountry){
+        fun bind(itemHaina: DataAirport){
             with(binding){
-              binding.tvNameCountry.text = itemHaina.nameCountry
-              setupListCity(binding, listCity)
+              binding.tvNameCountry.text = itemHaina.country
+//              setupListCity(binding, listCity)
+                setupListCity(binding, listOf(itemHaina))
             }
         }
     }
@@ -51,13 +49,13 @@ class AdapterFlightDestinationCountry(val context: Context, private val listDest
     }
 
     override fun onBindViewHolder(holder: AdapterFlightDestinationCountry.Holder, position: Int) {
-        val photo: DestinationCountry = listDestinationCountry?.get(position)!!
+        val photo: DataAirport = listDestinationCountry?.get(position)!!
         holder.bind(photo)
     }
 
     override fun getItemCount(): Int = listDestinationCountry?.size!!
 
-    private fun setupListCity(binding:ListItemDestinationCountryBinding,data:List<DestinationCity>){
+    private fun setupListCity(binding:ListItemDestinationCountryBinding,data:List<DataAirport?>?){
         binding.rvCountry.apply {
             adapter = AdapterFlightDestinationCity(context, data)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

@@ -12,6 +12,7 @@ import haina.ecommerce.databinding.ActivityCheckoutBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.bill.DataInquiry
 import haina.ecommerce.model.bill.RequestBill
+import haina.ecommerce.model.checkout.DataCheckout
 import haina.ecommerce.model.pulsaanddata.RequestPulsa
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
@@ -65,14 +66,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
             R.id.btn_payment -> {
                 when (typeTransaction) {
                     1 -> {
-                        requestPulsa?.productCode?.let {
-                            requestPulsa?.phoneNumber?.let { it1 ->
-                                presenter.checkout(
-                                    it1,
-                                    it
-                                )
-                            }
-                        }
+                        presenter.checkout(requestPulsa!!.phoneNumber, requestPulsa!!.productCode)
                     }
                     2 -> {
                         val requestBillFromCheckout = RequestBill(
@@ -111,6 +105,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         when (typeTransactionParams) {
             1 -> {
                 requestPulsa = intent.getParcelableExtra("dataPulsa")
+                Log.d("dataPulsa", requestPulsa?.idInquiry.toString())
                 productCode = requestPulsa?.productCode
                 binding.tvTotalPay.text = requestPulsa?.totalPrice
                 binding.tvPrice.text = requestPulsa?.totalPrice
@@ -128,20 +123,9 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                 requestBill = intent?.getParcelableExtra("request")
                 Log.d("dataBillCheckout", dataBill.toString())
                 if (requestBill?.inquiry == 0) {
-                    dataBill?.let {
-                        setDetailNoInquiry(
-                            it,
-                            sharedPref.getValueString(Constants.LANGUAGE_APP),
-                            requestBill
-                        )
-                    }
+                    dataBill?.let { setDetailNoInquiry(it, sharedPref.getValueString(Constants.LANGUAGE_APP), requestBill) }
                 } else {
-                    dataBill?.let {
-                        setDetailBillToView(
-                            it,
-                            sharedPref.getValueString(Constants.LANGUAGE_APP)
-                        )
-                    }
+                    dataBill?.let { setDetailBillToView(it, sharedPref.getValueString(Constants.LANGUAGE_APP)) }
                 }
                 typeTransaction = 2
             }
@@ -165,20 +149,22 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         }
     }
 
-    private fun moveTopup(status: String) {
-        if (status.contains("Success")) {
-            when (typeTransaction) {
-                1 -> {
+    private fun moveTopup(idInquiry:Int) {
+//        if (status.contains("Success")) {
+//            when (typeTransaction) {
+//                1 -> {
+                    val requestPulsaFromCheckout = RequestPulsa(this.requestPulsa!!.phoneNumber, this.requestPulsa!!.productCode,
+                    null, this.requestPulsa!!.totalPrice, "Topup", idInquiry)
                     val intent = Intent(applicationContext, PaymentActivity::class.java)
-                        .putExtra("dataPulsa", requestPulsa)
+                        .putExtra("dataPulsa", requestPulsaFromCheckout)
                         .putExtra("typeTransaction", 1)
                     startActivity(intent)
                 }
-            }
-        } else {
-            Toast.makeText(applicationContext, status, Toast.LENGTH_SHORT).show()
-        }
-    }
+//            }
+//        } else {
+//            Toast.makeText(applicationContext, status, Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
     override fun onBackPressed() {
         when (backTo) {
@@ -218,11 +204,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         }
     }
 
-    private fun setDetailNoInquiry(
-        data: DataInquiry,
-        codeLanguage: String?,
-        dataRequest: RequestBill?
-    ) {
+    private fun setDetailNoInquiry(data: DataInquiry, codeLanguage: String?, dataRequest: RequestBill?) {
         binding.linearDataProductTopup.visibility = View.GONE
         binding.includeDataProductBill.linearDataProductBill.visibility = View.VISIBLE
         binding.includeDataProductBill.tvCustomerNumber.text = data.billData?.customerId
@@ -247,6 +229,14 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
 
     override fun messageCheckout(msg: String) {
         Log.d("checkout", msg)
-        moveTopup(msg)
+        if (!msg.contains("Success")){
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun getDataCheckoutTopup(data: DataCheckout?) {
+        Log.d("idInquiry", data?.idInquiry.toString())
+        moveTopup(data!!.idInquiry)
+
     }
 }
