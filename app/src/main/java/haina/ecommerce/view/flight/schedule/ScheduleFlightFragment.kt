@@ -26,6 +26,7 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
+import haina.ecommerce.adapter.flight.AdapterFlightDestinationCity
 import haina.ecommerce.adapter.flight.AdapterFlightDestinationCountry
 import haina.ecommerce.databinding.FragmentBottomsheetFlightBinding
 import haina.ecommerce.databinding.FragmentScheduleFlightBinding
@@ -102,7 +103,6 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
             Toast.makeText(requireActivity(), "Clicked", Toast.LENGTH_SHORT).show()
         }
         switchDestination()
-//        popupDialogDestination(listDestination)
         popupDialogFlightClass()
         binding.toolbarScheduleFlight.setNavigationOnClickListener {
             (activity as FlightTicketActivity).onBackPressed()
@@ -320,7 +320,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         val searcView = popupDestination?.findViewById<SearchView>(R.id.sv_destination)
         actionClose?.setOnClickListener { popupDestination?.dismiss() }
         rvDestination?.apply {
-            adapter = AdapterFlightDestinationCountry(requireActivity(), listDestinationCountry)
+            adapter = AdapterFlightDestinationCity(requireActivity(), listDestinationCountry)
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
     }

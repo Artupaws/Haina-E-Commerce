@@ -60,7 +60,5 @@ class AdapterFlightDestinationCountry(val context: Context, private val listDest
             adapter = AdapterFlightDestinationCity(context, data)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
-
     }
-
 }

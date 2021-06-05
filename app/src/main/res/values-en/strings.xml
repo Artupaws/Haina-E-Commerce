@@ -276,4 +276,6 @@
     <string name="bill_has_paid">The bill has been paid</string>
     <string name="detail_news">Detail News</string>
     <string name="the_number_of_guests">The Number of Guests</string>
+    <string name="transaction_hotel">Transaction Hotel</string>
+
 </resources>

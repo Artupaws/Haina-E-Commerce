@@ -366,17 +366,9 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
         <include
             android:id="@+id/include_login"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            layout="@layout/layout_not_login"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            layout="@layout/layout_not_login" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

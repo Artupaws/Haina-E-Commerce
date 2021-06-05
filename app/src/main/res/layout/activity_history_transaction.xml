@@ -36,11 +36,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tab_transaction">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_transaction"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <include
+            android:id="@+id/include_login"
+            layout="@layout/layout_not_login" />
+
+        </FrameLayout>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

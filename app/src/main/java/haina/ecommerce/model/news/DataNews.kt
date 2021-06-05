@@ -19,6 +19,9 @@ data class DataNews(
 	@field:SerializedName("source")
 	val source: String? = null,
 
+	@field:SerializedName("source_name")
+	val sourceName: String? = null,
+
 	@field:SerializedName("title")
 	val title: String? = null,
 

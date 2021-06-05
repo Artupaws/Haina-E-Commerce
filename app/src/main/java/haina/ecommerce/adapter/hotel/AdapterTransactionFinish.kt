@@ -12,12 +12,14 @@ import haina.ecommerce.databinding.ListItemFinishTransactionBinding
 import haina.ecommerce.databinding.ListItemUnpaidHotelBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.hotels.transactionhotel.PaidItem
+import java.util.*
 
 
 class AdapterTransactionFinish(val context: Context, private val listHotel: List<PaidItem?>?, private val itemAdapterCallback: ItemAdapterCallback) :
         RecyclerView.Adapter<AdapterTransactionFinish.Holder>() {
 
     private val helper:Helper = Helper
+    private val now = Calendar.getInstance().get(Calendar.DATE)
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemBookingHotelBinding.bind(view)
@@ -35,9 +37,9 @@ class AdapterTransactionFinish(val context: Context, private val listHotel: List
                 btnInputRating.setOnClickListener {
                     itemAdapterCallback.onClick(btnInputRating, itemHaina)
                 }
-                showRatingOrButtonRating(binding, itemHaina)
+//                showRatingOrButtonRating(binding, itemHaina)
             }
-        }
+        } 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterTransactionFinish.Holder {
@@ -63,20 +65,28 @@ class AdapterTransactionFinish(val context: Context, private val listHotel: List
     }
 
     private fun showRatingOrButtonRating(binding: ListItemBookingHotelBinding, data: PaidItem) {
-//        binding.tvUserRating.text = data.reviews
-//        binding.ratingBar.rating = data.rating!!
-        if (binding.tvUserRating.text == "") {
+        //        binding.tvUserRating.text = data.reviews
+//        binding.ratingBar.rating.let { data.rating }
+        val dateCheckout = helper.getOnlyDateFromStringDate(data.checkOut!!)
+        if (dateCheckout.contains(now.toString())){
+            binding.linearRatingUser.visibility = View.VISIBLE
+            binding.btnInputRating.visibility = View.GONE
+        } else {
             binding.linearRatingUser.visibility = View.GONE
             binding.btnInputRating.visibility = View.VISIBLE
         }
-        if(binding.tvUserRating.text != ""){
-            binding.linearRatingUser.visibility = View.VISIBLE
-            binding.btnInputRating.visibility = View.GONE
-        }
-        if (data.status?.contains("Waiting")!!){
-            binding.linearRatingUser.visibility = View.GONE
-            binding.btnInputRating.visibility = View.GONE
-        }
+//        if (binding.tvUserRating.text == "") {
+//            binding.linearRatingUser.visibility = View.GONE
+//            binding.btnInputRating.visibility = View.VISIBLE
+//        }
+//        if(binding.tvUserRating.text != ""){
+//            binding.linearRatingUser.visibility = View.VISIBLE
+//            binding.btnInputRating.visibility = View.GONE
+//        }
+//        if (data.status?.contains("Waiting")!!){
+//            binding.linearRatingUser.visibility = View.GONE
+//            binding.btnInputRating.visibility = View.GONE
+//        }
     }
 
     interface ItemAdapterCallback{

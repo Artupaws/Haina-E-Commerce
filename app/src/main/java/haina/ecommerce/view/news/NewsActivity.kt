@@ -81,8 +81,8 @@ class NewsActivity : AppCompatActivity(), NewsContract, AdapterNews.ItemAdapterC
     override fun onClick(view: View, data: DataNews) {
         when (view.id) {
             R.id.linear_list -> {
-                val intentToWeb = Intent(applicationContext, WebViewActivity::class.java)
-                    .putExtra("url", data.source)
+                val intentToWeb = Intent(applicationContext, DetailNewsActivity::class.java)
+                    .putExtra("data", data)
                 startActivity(intentToWeb)
             }
         }

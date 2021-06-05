@@ -57,6 +57,10 @@ object Helper {
         return valueRupiah.replace(" ".toRegex(), "")
     }
 
+    fun getOnlyDateFromStringDate(date: String): String {
+        return date.substring(10, 11)
+    }
+
     fun formatPhoneNumber(number:String):String{
         var phoneNumber = number.replace("[-+.^:,]".toRegex(), "")
         if (phoneNumber.substring(0, 3) == "62 " && number.length == 14) {
@@ -85,12 +89,7 @@ object Helper {
        return format.format(date)
     }
 
-    @SuppressLint("SimpleDateFormat")
-    fun Long.convertLongtoDate(dateFormat:String) :String {
-        val date = Date(this)
-        val format = SimpleDateFormat(dateFormat)
-        return format.format(date)
-    }
+
 
 //    fun addPassenger(totalPassenger:Int, maxPassenger:Int){
 //        if (totalPassenger < maxPassenger){

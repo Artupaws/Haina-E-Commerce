@@ -276,5 +276,6 @@
     <string name="bill_has_paid">帐单已付</string>
     <string name="detail_news">详细新闻</string>
     <string name="the_number_of_guests">客人数量</string>
+    <string name="transaction_hotel">交易酒店</string>
 
 </resources>

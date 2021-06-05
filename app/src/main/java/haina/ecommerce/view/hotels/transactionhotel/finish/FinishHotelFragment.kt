@@ -127,5 +127,4 @@ class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
         Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
         dialogInputReview(msg)
     }
-
 }

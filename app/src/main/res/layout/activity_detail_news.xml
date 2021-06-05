@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.news.DetailNewsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_detail_news"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/yellow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back_black"
+        app:title="@string/detail_news"
+        app:titleTextAppearance="@style/ToolbarTitleStyle" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_detail_news">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title_news"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Mengenal Toxic Masculinity dan Bagaimana Kita Menyikapinya"
+                style="@style/TextView.Poppins16spBlack"
+                android:textSize="22sp"
+                android:textAlignment="gravity"
+                android:layout_margin="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_image_source"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@color/yellow"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_source_news"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Source.com"
+                        style="@style/TextView.Poppins14spBlack"/>
+
+                    <TextView
+                        android:id="@+id/tv_news_publish"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="2021-06-05"
+                        style="@style/TextView.Poppins12spGrey"/>
+
+                </LinearLayout>
+                
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_image_news"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ps5"
+                android:scaleType="fitXY"/>
+            
+            <TextView
+                android:id="@+id/tv_description_news"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                tools:text="Jakarta (ANTARA) - Vice President Ma'ruf Amin has said the development of the sharia ecosystem in Indonesia must be based on the use of digital technology and prioritize the local wisdom of various regions.\n\n\There needs to be a breakthrough in developing a digital-based sharia ecosystem that is integrated and harmonized with local wisdom,\ the Vice President said while attending a gathering of the Sharia Economic Community (MES) at The Tower building in Jakarta on Friday.\n\nIncorporating local wisdom is important, he explained, because the economic and social conditions of the people in each region are different.\n\nHe also asked the Sharia Economic Community to provide assistance and guidance to Islamic boarding schools so that their students could become skilled in entrepreneurship as well as at reading the Koran.\n\n\This Islamic boarding school certainly still needs assistance, including debriefing for the students, so that more entrepreneurs from students are formed,\ Amin said.\n\nEconomic empowerment achieved through such assistance will not only be useful for the students, but also for the people who live around the Islamic boarding schools, he added.\n\nTherefore, Islamic financial inclusion and Islamic boarding school education must be boosted by seeking active participation of all parties, he advised.\n\nThe Vice President also expressed the hope that the collaboration and innovation carried out would be developed further, so that the contribution of Islamic economics and finance to the national economic recovery can be realized.\n\n\Let us work together for real innovation and collaboration, in order to realize the vision of sharia economy and finance that is increasingly advancing and prospering the people of Indonesia,\ he remarked.\n\nBaca juga: I will encourage MUI to issue fatwa against 'mudik': Vice President Ma'ruf Amin"
+                style="@style/TextView.Poppins14spBlack"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
