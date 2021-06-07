@@ -43,12 +43,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/TextView.Poppins14spGrey"
                             android:text="@string/total" />
 
                         <TextView
                             android:id="@+id/tv_total_pay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/TextView.Poppins14spBlack"
                             android:textColor="@android:color/holo_red_dark"
                             tools:text="IDR 11.500" />
                     </LinearLayout>
@@ -75,6 +77,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/your_bank_account"
+                        style="@style/TextView.Poppins14spGrey"
                         android:textColor="@color/black"/>
                     <TextView
                         android:id="@+id/tv_number_user_account"
@@ -82,11 +85,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         tools:text="4280117141"
-                        android:textColor="@color/black"/>
+                        style="@style/TextView.Poppins14spBlack"/>
                     <TextView
                         android:id="@+id/tv_name_user_bank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/TextView.Poppins14spBlack"
                         tools:text="a.n Swa putra adji nugroho"
                         android:textColor="@color/black"/>
                 </LinearLayout>
@@ -107,6 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/destination_bank_account"
+                        style="@style/TextView.Poppins14spGrey"
                         android:textColor="@color/black"/>
                     <TextView
                         android:id="@+id/tv_number_destination_account"
@@ -114,14 +119,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         tools:text="4280117141"
-                        android:textColor="@color/black"/>
+                        style="@style/TextView.Poppins14spBlack"/>
                     <TextView
                         android:id="@+id/tv_company_bank_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAlignment="textEnd"
-                        tools:text="a.n CV HAINA SERVICE INDONESIA"
-                        android:textColor="@color/black"/>
+                        style="@style/TextView.Poppins14spBlack"
+                        tools:text="a.n CV HAINA SERVICE INDONESIA"/>
                 </LinearLayout>
 
             </LinearLayout>

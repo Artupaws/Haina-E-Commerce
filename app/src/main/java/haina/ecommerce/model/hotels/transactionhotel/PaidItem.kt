@@ -20,7 +20,7 @@ data class PaidItem(
 	val checkIn: String? = null,
 
 	@field:SerializedName("rating")
-	val rating: Float? = null,
+	val rating: Rating? = null,
 
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,

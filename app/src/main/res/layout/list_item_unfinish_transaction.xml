@@ -49,12 +49,13 @@
                             android:id="@+id/tv_date_transaction"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/TextView.Poppins12spGrey"
                             tools:text="12-03-2021"/>
                         <TextView
                             android:id="@+id/tv_description_product"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
+                            style="@style/TextView.Poppins14spBlack"
                             tools:text="Paket Data"/>
                     </LinearLayout>
 
@@ -82,6 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:textAlignment="center"
+                    style="@style/TextView.Poppins12spGrey"
                     android:background="@drawable/background_state_internet"
                     android:padding="5dp"
                     tools:text="Pay before 13-03-2021, 13:17 WIB"
@@ -93,14 +95,10 @@
 
                     <include
                         android:id="@+id/include_virtual_account"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         layout="@layout/layout_payment_virtual_account"/>
 
                     <include
                         android:id="@+id/include_bank_transfer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         layout="@layout/layout_payment_bank_transfer"/>
 
                 </FrameLayout>
@@ -109,9 +107,12 @@
                     android:id="@+id/btn_how_pay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
                     android:text="@string/how_to_payment"
-                    android:backgroundTint="@color/yellow"
-                    android:textColor="@color/black"/>
+                    style="@style/Button.Primary"
+                    android:backgroundTint="@color/yellow"/>
 
             </LinearLayout>
 

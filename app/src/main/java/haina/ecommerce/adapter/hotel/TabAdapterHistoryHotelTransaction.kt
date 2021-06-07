@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import haina.ecommerce.view.history.historytransaction.unfinish.FragmentTransactionUnfinish
 import haina.ecommerce.view.hotels.transactionhotel.finish.FinishHotelFragment
-import haina.ecommerce.view.hotels.transactionhotel.fragment.CancelHotelFragment
+import haina.ecommerce.view.hotels.transactionhotel.cancel.CancelHotelFragment
 import haina.ecommerce.view.hotels.transactionhotel.unfinish.UnfinishHotelFragment
 
 class TabAdapterHistoryHotelTransaction (fm: FragmentManager, behavior: Int) : FragmentStatePagerAdapter(fm, behavior) {

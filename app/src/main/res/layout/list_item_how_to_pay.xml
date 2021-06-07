@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tv_title_payment_method"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="ATM"
+        style="@style/TextView.Poppins16spBlack"/>
+
+    <TextView
+        android:id="@+id/tv_description_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title_payment_method"
+        android:lineSpacingExtra="5dp"
+        tools:text="1. Pilih menu \Transfer\ > \Ke Rek BCA Virtual Account\.\r\n2. Masukkan Nomor BCA Virtual Account, lalu pilih \Benar\.\r\n3. Pilih menu “Ke Rek BCA Virtual Account”.\r\nLayar ATM akan menampilkan konfirmasi transaksi. Pilih \Ya\ bila setuju.\r\n4. Konfirmasi jumlah pembayaran, pilih \Ya\ bila ingin membayar.\r\n5. Ikuti langkah selanjutnya sampai transaksi selesai."
+        style="@style/TextView.Poppins14spGrey"/>
+
+
+
+</RelativeLayout>

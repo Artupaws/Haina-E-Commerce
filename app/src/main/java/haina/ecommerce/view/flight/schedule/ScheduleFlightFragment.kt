@@ -276,7 +276,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         picker.addOnPositiveButtonClickListener {
             if (typeFlight == "First") {
                 binding.tvStartDate.text = it?.convertLongtoTime("dd MMM")
-                date = it?.convertLongtoTime("dd MMM").toString().substring(0, 2)
+                date = it?.convertLongtoTime("dd MM").toString().substring(0, 2)
                 month = it?.convertLongtoTime("dd MM").toString().substring(3, 5)
             } else if (typeFlight == "Second") {
                 binding.tvFinishDate.text = it?.convertLongtoTime("dd MMM")

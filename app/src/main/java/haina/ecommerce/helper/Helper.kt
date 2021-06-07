@@ -1,6 +1,7 @@
 package haina.ecommerce.helper
 
 import android.annotation.SuppressLint
+import haina.ecommerce.helper.Helper.convertLongtoTime
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -58,7 +59,7 @@ object Helper {
     }
 
     fun getOnlyDateFromStringDate(date: String): String {
-        return date.substring(10, 11)
+        return date.substring(9, 10)
     }
 
     fun formatPhoneNumber(number:String):String{
@@ -88,8 +89,6 @@ object Helper {
        val format = SimpleDateFormat(dateFormat)
        return format.format(date)
     }
-
-
 
 //    fun addPassenger(totalPassenger:Int, maxPassenger:Int){
 //        if (totalPassenger < maxPassenger){

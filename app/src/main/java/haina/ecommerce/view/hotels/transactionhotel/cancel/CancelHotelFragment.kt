@@ -1,4 +1,4 @@
-package haina.ecommerce.view.hotels.transactionhotel.fragment
+package haina.ecommerce.view.hotels.transactionhotel.cancel
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -39,6 +39,7 @@ class HistoryTransactionHotelActivity : AppCompatActivity(), HistoryTransactionH
         binding.vpTransaction.offscreenPageLimit = 3
         binding.tabTransaction.setupWithViewPager(binding.vpTransaction)
         binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
+        refresh()
     }
 
     override fun onResume() {
@@ -63,6 +64,12 @@ class HistoryTransactionHotelActivity : AppCompatActivity(), HistoryTransactionH
         moveToDashboard()
     }
 
+    private fun refresh(){
+        binding.swipeRefresh.setOnRefreshListener {
+            presenter.getListTransactionHotel()
+        }
+    }
+
     private fun moveToDashboard(){
         val intent = Intent(applicationContext, MainActivity::class.java)
         startActivity(intent)
@@ -71,6 +78,7 @@ class HistoryTransactionHotelActivity : AppCompatActivity(), HistoryTransactionH
 
     override fun messageGetListTransactionHotel(msg: String) {
         Log.d("messageGetList", msg)
+        binding.swipeRefresh.isRefreshing = false
     }
 
     override fun getListTransactionHotel(dataHotel: DataTransactionHotel?) {

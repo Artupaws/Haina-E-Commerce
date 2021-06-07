@@ -1,28 +1,34 @@
 package haina.ecommerce.view.howtopayment
 
-import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.TextView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import haina.ecommerce.R
+import haina.ecommerce.adapter.howtopay.AdapterHowToPayment
 import haina.ecommerce.databinding.FragmentBottomSheetHowToPaymentBinding
+import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.howtopay.Data
+import haina.ecommerce.model.transactionlist.PendingItem
 
-class BottomSheetHowToPayment : BottomSheetDialogFragment() {
+class BottomSheetHowToPayment : BottomSheetDialogFragment(), HowToPayContract {
 
-    private var _binding:FragmentBottomSheetHowToPaymentBinding? = null
-    private val  binding get() = _binding
+    private var _binding: FragmentBottomSheetHowToPaymentBinding? = null
+    private val binding get() = _binding
+    private lateinit var presenter: HowToPayPresenter
+    private val helper:Helper = Helper
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentBottomSheetHowToPaymentBinding.inflate(inflater, container, false)
+        presenter = HowToPayPresenter(this, requireActivity())
         return binding?.root
     }
 
@@ -31,6 +37,12 @@ class BottomSheetHowToPayment : BottomSheetDialogFragment() {
         binding?.toolbarHowToPayment?.title = requireContext().getString(R.string.how_to_payment)
         binding?.toolbarHowToPayment?.setNavigationIcon(R.drawable.ic_close_black)
         binding?.toolbarHowToPayment?.setNavigationOnClickListener { dismiss() }
+        val data = arguments?.get("data")
+        data as PendingItem
+        Log.d("bottomSheet", data.payment!!.vaNumber)
+        presenter.getHowToPay(data.payment.idPaymentMethod!!)
+        binding?.tvTotalPayment?.text = helper.convertToFormatMoneyIDRFilter(data.totalPayment.toString())
+        binding?.tvNumberAccount?.text = data.payment.vaNumber
     }
 
     private var mListener: ItemClickListener? = null
@@ -47,18 +59,6 @@ class BottomSheetHowToPayment : BottomSheetDialogFragment() {
         mListener = null
     }
 
-//    @SuppressLint("RestrictedApi")
-//    override fun setupDialog(dialog: Dialog, style: Int) {
-//        super.setupDialog(dialog, style)
-//        val rootView = View.inflate(context, R.layout.fragment_bottom_sheet_how_to_payment, null)
-//        dialog.setContentView(rootView)
-//
-//        val bottomSheet = dialog.window?.findViewById(R.id.design_bottom_sheet) as FrameLayout
-//        val behaviour = BottomSheetBehavior.from(bottomSheet)
-//
-//        behaviour.peekHeight = 0
-//    }
-
     interface ItemClickListener {
         fun onItemClick(item: String)
     }
@@ -72,4 +72,16 @@ class BottomSheetHowToPayment : BottomSheetDialogFragment() {
         }
     }
 
+    override fun messageGetHowToPay(msg: String) {
+        Log.d("howToPay", msg)
+    }
+
+    override fun getDataHowToPay(data: Data?) {
+        val adapterHowToPay = AdapterHowToPayment(requireActivity(), data?.instructions)
+        binding?.rvVirtualAccount?.apply {
+            adapter = adapterHowToPay
+            layoutManager =
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        }
+    }
 }

@@ -200,7 +200,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="35dp"
                         android:layout_gravity="start"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         style="@style/Button.Secondary"
                         android:textSize="11sp"
                         android:textColor="@color/black"
@@ -210,11 +210,35 @@
 
                     <LinearLayout
                         android:id="@+id/linear_rating_user"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:orientation="vertical"
                         android:gravity="center_horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/TextView.Poppins12spGrey"
+                                android:text="@string/your_review_on"/>
+
+                            <TextView
+                                android:id="@+id/tv_date_review"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                style="@style/TextView.Poppins12spGrey"
+                                android:textColor="@color/black"
+                                tools:text="2021-12-12"/>
+
+                        </LinearLayout>
+
 
                         <RatingBar
                             android:id="@+id/rating_bar"
@@ -229,7 +253,21 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
+                            style="@style/TextView.Poppins12spGrey"
+                            android:textColor="@color/black"
                             tools:text="Your Rating Here"/>
+
+                        <Button
+                            android:id="@+id/btn_change_review"
+                            android:layout_width="wrap_content"
+                            android:layout_height="35dp"
+                            android:visibility="visible"
+                            style="@style/Button.Secondary"
+                            android:textSize="11sp"
+                            android:textColor="@color/black"
+                            android:text="@string/change_review"
+                            android:backgroundTint="@color/yellow"
+                            tools:ignore="SmallSp" />
 
                     </LinearLayout>
 

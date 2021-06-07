@@ -1,6 +1,7 @@
 package haina.ecommerce.adapter.hotel
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import haina.ecommerce.databinding.ListItemBookingHotelBinding
 import haina.ecommerce.databinding.ListItemFinishTransactionBinding
 import haina.ecommerce.databinding.ListItemUnpaidHotelBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.helper.Helper.convertLongtoTime
 import haina.ecommerce.model.hotels.transactionhotel.PaidItem
 import java.util.*
 
@@ -37,7 +39,7 @@ class AdapterTransactionFinish(val context: Context, private val listHotel: List
                 btnInputRating.setOnClickListener {
                     itemAdapterCallback.onClick(btnInputRating, itemHaina)
                 }
-//                showRatingOrButtonRating(binding, itemHaina)
+                showRatingOrButtonRating(binding, itemHaina)
             }
         } 
     }
@@ -65,16 +67,39 @@ class AdapterTransactionFinish(val context: Context, private val listHotel: List
     }
 
     private fun showRatingOrButtonRating(binding: ListItemBookingHotelBinding, data: PaidItem) {
-        //        binding.tvUserRating.text = data.reviews
-//        binding.ratingBar.rating.let { data.rating }
         val dateCheckout = helper.getOnlyDateFromStringDate(data.checkOut!!)
-        if (dateCheckout.contains(now.toString())){
+        Log.d("resultConvert", now.toString())
+        if (now >= dateCheckout.toInt() && data.rating?.review!!.isNotEmpty()){
             binding.linearRatingUser.visibility = View.VISIBLE
             binding.btnInputRating.visibility = View.GONE
-        } else {
+            binding.ratingBar.rating = data.rating.rating!!.toFloat()
+            binding.tvUserRating.text = data.rating.review
+            binding.tvDateReview.text = data.createdAt?.substring(0,10)
+        } else if (now >= dateCheckout.toInt() && data.rating?.review?.isEmpty() == true){
             binding.linearRatingUser.visibility = View.GONE
             binding.btnInputRating.visibility = View.VISIBLE
+        } else if (now <= dateCheckout.toInt() && data.rating?.review?.isNotEmpty() == true){
+            binding.linearRatingUser.visibility = View.VISIBLE
+            binding.btnInputRating.visibility = View.GONE
+            binding.ratingBar.rating = data.rating.rating!!.toFloat()
+            binding.tvUserRating.text = data.rating.review
+            binding.tvDateReview.text = data.createdAt?.substring(0,10)
+            binding.btnChangeReview.visibility = View.GONE
+        } else {
+            binding.linearRatingUser.visibility = View.GONE
+            binding.btnInputRating.visibility = View.GONE
         }
+//        if (now >= dateCheckout.toInt()){
+//            binding.linearRatingUser.visibility = View.VISIBLE
+//            binding.btnInputRating.visibility = View.GONE
+//            binding.ratingBar.rating = data.rating?.rating!!.toFloat()
+//            binding.tvUserRating.text = data.rating.review
+//            binding.tvDateReview.text = data.createdAt?.substring(0,10)
+//
+//        } else {
+//            binding.linearRatingUser.visibility = View.GONE
+//            binding.btnInputRating.visibility = View.GONE
+//        }
 //        if (binding.tvUserRating.text == "") {
 //            binding.linearRatingUser.visibility = View.GONE
 //            binding.btnInputRating.visibility = View.VISIBLE

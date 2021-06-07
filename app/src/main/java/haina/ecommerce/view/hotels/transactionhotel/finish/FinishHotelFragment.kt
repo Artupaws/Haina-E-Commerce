@@ -40,7 +40,6 @@ class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dialogInputReview(null)
     }
 
     override fun onStart() {
@@ -65,14 +64,22 @@ class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
     }
 
     private fun setListTransaction(data:List<PaidItem?>?){
+        showIsEmpty(data?.size)
         binding.rvBooking.apply {
             adapter = AdapterTransactionFinish(requireActivity(), data, this@FinishHotelFragment)
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
     }
 
+    private fun showIsEmpty(listItem:Int?){
+        if (listItem == 0){
+            binding.rvBooking.visibility = View.GONE
+            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+        }
+    }
+
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun dialogInputReview(statusInputReview:String?){
+    private fun dialogInputReview(statusInputReview:String){
         popupInputReview = Dialog(requireActivity())
         popupInputReview?.setContentView(R.layout.popup_review_hotel)
         popupInputReview?.setCancelable(true)
@@ -101,9 +108,9 @@ class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
                 btnInputReview.visibility = View.GONE
             }
         }
-        if (statusInputReview?.contains("Success") == true){
+        if (statusInputReview.contains("Success")){
             popupInputReview?.dismiss()
-        } else {
+        } else if (statusInputReview.contains("Failed")) {
             Toast.makeText(requireActivity(), "Input Review Failed", Toast.LENGTH_SHORT).show()
             relativeLoading?.visibility = View.INVISIBLE
             btnInputReview?.visibility = View.VISIBLE
@@ -114,6 +121,7 @@ class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
         when(view.id){
             R.id.btn_input_rating -> {
                 idHotel = data.hotelId!!
+                dialogInputReview("")
                 popupInputReview?.show()
             }
             R.id.cv_click -> {

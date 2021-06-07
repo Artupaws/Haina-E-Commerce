@@ -1,6 +1,5 @@
 package haina.ecommerce.api
 
-import androidx.annotation.RawRes
 import haina.ecommerce.model.*
 import haina.ecommerce.model.bill.ResponseAddBillTransaction
 import haina.ecommerce.model.bill.ResponseGetBillAmount
@@ -10,6 +9,7 @@ import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.flight.ResponseGetListAirport
 import haina.ecommerce.model.hotels.*
 import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
+import haina.ecommerce.model.howtopay.ResponseGetHowToPay
 import haina.ecommerce.model.news.ResponseGetListNews
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.productservice.ResponseGetProductService
@@ -457,4 +457,11 @@ interface NetworkService {
 
     @POST("api/ticket/airport")
     fun getAirport():Call<ResponseGetListAirport>
+
+    //Get How to Payment
+    @FormUrlEncoded
+    @POST("/api/how_to_pay")
+    fun getHowToPay(
+        @Field("id_payment_method")idPaymentMethod:Int
+    ):Call<ResponseGetHowToPay>
 }

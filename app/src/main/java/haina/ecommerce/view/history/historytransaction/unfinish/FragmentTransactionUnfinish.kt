@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterTransactionPulsaUnfinish
@@ -69,11 +70,9 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
         showIsEmpty(data?.size)
         val adapterParams = AdapterTransactionPulsaUnfinish(requireActivity(), data, this)
         binding?.rvUnfinishTransaction?.apply {
-//            adapter = AdapterTransactionPulsaUnfinish(requireActivity(), data, this@FragmentTransactionUnfinish)
             adapter = adapterParams
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
-//        binding?.rvUnfinishTransaction?.smoothScrollToPosition(adapterParams.getItemId(3).toInt())
     }
 
     private fun showNotLogin(statusLogin:Boolean){
@@ -128,9 +127,11 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
                 popup.show()
             }
             R.id.btn_how_pay -> {
+                val bundle = Bundle()
+                bundle.putParcelable("data", data)
                 childFragmentManager.let {
-                    BottomSheetHowToPayment.newInstance(Bundle()).apply {
-                        show(it, tag)
+                    BottomSheetHowToPayment.newInstance(bundle).apply {
+                        show(it, "data")
                     }
                 }
             }

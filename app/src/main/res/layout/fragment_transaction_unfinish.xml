@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/broken_white"
     tools:context=".view.history.historytransaction.unfinish.FragmentTransactionUnfinish">
 
     <FrameLayout
@@ -22,14 +23,10 @@
 
         <include
             android:id="@+id/include_empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             layout="@layout/layout_empty"/>
 
         <include
             android:id="@+id/include_not_login"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             layout="@layout/layout_not_login"/>
 
     </FrameLayout>

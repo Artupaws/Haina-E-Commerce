@@ -277,5 +277,7 @@
     <string name="detail_news">Detail News</string>
     <string name="the_number_of_guests">The Number of Guests</string>
     <string name="transaction_hotel">Transaction Hotel</string>
+    <string name="change_review">Change Review</string>
+    <string name="your_review_on">Your review on</string>
 
 </resources>

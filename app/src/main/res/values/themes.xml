@@ -70,7 +70,7 @@
     </style>
 
     <style name="RatingBar">
-        <item name="colorControlNormal">#ECECEC</item>
+        <item name="colorControlNormal">@color/dark_gray</item>
         <item name="colorControlActivated">@color/yellow</item>
     </style>
     

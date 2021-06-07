@@ -38,12 +38,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins14spGrey"
                     android:text="@string/total" />
 
                 <TextView
                     android:id="@+id/tv_total_pay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins14spBlack"
                     android:textColor="@android:color/holo_red_dark"
                     tools:text="IDR 11.500" />
             </LinearLayout>
@@ -57,6 +59,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins14spGrey"
                     android:text="@string/virtual_account_number" />
 
                 <LinearLayout
@@ -71,7 +74,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.5"
-                        android:textColor="@color/black"
+                        style="@style/TextView.Poppins14spBlack"
                         tools:text="123456789013" />
 
                     <androidx.cardview.widget.CardView
@@ -91,8 +94,8 @@
                             android:layout_height="match_parent"
                             android:text="@string/copy"
                             android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"/>
+                            style="@style/TextView.Poppins12spGrey"
+                            android:textColor="@color/black"/>
 
                     </androidx.cardview.widget.CardView>
 
@@ -110,13 +113,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins14spGrey"
                     android:text="@string/payment_method" />
 
                 <TextView
                     android:id="@+id/tv_payment_method"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    style="@style/TextView.Poppins14spBlack"
                     tools:text="BCA Virtual Account" />
             </LinearLayout>
 

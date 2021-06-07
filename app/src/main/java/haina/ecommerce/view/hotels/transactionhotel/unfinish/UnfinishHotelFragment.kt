@@ -62,11 +62,19 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
     }
 
     private fun setListTransaction(data: List<UnpaidItem?>?) {
+        showIsEmpty(data?.size)
         binding.rvUnfinishHotel.apply {
             adapter =
                 AdapterTransactionUnfinish(requireActivity(), data, this@UnfinishHotelFragment)
             layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        }
+    }
+
+    private fun showIsEmpty(listItem:Int?){
+        if (listItem == 0){
+            binding.rvUnfinishHotel.visibility = View.GONE
+            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
         }
     }
 
