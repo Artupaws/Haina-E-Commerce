@@ -58,7 +58,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.2.0'
 
     //firebase cloud messaging
-    implementation 'com.google.firebase:firebase-messaging:21.0.0'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     def nav_version = "2.3.1"

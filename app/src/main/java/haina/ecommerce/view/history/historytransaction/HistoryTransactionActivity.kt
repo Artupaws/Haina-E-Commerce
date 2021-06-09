@@ -1,10 +1,10 @@
 package haina.ecommerce.view.history.historytransaction
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.TabAdapterHistoryTransaction
@@ -23,6 +23,8 @@ class HistoryTransactionActivity : AppCompatActivity(), HistoryTransactionContra
         binding = ActivityHistoryTransactionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         presenter = HistoryTransactionPresenter(this, this)
         presenter.getListTransaction()
         broadcaster = LocalBroadcastManager.getInstance(this)
@@ -32,6 +34,17 @@ class HistoryTransactionActivity : AppCompatActivity(), HistoryTransactionContra
         binding.tabTransaction.setupWithViewPager(binding.vpTransaction)
         binding.toolbarTransaction.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarTransaction.setNavigationOnClickListener { onBackPressed() }
+        when(intent.getStringExtra("tabs")){
+            "unfinish" -> {
+                binding.vpTransaction.currentItem = 0
+            }
+            "finish" -> {
+                binding.vpTransaction.currentItem = 1
+            }
+            "cancel" -> {
+                binding.vpTransaction.currentItem = 2
+            }
+        }
         refresh()
     }
 

@@ -89,12 +89,9 @@ interface NetworkService {
     fun getDataListJobLocation(): Call<ResponseListJobLocation>
 
     //Get Data User
-    @FormUrlEncoded
     @POST("api/detail")
     @Headers("No-Authentication: true")
-    fun getDataUser(
-            @Field("api_key") apiKey: String
-    ): Call<ResponseGetDataUser>
+    fun getDataUser(): Call<ResponseGetDataUser>
 
     //User Logout
     @FormUrlEncoded

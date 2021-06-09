@@ -68,26 +68,18 @@ class AdapterTransactionFinish(val context: Context, private val listHotel: List
 
     private fun showRatingOrButtonRating(binding: ListItemBookingHotelBinding, data: PaidItem) {
         val dateCheckout = helper.getOnlyDateFromStringDate(data.checkOut!!)
-        Log.d("resultConvert", now.toString())
-        if (now >= dateCheckout.toInt() && data.rating?.review!!.isNotEmpty()){
-            binding.linearRatingUser.visibility = View.VISIBLE
-            binding.btnInputRating.visibility = View.GONE
-            binding.ratingBar.rating = data.rating.rating!!.toFloat()
-            binding.tvUserRating.text = data.rating.review
-            binding.tvDateReview.text = data.createdAt?.substring(0,10)
-        } else if (now >= dateCheckout.toInt() && data.rating?.review?.isEmpty() == true){
-            binding.linearRatingUser.visibility = View.GONE
-            binding.btnInputRating.visibility = View.VISIBLE
-        } else if (now <= dateCheckout.toInt() && data.rating?.review?.isNotEmpty() == true){
-            binding.linearRatingUser.visibility = View.VISIBLE
-            binding.btnInputRating.visibility = View.GONE
-            binding.ratingBar.rating = data.rating.rating!!.toFloat()
-            binding.tvUserRating.text = data.rating.review
-            binding.tvDateReview.text = data.createdAt?.substring(0,10)
-            binding.btnChangeReview.visibility = View.GONE
-        } else {
-            binding.linearRatingUser.visibility = View.GONE
-            binding.btnInputRating.visibility = View.GONE
+        Log.d("resultConvert", dateCheckout)
+        if (now >= dateCheckout.toInt()){
+            if (data.rating == null){
+                binding.linearRatingUser.visibility = View.GONE
+                binding.btnInputRating.visibility = View.VISIBLE
+            } else {
+                binding.linearRatingUser.visibility = View.VISIBLE
+                binding.btnInputRating.visibility = View.GONE
+                binding.ratingBar.rating = data.rating.rating?.toFloat()!!
+                binding.tvUserRating.text = data.rating.review
+                binding.tvDateReview.text = data.createdAt?.substring(0,10)
+            }
         }
 //        if (now >= dateCheckout.toInt()){
 //            binding.linearRatingUser.visibility = View.VISIBLE

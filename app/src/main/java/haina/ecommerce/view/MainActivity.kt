@@ -109,6 +109,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("setLanguage"))
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        getIntent()
+    }
+
     private val mMessageReceiver:BroadcastReceiver = object :BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             when(intent?.action){

@@ -10,9 +10,9 @@ import haina.ecommerce.view.notification.NotificationActivity
 import org.json.JSONObject
 
 
-class OneSignalOpenNotificationHandler: Application(), OneSignal.OSNotificationOpenedHandler {
+class OneSignalOpenNotificationHandler: Application(){
 
-    override fun notificationOpened(result: OSNotificationOpenedResult?) {
+//    override fun notificationOpened(result: OSNotificationOpenedResult?) {
 //        val data: JSONObject = result!!.notification.payload.additionalData
 //        if (data != null) {
 //            val myCustomData = data.optString("key", null)
@@ -25,13 +25,13 @@ class OneSignalOpenNotificationHandler: Application(), OneSignal.OSNotificationO
 //            "Button pressed with id: " + result.action.actionID
 //        )
 
-        startApp()
+//        startApp()
 
     }
 
-    private fun startApp() {
-        val intent: Intent = Intent(this, NotificationActivity::class.java)
-            .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_NEW_TASK)
-        this.startActivity(intent)
-    }
-}
+//    private fun startApp() {
+//        val intent: Intent = Intent(this, NotificationActivity::class.java)
+//            .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_NEW_TASK)
+//        this.startActivity(intent)
+//    }
+//}

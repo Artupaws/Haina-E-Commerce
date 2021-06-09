@@ -135,12 +135,12 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
                     }
                 }
             }
-            R.id.relative_click -> {
-                val intent = Intent(context, DetailTransactionActivity::class.java)
-                    .putExtra("transaction", "finish")
-                    .putExtra("dataFinish", data)
-                startActivity(intent)
-            }
+//            R.id.relative_click -> {
+//                val intent = Intent(context, DetailTransactionActivity::class.java)
+//                    .putExtra("transaction", "finish")
+//                    .putExtra("dataFinish", data)
+//                startActivity(intent)
+//            }
         }
     }
 }

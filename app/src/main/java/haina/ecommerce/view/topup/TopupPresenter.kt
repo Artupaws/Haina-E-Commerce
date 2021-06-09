@@ -12,7 +12,7 @@ import retrofit2.Response
 class TopupPresenter(val view: TopupContract, val context: Context) {
 
     fun getDataUserProfile(){
-        NetworkConfig().getConnectionHainaBearer(context).getDataUser(Constants.APIKEY)
+        NetworkConfig().getConnectionHainaBearer(context).getDataUser()
                 .enqueue(object : retrofit2.Callback<ResponseGetDataUser>{
                     override fun onResponse(call: Call<ResponseGetDataUser>, response: Response<ResponseGetDataUser>) {
                         if (response.isSuccessful && response.body()?.value == 1){

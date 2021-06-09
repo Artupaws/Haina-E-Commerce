@@ -11,7 +11,7 @@ import retrofit2.Response
 class ScheduleFlightPresenter(val view: ScheduleContract, val context: Context) {
 
     fun getDataAirport(){
-        val getAirport = NetworkConfig().getConnectionHaina().getAirport()
+        val getAirport = NetworkConfig().getConnectionHainaBearer(context).getAirport()
         getAirport.enqueue(object : retrofit2.Callback<ResponseGetListAirport>{
             override fun onResponse(call: Call<ResponseGetListAirport>, response: Response<ResponseGetListAirport>) {
                 if (response.isSuccessful && response.body()?.value == 1){

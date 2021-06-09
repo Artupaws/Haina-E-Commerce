@@ -196,14 +196,14 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         override fun onReceive(context: Context?, intent: Intent?) {
             when(intent?.action){
                 "dataDestination" -> {
-                    val dataIntent = intent.getParcelableExtra<DestinationCity>("data")
+                    val dataIntent = intent.getParcelableExtra<DataAirport>("data")
                     if (typeDestination == "From") {
-                        binding.tvFromDestination.text = dataIntent.codeCity
-                        binding.tvCityNameFrom.text = dataIntent.nameCity
+                        binding.tvFromDestination.text = dataIntent.iata
+                        binding.tvCityNameFrom.text = dataIntent.city
                         popupDestination?.dismiss()
                     } else if (typeDestination == "To") {
-                        binding.tvToDestination.text = dataIntent.codeCity
-                        binding.tvCityNameTo.text = dataIntent.nameCity
+                        binding.tvToDestination.text = dataIntent.iata
+                        binding.tvCityNameTo.text = dataIntent.city
                         popupDestination?.dismiss()
                     }
                 }

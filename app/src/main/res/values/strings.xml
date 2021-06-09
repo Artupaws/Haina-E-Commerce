@@ -280,4 +280,6 @@
     <string name="transaction_hotel">Transaction Hotel</string>
     <string name="change_review">Change Review</string>
     <string name="your_review_on">Your review on</string>
+    <string name="default_notification_channel_id" translatable="false">NOTIFICATION_CHANNEL_ID</string>
+
 </resources>

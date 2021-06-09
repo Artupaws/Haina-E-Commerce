@@ -29,7 +29,6 @@ class DetailTransactionActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         dataCancel = intent.getParcelableExtra("dataCancel")
-        dataCancel = intent.getParcelableExtra("dataCancel")
         dataFinish = intent.getParcelableExtra("dataFinish")
         openDetailTransaction = intent.getStringExtra("transaction")
 
