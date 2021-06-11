@@ -23,8 +23,6 @@ class HistoryTransactionActivity : AppCompatActivity(), HistoryTransactionContra
         binding = ActivityHistoryTransactionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         presenter = HistoryTransactionPresenter(this, this)
         presenter.getListTransaction()
         broadcaster = LocalBroadcastManager.getInstance(this)

@@ -19,7 +19,7 @@ class ChooseAirlinesSecondFlightFragment : Fragment(), AdapterAirlines.ItemAdapt
     private val binding get() = _binding
     private lateinit var data: Request
     private val listTimeFlight = listOf<TimeFlight>(
-            TimeFlight("05:55", "06:55")
+            TimeFlight("05:55", "06:55", "", "")
     )
     private val listAirlines = arrayListOf<Airlines>(
             Airlines("Garuda", "", listTimeFlight, "1h0m", "Direct", "CGK", "JOG", "500000", "05:55", "06:55"),
@@ -47,11 +47,11 @@ class ChooseAirlinesSecondFlightFragment : Fragment(), AdapterAirlines.ItemAdapt
             findNavController().navigateUp()
         }
 
-        binding.rvAirlines.apply {
-            adapter = AdapterAirlines(requireActivity(), listAirlines, this@ChooseAirlinesSecondFlightFragment)
-            layoutManager =
-                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        }
+//        binding.rvAirlines.apply {
+//            adapter = AdapterAirlines(requireActivity(), listAirlines, this@ChooseAirlinesSecondFlightFragment)
+//            layoutManager =
+//                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+//        }
     }
 
     private fun setDataFirstFlight(dataAirlinesFirst:AirlinesFirst){
@@ -62,15 +62,15 @@ class ChooseAirlinesSecondFlightFragment : Fragment(), AdapterAirlines.ItemAdapt
         
     }
 
-    override fun onClick(view: View, data: Airlines) {
-        val dataFlight = Request(this.data.startDate, this.data.finishDate, this.data.fromDestination, this.data.toDestination, this.data.totalPassenger,
-                this.data.flightClass, this.data.airlinesFirst, airlinesSecond = AirlinesSecond(data.nameAirlines,
-                data.iconAirline, data.listFlightTime, data.flightTime, data.typeFlight,
-                data.cityCodeDeparture,data.cityCodeArrived, data.priceTicket, data.departureTime,
-                data.arrivedTime), null)
-        val bundle = Bundle()
-        bundle.putParcelable("data", dataFlight)
-        Navigation.findNavController(view).navigate(R.id.action_chooseAirlinesSecondFlightFragment_to_fillDataPassengerFragment, bundle)
+    override fun onClick(view: View, data: DepartItem, timeFlight: List<TimeFlight>) {
+//        val dataFlight = Request(this.data.startDate, this.data.finishDate, this.data.fromDestination, this.data.toDestination, this.data.totalPassenger,
+//            this.data.flightClass, this.data.airlinesFirst, airlinesSecond = AirlinesSecond(data.nameAirlines,
+//                data.iconAirline, data.listFlightTime, data.flightTime, data.typeFlight,
+//                data.cityCodeDeparture,data.cityCodeArrived, data.priceTicket, data.departureTime,
+//                data.arrivedTime), null)
+//        val bundle = Bundle()
+//        bundle.putParcelable("data", dataFlight)
+//        Navigation.findNavController(view).navigate(R.id.action_chooseAirlinesSecondFlightFragment_to_fillDataPassengerFragment, bundle)
     }
 
 }

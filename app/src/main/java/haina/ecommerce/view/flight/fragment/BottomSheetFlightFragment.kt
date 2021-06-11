@@ -1,9 +1,7 @@
 package haina.ecommerce.view.flight.fragment
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +10,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import haina.ecommerce.R
 import haina.ecommerce.databinding.FragmentBottomsheetFlightBinding
-
+import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
+import java.lang.RuntimeException
 
 class BottomSheetFlightFragment : BottomSheetDialogFragment(), View.OnClickListener {
 
@@ -30,18 +29,10 @@ class BottomSheetFlightFragment : BottomSheetDialogFragment(), View.OnClickListe
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentBottomsheetFlightBinding.inflate(inflater, container, false)
         broadcaster = LocalBroadcastManager.getInstance(requireActivity())
         return binding.root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -148,14 +139,27 @@ class BottomSheetFlightFragment : BottomSheetDialogFragment(), View.OnClickListe
                     minusBaby()
                 }
                 R.id.btn_save_total_passenger -> {
-                    val intentDataPassenger =Intent("dataPassenger")
-//                        .putExtra("total", "$totalAdults Adult(s), $totalKids Kid(s), $totalBaby Baby(s)")
-                        .putExtra("total", "${(totalAdults+totalKids+totalBaby)}")
-                    broadcaster?.sendBroadcast(intentDataPassenger)
+                    checkTotalPassenger()
                     dismiss()
                 }
         }
     }
 
+    private fun checkTotalPassenger(){
+        var totalAdult = binding.includeSelectPassenger.etTotalAdult.text.toString()
+        val totalChild = binding.includeSelectPassenger.etTotalKid.text.toString()
+        val totalBaby = binding.includeSelectPassenger.etTotalBaby.text.toString()
 
+        if (totalAdult == "0"){
+            binding.includeSelectPassenger.etTotalAdult.error = getString(R.string.input_adult)
+        } else {
+            totalAdult = binding.includeSelectPassenger.etTotalAdult.text.toString()
+            val intentDataPassenger =Intent("dataPassenger")
+                .putExtra("totalAdult", totalAdult)
+                .putExtra("totalChild", totalChild)
+                .putExtra("totalBaby", totalBaby)
+                .putExtra("total", "${(totalAdult.toInt()+totalChild.toInt()+totalBaby.toInt())}")
+            broadcaster?.sendBroadcast(intentDataPassenger)
+        }
+    }
 }

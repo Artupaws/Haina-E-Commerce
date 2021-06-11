@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.databinding.ActivitySplashScreenBinding
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
+import haina.ecommerce.view.notification.NotificationActivity
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -27,13 +29,19 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val dataParams= intent.extras
+        Log.d("dataNotification", dataParams?.get("page").toString())
         when(dataParams?.get("page")){
             "Transaction"-> {
                 val intent = Intent(applicationContext, HistoryTransactionActivity::class.java)
                 intent.putExtra("tabs", dataParams.get("tabs").toString())
                 startActivity(intent)
-
-            } else -> {
+            }
+            "Job"->{
+                val intent = Intent(applicationContext, NotificationActivity::class.java)
+                intent.putExtra("notif", true)
+                startActivity(intent)
+            }
+            else -> {
                 letMeIn()
         }
         }

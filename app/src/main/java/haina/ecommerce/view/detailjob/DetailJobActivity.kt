@@ -111,8 +111,9 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
     }
 
     private fun checkLogin(msg: String) {
-        if (sharePref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
-            binding.btnApply.isEnabled = msg == "Available!"
+        Log.d("checkLoginOnDetailJob", msg)
+        if (sharePref.getValueBoolien(Constants.PREF_IS_LOGIN) && msg.contains("Available!")) {
+            binding.btnApply.isEnabled = true
         } else {
             binding.btnApply.isEnabled = false
             Toast.makeText(applicationContext, "Please login for apply this job!", Toast.LENGTH_SHORT).show()
@@ -160,11 +161,8 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         binding.ivLoading.visibility = View.INVISIBLE
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
     override fun messageCheckAppliedJob(msg: String) {
+        Log.d("mesageAvailableJob", msg)
         checkLogin(msg)
         stateFinishLoading()
     }

@@ -60,7 +60,7 @@ class BottomSheetHowToPayment : BottomSheetDialogFragment(), HowToPayContract {
     }
 
     interface ItemClickListener {
-        fun onItemClick(item: String)
+        fun onItemClick(item: Int)
     }
 
     companion object {

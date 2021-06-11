@@ -21,7 +21,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.login.LoginActivity
 
-class HistoryShortListFragment : Fragment(), HistoryShortListContract, View.OnClickListener {
+class HistoryShortListFragment : Fragment(), HistoryShortListContract, View.OnClickListener, AdapterShortlistApplicant.ItemAdapterCallback {
 
     private var _binding: FragmentHistorySortListBinding? = null
     private val binding get() = _binding
@@ -65,55 +65,50 @@ class HistoryShortListFragment : Fragment(), HistoryShortListContract, View.OnCl
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        LocalBroadcastManager.getInstance(requireContext())
-            .registerReceiver(mReceiver, IntentFilter("interview"))
-        LocalBroadcastManager.getInstance(requireContext())
-            .registerReceiver(mReceiver, IntentFilter("accept"))
-        LocalBroadcastManager.getInstance(requireContext())
-            .registerReceiver(mReceiver, IntentFilter("decline"))
-    }
-
-    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            when (intent?.action) {
-                "interview" -> {
-                    val id = intent.getIntExtra("invite", 0)
-                    idApplicant = id
-                    Log.d("interview", idApplicant.toString())
-                    presenter.interviewApplicant(idApplicant, statusInterview)
-                }
-                "accept" -> {
-                    val id = intent.getIntExtra("hired", 0)
-                    idApplicant = id
-                    Log.d("accept", idApplicant.toString())
-                    presenter.acceptApplicant(idApplicant, statusAccept)
-                }
-                "decline" -> {
-                    val id = intent.getIntExtra("reject", 0)
-                    idApplicant = id
-                    Log.d("decline", idApplicant.toString())
-                    presenter.declinedApplicant(idApplicant, statusDecline)
-                }
-            }
-        }
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mReceiver)
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        LocalBroadcastManager.getInstance(requireContext())
+//            .registerReceiver(mReceiver, IntentFilter("interview"))
+//        LocalBroadcastManager.getInstance(requireContext())
+//            .registerReceiver(mReceiver, IntentFilter("accept"))
+//        LocalBroadcastManager.getInstance(requireContext())
+//            .registerReceiver(mReceiver, IntentFilter("decline"))
+//    }
+//
+//    private val mReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+//        override fun onReceive(context: Context?, intent: Intent?) {
+//            when (intent?.action) {
+//                "interview" -> {
+//                    val id = intent.getIntExtra("invite", 0)
+//                    idApplicant = id
+//                    Log.d("interview", idApplicant.toString())
+//                    presenter.interviewApplicant(idApplicant, statusInterview)
+//                }
+//                "accept" -> {
+//                    val id = intent.getIntExtra("hired", 0)
+//                    idApplicant = id
+//                    Log.d("accept", idApplicant.toString())
+//                    presenter.acceptApplicant(idApplicant, statusAccept)
+//                }
+//                "decline" -> {
+//                    val id = intent.getIntExtra("reject", 0)
+//                    idApplicant = id
+//                    Log.d("decline", idApplicant.toString())
+//                    presenter.declinedApplicant(idApplicant, statusDecline)
+//                }
+//            }
+//        }
+//
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mReceiver)
+//    }
 
     override fun onResume() {
         super.onResume()
         presenter.getShortlistApplicant(status)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun messageGetShortListSuccess(msg: String) {
@@ -170,7 +165,7 @@ class HistoryShortListFragment : Fragment(), HistoryShortListContract, View.OnCl
     }
 
     override fun getShortListApplicant(item: List<DataShortlist?>?) {
-        val adapterShortList = AdapterShortlistApplicant(requireContext(), item)
+        val adapterShortList = AdapterShortlistApplicant(requireContext(), item, this)
         binding?.rvShortList?.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -184,6 +179,20 @@ class HistoryShortListFragment : Fragment(), HistoryShortListContract, View.OnCl
             R.id.btn_login_not_login -> {
                 val intent = Intent(requireContext(), LoginActivity::class.java)
                 startActivity(intent)
+            }
+        }
+    }
+
+    override fun onAdapterClick(view: View, data: DataShortlist) {
+        when(view.id){
+            R.id.btn_interview -> {
+                presenter.interviewApplicant(data.id!!, statusInterview)
+            }
+            R.id.btn_accept -> {
+                presenter.acceptApplicant(data.id!!, statusAccept)
+            }
+            R.id.btn_decline -> {
+                presenter.declinedApplicant(data.id!!, statusDecline)
             }
         }
     }

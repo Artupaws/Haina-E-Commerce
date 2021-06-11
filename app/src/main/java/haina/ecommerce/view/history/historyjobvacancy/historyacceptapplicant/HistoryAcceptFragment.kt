@@ -18,7 +18,7 @@ import haina.ecommerce.view.history.historyjobvacancy.historyinterviewapplicant.
 import haina.ecommerce.view.history.historyjobvacancy.historyinterviewapplicant.HistoryInterviewPresenter
 import haina.ecommerce.view.login.LoginActivity
 
-class HistoryAcceptFragment : Fragment(), HistoryInterviewContract, View.OnClickListener {
+class HistoryAcceptFragment : Fragment(), HistoryInterviewContract, View.OnClickListener, AdapterShortlistApplicant.ItemAdapterCallback {
 
     private var _binding : FragmentHistoryAcceptBinding? = null
     private val binding get() = _binding
@@ -105,11 +105,15 @@ class HistoryAcceptFragment : Fragment(), HistoryInterviewContract, View.OnClick
     }
 
     override fun getInterviewApplicant(item: List<DataShortlist?>?) {
-        val adapterInterview = AdapterShortlistApplicant(requireContext(), item)
+        val adapterInterview = AdapterShortlistApplicant(requireContext(), item, this)
         binding?.rvAccept?.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = adapterInterview
             adapterInterview.notifyDataSetChanged()
         }
+    }
+
+    override fun onAdapterClick(view: View, data: DataShortlist) {
+        TODO("Not yet implemented")
     }
 }

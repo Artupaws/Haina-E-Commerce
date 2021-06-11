@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterTransactionPulsaUnfinish
@@ -21,7 +20,6 @@ import haina.ecommerce.model.transactionlist.DataTransaction
 import haina.ecommerce.model.transactionlist.PendingItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
-import haina.ecommerce.view.detailtransaction.DetailTransactionActivity
 import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
 import haina.ecommerce.view.login.LoginActivity
 
@@ -104,11 +102,11 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
         }
     }
 
-    override fun onItemClick(item: String) {
-        when(item){
-            "" ->{
-            }
-        }
+    override fun onItemClick(item: Int) {
+//        when(item){
+//            "" ->{
+//            }
+//        }
     }
 
     override fun onClickAdapter(view: View, data: PendingItem) {

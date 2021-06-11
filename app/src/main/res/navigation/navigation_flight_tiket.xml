@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/chooseAirlinesFragment"
-        android:name="haina.ecommerce.view.flight.fragment.ChooseAirlinesFragment"
+        android:name="haina.ecommerce.view.flight.chooseairline.ChooseAirlinesFragment"
         android:label="fragment_choose_airlines"
         tools:layout="@layout/fragment_choose_airlines" >
         <action

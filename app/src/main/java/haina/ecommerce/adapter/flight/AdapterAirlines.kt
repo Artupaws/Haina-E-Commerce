@@ -13,34 +13,33 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.AdapterListRoomHotel
 import haina.ecommerce.databinding.ListItemAirlinesBinding
 import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.flight.Airlines
-import haina.ecommerce.model.flight.AirlinesFirst
-import haina.ecommerce.model.flight.DestinationCity
-import haina.ecommerce.model.flight.TimeFlight
+import haina.ecommerce.model.flight.*
 
-class AdapterAirlines(val context: Context, private val listAirlines: ArrayList<Airlines>,
+class AdapterAirlines(val context: Context, private val listAirlines: List<DepartItem?>?,
                       private val itemAdapterCallback: ItemAdapterCallback) :
         RecyclerView.Adapter<AdapterAirlines.Holder>() {
 
     private var broadcaster:LocalBroadcastManager? =null
     private var helper:Helper = Helper
     private lateinit var listStep :List<Step>
+    private lateinit var listTimeFlight: List<TimeFlight>
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemAirlinesBinding.bind(view)
-        fun bind(itemHaina: Airlines, itemAdapterCallback:ItemAdapterCallback) {
+        fun bind(itemHaina: DepartItem, itemAdapterCallback:ItemAdapterCallback) {
             with(binding) {
                 listStep = listOf(
-                        Step(itemHaina.listFlightTime?.get(0)?.departureTime!!, Step.State.NOT_COMPLETED),
-                        Step(itemHaina.listFlightTime?.get(0)?.arrivedTime!!, Step.State.COMPLETED),
+                        Step(listTimeFlight[0].departureTime, Step.State.NOT_COMPLETED),
+                        Step(listTimeFlight[0].departureTime, Step.State.CURRENT),
+                        Step(listTimeFlight[0].arrivedTime, Step.State.COMPLETED),
                 )
-                stepView.steps = listStep
-                tvAirlineName.text = itemHaina.nameAirlines
-                val priceTicket = "${helper.convertToFormatMoneyIDRFilter(itemHaina.priceTicket)}/person"
+//                stepView.steps = listStep
+                tvAirlineName.text = itemHaina.airlineDetail?.airlineName
+                val priceTicket = "${helper.convertToFormatMoneyIDRFilter(itemHaina.price.toString())}/person"
                 tvPriceTicket.text = priceTicket
-                val typeAndTotalFlight = "${itemHaina.typeFlight} | ${itemHaina.flightTime}"
-                tvTypeAndTotalFlightTime.text = typeAndTotalFlight
+//                val typeAndTotalFlight = "${itemHaina.typeFlight} | ${itemHaina.flightTime}"
+                tvTypeAndTotalFlightTime.text = "Direct Flight"
                 setStepView(binding)
-                itemView.setOnClickListener { itemAdapterCallback.onClick(itemView, itemHaina) }
+                itemView.setOnClickListener { itemAdapterCallback.onClick(itemView, itemHaina, listTimeFlight) }
             }
         }
     }
@@ -53,11 +52,11 @@ class AdapterAirlines(val context: Context, private val listAirlines: ArrayList<
     }
 
     override fun onBindViewHolder(holder: AdapterAirlines.Holder, position: Int) {
-        val photo: Airlines = listAirlines?.get(position)!!
+        val photo: DepartItem = listAirlines?.get(position)!!
         holder.bind(photo, itemAdapterCallback)
     }
 
-    override fun getItemCount(): Int = listAirlines?.size!!
+    override fun getItemCount(): Int = listAirlines!!.size
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setStepView(binding:ListItemAirlinesBinding){
@@ -65,8 +64,8 @@ class AdapterAirlines(val context: Context, private val listAirlines: ArrayList<
         binding.stepView.notCompletedStepTextColor = R.color.black
         binding.stepView.notCompletedStepIcon = context.getDrawable(R.drawable.ic_not_complete_flight)
         binding.stepView.completedStepIcon = context.getDrawable(R.drawable.ic_complete_flight)
-        binding.stepView.setCompletedLineColor(R.color.black)
-        binding.stepView.setNotCompletedLineColor(R.color.black)
+        binding.stepView.completedLineColor = R.color.black
+        binding.stepView.notCompletedLineColor = R.color.black
         binding.stepView.setCircleRadius(8F)
         binding.stepView.setLineLength(20F)
         binding.stepView.textSize = 12
@@ -74,7 +73,7 @@ class AdapterAirlines(val context: Context, private val listAirlines: ArrayList<
     }
 
     interface ItemAdapterCallback{
-        fun onClick(view:View, data:Airlines)
+        fun onClick(view:View, data:DepartItem, timeFlight:List<TimeFlight>)
     }
 
 }

@@ -17,8 +17,12 @@ class Request (
     var toDestination: String,
         @SerializedName("totalPassenger")
     var totalPassenger: Int,
-        @SerializedName("flightClass")
-    var flightClass: String,
+        @SerializedName("totalAdult")
+    var totalAdult: Int,
+        @SerializedName("totalChild")
+    var totalChild: Int,
+        @SerializedName("totalBaby")
+    var totalBaby: Int,
         @SerializedName("airlinesFirst")
     var airlinesFirst: AirlinesFirst?,
         @SerializedName("airlinesSecond")

@@ -6,11 +6,13 @@ import haina.ecommerce.model.bill.ResponseGetBillAmount
 import haina.ecommerce.model.bill.ResponseGetBillDirect
 import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.currency.ResponseGetCurrency
+import haina.ecommerce.model.flight.ResponseGetListAirline
 import haina.ecommerce.model.flight.ResponseGetListAirport
 import haina.ecommerce.model.hotels.*
 import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
 import haina.ecommerce.model.howtopay.ResponseGetHowToPay
 import haina.ecommerce.model.news.ResponseGetListNews
+import haina.ecommerce.model.notification.ResponseGetNotification
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.productservice.ResponseGetProductService
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
@@ -461,4 +463,23 @@ interface NetworkService {
     fun getHowToPay(
         @Field("id_payment_method")idPaymentMethod:Int
     ):Call<ResponseGetHowToPay>
+
+    //Get notification
+    @POST("api/notification")
+    fun getNotification():Call<ResponseGetNotification>
+
+    //Get List Airlines
+    @FormUrlEncoded
+    @POST("api/ticket/schedule")
+    fun getListAirlines(
+        @Field("trip_type")tripType:String,
+        @Field("origin")origin:String,
+        @Field("destination")destination:String,
+        @Field("depart_date")departDate:String,
+        @Field("return_date")returnDate:String?,
+        @Field("adult")adult:Int,
+        @Field("child")child:Int,
+        @Field("infant")baby:Int,
+        @Field("airline_access_code")aAC:String
+    ):Call<ResponseGetListAirline>
 }

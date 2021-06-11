@@ -279,5 +279,16 @@
     <string name="transaction_hotel">Transaction Hotel</string>
     <string name="change_review">Change Review</string>
     <string name="your_review_on">Your review on</string>
+    <string name="input_captcha_here">Input captcha here</string>
+    <string name="insert_captcha_below">Insert Captcha Below</string>
+    <string name="captcha_is_needed_for_security_reason">captcha is needed for security reason.</string>
+    <string name="input_adult">Please input adult passenger</string>
+    <string name="input_total_passenger">input total passenger</string>
+    <string name="adult">Adult</string>
+    <string name="_12_or_above">12 Or Above</string>
+    <string name="child">Child</string>
+    <string name="_2_age_12_age">2 Age - 12 Age</string>
+    <string name="under_2_age">Under 2 Age</string>
+    <string name="baby">Baby</string>
 
 </resources>

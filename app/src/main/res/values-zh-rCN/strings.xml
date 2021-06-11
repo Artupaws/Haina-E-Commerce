@@ -279,5 +279,16 @@
     <string name="transaction_hotel">交易酒店</string>
     <string name="change_review">变更审查</string>
     <string name="your_review_on">您的评论 </string>
+    <string name="input_captcha_here">在这里输入验证码</string>
+    <string name="insert_captcha_below">在下方插入验证码</string>
+    <string name="captcha_is_needed_for_security_reason">出于安全原因需要验证码.</string>
+    <string name="input_adult">请输入成年乘客</string>
+    <string name="input_total_passenger">输入旅客总数</string>
+    <string name="adult">成人</string>
+    <string name="_12_or_above">12人或以上</string>
+    <string name="child">儿童</string>
+    <string name="_2_age_12_age">2 岁 - 12 岁</string>
+    <string name="under_2_age">2岁以下</string>
+    <string name="baby">婴儿</string>
 
 </resources>

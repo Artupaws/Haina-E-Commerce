@@ -3,6 +3,7 @@ package haina.ecommerce.view.flight.schedule
 import android.content.Context
 import android.view.View
 import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.model.flight.ResponseGetListAirline
 import haina.ecommerce.model.flight.ResponseGetListAirport
 import org.json.JSONObject
 import retrofit2.Call

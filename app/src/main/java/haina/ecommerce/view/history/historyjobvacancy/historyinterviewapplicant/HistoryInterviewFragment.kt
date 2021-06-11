@@ -16,7 +16,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.login.LoginActivity
 
-class HistoryInterviewFragment : Fragment(), HistoryInterviewContract, View.OnClickListener {
+class HistoryInterviewFragment : Fragment(), HistoryInterviewContract, View.OnClickListener, AdapterShortlistApplicant.ItemAdapterCallback {
 
     private var _binding : FragmentHistoryInterviewBinding? = null
     private val binding get() = _binding
@@ -65,11 +65,6 @@ class HistoryInterviewFragment : Fragment(), HistoryInterviewContract, View.OnCl
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
     override fun messageStatusSuccess(msg: String) {
         Log.d("interviewSuccess", msg)
         if (msg.contains("Success")){
@@ -103,7 +98,7 @@ class HistoryInterviewFragment : Fragment(), HistoryInterviewContract, View.OnCl
     }
 
     override fun getInterviewApplicant(item: List<DataShortlist?>?) {
-        val adapterInterview = AdapterShortlistApplicant(requireContext(), item)
+        val adapterInterview = AdapterShortlistApplicant(requireContext(), item, this)
         binding?.rvInterview?.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -112,6 +107,9 @@ class HistoryInterviewFragment : Fragment(), HistoryInterviewContract, View.OnCl
         }
     }
 
+    override fun onAdapterClick(view: View, data: DataShortlist) {
+        TODO("Not yet implemented")
+    }
 
 
 }

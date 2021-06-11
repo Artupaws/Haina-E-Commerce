@@ -27,15 +27,10 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
 import haina.ecommerce.adapter.flight.AdapterFlightDestinationCity
-import haina.ecommerce.adapter.flight.AdapterFlightDestinationCountry
-import haina.ecommerce.databinding.FragmentBottomsheetFlightBinding
 import haina.ecommerce.databinding.FragmentScheduleFlightBinding
 import haina.ecommerce.helper.Helper.convertLongtoTime
 import haina.ecommerce.helper.RangeValidator
-import haina.ecommerce.model.flight.DataAirport
-import haina.ecommerce.model.flight.DestinationCity
-import haina.ecommerce.model.flight.DestinationCountry
-import haina.ecommerce.model.flight.Request
+import haina.ecommerce.model.flight.*
 import haina.ecommerce.view.flight.FlightTicketActivity
 import haina.ecommerce.view.flight.fragment.BottomSheetFlightFragment
 import java.util.*
@@ -71,6 +66,10 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
     private var broadcaster:LocalBroadcastManager?=null
     private var flightClass:String? = null
     private lateinit var presenter: ScheduleFlightPresenter
+    private var totalAdult:Int = 0
+    private var totalChild:Int = 0
+    private var totalBaby:Int = 0
+    private var totalPassenger:Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -95,7 +94,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         binding.tvFinishDate.setOnClickListener(this)
         binding.tvFromDestination.setOnClickListener(this)
         binding.tvToDestination.setOnClickListener(this)
-        binding.tvTotalPassenger.setOnClickListener(this)
+        binding.linearTotalPassenger.setOnClickListener(this)
         binding.tvFlightClass.setOnClickListener(this)
         binding.vpFlightTicket.setImageListener(imagesListener)
         binding.vpFlightTicket.pageCount = listImage.size
@@ -122,7 +121,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                 val toDestination = binding.tvToDestination.text.toString()
                 val dateStart = binding.tvStartDate.text.toString()
                 val dateFinish = binding.tvFinishDate.text.toString()
-                val totalPassenger = binding.tvTotalPassenger.text.toString().toInt()
+                val totalPassengerParams = binding.tvTotalPassenger.text.toString()
                 val flightClass = binding.tvFlightClass.text.toString()
                 when {
                     fromDestination.isNullOrEmpty() -> {
@@ -137,16 +136,16 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                     dateStart.isNullOrEmpty() -> {
                         binding.tvFromDestination.error = "Please input date start"
                     }
-                    totalPassenger == 0 -> {
+                    totalPassengerParams.contains(getString(R.string.input_total_passenger)) -> {
                         binding.tvTotalPassenger.error = "Please input total passenger"
                     }
                     flightClass.isNullOrEmpty() -> {
                         binding.tvFlightClass.error = "Please input flight class"
                     }
                     else -> {
-                        val data = Request(dateStart, dateFinish, fromDestination, toDestination, totalPassenger, flightClass,
-                            null,
-                            null, null)
+                        val data = Request(dateStart, dateFinish, fromDestination, toDestination, totalPassenger,
+                            totalAdult,
+                            totalChild, totalBaby, null, null, null)
                         val bundle = Bundle()
                         bundle.putParcelable("data", data)
                         Navigation.findNavController(binding.btnFindTicket)
@@ -173,7 +172,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                 typeDestination = "To"
                 popupDestination?.show()
             }
-            R.id.tv_total_passenger -> {
+            R.id.linear_total_passenger -> {
                 childFragmentManager.let {
                     BottomSheetFlightFragment.newInstance(Bundle()).apply {
                         show(it, tag)
@@ -208,8 +207,15 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                     }
                 }
                 "dataPassenger" -> {
-                    val totalPassenger = intent.getStringExtra("total")
-                    binding.tvTotalPassenger.text = totalPassenger
+                    val totalPassengerParams = intent.getStringExtra("total")
+                    val totalAdultParams = intent.getStringExtra("totalAdult")
+                    val totalChildParams = intent.getStringExtra("totalChild")
+                    val totalBabyParams = intent.getStringExtra("totalBaby")
+                    totalPassenger = totalPassengerParams.toInt()
+                    totalAdult = totalAdultParams.toInt()
+                    totalChild = totalChildParams.toInt()
+                    totalBaby = totalBabyParams.toInt()
+                    setDetailPassenger(totalAdultParams!!, totalChildParams, totalBabyParams, totalPassengerParams!!)
                 }
             }
         }
@@ -218,6 +224,26 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
     override fun onStop() {
         super.onStop()
         LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(mMessageReceiver)
+    }
+
+    private fun setDetailPassenger(totalAdult:String, totalChildParams:String?, totalBabyParams:String?, totalPassenger:String){
+        if (totalChildParams != "0"){
+            binding.tvTotalChild.visibility = View.VISIBLE
+            binding.tvTotalChild.text = "$totalChild Child(s)"
+        } else {
+            binding.tvTotalChild.visibility = View.GONE
+            totalChild = 0
+        }
+        if (totalBabyParams != "0"){
+            binding.tvTotalBaby.visibility = View.VISIBLE
+            binding.tvTotalBaby.text = "$totalBaby Baby(s)"
+        } else {
+            binding.tvTotalBaby.visibility = View.GONE
+            totalBaby = 0
+        }
+        binding.tvTotalPassenger.error = null
+        binding.tvTotalAdult.text = "$totalAdult Adult(s)"
+        binding.tvTotalPassenger.text = "$totalPassenger consists of : "
     }
 
     private fun onAddPostClicked() {
@@ -275,11 +301,11 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         picker.addOnNegativeButtonClickListener { picker.dismiss() }
         picker.addOnPositiveButtonClickListener {
             if (typeFlight == "First") {
-                binding.tvStartDate.text = it?.convertLongtoTime("dd MMM")
-                date = it?.convertLongtoTime("dd MM").toString().substring(0, 2)
-                month = it?.convertLongtoTime("dd MM").toString().substring(3, 5)
+                binding.tvStartDate.text = it?.convertLongtoTime("yyyy-MM-dd")
+                date = it?.convertLongtoTime("dd MMM").toString()
+                month = it?.convertLongtoTime("dd MMM").toString()
             } else if (typeFlight == "Second") {
-                binding.tvFinishDate.text = it?.convertLongtoTime("dd MMM")
+                binding.tvFinishDate.text = it?.convertLongtoTime("yyyy-MM-dd")
             }
             picker.dismiss()
         }
@@ -290,12 +316,12 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         val calendarStart: Calendar = Calendar.getInstance()
         val calendarEnd: Calendar = Calendar.getInstance()
         val year = Calendar.getInstance().get(Calendar.YEAR)
-        val startMonth = month.toInt()
-        val startDate = date.toInt()
+        val startMonth = Calendar.getInstance().get(Calendar.MONTH)
+        val startDate = Calendar.getInstance().get(Calendar.DATE)
         val endMonth = 12
         val endDate = 31
 
-        calendarStart.set(year, startMonth - 1, startDate - 1)
+        calendarStart.set(year, startMonth, startDate - 1)
         calendarEnd.set(year, endMonth - 1, endDate)
 
         val minDate = calendarStart.timeInMillis
@@ -351,6 +377,5 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
     override fun getDataAirport(data: List<DataAirport?>?) {
         popupDialogDestination(data)
     }
-
 
 }

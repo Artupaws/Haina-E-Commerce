@@ -26,7 +26,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/icon_adult"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Adult" />
+        android:text="@string/adult" />
 
     <TextView
         android:id="@+id/description_adult"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/title_adult"
         app:layout_constraintTop_toBottomOf="@+id/title_adult"
-        android:text="12 Age Above" />
+        android:text="@string/_12_or_above" />
 
     <LinearLayout
         android:id="@+id/linear_add_adult"
@@ -136,7 +136,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/icon_kid"
         app:layout_constraintTop_toBottomOf="@+id/line_adult"
-        android:text="Kids" />
+        android:text="@string/child" />
 
     <TextView
         android:id="@+id/description_kid"
@@ -145,7 +145,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/title_kid"
         app:layout_constraintTop_toBottomOf="@+id/title_kid"
-        android:text="2 Age - 12 Age" />
+        android:text="@string/_2_age_12_age" />
 
     <LinearLayout
         android:id="@+id/linear_add_kid"
@@ -245,7 +245,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/icon_baby"
         app:layout_constraintTop_toBottomOf="@+id/line_kid"
-        android:text="Baby" />
+        android:text="@string/baby" />
 
     <TextView
         android:id="@+id/description_baby"
@@ -254,7 +254,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/title_baby"
         app:layout_constraintTop_toBottomOf="@+id/title_baby"
-        android:text="Under 2 Age" />
+        android:text="@string/under_2_age" />
 
     <LinearLayout
         android:id="@+id/linear_add_baby"

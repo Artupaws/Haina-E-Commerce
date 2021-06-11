@@ -17,30 +17,34 @@ import com.bumptech.glide.request.target.Target
 import haina.ecommerce.databinding.ListItemSortListBinding
 import haina.ecommerce.model.DataShortlist
 
-class AdapterShortlistApplicant(val context: Context, private val listShortlistApplicant: List<DataShortlist?>?):
+class AdapterShortlistApplicant(val context: Context, private val listShortlistApplicant: List<DataShortlist?>?, private val itemAdapterCallback: ItemAdapterCallback):
     RecyclerView.Adapter<AdapterShortlistApplicant.Holder>() {
     private var broadcaster: LocalBroadcastManager? = null
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemSortListBinding.bind(view)
         private var statusApplicant:String = ""
-        fun bind(itemHaina: DataShortlist){
+        fun bind(itemHaina: DataShortlist, itemAdapterCallback: ItemAdapterCallback){
             with(binding){
                 statusApplicant = itemHaina.status.toString()
-                if (statusApplicant == "interview"){
-                    btnDecline.visibility = View.INVISIBLE
-                    btnAccept.visibility = View.INVISIBLE
-                    btnInterview.visibility = View.VISIBLE
-                    btnInterview.isEnabled = false
-                } else if (statusApplicant == "shortlisted"){
-                    btnDecline.visibility = View.VISIBLE
-                    btnAccept.visibility = View.VISIBLE
-                    btnInterview.visibility = View.VISIBLE
-                } else if (statusApplicant == "accepted") {
-                    btnDecline.visibility = View.INVISIBLE
-                    btnAccept.visibility = View.VISIBLE
-                    btnInterview.visibility = View.INVISIBLE
-                    btnAccept.isEnabled = false
+                when (statusApplicant) {
+                    "interview" -> {
+                        btnDecline.visibility = View.INVISIBLE
+                        btnAccept.visibility = View.INVISIBLE
+                        btnInterview.visibility = View.VISIBLE
+                        btnInterview.isEnabled = false
+                    }
+                    "shortlisted" -> {
+                        btnDecline.visibility = View.VISIBLE
+                        btnAccept.visibility = View.VISIBLE
+                        btnInterview.visibility = View.VISIBLE
+                    }
+                    "accepted" -> {
+                        btnDecline.visibility = View.INVISIBLE
+                        btnAccept.visibility = View.VISIBLE
+                        btnInterview.visibility = View.INVISIBLE
+                        btnAccept.isEnabled = false
+                    }
                 }
                 tvName.text = itemHaina.fullname
                 tvEmail.text = itemHaina.email
@@ -63,19 +67,22 @@ class AdapterShortlistApplicant(val context: Context, private val listShortlistA
                         })
                         .into(ivImageApplicant)
                 btnInterview.setOnClickListener {
-                    val intentInterview = Intent("interview")
-                    intentInterview.putExtra("invite", itemHaina.id)
-                    broadcaster?.sendBroadcast(intentInterview)
+                    itemAdapterCallback.onAdapterClick(binding.btnInterview, itemHaina)
+//                    val intentInterview = Intent("interview")
+//                    intentInterview.putExtra("invite", itemHaina.id)
+//                    broadcaster?.sendBroadcast(intentInterview)
                 }
                 btnAccept.setOnClickListener {
-                    val intentAccept = Intent("accept")
-                    intentAccept.putExtra("hired", itemHaina.id)
-                    broadcaster?.sendBroadcast(intentAccept)
+                    itemAdapterCallback.onAdapterClick(binding.btnAccept, itemHaina)
+//                    val intentAccept = Intent("accept")
+//                    intentAccept.putExtra("hired", itemHaina.id)
+//                    broadcaster?.sendBroadcast(intentAccept)
                 }
                 btnDecline.setOnClickListener {
-                    val intentDecline = Intent("decline")
-                    intentDecline.putExtra("reject", itemHaina.id)
-                    broadcaster?.sendBroadcast(intentDecline)
+                    itemAdapterCallback.onAdapterClick(binding.btnDecline, itemHaina)
+//                    val intentDecline = Intent("decline")
+//                    intentDecline.putExtra("reject", itemHaina.id)
+//                    broadcaster?.sendBroadcast(intentDecline)
                 }
             }
         }
@@ -90,9 +97,13 @@ class AdapterShortlistApplicant(val context: Context, private val listShortlistA
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val item: DataShortlist = listShortlistApplicant?.get(position)!!
-        holder.bind(item)
+        holder.bind(item, itemAdapterCallback)
     }
 
     override fun getItemCount(): Int = listShortlistApplicant?.size!!
+
+    interface ItemAdapterCallback{
+        fun onAdapterClick(view: View, data:DataShortlist)
+    }
 
 }

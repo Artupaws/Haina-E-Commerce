@@ -33,9 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:textColor="@color/black"
-            android:textSize="17sp"
-            android:textStyle="bold"
+            style="@style/TextView.Poppins16spBlack"
             android:ellipsize="end"
             android:maxLines="2"
             tools:text="Penuhi Panggilan Polisi, Anies: Saya Datang Senagai Warga Negara" />
@@ -44,7 +42,8 @@
             android:id="@+id/tv_media_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
+            style="@style/TextView.Poppins14spGrey"
             tools:text="Media Indonesia" />
 
     </LinearLayout>
