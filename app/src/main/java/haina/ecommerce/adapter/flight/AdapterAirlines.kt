@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.get
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vinay.stepview.models.Step
 import haina.ecommerce.R
@@ -27,11 +28,11 @@ class AdapterAirlines(val context: Context, private val listAirlines: List<Depar
         private val binding = ListItemAirlinesBinding.bind(view)
         fun bind(itemHaina: DepartItem, itemAdapterCallback:ItemAdapterCallback) {
             with(binding) {
-                listStep = listOf(
-                        Step(listTimeFlight[0].departureTime, Step.State.NOT_COMPLETED),
-                        Step(listTimeFlight[0].departureTime, Step.State.CURRENT),
-                        Step(listTimeFlight[0].arrivedTime, Step.State.COMPLETED),
-                )
+//                listStep = listOf(
+//                        Step(listTimeFlight[0].departureTime, Step.State.NOT_COMPLETED),
+//                        Step(listTimeFlight[0].departureTime, Step.State.CURRENT),
+//                        Step(listTimeFlight[0].arrivedTime, Step.State.COMPLETED),
+//                )
 //                stepView.steps = listStep
                 tvAirlineName.text = itemHaina.airlineDetail?.airlineName
                 val priceTicket = "${helper.convertToFormatMoneyIDRFilter(itemHaina.price.toString())}/person"
@@ -40,6 +41,7 @@ class AdapterAirlines(val context: Context, private val listAirlines: List<Depar
                 tvTypeAndTotalFlightTime.text = "Direct Flight"
                 setStepView(binding)
                 itemView.setOnClickListener { itemAdapterCallback.onClick(itemView, itemHaina, listTimeFlight) }
+                setupListTimeFlight(binding, itemHaina.flightTime)
             }
         }
     }
@@ -56,7 +58,7 @@ class AdapterAirlines(val context: Context, private val listAirlines: List<Depar
         holder.bind(photo, itemAdapterCallback)
     }
 
-    override fun getItemCount(): Int = listAirlines!!.size
+    override fun getItemCount(): Int = listAirlines?.size!!
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setStepView(binding:ListItemAirlinesBinding){
@@ -70,6 +72,14 @@ class AdapterAirlines(val context: Context, private val listAirlines: List<Depar
         binding.stepView.setLineLength(20F)
         binding.stepView.textSize = 12
         binding.stepView.setReverse(false)
+    }
+
+    private fun setupListTimeFlight(binding: ListItemAirlinesBinding, data:List<TimeFlight?>?){
+        binding.rvTimeFlight.apply {
+            adapter = AdapterTimeFlight(context,data)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+
     }
 
     interface ItemAdapterCallback{

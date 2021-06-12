@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_origin_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageViewOrigin"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_not_complete_flight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/circleImageViewOrigin"
+            app:layout_constraintStart_toStartOf="@+id/circleImageViewOrigin"
+            app:layout_constraintTop_toBottomOf="@+id/circleImageViewOrigin" />
+
+
+        <TextView
+            android:id="@+id/tv_name_city_code"
+            style="@style/TextView.Poppins14spBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/circleImageViewOrigin"
+            app:layout_constraintStart_toStartOf="@+id/tv_time"
+            app:layout_constraintTop_toTopOf="@+id/circleImageViewOrigin"
+            tools:text="SUB" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/TextView.Poppins12spGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@+id/circleImageViewOrigin"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name_city_code"
+            tools:text="19.00 - 22.00" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_destination_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cl_origin_list"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageDestination"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_not_complete_flight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_name_city_destination_code"
+            style="@style/TextView.Poppins14spBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/circleImageDestination"
+            app:layout_constraintStart_toEndOf="@+id/circleImageDestination"
+            app:layout_constraintTop_toTopOf="@+id/circleImageDestination"
+            tools:text="SUB" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>

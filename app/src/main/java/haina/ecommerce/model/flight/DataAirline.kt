@@ -10,6 +10,9 @@ data class DataAirline(
 	@field:SerializedName("total_airline")
 	val totalAirline: Int? = null,
 
+	@field:SerializedName("access_code")
+	val accessCode: String? = null,
+
 	@field:SerializedName("depart")
 	val depart: List<DepartItem?>? = null
 ) : Parcelable

@@ -34,24 +34,36 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="3">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="2">
 
             <com.vinay.stepview.VerticalStepView
                 android:id="@+id/stepView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_time_flight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="1"
+                tools:listitem="@layout/list_item_time_flight" />
 
             <TextView
                 android:id="@+id/tv_type_and_total_flight_time"
@@ -60,11 +72,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textAlignment="center"
+                android:visibility="gone"
                 android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="@+id/stepView"
+                app:layout_constraintBottom_toBottomOf="@+id/rv_time_flight"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/stepView"
-                app:layout_constraintTop_toTopOf="@+id/stepView"
+                app:layout_constraintStart_toStartOf="@+id/rv_time_flight"
+                app:layout_constraintTop_toTopOf="@+id/rv_time_flight"
                 tools:ignore="SmallSp"
                 tools:text="Direct Flight | 1h 0m" />
 

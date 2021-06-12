@@ -32,5 +32,8 @@ data class DepartItem(
 	val journeyReferences: String? = null,
 
 	@field:SerializedName("flight_detail")
-	val flightDetail: List<FlightDetailItem?>? = null
+	val flightDetail: List<FlightDetailItem?>? = null,
+
+	@field:SerializedName("flight_time")
+	val flightTime: List<TimeFlight?>? = null
 ) : Parcelable

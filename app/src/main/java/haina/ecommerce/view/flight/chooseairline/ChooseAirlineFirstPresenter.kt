@@ -20,8 +20,9 @@ class ChooseAirlineFirstPresenter(val view: ChooseAirlineFristContract, val cont
                     val data = response.body()?.dataAirline
                     view.getDataAirline(data)
                 } else {
-                    val error = JSONObject(response.errorBody()?.string())
-                    view.messageChooseAirline(error.getString("message"))
+                    val dataError = JSONObject(response.errorBody()?.string())
+                    view.accessCode(dataError.getString("data"))
+                    view.messageChooseAirline(dataError.getString("message"))
                 }
             }
 
