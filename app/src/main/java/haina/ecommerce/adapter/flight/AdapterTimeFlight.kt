@@ -20,9 +20,6 @@ class AdapterTimeFlight(val context: Context, private val listAirlines: List<Tim
         private val binding = ListItemTimeFlightBinding.bind(view)
         fun bind(itemHaina: TimeFlight, position: Int) {
             with(binding) {
-                itemView.setOnClickListener {
-                    Log.d("positionItem", adapterPosition.toString())
-                }
                 if (adapterPosition+1 >= listAirlines!!.size){
                     binding.circleImageDestination.visibility = View.VISIBLE
                     binding.tvNameCityDestinationCode.visibility = View.VISIBLE
@@ -32,7 +29,8 @@ class AdapterTimeFlight(val context: Context, private val listAirlines: List<Tim
                 }
 
                 binding.tvNameCityCode.text = itemHaina.origin
-                binding.tvTime.text = "${itemHaina.departureTime.substring(11, 19)} - ${itemHaina.arrivedTime.substring(11, 19)}"
+                val timeFlight = "${itemHaina.departureTime.substring(11, 19)} - ${itemHaina.arrivedTime.substring(11, 19)}"
+                binding.tvTime.text = timeFlight
                 binding.tvNameCityDestinationCode.text = itemHaina.destination
                 binding.circleImageDestination.setBackgroundResource(R.drawable.ic_complete_flight)
             }

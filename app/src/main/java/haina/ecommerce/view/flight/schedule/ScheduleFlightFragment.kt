@@ -28,14 +28,17 @@ import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
 import haina.ecommerce.adapter.flight.AdapterFlightDestinationCity
 import haina.ecommerce.databinding.FragmentScheduleFlightBinding
+import haina.ecommerce.databinding.LayoutPopupDialogDestinationFlightBinding
+import haina.ecommerce.databinding.LayoutSelectFlightClassBinding
 import haina.ecommerce.helper.Helper.convertLongtoTime
 import haina.ecommerce.helper.RangeValidator
 import haina.ecommerce.model.flight.*
 import haina.ecommerce.view.flight.FlightTicketActivity
 import haina.ecommerce.view.flight.fragment.BottomSheetFlightFragment
 import java.util.*
+import kotlin.math.round
 
-class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContract {
+class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContract, AdapterFlightDestinationCity.ItemAdapterCallback {
 
     private lateinit var _binding: FragmentScheduleFlightBinding
     private val binding get() = _binding
@@ -70,6 +73,11 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
     private var totalChild:Int = 0
     private var totalBaby:Int = 0
     private var totalPassenger:Int = 0
+    var isEmptyOrigin = true
+    var isEmptyDestination = true
+    var isEmptyStart = true
+    var isEmptyFinish = true
+    var isEmptyTotalPassenger = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -117,44 +125,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                 flipDestination(clicked)
             }
             R.id.btn_find_ticket -> {
-                val fromDestination = binding.tvFromDestination.text.toString()
-                val toDestination = binding.tvToDestination.text.toString()
-                val dateStart = binding.tvStartDate.text.toString()
-                val dateFinish = binding.tvFinishDate.text.toString()
-                val totalPassengerParams = binding.tvTotalPassenger.text.toString()
-                val flightClass = binding.tvFlightClass.text.toString()
-                when {
-                    fromDestination.isNullOrEmpty() -> {
-                        binding.tvFromDestination.error = "Please input from"
-                    }
-                    toDestination.isNullOrEmpty() -> {
-                        binding.tvToDestination.error = "Please input to"
-                    }
-                    dateFinish.isNullOrEmpty() -> {
-                        binding.tvFinishDate.error = "Please input date finish"
-                    }
-                    dateStart.isNullOrEmpty() -> {
-                        binding.tvFromDestination.error = "Please input date start"
-                    }
-                    totalPassengerParams.contains(getString(R.string.input_total_passenger)) -> {
-                        binding.tvTotalPassenger.error = "Please input total passenger"
-                    }
-                    flightClass.isNullOrEmpty() -> {
-                        binding.tvFlightClass.error = "Please input flight class"
-                    }
-                    else -> {
-                        val data = Request(dateStart, dateFinish, fromDestination, toDestination, totalPassenger,
-                            totalAdult,
-                            totalChild, totalBaby, null, null, null)
-                        val bundle = Bundle()
-                        bundle.putParcelable("data", data)
-                        Navigation.findNavController(binding.btnFindTicket)
-                            .navigate(
-                                R.id.action_scheduleFlightFragment_to_chooseAirlinesFragment,
-                                bundle
-                            )
-                    }
-                }
+               checkScheduleTicket()
             }
             R.id.tv_start_date -> {
                 date = Calendar.getInstance().get(Calendar.DATE).toString()
@@ -191,6 +162,70 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(mMessageReceiver, IntentFilter("dataPassenger"))
     }
 
+    private fun checkScheduleTicket(){
+        var fromDestination = binding.tvFromDestination.text.toString()
+        var toDestination = binding.tvToDestination.text.toString()
+        var dateStart = binding.tvStartDate.text.toString()
+        var dateFinish:String? = binding.tvFinishDate.text.toString()
+        var totalPassengerParams = binding.tvTotalPassenger.text.toString()
+
+        if (fromDestination.isNullOrEmpty()){
+            binding.tvFromDestination.error = "Please input from"
+            isEmptyOrigin = true
+        } else {
+            fromDestination = binding.tvFromDestination.text.toString()
+            isEmptyOrigin = false
+        }
+
+        if (toDestination.isNullOrEmpty()){
+            binding.tvToDestination.error = "Please input to"
+            isEmptyDestination = true
+        } else {
+            toDestination = binding.tvToDestination.text.toString()
+            isEmptyDestination = false
+        }
+
+        if (dateStart.contains("select date")){
+            binding.tvStartDate.error = "Please input date start"
+            isEmptyStart = true
+        } else {
+            dateStart =  binding.tvStartDate.text.toString()
+            isEmptyStart = false
+        }
+
+        if (dateFinish?.contains("select date") == true){
+            if (roundTrip){
+                binding.tvFinishDate.error = "Please input return date"
+                isEmptyFinish = true
+            } else {
+                dateFinish = null
+                isEmptyFinish = false
+            }
+        } else {
+            dateFinish = binding.tvFinishDate.text.toString()
+            isEmptyFinish = false
+        }
+
+        if (totalPassengerParams.contains(getString(R.string.input_total_passenger))){
+            binding.tvTotalPassenger.error = "Please input total passenger"
+            isEmptyTotalPassenger = true
+        } else {
+            totalPassengerParams = binding.tvTotalPassenger.text.toString()
+            isEmptyTotalPassenger = false
+        }
+
+        if (!isEmptyOrigin && !isEmptyDestination && !isEmptyStart && !isEmptyFinish && !isEmptyTotalPassenger){
+            val data = Request(dateStart, dateFinish, fromDestination, toDestination, totalPassenger,
+                totalAdult,
+                totalChild, totalBaby, null, null, null)
+            val bundle = Bundle()
+            bundle.putParcelable("data", data)
+            Navigation.findNavController(binding.btnFindTicket).navigate(R.id.action_scheduleFlightFragment_to_chooseAirlinesFragment, bundle)
+        } else {
+            Toast.makeText(requireActivity(), "Please complete form", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private val mMessageReceiver:BroadcastReceiver = object :BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             when(intent?.action){
@@ -224,6 +259,12 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
     override fun onStop() {
         super.onStop()
         LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(mMessageReceiver)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        popupDestination?.dismiss()
+        popupFlightClass?.dismiss()
     }
 
     private fun setDetailPassenger(totalAdult:String, totalChildParams:String?, totalBabyParams:String?, totalPassenger:String){
@@ -285,6 +326,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                 roundTrip = true
             } else {
                 binding.clGoBack.visibility = View.GONE
+                roundTrip = false
             }
         }
     }
@@ -304,8 +346,10 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                 binding.tvStartDate.text = it?.convertLongtoTime("yyyy-MM-dd")
                 date = it?.convertLongtoTime("dd MMM").toString()
                 month = it?.convertLongtoTime("dd MMM").toString()
+                binding.tvStartDate.error= null
             } else if (typeFlight == "Second") {
                 binding.tvFinishDate.text = it?.convertLongtoTime("yyyy-MM-dd")
+                binding.tvFinishDate.error = null
             }
             picker.dismiss()
         }
@@ -343,12 +387,28 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         window.setGravity(Gravity.CENTER)
         val actionClose = popupDestination?.findViewById<ImageView>(R.id.iv_close)
         val rvDestination = popupDestination?.findViewById<RecyclerView>(R.id.rv_destination)
-        val searcView = popupDestination?.findViewById<SearchView>(R.id.sv_destination)
+        val searchView = popupDestination?.findViewById<SearchView>(R.id.sv_destination)
         actionClose?.setOnClickListener { popupDestination?.dismiss() }
         rvDestination?.apply {
-            adapter = AdapterFlightDestinationCity(requireActivity(), listDestinationCountry)
+            adapter = AdapterFlightDestinationCity(requireActivity(), listDestinationCountry, this@ScheduleFlightFragment)
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
+        searchView?.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
+            SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                if (p0?.isNotEmpty()!!){
+                    (rvDestination?.adapter as AdapterFlightDestinationCity).filter.filter(p0)
+                    (rvDestination.adapter as AdapterFlightDestinationCity).notifyDataSetChanged()
+                } else {
+                    presenter.getDataAirport()
+                }
+                return true
+            }
+        })
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -370,12 +430,48 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         )
     }
 
+    private fun searchProduct(searchView:SearchView, rvDestination:RecyclerView){
+        searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
+            SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                if (p0?.isNotEmpty()!!){
+                    (rvDestination.adapter as AdapterFlightDestinationCity).filter.filter(p0)
+                    (rvDestination.adapter as AdapterFlightDestinationCity).notifyDataSetChanged()
+                } else {
+                    presenter.getDataAirport()
+                }
+                return true
+            }
+        })
+    }
+
+
     override fun messageGetAirport(msg: String) {
         Log.d("airportData", msg)
     }
 
     override fun getDataAirport(data: List<DataAirport?>?) {
         popupDialogDestination(data)
+    }
+
+    override fun onClickAdapter(view: View, data: DataAirport) {
+        when(view.id){
+            R.id.rv_click -> {
+                if (typeDestination == "From") {
+                    binding.tvFromDestination.text = data.iata
+                    binding.tvCityNameFrom.text = data.city
+                    popupDestination?.dismiss()
+                } else if (typeDestination == "To") {
+                    binding.tvToDestination.text = data.iata
+                    binding.tvCityNameTo.text = data.city
+                    popupDestination?.dismiss()
+                }
+            }
+        }
     }
 
 }

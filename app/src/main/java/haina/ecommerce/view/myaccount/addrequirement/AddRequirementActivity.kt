@@ -12,14 +12,11 @@ import android.os.Environment
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.webkit.PermissionRequest
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.DexterError
-import com.karumi.dexter.listener.PermissionRequestErrorListener
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityAddRequirementBinding
@@ -73,7 +70,7 @@ class AddRequirementActivity : AppCompatActivity(), View.OnClickListener, AddReq
 
     override fun onClick(p0: View?) {
         when(p0?.id){
-            R.id.linear_click -> {
+            R.id.relative -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                         val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)

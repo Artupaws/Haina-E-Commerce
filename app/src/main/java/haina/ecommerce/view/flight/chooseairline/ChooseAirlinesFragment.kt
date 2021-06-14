@@ -10,7 +10,6 @@ import android.view.*
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -28,19 +27,7 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
     private val binding get() = _binding
     private lateinit var data: Request
     private var popupInputCaptcha: Dialog? = null
-    //    private val listTimeFlight = listOf<TimeFlight>(
-//        TimeFlight("05:55", "06:55")
-//    )
     private var tripType:String = ""
-//    private val listAirlines = arrayListOf<Airlines>(
-//            Airlines("Garuda", "", listTimeFlight, "1h0m", "Direct", "CGK", "JOG", "500000", "05:55", "06:55"),
-//            Airlines("Lion", "", listTimeFlight, "1h0m", "Direct", "CGK", "JOG", "500000", "05:55", "06:55"),
-//            Airlines("Batavia", "", listTimeFlight, "1h0m", "Direct", "CGK", "JOG", "500000", "05:55", "06:55"),
-//            Airlines("Wings", "", listTimeFlight, "1h0m", "Direct", "CGK", "JOG", "500000", "05:55", "06:55"),
-//            Airlines("Adam", "", listTimeFlight, "1h0m", "Direct", "CGK", "JOG", "500000", "05:55", "06:55"),
-//            Airlines("Mandala", "", listTimeFlight, "1h0m", "Direct", "CGK", "JOG", "500000", "05:55", "06:55"),
-//            Airlines("Buroq", "", listTimeFlight, "1h0m", "Direct", "CGK", "JOG", "500000", "05:55", "06:55"),
-//    )
     private lateinit var presenter: ChooseAirlineFirstPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,7 +39,8 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         data = arguments?.getParcelable("data")!!
-        tripType = if (data.finishDate!!.contains("select date")){
+        Log.d("typeTrip", data.finishDate.toString())
+        tripType = if (data.finishDate.isNullOrEmpty()){
             "OneWay"
         } else {
             "RoundTrip"
@@ -64,28 +52,7 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
         binding.toolbarChooseAirlines.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
-
-//        binding.rvAirlines.apply {
-//            adapter = AdapterAirlines(requireActivity(), listAirlines, this@ChooseAirlinesFragment)
-//            layoutManager =
-//                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-//        }
     }
-
-//    override fun onClick(view:View, data:Airlines) {
-//        val dataFlight = Request(this.data.startDate, this.data.finishDate, this.data.fromDestination, this.data.toDestination, this.data.totalPassenger,
-//            this.data.flightClass, airlinesFirst = AirlinesFirst(data.nameAirlines,
-//                data.iconAirline, data.listFlightTime, data.flightTime, data.typeFlight,
-//                data.cityCodeDeparture,data.cityCodeArrived, data.priceTicket, data.departureTime,
-//                data.arrivedTime), null, null)
-//        val bundle = Bundle()
-//        bundle.putParcelable("data", dataFlight)
-//        if (this.data.finishDate?.contains("select date")!!){
-//            Navigation.findNavController(view).navigate(haina.ecommerce.R.id.action_chooseAirlinesFragment_to_fillDataPassengerFragment, bundle)
-//        } else if (!this.data.finishDate?.contains("select date")!!){
-//            Navigation.findNavController(view).navigate(haina.ecommerce.R.id.action_chooseAirlinesFragment_to_chooseAirlinesSecondFlightFragment, bundle)
-//        }
-//    }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun popupDialogInputCaptcha(accessCode:String) {
@@ -101,41 +68,55 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
         val decodedString: ByteArray = Base64.decode(accessCode, Base64.DEFAULT)
         val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
         Glide.with(requireActivity()).load(decodedByte).into(imageCaptcha!!)
+        buttonNext?.setOnClickListener {
+            if (etCaptcha?.text.toString().isNotEmpty()){
+                presenter.getAirlinesData(tripType, data.fromDestination, data.toDestination, data.startDate, data.finishDate, data.totalAdult, data.totalChild,
+                    data.totalBaby, etCaptcha.toString())
+            } else {
+                etCaptcha?.error = "Please input captcha here"
+            }
+
+        }
     }
 
     override fun messageChooseAirline(msg: String) {
         Log.d("getAirlines", msg)
     }
 
-    override fun accessCode(accessCode: String) {
+    override fun accessCode(accessCode: String?) {
         Log.d("isinya", accessCode)
-        if (accessCode.isNotEmpty()){
-            popupDialogInputCaptcha(accessCode)
-            popupInputCaptcha?.show()
+        if (accessCode != null) {
+            if (accessCode.isNotEmpty()){
+                popupDialogInputCaptcha(accessCode)
+                popupInputCaptcha?.show()
+            }
         }
     }
 
     override fun getDataAirline(data: DataAirline?) {
         Log.d("isinya", data?.accessCode.toString())
         binding.rvAirlines.apply {
-            adapter = AdapterAirlines(requireActivity(), data?.depart, this@ChooseAirlinesFragment)
-            layoutManager =
-                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            adapter = AdapterAirlines(requireContext(), data?.depart, this@ChooseAirlinesFragment)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         }
     }
 
-    override fun onClick(view: View, dataDepart: DepartItem, timeFlight: List<TimeFlight>) {
-        val dataFlight = Request(this.data.startDate, this.data.finishDate, this.data.fromDestination, this.data.toDestination,
-        this.data.totalPassenger, this.data.totalAdult, this.data.totalChild, this.data.totalBaby, airlinesFirst = AirlinesFirst(dataDepart.airlineCode!!,
-                "", timeFlight, dataDepart.departTime!!, "Direct Flight",
-                dataDepart.origin!!,dataDepart.destination!!, dataDepart.price.toString(), dataDepart.departTime.toString(),
-                dataDepart.arrivalTime!!), null, null)
-        val bundle = Bundle()
-        bundle.putParcelable("data", dataFlight)
-        if (this.data.finishDate?.contains("select date")!!){
-            Navigation.findNavController(view).navigate(haina.ecommerce.R.id.action_chooseAirlinesFragment_to_fillDataPassengerFragment, bundle)
-        } else if (!this.data.finishDate?.contains("select date")!!){
-            Navigation.findNavController(view).navigate(haina.ecommerce.R.id.action_chooseAirlinesFragment_to_chooseAirlinesSecondFlightFragment, bundle)
+    override fun onClick(view: View, dataDepart: DepartItem, timeFlight: List<TimeFlight?>?) {
+        when(view.id){
+            R.id.linear_click -> {
+                val dataFlight = Request(this.data.startDate, this.data.finishDate, this.data.fromDestination, this.data.toDestination,
+                    this.data.totalPassenger, this.data.totalAdult, this.data.totalChild, this.data.totalBaby, airlinesFirst = AirlinesFirst(dataDepart.airlineCode!!,
+                        "", timeFlight, dataDepart.departTime!!, "Direct Flight",
+                        dataDepart.origin!!,dataDepart.destination!!, dataDepart.price.toString(), dataDepart.departTime.toString(),
+                        dataDepart.arrivalTime!!), null, null)
+                val bundle = Bundle()
+                bundle.putParcelable("data", dataFlight)
+                if (this.data.finishDate.isNullOrEmpty()){
+                    Navigation.findNavController(view).navigate(haina.ecommerce.R.id.action_chooseAirlinesFragment_to_fillDataPassengerFragment, bundle)
+                } else if (!this.data.finishDate?.contains("select date")!!){
+                    Navigation.findNavController(view).navigate(haina.ecommerce.R.id.action_chooseAirlinesFragment_to_chooseAirlinesSecondFlightFragment, bundle)
+                }
+            }
         }
     }
 

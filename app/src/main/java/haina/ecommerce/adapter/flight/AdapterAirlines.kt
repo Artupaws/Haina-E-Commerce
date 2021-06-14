@@ -5,6 +5,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.core.view.get
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,24 +25,17 @@ class AdapterAirlines(val context: Context, private val listAirlines: List<Depar
     private var broadcaster:LocalBroadcastManager? =null
     private var helper:Helper = Helper
     private lateinit var listStep :List<Step>
-    private lateinit var listTimeFlight: List<TimeFlight>
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemAirlinesBinding.bind(view)
         fun bind(itemHaina: DepartItem, itemAdapterCallback:ItemAdapterCallback) {
             with(binding) {
-//                listStep = listOf(
-//                        Step(listTimeFlight[0].departureTime, Step.State.NOT_COMPLETED),
-//                        Step(listTimeFlight[0].departureTime, Step.State.CURRENT),
-//                        Step(listTimeFlight[0].arrivedTime, Step.State.COMPLETED),
-//                )
-//                stepView.steps = listStep
                 tvAirlineName.text = itemHaina.airlineDetail?.airlineName
                 val priceTicket = "${helper.convertToFormatMoneyIDRFilter(itemHaina.price.toString())}/person"
                 tvPriceTicket.text = priceTicket
-//                val typeAndTotalFlight = "${itemHaina.typeFlight} | ${itemHaina.flightTime}"
                 tvTypeAndTotalFlightTime.text = "Direct Flight"
                 setStepView(binding)
-                itemView.setOnClickListener { itemAdapterCallback.onClick(itemView, itemHaina, listTimeFlight) }
+                linearClick.setOnClickListener {
+                    itemAdapterCallback.onClick(binding.linearClick, itemHaina, itemHaina.flightTime) }
                 setupListTimeFlight(binding, itemHaina.flightTime)
             }
         }
@@ -83,7 +78,6 @@ class AdapterAirlines(val context: Context, private val listAirlines: List<Depar
     }
 
     interface ItemAdapterCallback{
-        fun onClick(view:View, data:DepartItem, timeFlight:List<TimeFlight>)
+        fun onClick(view:View, data:DepartItem, timeFlight:List<TimeFlight?>?)
     }
-
 }

@@ -36,7 +36,7 @@ class AdapterFlightDestinationCountry(val context: Context, private val listDest
             with(binding){
               binding.tvNameCountry.text = itemHaina.country
 //              setupListCity(binding, listCity)
-                setupListCity(binding, listOf(itemHaina))
+//                setupListCity(binding, listOf(itemHaina))
             }
         }
     }
@@ -55,10 +55,10 @@ class AdapterFlightDestinationCountry(val context: Context, private val listDest
 
     override fun getItemCount(): Int = listDestinationCountry?.size!!
 
-    private fun setupListCity(binding:ListItemDestinationCountryBinding,data:List<DataAirport?>?){
-        binding.rvCountry.apply {
-            adapter = AdapterFlightDestinationCity(context, data)
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        }
-    }
+//    private fun setupListCity(binding:ListItemDestinationCountryBinding,data:List<DataAirport?>?){
+//        binding.rvCountry.apply {
+//            adapter = AdapterFlightDestinationCity(context, data, this)
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        }
+//    }
 }
