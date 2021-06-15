@@ -489,4 +489,8 @@ interface NetworkService {
     fun getCalculationTicketPrice(
         @Body body:RequestPrice
     ):Call<ResponseGetRealTicketPrice>
+
+    //Get List Nationality
+    @POST("api/ticket/nationality")
+    fun getListNationality():Call<ResponseGetListNationality>
 }

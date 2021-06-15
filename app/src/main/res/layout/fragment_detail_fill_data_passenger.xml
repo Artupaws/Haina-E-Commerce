@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.flight.fragment.DetailFillDataPassengerFragment">
+    tools:context=".view.flight.detailfilldata.DetailFillDataPassengerFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_detail_fill_data_passenger"
@@ -41,10 +41,46 @@
               android:layout_marginStart="10dp"
               android:layout_marginTop="20dp"/>
 
+            <RadioGroup
+                android:id="@+id/rd_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Title :"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_marginStart="10dp"/>
+                <RadioButton
+                    android:id="@+id/rb_mr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="Mr" />
+
+                <RadioButton
+                    android:id="@+id/rb_mrs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Mrs" />
+
+                <RadioButton
+                    android:id="@+id/rb_mstr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Mstr" />
+
+            </RadioGroup>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fullname"
+                android:text="First Name"
                 style="@style/TextView.Poppins14spBlack"
                 android:layout_marginStart="10dp"/>
 
@@ -55,6 +91,32 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 style="@style/TextView.Poppins14spBlack"/>
+
+            <LinearLayout
+                android:id="@+id/linear_last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Last Name"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_marginStart="10dp"/>
+
+                <EditText
+                    android:id="@+id/et_last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:inputType="number"
+                    style="@style/TextView.Poppins14spBlack"/>
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -73,11 +135,65 @@
                 android:focusable="false"
                 style="@style/TextView.Poppins14spBlack"/>
 
+            <RadioGroup
+                android:id="@+id/rd_group_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gender :"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_marginStart="10dp"/>
+
+                <RadioButton
+                    android:id="@+id/rb_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/male" />
+
+                <RadioButton
+                    android:id="@+id/rb_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/female" />
+
+            </RadioGroup>
+
+
+        <LinearLayout
+            android:id="@+id/linear_nationality"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Nationality"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_marginStart="10dp"/>
+
+            <AutoCompleteTextView
+                android:id="@+id/ac_nationality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp" />
+
+        </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/linear_id_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="vertical">
 
                 <TextView
@@ -98,6 +214,7 @@
                     style="@style/TextView.Poppins14spBlack"/>
 
             </LinearLayout>
+
 
             <Button
                 android:id="@+id/btn_save"
