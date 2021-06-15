@@ -14,7 +14,7 @@ data class DataAirline(
 	val accessCode: String? = null,
 
 	@field:SerializedName("depart")
-	val depart: List<DepartItem?>? = null,
+	val depart: List<DepartItem>,
 
 	@field:SerializedName("return")
 	val returnParams: List<DepartItem?>? = null,

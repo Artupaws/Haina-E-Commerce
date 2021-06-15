@@ -85,11 +85,11 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentScheduleFlightBinding.inflate(inflater, container, false)
-        imagesListener = ImageListener { position, imageView ->
-            Glide.with(requireActivity()).load(listImage[position]).placeholder(R.drawable.ps5).into(
-                imageView
-            )
-        }
+//        imagesListener = ImageListener { position, imageView ->
+//            Glide.with(requireActivity()).load(listImage[position]).placeholder(R.drawable.ps5).into(
+//                imageView
+//            )
+//        }
         broadcaster = LocalBroadcastManager.getInstance(requireActivity())
         return binding.root
     }
@@ -104,11 +104,11 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         binding.tvToDestination.setOnClickListener(this)
         binding.linearTotalPassenger.setOnClickListener(this)
         binding.tvFlightClass.setOnClickListener(this)
-        binding.vpFlightTicket.setImageListener(imagesListener)
-        binding.vpFlightTicket.pageCount = listImage.size
-        binding.vpFlightTicket.setImageClickListener {
-            Toast.makeText(requireActivity(), "Clicked", Toast.LENGTH_SHORT).show()
-        }
+//        binding.vpFlightTicket.setImageListener(imagesListener)
+//        binding.vpFlightTicket.pageCount = listImage.size
+//        binding.vpFlightTicket.setImageClickListener {
+//            Toast.makeText(requireActivity(), "Clicked", Toast.LENGTH_SHORT).show()
+//        }
         switchDestination()
         popupDialogFlightClass()
         binding.toolbarScheduleFlight.setNavigationOnClickListener {
@@ -217,7 +217,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         if (!isEmptyOrigin && !isEmptyDestination && !isEmptyStart && !isEmptyFinish && !isEmptyTotalPassenger){
             val data = Request(dateStart, dateFinish, fromDestination, toDestination, totalPassenger,
                 totalAdult,
-                totalChild, totalBaby, null, null, null)
+                totalChild, totalBaby, null, null, null, null, null)
             val bundle = Bundle()
             bundle.putParcelable("data", data)
             Navigation.findNavController(binding.btnFindTicket).navigate(R.id.action_scheduleFlightFragment_to_chooseAirlinesFragment, bundle)
@@ -336,7 +336,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         val now = Calendar.getInstance()
         builder.setTitleText("Select Date Flight")
         builder.setSelection(now.timeInMillis)
-        builder.setCalendarConstraints(limitRangeDate().build())
+        builder.setCalendarConstraints(limitRangeDate(typeFlight).build())
 
         val picker = builder.build()
         picker.show(childFragmentManager, picker.toString())
@@ -344,8 +344,9 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         picker.addOnPositiveButtonClickListener {
             if (typeFlight == "First") {
                 binding.tvStartDate.text = it?.convertLongtoTime("yyyy-MM-dd")
-                date = it?.convertLongtoTime("dd MMM").toString().substring(0,2)
-                month = it?.convertLongtoTime("dd MM").toString().substring(3,5)
+                date = it?.convertLongtoTime("dd-MM").toString().substring(0,2)
+                month = it?.convertLongtoTime("dd-MM").toString().substring(3,5)
+                Toast.makeText(requireActivity(), date, Toast.LENGTH_SHORT).show()
                 binding.tvStartDate.error= null
             } else if (typeFlight == "Second") {
                 binding.tvFinishDate.text = it?.convertLongtoTime("yyyy-MM-dd")
@@ -355,7 +356,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         }
     }
 
-    private fun limitRangeDate(): CalendarConstraints.Builder {
+    private fun limitRangeDate(typeFlight: String): CalendarConstraints.Builder {
         val constraintsBuilderRange = CalendarConstraints.Builder()
         val calendarStart: Calendar = Calendar.getInstance()
         val calendarEnd: Calendar = Calendar.getInstance()
@@ -365,8 +366,13 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         val endMonth = 12
         val endDate = 31
 
-        calendarStart.set(year, startMonth - 1, startDate - 1)
-        calendarEnd.set(year, endMonth - 1, endDate)
+        if (typeFlight == "First"){
+            calendarStart.set(year, startMonth, startDate-1)
+            calendarEnd.set(year, endMonth - 1, endDate)
+        } else {
+            calendarStart.set(year, startMonth -1, startDate-1)
+            calendarEnd.set(year, endMonth - 1, endDate)
+        }
 
         val minDate = calendarStart.timeInMillis
         val maxDate = calendarEnd.timeInMillis

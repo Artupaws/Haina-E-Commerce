@@ -28,5 +28,9 @@ class Request (
         @SerializedName("airlinesSecond")
     var airlinesSecond: AirlinesSecond?,
         @SerializedName("dataPassenger")
-    var dataPassenger: List<DataPassenger>?
+    var dataPassenger: List<DataPassenger?>?,
+        @SerializedName("airlineDepart")
+        var airlineDepart: List<DepartItem?>?,
+        @SerializedName("airlineReturn")
+        var airlineReturn: List<DepartItem?>?
 ):Parcelable

@@ -1,0 +1,36 @@
+package haina.ecommerce.view.flight.filldatapassenger
+
+import android.content.Context
+import android.util.TypedValue
+import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.model.flight.DepartItem
+import haina.ecommerce.model.flight.RequestPrice
+import haina.ecommerce.model.flight.ResponseGetRealTicketPrice
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Response
+
+class FillDataPassengerPresenter(val view:FillDataPassengerContract, val context: Context) {
+
+    fun getCalculationTicketPrice(body:RequestPrice){
+        val getCalculation = NetworkConfig().getConnectionHainaBearer(context).getCalculationTicketPrice(body)
+        getCalculation.enqueue(object : retrofit2.Callback<ResponseGetRealTicketPrice>{
+            override fun onResponse(call: Call<ResponseGetRealTicketPrice>, response: Response<ResponseGetRealTicketPrice>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageCalculationPrice(response.body()?.message.toString())
+                    val data = response.body()?.dataRealTicketPrice
+                    view.getCalculationPrice(data)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageCalculationPrice(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetRealTicketPrice>, t: Throwable) {
+                view.messageCalculationPrice(t.localizedMessage.toString())
+            }
+
+        })
+    }
+
+}

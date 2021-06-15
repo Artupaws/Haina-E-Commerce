@@ -417,6 +417,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="Benefits"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/vp_flight_ticket"
         app:layout_constraintStart_toStartOf="parent" />
 

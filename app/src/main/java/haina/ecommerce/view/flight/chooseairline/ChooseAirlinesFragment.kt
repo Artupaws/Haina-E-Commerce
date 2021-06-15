@@ -29,6 +29,7 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
     private var popupInputCaptcha: Dialog? = null
     private var tripType:String = ""
     private lateinit var presenter: ChooseAirlineFirstPresenter
+    private var airlineCode:String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentChooseAirlinesBinding.inflate(inflater, container, false)
@@ -90,6 +91,8 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
                 popupDialogInputCaptcha(accessCode)
                 popupInputCaptcha?.show()
             }
+        } else {
+            popupInputCaptcha?.dismiss()
         }
     }
 
@@ -101,26 +104,32 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
         }
     }
 
-    override fun onClick(view: View, dataDepart: DepartItem, timeFlight: List<TimeFlight?>?, dataReturn: DepartItem) {
+    override fun onClick(
+        view: View, dataDepart: DepartItem, timeFlight: List<TimeFlight?>?, depart: List<DepartItem>, returnParams: List<DepartItem?>?) {
         when(view.id){
             R.id.linear_click -> {
                 val dataFlight = Request(this.data.startDate, this.data.finishDate, this.data.fromDestination, this.data.toDestination,
-                    this.data.totalPassenger, this.data.totalAdult, this.data.totalChild, this.data.totalBaby, airlinesFirst = AirlinesFirst(dataDepart.airlineCode!!,
-                        "", null, dataDepart.departTime!!, "Direct Flight",
-                        dataDepart.origin!!,dataDepart.destination!!, dataDepart.price.toString(), dataDepart.departTime.toString(),
-                        dataDepart.arrivalTime!!), airlinesSecond = AirlinesSecond(dataReturn.airlineCode!!,
-                        "", null, dataReturn.departTime!!, "Direct Flight",
-                        dataReturn.origin!!,dataReturn.destination!!, dataReturn.price.toString(), dataReturn.departTime.toString(),
-                        dataReturn.arrivalTime!!), null)
+                    this.data.totalPassenger, this.data.totalAdult, this.data.totalChild, this.data.totalBaby, airlinesFirst = AirlinesFirst(
+                        dataDepart.airlineCode!!, "", null, dataDepart.departTime!!, "Direct Flight",
+                        dataDepart.origin!!, dataDepart.destination!!, dataDepart.price.toString(), dataDepart.departTime.toString(), dataDepart.arrivalTime!!), null, null,
+                     depart, returnParams)
+                airlineCode = dataDepart.airlineCode
+//                val dataReal = DataAirline(null, dataDepart.airlineCode, listOf(dataDepart), listOf(dataReturn))
                 val bundle = Bundle()
                 bundle.putParcelable("data", dataFlight)
+                bundle.putParcelable("depart", dataDepart)
+                bundle.putString("airlineCode", airlineCode)
                 if (this.data.finishDate.isNullOrEmpty()){
                     Navigation.findNavController(view).navigate(R.id.action_chooseAirlinesFragment_to_fillDataPassengerFragment, bundle)
                 } else if (!this.data.finishDate?.contains("select date")!!){
-                    Navigation.findNavController(view).navigate(R.id.action_chooseAirlinesFragment_to_fillDataPassengerFragment, bundle)
+                    Navigation.findNavController(view).navigate(R.id.action_chooseAirlinesFragment_to_chooseAirlinesSecondFlightFragment, bundle)
                 }
             }
         }
+    }
+
+    fun getAirlineCode():String{
+        return airlineCode
     }
 
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.flight.fragment.FillDataPassengerFragment">
+    tools:context=".view.flight.filldatapassenger.FillDataPassengerFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_fill_data_passenger"

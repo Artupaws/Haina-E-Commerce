@@ -6,8 +6,7 @@ import haina.ecommerce.model.bill.ResponseGetBillAmount
 import haina.ecommerce.model.bill.ResponseGetBillDirect
 import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.currency.ResponseGetCurrency
-import haina.ecommerce.model.flight.ResponseGetListAirline
-import haina.ecommerce.model.flight.ResponseGetListAirport
+import haina.ecommerce.model.flight.*
 import haina.ecommerce.model.hotels.*
 import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
 import haina.ecommerce.model.howtopay.ResponseGetHowToPay
@@ -22,6 +21,7 @@ import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
 import haina.ecommerce.model.transactionlist.ResponseGetListTransactionPending
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -482,4 +482,11 @@ interface NetworkService {
         @Field("infant")baby:Int,
         @Field("airline_access_code")aAC:String
     ):Call<ResponseGetListAirline>
+
+    //Get Calculation Ticket Price
+    @Headers("Content-Type: application/json")
+    @POST("api/ticket/price")
+    fun getCalculationTicketPrice(
+        @Body body:RequestPrice
+    ):Call<ResponseGetRealTicketPrice>
 }

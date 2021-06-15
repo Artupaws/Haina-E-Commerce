@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/fillDataPassengerFragment"
-        android:name="haina.ecommerce.view.flight.fragment.FillDataPassengerFragment"
+        android:name="haina.ecommerce.view.flight.filldatapassenger.FillDataPassengerFragment"
         android:label="fragment_fill_data_passenger"
         tools:layout="@layout/fragment_fill_data_passenger" >
         <action
