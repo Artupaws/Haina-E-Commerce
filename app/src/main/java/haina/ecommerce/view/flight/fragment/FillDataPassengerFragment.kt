@@ -2,6 +2,7 @@ package haina.ecommerce.view.flight.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -69,7 +70,17 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
                     .navigate(R.id.action_fillDataPassengerFragment_to_detailFillDataPassengerFragment)
             }
             R.id.btn_continue_payment -> {
-                setStateButtonContinue(data)
+                if (listDataPassenger.size == 0) {
+                    Toast.makeText(requireActivity(), "Please fill in the passenger data according to the number", Toast.LENGTH_SHORT).show()
+                    binding.btnAddDataPassenger.visibility = View.VISIBLE
+                }
+                if (listDataPassenger.size == data.totalPassenger && listDataPassenger.size != 0) {
+                    binding.btnAddDataPassenger.visibility = View.GONE
+                    binding.btnContinuePayment.setOnClickListener {
+                        moveToPayment()
+                    }
+                }
+//                setStateButtonContinue(data)
             }
         }
     }
@@ -87,9 +98,12 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     }
 
     private fun setStateButtonContinue(dataParams: Request) {
-        if (listDataPassenger.size < dataParams.totalPassenger) {
+        Log.d("totalPassenger", listDataPassenger.size.toString())
+        if (listDataPassenger.size == 0) {
             Toast.makeText(requireActivity(), "Please fill in the passenger data according to the number", Toast.LENGTH_SHORT).show()
-        } else if (listDataPassenger.size == dataParams.totalPassenger) {
+            binding.btnAddDataPassenger.visibility = View.VISIBLE
+        }
+        if (listDataPassenger.size == dataParams.totalPassenger && listDataPassenger.size != 0) {
           binding.btnAddDataPassenger.visibility = View.GONE
             binding.btnContinuePayment.setOnClickListener {
                 moveToPayment()
@@ -98,7 +112,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     }
 
     private fun getListDataPassengerDao(database: RoomDataPassenger, dao: PassengerDao) {
-        listDataPassenger = arrayListOf<DataPassenger>()
+        listDataPassenger = arrayListOf()
         listDataPassenger.addAll(dao.getAll())
         setupListDataPassenger(listDataPassenger)
     }
@@ -117,7 +131,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         when(view.id){
             R.id.tv_action_delete -> {
                 deleteCart(DataPassenger(data.id, data.fullname, data.birthdate, data.idcard))
-                getListDataPassengerDao(database, dao)
+                onResume()
             }
 
             R.id.tv_action_edit -> {

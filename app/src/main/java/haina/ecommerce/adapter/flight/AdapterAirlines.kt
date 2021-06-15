@@ -2,6 +2,7 @@ package haina.ecommerce.adapter.flight
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,25 +19,28 @@ import haina.ecommerce.databinding.ListItemAirlinesBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.flight.*
 
-class AdapterAirlines(val context: Context, private val listAirlines: List<DepartItem?>?,
+class AdapterAirlines(val context: Context, private val listAirlines: DataAirline,
                       private val itemAdapterCallback: ItemAdapterCallback) :
         RecyclerView.Adapter<AdapterAirlines.Holder>() {
 
     private var broadcaster:LocalBroadcastManager? =null
     private var helper:Helper = Helper
-    private lateinit var listStep :List<Step>
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemAirlinesBinding.bind(view)
-        fun bind(itemHaina: DepartItem, itemAdapterCallback:ItemAdapterCallback) {
+        fun bind(itemHaina: DepartItem, itemAdapterCallback:ItemAdapterCallback, itemReturn: DepartItem) {
             with(binding) {
                 tvAirlineName.text = itemHaina.airlineDetail?.airlineName
                 val priceTicket = "${helper.convertToFormatMoneyIDRFilter(itemHaina.price.toString())}/person"
                 tvPriceTicket.text = priceTicket
-                tvTypeAndTotalFlightTime.text = "Direct Flight"
                 setStepView(binding)
                 linearClick.setOnClickListener {
-                    itemAdapterCallback.onClick(binding.linearClick, itemHaina, itemHaina.flightTime) }
+                    itemAdapterCallback.onClick(binding.linearClick, itemHaina, itemHaina.flightTime, itemReturn) }
                 setupListTimeFlight(binding, itemHaina.flightTime)
+                if (itemHaina.flightTime?.size!! > 1){
+                    tvTypeFlight.text = "Transit"
+                } else {
+                    tvTypeFlight.text = "Direct"
+                }
             }
         }
     }
@@ -49,11 +53,12 @@ class AdapterAirlines(val context: Context, private val listAirlines: List<Depar
     }
 
     override fun onBindViewHolder(holder: AdapterAirlines.Holder, position: Int) {
-        val photo: DepartItem = listAirlines?.get(position)!!
-        holder.bind(photo, itemAdapterCallback)
+        val depart: DepartItem = listAirlines.depart?.get(position)!!
+        val returnParams:DepartItem = listAirlines.returnParams?.get(position)!!
+        holder.bind(depart, itemAdapterCallback, returnParams)
     }
 
-    override fun getItemCount(): Int = listAirlines?.size!!
+    override fun getItemCount(): Int = listAirlines.depart?.size!!
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setStepView(binding:ListItemAirlinesBinding){
@@ -78,6 +83,6 @@ class AdapterAirlines(val context: Context, private val listAirlines: List<Depar
     }
 
     interface ItemAdapterCallback{
-        fun onClick(view:View, data:DepartItem, timeFlight:List<TimeFlight?>?)
+        fun onClick(view:View, data:DepartItem, timeFlight:List<TimeFlight?>?, dataReturn:DepartItem)
     }
 }

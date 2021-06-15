@@ -28,6 +28,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             tools:text="Lion" />
+
+        <TextView
+            android:id="@+id/tv_type_flight"
+            style="@style/TextView.Poppins12spGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/black"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            tools:text="Direct"
+            app:drawableStartCompat="@drawable/ic_airplane" />
     </LinearLayout>
 
     <LinearLayout
@@ -66,21 +78,6 @@
                 tools:itemCount="1"
                 tools:listitem="@layout/list_item_time_flight" />
 
-            <TextView
-                android:id="@+id/tv_type_and_total_flight_time"
-                style="@style/TextView.Poppins12spGrey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textAlignment="center"
-                android:visibility="gone"
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="@+id/rv_time_flight"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/rv_time_flight"
-                app:layout_constraintTop_toTopOf="@+id/rv_time_flight"
-                tools:ignore="SmallSp"
-                tools:text="Direct Flight | 1h 0m" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

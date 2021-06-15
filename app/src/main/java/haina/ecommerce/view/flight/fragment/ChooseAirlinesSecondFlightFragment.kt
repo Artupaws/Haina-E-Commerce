@@ -53,7 +53,7 @@ class ChooseAirlinesSecondFlightFragment : Fragment(), AdapterAirlines.ItemAdapt
         
     }
 
-    override fun onClick(view: View, data: DepartItem, timeFlight: List<TimeFlight?>?) {
+    override fun onClick(view: View, data: DepartItem, timeFlight: List<TimeFlight?>?,  dataReturn: DepartItem) {
 //        val dataFlight = Request(this.data.startDate, this.data.finishDate, this.data.fromDestination, this.data.toDestination, this.data.totalPassenger,
 //            this.data.flightClass, this.data.airlinesFirst, airlinesSecond = AirlinesSecond(data.nameAirlines,
 //                data.iconAirline, data.listFlightTime, data.flightTime, data.typeFlight,

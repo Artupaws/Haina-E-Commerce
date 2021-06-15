@@ -6,5 +6,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class AirlinesSecond (val nameAirlines:String, val iconAirline:String,
-                           val listFlightTime:List<TimeFlight>?, val flightTime:String, val typeFlight:String,
+                           val listFlightTime:List<TimeFlight?>?, val flightTime:String, val typeFlight:String,
                            val cityCodeDeparture:String, val cityCodeArrived:String, val priceTicket:String, val departureTime:String, val arrivedTime:String):Parcelable

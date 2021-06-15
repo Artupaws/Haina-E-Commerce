@@ -169,7 +169,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         var dateFinish:String? = binding.tvFinishDate.text.toString()
         var totalPassengerParams = binding.tvTotalPassenger.text.toString()
 
-        if (fromDestination.isNullOrEmpty()){
+        if (fromDestination.contains("Choose")){
             binding.tvFromDestination.error = "Please input from"
             isEmptyOrigin = true
         } else {
@@ -177,7 +177,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
             isEmptyOrigin = false
         }
 
-        if (toDestination.isNullOrEmpty()){
+        if (toDestination.contains("Choose")){
             binding.tvToDestination.error = "Please input to"
             isEmptyDestination = true
         } else {
@@ -344,8 +344,8 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         picker.addOnPositiveButtonClickListener {
             if (typeFlight == "First") {
                 binding.tvStartDate.text = it?.convertLongtoTime("yyyy-MM-dd")
-                date = it?.convertLongtoTime("dd MMM").toString()
-                month = it?.convertLongtoTime("dd MMM").toString()
+                date = it?.convertLongtoTime("dd MMM").toString().substring(0,2)
+                month = it?.convertLongtoTime("dd MM").toString().substring(3,5)
                 binding.tvStartDate.error= null
             } else if (typeFlight == "Second") {
                 binding.tvFinishDate.text = it?.convertLongtoTime("yyyy-MM-dd")
@@ -360,12 +360,12 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         val calendarStart: Calendar = Calendar.getInstance()
         val calendarEnd: Calendar = Calendar.getInstance()
         val year = Calendar.getInstance().get(Calendar.YEAR)
-        val startMonth = Calendar.getInstance().get(Calendar.MONTH)
-        val startDate = Calendar.getInstance().get(Calendar.DATE)
+        val startMonth = month.toInt()
+        val startDate = date.toInt()
         val endMonth = 12
         val endDate = 31
 
-        calendarStart.set(year, startMonth, startDate - 1)
+        calendarStart.set(year, startMonth - 1, startDate - 1)
         calendarEnd.set(year, endMonth - 1, endDate)
 
         val minDate = calendarStart.timeInMillis
@@ -464,10 +464,12 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                 if (typeDestination == "From") {
                     binding.tvFromDestination.text = data.iata
                     binding.tvCityNameFrom.text = data.city
+                    binding.tvFromDestination.error = null
                     popupDestination?.dismiss()
                 } else if (typeDestination == "To") {
                     binding.tvToDestination.text = data.iata
                     binding.tvCityNameTo.text = data.city
+                    binding.tvToDestination.error = null
                     popupDestination?.dismiss()
                 }
             }

@@ -20,7 +20,7 @@ class AdapterListTicket(val context: Context, private val listAirlines: MutableL
                 tvAirlineName.text = itemHaina.nameAirlines
                 val destination = "${itemHaina.cityCodeDeparture} - ${itemHaina.cityCodeArrived}"
                 tvDestination.text = destination
-                val schedule = "${itemHaina.listFlightTime}"
+                val schedule = "${itemHaina.departureTime.substring(11, 19)} - ${itemHaina.arrivedTime.substring(11, 19)}"
                 tvSchedule.text = schedule
                 tvTypeFlight.text = itemHaina.typeFlight
                 itemView.setOnClickListener { itemAdapterCallback.onClick(itemView, itemHaina) }
