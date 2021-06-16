@@ -8,13 +8,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_name_passenger"
-        style="@style/TextView.Poppins14spBlack"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linear_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="266dp"
-        tools:text="Putra" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/tv_title_passenger"
+            style="@style/TextView.Poppins12spGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Putra" />
+
+        <TextView
+            android:id="@+id/tv_name_passenger"
+            style="@style/TextView.Poppins14spBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            tools:text="Putra" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/linear_edit"
@@ -53,7 +69,7 @@
         android:id="@+id/tv_birthdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_name_passenger"
+        android:layout_below="@+id/linear_name"
         style="@style/TextView.Poppins14spBlack"
         tools:text="18-10-1997"/>
 

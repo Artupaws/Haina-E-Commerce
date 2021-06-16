@@ -8,6 +8,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -23,7 +25,8 @@ import haina.ecommerce.roomdatapassenger.RoomDataPassenger
 import java.util.*
 
 
-class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, DetailFillDataContract, AutoCompleteAdapter.ItemAdapterCallback {
+class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, DetailFillDataContract,
+    AutoCompleteAdapter.ItemAdapterCallback {
 
     private lateinit var _binding:FragmentDetailFillDataPassengerBinding
     private val binding get()= _binding
@@ -33,6 +36,9 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     private var dateSetListener: DatePickerDialog.OnDateSetListener? = null
     private var age:Int = 0
     private lateinit var presenter: DetailFillDataPresenter
+    private var typePassenger:String? = null
+    private var genderRadio:String? = null
+    private var titleRadio:String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -43,6 +49,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         dao = database.getDataPassengerDao()
         binding.btnSave.setOnClickListener(this)
         binding.etBirthdate.setOnClickListener(this)
+        radioGroup()
         return binding.root
     }
 
@@ -68,28 +75,78 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     }
 
     private fun checkData(){
-        var fullname = binding.etFullname.text.toString()
+        var firstname = binding.etFirstname.text.toString()
+        var lastname = binding.etLastName.text.toString()
         var birthdate = binding.etBirthdate.text.toString()
+        var gender = genderRadio
+        var title = titleRadio
+        var nationality = binding.acNationality.text.toString()
+        var birthCountry = binding.acBirthNationality.text.toString()
         var idCardNumber:String? = binding.etIdCard.text.toString()
-        var isEmptyFullname = false
+        var typePassengerParams = typePassenger
+        var isEmptyType = false
+        var isEmptFirstName = false
+        var isEmptLastName = false
         var isEmptyBirthdate = false
+        var isEmptyGender = false
+        var isEmptyNationality = false
+        var isEmptyBirthCountry = false
+        var isEmptyTitle = false
         var isEmptyIdCard = false
-        if (fullname.isNullOrEmpty()){
-            binding.etFullname.error = "Can't Empty"
-            isEmptyFullname = true
+        if (firstname.isNullOrEmpty()){
+            binding.etFirstname.error = "Can't Empty"
+            isEmptFirstName = true
         } else {
-            isEmptyFullname = false
-            fullname = binding.etFullname.text.toString()
-            binding.etFullname.error = null
+            isEmptFirstName = false
+            firstname = binding.etFirstname.text.toString()
+            binding.etFirstname.error = null
+        }
+
+        if (lastname.isNullOrEmpty()){
+            binding.etLastName.error = "Can't Empty"
+            isEmptLastName = true
+        } else {
+            isEmptLastName = false
+            lastname = binding.etLastName.text.toString()
+            binding.etLastName.error = null
         }
 
         if (birthdate.isNullOrEmpty()){
             isEmptyBirthdate = true
+            isEmptyType = true
             binding.etBirthdate.error = "Can't Empty"
         } else {
             isEmptyBirthdate = false
+            isEmptyType = false
             birthdate = binding.etBirthdate.text.toString()
+            typePassengerParams = typePassenger
             binding.etBirthdate.error = null
+        }
+
+        if (gender == null){
+            binding.rbFemale.error = ""
+            isEmptyGender = true
+        } else {
+            gender = genderRadio
+            isEmptyGender = false
+        }
+
+        if (birthCountry.isNullOrEmpty()){
+            isEmptyBirthCountry = true
+            binding.acBirthNationality.error = ""
+        } else {
+            birthCountry = binding.acBirthNationality.text.toString()
+            isEmptyBirthCountry = false
+            binding.acBirthNationality.error = null
+        }
+
+        if (nationality.isNullOrEmpty()){
+            isEmptyNationality = true
+            binding.acNationality.error = ""
+        } else {
+            nationality = binding.acNationality.text.toString()
+            isEmptyNationality = false
+            binding.acNationality.error = null
         }
 
         if (idCardNumber.isNullOrEmpty() && age > 16){
@@ -102,8 +159,18 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
             idCardNumber = binding.etIdCard.text.toString()
         }
 
-        if (!isEmptyFullname && !isEmptyBirthdate && !isEmptyIdCard){
-            saveDataPassenger(DataPassenger(0,fullname,birthdate,idCardNumber))
+        if (title == null){
+            binding.rbMstr.error = ""
+            isEmptyTitle = true
+        } else {
+            title = titleRadio
+            isEmptyTitle = false
+        }
+
+        if (!isEmptFirstName && !isEmptLastName && !isEmptyBirthdate && !isEmptyGender && !isEmptyNationality &&
+            !isEmptyBirthCountry && !isEmptyIdCard && !isEmptyTitle && !isEmptyType){
+            saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, nationality, birthCountry, idCardNumber, title!!,
+            "", "", null, null, null, typePassengerParams!!))
             findNavController().navigateUp()
         } else {
             Toast.makeText(requireActivity(), "Please fill in data corectly", Toast.LENGTH_SHORT).show()
@@ -115,6 +182,41 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
             dao.insert(datapassenger)
         }else{
             dao.update(datapassenger)
+        }
+    }
+
+    private fun radioGroup(){
+        binding.rdGroup.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener {
+                radioGroup, i ->
+            val radio : RadioButton = requireActivity().findViewById(i)
+            radioButtonTitle(radio)
+        })
+
+        binding.rdGroupGender.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener {
+                radioGroup, i ->
+            val radio : RadioButton = requireActivity().findViewById(i)
+            radioButtonGender(radio)
+
+        })
+    }
+
+    private fun radioButtonTitle(view: View){
+        val radio: RadioButton = requireActivity().findViewById(binding.rdGroup.checkedRadioButtonId)
+        titleRadio = radio.text.toString()
+        if(titleRadio!!.isNotEmpty()){
+            binding.rbMr.error = null
+            binding.rbMrs.error = null
+            binding.rbMiss.error = null
+            binding.rbMstr.error = null
+        }
+    }
+
+    private fun radioButtonGender(view: View){
+        val radio: RadioButton = requireActivity().findViewById(binding.rdGroupGender.checkedRadioButtonId)
+        genderRadio = radio.text.toString()
+        if(genderRadio!!.isNotEmpty()){
+            binding.rbMale.error = null
+            binding.rbFemale.error = null
         }
     }
 
@@ -134,7 +236,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
             var month = month
             month += 1
             Log.d("date", "onDateSet: dd/mm/yyyy: $day-$month-$year")
-            val date = "$day-$month-$year"
+            val date = "$year-$month-$day"
             binding.etBirthdate.setText(date)
             detectAge(year)
         }
@@ -143,10 +245,19 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     private fun detectAge(year:Int){
         val ageParams = Calendar.getInstance().get(Calendar.YEAR)-year
         age = ageParams
-        if (ageParams < 17){
-            binding.linearIdCard.visibility = View.GONE
-        } else {
-            binding.linearIdCard.visibility = View.VISIBLE
+        when {
+            ageParams < 17 -> {
+                typePassenger = "Child"
+                binding.linearIdCard.visibility = View.GONE
+            }
+            ageParams < 5 -> {
+                typePassenger = "Infant"
+                binding.linearIdCard.visibility = View.GONE
+            }
+            else -> {
+                typePassenger = "Adult"
+                binding.linearIdCard.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -155,21 +266,24 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     }
 
     override fun getListCountry(data: DataNationality) {
-
-//        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(requireActivity(), android.R.layout.simple_dropdown_item_1line, COUNTRIES)
-//        binding.acNationality.setAdapter(adapter)
-//        val array = arrayOf(data.countries?.forEach { it?.countryName }.toString())
-//        val arrayAdapter = AutoTextCompleteViewAdapter(requireActivity(),  android.R.layout.simple_expandable_list_item_1, data.countries, this)
-//        val arrayAdapter = AutoTextCompleteViewAdapter(requireActivity(),  R.layout.layout_autotextcomplete, data, this)
         val arrayAdapter = AutoCompleteAdapter(requireActivity(),android.R.layout.simple_expandable_list_item_1, data.countries, this)
         binding.acNationality.setAdapter(arrayAdapter)
+        binding.acBirthNationality.setAdapter(arrayAdapter)
     }
 
     override fun onAdapterClick(view: View, data: CountriesItem) {
         when(view.id){
             android.R.id.text1 -> {
-                binding.acNationality.setText(data.countryName.toString())
-                binding.acNationality.dismissDropDown()
+                if (binding.acNationality.isFocusable){
+                    binding.acNationality.setText(data.countryName.toString())
+                    binding.acNationality.dismissDropDown()
+                    binding.acNationality.isFocusable = false
+                } else if (binding.acBirthNationality.isFocusable){
+                    binding.acBirthNationality.setText(data.countryName.toString())
+                    binding.acBirthNationality.dismissDropDown()
+                    binding.acBirthNationality.isFocusable = false
+                }
+
             }
         }
     }

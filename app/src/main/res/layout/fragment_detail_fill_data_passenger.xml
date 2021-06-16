@@ -35,9 +35,8 @@
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="Passenger Indentity"
+              android:text="@string/passenger_indentity"
               style="@style/TextView.Poppins16spBlack"
-              android:textStyle="bold"
               android:layout_marginStart="10dp"
               android:layout_marginTop="20dp"/>
 
@@ -51,28 +50,39 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Title :"
+                    android:text="@string/title"
                     style="@style/TextView.Poppins14spBlack"
                     android:layout_marginStart="10dp"/>
                 <RadioButton
                     android:id="@+id/rb_mr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
+                    style="@style/TextView.Poppins12spGrey"
                     android:text="Mr" />
 
                 <RadioButton
                     android:id="@+id/rb_mrs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
+                    style="@style/TextView.Poppins12spGrey"
                     android:text="Mrs" />
+
+                <RadioButton
+                    android:id="@+id/rb_miss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:text="Ms" />
 
                 <RadioButton
                     android:id="@+id/rb_mstr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
+                    style="@style/TextView.Poppins12spGrey"
                     android:text="Mstr" />
 
             </RadioGroup>
@@ -80,16 +90,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="First Name"
+                android:text="@string/first_name"
                 style="@style/TextView.Poppins14spBlack"
                 android:layout_marginStart="10dp"/>
 
             <EditText
-                android:id="@+id/et_fullname"
+                android:id="@+id/et_firstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:inputType="textPersonName"
                 style="@style/TextView.Poppins14spBlack"/>
 
             <LinearLayout
@@ -103,7 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Last Name"
+                    android:text="@string/last_name"
                     style="@style/TextView.Poppins14spBlack"
                     android:layout_marginStart="10dp"/>
 
@@ -113,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:inputType="number"
+                    android:inputType="textPersonName"
                     style="@style/TextView.Poppins14spBlack"/>
 
             </LinearLayout>
@@ -122,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Birth Date"
+                android:text="@string/birth_date"
                 style="@style/TextView.Poppins14spBlack"
                 android:layout_marginStart="10dp"/>
 
@@ -145,7 +156,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gender :"
+                    android:text="@string/gender_with_colon"
                     style="@style/TextView.Poppins14spBlack"
                     android:layout_marginStart="10dp"/>
 
@@ -153,14 +164,16 @@
                     android:id="@+id/rb_male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="10dp"
+                    style="@style/TextView.Poppins12spGrey"
                     android:text="@string/male" />
 
                 <RadioButton
                     android:id="@+id/rb_female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
+                    style="@style/TextView.Poppins12spGrey"
                     android:text="@string/female" />
 
             </RadioGroup>
@@ -176,7 +189,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Nationality"
+                android:text="@string/nationality"
                 style="@style/TextView.Poppins14spBlack"
                 android:layout_marginStart="10dp"/>
 
@@ -192,19 +205,52 @@
         </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linear_id_card"
+                android:id="@+id/linear_birth_nationality"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/birth_country"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_marginStart="10dp"/>
+
+                <AutoCompleteTextView
+                    android:id="@+id/ac_birth_nationality"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:dropDownHeight="100dp"
+                    android:dropDownWidth="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_id_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="ID Card Number"
+                    android:text="@string/id_card_number"
                     style="@style/TextView.Poppins14spBlack"
                     android:layout_marginStart="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/warning_input_passport"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:textSize="10sp"
+                    android:layout_marginStart="10dp"
+                    tools:ignore="SmallSp" />
 
                 <EditText
                     android:id="@+id/et_id_card"

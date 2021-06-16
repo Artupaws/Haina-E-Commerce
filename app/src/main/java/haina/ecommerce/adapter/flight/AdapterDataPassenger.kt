@@ -16,9 +16,11 @@ class AdapterDataPassenger(val context: Context, private val listDataPassenger: 
         private val binding = ListItemDataPassengerBinding.bind(view)
         fun bind(itemHaina: DataPassenger, itemAdapterCallback:ItemAdapterCallback) {
             with(binding) {
-               tvNamePassenger.text = itemHaina.fullname
-                tvBirthdate.text = itemHaina.birthdate
-                tvIdcardNumber.text = itemHaina.idcard
+                val namePassenger = "${itemHaina.last_name}, ${itemHaina.first_name}"
+                tvTitlePassenger.text = itemHaina.title
+               tvNamePassenger.text = namePassenger
+                tvBirthdate.text = itemHaina.birth_date
+                tvIdcardNumber.text = itemHaina.id_number
                 tvActionEdit.setOnClickListener { itemAdapterCallback.onClick(binding.tvActionEdit, itemHaina) }
                 tvActionDelete.setOnClickListener { itemAdapterCallback.onClick(binding.tvActionDelete, itemHaina) }
             }

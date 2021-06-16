@@ -290,5 +290,13 @@
     <string name="_2_age_12_age">2 岁 - 12 岁</string>
     <string name="under_2_age">2岁以下</string>
     <string name="baby">婴儿</string>
+    <string name="title">标题  :</string>
+    <string name="passenger_indentity">乘客身份</string>
+    <string name="first_name">名</string>
+    <string name="last_name">姓</string>
+    <string name="gender_with_colon">性别 :</string>
+    <string name="nationality">国籍</string>
+    <string name="birth_country">出生国家</string>
+    <string name="id_card_number">身份证号码</string>
 
 </resources>

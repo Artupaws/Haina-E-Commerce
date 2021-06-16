@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.JsonObject
 import haina.ecommerce.R
 import haina.ecommerce.adapter.flight.AdapterDataPassenger
 import haina.ecommerce.adapter.flight.AdapterListTicket
@@ -23,7 +22,6 @@ import haina.ecommerce.roomdatapassenger.PassengerDao
 import haina.ecommerce.roomdatapassenger.RoomDataPassenger
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.paymentmethod.PaymentActivity
-import org.json.JSONObject
 
 
 class FillDataPassengerFragment : Fragment(), View.OnClickListener,
@@ -74,6 +72,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
                     .navigate(R.id.action_fillDataPassengerFragment_to_detailFillDataPassengerFragment)
             }
             R.id.btn_continue_payment -> {
+                checkDataPassenger()
 //                if (listDataPassenger.size == 0) {
 //                    Toast.makeText(requireActivity(), "Please fill in the passenger data according to the number", Toast.LENGTH_SHORT).show()
 //                    binding.btnAddDataPassenger.visibility = View.VISIBLE
@@ -101,28 +100,46 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         binding.tvPhone.text = sharedPref.getValueString(Constants.PREF_PHONE_NUMBER)
     }
 
-    private fun setStateButtonContinue(dataParams: Request) {
-        Log.d("totalPassenger", listDataPassenger.size.toString())
-        if (listDataPassenger.size == 0) {
-            Toast.makeText(requireActivity(), "Please fill in the passenger data according to the number", Toast.LENGTH_SHORT).show()
-            binding.btnAddDataPassenger.visibility = View.VISIBLE
+    private fun checkDataPassenger() {
+        var codePhone = sharedPref.getValueString(Constants.PREF_PHONE_NUMBER)?.substring(0,1)
+        val areaPhone = sharedPref.getValueString(Constants.PREF_PHONE_NUMBER)?.substring(1,4)
+        val name = sharedPref.getValueString(Constants.PREF_FULLNAME)
+        var title = sharedPref.getValueString(Constants.PREF_GENDER)
+        val mainPhone = sharedPref.getValueString(Constants.PREF_PHONE_NUMBER)?.substring(4,sharedPref.getValueString(Constants.PREF_PHONE_NUMBER)!!.length)
+        if (codePhone == "0"){
+            codePhone = "62"
         }
-        if (listDataPassenger.size == dataParams.totalPassenger && listDataPassenger.size != 0) {
-          binding.btnAddDataPassenger.visibility = View.GONE
-            binding.btnContinuePayment.setOnClickListener {
-                moveToPayment()
-            }
+        title = if (title?.toLowerCase()?.contains("male") == true){
+            "MR"
+        } else {
+            "MRS"
         }
+        val dataPassenger = listDataPassenger
+        presenter.setDataPassenger(RequestSetPassenger(title, name!!, name, codePhone!!, areaPhone!!, mainPhone!!, null, dataPassenger))
+//        if (listDataPassenger.size == 0) {
+//            Toast.makeText(requireActivity(), "Please fill in the passenger data according to the number", Toast.LENGTH_SHORT).show()
+//            binding.btnAddDataPassenger.visibility = View.VISIBLE
+//        }
+//        if (listDataPassenger.size == dataParams.totalPassenger && listDataPassenger.size != 0) {
+//          binding.btnAddDataPassenger.visibility = View.GONE
+//            binding.btnContinuePayment.setOnClickListener {
+//                moveToPayment()
+//            }
+//        }
     }
 
     private fun getListDataPassengerDao(database: RoomDataPassenger, dao: PassengerDao) {
         listDataPassenger = arrayListOf()
         listDataPassenger.addAll(dao.getAll())
         setupListDataPassenger(listDataPassenger)
+        if (listDataPassenger.size == data.totalPassenger) {
+            binding.btnAddDataPassenger.visibility = View.GONE
+        } else {
+            binding.btnAddDataPassenger.visibility = View.VISIBLE
+        }
     }
 
     private fun setupListDataPassenger(listParams: ArrayList<DataPassenger>) {
-        listDataPassenger = listParams
         binding.rvDataPassenger.apply {
             layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
@@ -134,12 +151,15 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     override fun onClick(view: View, data: DataPassenger) {
         when(view.id){
             R.id.tv_action_delete -> {
-                deleteCart(DataPassenger(data.id, data.fullname, data.birthdate, data.idcard))
+                data.id_number?.let {
+                    DataPassenger(data.id, data.first_name, data.birth_date, it, data.gender,
+                        data.nationality, data.birth_country, data.last_name, data.title, data.parent,
+                    data.passport_number, data.passport_issued_country, data.passport_issued_date, data.passport_expired_date, data.type) }?.let { deleteCart(it) }
                 onResume()
             }
 
             R.id.tv_action_edit -> {
-                Toast.makeText(requireActivity(), data.fullname, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), data.first_name, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -189,6 +209,14 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
 
     override fun messageCalculationPrice(msg: String) {
         Log.d("getCalculation", msg)
+    }
+
+    override fun messageSetDataPassenger(msg: String) {
+        Log.d("setDataPassenger", msg)
+        binding.relativeLoading.visibility = View.INVISIBLE
+        if (!msg.contains("Success!")){
+            Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getCalculationPrice(data: DataRealTicketPrice?) {
