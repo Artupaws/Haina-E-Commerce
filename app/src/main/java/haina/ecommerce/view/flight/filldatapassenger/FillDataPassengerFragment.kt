@@ -68,10 +68,14 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_add_data_passenger -> {
+                val bundle = Bundle()
+                bundle.putInt("totalPassenger", listDataPassenger.size)
                 Navigation.findNavController(binding.btnAddDataPassenger)
-                    .navigate(R.id.action_fillDataPassengerFragment_to_detailFillDataPassengerFragment)
+                    .navigate(R.id.action_fillDataPassengerFragment_to_detailFillDataPassengerFragment, bundle)
             }
             R.id.btn_continue_payment -> {
+                binding.relativeLoading.visibility = View.VISIBLE
+                binding.btnContinuePayment.visibility = View.GONE
                 checkDataPassenger()
 //                if (listDataPassenger.size == 0) {
 //                    Toast.makeText(requireActivity(), "Please fill in the passenger data according to the number", Toast.LENGTH_SHORT).show()
@@ -114,18 +118,15 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         } else {
             "MRS"
         }
-        val dataPassenger = listDataPassenger
-        presenter.setDataPassenger(RequestSetPassenger(title, name!!, name, codePhone!!, areaPhone!!, mainPhone!!, null, dataPassenger))
-//        if (listDataPassenger.size == 0) {
-//            Toast.makeText(requireActivity(), "Please fill in the passenger data according to the number", Toast.LENGTH_SHORT).show()
-//            binding.btnAddDataPassenger.visibility = View.VISIBLE
-//        }
-//        if (listDataPassenger.size == dataParams.totalPassenger && listDataPassenger.size != 0) {
-//          binding.btnAddDataPassenger.visibility = View.GONE
-//            binding.btnContinuePayment.setOnClickListener {
-//                moveToPayment()
-//            }
-//        }
+        if (listDataPassenger.size == data.totalPassenger){
+            val dataPassenger = listDataPassenger
+            presenter.setDataPassenger(RequestSetPassenger(title, name!!, name, codePhone!!, areaPhone!!, mainPhone!!, null, dataPassenger))
+        } else {
+            binding.relativeLoading.visibility = View.GONE
+            binding.btnContinuePayment.visibility = View.VISIBLE
+            Toast.makeText(requireActivity(), "Please complete data passenger", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     private fun getListDataPassengerDao(database: RoomDataPassenger, dao: PassengerDao) {

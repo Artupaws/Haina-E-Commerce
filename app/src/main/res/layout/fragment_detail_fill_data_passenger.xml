@@ -40,6 +40,15 @@
               android:layout_marginStart="10dp"
               android:layout_marginTop="20dp"/>
 
+            <TextView
+                android:id="@+id/tv_warning_input_data_passenger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/warning_input_data_passenger"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_marginStart="10dp"/>
+
             <RadioGroup
                 android:id="@+id/rd_group"
                 android:layout_width="match_parent"
@@ -197,7 +206,7 @@
                 android:id="@+id/ac_nationality"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:dropDownHeight="100dp"
+                android:dropDownHeight="200dp"
                 android:dropDownWidth="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp" />
@@ -222,7 +231,7 @@
                     android:id="@+id/ac_birth_nationality"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:dropDownHeight="100dp"
+                    android:dropDownHeight="200dp"
                     android:dropDownWidth="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp" />

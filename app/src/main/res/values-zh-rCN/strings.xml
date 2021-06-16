@@ -298,5 +298,6 @@
     <string name="nationality">国籍</string>
     <string name="birth_country">出生国家</string>
     <string name="id_card_number">身份证号码</string>
+    <string name="warning_input_data_passenger">对于第一位乘客，请输入成人数据乘客</string>
 
 </resources>

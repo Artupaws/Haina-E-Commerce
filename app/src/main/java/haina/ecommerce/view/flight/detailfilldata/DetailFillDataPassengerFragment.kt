@@ -39,6 +39,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     private var typePassenger:String? = null
     private var genderRadio:String? = null
     private var titleRadio:String? = null
+    private var totalPassenger:Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -58,6 +59,9 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         binding.toolbarDetailFillDataPassenger.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
+        val totalPassengerParams = arguments?.getInt("totalPassenger")
+        totalPassenger = totalPassengerParams!!
+        checkFirstDataPassenger(totalPassengerParams)
         presenter.getListCountry()
         binding.acNationality.threshold = 1
         setTextBirthDate()
@@ -71,6 +75,14 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
             R.id.et_birthdate -> {
                 setDatePicker()
             }
+        }
+    }
+
+    private fun checkFirstDataPassenger(total:Int){
+        if (total == 0){
+            binding.tvWarningInputDataPassenger.visibility = View.VISIBLE
+        } else {
+            binding.tvWarningInputDataPassenger.visibility = View.GONE
         }
     }
 
@@ -168,10 +180,12 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         }
 
         if (!isEmptFirstName && !isEmptLastName && !isEmptyBirthdate && !isEmptyGender && !isEmptyNationality &&
-            !isEmptyBirthCountry && !isEmptyIdCard && !isEmptyTitle && !isEmptyType){
+            !isEmptyBirthCountry && !isEmptyIdCard && !isEmptyTitle && !isEmptyType && totalPassenger != 0){
             saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, nationality, birthCountry, idCardNumber, title!!,
             "", "", null, null, null, typePassengerParams!!))
             findNavController().navigateUp()
+        }else if (age < 17){
+            Toast.makeText(requireActivity(), "Please input data adult passenger first", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(requireActivity(), "Please fill in data corectly", Toast.LENGTH_SHORT).show()
         }

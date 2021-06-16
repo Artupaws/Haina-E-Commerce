@@ -299,5 +299,6 @@
     <string name="nationality">Nationality</string>
     <string name="birth_country">Birth Country</string>
     <string name="id_card_number">ID Card Number</string>
+    <string name="warning_input_data_passenger">for first passenger, please input adult data passenger</string>
 
 </resources>
