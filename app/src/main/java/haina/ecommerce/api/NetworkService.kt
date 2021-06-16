@@ -491,6 +491,6 @@ interface NetworkService {
     ):Call<ResponseGetRealTicketPrice>
 
     //Get List Nationality
-    @POST("api/ticket/nationality")
+    @GET("api/ticket/nationality")
     fun getListNationality():Call<ResponseGetListNationality>
 }

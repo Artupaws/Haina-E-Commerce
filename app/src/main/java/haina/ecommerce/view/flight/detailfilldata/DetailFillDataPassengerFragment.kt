@@ -5,15 +5,16 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import haina.ecommerce.R
-import haina.ecommerce.adapter.flight.AutoTextCompleteViewAdapter
+import haina.ecommerce.adapter.flight.AutoCompleteAdapter
 import haina.ecommerce.databinding.FragmentDetailFillDataPassengerBinding
+import haina.ecommerce.model.flight.CountriesItem
 import haina.ecommerce.model.flight.DataNationality
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.roomdatapassenger.DataPassenger
@@ -21,7 +22,8 @@ import haina.ecommerce.roomdatapassenger.PassengerDao
 import haina.ecommerce.roomdatapassenger.RoomDataPassenger
 import java.util.*
 
-class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, DetailFillDataContract, AutoTextCompleteViewAdapter.ItemAdapterCallback {
+
+class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, DetailFillDataContract, AutoCompleteAdapter.ItemAdapterCallback {
 
     private lateinit var _binding:FragmentDetailFillDataPassengerBinding
     private val binding get()= _binding
@@ -50,6 +52,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
             findNavController().navigateUp()
         }
         presenter.getListCountry()
+        binding.acNationality.threshold = 1
         setTextBirthDate()
     }
 
@@ -152,15 +155,21 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     }
 
     override fun getListCountry(data: DataNationality) {
-        val adapterParams = AutoTextCompleteViewAdapter(requireActivity(), R.layout.layout_autotextcomplete, data.countries, this)
-        binding.acNationality.setAdapter(adapterParams)
-        binding.acNationality.text
+
+//        val adapter: ArrayAdapter<String> = ArrayAdapter<String>(requireActivity(), android.R.layout.simple_dropdown_item_1line, COUNTRIES)
+//        binding.acNationality.setAdapter(adapter)
+//        val array = arrayOf(data.countries?.forEach { it?.countryName }.toString())
+//        val arrayAdapter = AutoTextCompleteViewAdapter(requireActivity(),  android.R.layout.simple_expandable_list_item_1, data.countries, this)
+//        val arrayAdapter = AutoTextCompleteViewAdapter(requireActivity(),  R.layout.layout_autotextcomplete, data, this)
+        val arrayAdapter = AutoCompleteAdapter(requireActivity(),android.R.layout.simple_expandable_list_item_1, data.countries, this)
+        binding.acNationality.setAdapter(arrayAdapter)
     }
 
-    override fun onAdapterClick(view: View, data: String?) {
+    override fun onAdapterClick(view: View, data: CountriesItem) {
         when(view.id){
-            R.id.tv_country -> {
-                Toast.makeText(requireActivity(), data, Toast.LENGTH_SHORT).show()
+            android.R.id.text1 -> {
+                binding.acNationality.setText(data.countryName.toString())
+                binding.acNationality.dismissDropDown()
             }
         }
     }

@@ -112,6 +112,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         refresh()
         setLanguage(sharedPref.getValueString(Constants.LANGUAGE_APP).toString())
         switchLanguage()
+        showPopupLogout()
     }
 
     override fun onClick(p0: View?) {
@@ -133,7 +134,6 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             }
 
             R.id.linear_logout -> {
-                showPopupLogout()
                 popupLogout?.show()
             }
 
@@ -287,6 +287,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         title.text = "Logout"
         actionCancel.setOnClickListener { popupLogout?.dismiss() }
         actionYes.setOnClickListener {
+            popupLogout?.dismiss()
             sharedPref.removeValue(Constants.PREF_IS_LOGIN)
             presenter.resetTokenUser()
             val intent = Intent(requireContext(), MainActivity::class.java)

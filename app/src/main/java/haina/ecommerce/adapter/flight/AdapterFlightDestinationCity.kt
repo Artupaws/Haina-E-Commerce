@@ -1,23 +1,15 @@
 package haina.ecommerce.adapter.flight
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.appcompat.widget.PopupMenu
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
-import haina.ecommerce.adapter.hotel.AdapterListRoomHotel
-import haina.ecommerce.databinding.ListItemAddressCompanyBinding
 import haina.ecommerce.databinding.ListItemDestinationCityBinding
-import haina.ecommerce.model.AddressItemCompany
 import haina.ecommerce.model.flight.DataAirport
-import haina.ecommerce.model.flight.DestinationCity
-import haina.ecommerce.view.datacompany.address.AddAddressCompanyActivity
 
 
 class AdapterFlightDestinationCity(val context: Context, private var listDestinationCity: List<DataAirport?>?, private var itemAdapterCallback: ItemAdapterCallback) :
@@ -60,6 +52,19 @@ class AdapterFlightDestinationCity(val context: Context, private var listDestina
 
     override fun getItemCount(): Int = listDestinationCity?.size!!
 
+//    if (constraint != null) {
+//        ArrayList<Customer> suggestions = new ArrayList<Customer>();
+//        for (Customer customer : mCustomers) {
+//            // Note: change the "contains" to "startsWith" if you only want starting matches
+//            if (customer.getName().toLowerCase().contains(constraint.toString().toLowerCase())) {
+//                suggestions.add(customer);
+//            }
+//        }
+//
+//        results.values = suggestions;
+//        results.count = suggestions.size();
+//    }
+
     override fun getFilter(): Filter {
         return object :Filter(){
             override fun performFiltering(p0: CharSequence?): FilterResults {
@@ -77,6 +82,7 @@ class AdapterFlightDestinationCity(val context: Context, private var listDestina
 
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
                 listDestinationCity = p1?.values as List<DataAirport?>?
+                notifyDataSetChanged()
             }
 
         }

@@ -14,7 +14,7 @@ data class DataNationality(
 	val respTime: String? = null,
 
 	@field:SerializedName("countries")
-	val countries: List<CountriesItem?>? = null,
+	val countries: List<CountriesItem>,
 
 	@field:SerializedName("accessToken")
 	val accessToken: String? = null,
