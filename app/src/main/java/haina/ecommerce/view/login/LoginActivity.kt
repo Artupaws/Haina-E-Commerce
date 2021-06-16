@@ -26,6 +26,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.register.account.RegisterActivity
+import kotlin.math.log
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
 
@@ -127,9 +128,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if(task.isSuccessful){
-                    loginMethod = 1
-                    Toast.makeText(applicationContext, "Login", Toast.LENGTH_SHORT).show()
-                    move(loginMethod)
+                    val deviceToken = sharedPreferenceHelper.getValueString(Constants.PREF_TOKEN_FIREBASE).toString()
+
+                    presenter.loginWithGoogle( idToken ,deviceToken)
+
                 } else {
                     loginMethod = 0
                     Snackbar.make(binding.linearGoogle, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
@@ -219,6 +221,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
     override fun getToken(token: String) {
         sharedPreferenceHelper.save(Constants.PREF_TOKEN_USER, token)
         Log.d("token", token)
+    }
+
+    override fun loginRegistration(){
+        loginMethod = 0
+        move(loginMethod)
     }
 
 }
