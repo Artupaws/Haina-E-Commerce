@@ -67,26 +67,10 @@ class ChooseAirlinesSecondFlightFragment : Fragment(), AdapterAirlinesReturn.Ite
         Navigation.findNavController(view).navigate(R.id.action_chooseAirlinesSecondFlightFragment_to_fillDataPassengerFragment, bundle)
     }
 
-//    override fun messageChooseAirline(msg: String) {
-//        Log.d("getAirlineSecond", msg)
-//    }
-//
-//    override fun accessCode(accessCode: String?) {
-//
-//    }
-
     private fun showListAirlineReturn(data: List<DepartItem?>?){
         binding.rvAirlines.apply {
             adapter = AdapterAirlinesReturn(requireActivity(), data!!, this@ChooseAirlinesSecondFlightFragment)
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
     }
-
-//    override fun getDataAirline(data: DataAirline?) {
-//        binding.rvAirlines.apply {
-//            adapter = AdapterAirlinesReturn(requireActivity(), data!!, this@ChooseAirlinesSecondFlightFragment)
-//            layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-//        }
-//    }
-
 }

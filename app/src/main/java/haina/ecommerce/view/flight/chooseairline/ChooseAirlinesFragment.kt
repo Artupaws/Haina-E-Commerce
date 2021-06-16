@@ -114,7 +114,6 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
                         dataDepart.origin!!, dataDepart.destination!!, dataDepart.price.toString(), dataDepart.departTime.toString(), dataDepart.arrivalTime!!), null, null,
                      depart, returnParams)
                 airlineCode = dataDepart.airlineCode
-//                val dataReal = DataAirline(null, dataDepart.airlineCode, listOf(dataDepart), listOf(dataReturn))
                 val bundle = Bundle()
                 bundle.putParcelable("data", dataFlight)
                 bundle.putParcelable("depart", dataDepart)
