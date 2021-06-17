@@ -5,8 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import haina.ecommerce.R
 import haina.ecommerce.databinding.FragmentSetAddOnPassengerBinding
+import haina.ecommerce.model.flight.DataSetPassenger
+import haina.ecommerce.model.flight.Ticket
 
 class SetAddOnPassengerFragment : Fragment() {
 
@@ -20,6 +24,16 @@ class SetAddOnPassengerFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        binding.toolbarSetAddOn.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        val dataSetPassenger = arguments?.getParcelableArrayList<DataSetPassenger>("dataSetPassenger")
+        Toast.makeText(requireActivity(), dataSetPassenger?.size.toString(), Toast.LENGTH_SHORT).show()
+        val dataFlight = arguments?.getParcelableArrayList<Ticket>("dataFlight")
+        Toast.makeText(requireActivity(), dataFlight?.size.toString(), Toast.LENGTH_SHORT).show()
+
     }
 
 

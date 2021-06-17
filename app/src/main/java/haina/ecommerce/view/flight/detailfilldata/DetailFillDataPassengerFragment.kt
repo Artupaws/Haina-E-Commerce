@@ -40,6 +40,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     private var genderRadio:String? = null
     private var titleRadio:String? = null
     private var totalPassenger:Int = 0
+    private var idNationality:String =""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -181,7 +182,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
 
         if (!isEmptFirstName && !isEmptLastName && !isEmptyBirthdate && !isEmptyGender && !isEmptyNationality &&
             !isEmptyBirthCountry && !isEmptyIdCard && !isEmptyTitle && !isEmptyType){
-            saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, nationality, birthCountry, idCardNumber, title!!,
+            saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, idNationality, idNationality, idCardNumber, title!!,
             "", "", null, null, null, typePassengerParams!!))
             findNavController().navigateUp()
         }else if (age < 17){
@@ -289,10 +290,12 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         when(view.id){
             android.R.id.text1 -> {
                 if (binding.acNationality.isFocusable){
+                    idNationality = data.countryID.toString()
                     binding.acNationality.setText(data.countryName.toString())
                     binding.acNationality.dismissDropDown()
                     binding.acNationality.isFocusable = false
                 } else if (binding.acBirthNationality.isFocusable){
+                    idNationality = data.countryID.toString()
                     binding.acBirthNationality.setText(data.countryName.toString())
                     binding.acBirthNationality.dismissDropDown()
                     binding.acBirthNationality.isFocusable = false

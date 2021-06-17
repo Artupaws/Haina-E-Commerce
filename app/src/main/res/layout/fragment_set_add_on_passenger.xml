@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:background="@color/yellow"
         android:text="@string/hello_blank_fragment"
+        app:title="Set Add on"
+        app:navigationIcon="@drawable/ic_back_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
