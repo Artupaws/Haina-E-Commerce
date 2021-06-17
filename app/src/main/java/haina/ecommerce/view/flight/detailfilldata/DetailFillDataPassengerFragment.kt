@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -64,7 +65,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         totalPassenger = totalPassengerParams!!
         checkFirstDataPassenger(totalPassengerParams)
         presenter.getListCountry()
-        binding.acNationality.threshold = 1
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setTextBirthDate()
     }
 
@@ -282,6 +283,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
 
     override fun getListCountry(data: DataNationality) {
         val arrayAdapter = AutoCompleteAdapter(requireActivity(),android.R.layout.simple_expandable_list_item_1, data.countries, this)
+        arrayAdapter.notifyDataSetChanged()
         binding.acNationality.setAdapter(arrayAdapter)
         binding.acBirthNationality.setAdapter(arrayAdapter)
     }
