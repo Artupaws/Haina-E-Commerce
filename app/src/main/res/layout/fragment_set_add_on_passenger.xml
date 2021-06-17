@@ -24,6 +24,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_set_add_on"
         tools:itemCount="3"
-        tools:listitem="@layout/list_item_time_flight" />
+        tools:listitem="@layout/list_item_set_addon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
