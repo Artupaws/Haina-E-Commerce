@@ -2,6 +2,7 @@ package haina.ecommerce.view.flight.filldatapassenger
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -31,10 +32,14 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     private val binding get() = _binding
     private lateinit var sharedPref: SharedPreferenceHelper
     private lateinit var listDataPassenger: ArrayList<DataPassenger>
-    private lateinit var data: Request
+    private lateinit var dataRequest: Request
+    private var departParams: DepartItem? = null
+    private var returnParams: DepartItem? = null
+    private var airlineCodeParams:String = ""
     private lateinit var database: RoomDataPassenger
     private lateinit var dao: PassengerDao
     private lateinit var presenter:FillDataPassengerPresenter
+    private var statusGetCalculationPrice = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -55,11 +60,14 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
             findNavController().navigateUp()
 
         }
-        data = arguments?.getParcelable<Request>("data")!!
-        val airlineCode = arguments?.getString("airlineCode")
+        dataRequest = arguments?.getParcelable<Request>("data")!!
+        val airlineCode = arguments?.getString("airlineCode")!!
+        airlineCodeParams = airlineCode
         val depart = arguments?.getParcelable<DepartItem>("depart")
-        val returnParams = arguments?.getParcelable<DepartItem>("return")
-        presenter.getCalculationTicketPrice(RequestPrice(airlineCode!!, depart, returnParams))
+        departParams = depart
+        val returnItem =arguments?.getParcelable<DepartItem>("return")
+        returnParams =  returnItem
+        presenter.getCalculationTicketPrice(RequestPrice(airlineCodeParams, departParams, returnParams))
 //        presenter.getCalculationTicketPrice(data.accessCode!!, data.depart as List<DepartItem>, data.returnParams)
         setDataOrderer()
         getListDataPassengerDao(database, dao)
@@ -75,11 +83,22 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
                     .navigate(R.id.action_fillDataPassengerFragment_to_detailFillDataPassengerFragment, bundle)
             }
             R.id.btn_continue_payment -> {
-                binding.relativeLoading.visibility = View.VISIBLE
-                binding.btnContinuePayment.visibility = View.GONE
-                checkDataPassenger()
+                if (!statusGetCalculationPrice){
+                    presenter.getCalculationTicketPrice(RequestPrice(airlineCodeParams, departParams, returnParams))
+                    binding.relativeLoading.visibility = View.VISIBLE
+                    binding.btnContinuePayment.visibility = View.GONE
+                    checkDataPassenger()
+                } else {
+                    binding.relativeLoading.visibility = View.VISIBLE
+                    binding.btnContinuePayment.visibility = View.GONE
+                    checkDataPassenger()
+                }
             }
         }
+    }
+
+    private fun checkGetPrice(){
+
     }
 
     override fun onResume() {
@@ -108,7 +127,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         } else {
             "MRS"
         }
-        if (listDataPassenger.size == data.totalPassenger){
+        if (listDataPassenger.size == dataRequest.totalPassenger){
             val dataPassenger = listDataPassenger
             presenter.setDataPassenger(RequestSetPassenger(title, name!!, name, codePhone!!, areaPhone!!, mainPhone!!, null, dataPassenger))
         } else {
@@ -123,7 +142,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         listDataPassenger = arrayListOf()
         listDataPassenger.addAll(dao.getAll())
         setupListDataPassenger(listDataPassenger)
-        if (listDataPassenger.size == data.totalPassenger) {
+        if (listDataPassenger.size == dataRequest.totalPassenger) {
             binding.btnAddDataPassenger.visibility = View.GONE
         } else {
             binding.btnAddDataPassenger.visibility = View.VISIBLE
@@ -170,26 +189,26 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
 
     private fun setlistTicket(){
         val ticket = mutableListOf<Ticket>()
-        if (data.airlinesSecond != null){
-            ticket.addAll(listOf(Ticket(data.airlinesFirst?.nameAirlines!!,"", data.airlinesFirst!!.listFlightTime,
-                    data.airlinesFirst?.flightTime!!,data.airlinesFirst?.typeFlight!!, data.airlinesFirst?.cityCodeDeparture!!,
-                    data.airlinesFirst?.cityCodeArrived!!, data.airlinesFirst?.priceTicket!!,
-                    data.airlinesFirst?.departureTime!!, data.airlinesFirst?.arrivedTime!!)))
+        if (dataRequest.airlinesSecond != null){
+            ticket.addAll(listOf(Ticket(dataRequest.airlinesFirst?.nameAirlines!!,"", dataRequest.airlinesFirst!!.listFlightTime,
+                    dataRequest.airlinesFirst?.flightTime!!,dataRequest.airlinesFirst?.typeFlight!!, dataRequest.airlinesFirst?.cityCodeDeparture!!,
+                    dataRequest.airlinesFirst?.cityCodeArrived!!, dataRequest.airlinesFirst?.priceTicket!!,
+                    dataRequest.airlinesFirst?.departureTime!!, dataRequest.airlinesFirst?.arrivedTime!!)))
 
-            ticket.addAll(listOf(Ticket(data.airlinesSecond?.nameAirlines!!,"", data.airlinesSecond!!.listFlightTime,
-                    data.airlinesSecond?.flightTime!!,data.airlinesSecond?.typeFlight!!, data.airlinesSecond?.cityCodeDeparture!!,
-                    data.airlinesSecond?.cityCodeArrived!!, data.airlinesSecond?.priceTicket!!,
-                    data.airlinesSecond?.departureTime!!, data.airlinesSecond?.arrivedTime!!)))
+            ticket.addAll(listOf(Ticket(dataRequest.airlinesSecond?.nameAirlines!!,"", dataRequest.airlinesSecond!!.listFlightTime,
+                    dataRequest.airlinesSecond?.flightTime!!,dataRequest.airlinesSecond?.typeFlight!!, dataRequest.airlinesSecond?.cityCodeDeparture!!,
+                    dataRequest.airlinesSecond?.cityCodeArrived!!, dataRequest.airlinesSecond?.priceTicket!!,
+                    dataRequest.airlinesSecond?.departureTime!!, dataRequest.airlinesSecond?.arrivedTime!!)))
 
             binding.rvTicket.apply {
                 adapter = AdapterListTicket(requireActivity(), ticket, this@FillDataPassengerFragment)
                 layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             }
         } else {
-            ticket.addAll(listOf(Ticket(data.airlinesFirst?.nameAirlines!!,"", data.airlinesFirst!!.listFlightTime,
-                    data.airlinesFirst?.flightTime!!,data.airlinesFirst?.typeFlight!!, data.airlinesFirst?.cityCodeDeparture!!,
-                    data.airlinesFirst?.cityCodeArrived!!, data.airlinesFirst?.priceTicket!!,
-                    data.airlinesFirst?.departureTime!!, data.airlinesFirst?.arrivedTime!!)))
+            ticket.addAll(listOf(Ticket(dataRequest.airlinesFirst?.nameAirlines!!,"", dataRequest.airlinesFirst!!.listFlightTime,
+                    dataRequest.airlinesFirst?.flightTime!!,dataRequest.airlinesFirst?.typeFlight!!, dataRequest.airlinesFirst?.cityCodeDeparture!!,
+                    dataRequest.airlinesFirst?.cityCodeArrived!!, dataRequest.airlinesFirst?.priceTicket!!,
+                    dataRequest.airlinesFirst?.departureTime!!, dataRequest.airlinesFirst?.arrivedTime!!)))
 
             binding.rvTicket.apply {
                 adapter = AdapterListTicket(requireActivity(), ticket, this@FillDataPassengerFragment)
@@ -204,11 +223,15 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
 
     override fun messageCalculationPrice(msg: String) {
         Log.d("getCalculation", msg)
+        if (!msg.contains("Success")){
+            statusGetCalculationPrice = false
+        }
     }
 
     override fun messageSetDataPassenger(msg: String) {
         Log.d("setDataPassenger", msg)
         binding.relativeLoading.visibility = View.INVISIBLE
+        binding.btnContinuePayment.visibility = View.VISIBLE
         if (!msg.contains("Success!")){
             Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
         }
@@ -222,7 +245,26 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         if (data.isNotEmpty()){
             deleteAllPassenger()
             val bundle = Bundle()
-            bundle.putParcelableArrayList("asdas", data as java.util.ArrayList)
+            val arrayListFlight = mutableListOf<Ticket>()
+            if (dataRequest.airlinesSecond !=null){
+                arrayListFlight.addAll(listOf(Ticket(dataRequest.airlinesFirst?.nameAirlines!!,"", dataRequest.airlinesFirst!!.listFlightTime,
+                    dataRequest.airlinesFirst?.flightTime!!,dataRequest.airlinesFirst?.typeFlight!!, dataRequest.airlinesFirst?.cityCodeDeparture!!,
+                    dataRequest.airlinesFirst?.cityCodeArrived!!, dataRequest.airlinesFirst?.priceTicket!!,
+                    dataRequest.airlinesFirst?.departureTime!!, dataRequest.airlinesFirst?.arrivedTime!!)))
+
+                arrayListFlight.addAll(listOf(Ticket(dataRequest.airlinesSecond?.nameAirlines!!,"", dataRequest.airlinesSecond!!.listFlightTime,
+                    dataRequest.airlinesSecond?.flightTime!!,dataRequest.airlinesSecond?.typeFlight!!, dataRequest.airlinesSecond?.cityCodeDeparture!!,
+                    dataRequest.airlinesSecond?.cityCodeArrived!!, dataRequest.airlinesSecond?.priceTicket!!,
+                    dataRequest.airlinesSecond?.departureTime!!, dataRequest.airlinesSecond?.arrivedTime!!)))
+            } else {
+                arrayListFlight.addAll(listOf(Ticket(dataRequest.airlinesFirst?.nameAirlines!!,"", dataRequest.airlinesFirst!!.listFlightTime,
+                    dataRequest.airlinesFirst?.flightTime!!,dataRequest.airlinesFirst?.typeFlight!!, dataRequest.airlinesFirst?.cityCodeDeparture!!,
+                    dataRequest.airlinesFirst?.cityCodeArrived!!, dataRequest.airlinesFirst?.priceTicket!!,
+                    dataRequest.airlinesFirst?.departureTime!!, dataRequest.airlinesFirst?.arrivedTime!!)))
+            }
+
+            bundle.putParcelableArrayList("dataSetPassenger", data as java.util.ArrayList)
+            bundle.putParcelableArrayList("dataFirstFligt", arrayListFlight as java.util.ArrayList<out Parcelable>)
             Navigation.findNavController(binding.btnContinuePayment).navigate(R.id.action_fillDataPassengerFragment_to_setAddOnPassengerFragment, bundle)
         }
     }

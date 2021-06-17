@@ -510,4 +510,8 @@ interface NetworkService {
     fun setDataPassenger(
         @Body body:RequestSetPassenger
     ):Call<ResponseSetDataPassenger>
+
+    //Get Data Add On
+    @GET("api/ticket/addons")
+    fun getDataAddOn():Call<ResponseGetAddOn>
 }
