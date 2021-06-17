@@ -16,9 +16,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GetTokenResult
 import com.google.firebase.auth.GoogleAuthProvider
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityLoginBinding
@@ -128,15 +130,26 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if(task.isSuccessful){
-                    val deviceToken = sharedPreferenceHelper.getValueString(Constants.PREF_TOKEN_FIREBASE).toString()
 
-                    presenter.loginWithGoogle( idToken ,deviceToken)
+                    val user=FirebaseAuth.getInstance().currentUser
+                    user?.getIdToken(true)?.addOnCompleteListener{task->
+                        if(task.isSuccessful){
+                            sendToken(task.getResult()?.token)
+                        }
+                    }
 
                 } else {
                     loginMethod = 0
                     Snackbar.make(binding.linearGoogle, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    private fun sendToken(token:String?){
+        val deviceToken = sharedPreferenceHelper.getValueString(Constants.PREF_TOKEN_FIREBASE).toString()
+
+        presenter.loginWithGoogle( token ,deviceToken)
+
     }
 
     private fun getDeviceName() {
