@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class ResponseSetDataPassenger(
 
 	@field:SerializedName("data")
-	val data: String? = null,
+	val data: List<DataSetPassenger>,
 
 	@field:SerializedName("message")
 	val message: String? = null,

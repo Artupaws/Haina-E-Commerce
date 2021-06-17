@@ -180,7 +180,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         }
 
         if (!isEmptFirstName && !isEmptLastName && !isEmptyBirthdate && !isEmptyGender && !isEmptyNationality &&
-            !isEmptyBirthCountry && !isEmptyIdCard && !isEmptyTitle && !isEmptyType && totalPassenger != 0){
+            !isEmptyBirthCountry && !isEmptyIdCard && !isEmptyTitle && !isEmptyType){
             saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, nationality, birthCountry, idCardNumber, title!!,
             "", "", null, null, null, typePassengerParams!!))
             findNavController().navigateUp()
