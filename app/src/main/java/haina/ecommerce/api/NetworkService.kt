@@ -53,6 +53,15 @@ interface NetworkService {
             @Field("device_name") deviceName: String
             ): Call<ResponseLogin>
 
+    //LoginWithGoogle
+    @FormUrlEncoded
+    @POST("api/login/google")
+    @Headers("No-Authentication: true")
+    fun loginGoogle(
+        @Field("firebase_token") firebaseToken: String?,
+        @Field("device_token") deviceToken: String
+    ): Call<ResponseLogin>
+
     //Currency
     @FormUrlEncoded
     @POST("api/currency")

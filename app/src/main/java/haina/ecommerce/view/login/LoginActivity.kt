@@ -16,9 +16,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GetTokenResult
 import com.google.firebase.auth.GoogleAuthProvider
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityLoginBinding
@@ -26,6 +28,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.register.account.RegisterActivity
+import kotlin.math.log
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
 
@@ -127,14 +130,26 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if(task.isSuccessful){
-                    loginMethod = 1
-                    Toast.makeText(applicationContext, "Login", Toast.LENGTH_SHORT).show()
-                    move(loginMethod)
+
+                    val user=FirebaseAuth.getInstance().currentUser
+                    user?.getIdToken(true)?.addOnCompleteListener{task->
+                        if(task.isSuccessful){
+                            sendToken(task.getResult()?.token)
+                        }
+                    }
+
                 } else {
                     loginMethod = 0
                     Snackbar.make(binding.linearGoogle, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    private fun sendToken(token:String?){
+        val deviceToken = sharedPreferenceHelper.getValueString(Constants.PREF_TOKEN_FIREBASE).toString()
+
+        presenter.loginWithGoogle( token ,deviceToken)
+
     }
 
     private fun getDeviceName() {
@@ -219,6 +234,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
     override fun getToken(token: String) {
         sharedPreferenceHelper.save(Constants.PREF_TOKEN_USER, token)
         Log.d("token", token)
+    }
+
+    override fun loginRegistration(){
+        loginMethod = 0
+        move(loginMethod)
     }
 
 }
