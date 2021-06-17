@@ -51,6 +51,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         binding.btnAddDataPassenger.setOnClickListener(this)
         binding.btnContinuePayment.setOnClickListener(this)
         binding.toolbarFillDataPassenger.setNavigationOnClickListener {
+            deleteAllPassenger()
             findNavController().navigateUp()
 
         }
@@ -77,17 +78,6 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
                 binding.relativeLoading.visibility = View.VISIBLE
                 binding.btnContinuePayment.visibility = View.GONE
                 checkDataPassenger()
-//                if (listDataPassenger.size == 0) {
-//                    Toast.makeText(requireActivity(), "Please fill in the passenger data according to the number", Toast.LENGTH_SHORT).show()
-//                    binding.btnAddDataPassenger.visibility = View.VISIBLE
-//                }
-//                if (listDataPassenger.size == data.totalPassenger && listDataPassenger.size != 0) {
-//                    binding.btnAddDataPassenger.visibility = View.GONE
-//                    binding.btnContinuePayment.setOnClickListener {
-//                        moveToPayment()
-//                    }
-//                }
-//                setStateButtonContinue(data)
             }
         }
     }
@@ -155,7 +145,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
                 data.id_number?.let {
                     DataPassenger(data.id, data.first_name, data.birth_date, it, data.gender,
                         data.nationality, data.birth_country, data.last_name, data.title, data.parent,
-                    data.passport_number, data.passport_issued_country, data.passport_issued_date, data.passport_expired_date, data.type) }?.let { deleteCart(it) }
+                    data.passport_number, data.passport_issued_country, data.passport_issued_date, data.passport_expired_date, data.type) }?.let { deletePassenger(it) }
                 onResume()
             }
 
@@ -165,8 +155,12 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         }
     }
 
-    private fun deleteCart(datapassenger: DataPassenger){
+    private fun deletePassenger(datapassenger: DataPassenger){
         dao.delete(datapassenger)
+    }
+
+    private fun deleteAllPassenger() {
+        dao.deleteAll()
     }
 
     private fun moveToPayment(){
@@ -222,6 +216,15 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
 
     override fun getCalculationPrice(data: DataRealTicketPrice?) {
         Toast.makeText(requireActivity(), data?.origin, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun getIdSetPassenger(data: List<DataSetPassenger>) {
+        if (data.isNotEmpty()){
+            deleteAllPassenger()
+            val bundle = Bundle()
+            bundle.putParcelableArrayList("asdas", data as java.util.ArrayList)
+            Navigation.findNavController(binding.btnContinuePayment).navigate(R.id.action_fillDataPassengerFragment_to_setAddOnPassengerFragment, bundle)
+        }
     }
 
 }

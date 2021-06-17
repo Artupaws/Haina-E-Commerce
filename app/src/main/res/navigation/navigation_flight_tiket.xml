@@ -48,10 +48,18 @@
         <action
             android:id="@+id/action_fillDataPassengerFragment_to_detailFillDataPassengerFragment"
             app:destination="@id/detailFillDataPassengerFragment" />
+        <action
+            android:id="@+id/action_fillDataPassengerFragment_to_setAddOnPassengerFragment"
+            app:destination="@id/setAddOnPassengerFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFillDataPassengerFragment"
         android:name="haina.ecommerce.view.flight.detailfilldata.DetailFillDataPassengerFragment"
         android:label="fragment_detail_fill_data_passenger"
         tools:layout="@layout/fragment_detail_fill_data_passenger" />
+    <fragment
+        android:id="@+id/setAddOnPassengerFragment"
+        android:name="haina.ecommerce.view.flight.setaddonpassenger.SetAddOnPassengerFragment"
+        android:label="fragment_set_add_on_passenger"
+        tools:layout="@layout/fragment_set_add_on_passenger" />
 </navigation>
