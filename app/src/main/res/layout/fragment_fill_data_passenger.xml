@@ -123,6 +123,7 @@
                         android:id="@+id/rv_data_passenger"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        tools:itemCount="3"
                         tools:listitem="@layout/list_item_data_passenger"
                         android:nestedScrollingEnabled="true" />
 
@@ -144,11 +145,13 @@
                 android:layout_height="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:visibility="gone"
                 android:background="@color/light_grey"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <TextView
@@ -192,14 +195,35 @@
                 android:layout_marginBottom="10dp"
                 android:background="@color/light_grey"/>
 
-            <Button
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+                <RelativeLayout
+                    android:id="@+id/relative_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/background_loading"
+                    android:visibility="invisible">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/iv_loading"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/load" />
+                </RelativeLayout>
+                <Button
                 android:id="@+id/btn_continue_payment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Continue Payment"
+                android:text="@string/next_title"
                 android:textAllCaps="false"
                 style="@style/Button.Primary"/>
+            </FrameLayout>
 
         </LinearLayout>
 

@@ -19,6 +19,7 @@ import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
 import haina.ecommerce.model.transactionlist.ResponseGetListTransactionPending
+import haina.ecommerce.roomdatapassenger.DataPassenger
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -502,4 +503,11 @@ interface NetworkService {
     //Get List Nationality
     @GET("api/ticket/nationality")
     fun getListNationality():Call<ResponseGetListNationality>
+
+    //Set Data Passenger
+    @Headers("Content-Type: application/json")
+    @POST("api/ticket/passenger")
+    fun setDataPassenger(
+        @Body body:RequestSetPassenger
+    ):Call<ResponseSetDataPassenger>
 }

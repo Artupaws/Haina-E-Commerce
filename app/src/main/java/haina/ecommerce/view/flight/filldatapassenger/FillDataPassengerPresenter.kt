@@ -1,11 +1,8 @@
 package haina.ecommerce.view.flight.filldatapassenger
 
 import android.content.Context
-import android.util.TypedValue
 import haina.ecommerce.api.NetworkConfig
-import haina.ecommerce.model.flight.DepartItem
-import haina.ecommerce.model.flight.RequestPrice
-import haina.ecommerce.model.flight.ResponseGetRealTicketPrice
+import haina.ecommerce.model.flight.*
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
@@ -32,5 +29,25 @@ class FillDataPassengerPresenter(val view:FillDataPassengerContract, val context
 
         })
     }
+
+    fun setDataPassenger(body: RequestSetPassenger){
+        val setDataPassenger = NetworkConfig().getConnectionHainaBearer(context).setDataPassenger(body)
+        setDataPassenger.enqueue(object : retrofit2.Callback<ResponseSetDataPassenger>{
+            override fun onResponse(call: Call<ResponseSetDataPassenger>, response: Response<ResponseSetDataPassenger>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageSetDataPassenger(response.body()?.message.toString())
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageSetDataPassenger(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseSetDataPassenger>, t: Throwable) {
+                view.messageSetDataPassenger(t.localizedMessage.toString() )
+            }
+
+        })
+    }
+
 
 }

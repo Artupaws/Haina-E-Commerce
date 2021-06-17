@@ -346,7 +346,6 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                 binding.tvStartDate.text = it?.convertLongtoTime("yyyy-MM-dd")
                 date = it?.convertLongtoTime("dd-MM").toString().substring(0,2)
                 month = it?.convertLongtoTime("dd-MM").toString().substring(3,5)
-                Toast.makeText(requireActivity(), date, Toast.LENGTH_SHORT).show()
                 binding.tvStartDate.error= null
             } else if (typeFlight == "Second") {
                 binding.tvFinishDate.text = it?.convertLongtoTime("yyyy-MM-dd")

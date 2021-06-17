@@ -216,6 +216,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
         sharedPref.save(Constants.PREF_FULLNAME, data?.fullname.toString())
         sharedPref.save(Constants.PREF_PHONE_NUMBER, data?.phone.toString())
         sharedPref.save(Constants.PREF_EMAIL, data?.email.toString())
+        sharedPref.save(Constants.PREF_GENDER, data?.gender.toString())
     }
 
     private fun showPendingTransaction(total:Int){

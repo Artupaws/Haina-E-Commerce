@@ -76,12 +76,14 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
             } else {
                 etCaptcha?.error = "Please input captcha here"
             }
-
         }
     }
 
     override fun messageChooseAirline(msg: String) {
         Log.d("getAirlines", msg)
+        if (msg.contains("Success")){
+            popupInputCaptcha?.dismiss()
+        }
     }
 
     override fun accessCode(accessCode: String?) {
@@ -90,6 +92,8 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
             if (accessCode.isNotEmpty()){
                 popupDialogInputCaptcha(accessCode)
                 popupInputCaptcha?.show()
+            } else{
+                popupInputCaptcha?.dismiss()
             }
         } else {
             popupInputCaptcha?.dismiss()

@@ -116,7 +116,7 @@
     <string name="personal_data">Personal Data</string>
     <string name="address">address</string>
     <string name="resume">Resume</string>
-    <string name="birth_date">birth date</string>
+    <string name="birth_date">Birth date</string>
     <string name="male">Male</string>
     <string name="economy">Economy</string>
     <string name="business">Bussines</string>
@@ -124,7 +124,7 @@
     <string name="female">Female</string>
     <string name="portfolio">Portfolio</string>
     <string name="certificate">Certificate</string>
-    <string name="gender">gender</string>
+    <string name="gender">Gender</string>
     <string name="title_upload_document">Click here for upload your document (.pdf)</string>
     <string name="uploaded">Ready to upload :</string>
     <string name="upload_document">Upload Document</string>
@@ -292,5 +292,15 @@
     <string name="_2_age_12_age">2 Age - 12 Age</string>
     <string name="under_2_age">Under 2 Age</string>
     <string name="baby">Baby</string>
+    <string name="warning_input_passport">If your nationality is not Indonesian, then just enter your passport number</string>
+    <string name="title">Title :</string>
+    <string name="passenger_indentity">Passenger Indentity</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="gender_with_colon">Gender :</string>
+    <string name="nationality">Nationality</string>
+    <string name="birth_country">Birth Country</string>
+    <string name="id_card_number">ID Card Number</string>
+    <string name="warning_input_data_passenger">for first passenger, please input adult data passenger</string>
 
 </resources>
