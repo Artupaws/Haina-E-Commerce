@@ -28,6 +28,7 @@ import haina.ecommerce.view.explore.ExploreFragment
 import haina.ecommerce.view.history.HistoryFragment
 import haina.ecommerce.view.myaccount.MyAccountFragment
 import haina.ecommerce.view.posting.PostingFragment
+import haina.ecommerce.view.register.account.RegisterActivity
 import java.util.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -100,7 +101,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val ok = popupFillData?.findViewById<TextView>(R.id.tv_action_yes)
         title?.text  = applicationContext.getString(R.string.title_attention)
         ok?.setOnClickListener {
-            popupFillData?.dismiss()
+            val intent = Intent(applicationContext, RegisterActivity::class.java)
+            intent.putExtra("google", true)
+            startActivity(intent)
+            finish()
         }
     }
 

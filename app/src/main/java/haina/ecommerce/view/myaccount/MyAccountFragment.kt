@@ -291,7 +291,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             sharedPref.removeValue(Constants.PREF_IS_LOGIN)
             presenter.resetTokenUser()
             val intent = Intent(requireContext(), MainActivity::class.java)
-            Firebase.auth.signOut()
+            FirebaseAuth.getInstance().signOut()
             intent.putExtra("loginStatus", "1")
             startActivity(intent)
             activity?.finish()

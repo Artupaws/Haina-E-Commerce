@@ -145,7 +145,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         val deviceToken = sharedPreferenceHelper.getValueString(Constants.PREF_TOKEN_FIREBASE).toString()
 
         presenter.loginWithGoogle( token ,deviceToken)
-
     }
 
     private fun getDeviceName() {
@@ -233,7 +232,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
     }
 
     override fun loginRegistration(){
-        loginMethod = 0
+        loginMethod = 1
         move(loginMethod)
     }
 

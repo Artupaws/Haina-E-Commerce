@@ -17,6 +17,7 @@ class FillDataPassengerPresenter(val view:FillDataPassengerContract, val context
                     view.messageCalculationPrice(response.body()?.message.toString())
                     val data = response.body()?.dataRealTicketPrice
                     view.getCalculationPrice(data)
+
                 } else {
                     val error = JSONObject(response.errorBody()?.string())
                     view.messageCalculationPrice(error.getString("message"))
