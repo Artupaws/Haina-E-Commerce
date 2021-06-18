@@ -9,6 +9,7 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityRegisterBinding
 import haina.ecommerce.preference.SharedPreferenceHelper
@@ -31,10 +32,18 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
     lateinit var sharedPreferenceHelper: SharedPreferenceHelper
     private var manufacturer: String = ""
 
+    private var loginGoogle:Boolean= false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        loginGoogle=intent.getBooleanExtra("google",false)
+
+        if(loginGoogle){
+            googleRegist()
+        }
 
         presenter = RegisterPresenter(this)
         binding.btnRegister.setOnClickListener(this)
@@ -53,6 +62,14 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
                 registerCheck()
             }
         }
+    }
+
+    private fun googleRegist(){
+        val user= FirebaseAuth.getInstance().currentUser
+
+        binding.etEmail.setText(user?.email)
+        binding.etEmail.isEnabled=false
+        binding.etFullname.setText(user?.displayName)
     }
 
     private fun registerCheck() {
