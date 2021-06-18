@@ -39,7 +39,6 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     private lateinit var database: RoomDataPassenger
     private lateinit var dao: PassengerDao
     private lateinit var presenter:FillDataPassengerPresenter
-    private var statusGetCalculationPrice = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -83,22 +82,11 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
                     .navigate(R.id.action_fillDataPassengerFragment_to_detailFillDataPassengerFragment, bundle)
             }
             R.id.btn_continue_payment -> {
-                if (!statusGetCalculationPrice){
-                    presenter.getCalculationTicketPrice(RequestPrice(airlineCodeParams, departParams, returnParams))
                     binding.relativeLoading.visibility = View.VISIBLE
                     binding.btnContinuePayment.visibility = View.GONE
                     checkDataPassenger()
-                } else {
-                    binding.relativeLoading.visibility = View.VISIBLE
-                    binding.btnContinuePayment.visibility = View.GONE
-                    checkDataPassenger()
-                }
             }
         }
-    }
-
-    private fun checkGetPrice(){
-
     }
 
     override fun onResume() {
@@ -182,9 +170,9 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         dao.deleteAll()
     }
 
-    private fun moveToPayment(){
-        val intentPayment = Intent(requireActivity(), PaymentActivity::class.java)
-        startActivity(intentPayment)
+    override fun onDestroy() {
+        super.onDestroy()
+        deleteAllPassenger()
     }
 
     private fun setlistTicket(){
@@ -224,7 +212,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     override fun messageCalculationPrice(msg: String) {
         Log.d("getCalculation", msg)
         if (!msg.contains("Success")){
-            statusGetCalculationPrice = false
+            Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -242,6 +230,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     }
 
     override fun getIdSetPassenger(data: List<DataSetPassenger>) {
+        Toast.makeText(requireContext(), data.size.toString(), Toast.LENGTH_SHORT).show()
         if (data.isNotEmpty()){
             deleteAllPassenger()
             val bundle = Bundle()
@@ -262,9 +251,8 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
                     dataRequest.airlinesFirst?.cityCodeArrived!!, dataRequest.airlinesFirst?.priceTicket!!,
                     dataRequest.airlinesFirst?.departureTime!!, dataRequest.airlinesFirst?.arrivedTime!!)))
             }
-
             bundle.putParcelableArrayList("dataSetPassenger", data as java.util.ArrayList)
-            bundle.putParcelableArrayList("dataFirstFligt", arrayListFlight as java.util.ArrayList<out Parcelable>)
+            bundle.putParcelableArrayList("dataFlight", arrayListFlight as java.util.ArrayList<out Parcelable>)
             Navigation.findNavController(binding.btnContinuePayment).navigate(R.id.action_fillDataPassengerFragment_to_setAddOnPassengerFragment, bundle)
         }
     }

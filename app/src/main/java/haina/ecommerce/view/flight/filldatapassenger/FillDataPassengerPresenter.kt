@@ -36,6 +36,8 @@ class FillDataPassengerPresenter(val view:FillDataPassengerContract, val context
             override fun onResponse(call: Call<ResponseSetDataPassenger>, response: Response<ResponseSetDataPassenger>) {
                 if (response.isSuccessful && response.body()?.value == 1){
                     view.messageSetDataPassenger(response.body()?.message.toString())
+                    val data = response.body()?.data
+                    view.getIdSetPassenger(data!!)
                 } else {
                     val error = JSONObject(response.errorBody()?.string())
                     view.messageSetDataPassenger(error.getString("message"))

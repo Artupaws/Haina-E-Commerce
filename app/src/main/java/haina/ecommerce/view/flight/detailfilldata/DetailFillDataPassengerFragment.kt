@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -40,6 +41,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     private var genderRadio:String? = null
     private var titleRadio:String? = null
     private var totalPassenger:Int = 0
+    private var idNationality:String =""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -63,7 +65,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         totalPassenger = totalPassengerParams!!
         checkFirstDataPassenger(totalPassengerParams)
         presenter.getListCountry()
-        binding.acNationality.threshold = 1
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setTextBirthDate()
     }
 
@@ -181,7 +183,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
 
         if (!isEmptFirstName && !isEmptLastName && !isEmptyBirthdate && !isEmptyGender && !isEmptyNationality &&
             !isEmptyBirthCountry && !isEmptyIdCard && !isEmptyTitle && !isEmptyType){
-            saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, nationality, birthCountry, idCardNumber, title!!,
+            saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, idNationality, idNationality, idCardNumber, title!!,
             "", "", null, null, null, typePassengerParams!!))
             findNavController().navigateUp()
         }else if (age < 17){
@@ -281,6 +283,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
 
     override fun getListCountry(data: DataNationality) {
         val arrayAdapter = AutoCompleteAdapter(requireActivity(),android.R.layout.simple_expandable_list_item_1, data.countries, this)
+        arrayAdapter.notifyDataSetChanged()
         binding.acNationality.setAdapter(arrayAdapter)
         binding.acBirthNationality.setAdapter(arrayAdapter)
     }
@@ -289,10 +292,12 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         when(view.id){
             android.R.id.text1 -> {
                 if (binding.acNationality.isFocusable){
+                    idNationality = data.countryID.toString()
                     binding.acNationality.setText(data.countryName.toString())
                     binding.acNationality.dismissDropDown()
                     binding.acNationality.isFocusable = false
                 } else if (binding.acBirthNationality.isFocusable){
+                    idNationality = data.countryID.toString()
                     binding.acBirthNationality.setText(data.countryName.toString())
                     binding.acBirthNationality.dismissDropDown()
                     binding.acBirthNationality.isFocusable = false

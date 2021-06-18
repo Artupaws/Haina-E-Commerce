@@ -206,8 +206,10 @@
                 android:id="@+id/ac_nationality"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:dropDownHeight="200dp"
+                android:dropDownHeight="wrap_content"
                 android:dropDownWidth="wrap_content"
+                android:dropDownAnchor="@id/ac_nationality"
+                android:windowSoftInputMode="stateHidden|adjustResize"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp" />
 
@@ -231,8 +233,10 @@
                     android:id="@+id/ac_birth_nationality"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:dropDownHeight="200dp"
+                    android:dropDownHeight="wrap_content"
                     android:dropDownWidth="wrap_content"
+                    android:windowSoftInputMode="stateHidden|adjustResize"
+                    android:dropDownAnchor="@id/btn_save"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp" />
 

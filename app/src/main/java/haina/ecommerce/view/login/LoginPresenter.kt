@@ -13,7 +13,7 @@ class LoginPresenter (val view: LoginContract){
                 .enqueue(object : retrofit2.Callback<ResponseLogin>{
                     override fun onResponse(call: Call<ResponseLogin>, response: Response<ResponseLogin>) {
                         if (response.isSuccessful && response.body()?.value == 1){
-                            view.getToken(response.body()?.data?.token.toString())
+                            view.getToken(response.body()?.data!!)
                             view.successLogin(response.body()?.message.toString())
                         } else {
                             val errorResponse = JSONObject(response.errorBody()?.string()!!)
@@ -35,7 +35,7 @@ class LoginPresenter (val view: LoginContract){
                             if(response.body()?.message=="Please Continue Registration!"){
                                 view.loginRegistration()
                             }else{
-                                view.getToken(response.body()?.data?.token.toString())
+                                view.getToken(response.body()?.data!!)
                                 view.successLogin(response.body()?.message.toString())
                             }
                         }
