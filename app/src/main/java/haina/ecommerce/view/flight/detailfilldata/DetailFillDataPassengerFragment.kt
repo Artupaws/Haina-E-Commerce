@@ -166,7 +166,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         if (idCardNumber.isNullOrEmpty() && age > 16){
             binding.etIdCard.error = "Can't Empty"
             isEmptyIdCard = true
-        } else if (idCardNumber.isNullOrEmpty() && age < 17){
+        } else if (idCardNumber.isNullOrEmpty() && age < 17 && totalPassenger == 0){
             isEmptyIdCard = true
         } else {
             isEmptyIdCard = false
@@ -182,18 +182,9 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         }
 
         if (!isEmptFirstName && !isEmptLastName && !isEmptyBirthdate && !isEmptyGender && !isEmptyNationality &&
-            !isEmptyBirthCountry && !isEmptyIdCard && !isEmptyTitle && !isEmptyType && totalPassenger == 0){
+            !isEmptyBirthCountry && !isEmptyIdCard && !isEmptyTitle && !isEmptyType){
                 saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, idNationality, idNationality, idCardNumber, title!!,
                     "", "", null, null, null, typePassengerParams!!))
-            findNavController().navigateUp()
-        }else {
-            Toast.makeText(requireActivity(), "Please complete data adult passenger first", Toast.LENGTH_SHORT).show()
-        }
-
-        if (!isEmptFirstName && !isEmptLastName && !isEmptyBirthdate && !isEmptyGender && !isEmptyNationality &&
-            !isEmptyBirthCountry && !isEmptyTitle && !isEmptyType && totalPassenger != 0){
-            saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, idNationality, idNationality, idCardNumber, title!!,
-                "", "", null, null, null, typePassengerParams!!))
             findNavController().navigateUp()
         }else {
             Toast.makeText(requireActivity(), "Please complete data passenger", Toast.LENGTH_SHORT).show()
@@ -247,9 +238,10 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         val cal: Calendar = Calendar.getInstance()
         val year: Int = cal.get(Calendar.YEAR)
         val month: Int = cal.get(Calendar.MONTH)
-        val day: Int = cal.get(Calendar.DAY_OF_MONTH)
+        val day: Int = cal.get(Calendar.DATE)
         val dialog = DatePickerDialog(requireActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, dateSetListener,
                 year, month, day)
+        dialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }

@@ -43,7 +43,6 @@
                 android:layout_height="wrap_content"
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_marginStart="10dp"
-                android:textStyle="bold"
                 android:text="Orderer Data"/>
 
             <androidx.cardview.widget.CardView
@@ -101,7 +100,6 @@
                 android:layout_height="wrap_content"
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_marginStart="10dp"
-                android:textStyle="bold"
                 android:text="Data Passenger"/>
 
 

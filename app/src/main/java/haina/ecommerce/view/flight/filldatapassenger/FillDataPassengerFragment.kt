@@ -46,6 +46,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         sharedPref = SharedPreferenceHelper(requireActivity())
         database = RoomDataPassenger.getDatabase(requireActivity())
         dao = database.getDataPassengerDao()
+        listDataPassenger = arrayListOf()
         presenter = FillDataPassengerPresenter(this, requireActivity())
         return binding.root
     }
@@ -127,7 +128,6 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     }
 
     private fun getListDataPassengerDao(database: RoomDataPassenger, dao: PassengerDao) {
-        listDataPassenger = arrayListOf()
         listDataPassenger.addAll(dao.getAll())
         setupListDataPassenger(listDataPassenger)
         if (listDataPassenger.size == dataRequest.totalPassenger) {
@@ -168,13 +168,6 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
 
     private fun deleteAllPassenger() {
         dao.deleteAll()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (listDataPassenger.isNotEmpty()){
-            deleteAllPassenger()
-        }
     }
 
     private fun setlistTicket(){
