@@ -172,7 +172,9 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
 
     override fun onDestroy() {
         super.onDestroy()
-        deleteAllPassenger()
+        if (listDataPassenger.isNotEmpty()){
+            deleteAllPassenger()
+        }
     }
 
     private fun setlistTicket(){

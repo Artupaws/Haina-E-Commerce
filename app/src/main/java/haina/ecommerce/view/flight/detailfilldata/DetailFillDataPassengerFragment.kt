@@ -167,7 +167,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
             binding.etIdCard.error = "Can't Empty"
             isEmptyIdCard = true
         } else if (idCardNumber.isNullOrEmpty() && age < 17){
-            isEmptyIdCard = false
+            isEmptyIdCard = true
         } else {
             isEmptyIdCard = false
             idCardNumber = binding.etIdCard.text.toString()
@@ -182,15 +182,23 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         }
 
         if (!isEmptFirstName && !isEmptLastName && !isEmptyBirthdate && !isEmptyGender && !isEmptyNationality &&
-            !isEmptyBirthCountry && !isEmptyIdCard && !isEmptyTitle && !isEmptyType){
-            saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, idNationality, idNationality, idCardNumber, title!!,
-            "", "", null, null, null, typePassengerParams!!))
+            !isEmptyBirthCountry && !isEmptyIdCard && !isEmptyTitle && !isEmptyType && totalPassenger == 0){
+                saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, idNationality, idNationality, idCardNumber, title!!,
+                    "", "", null, null, null, typePassengerParams!!))
             findNavController().navigateUp()
-        }else if (age < 17){
-            Toast.makeText(requireActivity(), "Please input data adult passenger first", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(requireActivity(), "Please fill in data corectly", Toast.LENGTH_SHORT).show()
+        }else {
+            Toast.makeText(requireActivity(), "Please complete data adult passenger first", Toast.LENGTH_SHORT).show()
         }
+
+        if (!isEmptFirstName && !isEmptLastName && !isEmptyBirthdate && !isEmptyGender && !isEmptyNationality &&
+            !isEmptyBirthCountry && !isEmptyTitle && !isEmptyType && totalPassenger != 0){
+            saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, idNationality, idNationality, idCardNumber, title!!,
+                "", "", null, null, null, typePassengerParams!!))
+            findNavController().navigateUp()
+        }else {
+            Toast.makeText(requireActivity(), "Please complete data passenger", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     private fun saveDataPassenger(datapassenger: DataPassenger){
@@ -202,11 +210,10 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     }
 
     private fun radioGroup(){
-        binding.rdGroup.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener {
-                radioGroup, i ->
-            val radio : RadioButton = requireActivity().findViewById(i)
+        binding.rdGroup.setOnCheckedChangeListener { radioGroup, i ->
+            val radio: RadioButton = requireActivity().findViewById(i)
             radioButtonTitle(radio)
-        })
+        }
 
         binding.rdGroupGender.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener {
                 radioGroup, i ->
@@ -249,16 +256,16 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
 
     private fun setTextBirthDate(){
         dateSetListener = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
-            var month = month
-            month += 1
-            Log.d("date", "onDateSet: dd/mm/yyyy: $day-$month-$year")
-            val date = "$year-$month-$day"
+            var monthParams = month
+            monthParams += 1
+            Log.d("date", "onDateSet: dd/mm/yyyy: $day-$monthParams-$year")
+            val date = "$year-$monthParams-$day"
             binding.etBirthdate.setText(date)
             detectAge(year)
         }
     }
 
-    private fun detectAge(year:Int){
+    private fun detectAge(year:Int):String{
         val ageParams = Calendar.getInstance().get(Calendar.YEAR)-year
         age = ageParams
         when {
@@ -275,6 +282,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
                 binding.linearIdCard.visibility = View.VISIBLE
             }
         }
+        return typePassenger.toString()
     }
 
     override fun messageGetCountryList(msg: String) {
