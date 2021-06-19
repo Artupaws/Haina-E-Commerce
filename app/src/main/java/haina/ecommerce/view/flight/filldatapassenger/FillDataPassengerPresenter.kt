@@ -20,6 +20,7 @@ class FillDataPassengerPresenter(val view:FillDataPassengerContract, val context
 
                 } else {
                     val error = JSONObject(response.errorBody()?.string())
+                    view.accessCode(error.getString("data"))
                     view.messageCalculationPrice(error.getString("message"))
                 }
             }

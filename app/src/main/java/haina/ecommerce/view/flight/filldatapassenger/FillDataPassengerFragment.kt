@@ -1,17 +1,23 @@
 package haina.ecommerce.view.flight.filldatapassenger
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Base64
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import haina.ecommerce.R
 import haina.ecommerce.adapter.flight.AdapterDataPassenger
 import haina.ecommerce.adapter.flight.AdapterListTicket
@@ -39,6 +45,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     private lateinit var database: RoomDataPassenger
     private lateinit var dao: PassengerDao
     private lateinit var presenter:FillDataPassengerPresenter
+    private var popupInputCaptcha: Dialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,7 +53,6 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         sharedPref = SharedPreferenceHelper(requireActivity())
         database = RoomDataPassenger.getDatabase(requireActivity())
         dao = database.getDataPassengerDao()
-        listDataPassenger = arrayListOf()
         presenter = FillDataPassengerPresenter(this, requireActivity())
         return binding.root
     }
@@ -67,7 +73,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         departParams = depart
         val returnItem =arguments?.getParcelable<DepartItem>("return")
         returnParams =  returnItem
-        presenter.getCalculationTicketPrice(RequestPrice(airlineCodeParams, departParams, returnParams))
+        presenter.getCalculationTicketPrice(RequestPrice(airlineCodeParams, departParams, returnParams, "1"))
 //        presenter.getCalculationTicketPrice(data.accessCode!!, data.depart as List<DepartItem>, data.returnParams)
         setDataOrderer()
         getListDataPassengerDao(database, dao)
@@ -128,6 +134,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     }
 
     private fun getListDataPassengerDao(database: RoomDataPassenger, dao: PassengerDao) {
+        listDataPassenger = arrayListOf()
         listDataPassenger.addAll(dao.getAll())
         setupListDataPassenger(listDataPassenger)
         if (listDataPassenger.size == dataRequest.totalPassenger) {
@@ -200,6 +207,29 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun popupDialogInputCaptcha(accessCode:String) {
+        popupInputCaptcha = Dialog(requireActivity())
+        popupInputCaptcha?.setContentView(R.layout.popup_image_captcha)
+        popupInputCaptcha?.setCancelable(true)
+        popupInputCaptcha?.window?.setBackgroundDrawableResource(R.color.white)
+        val window: Window = popupInputCaptcha?.window!!
+        window.setGravity(Gravity.CENTER)
+        val imageCaptcha =popupInputCaptcha?.findViewById<ImageView>(R.id.iv_image_captcha)
+        val etCaptcha = popupInputCaptcha?.findViewById<EditText>(R.id.et_captcha)
+        val buttonNext = popupInputCaptcha?.findViewById<Button>(R.id.btn_next)
+        val decodedString: ByteArray = Base64.decode(accessCode, Base64.DEFAULT)
+        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+        Glide.with(requireActivity()).load(decodedByte).into(imageCaptcha!!)
+        buttonNext?.setOnClickListener {
+            if (etCaptcha?.text.toString().isNotEmpty()){
+                presenter.getCalculationTicketPrice(RequestPrice(airlineCodeParams, departParams, returnParams, etCaptcha.toString()))
+            } else {
+                etCaptcha?.error = "Please input captcha here"
+            }
+        }
+    }
+
     override fun onClick(view: View, data: Ticket) {
         Toast.makeText(requireActivity(), data.nameAirlines, Toast.LENGTH_SHORT).show()
     }
@@ -221,13 +251,24 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     }
 
     override fun getCalculationPrice(data: DataRealTicketPrice?) {
-        Toast.makeText(requireActivity(), data?.origin, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun accessCode(accessCode: String?) {
+        if (accessCode != null) {
+            if (accessCode.isNotEmpty()){
+                popupDialogInputCaptcha(accessCode)
+                popupInputCaptcha?.show()
+            } else{
+                popupInputCaptcha?.dismiss()
+            }
+        } else {
+            popupInputCaptcha?.dismiss()
+        }
     }
 
     override fun getIdSetPassenger(data: List<DataSetPassenger>) {
         Toast.makeText(requireContext(), data.size.toString(), Toast.LENGTH_SHORT).show()
         if (data.isNotEmpty()){
-            deleteAllPassenger()
             val bundle = Bundle()
             val arrayListFlight = mutableListOf<Ticket>()
             if (dataRequest.airlinesSecond !=null){

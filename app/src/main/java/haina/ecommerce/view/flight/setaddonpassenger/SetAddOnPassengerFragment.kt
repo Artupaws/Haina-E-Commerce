@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
@@ -25,10 +26,12 @@ class SetAddOnPassengerFragment : Fragment(), AdapterCombinePassengerAndFlight.I
     private var dataPassengerParams = java.util.ArrayList<DataSetPassenger>()
     private var dataFlightParams = java.util.ArrayList<Ticket>()
     private lateinit var presenter: SetAddOnPresenter
+    private var broadcaster:LocalBroadcastManager? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentSetAddOnPassengerBinding.inflate(inflater, container, false)
         presenter = SetAddOnPresenter(this, requireActivity())
+        broadcaster = LocalBroadcastManager.getInstance(requireActivity())
         return binding.root
     }
 
@@ -44,6 +47,14 @@ class SetAddOnPassengerFragment : Fragment(), AdapterCombinePassengerAndFlight.I
         val dataFlight = arguments?.getParcelableArrayList<Ticket>("dataFlight")
         dataFlightParams = dataFlight!!
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 
     override fun messageGetAddOn(msg: String) {

@@ -44,6 +44,7 @@ class AdapterCombinePassengerAndFlight(val context: Context, private val dataPas
                 tvIdcardNumber.text = itemHaina.id_number
                 ivDropdown.setOnClickListener {
                     onAddPostClicked(binding)
+                    clicked = !clicked
                 }
                 setupListDataFlight(binding)
             }
@@ -78,7 +79,6 @@ class AdapterCombinePassengerAndFlight(val context: Context, private val dataPas
     private fun onAddPostClicked(binding: ListItemSetAddonBinding) {
         setVisibility(clicked, binding)
         setAnimation(clicked, binding)
-        clicked = false
     }
 
     private fun setAnimation(clicked:Boolean, binding:ListItemSetAddonBinding){
@@ -91,9 +91,9 @@ class AdapterCombinePassengerAndFlight(val context: Context, private val dataPas
 
     private fun setVisibility(clicked: Boolean, binding: ListItemSetAddonBinding){
         if (!clicked){
-            binding.rvFlight.visibility = View.VISIBLE
-        } else {
             binding.rvFlight.visibility = View.GONE
+        } else {
+            binding.rvFlight.visibility = View.VISIBLE
         }
     }
 }
