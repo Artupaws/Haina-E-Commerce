@@ -10,5 +10,8 @@ data class RequestPrice(
     var airlineDepart: DepartItem?,
 
     @SerializedName("return")
-    var airlineReturn: DepartItem?
+    var airlineReturn: DepartItem?,
+
+    @SerializedName("access_code")
+var accessCode: String?
 )

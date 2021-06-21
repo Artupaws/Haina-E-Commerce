@@ -35,7 +35,7 @@ class LoginPresenter (val view: LoginContract){
                             if(response.body()?.message=="Please Continue Registration!"){
                                 view.loginRegistration()
                             }else{
-                                view.getToken(response.body()?.data?.token.toString())
+                                view.getToken(response.body()?.data.toString())
                                 view.successLogin(response.body()?.message.toString())
                             }
                         }

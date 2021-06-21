@@ -435,26 +435,6 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         )
     }
 
-    private fun searchProduct(searchView:SearchView, rvDestination:RecyclerView){
-        searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
-            SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                if (p0?.isNotEmpty()!!){
-                    (rvDestination.adapter as AdapterFlightDestinationCity).filter.filter(p0)
-                    (rvDestination.adapter as AdapterFlightDestinationCity).notifyDataSetChanged()
-                } else {
-                    presenter.getDataAirport()
-                }
-                return true
-            }
-        })
-    }
-
-
     override fun messageGetAirport(msg: String) {
         Log.d("airportData", msg)
     }

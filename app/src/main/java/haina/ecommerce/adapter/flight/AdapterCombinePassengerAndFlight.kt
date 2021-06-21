@@ -1,24 +1,38 @@
 package haina.ecommerce.adapter.flight
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import haina.ecommerce.databinding.ListItemAddOnChoosedBinding
-import haina.ecommerce.databinding.ListItemAirlinesBinding
+import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemSetAddonBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.flight.*
 
 class AdapterCombinePassengerAndFlight(val context: Context, private val dataPassenger: ArrayList<DataSetPassenger>,
                                        private val dataTicket:ArrayList<Ticket>,
+                                       private val dataAddOn:DataAddOn,
                                        private val itemAdapterCallback: ItemAdapterCallback) :
         RecyclerView.Adapter<AdapterCombinePassengerAndFlight.Holder>() {
 
     private var broadcaster:LocalBroadcastManager? =null
-    private var helper:Helper = Helper
+
+    private val positionCollaps: Animation by lazy {
+        AnimationUtils.loadAnimation(context, R.anim.anim_collapse)
+    }
+
+    private val positionExpand: Animation by lazy {
+        AnimationUtils.loadAnimation(context, R.anim.anim_expand)
+    }
+
+    private var clicked = false
+
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemSetAddonBinding.bind(view)
         fun bind(itemHaina: DataSetPassenger, itemAdapterCallback:ItemAdapterCallback) {
@@ -28,6 +42,11 @@ class AdapterCombinePassengerAndFlight(val context: Context, private val dataPas
                 tvNamePassenger.text = fullname
                 tvBirthdate.text = itemHaina.birth_date
                 tvIdcardNumber.text = itemHaina.id_number
+                ivDropdown.setOnClickListener {
+                    onAddPostClicked(binding)
+                    clicked = !clicked
+                }
+                setupListDataFlight(binding)
             }
         }
     }
@@ -48,5 +67,33 @@ class AdapterCombinePassengerAndFlight(val context: Context, private val dataPas
 
     interface ItemAdapterCallback{
 
+    }
+
+    private fun setupListDataFlight(binding:ListItemSetAddonBinding){
+        binding.rvFlight.apply {
+            adapter = AdapterListFlight(context, dataTicket)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+    }
+
+    private fun onAddPostClicked(binding: ListItemSetAddonBinding) {
+        setVisibility(clicked, binding)
+        setAnimation(clicked, binding)
+    }
+
+    private fun setAnimation(clicked:Boolean, binding:ListItemSetAddonBinding){
+        if (!clicked){
+            binding.ivDropdown.startAnimation(positionExpand)
+        } else {
+            binding.ivDropdown.startAnimation(positionCollaps)
+        }
+    }
+
+    private fun setVisibility(clicked: Boolean, binding: ListItemSetAddonBinding){
+        if (!clicked){
+            binding.rvFlight.visibility = View.GONE
+        } else {
+            binding.rvFlight.visibility = View.VISIBLE
+        }
     }
 }
