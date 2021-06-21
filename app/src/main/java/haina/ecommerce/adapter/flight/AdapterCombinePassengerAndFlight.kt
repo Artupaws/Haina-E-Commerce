@@ -1,7 +1,6 @@
 package haina.ecommerce.adapter.flight
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemSetAddonBinding
-import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.flight.*
 
-class AdapterCombinePassengerAndFlight(val context: Context, private val dataPassenger: ArrayList<DataSetPassenger>,
-                                       private val dataTicket:ArrayList<Ticket>,
-                                       private val dataAddOn:DataAddOn,
-                                       private val itemAdapterCallback: ItemAdapterCallback) :
+class AdapterCombinePassengerAndFlight(
+    val context: Context, private val dataPassenger: ArrayList<DataSetPassenger>,
+    private val dataTicket:ArrayList<Ticket>,
+    private val dataAddOn: List<BaggageInfosItem?>?,
+    private val dataMeals: List<MealInfosItem?>?
+) :
         RecyclerView.Adapter<AdapterCombinePassengerAndFlight.Holder>() {
 
     private var broadcaster:LocalBroadcastManager? =null
@@ -33,9 +33,11 @@ class AdapterCombinePassengerAndFlight(val context: Context, private val dataPas
 
     private var clicked = false
 
+    val dataBaggage = arrayListOf<BaggageInfosItem>()
+
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemSetAddonBinding.bind(view)
-        fun bind(itemHaina: DataSetPassenger, itemAdapterCallback:ItemAdapterCallback) {
+        fun bind(itemHaina: DataSetPassenger) {
             with(binding) {
                tvTitlePassenger.text = itemHaina.title
                 val fullname = "${itemHaina.first_name} ${itemHaina.last_name}"
@@ -55,23 +57,21 @@ class AdapterCombinePassengerAndFlight(val context: Context, private val dataPas
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemSetAddonBinding.inflate(inflater)
         broadcaster = LocalBroadcastManager.getInstance(context)
+//        dataAddOn?.forEach { dataBaggage.add(it?.baggageInfos) }
         return Holder(binding.root)
     }
 
     override fun onBindViewHolder(holder: AdapterCombinePassengerAndFlight.Holder, position: Int) {
         val depart: DataSetPassenger = dataPassenger[position]
-        holder.bind(depart, itemAdapterCallback)
+        holder.bind(depart)
     }
 
     override fun getItemCount(): Int = dataPassenger.size
 
-    interface ItemAdapterCallback{
-
-    }
-
+    @Suppress("UNCHECKED_CAST")
     private fun setupListDataFlight(binding:ListItemSetAddonBinding){
         binding.rvFlight.apply {
-            adapter = AdapterListFlight(context, dataTicket)
+            adapter = AdapterListFlight(context, dataTicket, dataAddOn, dataMeals)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
     }

@@ -8,13 +8,19 @@ import android.view.ViewGroup
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemFlightAddOnBinding
-import haina.ecommerce.model.flight.AirlinesFirst
+import haina.ecommerce.model.flight.BaggageInfosItem
+import haina.ecommerce.model.flight.MealInfosItem
 import haina.ecommerce.model.flight.Ticket
+import java.util.*
 
-class AdapterListFlight(val context: Context, private val listAirlines: MutableList<Ticket>?) :
+
+class AdapterListFlight(val context: Context, private val listAirlines: MutableList<Ticket>?,
+                        private val dataAddOn: List<BaggageInfosItem?>?,
+                        private val dataMeals: List<MealInfosItem?>?) :
         RecyclerView.Adapter<AdapterListFlight.Holder>() {
     private var broadcaster : LocalBroadcastManager? = null
 
+    @Suppress("UNCHECKED_CAST")
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemFlightAddOnBinding.bind(view)
         fun bind(itemHaina: Ticket) {
@@ -26,9 +32,11 @@ class AdapterListFlight(val context: Context, private val listAirlines: MutableL
                 tvTimeFlight.text = originDestinationTime
                 val numberFlight = "FLIGHT ${adapterPosition + 1}"
                 tvTypeFlight.text = numberFlight
+
                 btnAddOn.setOnClickListener {
                 val intentOpenDialogAddOn = Intent("addOn")
-                intentOpenDialogAddOn.putExtra("openDialog","open")
+                intentOpenDialogAddOn.putParcelableArrayListExtra("openDialog", dataAddOn as ArrayList<BaggageInfosItem>)
+                intentOpenDialogAddOn.putParcelableArrayListExtra("openDialogMeals", dataMeals as ArrayList<MealInfosItem>)
                     broadcaster?.sendBroadcast(intentOpenDialogAddOn)
                 }
                 btnChooseSeat.setOnClickListener {
@@ -52,9 +60,4 @@ class AdapterListFlight(val context: Context, private val listAirlines: MutableL
     }
 
     override fun getItemCount(): Int = listAirlines?.size!!
-
-    interface ItemAdapterCallback{
-        fun onAdapterClick(view:View, data:Ticket)
-    }
-
 }
