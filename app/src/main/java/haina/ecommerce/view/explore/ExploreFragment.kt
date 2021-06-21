@@ -29,6 +29,7 @@ import haina.ecommerce.util.Constants
 import haina.ecommerce.view.covidlist.CovidListActivity
 import haina.ecommerce.view.flight.FlightTicketActivity
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
+import haina.ecommerce.view.hotels.HotelBaseActivity
 import haina.ecommerce.view.hotels.dashboardhotel.HotelsActivity
 import haina.ecommerce.view.topup.TopupActivity
 import haina.ecommerce.view.job.JobActivity
@@ -146,7 +147,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
                 startActivity(intent)
             }
             R.id.linear_hotel -> {
-                val intent = Intent(requireContext(), HotelsActivity::class.java)
+                val intent = Intent(requireContext(), HotelBaseActivity::class.java)
                 startActivity(intent)
             }
 
