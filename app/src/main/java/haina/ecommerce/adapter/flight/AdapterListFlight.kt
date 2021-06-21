@@ -31,6 +31,10 @@ class AdapterListFlight(val context: Context, private val listAirlines: MutableL
                 intentOpenDialogAddOn.putExtra("openDialog","open")
                     broadcaster?.sendBroadcast(intentOpenDialogAddOn)
                 }
+                btnChooseSeat.setOnClickListener {
+                    val intentChooseSeat = Intent("chooseSeat")
+                    broadcaster?.sendBroadcast(intentChooseSeat)
+                }
             }
         }
     }
