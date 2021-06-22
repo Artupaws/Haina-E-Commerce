@@ -36,6 +36,7 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
     private var popupShowChooseSeat: Dialog? = null
     private var popupSetAddOn: Dialog? = null
     private var totalPriceAddOn: Int = 0
+    private var totalPrice: TextView? = null
     private var dataBaggage: List<BaggageInfosItem?>? = null
     private var dataMeals: List<MealInfosItem?>? = null
 
@@ -105,7 +106,7 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
         val title = popupShowChooseSeat?.findViewById<TextView>(R.id.tv_title)
         val btnSave = popupShowChooseSeat?.findViewById<Button>(R.id.btn_save)
         val scrollSeat = popupShowChooseSeat?.findViewById<NestedScrollView>(R.id.scroll_seat)
-
+    }
 
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -121,7 +122,7 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
         val rvAddOn = popupSetAddOn?.findViewById<RecyclerView>(R.id.rv_addon)
         val btnSave = popupSetAddOn?.findViewById<Button>(R.id.btn_save)
         val ivClose = popupSetAddOn?.findViewById<ImageView>(R.id.iv_close)
-        val totalPrice = popupSetAddOn?.findViewById<TextView>(R.id.tv_total_price)
+        totalPrice = popupSetAddOn?.findViewById<TextView>(R.id.tv_total_price)
         val adapterSpinnerBaggage = AdapterSpinnerBaggage(requireActivity(), data)
         spinnerBaggage?.adapter = adapterSpinnerBaggage
         spinnerBaggage?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -138,11 +139,15 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
             adapter = AdapterAddOn(requireActivity(), dataMeals, this@SetAddOnPassengerFragment)
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
-
         totalPrice?.text = "Total price Add-on : $totalPriceParams"
+
 
         ivClose?.setOnClickListener {
             popupSetAddOn?.dismiss()
+        }
+
+        btnSave?.setOnClickListener {
+
         }
     }
 
@@ -171,8 +176,9 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
         when(view.id){
             R.id.cb_addon -> {
                 Toast.makeText(requireActivity(), price.toString(), Toast.LENGTH_SHORT).show()
-                totalPriceAddOn = price
-                popupDialogSetAddOn(dataBaggage, dataMeals, totalPriceAddOn)
+
+                totalPrice?.text = "Total price -on : ${price.toString()}"
+
             }
         }
     }

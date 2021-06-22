@@ -1,4 +1,4 @@
-package haina.ecommerce.roomdatapassenger
+package haina.ecommerce.room.roomdatapassenger
 
 import android.content.Context
 import androidx.room.Database
@@ -13,8 +13,8 @@ abstract class RoomDataPassenger :RoomDatabase(){
         @Volatile
         private var INSTANCE: RoomDataPassenger? = null
 
-        fun getDatabase(context: Context):RoomDataPassenger{
-            return INSTANCE?: synchronized(this){
+        fun getDatabase(context: Context): RoomDataPassenger {
+            return INSTANCE ?: synchronized(this){
                 val instance = Room.databaseBuilder(
                     context.applicationContext, RoomDataPassenger::class.java,"passenger_db"
                 ).allowMainThreadQueries()
@@ -27,6 +27,6 @@ abstract class RoomDataPassenger :RoomDatabase(){
 
     }
 
-    abstract fun getDataPassengerDao():PassengerDao
+    abstract fun getDataPassengerDao(): PassengerDao
 
 }

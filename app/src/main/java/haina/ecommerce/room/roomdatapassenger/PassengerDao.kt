@@ -1,4 +1,4 @@
-package haina.ecommerce.roomdatapassenger
+package haina.ecommerce.room.roomdatapassenger
 
 import androidx.room.*
 

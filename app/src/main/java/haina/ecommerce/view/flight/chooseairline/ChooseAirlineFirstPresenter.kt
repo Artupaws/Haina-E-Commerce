@@ -1,14 +1,13 @@
 package haina.ecommerce.view.flight.chooseairline
 
 import android.content.Context
-import android.view.View
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.flight.ResponseGetListAirline
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class ChooseAirlineFirstPresenter(val view: ChooseAirlineFristContract, val context:Context) {
+class ChooseAirlineFirstPresenter(val view: ChooseAirlineFirstContract, val context:Context) {
 
     fun getAirlinesData(tripType:String, origin:String, destination:String, departDate:String, returnDate:String?,
                         adult:Int, child:Int, baby:Int, aAC:String){

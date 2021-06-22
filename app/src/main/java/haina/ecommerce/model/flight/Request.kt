@@ -2,35 +2,35 @@ package haina.ecommerce.model.flight
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import haina.ecommerce.roomdatapassenger.DataPassenger
+import haina.ecommerce.room.roomdatapassenger.DataPassenger
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Request (
-        @SerializedName("startDate")
+    @SerializedName("startDate")
     var startDate: String,
-        @SerializedName("finishDate")
+    @SerializedName("finishDate")
     var finishDate: String?,
-        @SerializedName("fromDestination")
+    @SerializedName("fromDestination")
     var fromDestination: String,
-        @SerializedName("toDestination")
+    @SerializedName("toDestination")
     var toDestination: String,
-        @SerializedName("totalPassenger")
+    @SerializedName("totalPassenger")
     var totalPassenger: Int,
-        @SerializedName("totalAdult")
+    @SerializedName("totalAdult")
     var totalAdult: Int,
-        @SerializedName("totalChild")
+    @SerializedName("totalChild")
     var totalChild: Int,
-        @SerializedName("totalBaby")
+    @SerializedName("totalBaby")
     var totalBaby: Int,
-        @SerializedName("airlinesFirst")
+    @SerializedName("airlinesFirst")
     var airlinesFirst: AirlinesFirst?,
-        @SerializedName("airlinesSecond")
+    @SerializedName("airlinesSecond")
     var airlinesSecond: AirlinesSecond?,
-        @SerializedName("dataPassenger")
+    @SerializedName("dataPassenger")
     var dataPassenger: List<DataPassenger?>?,
-        @SerializedName("airlineDepart")
+    @SerializedName("airlineDepart")
         var airlineDepart: List<DepartItem?>?,
-        @SerializedName("airlineReturn")
+    @SerializedName("airlineReturn")
         var airlineReturn: List<DepartItem?>?
 ):Parcelable

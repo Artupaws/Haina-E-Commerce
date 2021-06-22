@@ -1,4 +1,4 @@
-package haina.ecommerce.roomdatapassenger
+package haina.ecommerce.room.roomdatapassenger
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

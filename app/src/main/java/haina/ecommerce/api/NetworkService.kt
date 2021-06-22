@@ -523,7 +523,4 @@ interface NetworkService {
     fun getDataSeat():Call<ResponseGetAddOn>
 
 
-    //Get List City Hotel
-    @POST("api/hotel_darma/all_cities")
-    fun getListAllCityHotel():Call<ResponseGetCityHotel>
 }

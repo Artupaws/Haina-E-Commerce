@@ -24,9 +24,9 @@ import haina.ecommerce.adapter.flight.AdapterListTicket
 import haina.ecommerce.databinding.FragmentFillDataPassengerBinding
 import haina.ecommerce.model.flight.*
 import haina.ecommerce.preference.SharedPreferenceHelper
-import haina.ecommerce.roomdatapassenger.DataPassenger
-import haina.ecommerce.roomdatapassenger.PassengerDao
-import haina.ecommerce.roomdatapassenger.RoomDataPassenger
+import haina.ecommerce.room.roomdatapassenger.DataPassenger
+import haina.ecommerce.room.roomdatapassenger.PassengerDao
+import haina.ecommerce.room.roomdatapassenger.RoomDataPassenger
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.paymentmethod.PaymentActivity
 
