@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.squareup.picasso.Picasso
 import haina.ecommerce.databinding.ListItemHotelsBinding
 import haina.ecommerce.helper.Helper
@@ -28,9 +30,9 @@ class AdapterListHotelDarma(val context: Context, private val listHotel: List<Ho
                 val startPrice = helper.convertToFormatMoneyIDRFilter(hotelHaina.priceStart.toString())
                 tvStartPrice.text = startPrice
                 cvClick.setOnClickListener { itemAdapterCallback.onClick(binding.cvClick, hotelHaina.iD!!) }
-                val logo = "${hotelHaina.logo}"
-                Picasso.get().load("http://61.8.74.42:7080/H2H/hotel/logo?id=48659").into(ivHotels)
-//                Glide.with(context).load(logo).into(ivHotels)
+//                Picasso.get().load("http://61.8.74.42:7080/H2H/hotel/logo?id=48659").into(ivHotels)
+                Glide.with(context).load(hotelHaina.logo).skipMemoryCache(true).diskCacheStrategy(
+                    DiskCacheStrategy.NONE).apply(RequestOptions().override(110, 150)).into(ivHotels)
                 ratingBarHotel.rating = hotelHaina.rating!!
                 val avgRating = "${hotelHaina.ratingAverage} - Avg Rating"
                 tvAvgRating.text = avgRating

@@ -10,6 +10,7 @@ import haina.ecommerce.model.flight.*
 import haina.ecommerce.model.hotels.*
 import haina.ecommerce.model.hotels.newHotel.ResponseGetCityHotel
 import haina.ecommerce.model.hotels.newHotel.ResponseGetHotelDarma
+import haina.ecommerce.model.hotels.newHotel.ResponseGetRoomHotel
 import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
 import haina.ecommerce.model.howtopay.ResponseGetHowToPay
 import haina.ecommerce.model.news.ResponseGetListNews
@@ -530,9 +531,16 @@ interface NetworkService {
         @Field("check_in_date")checkIn:String,
         @Field("check_out_date")checkOut:String
         ):Call<ResponseGetHotelDarma>
+
     //Get Data Add On
     @GET("api/ticket/seat")
     fun getDataSeat():Call<ResponseGetAddOn>
 
+    //Get Room Hotel
+    @FormUrlEncoded
+    @POST("api/hotel_darma/search_room")
+    fun getDataRoom(
+        @Field("hotel_id")hotelId:String
+    ):Call<ResponseGetRoomHotel>
 
 }
