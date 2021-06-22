@@ -20,7 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config">
         <activity android:name=".view.hotels.HotelBaseActivity"></activity>
         <activity android:name=".view.news.DetailNewsActivity" />
         <activity android:name=".view.news.NewsActivity" />
@@ -135,5 +136,6 @@
             android:name="com.onesignal.NotificationOpened.DEFAULT"
             android:value="DISABLE" />
     </application>
+
 
 </manifest>

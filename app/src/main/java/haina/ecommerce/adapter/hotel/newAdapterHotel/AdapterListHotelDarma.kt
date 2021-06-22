@@ -29,7 +29,7 @@ class AdapterListHotelDarma(val context: Context, private val listHotel: List<Ho
                 tvStartPrice.text = startPrice
                 cvClick.setOnClickListener { itemAdapterCallback.onClick(binding.cvClick, hotelHaina.iD!!) }
                 val logo = "${hotelHaina.logo}"
-                Picasso.get().load(logo).into(ivHotels)
+                Picasso.get().load("http://61.8.74.42:7080/H2H/hotel/logo?id=48659").into(ivHotels)
 //                Glide.with(context).load(logo).into(ivHotels)
                 ratingBarHotel.rating = hotelHaina.rating!!
                 val avgRating = "${hotelHaina.ratingAverage} - Avg Rating"
