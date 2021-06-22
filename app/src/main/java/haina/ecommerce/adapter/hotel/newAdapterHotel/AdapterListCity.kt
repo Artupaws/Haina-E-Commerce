@@ -6,21 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemCityHotelBinding
-import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.hotels.newHotel.CitiesItem
+import haina.ecommerce.model.hotels.newHotel.DataCities
 
 
-class AdapterListCity(val context: Context, private val listCity: List<CitiesItem?>?,
+class AdapterListCity(val context: Context, private val listCity: List<DataCities?>?,
                       private val itemAdapterCallback:ItemAdapterCallBack):
     RecyclerView.Adapter<AdapterListCity.Holder>() {
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemCityHotelBinding.bind(view)
-        fun bind(hotelHaina: CitiesItem, itemAdapterCallback:ItemAdapterCallBack){
+        fun bind(hotelHaina: DataCities, itemAdapterCallback:ItemAdapterCallBack){
             with(binding){
               tvNameCity.text = hotelHaina.name
-                tvNameCity.setOnClickListener {
-                    itemAdapterCallback.onClick(tvNameCity, hotelHaina)
+                cvClick.setOnClickListener {
+                    hotelHaina.idDarma?.let { it1 -> itemAdapterCallback.onClick(cvClick, it1) }
                 }
             }
         }
@@ -33,14 +32,14 @@ class AdapterListCity(val context: Context, private val listCity: List<CitiesIte
     }
 
     override fun onBindViewHolder(holder: AdapterListCity.Holder, position: Int) {
-        val data: CitiesItem = listCity?.get(position)!!
+        val data: DataCities = listCity?.get(position)!!
         holder.bind(data, itemAdapterCallback)
     }
 
     override fun getItemCount(): Int = listCity?.size!!
 
     interface ItemAdapterCallBack{
-        fun onClick(view: View, dataCity: CitiesItem)
+        fun onClick(view: View, idDarma: Int)
     }
 
 

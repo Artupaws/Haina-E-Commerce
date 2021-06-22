@@ -18,17 +18,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <ImageView
+                android:id="@+id/iv_hotels"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                app:cardCornerRadius="10dp">
-
-                <ImageView
-                    android:id="@+id/iv_hotels"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
-            </androidx.cardview.widget.CardView>
+                android:layout_height="100dp"
+                android:src="@drawable/ps5"
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/tv_name_city"

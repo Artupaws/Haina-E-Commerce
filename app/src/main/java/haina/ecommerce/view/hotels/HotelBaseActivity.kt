@@ -13,9 +13,5 @@ class HotelBaseActivity : AppCompatActivity() {
         binding = ActivityHotelBaseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar4.setNavigationOnClickListener {
-            onBackPressed()
-        }
-
     }
 }
