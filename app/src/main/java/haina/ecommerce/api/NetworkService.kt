@@ -8,6 +8,7 @@ import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.flight.*
 import haina.ecommerce.model.hotels.*
+import haina.ecommerce.model.hotels.newHotel.ResponseGetCityHotel
 import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
 import haina.ecommerce.model.howtopay.ResponseGetHowToPay
 import haina.ecommerce.model.news.ResponseGetListNews
@@ -19,10 +20,8 @@ import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
 import haina.ecommerce.model.transactionlist.ResponseGetListTransactionPending
-import haina.ecommerce.roomdatapassenger.DataPassenger
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -514,4 +513,9 @@ interface NetworkService {
     //Get Data Add On
     @GET("api/ticket/addons")
     fun getDataAddOn():Call<ResponseGetAddOn>
+
+
+    //Get List City Hotel
+    @POST("api/hotel_darma/all_cities")
+    fun getListAllCityHotel():Call<ResponseGetCityHotel>
 }

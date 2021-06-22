@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.news.DetailNewsActivity"></activity>
+        <activity android:name=".view.hotels.HotelBaseActivity"></activity>
+        <activity android:name=".view.news.DetailNewsActivity" />
         <activity android:name=".view.news.NewsActivity" />
         <activity android:name=".view.onlinepayment.OnlinePaymentActivity" />
         <activity android:name=".view.flight.FlightTicketActivity" />
@@ -93,7 +94,8 @@
         </activity>
         <activity
             android:name=".view.MainActivity"
-            android:screenOrientation="nosensor"/>
+            android:screenOrientation="nosensor" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.provider"
@@ -117,10 +119,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_haina_icon" />
-
-        <meta-data android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id"/>
-
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/white" />
