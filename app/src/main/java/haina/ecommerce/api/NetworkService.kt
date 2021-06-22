@@ -530,4 +530,9 @@ interface NetworkService {
         @Field("check_in_date")checkIn:String,
         @Field("check_out_date")checkOut:String
         ):Call<ResponseGetHotelDarma>
+    //Get Data Add On
+    @GET("api/ticket/seat")
+    fun getDataSeat():Call<ResponseGetAddOn>
+
+
 }

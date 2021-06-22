@@ -381,7 +381,6 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         constraintsBuilderRange.setValidator(RangeValidator(minDate, maxDate))
         return constraintsBuilderRange
     }
-
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun popupDialogDestination(listDestinationCountry: List<DataAirport?>?) {
         popupDestination = Dialog(requireActivity())
@@ -409,7 +408,8 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                     (rvDestination?.adapter as AdapterFlightDestinationCity).filter.filter(p0)
                     (rvDestination.adapter as AdapterFlightDestinationCity).notifyDataSetChanged()
                 } else {
-                    presenter.getDataAirport()
+                    (rvDestination?.adapter as AdapterFlightDestinationCity).filter.filter("")
+
                 }
                 return true
             }

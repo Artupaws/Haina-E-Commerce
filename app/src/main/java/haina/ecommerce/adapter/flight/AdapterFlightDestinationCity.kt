@@ -1,11 +1,13 @@
 package haina.ecommerce.adapter.flight
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemDestinationCityBinding
@@ -16,6 +18,7 @@ class AdapterFlightDestinationCity(val context: Context, private var listDestina
         RecyclerView.Adapter<AdapterFlightDestinationCity.Holder>(), Filterable {
 
     private var broadcaster:LocalBroadcastManager? =null
+    private var listStatic: List<DataAirport?>?=listDestinationCity
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemDestinationCityBinding.bind(view)
@@ -70,11 +73,11 @@ class AdapterFlightDestinationCity(val context: Context, private var listDestina
             override fun performFiltering(p0: CharSequence?): FilterResults {
                 val querySearch = p0?.toString()?.toLowerCase()
                 val filterResult = FilterResults()
-                filterResult.values = if (querySearch == null || querySearch.isEmpty()){
-                    listDestinationCity
+                filterResult.values = if (querySearch == null){
+                    listStatic
                 } else {
-                    listDestinationCity?.filter {
-                        it?.city?.toLowerCase()!!.contains(querySearch)
+                    listStatic?.filter {
+                        it?.city?.toLowerCase()!!.contains(querySearch,ignoreCase = true)
                     }
                 }
                 return filterResult
@@ -82,6 +85,8 @@ class AdapterFlightDestinationCity(val context: Context, private var listDestina
 
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
                 listDestinationCity = p1?.values as List<DataAirport?>?
+                Log.d("count",listDestinationCity?.count().toString())
+
                 notifyDataSetChanged()
             }
 

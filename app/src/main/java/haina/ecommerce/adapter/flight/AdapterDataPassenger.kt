@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemDataPassengerBinding
-import haina.ecommerce.roomdatapassenger.DataPassenger
+import haina.ecommerce.room.roomdatapassenger.DataPassenger
 
 class AdapterDataPassenger(val context: Context, private val listDataPassenger: ArrayList<DataPassenger>,
                            private val itemAdapterCallback: ItemAdapterCallback) :
@@ -46,7 +46,7 @@ class AdapterDataPassenger(val context: Context, private val listDataPassenger: 
     override fun getItemCount(): Int = listDataPassenger.size
 
     interface ItemAdapterCallback{
-        fun onClick(view:View, data:DataPassenger)
+        fun onClick(view:View, data: DataPassenger)
     }
 
 }

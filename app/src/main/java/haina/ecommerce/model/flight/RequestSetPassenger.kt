@@ -1,7 +1,7 @@
 package haina.ecommerce.model.flight
 
 import com.google.gson.annotations.SerializedName
-import haina.ecommerce.roomdatapassenger.DataPassenger
+import haina.ecommerce.room.roomdatapassenger.DataPassenger
 
 data class RequestSetPassenger(
     @SerializedName("contact_title")

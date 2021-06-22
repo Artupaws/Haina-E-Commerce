@@ -20,9 +20,9 @@ import haina.ecommerce.databinding.FragmentDetailFillDataPassengerBinding
 import haina.ecommerce.model.flight.CountriesItem
 import haina.ecommerce.model.flight.DataNationality
 import haina.ecommerce.preference.SharedPreferenceHelper
-import haina.ecommerce.roomdatapassenger.DataPassenger
-import haina.ecommerce.roomdatapassenger.PassengerDao
-import haina.ecommerce.roomdatapassenger.RoomDataPassenger
+import haina.ecommerce.room.roomdatapassenger.DataPassenger
+import haina.ecommerce.room.roomdatapassenger.PassengerDao
+import haina.ecommerce.room.roomdatapassenger.RoomDataPassenger
 import java.util.*
 
 
@@ -33,7 +33,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     private val binding get()= _binding
     private lateinit var sharedPref:SharedPreferenceHelper
     private lateinit var database: RoomDataPassenger
-    private lateinit var dao:PassengerDao
+    private lateinit var dao: PassengerDao
     private var dateSetListener: DatePickerDialog.OnDateSetListener? = null
     private var age:Int = 0
     private lateinit var presenter: DetailFillDataPresenter
@@ -183,8 +183,10 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
 
         if (!isEmptFirstName && !isEmptLastName && !isEmptyBirthdate && !isEmptyGender && !isEmptyNationality &&
             !isEmptyBirthCountry && !isEmptyIdCard && !isEmptyTitle && !isEmptyType){
-                saveDataPassenger(DataPassenger(0,firstname, lastname, birthdate, gender!!, idNationality, idNationality, idCardNumber, title!!,
-                    "", "", null, null, null, typePassengerParams!!))
+                saveDataPassenger(
+                    DataPassenger(0,firstname, lastname, birthdate, gender!!, idNationality, idNationality, idCardNumber, title!!,
+                    "", "", null, null, null, typePassengerParams!!)
+                )
             findNavController().navigateUp()
         }else {
             Toast.makeText(requireActivity(), "Please complete data passenger", Toast.LENGTH_SHORT).show()

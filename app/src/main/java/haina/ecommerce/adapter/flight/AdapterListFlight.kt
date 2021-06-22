@@ -34,9 +34,9 @@ class AdapterListFlight(val context: Context, private val listAirlines: MutableL
                 tvTypeFlight.text = numberFlight
 
                 btnAddOn.setOnClickListener {
-                val intentOpenDialogAddOn = Intent("addOn")
-                intentOpenDialogAddOn.putParcelableArrayListExtra("openDialog", dataAddOn as ArrayList<BaggageInfosItem>)
-                intentOpenDialogAddOn.putParcelableArrayListExtra("openDialogMeals", dataMeals as ArrayList<MealInfosItem>)
+                    val intentOpenDialogAddOn = Intent("addOn")
+                    intentOpenDialogAddOn.putParcelableArrayListExtra("openDialog", dataAddOn as ArrayList<BaggageInfosItem>)
+                    intentOpenDialogAddOn.putParcelableArrayListExtra("openDialogMeals", dataMeals as ArrayList<MealInfosItem>)
                     broadcaster?.sendBroadcast(intentOpenDialogAddOn)
                 }
                 btnChooseSeat.setOnClickListener {
