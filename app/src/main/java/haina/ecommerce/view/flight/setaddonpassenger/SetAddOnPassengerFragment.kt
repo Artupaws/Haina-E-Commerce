@@ -106,7 +106,6 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
         val btnSave = popupShowChooseSeat?.findViewById<Button>(R.id.btn_save)
         val scrollSeat = popupShowChooseSeat?.findViewById<NestedScrollView>(R.id.scroll_seat)
 
-    }
 
 
     @SuppressLint("UseCompatLoadingForDrawables")

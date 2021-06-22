@@ -518,4 +518,12 @@ interface NetworkService {
     //Get List City Hotel
     @POST("api/hotel_darma/all_cities")
     fun getListAllCityHotel():Call<ResponseGetCityHotel>
+    //Get Data Add On
+    @GET("api/ticket/seat")
+    fun getDataSeat():Call<ResponseGetAddOn>
+
+
+    //Get List City Hotel
+    @POST("api/hotel_darma/all_cities")
+    fun getListAllCityHotel():Call<ResponseGetCityHotel>
 }
