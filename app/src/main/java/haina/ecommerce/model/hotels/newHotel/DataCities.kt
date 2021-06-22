@@ -7,12 +7,21 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class DataCities(
 
-	@field:SerializedName("cities")
-	val cities: List<CitiesItem?>? = null,
+	@field:SerializedName("id_darma")
+	val idDarma: Int? = null,
 
-	@field:SerializedName("ID")
-	val iD: String? = null,
+	@field:SerializedName("id_province")
+	val idProvince: Int? = null,
 
-	@field:SerializedName("Name")
-	val name: String? = null
+	@field:SerializedName("updated_at")
+	val updatedAt: String? = null,
+
+	@field:SerializedName("name")
+	val name: String? = null,
+
+	@field:SerializedName("created_at")
+	val createdAt: String? = null,
+
+	@field:SerializedName("id")
+	val id: Int? = null
 ) : Parcelable

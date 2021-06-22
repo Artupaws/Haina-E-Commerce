@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ResponseGetCityHotel(
+data class ResponseGetHotelDarma(
 
 	@field:SerializedName("data")
-	val data: List<DataCities?>? = null,
+	val dataHotelDarma: DataHotelDarma? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
