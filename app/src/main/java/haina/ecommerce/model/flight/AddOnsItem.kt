@@ -10,6 +10,9 @@ data class AddOnsItem(
 	@field:SerializedName("baggageInfos")
 	val baggageInfos: List<BaggageInfosItem?>? = null,
 
+	@field:SerializedName("seatInfos")
+	val seatInfos: List<SeatInfosItem?>? = null,
+
 	@field:SerializedName("origin")
 	val origin: String? = null,
 
