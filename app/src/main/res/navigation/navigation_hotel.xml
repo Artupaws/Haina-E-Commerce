@@ -18,7 +18,7 @@
         android:id="@+id/scheduleHotelFragment"
         android:name="haina.ecommerce.view.hotels.listhotel.ListHotelFragment"
         android:label="fragment_schedule_hotel"
-        tools:layout="@layout/fragment_schedule_hotel" >
+        tools:layout="@layout/fragment_list_hotel" >
         <action
             android:id="@+id/action_scheduleHotelFragment_to_listRoomFragment"
             app:destination="@id/listRoomFragment" />
@@ -27,5 +27,14 @@
         android:id="@+id/listRoomFragment"
         android:name="haina.ecommerce.view.hotels.listroom.ListRoomFragment"
         android:label="fragment_list_room"
-        tools:layout="@layout/fragment_list_room" />
+        tools:layout="@layout/fragment_list_room" >
+        <action
+            android:id="@+id/action_listRoomFragment_to_fillInDetailFragment"
+            app:destination="@id/fillInDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fillInDetailFragment"
+        android:name="haina.ecommerce.view.hotels.fillindetail.FillInDetailFragment"
+        android:label="fragment_fill_in_detail"
+        tools:layout="@layout/fragment_fill_in_detail" />
 </navigation>

@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class FacilityItem(
+data class CommonFacilityItem(
 
-	@field:SerializedName("facilityGroupName")
-	val facilityGroupName: String? = null,
+	@field:SerializedName("id")
+	val id: Int? = null,
 
-	@field:SerializedName("facilities")
-	val facilities: List<String?>? = null,
+	@field:SerializedName("name")
+	val name: String? = null,
 
 	@field:SerializedName("icon")
 	val icon: String? = null

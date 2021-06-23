@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class RoomsItem(
+data class RoomsItemDarma(
 
 	@field:SerializedName("image")
 	val image: String? = null,

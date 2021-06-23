@@ -303,5 +303,9 @@
     <string name="id_card_number">ID Card Number</string>
     <string name="warning_input_data_passenger">for first passenger, please input adult data passenger</string>
     <string name="add_on">Add On</string>
+    <string name="select">Select</string>
+    <string name="see_all_facilities"><u>See all facilities</u></string>
+    <string name="breakfast_status_yes"><u>Include</u></string>
+    <string name="breakfast_status_no"><u>Not Include</u></string>
 
 </resources>

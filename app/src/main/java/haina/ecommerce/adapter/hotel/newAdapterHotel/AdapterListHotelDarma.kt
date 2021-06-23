@@ -31,7 +31,7 @@ class AdapterListHotelDarma(val context: Context, private val listHotel: List<Ho
                 tvStartPrice.text = startPrice
                 cvClick.setOnClickListener { itemAdapterCallback.onClick(binding.cvClick, hotelHaina.iD!!) }
 //                Picasso.get().load("http://61.8.74.42:7080/H2H/hotel/logo?id=48659").into(ivHotels)
-                Glide.with(context).load(hotelHaina.logo).skipMemoryCache(true).diskCacheStrategy(
+                Glide.with(context).load("http://61.8.74.42:7080/H2H/hotel/RoomImage?RoomID=48659-30915435").skipMemoryCache(true).diskCacheStrategy(
                     DiskCacheStrategy.NONE).apply(RequestOptions().override(110, 150)).into(ivHotels)
                 ratingBarHotel.rating = hotelHaina.rating!!
                 val avgRating = "${hotelHaina.ratingAverage} - Avg Rating"

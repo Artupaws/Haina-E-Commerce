@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_click"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:elevation="5sp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="8dp"
+        android:focusable="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_room_hotel"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                tools:src="@drawable/ps5"
+                android:scaleType="centerCrop"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Queen"
+                style="@style/TextView.Poppins14spBlack"/>
+
+            <TextView
+                android:id="@+id/tv_status_breakfast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Breakfast"
+                style="@style/TextView.Poppins12spGrey"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Faciities :"
+                style="@style/TextView.Poppins12spGrey"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_facilities_room"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_select"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                style="@style/Button.Primary"
+                android:text="@string/select"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10dp"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

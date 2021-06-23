@@ -12,19 +12,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.newAdapterHotel.AdapterListHotelDarma
-import haina.ecommerce.databinding.FragmentScheduleHotelBinding
+import haina.ecommerce.databinding.FragmentListHotelBinding
 import haina.ecommerce.model.hotels.newHotel.DataHotelDarma
 import haina.ecommerce.model.hotels.newHotel.DataRoom
 
 class ListHotelFragment : Fragment(), AdapterListHotelDarma.ItemAdapterCallBack, ListHotelContract {
 
-    private lateinit var _binding:FragmentScheduleHotelBinding
+    private lateinit var _binding:FragmentListHotelBinding
     private val binding get() = _binding
     private lateinit var presenter: ListHotelPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentScheduleHotelBinding.inflate(inflater, container, false)
+        _binding = FragmentListHotelBinding.inflate(inflater, container, false)
         presenter = ListHotelPresenter(this, requireActivity())
         return binding.root
     }

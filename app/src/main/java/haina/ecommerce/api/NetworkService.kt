@@ -10,6 +10,7 @@ import haina.ecommerce.model.flight.*
 import haina.ecommerce.model.hotels.*
 import haina.ecommerce.model.hotels.newHotel.ResponseGetCityHotel
 import haina.ecommerce.model.hotels.newHotel.ResponseGetHotelDarma
+import haina.ecommerce.model.hotels.newHotel.ResponseGetPricePolicy
 import haina.ecommerce.model.hotels.newHotel.ResponseGetRoomHotel
 import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
 import haina.ecommerce.model.howtopay.ResponseGetHowToPay
@@ -543,4 +544,11 @@ interface NetworkService {
         @Field("hotel_id")hotelId:String
     ):Call<ResponseGetRoomHotel>
 
+    //Get Price Policy
+    @FormUrlEncoded
+    @POST("api/hotel_darma/price_policy")
+    fun getPricePolicy(
+        @Field("room_id")roomId:String,
+        @Field("breakfast")breakfast:String
+    ):Call<ResponseGetPricePolicy>
 }

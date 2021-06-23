@@ -11,7 +11,7 @@ data class HotelInfo(
 	val website: String? = null,
 
 	@field:SerializedName("rooms")
-	val rooms: List<RoomsItem?>? = null,
+	val rooms: List<RoomsItemDarma?>? = null,
 
 	@field:SerializedName("address")
 	val address: String? = null,
@@ -48,6 +48,9 @@ data class HotelInfo(
 
 	@field:SerializedName("availabilityStatus")
 	val availabilityStatus: Boolean? = null,
+
+	@field:SerializedName("common_facility")
+	val commonFacility: List<CommonFacilityItem?>? = null,
 
 	@field:SerializedName("facilities")
 	val facilities: List<String?>? = null,
