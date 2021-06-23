@@ -16,7 +16,16 @@
     </fragment>
     <fragment
         android:id="@+id/scheduleHotelFragment"
-        android:name="haina.ecommerce.view.hotels.schedule.ScheduleHotelFragment"
+        android:name="haina.ecommerce.view.hotels.listhotel.ListHotelFragment"
         android:label="fragment_schedule_hotel"
-        tools:layout="@layout/fragment_schedule_hotel" />
+        tools:layout="@layout/fragment_schedule_hotel" >
+        <action
+            android:id="@+id/action_scheduleHotelFragment_to_listRoomFragment"
+            app:destination="@id/listRoomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listRoomFragment"
+        android:name="haina.ecommerce.view.hotels.listroom.ListRoomFragment"
+        android:label="fragment_list_room"
+        tools:layout="@layout/fragment_list_room" />
 </navigation>
