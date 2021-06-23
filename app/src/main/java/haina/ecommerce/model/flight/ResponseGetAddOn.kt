@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class ResponseGetAddOn(
 
 	@field:SerializedName("data")
-	val dataAddOn: DataAddOn? = null,
+	val dataAddOn: List<AddOnsItem>? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,

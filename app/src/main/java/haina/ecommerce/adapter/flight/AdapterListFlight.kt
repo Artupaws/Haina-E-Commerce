@@ -10,13 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemFlightAddOnBinding
 import haina.ecommerce.model.flight.BaggageInfosItem
 import haina.ecommerce.model.flight.MealInfosItem
+import haina.ecommerce.model.flight.SeatInfosItem
 import haina.ecommerce.model.flight.Ticket
 import java.util.*
 
 
 class AdapterListFlight(val context: Context, private val listAirlines: MutableList<Ticket>?,
                         private val dataAddOn: List<BaggageInfosItem?>?,
-                        private val dataMeals: List<MealInfosItem?>?) :
+                        private val dataMeals: List<MealInfosItem?>?,
+                        private val dataSeat: List<SeatInfosItem?>?
+) :
         RecyclerView.Adapter<AdapterListFlight.Holder>() {
     private var broadcaster : LocalBroadcastManager? = null
 
@@ -37,10 +40,16 @@ class AdapterListFlight(val context: Context, private val listAirlines: MutableL
                     val intentOpenDialogAddOn = Intent("addOn")
                     intentOpenDialogAddOn.putParcelableArrayListExtra("openDialog", dataAddOn as ArrayList<BaggageInfosItem>)
                     intentOpenDialogAddOn.putParcelableArrayListExtra("openDialogMeals", dataMeals as ArrayList<MealInfosItem>)
+                    intentOpenDialogAddOn.putExtra("departure", itemHaina.cityCodeDeparture)
+                    intentOpenDialogAddOn.putExtra("arrival", itemHaina.cityCodeArrived)
+
                     broadcaster?.sendBroadcast(intentOpenDialogAddOn)
                 }
                 btnChooseSeat.setOnClickListener {
                     val intentChooseSeat = Intent("chooseSeat")
+                    intentChooseSeat.putParcelableArrayListExtra("dataSeats", dataSeat as ArrayList<SeatInfosItem>)
+                    intentChooseSeat.putExtra("departure", itemHaina.cityCodeDeparture)
+                    intentChooseSeat.putExtra("arrival", itemHaina.cityCodeArrived)
                     broadcaster?.sendBroadcast(intentChooseSeat)
                 }
             }
