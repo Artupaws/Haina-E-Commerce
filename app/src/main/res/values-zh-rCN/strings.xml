@@ -304,4 +304,6 @@
     <string name="see_all_facilities"><u>See all facilities</u></string>
     <string name="breakfast_status_yes"><u>包括</u></string>
     <string name="breakfast_status_no"><u>不包括</u></string>
+    <string name="guest_identity">客人身份</string>
+
 </resources>

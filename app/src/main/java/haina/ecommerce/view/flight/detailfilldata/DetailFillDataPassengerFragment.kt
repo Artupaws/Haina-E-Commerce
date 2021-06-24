@@ -19,7 +19,10 @@ import haina.ecommerce.adapter.flight.AutoCompleteAdapter
 import haina.ecommerce.databinding.FragmentDetailFillDataPassengerBinding
 import haina.ecommerce.model.flight.CountriesItem
 import haina.ecommerce.model.flight.DataNationality
+import haina.ecommerce.model.hotels.newHotel.DataGuest
 import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.room.roomdataguest.GuestDao
+import haina.ecommerce.room.roomdataguest.RoomDataGuest
 import haina.ecommerce.room.roomdatapassenger.DataPassenger
 import haina.ecommerce.room.roomdatapassenger.PassengerDao
 import haina.ecommerce.room.roomdatapassenger.RoomDataPassenger
@@ -33,7 +36,9 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     private val binding get()= _binding
     private lateinit var sharedPref:SharedPreferenceHelper
     private lateinit var database: RoomDataPassenger
+    private lateinit var databaseGuest: RoomDataGuest
     private lateinit var dao: PassengerDao
+    private lateinit var daoGuest: GuestDao
     private var dateSetListener: DatePickerDialog.OnDateSetListener? = null
     private var age:Int = 0
     private lateinit var presenter: DetailFillDataPresenter
@@ -42,14 +47,17 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     private var titleRadio:String? = null
     private var totalPassenger:Int = 0
     private var idNationality:String =""
+    private var setupView:String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         _binding = FragmentDetailFillDataPassengerBinding.inflate(inflater, container, false)
         sharedPref = SharedPreferenceHelper(requireActivity())
         database = RoomDataPassenger.getDatabase(requireActivity())
+        databaseGuest = RoomDataGuest.getDatabase(requireActivity())
         presenter = DetailFillDataPresenter(this, requireActivity())
         dao = database.getDataPassengerDao()
+        daoGuest = databaseGuest.getGuestDao()
         binding.btnSave.setOnClickListener(this)
         binding.etBirthdate.setOnClickListener(this)
         radioGroup()
@@ -62,6 +70,10 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
             findNavController().navigateUp()
         }
         val totalPassengerParams = arguments?.getInt("totalPassenger")
+         setupView = arguments?.getString("hotel")
+        if (setupView != null && setupView == "setupHotel"){
+            setupHotelGuestView()
+        }
         totalPassenger = totalPassengerParams!!
         checkFirstDataPassenger(totalPassengerParams)
         presenter.getListCountry()
@@ -72,7 +84,11 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_save -> {
-                checkData()
+                if (setupView !=null && setupView == "setupHotel"){
+                    checkDataGuestHotel()
+                }else {
+                    checkData()
+                }
             }
             R.id.et_birthdate -> {
                 setDatePicker()
@@ -86,6 +102,50 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         } else {
             binding.tvWarningInputDataPassenger.visibility = View.GONE
         }
+    }
+
+    private fun checkDataGuestHotel(){
+        var firstname = binding.etFirstname.text.toString()
+        var lastname = binding.etLastName.text.toString()
+        var title = titleRadio
+        var isEmptFirstName = false
+        var isEmptLastName = false
+        var isEmptyTitle = false
+
+        if (firstname.isNullOrEmpty()){
+            binding.etFirstname.error = "Can't Empty"
+            isEmptFirstName = true
+        } else {
+            isEmptFirstName = false
+            firstname = binding.etFirstname.text.toString()
+            binding.etFirstname.error = null
+        }
+
+        if (lastname.isNullOrEmpty()){
+            binding.etLastName.error = "Can't Empty"
+            isEmptLastName = true
+        } else {
+            isEmptLastName = false
+            lastname = binding.etLastName.text.toString()
+            binding.etLastName.error = null
+        }
+
+        if (title == null){
+            binding.rbMstr.error = ""
+            isEmptyTitle = true
+        } else {
+            title = titleRadio
+            isEmptyTitle = false
+        }
+
+        if (!isEmptFirstName && !isEmptLastName &&
+          !isEmptyTitle){
+              saveGuestHotel(DataGuest(0,title!!, firstname, lastname))
+            findNavController().navigateUp()
+        }else {
+            Toast.makeText(requireActivity(), "Please complete data guest", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     private fun checkData(){
@@ -202,6 +262,14 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         }
     }
 
+    private fun saveGuestHotel(dataguest: DataGuest){
+        if (daoGuest.getById(dataguest.id).isEmpty()){
+            daoGuest.insert(dataguest)
+        }else{
+            daoGuest.update(dataguest)
+        }
+    }
+
     private fun radioGroup(){
         binding.rdGroup.setOnCheckedChangeListener { radioGroup, i ->
             val radio: RadioButton = requireActivity().findViewById(i)
@@ -277,6 +345,15 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
             }
         }
         return typePassenger.toString()
+    }
+
+    private fun setupHotelGuestView(){
+        binding.tvTitleAddGuest.text = requireActivity().getString(R.string.guest_identity)
+        binding.rbMstr.visibility = View.GONE
+        binding.linearBirthDate.visibility = View.GONE
+        binding.rdGroupGender.visibility = View.GONE
+        binding.linearNationality.visibility = View.GONE
+        binding.linearBirthNationality.visibility = View.GONE
     }
 
     override fun messageGetCountryList(msg: String) {

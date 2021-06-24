@@ -50,6 +50,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -59,6 +60,7 @@
                     android:text="Smoking Room"/>
 
                 <RadioGroup
+                    android:id="@+id/rd_smoking_room"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">

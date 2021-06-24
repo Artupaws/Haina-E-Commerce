@@ -94,9 +94,9 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity
 
         btnSave?.setOnClickListener {
             if (!tvCheckIn?.text?.contains("-")!!){
-                requestHotel = RequestBookingHotel("ID", cityId, "ID", checkInDate, checkOutDate )
-                presenter.getHotelDarma(requestHotel.countryID, requestHotel.cityId, requestHotel.paxPassport,
-                    requestHotel.checkIn, requestHotel.checkOut)
+                requestHotel = RequestBookingHotel("ID", cityId, "ID", checkInDate, checkOutDate, null)
+                presenter.getHotelDarma(requestHotel.countryID!!, requestHotel.cityId!!, requestHotel.paxPassport!!,
+                    requestHotel.checkIn!!, requestHotel.checkOut!!)
             } else {
                 popUpScheduleHotel?.show()
             }
@@ -147,6 +147,7 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity
         if (data != null){
             val bundle = Bundle()
             bundle.putParcelable("dataHotel", data)
+            bundle.putInt("totalNight", totalNight)
             Navigation.findNavController(binding.root).navigate(R.id.action_listCityHotelFragment_to_scheduleHotelFragment, bundle)
         }
     }

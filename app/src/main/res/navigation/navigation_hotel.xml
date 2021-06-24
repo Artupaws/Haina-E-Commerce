@@ -36,5 +36,22 @@
         android:id="@+id/fillInDetailFragment"
         android:name="haina.ecommerce.view.hotels.fillindetail.FillInDetailFragment"
         android:label="fragment_fill_in_detail"
-        tools:layout="@layout/fragment_fill_in_detail" />
+        tools:layout="@layout/fragment_fill_in_detail" >
+        <action
+            android:id="@+id/action_fillInDetailFragment_to_detailFillDataPassengerFragment2"
+            app:destination="@id/detailFillDataPassengerFragment2" />
+        <action
+            android:id="@+id/action_fillInDetailFragment_to_reviewBookingFragment"
+            app:destination="@id/reviewBookingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFillDataPassengerFragment2"
+        android:name="haina.ecommerce.view.flight.detailfilldata.DetailFillDataPassengerFragment"
+        android:label="fragment_detail_fill_data_passenger"
+        tools:layout="@layout/fragment_detail_fill_data_passenger" />
+    <fragment
+        android:id="@+id/reviewBookingFragment"
+        android:name="haina.ecommerce.view.hotels.review.ReviewBookingFragment"
+        android:label="fragment_review_booking"
+        tools:layout="@layout/fragment_review_booking" />
 </navigation>

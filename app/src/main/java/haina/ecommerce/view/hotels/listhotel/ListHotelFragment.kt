@@ -21,6 +21,7 @@ class ListHotelFragment : Fragment(), AdapterListHotelDarma.ItemAdapterCallBack,
     private lateinit var _binding:FragmentListHotelBinding
     private val binding get() = _binding
     private lateinit var presenter: ListHotelPresenter
+    private var totalNight:Int? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -33,6 +34,7 @@ class ListHotelFragment : Fragment(), AdapterListHotelDarma.ItemAdapterCallBack,
         super.onActivityCreated(savedInstanceState)
 
         val dataHotelDarma = arguments?.getParcelable<DataHotelDarma>("dataHotel")
+        totalNight = arguments?.getInt("totalNight", 0)
         val adapterHotel = AdapterListHotelDarma(requireActivity(), dataHotelDarma?.hotels, this)
 
         binding.toolbar4.setNavigationOnClickListener {
@@ -61,6 +63,7 @@ class ListHotelFragment : Fragment(), AdapterListHotelDarma.ItemAdapterCallBack,
         if (data != null){
             val bundle = Bundle()
             bundle.putParcelable("dataRoom", data)
+            totalNight?.let { bundle.putInt("totalNight", it) }
             Navigation.findNavController(binding.root).navigate(R.id.action_scheduleHotelFragment_to_listRoomFragment, bundle)
         }
     }

@@ -38,6 +38,13 @@
                 android:layout_height="20dp"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_edit" />
+            <ImageView
+                android:id="@+id/iv_action_save"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:visibility="gone"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_save" />
 
         </RelativeLayout>
 
@@ -58,29 +65,67 @@
         app:layout_constraintTop_toBottomOf="@+id/linear_title"
         app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_email_contact_detail"
-                style="@style/TextView.Poppins12spGrey"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linear_state_saved"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="putra@gmail.com" />
+                android:visibility="visible"
+                android:orientation="vertical"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/tv_name_contact_detail"
-                style="@style/TextView.Poppins12spGrey"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tv_email_contact_detail"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="putra@gmail.com" />
+
+                <TextView
+                    android:id="@+id/tv_phone_number"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="08321014912" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_state_unsaved"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="Putra" />
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="10dp">
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/et_email_contact_detail"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:inputType="textEmailAddress"
+                    android:hint="@string/hint_email"
+                    android:text="putra@gmail.com" />
+
+                <EditText
+                    android:id="@+id/et_name_contact_detail"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:inputType="phone"
+                    android:hint="@string/phone_number"
+                    android:text="0813921041" />
+            </LinearLayout>
+
+
+        </FrameLayout>
+
 
     </androidx.cardview.widget.CardView>
 

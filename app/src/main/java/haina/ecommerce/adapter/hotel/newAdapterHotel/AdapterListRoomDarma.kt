@@ -4,8 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemRoomDarmaBinding
 import haina.ecommerce.databinding.ListItemRoomHotelBinding
@@ -22,6 +24,8 @@ class AdapterListRoomDarma(val context: Context, private val listRoom: List<Room
             binding.apply {
                 tvNameRoom.text = itemHaina.name
                 var statusBreakfast = itemHaina.breakfast
+                val icon = HtmlCompat.fromHtml("<img${itemHaina.image}>", HtmlCompat.FROM_HTML_MODE_LEGACY)
+                Glide.with(context).load(icon).into(ivRoomHotel)
                 statusBreakfast = if (!statusBreakfast?.toLowerCase()?.contains("breakfast")!!){
                     "Breakfast : ${context.getString(R.string.breakfast_status_no)}"
                 } else {

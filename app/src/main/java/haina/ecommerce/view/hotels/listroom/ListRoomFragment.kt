@@ -1,6 +1,7 @@
 package haina.ecommerce.view.hotels.listroom
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,17 +9,19 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.newAdapterHotel.AdapterListCommonFacilities
 import haina.ecommerce.adapter.hotel.newAdapterHotel.AdapterListRoomDarma
 import haina.ecommerce.databinding.FragmentListRoomBinding
+import haina.ecommerce.model.hotels.newHotel.DataPricePolicy
 import haina.ecommerce.model.hotels.newHotel.DataRoom
 import haina.ecommerce.model.hotels.newHotel.RoomsItemDarma
 import haina.ecommerce.view.hotels.listfacitieshotel.BottomSheetFacilitiesHotel
 
-class ListRoomFragment : Fragment(), AdapterListRoomDarma.ItemAdapterCallback, View.OnClickListener {
+class ListRoomFragment : Fragment(), AdapterListRoomDarma.ItemAdapterCallback, View.OnClickListener, ListRoomContract {
 
     private lateinit var _binding:FragmentListRoomBinding
     private val binding get() = _binding
@@ -30,11 +33,14 @@ class ListRoomFragment : Fragment(), AdapterListRoomDarma.ItemAdapterCallback, V
     }
     private var clicked = false
     private var dataRoom:DataRoom? = null
-
+    private lateinit var presenter: ListRoomPresenter
+    private var totalNight:Int? = null
+    private var imageRoomUrl:String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentListRoomBinding.inflate(inflater, container, false)
         clicked = !clicked
+        presenter = ListRoomPresenter(this, requireActivity())
         return binding.root
     }
 
@@ -47,6 +53,7 @@ class ListRoomFragment : Fragment(), AdapterListRoomDarma.ItemAdapterCallback, V
             findNavController().navigateUp()
         }
         dataRoom = arguments?.getParcelable<DataRoom>("dataRoom")
+        totalNight = arguments?.getInt("totalNight")
         setupView(dataRoom)
 
     }
@@ -97,7 +104,8 @@ class ListRoomFragment : Fragment(), AdapterListRoomDarma.ItemAdapterCallback, V
     override fun onClick(view: View, data: RoomsItemDarma) {
         when(view.id){
             R.id.btn_select -> {
-                Toast.makeText(requireActivity(), "${data.breakfast} ${data.iD}", Toast.LENGTH_SHORT).show()
+                presenter.getPricePolicy(data.iD!!, data.breakfast!!)
+                imageRoomUrl = data.image
             }
         }
     }
@@ -118,7 +126,23 @@ class ListRoomFragment : Fragment(), AdapterListRoomDarma.ItemAdapterCallback, V
                 }
             }
         }
+    }
 
+    override fun messageGetPricePolicy(msg: String) {
+        Log.d("getDataPricePolicy", msg)
+        if (!msg.toLowerCase().contains("success")){
+            Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun getPricePolicy(data: DataPricePolicy?) {
+        if (data != null) {
+            val bundle = Bundle()
+            bundle.putParcelable("dataPricePolicy", data)
+            bundle.putString("imageRoomUrl", imageRoomUrl)
+            totalNight?.let { bundle.putInt("totalNight", it) }
+            Navigation.findNavController(binding.root).navigate(R.id.action_listRoomFragment_to_fillInDetailFragment, bundle)
+        }
     }
 
 }

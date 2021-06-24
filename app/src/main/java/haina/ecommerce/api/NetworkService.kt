@@ -8,10 +8,7 @@ import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.flight.*
 import haina.ecommerce.model.hotels.*
-import haina.ecommerce.model.hotels.newHotel.ResponseGetCityHotel
-import haina.ecommerce.model.hotels.newHotel.ResponseGetHotelDarma
-import haina.ecommerce.model.hotels.newHotel.ResponseGetPricePolicy
-import haina.ecommerce.model.hotels.newHotel.ResponseGetRoomHotel
+import haina.ecommerce.model.hotels.newHotel.*
 import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
 import haina.ecommerce.model.howtopay.ResponseGetHowToPay
 import haina.ecommerce.model.news.ResponseGetListNews
@@ -551,4 +548,11 @@ interface NetworkService {
         @Field("room_id")roomId:String,
         @Field("breakfast")breakfast:String
     ):Call<ResponseGetPricePolicy>
+
+    //Set Booking Hotel Darma
+    @Headers("Content-Type: application/json")
+    @POST("api/hotel_darma/create_booking")
+    fun setBookingHotelDarma(
+        @Body body: RequestBookingHotelDarma
+    ):Call<ResponseSetBooking>
 }

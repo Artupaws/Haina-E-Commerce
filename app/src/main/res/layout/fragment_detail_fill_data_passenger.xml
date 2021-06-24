@@ -33,6 +33,7 @@
             android:orientation="vertical">
 
           <TextView
+              android:id="@+id/tv_title_add_guest"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="@string/passenger_indentity"
@@ -116,7 +117,6 @@
                 android:id="@+id/linear_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
                 android:orientation="vertical">
 
                 <TextView
@@ -138,6 +138,12 @@
 
             </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/linear_birth_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -154,6 +160,7 @@
                 android:layout_marginEnd="10dp"
                 android:focusable="false"
                 style="@style/TextView.Poppins14spBlack"/>
+        </LinearLayout>
 
             <RadioGroup
                 android:id="@+id/rd_group_gender"

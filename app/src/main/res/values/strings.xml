@@ -307,5 +307,6 @@
     <string name="see_all_facilities"><u>See all facilities</u></string>
     <string name="breakfast_status_yes"><u>Include</u></string>
     <string name="breakfast_status_no"><u>Not Include</u></string>
+    <string name="guest_identity">Guest Identity</string>
 
 </resources>

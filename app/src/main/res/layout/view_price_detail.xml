@@ -10,7 +10,7 @@
             style="@style/TextView.Poppins14spBlack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Price Detail"
+            android:text="Price Room"
             app:layout_constraintStart_toStartOf="@+id/cardView3"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextView.Poppins14spBlack"
-                tools:text="Total Price"/>
+                android:text="@string/price"/>
 
             <TextView
                 android:id="@+id/tv_total_price"

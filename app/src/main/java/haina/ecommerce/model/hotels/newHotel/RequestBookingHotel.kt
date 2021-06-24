@@ -8,18 +8,21 @@ import kotlinx.android.parcel.Parcelize
 data class RequestBookingHotel(
 
     @SerializedName("country_id")
-    var countryID: String,
+    var countryID: String?,
 
     @SerializedName("city_id")
-    var cityId: Int,
+    var cityId: Int?,
 
     @SerializedName("pax_passport")
-    var paxPassport: String,
+    var paxPassport: String?,
 
     @SerializedName("check_in_date")
-    var checkIn: String,
+    var checkIn: String?,
 
     @SerializedName("check_out_date")
-    var checkOut: String
+    var checkOut: String?,
+
+    @SerializedName("data_guest")
+    var dataGuest: List<DataGuest?>?
 
 ) : Parcelable

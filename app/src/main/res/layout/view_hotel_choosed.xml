@@ -95,6 +95,50 @@
                 android:layout_height="wrap_content"
                 android:text="(1x) Singkawang Room" />
 
+            <LinearLayout
+                android:id="@+id/linear_cancel_policy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="Cancel Policy" />
+
+                <TextView
+                    android:id="@+id/tv_cancel_policy"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_additional_information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="Additional Information" />
+
+                <TextView
+                    android:id="@+id/tv_additional_information"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
