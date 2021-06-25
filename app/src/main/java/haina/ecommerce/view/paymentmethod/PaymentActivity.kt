@@ -23,10 +23,13 @@ import haina.ecommerce.databinding.ActivityPaymentBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.bill.RequestBill
 import haina.ecommerce.model.hotels.Requesthotel
+import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelDarma
+import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelToDarma
 import haina.ecommerce.model.paymentmethod.DataPaymentMethod
 import haina.ecommerce.model.pulsaanddata.RequestPulsa
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
+import java.util.ArrayList
 
 class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContract {
 
@@ -42,6 +45,8 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     private var dataPulsa:RequestPulsa? = null
     private var requestBill:RequestBill? = null
     private var dataBooking:Requesthotel? = null
+    private var dataBookingHotelDarma: RequestBookingHotelDarma? = null
+    private var requestToDarma : RequestBookingHotelToDarma? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +61,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         binding.frameChoosePaymentMethod.setOnClickListener(this)
         binding.btnPayment.setOnClickListener(this)
         typeTransactionParams = intent.getIntExtra("typeTransaction", 0)
+        dataBookingHotelDarma = intent.getParcelableExtra("dataBooking")
         Log.d("typeTransaction", typeTransactionParams.toString())
         setDetailOrder(typeTransactionParams)
     }
@@ -74,6 +80,9 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                     }
                     3 -> { presenter.createBookingHotel(dataBooking?.hotelId!!, dataBooking?.roomId!!, dataBooking?.checkIn!!, dataBooking?.checkOut!!, dataBooking?.totalGuest!!,
                    helper.changeFormatMoneyToValueFilter(dataBooking?.totalPrice)?.toInt()!!, idPaymentMethod!!)
+                    }
+                    4 -> {
+                        presenter.createBookingHotelDarma(requestToDarma!!)
                     }
                 }
             }
@@ -96,6 +105,19 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                     binding.tvChoosePaymentMethod.visibility = View.GONE
                     binding.linearPaymentMethod.visibility = View.VISIBLE
                     binding.tvNameBank.text = bank
+                    val list = ArrayList<String>()
+                    for (data in dataBookingHotelDarma?.special_request_array_complete!!){
+                        list.add(data.iD!!)
+                    }
+                    val separator = ", "
+                    val string = list.joinToString(separator)
+                    val smokingRoomValue = if (dataBookingHotelDarma?.smokingRoom == true){
+                        1
+                    } else {
+                        0
+                    }
+                    requestToDarma= RequestBookingHotelToDarma(smokingRoomValue, dataBookingHotelDarma!!.phone,
+                        string, idPaymentMethod, dataBookingHotelDarma!!.paxes, dataBookingHotelDarma!!.email, dataBookingHotelDarma!!.price)
                 }
             }
         }
@@ -121,6 +143,11 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                 dataBooking = intent.getParcelableExtra("dataBooking")
                 binding.tvTotalBill.text = dataBooking?.totalPrice
                 price = dataBooking?.totalPrice
+            }
+
+            4 -> {
+                binding.tvTotalBill.text = dataBookingHotelDarma?.price
+                price = dataBookingHotelDarma?.price
             }
         }
     }

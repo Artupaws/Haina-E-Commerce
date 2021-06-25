@@ -503,13 +503,6 @@ interface NetworkService {
     @GET("api/ticket/nationality")
     fun getListNationality():Call<ResponseGetListNationality>
 
-    //Set Data Passenger
-    @Headers("Content-Type: application/json")
-    @POST("api/ticket/passenger")
-    fun setDataPassenger(
-        @Body body:RequestSetPassenger
-    ):Call<ResponseSetDataPassenger>
-
     //Get Data Add On
     @GET("api/ticket/addons")
     fun getDataAddOn():Call<ResponseGetAddOn>
@@ -553,6 +546,13 @@ interface NetworkService {
     @Headers("Content-Type: application/json")
     @POST("api/hotel_darma/create_booking")
     fun setBookingHotelDarma(
-        @Body body: RequestBookingHotelDarma
+        @Body body:RequestBookingHotelToDarma
     ):Call<ResponseSetBooking>
+
+    //Set Data Passenger
+    @Headers("Content-Type: application/json")
+    @POST("api/ticket/passenger")
+    fun setDataPassenger(
+        @Body body:RequestSetPassenger
+    ):Call<ResponseSetDataPassenger>
 }

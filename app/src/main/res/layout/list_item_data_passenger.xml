@@ -82,6 +82,7 @@
         tools:text="31727274912971"/>
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_below="@+id/tv_idcard_number"

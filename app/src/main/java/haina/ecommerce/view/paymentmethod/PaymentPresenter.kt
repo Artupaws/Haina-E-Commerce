@@ -4,6 +4,9 @@ import android.content.Context
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.bill.ResponseAddBillTransaction
 import haina.ecommerce.model.hotels.ResponseBookingHotel
+import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelDarma
+import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelToDarma
+import haina.ecommerce.model.hotels.newHotel.ResponseSetBooking
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
 import org.json.JSONObject
@@ -87,6 +90,23 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
                 view.messageBookingHotel(t.localizedMessage.toString())
             }
 
+        })
+    }
+
+    fun createBookingHotelDarma(dataBooking: RequestBookingHotelToDarma){
+        val createBooking = NetworkConfig().getConnectionHainaBearer(context).setBookingHotelDarma(dataBooking)
+        createBooking.enqueue(object : retrofit2.Callback<ResponseSetBooking>{
+            override fun onResponse(call: Call<ResponseSetBooking>, response: Response<ResponseSetBooking>) {
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageBookingHotel(response.body()?.message.toString())
+                } else {
+                    view.messageBookingHotel(response.body()?.message.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseSetBooking>, t: Throwable) {
+                view.messageBookingHotel(t.localizedMessage.toString())
+            }
         })
     }
 

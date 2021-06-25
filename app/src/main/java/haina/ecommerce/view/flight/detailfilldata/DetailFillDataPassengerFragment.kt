@@ -97,7 +97,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     }
 
     private fun checkFirstDataPassenger(total:Int){
-        if (total == 0){
+        if (total == 0 && setupView.isNullOrEmpty()){
             binding.tvWarningInputDataPassenger.visibility = View.VISIBLE
         } else {
             binding.tvWarningInputDataPassenger.visibility = View.GONE
@@ -134,7 +134,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
             binding.rbMstr.error = ""
             isEmptyTitle = true
         } else {
-            title = titleRadio
+            title = "$titleRadio."
             isEmptyTitle = false
         }
 
@@ -354,6 +354,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         binding.rdGroupGender.visibility = View.GONE
         binding.linearNationality.visibility = View.GONE
         binding.linearBirthNationality.visibility = View.GONE
+        binding.tvWarningInputDataPassenger.visibility = View.GONE
     }
 
     override fun messageGetCountryList(msg: String) {

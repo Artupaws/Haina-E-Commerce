@@ -11,7 +11,8 @@ import haina.ecommerce.model.hotels.newHotel.DataGuest
 import haina.ecommerce.room.roomdatapassenger.DataPassenger
 
 class AdapterDataGuest(val context: Context, private val listDataPassenger: List<DataGuest?>?,
-                       private val itemAdapterCallback: ItemAdapterCallback) :
+                       private val itemAdapterCallback: ItemAdapterCallback,
+private val status:Boolean) :
         RecyclerView.Adapter<AdapterDataGuest.Holder>() {
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
@@ -20,10 +21,18 @@ class AdapterDataGuest(val context: Context, private val listDataPassenger: List
             with(binding) {
                 tvBirthdate.visibility = View.GONE
                 tvIdcardNumber.visibility = View.GONE
-                val nameAndTitle = "${itemHaina?.title}, ${itemHaina?.first_name} ${itemHaina?.last_name}"
+                val nameAndTitle = "${itemHaina?.title} ${itemHaina?.first_name} ${itemHaina?.last_name}"
                 tvNamePassenger.text = nameAndTitle
                 tvActionDelete.setOnClickListener {
                     itemAdapterCallback.onClick(tvActionDelete, itemHaina!!)
+                }
+                when(status){
+                    true -> {
+                        linearEdit.visibility = View.VISIBLE
+                    } false -> {
+                    linearEdit.visibility = View.GONE
+                    line.visibility = View.GONE
+                    }
                 }
             }
         }

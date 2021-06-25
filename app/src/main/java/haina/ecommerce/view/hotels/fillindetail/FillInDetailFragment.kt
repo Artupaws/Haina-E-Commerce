@@ -16,18 +16,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.newAdapterHotel.AdapterDataGuest
+import haina.ecommerce.adapter.hotel.newAdapterHotel.AdapterSpecialRequestArray
 import haina.ecommerce.databinding.FragmentFillInDetailBinding
 import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.hotels.newHotel.DataGuest
-import haina.ecommerce.model.hotels.newHotel.DataPricePolicy
-import haina.ecommerce.model.hotels.newHotel.DataSetBooking
-import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelDarma
+import haina.ecommerce.model.hotels.newHotel.*
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.room.roomdataguest.GuestDao
 import haina.ecommerce.room.roomdataguest.RoomDataGuest
 import haina.ecommerce.util.Constants
 
-class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.ItemAdapterCallback {
+class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.ItemAdapterCallback, AdapterSpecialRequestArray.ItemAdapterCallback {
 
     private lateinit var _binding:FragmentFillInDetailBinding
     private val binding get() = _binding
@@ -41,8 +39,12 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
     private var totalGuest:Int = 0
     private var totalNight:Int? = null
     private var smokingRoomRadio:String = ""
+    private var smokingBoolean:Boolean = false
     private var dataPricePolicy:DataPricePolicy? = null
     private var imageRoomUrl:String? = null
+    private var listSpecialRequestArrayItem = ArrayList<SpecialRequestArrayItem>()
+    private var sra = ArrayList<String>()
+    private var specialRequestArray:Boolean = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentFillInDetailBinding.inflate(inflater, container, false)
@@ -77,6 +79,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
     override fun onResume() {
         super.onResume()
         getListDataGuest(databaseGuest, dao)
+        listSpecialRequestArrayItem.clear()
     }
 
     private fun setViewDataHotel(data:DataPricePolicy?){
@@ -115,12 +118,19 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
     }
 
     private fun specialRequest(data: DataPricePolicy?){
+        Log.d("dataSRA", data?.specialRequestArray?.size.toString())
         if (!data?.specialRequestArrayRequired!!){
+            !specialRequestArray
             binding.includeSpecialRequest.rvRequest.visibility = View.GONE
             binding.includeSpecialRequest.linearAddRequest.visibility = View.VISIBLE
         } else {
+            specialRequestArray
             binding.includeSpecialRequest.rvRequest.visibility = View.VISIBLE
             binding.includeSpecialRequest.linearAddRequest.visibility = View.GONE
+            binding.includeSpecialRequest.rvRequest.apply {
+                adapter = AdapterSpecialRequestArray(requireActivity(), data.specialRequestArray, this@FillInDetailFragment, true)
+                layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            }
         }
     }
 
@@ -138,7 +148,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
     private fun setupListDataGuest(listParams: ArrayList<DataGuest>) {
         binding.includeDataGuest.rvGuest.apply {
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-            adapter = AdapterDataGuest(requireActivity(), listParams, this@FillInDetailFragment)
+            adapter = AdapterDataGuest(requireActivity(), listParams, this@FillInDetailFragment, true)
         }
     }
 
@@ -153,10 +163,14 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
             R.id.btn_add_guest -> {
                 val bundle = Bundle()
                 bundle.putString("hotel","setupHotel")
-                Navigation.findNavController(binding.includeDataGuest.btnAddGuest).navigate(haina.ecommerce.R.id.action_fillInDetailFragment_to_detailFillDataPassengerFragment2, bundle)
+                Navigation.findNavController(binding.includeDataGuest.btnAddGuest).navigate(R.id.action_fillInDetailFragment_to_detailFillDataPassengerFragment2, bundle)
             }
             R.id.btn_next -> {
-                checkDataBooking()
+                if (specialRequestArray){
+                    checkDataBookingRequestArray()
+                } else {
+                    checkDataBookingRequestString()
+                }
             }
         }
     }
@@ -242,6 +256,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
     private fun radioButtonSmokingRoom(view: View){
         val radio: RadioButton = requireActivity().findViewById(binding.rdSmokingRoom.checkedRadioButtonId)
         smokingRoomRadio = radio.text.toString()
+        smokingBoolean = smokingRoomRadio.toLowerCase().contains("yes")
     }
 
     private fun deleteGuest(dataguest: DataGuest){
@@ -252,7 +267,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
         dao.deleteAll()
     }
 
-    private fun checkDataBooking(){
+    private fun checkDataBookingRequestString(){
         var isEmptySmokingRoom = true
         var isEmptyDataGuest = true
         var isEmptySpecialRequest = true
@@ -282,11 +297,9 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
             specialRequest = binding.includeSpecialRequest.etSpecialRequest.text.toString()
             isEmptySpecialRequest = false
         }
-
-        if (!isEmptySmokingRoom && smokingRoom.toLowerCase().contains("yes") && !isEmptyDataGuest && !isEmptySpecialRequest){
-            val dataBooking = RequestBookingHotelDarma(true,
-                binding.includeContactDetail.tvPhoneNumber.text.toString(), specialRequest, null, listGuest,
-                binding.includeContactDetail.tvEmailContactDetail.text.toString())
+        if (!isEmptySmokingRoom && !isEmptyDataGuest && !isEmptySpecialRequest && !specialRequestArray){
+            val dataBooking = RequestBookingHotelDarma(smokingBoolean, binding.includeContactDetail.tvPhoneNumber.text.toString(), specialRequest, null, listGuest,
+                 null, binding.includeContactDetail.tvEmailContactDetail.text.toString(), binding.includePriceDetail.tvTotalPrice.text.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataBooking", dataBooking)
             bundle.putParcelable("dataPricePolicy", dataPricePolicy)
@@ -294,23 +307,71 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
             totalNight?.let { bundle.putInt("totalNight", it) }
             Navigation.findNavController(binding.btnNext).navigate(R.id.action_fillInDetailFragment_to_reviewBookingFragment, bundle)
             Log.d("dataRequest", "$smokingRoom, ${binding.includeContactDetail.tvPhoneNumber.text}, ${binding.includeContactDetail.tvEmailContactDetail.text}," +
-                    "$specialRequest, $listGuest")
-        } else if (!isEmptySmokingRoom && smokingRoom.toLowerCase().contains("no") && !isEmptyDataGuest && !isEmptySpecialRequest){
-            val dataBooking = RequestBookingHotelDarma(false,
-                binding.includeContactDetail.tvPhoneNumber.text.toString(), specialRequest, null, listGuest,
-                binding.includeContactDetail.tvEmailContactDetail.text.toString())
-            val bundle = Bundle()
-            bundle.putParcelable("dataBooking", dataBooking)
-            bundle.putParcelable("dataPricePolicy", dataPricePolicy)
-            bundle.putString("imageRoomUrl", imageRoomUrl)
-            totalNight?.let { bundle.putInt("totalNight", it) }
-            Navigation.findNavController(binding.btnNext).navigate(R.id.action_fillInDetailFragment_to_reviewBookingFragment, bundle)
-            Log.d("dataRequest", "$smokingRoom, ${binding.includeContactDetail.tvPhoneNumber.text}, ${binding.includeContactDetail.tvEmailContactDetail.text}," +
-                    "$specialRequest, $listGuest")
+                    "$specialRequest, $listSpecialRequestArrayItem, $listGuest")
         }else{
             Log.d("dataRequest", "$smokingRoom, ${binding.includeContactDetail.tvPhoneNumber.text}, ${binding.includeContactDetail.tvEmailContactDetail.text}," +
                     "$specialRequest, $listGuest")
             Toast.makeText(requireActivity(), "Please complete all data", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun checkDataBookingRequestArray(){
+        var isEmptySmokingRoom = true
+        var isEmptyDataGuest = true
+        var isEmptySpecialRequest = true
+
+        var smokingRoom = smokingRoomRadio
+        var listGuest = listDataGuest
+        val specialRequest = listSpecialRequestArrayItem
+
+        if (smokingRoom.isNullOrEmpty()){
+            isEmptySmokingRoom = true
+        } else {
+            isEmptySmokingRoom = false
+            smokingRoom = smokingRoomRadio
+        }
+
+        if (listDataGuest.size == 0){
+            isEmptyDataGuest = true
+        } else {
+            isEmptyDataGuest = false
+            listGuest = listDataGuest
+        }
+
+        isEmptySpecialRequest = specialRequest.size == 0
+
+        if (!isEmptySmokingRoom && !isEmptyDataGuest && !isEmptySpecialRequest){
+            val dataBooking = RequestBookingHotelDarma(smokingBoolean, binding.includeContactDetail.tvPhoneNumber.text.toString(), null, null, listGuest,
+                listSpecialRequestArrayItem, binding.includeContactDetail.tvEmailContactDetail.text.toString(),  binding.includePriceDetail.tvTotalPrice.text.toString())
+            val bundle = Bundle()
+            bundle.putParcelable("dataBooking", dataBooking)
+            bundle.putParcelable("dataPricePolicy", dataPricePolicy)
+            bundle.putString("imageRoomUrl", imageRoomUrl)
+            totalNight?.let { bundle.putInt("totalNight", it) }
+            Navigation.findNavController(binding.btnNext).navigate(R.id.action_fillInDetailFragment_to_reviewBookingFragment, bundle)
+            Log.d("dataRequestArray", "$smokingRoom, ${binding.includeContactDetail.tvPhoneNumber.text}, ${binding.includeContactDetail.tvEmailContactDetail.text}," +
+                    "${listSpecialRequestArrayItem}, $listGuest")
+        }else{
+            Log.d("dataRequestArray", "$smokingRoom, ${binding.includeContactDetail.tvPhoneNumber.text}, ${binding.includeContactDetail.tvEmailContactDetail.text}," +
+                    "$specialRequest, $listGuest")
+            Toast.makeText(requireActivity(), "Please complete all data", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onClickSpecialRequest(view: View, data: SpecialRequestArrayItem, status:Boolean) {
+        when(view.id){
+            R.id.cb_addon -> {
+                when (status){
+                    true -> {
+                        listSpecialRequestArrayItem.add(data)
+                        sra.add(data.iD!!)
+                    }
+                    false -> {
+                        listSpecialRequestArrayItem.remove(data)
+                        sra.remove(data.iD!!)
+                    }
+                }
+            }
         }
     }
 
