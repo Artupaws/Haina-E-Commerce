@@ -362,10 +362,12 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
     }
 
     override fun getListCountry(data: DataNationality) {
-        val arrayAdapter = AutoCompleteAdapter(requireActivity(),android.R.layout.simple_expandable_list_item_1, data.countries, this)
-        arrayAdapter.notifyDataSetChanged()
-        binding.acNationality.setAdapter(arrayAdapter)
-        binding.acBirthNationality.setAdapter(arrayAdapter)
+//        val arrayAdapter = AutoCompleteAdapter(requireActivity(),android.R.layout.simple_expandable_list_item_1, data.countries, this)
+//        arrayAdapter.notifyDataSetChanged()
+        binding.acNationality.setAdapter(AutoCompleteAdapter(requireActivity(),android.R.layout.simple_expandable_list_item_1, data.countries, this))
+        binding.acBirthNationality.setAdapter(AutoCompleteAdapter(requireActivity(),android.R.layout.simple_expandable_list_item_1, data.countries, this))
+        (binding.acNationality.adapter as AutoCompleteAdapter).notifyDataSetChanged()
+        (binding.acBirthNationality.adapter as AutoCompleteAdapter).notifyDataSetChanged()
     }
 
     override fun onAdapterClick(view: View, data: CountriesItem) {

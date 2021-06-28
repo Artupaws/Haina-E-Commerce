@@ -8,6 +8,7 @@ import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -22,6 +23,23 @@ class NetworkConfig {
         return OkHttpClient.Builder().connectTimeout(2, TimeUnit.MINUTES)
                 .addInterceptor(logging)
                 .build()
+    }
+
+    fun getConnectionHainaBearerNew(context: Context): NetworkService{
+        sharedPrefHelper = SharedPreferenceHelper(context)
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl(Constants.BASE_API_HAINA)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(OkHttpClient.Builder().connectTimeout(5, TimeUnit.MINUTES).addInterceptor { chain ->
+                val request = chain.request().newBuilder().addHeader("Authorization", "Bearer ${sharedPrefHelper.getValueString(Constants.PREF_TOKEN_USER)}")
+                    .addHeader("Accept", "application/json")
+                    .addHeader("apikey", Constants.APIKEY)
+                    .build()
+                chain.proceed(request)
+            }.build())
+            .build()
+        return retrofit.create(NetworkService::class.java)
     }
 
     fun getConnectionHainaBearer(context: Context): NetworkService{

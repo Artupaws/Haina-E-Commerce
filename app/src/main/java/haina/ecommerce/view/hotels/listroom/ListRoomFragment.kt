@@ -1,11 +1,10 @@
 package haina.ecommerce.view.hotels.listroom
 
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -21,7 +20,7 @@ import haina.ecommerce.model.hotels.newHotel.DataRoom
 import haina.ecommerce.model.hotels.newHotel.RoomsItemDarma
 import haina.ecommerce.view.hotels.listfacitieshotel.BottomSheetFacilitiesHotel
 
-class ListRoomFragment : Fragment(), AdapterListRoomDarma.ItemAdapterCallback, View.OnClickListener, ListRoomContract {
+class ListRoomFragment : Fragment(), AdapterListRoomDarma.ItemAdapterCallback, View.OnClickListener, ListRoomContract.View {
 
     private lateinit var _binding:FragmentListRoomBinding
     private val binding get() = _binding
@@ -36,6 +35,7 @@ class ListRoomFragment : Fragment(), AdapterListRoomDarma.ItemAdapterCallback, V
     private lateinit var presenter: ListRoomPresenter
     private var totalNight:Int? = null
     private var imageRoomUrl:String? = null
+    private var progressDialog : Dialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentListRoomBinding.inflate(inflater, container, false)
@@ -55,6 +55,7 @@ class ListRoomFragment : Fragment(), AdapterListRoomDarma.ItemAdapterCallback, V
         dataRoom = arguments?.getParcelable<DataRoom>("dataRoom")
         totalNight = arguments?.getInt("totalNight")
         setupView(dataRoom)
+        initLoading()
 
     }
 
@@ -78,6 +79,15 @@ class ListRoomFragment : Fragment(), AdapterListRoomDarma.ItemAdapterCallback, V
             binding.tvTitleCommonFacilities.visibility =View.GONE
             binding.rvCommonFacilities.visibility = View.GONE
         }
+    }
+
+    private fun initLoading(){
+        progressDialog = Dialog(requireActivity())
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.white))
+        val window: Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
     }
 
     private fun onAddPostClicked(clicked: Boolean) {
@@ -143,6 +153,14 @@ class ListRoomFragment : Fragment(), AdapterListRoomDarma.ItemAdapterCallback, V
             totalNight?.let { bundle.putInt("totalNight", it) }
             Navigation.findNavController(binding.root).navigate(R.id.action_listRoomFragment_to_fillInDetailFragment, bundle)
         }
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 
 }

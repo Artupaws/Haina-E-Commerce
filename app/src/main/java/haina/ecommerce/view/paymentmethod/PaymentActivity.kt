@@ -31,7 +31,7 @@ import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivit
 import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
 import java.util.ArrayList
 
-class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContract {
+class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContract.View {
 
     private lateinit var binding: ActivityPaymentBinding
     private var popupPaymentMethod: Dialog? = null
@@ -47,6 +47,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     private var dataBooking:Requesthotel? = null
     private var dataBookingHotelDarma: RequestBookingHotelDarma? = null
     private var requestToDarma : RequestBookingHotelToDarma? = null
+    private var progressDialog : Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         dataBookingHotelDarma = intent.getParcelableExtra("dataBooking")
         Log.d("typeTransaction", typeTransactionParams.toString())
         setDetailOrder(typeTransactionParams)
+        initLoading()
     }
 
     override fun onClick(v: View?) {
@@ -73,13 +75,14 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
             }
             R.id.btn_payment -> {
                 when(typeTransactionParams){
-                    1 -> { presenter.createTransaction(dataPulsa?.phoneNumber!!, dataPulsa?.productCode!!,
+                    1 -> { presenter.createTransactionPhone(dataPulsa?.phoneNumber!!, dataPulsa?.productCode!!,
                     idPaymentMethod!!, dataPulsa!!.idInquiry)
                     }
-                    2 -> {presenter.createBillTransaction(requestBill?.productCode!!, requestBill?.amount!!, requestBill?.customerNumber!!, idPaymentMethod!!, requestBill?.inquiry)
+                    2 -> {presenter.createTransactionBill(requestBill?.productCode!!, requestBill?.amount!!, requestBill?.customerNumber!!, idPaymentMethod!!, requestBill?.inquiry)
                     }
-                    3 -> { presenter.createBookingHotel(dataBooking?.hotelId!!, dataBooking?.roomId!!, dataBooking?.checkIn!!, dataBooking?.checkOut!!, dataBooking?.totalGuest!!,
-                   helper.changeFormatMoneyToValueFilter(dataBooking?.totalPrice)?.toInt()!!, idPaymentMethod!!)
+                    3 -> {
+//                        presenter.createBookingHotel(dataBooking?.hotelId!!, dataBooking?.roomId!!, dataBooking?.checkIn!!, dataBooking?.checkOut!!, dataBooking?.totalGuest!!,
+//                   helper.changeFormatMoneyToValueFilter(dataBooking?.totalPrice)?.toInt()!!, idPaymentMethod!!)
                     }
                     4 -> {
                         presenter.createBookingHotelDarma(requestToDarma!!)
@@ -87,6 +90,16 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                 }
             }
         }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun initLoading(){
+        progressDialog = Dialog(this)
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(getDrawable(android.R.color.white))
+        val window: Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
     }
 
     override fun onStart() {
@@ -221,5 +234,13 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         } else {
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 }
