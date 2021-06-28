@@ -71,7 +71,7 @@ class AdapterCombinePassengerAndFlight(
 
     @Suppress("UNCHECKED_CAST")
     private fun setupListDataFlight(binding:ListItemSetAddonBinding){
-        if(dataSeat!!.isEmpty()){
+        if(dataSeat?.isEmpty() == true){
             binding.rvFlight.apply {
                 adapter = AdapterListFlight(context, dataTicket, dataAddOn, dataMeals, dataSeat, false)
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
