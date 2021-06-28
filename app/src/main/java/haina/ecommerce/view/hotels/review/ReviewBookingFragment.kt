@@ -87,7 +87,7 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
             adapter = AdapterDataGuest(requireActivity(), dataBooking.paxes, this@ReviewBookingFragment, false)
         }
 
-        if (dataBooking.special_request_array_complete == null){
+        if (dataBooking.special_request_array_complete?.size == 0){
             binding.includeReviewHotel.linearAddRequest.visibility = View.VISIBLE
             binding.includeReviewHotel.rvRequest.visibility = View.GONE
             binding.includeReviewHotel.etSpecialRequest.setText(dataBooking.specialRequest)

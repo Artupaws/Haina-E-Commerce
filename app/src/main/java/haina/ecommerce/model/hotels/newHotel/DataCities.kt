@@ -16,9 +16,6 @@ data class DataCities(
 	@field:SerializedName("updated_at")
 	val updatedAt: String? = null,
 
-	@field:SerializedName("image")
-	val image: String? = null,
-
 	@field:SerializedName("name")
 	val name: String? = null,
 

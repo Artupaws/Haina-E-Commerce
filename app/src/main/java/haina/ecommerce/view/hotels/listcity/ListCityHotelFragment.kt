@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Button
-import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
@@ -27,7 +26,7 @@ import haina.ecommerce.view.hotels.HotelBaseActivity
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ListCityHotelFragment : Fragment(), ListCityHotelContract.View, AdapterListCity.ItemAdapterCallBack {
+class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity.ItemAdapterCallBack {
 
     private lateinit var _binding:FragmentListCityHotelBinding
     private val binding get() = _binding
@@ -36,7 +35,6 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract.View, AdapterLis
     private var totalNight: Int = 0
     private var cityId:Int = 0
     private lateinit var requestHotel: RequestBookingHotel
-    private var progressDialog : Dialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentListCityHotelBinding.inflate(inflater, container, false)
@@ -51,25 +49,6 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract.View, AdapterLis
             (requireActivity() as HotelBaseActivity).onBackPressed()
         }
         dialogScheduleHotel()
-        initLoading()
-
-        binding.svDestination.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener,
-            SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                if (p0?.isNotEmpty()!!){
-                    (binding.rvCityHotel.adapter as AdapterListCity).filter.filter(p0)
-                    (binding.rvCityHotel.adapter as AdapterListCity).notifyDataSetChanged()
-                } else {
-                    (binding.rvCityHotel.adapter as AdapterListCity).filter.filter("")
-                }
-                return true
-            }
-
-        })
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -116,21 +95,12 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract.View, AdapterLis
         btnSave?.setOnClickListener {
             if (!tvCheckIn?.text?.contains("-")!!){
                 requestHotel = RequestBookingHotel("ID", cityId, "ID", checkInDate, checkOutDate, null)
-                presenter.getListHotelDarma(requestHotel.countryID!!, requestHotel.cityId!!, requestHotel.paxPassport!!,
+                presenter.getHotelDarma(requestHotel.countryID!!, requestHotel.cityId!!, requestHotel.paxPassport!!,
                     requestHotel.checkIn!!, requestHotel.checkOut!!)
             } else {
                 popUpScheduleHotel?.show()
             }
         }
-    }
-
-    private fun initLoading(){
-        progressDialog = Dialog(requireActivity())
-        progressDialog?.setContentView(R.layout.dialog_loader)
-        progressDialog?.setCancelable(false)
-        progressDialog?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.white))
-        val window:Window = progressDialog?.window!!
-        window.setGravity(Gravity.CENTER)
     }
 
     private fun limitRange(): CalendarConstraints.Builder {
@@ -159,16 +129,6 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract.View, AdapterLis
         Log.d("getListCitYHotel", msg)
     }
 
-    override fun showLoading() {
-        progressDialog?.show()
-        Toast.makeText(requireActivity(), "Loading", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun dismissLoading() {
-        progressDialog?.dismiss()
-        Toast.makeText(requireActivity(), "Dismiss", Toast.LENGTH_SHORT).show()
-    }
-
     override fun messageGetHotelDarma(msg: String) {
         Log.d("getHotelDarma", msg)
         if (msg.contains("Success!")){
@@ -183,7 +143,7 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract.View, AdapterLis
             }
     }
 
-    override fun getListHotelDarma(data: DataHotelDarma?) {
+    override fun getHotelDarma(data: DataHotelDarma?) {
         if (data != null){
             val bundle = Bundle()
             bundle.putParcelable("dataHotel", data)
