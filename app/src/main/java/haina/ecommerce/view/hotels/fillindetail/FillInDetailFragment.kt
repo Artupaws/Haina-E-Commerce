@@ -120,11 +120,11 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
     private fun specialRequest(data: DataPricePolicy?){
         Log.d("dataSRA", data?.specialRequestArray?.size.toString())
         if (!data?.specialRequestArrayRequired!!){
-            !specialRequestArray
+            specialRequestArray = false
             binding.includeSpecialRequest.rvRequest.visibility = View.GONE
             binding.includeSpecialRequest.linearAddRequest.visibility = View.VISIBLE
         } else {
-            specialRequestArray
+            specialRequestArray = true
             binding.includeSpecialRequest.rvRequest.visibility = View.VISIBLE
             binding.includeSpecialRequest.linearAddRequest.visibility = View.GONE
             binding.includeSpecialRequest.rvRequest.apply {
@@ -307,7 +307,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
             totalNight?.let { bundle.putInt("totalNight", it) }
             Navigation.findNavController(binding.btnNext).navigate(R.id.action_fillInDetailFragment_to_reviewBookingFragment, bundle)
             Log.d("dataRequest", "$smokingRoom, ${binding.includeContactDetail.tvPhoneNumber.text}, ${binding.includeContactDetail.tvEmailContactDetail.text}," +
-                    "$specialRequest, $listSpecialRequestArrayItem, $listGuest")
+                    "$specialRequest, $listGuest")
         }else{
             Log.d("dataRequest", "$smokingRoom, ${binding.includeContactDetail.tvPhoneNumber.text}, ${binding.includeContactDetail.tvEmailContactDetail.text}," +
                     "$specialRequest, $listGuest")

@@ -20,6 +20,7 @@ import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
 import haina.ecommerce.model.transactionlist.ResponseGetListTransactionPending
+import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -341,7 +342,7 @@ interface NetworkService {
 
     //Get Payment Method
     @POST("api/payment/method")
-    fun getPaymentMethod():Call<ResponsePaymentMethod>
+    fun getPaymentMethod():Observable<ResponsePaymentMethod>
 
     //Get List Transaction
     @POST("api/pulsa/list")
@@ -355,7 +356,7 @@ interface NetworkService {
         @Field("product_code")productCode:String,
         @Field("id_payment_method")idPaymentMethod:Int,
         @Field("id_inquiry")idInquiry: Int
-    ):Call<ResponseCreateTransactionProductPhone>
+    ):Observable<ResponseCreateTransactionProductPhone>
 
     //Get All Hotel
     @GET("api/hotel")
@@ -457,7 +458,7 @@ interface NetworkService {
         @Field("customer_number")customerNumber: String,
         @Field("id_payment_method")idPaymentMethod: Int,
         @Field("id_inquiry")idInquiry:Int?
-    ):Call<ResponseAddBillTransaction>
+    ):Observable<ResponseAddBillTransaction>
 
     //Get All Transaction Pending List
     @POST("api/pending_transaction")
@@ -509,19 +510,32 @@ interface NetworkService {
 
 
     //Get List City Hotel
+//    @POST("api/hotel_darma/all_cities")
+//    fun getListAllCityHotel():Call<ResponseGetCityHotel>
+
+    //Get List City Hotel
     @POST("api/hotel_darma/all_cities")
-    fun getListAllCityHotel():Call<ResponseGetCityHotel>
+    fun getListAllCityHotel():Observable<ResponseGetCityHotel>
 
     //Get Hotel Darma
-    @FormUrlEncoded
+//    @FormUrlEncoded
+//    @POST("api/hotel_darma/search_hotel")
+//    fun getHotelDarma(
+//        @Field("country_id")countryId:String,
+//        @Field("city_id")cityId:Int,
+//        @Field("pax_passport")paxPassport:String,
+//        @Field("check_in_date")checkIn:String,
+//        @Field("check_out_date")checkOut:String
+//        ):Call<ResponseGetHotelDarma>
     @POST("api/hotel_darma/search_hotel")
+    @FormUrlEncoded
     fun getHotelDarma(
         @Field("country_id")countryId:String,
         @Field("city_id")cityId:Int,
         @Field("pax_passport")paxPassport:String,
         @Field("check_in_date")checkIn:String,
         @Field("check_out_date")checkOut:String
-        ):Call<ResponseGetHotelDarma>
+        ):Observable<ResponseGetHotelDarma>
 
     //Get Data Add On
     @GET("api/ticket/seat")
@@ -532,7 +546,7 @@ interface NetworkService {
     @POST("api/hotel_darma/search_room")
     fun getDataRoom(
         @Field("hotel_id")hotelId:String
-    ):Call<ResponseGetRoomHotel>
+    ):Observable<ResponseGetRoomHotel>
 
     //Get Price Policy
     @FormUrlEncoded
@@ -540,14 +554,14 @@ interface NetworkService {
     fun getPricePolicy(
         @Field("room_id")roomId:String,
         @Field("breakfast")breakfast:String
-    ):Call<ResponseGetPricePolicy>
+    ):Observable<ResponseGetPricePolicy>
 
     //Set Booking Hotel Darma
     @Headers("Content-Type: application/json")
     @POST("api/hotel_darma/create_booking")
     fun setBookingHotelDarma(
         @Body body:RequestBookingHotelToDarma
-    ):Call<ResponseSetBooking>
+    ):Observable<ResponseSetBooking>
 
     //Set Data Passenger
     @Headers("Content-Type: application/json")
