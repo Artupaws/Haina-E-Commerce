@@ -49,7 +49,10 @@ class AdapterSpecialRequestArray(val context: Context, private val listSpecialRe
         holder.bind(photo, itemAdapterCallback)
     }
 
-    override fun getItemCount(): Int = listSpecialRequest?.size!!
+//    override fun getItemCount(): Int = listSpecialRequest.size
+    override fun getItemCount():Int{
+    return listSpecialRequest?.size ?: 0
+    }
 
     interface ItemAdapterCallback{
         fun onClickSpecialRequest(view:View, dataRequest:SpecialRequestArrayItem, status:Boolean)

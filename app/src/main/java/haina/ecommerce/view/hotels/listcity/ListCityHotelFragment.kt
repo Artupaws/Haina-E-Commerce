@@ -9,12 +9,14 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import haina.ecommerce.R
+import haina.ecommerce.adapter.flight.AdapterFlightDestinationCity
 import haina.ecommerce.adapter.hotel.newAdapterHotel.AdapterListCity
 import haina.ecommerce.databinding.FragmentListCityHotelBinding
 import haina.ecommerce.helper.Helper.convertLongtoTime
@@ -49,6 +51,24 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity
             (requireActivity() as HotelBaseActivity).onBackPressed()
         }
         dialogScheduleHotel()
+
+        binding.svDestination.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
+            SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                if (p0?.isNotEmpty()!!){
+                    (binding.rvCityHotel.adapter as AdapterListCity).filter.filter(p0)
+                    (binding.rvCityHotel.adapter as AdapterListCity).notifyDataSetChanged()
+                } else {
+                    (binding.rvCityHotel ?.adapter as AdapterFlightDestinationCity).filter.filter("")
+
+                }
+                return true
+            }
+        })
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

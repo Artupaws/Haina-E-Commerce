@@ -119,12 +119,12 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
 
     private fun specialRequest(data: DataPricePolicy?){
         Log.d("dataSRA", data?.specialRequestArray?.size.toString())
-        if (!data?.specialRequestArrayRequired!!){
-            !specialRequestArray
+        if (data?.specialRequestArray?.size == null){
+            specialRequestArray = false
             binding.includeSpecialRequest.rvRequest.visibility = View.GONE
             binding.includeSpecialRequest.linearAddRequest.visibility = View.VISIBLE
         } else {
-            specialRequestArray
+            specialRequestArray = true
             binding.includeSpecialRequest.rvRequest.visibility = View.VISIBLE
             binding.includeSpecialRequest.linearAddRequest.visibility = View.GONE
             binding.includeSpecialRequest.rvRequest.apply {
