@@ -555,4 +555,15 @@ interface NetworkService {
     fun setDataPassenger(
         @Body body:RequestSetPassenger
     ):Call<ResponseSetDataPassenger>
+
+    //Get List Booking Hotel Darma
+    @POST("api/hotel_darma/booking_list")
+    fun getListBookingHotelDarma():Call<ResponseGetListBooking>
+
+    //Cancel List
+    @FormUrlEncoded
+    @POST("api/hotel_darma/cancel")
+    fun cancelBookingHotelDarma(
+        @Field("bookig_id")bookingId:Int
+    ):Call<ResponseCancelBookingHotel>
 }

@@ -1,10 +1,13 @@
 package haina.ecommerce.view.hotels.listroom
 
+import haina.ecommerce.base.BaseView
 import haina.ecommerce.model.hotels.newHotel.DataPricePolicy
 
 interface ListRoomContract {
 
-    fun messageGetPricePolicy(msg:String)
-    fun getPricePolicy(data:DataPricePolicy?)
+    interface View:BaseView{
+        fun messageGetPricePolicy(msg:String)
+        fun getPricePolicy(data:DataPricePolicy?)
+    }
 
 }

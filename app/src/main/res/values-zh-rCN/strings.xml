@@ -305,5 +305,6 @@
     <string name="breakfast_status_yes"><u>包括</u></string>
     <string name="breakfast_status_no"><u>不包括</u></string>
     <string name="guest_identity">客人身份</string>
+    <string name="warning_booking_hotel">请先完成您的酒店交易，然后再进行新的酒店交易</string>
 
 </resources>

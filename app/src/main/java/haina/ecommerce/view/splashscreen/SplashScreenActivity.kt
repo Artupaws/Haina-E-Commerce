@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.databinding.ActivitySplashScreenBinding
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
+import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
 import haina.ecommerce.view.notification.NotificationActivity
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -39,6 +40,11 @@ class SplashScreenActivity : AppCompatActivity() {
             "Job"->{
                 val intent = Intent(applicationContext, NotificationActivity::class.java)
                 intent.putExtra("notif", true)
+                startActivity(intent)
+            }
+            "Hotel"->{
+                val intent = Intent(applicationContext, HistoryTransactionHotelActivity::class.java)
+                intent.putExtra("tabs", dataParams.get("tabs").toString())
                 startActivity(intent)
             }
             else -> {

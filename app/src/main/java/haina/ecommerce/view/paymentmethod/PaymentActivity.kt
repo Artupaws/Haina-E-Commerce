@@ -31,7 +31,7 @@ import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivit
 import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
 import java.util.ArrayList
 
-class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContract {
+class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContract.View {
 
     private lateinit var binding: ActivityPaymentBinding
     private var popupPaymentMethod: Dialog? = null
@@ -47,6 +47,11 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     private var dataBooking:Requesthotel? = null
     private var dataBookingHotelDarma: RequestBookingHotelDarma? = null
     private var requestToDarma : RequestBookingHotelToDarma? = null
+    private var progressDialog:Dialog? = null
+    private var list = ArrayList<String>()
+    private var stringRequest :String = ""
+    private var smokingRoomValue:Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +69,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         dataBookingHotelDarma = intent.getParcelableExtra("dataBooking")
         Log.d("typeTransaction", typeTransactionParams.toString())
         setDetailOrder(typeTransactionParams)
+        dialogLoading()
     }
 
     override fun onClick(v: View?) {
@@ -89,6 +95,31 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         }
     }
 
+    private fun setRequestSraAndSmokeRoom(idPaymentMethod: Int?){
+        for (data in dataBookingHotelDarma?.special_request_array_complete!!){
+            list.add(data.iD!!)
+        }
+        val separator = ", "
+        stringRequest = list.joinToString(separator)
+        smokingRoomValue = if (dataBookingHotelDarma?.smokingRoom == true){
+            1
+        } else {
+            0
+        }
+        requestToDarma= RequestBookingHotelToDarma(smokingRoomValue, dataBookingHotelDarma!!.phone,
+            stringRequest, idPaymentMethod, dataBookingHotelDarma!!.paxes, dataBookingHotelDarma!!.email, dataBookingHotelDarma!!.price)
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun dialogLoading(){
+        progressDialog = Dialog(this)
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(getDrawable(android.R.color.white))
+        val window: Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
+    }
+
     override fun onStart() {
         super.onStart()
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("paymentMethod"))
@@ -105,19 +136,11 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                     binding.tvChoosePaymentMethod.visibility = View.GONE
                     binding.linearPaymentMethod.visibility = View.VISIBLE
                     binding.tvNameBank.text = bank
-                    val list = ArrayList<String>()
-                    for (data in dataBookingHotelDarma?.special_request_array_complete!!){
-                        list.add(data.iD!!)
+                    when(typeTransactionParams){
+                        4 -> {
+                            setRequestSraAndSmokeRoom(idPaymentMethod)
+                        }
                     }
-                    val separator = ", "
-                    val string = list.joinToString(separator)
-                    val smokingRoomValue = if (dataBookingHotelDarma?.smokingRoom == true){
-                        1
-                    } else {
-                        0
-                    }
-                    requestToDarma= RequestBookingHotelToDarma(smokingRoomValue, dataBookingHotelDarma!!.phone,
-                        string, idPaymentMethod, dataBookingHotelDarma!!.paxes, dataBookingHotelDarma!!.email, dataBookingHotelDarma!!.price)
                 }
             }
         }
@@ -221,5 +244,13 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         } else {
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 }

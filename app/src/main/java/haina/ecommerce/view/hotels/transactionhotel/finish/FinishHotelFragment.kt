@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.AdapterTransactionFinish
 import haina.ecommerce.databinding.FragmentFinishHotelBinding
 import haina.ecommerce.model.hotels.Bookings
+import haina.ecommerce.model.hotels.newHotel.DataBooking
 import haina.ecommerce.model.hotels.transactionhotel.DataTransactionHotel
 import haina.ecommerce.model.hotels.transactionhotel.PaidItem
 import haina.ecommerce.view.hotels.transactionhotel.DetailBookingsActivity
@@ -44,14 +46,14 @@ class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
 
     override fun onStart() {
         super.onStart()
-        LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(mMessageReceiver, IntentFilter("dataTransactionHotel"))
+        LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(mMessageReceiver, IntentFilter("dataBooking"))
     }
 
     private val mMessageReceiver : BroadcastReceiver = object : BroadcastReceiver(){
         override fun onReceive(p0: Context?, intent: Intent?) {
             when(intent?.action){
-                "dataTransactionHotel" -> {
-                    val dataTransactionFinish = intent.getParcelableExtra<DataTransactionHotel>("transactionHotel")
+                "dataBooking" -> {
+                    val dataTransactionFinish = intent.getParcelableExtra<DataBooking>("bookingHotel")
                     setListTransaction(dataTransactionFinish.paid)
                 }
             }
@@ -63,18 +65,22 @@ class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
         LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(mMessageReceiver)
     }
 
-    private fun setListTransaction(data:List<PaidItem?>?){
+    private fun setListTransaction(data:List<haina.ecommerce.model.hotels.newHotel.PaidItem?>?){
         showIsEmpty(data?.size)
         binding.rvBooking.apply {
-            adapter = AdapterTransactionFinish(requireActivity(), data, this@FinishHotelFragment)
+            adapter = AdapterTransactionFinish(requireActivity(), data, this@FinishHotelFragment, false)
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
     }
 
     private fun showIsEmpty(listItem:Int?){
+        Log.d("item", listItem.toString())
         if (listItem == 0){
             binding.rvBooking.visibility = View.GONE
             binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+        } else {
+            binding.rvBooking.visibility = View.VISIBLE
+            binding.includeEmpty.linearEmpty.visibility = View.GONE
         }
     }
 
@@ -117,7 +123,7 @@ class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
         }
     }
 
-    override fun onClick(view: View, data: PaidItem) {
+    override fun onClick(view: View, data: haina.ecommerce.model.hotels.newHotel.PaidItem) {
         when(view.id){
             R.id.btn_input_rating -> {
                 idHotel = data.hotelId!!

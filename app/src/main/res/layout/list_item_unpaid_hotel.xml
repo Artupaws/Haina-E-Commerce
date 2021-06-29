@@ -60,15 +60,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_toEndOf="@id/cv_click"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_hotel_name"
-                        style="@style/TextView.Poppins14spBlack"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Hotel Name" />
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/tv_hotel_name"
+                            style="@style/TextView.Poppins14spBlack"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.9"
+                            tools:text="Hotel Name" />
+
+                        <ImageView
+                            android:id="@+id/iv_action_cancel"
+                            android:layout_width="0dp"
+                            android:layout_height="15dp"
+                            android:layout_weight="0.1"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:src="@drawable/ic_option"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:contentDescription="option" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tv_address_hotel"

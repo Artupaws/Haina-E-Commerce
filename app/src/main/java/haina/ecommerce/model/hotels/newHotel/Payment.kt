@@ -7,18 +7,24 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Payment(
 
-	@field:SerializedName("payment_type")
-	val paymentType: String? = null,
+	@field:SerializedName("id")
+	val id: Int? = null,
 
-	@field:SerializedName("amount")
-	val amount: String? = null,
+	@field:SerializedName("booking_id")
+	val bookingId: Int? = null,
 
-	@field:SerializedName("bank")
-	val bank: String? = null,
+	@field:SerializedName("payment_method_id")
+	val paymentMethodId: Int? = null,
+
+	@field:SerializedName("midtrans_id")
+	val midtransId: String? = null,
+
+	@field:SerializedName("va_number")
+	val vaNumber: String? = null,
+
+	@field:SerializedName("settlement_time")
+	val settlementTime: String? = null,
 
 	@field:SerializedName("payment_status")
-	val paymentStatus: String? = null,
-
-	@field:SerializedName("virtual_account")
-	val virtualAccount: String? = null
+	val paymentStatus: String? = null
 ) : Parcelable

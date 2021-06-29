@@ -13,12 +13,14 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class PaymentPresenter(val view:PaymentContract, val context: Context) {
+class PaymentPresenter(val view:PaymentContract.View, val context: Context) {
 
     fun getPaymentMethod(){
+        view.showLoading()
         val getPaymentMethod = NetworkConfig().getConnectionHainaBearer(context).getPaymentMethod()
         getPaymentMethod.enqueue(object :retrofit2.Callback<ResponsePaymentMethod>{
             override fun onResponse(call: Call<ResponsePaymentMethod>, response: Response<ResponsePaymentMethod>) {
+                view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value ==1 ){
                     val data = response.body()?.data
                     view.getDataPaymentMethod(data)
@@ -30,6 +32,7 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
             }
 
             override fun onFailure(call: Call<ResponsePaymentMethod>, t: Throwable) {
+                view.dismissLoading()
                 view.messageGetPaymentMethod(t.localizedMessage.toString())
             }
 
@@ -37,9 +40,11 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
     }
 
     fun createTransaction(customerNumber:String, productCode:String, idPaymentMethod:Int, idInquiry: Int){
+        view.showLoading()
         val createTransaction = NetworkConfig().getConnectionHainaBearer(context).createTransactionProductPhone(customerNumber, productCode, idPaymentMethod, idInquiry)
         createTransaction.enqueue(object : retrofit2.Callback<ResponseCreateTransactionProductPhone>{
             override fun onResponse(call: Call<ResponseCreateTransactionProductPhone>, response: Response<ResponseCreateTransactionProductPhone>) {
+                view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
                     view.messageCreateTransaction(response.body()?.message.toString())
                 } else {
@@ -49,6 +54,7 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
             }
 
             override fun onFailure(call: Call<ResponseCreateTransactionProductPhone>, t: Throwable) {
+                view.dismissLoading()
                 view.messageCreateTransaction(t.localizedMessage.toString())
             }
 
@@ -56,9 +62,11 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
     }
 
     fun createBillTransaction(productCode:String, amount:String, customerNumber:String, idPaymentMethod:Int, idInquiry:Int?){
+        view.showLoading()
         val createTransaction = NetworkConfig().getConnectionHainaBearer(context).addBillTransaction(productCode, amount, customerNumber, idPaymentMethod, idInquiry)
         createTransaction.enqueue(object : retrofit2.Callback<ResponseAddBillTransaction>{
             override fun onResponse(call: Call<ResponseAddBillTransaction>, response: Response<ResponseAddBillTransaction>) {
+                view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
                     view.messageCreateBillTransaction(response.body()?.message.toString())
                 } else {
@@ -68,6 +76,7 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
             }
 
             override fun onFailure(call: Call<ResponseAddBillTransaction>, t: Throwable) {
+                view.dismissLoading()
                 view.messageCreateBillTransaction(t.localizedMessage.toString())
             }
 
@@ -76,9 +85,11 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
 
 
     fun createBookingHotel(hotelId:Int, roomId:Int, checkIn:String, checkOut:String, totalGuest:Int, totalPrice:Int, idPaymentMethod:Int){
+        view.showLoading()
         val createBooking = NetworkConfig().getConnectionHainaBearer(context).createBookingHotel(hotelId, roomId, checkIn, checkOut, totalGuest, totalPrice, idPaymentMethod)
         createBooking.enqueue(object : retrofit2.Callback<ResponseBookingHotel>{
             override fun onResponse(call: Call<ResponseBookingHotel>, response: Response<ResponseBookingHotel>) {
+                view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
                     view.messageBookingHotel(response.body()?.message.toString())
                 } else {
@@ -87,6 +98,7 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
             }
 
             override fun onFailure(call: Call<ResponseBookingHotel>, t: Throwable) {
+                view.dismissLoading()
                 view.messageBookingHotel(t.localizedMessage.toString())
             }
 
@@ -94,9 +106,11 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
     }
 
     fun createBookingHotelDarma(dataBooking: RequestBookingHotelToDarma){
+        view.showLoading()
         val createBooking = NetworkConfig().getConnectionHainaBearer(context).setBookingHotelDarma(dataBooking)
         createBooking.enqueue(object : retrofit2.Callback<ResponseSetBooking>{
             override fun onResponse(call: Call<ResponseSetBooking>, response: Response<ResponseSetBooking>) {
+                view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
                     view.messageBookingHotel(response.body()?.message.toString())
                 } else {
@@ -105,6 +119,7 @@ class PaymentPresenter(val view:PaymentContract, val context: Context) {
             }
 
             override fun onFailure(call: Call<ResponseSetBooking>, t: Throwable) {
+                view.dismissLoading()
                 view.messageBookingHotel(t.localizedMessage.toString())
             }
         })

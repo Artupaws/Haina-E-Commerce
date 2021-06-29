@@ -28,15 +28,17 @@ import haina.ecommerce.view.hotels.HotelBaseActivity
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity.ItemAdapterCallBack {
+class ListCityHotelFragment : Fragment(), ListCityHotelContract.View, AdapterListCity.ItemAdapterCallBack {
 
     private lateinit var _binding:FragmentListCityHotelBinding
     private val binding get() = _binding
     private lateinit var presenter: ListCityHotelPresenter
     private var popUpScheduleHotel:Dialog? = null
+    private var progressDialog:Dialog? = null
     private var totalNight: Int = 0
     private var cityId:Int = 0
     private lateinit var requestHotel: RequestBookingHotel
+    private var unfinishBookingSize:Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentListCityHotelBinding.inflate(inflater, container, false)
@@ -46,12 +48,13 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        dialogLoading()
         presenter.getListCity()
+        presenter.getListTransactionHotelDarma()
         binding.toolbarListCity.setNavigationOnClickListener {
             (requireActivity() as HotelBaseActivity).onBackPressed()
         }
         dialogScheduleHotel()
-
         binding.svDestination.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
             SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -62,13 +65,19 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity
                 if (p0?.isNotEmpty()!!){
                     (binding.rvCityHotel.adapter as AdapterListCity).filter.filter(p0)
                     (binding.rvCityHotel.adapter as AdapterListCity).notifyDataSetChanged()
-                } else {
-                    (binding.rvCityHotel ?.adapter as AdapterFlightDestinationCity).filter.filter("")
-
                 }
                 return true
             }
         })
+    }
+
+    private fun dialogLoading(){
+        progressDialog = Dialog(requireActivity())
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.white))
+        val window:Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -156,7 +165,12 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity
         }
     }
 
+    override fun messageGetListTransactionHotel(msg: String) {
+        Log.d("getListUnfinish", msg)
+    }
+
     override fun getListCity(data: List<DataCities?>?) {
+        progressDialog?.dismiss()
             binding.rvCityHotel.apply {
                 adapter = AdapterListCity(requireActivity(), data, this@ListCityHotelFragment)
                 layoutManager = GridLayoutManager(requireActivity(), 3)
@@ -172,11 +186,29 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity
         }
     }
 
+    override fun getSizeListUnfinish(size: Int?) {
+        if (size != null) {
+            unfinishBookingSize = size
+        }
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
+    }
+
     override fun onClick(view: View, idDarma: Int) {
         when(view.id){
             R.id.cv_click -> {
                 cityId = idDarma
-                popUpScheduleHotel?.show()
+                if (unfinishBookingSize == 0){
+                    popUpScheduleHotel?.show()
+                } else {
+                    Toast.makeText(requireActivity(), getString(R.string.warning_booking_hotel), Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

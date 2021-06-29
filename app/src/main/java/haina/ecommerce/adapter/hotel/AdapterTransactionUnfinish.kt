@@ -4,22 +4,25 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemUnpaidHotelBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.hotels.newHotel.PaidItem
 import haina.ecommerce.model.hotels.transactionhotel.UnpaidItem
+import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
 
 
-class AdapterTransactionUnfinish(val context: Context, private val listHotel: List<UnpaidItem?>?, private val itemAdapterCallback: ItemAdapterCallback) :
+class AdapterTransactionUnfinish(val context: Context, private val listHotel: List<PaidItem?>?, private val itemAdapterCallback: ItemAdapterCallback) :
         RecyclerView.Adapter<AdapterTransactionUnfinish.Holder>() {
 
     private val helper:Helper = Helper
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemUnpaidHotelBinding.bind(view)
-        fun bind(itemHaina: UnpaidItem, itemAdapterCallback: ItemAdapterCallback) {
+        fun bind(itemHaina: PaidItem, itemAdapterCallback: ItemAdapterCallback) {
             with(binding) {
                 tvHotelName.text = itemHaina.hotel?.hotelName
                 tvAddressHotel.text = itemHaina.hotel?.hotelAddress
@@ -27,15 +30,30 @@ class AdapterTransactionUnfinish(val context: Context, private val listHotel: Li
                 tvPriceAndTotalNight.text = priceAndNight
                 val checkinCheckout = "${itemHaina.checkIn} - ${itemHaina.checkOut}"
                 tvCheckinCheckout.text = checkinCheckout
-                Glide.with(context).load(itemHaina.hotel?.hotelImage).into(ivImageRoom)
+//                Glide.with(context).load(itemHaina.hotel?.).into(ivImageRoom)
                 tvIdBooking.text = itemHaina.id.toString()
-                tvTotalGuest.text = itemHaina.totalGuest.toString()
+//                tvTotalGuest.text = itemHaina.totalGuest.toString()
                 tvNumberPayment.text = itemHaina.payment?.vaNumber
                 btnCopyNumber.setOnClickListener {
                     itemAdapterCallback.onClick(btnCopyNumber, itemHaina)
                 }
                 cvClick.setOnClickListener {
                     itemAdapterCallback.onClick(cvClick, itemHaina)
+                }
+                ivActionCancel.setOnClickListener {
+                    val popup = PopupMenu(context, ivActionCancel)
+                    popup.inflate(R.menu.menu_option_address_company)
+                    popup.setOnMenuItemClickListener{
+                        iteem -> when(iteem.itemId){
+                        R.id.action_edit -> {
+                            itemHaina.payment?.bookingId?.let {
+                                (context as HistoryTransactionHotelActivity).cancelBookingHotel(it)
+                            }
+                            true
+                        }
+                        else -> false
+                        }
+                    }
                 }
             }
         }
@@ -48,7 +66,7 @@ class AdapterTransactionUnfinish(val context: Context, private val listHotel: Li
     }
 
     override fun onBindViewHolder(holder: AdapterTransactionUnfinish.Holder, position: Int) {
-        val photo: UnpaidItem = listHotel?.get(position)!!
+        val photo: PaidItem = listHotel?.get(position)!!
         holder.bind(photo, itemAdapterCallback)
     }
 
@@ -81,6 +99,6 @@ class AdapterTransactionUnfinish(val context: Context, private val listHotel: Li
 //    }
 
     interface ItemAdapterCallback{
-        fun onClick(view: View, data:UnpaidItem)
+        fun onClick(view: View, data:PaidItem)
     }
 }

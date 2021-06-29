@@ -8,13 +8,15 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class ListRoomPresenter(val view:ListRoomContract, val context: Context) {
+class ListRoomPresenter(val view:ListRoomContract.View, val context: Context) {
 
     fun getPricePolicy(room_id:String, breakfastStatus:String) {
+        view.showLoading()
         val getPricePolicy = NetworkConfig().getConnectionHainaBearer(context)
             .getPricePolicy(room_id, breakfastStatus)
         getPricePolicy.enqueue(object : retrofit2.Callback<ResponseGetPricePolicy> {
             override fun onResponse(call: Call<ResponseGetPricePolicy>, response: Response<ResponseGetPricePolicy>) {
+                view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1) {
                     view.messageGetPricePolicy(response.body()?.message.toString())
                     val data = response.body()?.dataPricePolicy
@@ -26,6 +28,7 @@ class ListRoomPresenter(val view:ListRoomContract, val context: Context) {
             }
 
             override fun onFailure(call: Call<ResponseGetPricePolicy>, t: Throwable) {
+                view.dismissLoading()
                 view.messageGetPricePolicy(t.localizedMessage.toString())
             }
 

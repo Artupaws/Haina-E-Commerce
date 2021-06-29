@@ -8,12 +8,14 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class CheckoutPresenter (val view:CheckoutContract, val context: Context) {
+class CheckoutPresenter (val view:CheckoutContract.View, val context: Context) {
 
     fun checkout(customerNumber:String, productCode:String){
+        view.showLoading()
         val checkout = NetworkConfig().getConnectionHainaBearer(context).checkout(customerNumber, productCode)
         checkout.enqueue(object : retrofit2.Callback<ResponseCheckout>{
             override fun onResponse(call: Call<ResponseCheckout>, response: Response<ResponseCheckout>) {
+                view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
                     view.messageCheckout(response.body()?.message.toString())
                     val data = response.body()?.dataCheckout
@@ -25,6 +27,7 @@ class CheckoutPresenter (val view:CheckoutContract, val context: Context) {
             }
 
             override fun onFailure(call: Call<ResponseCheckout>, t: Throwable) {
+                view.dismissLoading()
                 view.messageCheckout(t.localizedMessage.toString())
             }
 

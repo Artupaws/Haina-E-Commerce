@@ -1,10 +1,13 @@
 package haina.ecommerce.view.checkout
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.widget.Toast
 import androidx.core.text.HtmlCompat
 import haina.ecommerce.R
@@ -20,7 +23,7 @@ import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.login.LoginActivity
 import haina.ecommerce.view.paymentmethod.PaymentActivity
 
-class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutContract {
+class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutContract.View {
 
     private lateinit var binding: ActivityCheckoutBinding
     private var titleService: String? = null
@@ -38,6 +41,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
     private var dataBill: DataInquiry? = null
     private var backTo: Int = 0
     private var typeInquiry: Int = 0
+    private var progressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,6 +95,15 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                 startActivity(intent)
             }
         }
+    }
+
+    private fun dialogLoading(){
+        progressDialog = Dialog(this)
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(getDrawable(android.R.color.white))
+        val window: Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
     }
 
     override fun onResume() {
@@ -238,5 +251,13 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         Log.d("idInquiry", data?.idInquiry.toString())
         moveTopup(data!!.idInquiry)
 
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 }
