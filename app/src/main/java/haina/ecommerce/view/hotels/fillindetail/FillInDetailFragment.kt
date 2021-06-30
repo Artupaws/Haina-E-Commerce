@@ -44,6 +44,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
     private var imageRoomUrl:String? = null
     private var listSpecialRequestArrayItem = ArrayList<SpecialRequestArrayItem>()
     private var sra = ArrayList<String>()
+    private var stringRequest :String = ""
     private var specialRequestArray:Boolean = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -299,7 +300,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
         }
         if (!isEmptySmokingRoom && !isEmptyDataGuest && !isEmptySpecialRequest && !specialRequestArray){
             val dataBooking = RequestBookingHotelDarma(smokingBoolean, binding.includeContactDetail.tvPhoneNumber.text.toString(), specialRequest, null, listGuest,
-                 null, binding.includeContactDetail.tvEmailContactDetail.text.toString(), binding.includePriceDetail.tvTotalPrice.text.toString())
+                 binding.includeContactDetail.tvEmailContactDetail.text.toString(), binding.includePriceDetail.tvTotalPrice.text.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataBooking", dataBooking)
             bundle.putParcelable("dataPricePolicy", dataPricePolicy)
@@ -341,8 +342,8 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
         isEmptySpecialRequest = specialRequest.size == 0
 
         if (!isEmptySmokingRoom && !isEmptyDataGuest && !isEmptySpecialRequest){
-            val dataBooking = RequestBookingHotelDarma(smokingBoolean, binding.includeContactDetail.tvPhoneNumber.text.toString(), null, null, listGuest,
-                listSpecialRequestArrayItem, binding.includeContactDetail.tvEmailContactDetail.text.toString(),  binding.includePriceDetail.tvTotalPrice.text.toString())
+            val dataBooking = RequestBookingHotelDarma(smokingBoolean, binding.includeContactDetail.tvPhoneNumber.text.toString(), stringRequest, null, listGuest,
+                binding.includeContactDetail.tvEmailContactDetail.text.toString(),  binding.includePriceDetail.tvTotalPrice.text.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataBooking", dataBooking)
             bundle.putParcelable("dataPricePolicy", dataPricePolicy)
@@ -365,6 +366,8 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
                     true -> {
                         listSpecialRequestArrayItem.add(data)
                         sra.add(data.iD!!)
+                        val separator = ", "
+                        stringRequest = sra.joinToString(separator)
                     }
                     false -> {
                         listSpecialRequestArrayItem.remove(data)

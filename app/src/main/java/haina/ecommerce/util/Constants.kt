@@ -26,5 +26,6 @@ class Constants {
         const val PREF_PERSONAL_DATA = "PREF_PERSONAL_DATA"
         const val ONE_SIGNAL_APP_ID = "cb3a2a52-1950-4d94-9b7a-c06d1c47c56acb3a2a52-1950-4d94-9b7a-c06d1c47c56a"
         const val LANGUAGE_APP = "LANGUAGE_APP"
+        const val CURRENT_TIME_SESSION_PAYMENT = "CURRENT_TIME_SESSION_PAYMENT"
     }
 }

@@ -44,7 +44,7 @@ private val adapterForCancel:Boolean) :
                 tvAddressHotel.text = itemHaina.hotel?.hotelAddress
                 val priceAndNight = "${helper.convertToFormatMoneyIDRFilter(itemHaina.totalPrice.toString())} (${itemHaina.totalNight}) Night"
                 tvPriceAndTotalNight.text = priceAndNight
-                val checkinCheckout = "${itemHaina.checkIn} - ${itemHaina.checkOut}"
+                val checkinCheckout = "${itemHaina.checkIn} to ${itemHaina.checkOut}"
                 tvCheckinCheckout.text = checkinCheckout
 //                Glide.with(context).load(itemHaina.hotel?.hotelImage).into(ivImageRoom)
                 tvIdBooking.text = itemHaina.id.toString()

@@ -9,10 +9,12 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
+import android.widget.TextView
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.TabAdapterHistoryHotelTransaction
+import haina.ecommerce.countdowntimer.SimpleCountDownTimerKotlin
 import haina.ecommerce.databinding.ActivityHistoryTransactionBinding
 import haina.ecommerce.model.hotels.newHotel.DataBooking
 import haina.ecommerce.model.hotels.transactionhotel.DataTransactionHotel
@@ -28,6 +30,7 @@ class HistoryTransactionHotelActivity : AppCompatActivity(), HistoryTransactionH
     private var broadcaster:LocalBroadcastManager?=null
     private lateinit var sharedPref:SharedPreferenceHelper
     private var progressDialog:Dialog? = null
+    private var countDown: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -96,16 +96,17 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     }
 
     private fun setRequestSraAndSmokeRoom(idPaymentMethod: Int?){
-        for (data in dataBookingHotelDarma?.special_request_array_complete!!){
-            list.add(data.iD!!)
-        }
-        val separator = ", "
-        stringRequest = list.joinToString(separator)
-        smokingRoomValue = if (dataBookingHotelDarma?.smokingRoom == true){
-            1
-        } else {
-            0
-        }
+//        for (data in dataBookingHotelDarma?.special_request_array_complete!!){
+//            list.add(data.iD!!)
+//        }
+//        val separator = ", "
+//        stringRequest = list.joinToString(separator)
+//        smokingRoomValue = if (dataBookingHotelDarma?.smokingRoom == true){
+//            1
+//        } else {
+//            0
+//        }
+        stringRequest = dataBookingHotelDarma?.specialRequest!!
         requestToDarma= RequestBookingHotelToDarma(smokingRoomValue, dataBookingHotelDarma!!.phone,
             stringRequest, idPaymentMethod, dataBookingHotelDarma!!.paxes, dataBookingHotelDarma!!.email, dataBookingHotelDarma!!.price)
     }

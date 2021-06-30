@@ -90,6 +90,51 @@ object Helper {
        return format.format(date)
     }
 
+    fun formatDate(date:String):String{
+        val day = date.substring(8,10)
+        var month = date.substring(5,7)
+        val year = date.substring(0,4)
+        when (month) {
+            "01" -> {
+                month = "JAN"
+            }
+            "02" -> {
+                month = "FEB"
+            }
+            "03" -> {
+                month = "MAR"
+            }
+            "04" -> {
+                month = "APR"
+            }
+            "05" -> {
+                month = "MAY"
+            }
+            "06" -> {
+                month = "JUN"
+            }
+            "07" -> {
+                month = "JUL"
+            }
+            "08" -> {
+                month = "AUG"
+            }
+            "09" -> {
+                month = "SEP"
+            }
+            "10" -> {
+                month = "OCT"
+            }
+            "11" -> {
+                month = "NOV"
+            }
+            "12" -> {
+                month = "DEC"
+            }
+        }
+        return "${year}-${month}-${day}"
+    }
+
 //    fun addPassenger(totalPassenger:Int, maxPassenger:Int){
 //        if (totalPassenger < maxPassenger){
 //        }

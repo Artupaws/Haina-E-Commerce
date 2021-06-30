@@ -114,6 +114,17 @@
                 android:layout_marginStart="10dp"
                 android:text="Jl Jakarta Pusat, 10000, INDONESIA" />
 
+            <TextView
+                android:id="@+id/tv_location_hotel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                android:text="@string/see_on_map"
+                app:drawableStartCompat="@drawable/ic_location" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -139,7 +150,7 @@
                         android:id="@+id/tv_check_in_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="31 APR"
+                        tools:text="31 APR"
                         android:textColor="@color/black" />
 
                 </LinearLayout>
@@ -162,7 +173,7 @@
                         android:id="@+id/tv_check_out_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1 MAY"
+                        tools:text="1 MAY"
                         android:textColor="@color/black" />
 
                 </LinearLayout>
@@ -185,7 +196,7 @@
                         android:id="@+id/tv_total_guest"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2"
+                        tools:text="2"
                         android:textColor="@color/black" />
 
                 </LinearLayout>
@@ -214,7 +225,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Room Type"
+                    android:text="Room Name"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -222,7 +233,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="VIP"
+                    tools:text="VIP"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black" />
 
@@ -242,7 +253,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="1 Night(s) x"
+                    tools:text="1 Night(s) x"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -250,7 +261,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="IDR 200,000"
+                    tools:text="IDR 200,000"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black" />
 
@@ -305,7 +316,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Virtual Account BCA"
+                    tools:text="Virtual Account BCA"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black" />
 
@@ -332,7 +343,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Included"
+                    tools:text="Included"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black" />
 
@@ -360,7 +371,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="IDR 210,000"
+                    tools:text="IDR 210,000"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textStyle="bold" />

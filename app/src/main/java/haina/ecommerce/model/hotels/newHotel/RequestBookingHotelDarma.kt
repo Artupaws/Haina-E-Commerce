@@ -23,8 +23,8 @@ data class RequestBookingHotelDarma(
 	@SerializedName("paxes")
 	var paxes: List<DataGuest>,
 
-	@SerializedName("special_request_array_complete")
-	var special_request_array_complete: ArrayList<SpecialRequestArrayItem>?,
+//	@SerializedName("special_request_array_complete")
+//	var special_request_array_complete: ArrayList<SpecialRequestArrayItem>?,
 
 	@SerializedName("email")
 	var email: String,

@@ -181,7 +181,6 @@ class SimpleCountDownTimerKotlin(
          * @param time The time at tick.
          */
         fun onCountDownActive(time: String)
-
         /**
          * A method called once when countdown is finished.
          */

@@ -19,6 +19,9 @@ data class PaidItem(
 	@field:SerializedName("total_nights")
 	val totalNight: Int? = null,
 
+	@field:SerializedName("payment_method")
+	val paymentMethod: PaymentMethod? = null,
+
 	@field:SerializedName("total_guests")
 	val totalGuest: Int? = null,
 

@@ -87,19 +87,19 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
             adapter = AdapterDataGuest(requireActivity(), dataBooking.paxes, this@ReviewBookingFragment, false)
         }
 
-        if (dataBooking.special_request_array_complete?.size == 0){
+        if (dataBooking.specialRequest != null){
             binding.includeReviewHotel.linearAddRequest.visibility = View.VISIBLE
-            binding.includeReviewHotel.rvRequest.visibility = View.GONE
             binding.includeReviewHotel.etSpecialRequest.setText(dataBooking.specialRequest)
+            binding.includeReviewHotel.rvRequest.visibility = View.GONE
             binding.includeReviewHotel.btnAddRequest.visibility = View.GONE
-        } else {
-            binding.includeReviewHotel.linearAddRequest.visibility = View.GONE
-            binding.includeReviewHotel.rvRequest.visibility = View.VISIBLE
-            binding.includeReviewHotel.rvRequest.apply {
-                adapter = AdapterSpecialRequestArray(requireActivity(), dataBooking.special_request_array_complete, this@ReviewBookingFragment, false)
-                layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-            }
         }
+//        else {
+//            binding.includeReviewHotel.linearAddRequest.visibility = View.GONE
+//            binding.includeReviewHotel.rvRequest.visibility = View.VISIBLE
+//            binding.includeReviewHotel.rvRequest.apply {
+//                adapter = AdapterSpecialRequestArray(requireActivity(), dataBooking.special_request_array_complete, this@ReviewBookingFragment, false)
+//                layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+//            }
         binding.tvTotalPrice.text = helper.convertToFormatMoneyIDRFilter(dataPricePolicy.totalPrice.toString())
     }
 

@@ -1,5 +1,6 @@
 package haina.ecommerce.view.hotels.transactionhotel.unfinish
 
+import android.app.Activity
 import android.content.*
 import android.os.Bundle
 import android.util.Log
@@ -8,11 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.AdapterTransactionUnfinish
+import haina.ecommerce.countdowntimer.SimpleCountDownTimerKotlin
 import haina.ecommerce.databinding.FragmentUnfinishHotelBinding
 import haina.ecommerce.databinding.ListItemUnfinishTransactionBinding
 import haina.ecommerce.model.hotels.newHotel.DataBooking
@@ -21,12 +24,15 @@ import haina.ecommerce.model.hotels.transactionhotel.DataTransactionHotel
 import haina.ecommerce.model.hotels.transactionhotel.UnpaidItem
 import haina.ecommerce.view.hotels.transactionhotel.DetailBookingsActivity
 import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
+import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
 
-class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapterCallback{
+class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapterCallback, SimpleCountDownTimerKotlin.OnCountDownListener{
 
     private lateinit var _binding: FragmentUnfinishHotelBinding
     private val binding get() = _binding
     private var broadcaster: LocalBroadcastManager? = null
+    private var adapterUnfinish:AdapterTransactionUnfinish? = null
+    private var countDown: TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -37,6 +43,7 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        countDownStart(1,0)
     }
 
     override fun onStart() {
@@ -49,6 +56,8 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
             when (intent?.action) {
                 "dataBooking" -> {
                     val dataTransaction = intent.getParcelableExtra<DataBooking>("bookingHotel")
+                    adapterUnfinish =  AdapterTransactionUnfinish(requireActivity(), dataTransaction.unpaid, this@UnfinishHotelFragment)
+                    adapterUnfinish!!.notifyDataSetChanged()
                     setListTransaction(dataTransaction.unpaid)
                 }
             }
@@ -63,8 +72,7 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
     private fun setListTransaction(data: List<PaidItem?>?) {
         showIsEmpty(data?.size)
         binding.rvUnfinishHotel.apply {
-            adapter =
-                AdapterTransactionUnfinish(requireActivity(), data, this@UnfinishHotelFragment)
+            adapter = adapterUnfinish
             layoutManager =
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
@@ -102,7 +110,16 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
                         else -> false
                     }
                 }
-
+            }
+            R.id.btn_how_pay -> {
+                val bundle = Bundle()
+                bundle.putParcelable("dataTransactionHotel", data)
+                bundle.putBoolean("transactionHotel", true)
+                childFragmentManager.let {
+                    BottomSheetHowToPayment.newInstance(bundle).apply {
+                        show(it, "data")
+                    }
+                }
             }
         }
     }
@@ -113,6 +130,25 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
         val myClip = ClipData.newPlainText("text", paymentNumber)
         myClipboard.setPrimaryClip(myClip)
         Toast.makeText(context, "Virtual Account Copied", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onCountDownActive(time: String) {
+       activity?.runOnUiThread {
+            countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
+            countDown?.text = time
+        }
+    }
+
+    override fun onCountDownFinished() {
+        Toast.makeText(requireActivity(), "expired", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun countDownStart(minuteSession:Int, secondSession:Int){
+//        if (minuteSession != 0){
+        val countDownTimer = SimpleCountDownTimerKotlin(minuteSession.toLong(), secondSession.toLong(), this)
+        countDownTimer.start()
+        countDownTimer.runOnBackgroundThread()
+//        }
     }
 
 }
