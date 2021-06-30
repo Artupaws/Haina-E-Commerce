@@ -33,6 +33,7 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
     private var broadcaster: LocalBroadcastManager? = null
     private var adapterUnfinish:AdapterTransactionUnfinish? = null
     private var countDown: TextView? = null
+    private lateinit var countDownTimer:SimpleCountDownTimerKotlin
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -133,22 +134,26 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
     }
 
     override fun onCountDownActive(time: String) {
-       activity?.runOnUiThread {
+        (requireActivity() as Activity).runOnUiThread {
             countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
-            countDown?.text = time
+            countDown?.text = countDownTimer.getSecondsTillCountDown().toString()
+           Toast.makeText(requireActivity(), time, Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onCountDownFinished() {
+        countDown?.text = "this transaction has expired"
         Toast.makeText(requireActivity(), "expired", Toast.LENGTH_SHORT).show()
     }
 
     private fun countDownStart(minuteSession:Int, secondSession:Int){
-//        if (minuteSession != 0){
-        val countDownTimer = SimpleCountDownTimerKotlin(minuteSession.toLong(), secondSession.toLong(), this)
+        countDownTimer = SimpleCountDownTimerKotlin(minuteSession.toLong(), secondSession.toLong(), this)
         countDownTimer.start()
         countDownTimer.runOnBackgroundThread()
-//        }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        countDownTimer.pause()
+    }
 }
