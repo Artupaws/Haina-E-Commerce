@@ -2,7 +2,10 @@ package haina.ecommerce.view.hotels.transactionhotel
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -31,6 +34,7 @@ class HistoryTransactionHotelActivity : AppCompatActivity(), HistoryTransactionH
     private lateinit var sharedPref:SharedPreferenceHelper
     private var progressDialog:Dialog? = null
     private var countDown: TextView? = null
+    private var idBooking:Int=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +67,26 @@ class HistoryTransactionHotelActivity : AppCompatActivity(), HistoryTransactionH
     override fun onResume() {
         super.onResume()
         startRequest(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
+    }
+
+    override fun onStart() {
+        super.onStart()
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, IntentFilter("cancelBooking"))
+    }
+
+    private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            when(intent.action){
+                "cancelBooking" -> {
+                    presenter.cancelBookingHotel(idBooking)
+                }
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver)
     }
 
     private fun startRequest(login:Boolean){
@@ -122,6 +146,12 @@ class HistoryTransactionHotelActivity : AppCompatActivity(), HistoryTransactionH
     }
 
     override fun getListBookingHotelDarma(dataHotel: DataBooking?) {
+        for (i in dataHotel?.unpaid!!){
+            if (i != null) {
+                idBooking = i.id!!
+                Log.d("idBooking", idBooking.toString())
+            }
+        }
         val dataTransactionHotel = Intent("dataBooking")
             .putExtra("bookingHotel", dataHotel)
         broadcaster?.sendBroadcast(dataTransactionHotel)

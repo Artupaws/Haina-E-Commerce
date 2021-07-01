@@ -1,15 +1,12 @@
 package haina.ecommerce.adapter.hotel
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
-import haina.ecommerce.countdowntimer.SimpleCountDownTimerKotlin
 import haina.ecommerce.databinding.ListItemUnpaidHotelBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.hotels.newHotel.PaidItem
@@ -27,12 +24,12 @@ class AdapterTransactionUnfinish(val context: Context, private val listHotel: Li
     private var bookingId:Int = 0
     private val minutePayment:Int = 0
     private val secondPayment:Int = 30
-    private var countDown:String = ""
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemUnpaidHotelBinding.bind(view)
         fun bind(itemHaina: PaidItem, itemAdapterCallback: ItemAdapterCallback) {
             with(binding) {
+                val timer: Long = 1.toLong()
                 bookingId = itemHaina.id!!
                 tvHotelName.text = itemHaina.hotel?.hotelName
                 tvAddressHotel.text = itemHaina.hotel?.hotelAddress
@@ -71,6 +68,7 @@ class AdapterTransactionUnfinish(val context: Context, private val listHotel: Li
                 btnHowPay.setOnClickListener {
                     itemAdapterCallback.onClick(btnHowPay, itemHaina)
                 }
+
             }
         }
     }
@@ -79,7 +77,7 @@ class AdapterTransactionUnfinish(val context: Context, private val listHotel: Li
         val inflater = LayoutInflater.from(parent.context)
         binding = ListItemUnpaidHotelBinding.inflate(inflater)
         broadcaster = LocalBroadcastManager.getInstance(context)
-//        sharedPref = SharedPreferenceHelper(context)
+        sharedPref = SharedPreferenceHelper(context)
 //        val currentTime =sharedPref.getValueString(Constants.CURRENT_TIME_SESSION_PAYMENT)
 //        if (currentTime != null){
 //            when {

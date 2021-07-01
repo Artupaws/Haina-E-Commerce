@@ -29,7 +29,7 @@ class NetworkConfig {
         val retrofit: Retrofit = Retrofit.Builder()
                 .baseUrl(Constants.BASE_API_HAINA)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(OkHttpClient.Builder().connectTimeout(2, TimeUnit.MINUTES).addInterceptor { chain ->
+                .client(OkHttpClient.Builder().connectTimeout(5, TimeUnit.MINUTES).addInterceptor { chain ->
                     val request = chain.request().newBuilder().addHeader("Authorization", "Bearer ${sharedPrefHelper.getValueString(Constants.PREF_TOKEN_USER)}")
                             .addHeader("Accept", "application/json")
                             .addHeader("apikey", Constants.APIKEY)

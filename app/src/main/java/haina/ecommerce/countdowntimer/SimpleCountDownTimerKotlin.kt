@@ -97,7 +97,6 @@ class SimpleCountDownTimerKotlin(
     }
 
     private fun startBackgroundThreadIfNotRunningAndEnabled() {
-
         handlerThread!!.run {
             start()
             isBackgroundThreadRunning = true

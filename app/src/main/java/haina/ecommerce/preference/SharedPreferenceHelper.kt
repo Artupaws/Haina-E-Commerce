@@ -37,8 +37,11 @@ class SharedPreferenceHelper(context: Context) {
     }
 
     fun getValueInt(KEY_NAME: String): Int {
-
         return sharedPref.getInt(KEY_NAME, 0)
+    }
+
+    fun getValueLong(KEY_NAME: String):Long{
+        return sharedPref.getLong(KEY_NAME, 0L)
     }
 
     fun getValueBoolien(KEY_NAME: String): Boolean {
