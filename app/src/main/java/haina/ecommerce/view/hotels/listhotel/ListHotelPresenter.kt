@@ -11,7 +11,7 @@ class ListHotelPresenter(val view:ListHotelContract.View, val context: Context) 
 
     fun getRoomHotel(idHotel:String){
         view.showLoading()
-        val getRoom = NetworkConfig().getConnectionHainaBearer(context).getDataRoom(idHotel)
+        val getRoom = NetworkConfig().getConnectionToDarma(context).getDataRoom(idHotel)
         getRoom.enqueue(object : retrofit2.Callback<ResponseGetRoomHotel>{
             override fun onResponse(call: Call<ResponseGetRoomHotel>, response: Response<ResponseGetRoomHotel>) {
                 view.dismissLoading()

@@ -29,7 +29,7 @@ class NetworkConfig {
         val retrofit: Retrofit = Retrofit.Builder()
                 .baseUrl(Constants.BASE_API_HAINA)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(OkHttpClient.Builder().connectTimeout(5, TimeUnit.MINUTES).addInterceptor { chain ->
+                .client(OkHttpClient.Builder().connectTimeout(2, TimeUnit.MINUTES).addInterceptor { chain ->
                     val request = chain.request().newBuilder().addHeader("Authorization", "Bearer ${sharedPrefHelper.getValueString(Constants.PREF_TOKEN_USER)}")
                             .addHeader("Accept", "application/json")
                             .addHeader("apikey", Constants.APIKEY)
@@ -37,6 +37,22 @@ class NetworkConfig {
                     chain.proceed(request)
                 }.build())
                 .build()
+        return retrofit.create(NetworkService::class.java)
+    }
+
+    fun getConnectionToDarma(context: Context): NetworkService{
+        sharedPrefHelper = SharedPreferenceHelper(context)
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL_TO_DARMA)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).addInterceptor { chain ->
+                val request = chain.request().newBuilder().addHeader("Authorization", "Bearer ${sharedPrefHelper.getValueString(Constants.PREF_TOKEN_USER)}")
+                    .addHeader("Accept", "application/json")
+                    .addHeader("apikey", Constants.APIKEY)
+                    .build()
+                chain.proceed(request)
+            }.build())
+            .build()
         return retrofit.create(NetworkService::class.java)
     }
 

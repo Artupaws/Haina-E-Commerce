@@ -36,7 +36,7 @@ class ListCityHotelPresenter(val view:ListCityHotelContract.View, val context: C
 
     fun getHotelDarma(countryId:String, cityId:Int, paxPassport:String, checkIn:String, checkOut:String){
         view.showLoading()
-        val getList = NetworkConfig().getConnectionHainaBearer(context).getHotelDarma(countryId, cityId, paxPassport, checkIn, checkOut)
+        val getList = NetworkConfig().getConnectionToDarma(context).getHotelDarma(countryId, cityId, paxPassport, checkIn, checkOut)
         getList.enqueue(object : retrofit2.Callback<ResponseGetHotelDarma>{
             override fun onResponse(call: Call<ResponseGetHotelDarma>, response: Response<ResponseGetHotelDarma>) {
                 view.dismissLoading()
@@ -60,7 +60,7 @@ class ListCityHotelPresenter(val view:ListCityHotelContract.View, val context: C
 
     fun getListTransactionHotelDarma(){
         view.showLoading()
-        val getListTransaction = NetworkConfig().getConnectionHainaBearer(context).getListBookingHotelDarma()
+        val getListTransaction = NetworkConfig().getConnectionToDarma(context).getListBookingHotelDarma()
         getListTransaction.enqueue(object : retrofit2.Callback<ResponseGetListBooking>{
             override fun onResponse(call: Call<ResponseGetListBooking>, response: Response<ResponseGetListBooking>) {
                 view.dismissLoading()

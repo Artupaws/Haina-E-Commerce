@@ -13,7 +13,7 @@ class HistoryTransactionHotelPresenter(val view: HistoryTransactionHotelContract
 
     fun getListTransactionHotel(){
         view.showLoading()
-        val getListTransaction = NetworkConfig().getConnectionHainaBearer(context).getListTransactionHotel()
+        val getListTransaction = NetworkConfig().getConnectionToDarma(context).getListTransactionHotel()
         getListTransaction.enqueue(object : retrofit2.Callback<ResponseGetTransactionHotel>{
             override fun onResponse(call: Call<ResponseGetTransactionHotel>, response: Response<ResponseGetTransactionHotel>) {
                 view.dismissLoading()
@@ -36,7 +36,7 @@ class HistoryTransactionHotelPresenter(val view: HistoryTransactionHotelContract
 
     fun getListTransactionHotelDarma(){
         view.showLoading()
-        val getListTransaction = NetworkConfig().getConnectionHainaBearer(context).getListBookingHotelDarma()
+        val getListTransaction = NetworkConfig().getConnectionToDarma(context).getListBookingHotelDarma()
         getListTransaction.enqueue(object : retrofit2.Callback<ResponseGetListBooking>{
             override fun onResponse(call: Call<ResponseGetListBooking>, response: Response<ResponseGetListBooking>) {
                 view.dismissLoading()
@@ -59,7 +59,7 @@ class HistoryTransactionHotelPresenter(val view: HistoryTransactionHotelContract
 
     fun cancelBookingHotel(bookingId:Int){
         view.showLoading()
-        val cancelBookingHotel = NetworkConfig().getNetworkHotelBearer(context).cancelBookingHotelDarma(bookingId)
+        val cancelBookingHotel = NetworkConfig().getConnectionToDarma(context).cancelBookingHotelDarma(bookingId)
         cancelBookingHotel.enqueue(object : retrofit2.Callback<ResponseCancelBookingHotel>{
             override fun onResponse(call: Call<ResponseCancelBookingHotel>, response: Response<ResponseCancelBookingHotel>) {
                 view.dismissLoading()

@@ -160,6 +160,7 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract.View, AdapterLis
 
     override fun messageGetHotelDarma(msg: String) {
         Log.d("getHotelDarma", msg)
+        Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
         if (msg.contains("Success!")){
             popUpScheduleHotel?.dismiss()
         }

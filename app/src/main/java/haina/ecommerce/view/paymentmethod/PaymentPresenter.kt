@@ -4,7 +4,6 @@ import android.content.Context
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.bill.ResponseAddBillTransaction
 import haina.ecommerce.model.hotels.ResponseBookingHotel
-import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelDarma
 import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelToDarma
 import haina.ecommerce.model.hotels.newHotel.ResponseSetBooking
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
@@ -86,7 +85,7 @@ class PaymentPresenter(val view:PaymentContract.View, val context: Context) {
 
     fun createBookingHotel(hotelId:Int, roomId:Int, checkIn:String, checkOut:String, totalGuest:Int, totalPrice:Int, idPaymentMethod:Int){
         view.showLoading()
-        val createBooking = NetworkConfig().getConnectionHainaBearer(context).createBookingHotel(hotelId, roomId, checkIn, checkOut, totalGuest, totalPrice, idPaymentMethod)
+        val createBooking = NetworkConfig().getConnectionToDarma(context).createBookingHotel(hotelId, roomId, checkIn, checkOut, totalGuest, totalPrice, idPaymentMethod)
         createBooking.enqueue(object : retrofit2.Callback<ResponseBookingHotel>{
             override fun onResponse(call: Call<ResponseBookingHotel>, response: Response<ResponseBookingHotel>) {
                 view.dismissLoading()

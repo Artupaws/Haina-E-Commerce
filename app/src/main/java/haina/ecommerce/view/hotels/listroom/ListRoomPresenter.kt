@@ -3,7 +3,6 @@ package haina.ecommerce.view.hotels.listroom
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.hotels.newHotel.ResponseGetPricePolicy
-import haina.ecommerce.model.hotels.newHotel.SpecialRequestArrayItem
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
@@ -12,7 +11,7 @@ class ListRoomPresenter(val view:ListRoomContract.View, val context: Context) {
 
     fun getPricePolicy(room_id:String, breakfastStatus:String) {
         view.showLoading()
-        val getPricePolicy = NetworkConfig().getConnectionHainaBearer(context)
+        val getPricePolicy = NetworkConfig().getConnectionToDarma(context)
             .getPricePolicy(room_id, breakfastStatus)
         getPricePolicy.enqueue(object : retrofit2.Callback<ResponseGetPricePolicy> {
             override fun onResponse(call: Call<ResponseGetPricePolicy>, response: Response<ResponseGetPricePolicy>) {

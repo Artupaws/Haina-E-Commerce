@@ -4,6 +4,7 @@ import haina.ecommerce.model.*
 import haina.ecommerce.model.bill.ResponseAddBillTransaction
 import haina.ecommerce.model.bill.ResponseGetBillAmount
 import haina.ecommerce.model.bill.ResponseGetBillDirect
+import haina.ecommerce.model.categorypost.ResponseGetCategoryPost
 import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.flight.*
@@ -566,4 +567,8 @@ interface NetworkService {
     fun cancelBookingHotelDarma(
         @Field("bookig_id")bookingId:Int
     ):Call<ResponseCancelBookingHotel>
+
+    //CategoryPost
+    @GET("api/post_category")
+    fun getCategoryPost():Call<ResponseGetCategoryPost>
 }
