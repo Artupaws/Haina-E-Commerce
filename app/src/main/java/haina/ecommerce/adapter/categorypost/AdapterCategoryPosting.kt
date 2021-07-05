@@ -13,22 +13,26 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 
 
-class AdapterCategoryPosting(val context: Context, private val listCategory: List<DataCategory?>?, val itemAdapterCallback: ItemAdapterCallback):
+class AdapterCategoryPosting(val context: Context, private val listCategory: List<DataCategory?>?,
+                             val itemAdapterCallback: ItemAdapterCallback, val codeLanguage:String):
     RecyclerView.Adapter<AdapterCategoryPosting.Holder>() {
-
-    private lateinit var sharedPref:SharedPreferenceHelper
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemCategoryBinding.bind(view)
         fun bind(itemHaina: DataCategory, itemAdapterCallback: ItemAdapterCallback){
             with(binding){
                 val icon = HtmlCompat.fromHtml("${itemHaina.icon}", HtmlCompat.FROM_HTML_MODE_LEGACY)
-                val codeLanguage = sharedPref.getValueString(Constants.LANGUAGE_APP)
-                setLanguage(codeLanguage, binding, itemHaina)
-//                tvNameCategory.text = itemHaina.name
+//                setLanguage(codeLanguage, binding, itemHaina)
                 faIcon.text = icon
                 linearDataCategory.setOnClickListener {
                     itemAdapterCallback.onAdapterClick(linearDataCategory, itemHaina)
+                }
+                when(codeLanguage){
+                    "en"-> {
+                        tvNameCategory.text = itemHaina.name
+                    } "zh" -> {
+                        tvNameCategory.text = itemHaina.nameZh
+                    }
                 }
             }
         }
@@ -37,7 +41,6 @@ class AdapterCategoryPosting(val context: Context, private val listCategory: Lis
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterCategoryPosting.Holder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemCategoryBinding.inflate(inflater)
-        sharedPref = SharedPreferenceHelper(context)
         return Holder(binding.root)
     }
 

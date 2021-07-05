@@ -48,19 +48,10 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val statusCountDown = sharedPref.getValueString(Constants.CURRENT_TIME_SESSION_PAYMENT)
-        val dataBooking = dataTransaction?.unpaid?.size
+//        val dataBooking = dataTransaction?.unpaid?.size
         countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
-        Log.d("statusCountDown", statusCountDown.toString())
-        Log.d("dataBookingTop", dataBooking.toString())
-        if (dataBooking != null){
-            if(statusCountDown != null) {
-                countDown?.text = statusCountDown
-            } else {
-                val intentCountdown = Intent(requireActivity(), BroadcastService::class.java)
-                requireActivity().startService(intentCountdown)
-            }
-        }
+//        Log.d("dataBookingTop", dataBooking.toString())
+
         Log.i(TAG, "Started Service")
     }
 
@@ -91,10 +82,19 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
         override fun onReceive(p0: Context?, intent: Intent?) {
             when (intent?.action) {
                 "dataBooking" -> {
+                    val statusCountDown = sharedPref.getValueString(Constants.CURRENT_TIME_SESSION_PAYMENT)
+                    Log.d("statusCountDown", statusCountDown.toString())
+                    val intentCountdown = Intent(requireActivity(), BroadcastService::class.java)
                     dataTransaction = intent.getParcelableExtra<DataBooking>("bookingHotel")
                     adapterUnfinish = AdapterTransactionUnfinish(requireActivity(), dataTransaction?.unpaid, this@UnfinishHotelFragment)
                     adapterUnfinish!!.notifyDataSetChanged()
                     setListTransaction(dataTransaction!!.unpaid)
+                    if (dataTransaction!!.unpaid?.size != 0){
+                        requireActivity().startService(intentCountdown)
+                    } else {
+                        Log.d("dataTransactionNull", dataTransaction!!.unpaid?.size.toString())
+                        requireActivity().stopService(intentCountdown)
+                    }
                     Log.d("dataBooking", dataTransaction!!.unpaid?.size.toString())
                 }
             }
@@ -110,8 +110,7 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
         showIsEmpty(data?.size)
         binding.rvUnfinishHotel.apply {
             adapter = adapterUnfinish
-            layoutManager =
-                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
     }
 

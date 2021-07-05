@@ -20,7 +20,7 @@ class BroadcastService:Service() {
     override fun onCreate() {
         super.onCreate()
         Log.i(TAG, "Starting timer...")
-        sharedPreferences = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(packageName, Context.MODE_PRIVATE)
         var millis = sharedPreferences!!.getLong("time", 0)
         if (millis / 1000 == 0L) {
             millis = 300000
@@ -31,7 +31,6 @@ class BroadcastService:Service() {
                 intent.putExtra("countdown", millisUntilFinished)
                 sendBroadcast(intent)
             }
-
             override fun onFinish() {}
         }
         countDownTimer!!.start()

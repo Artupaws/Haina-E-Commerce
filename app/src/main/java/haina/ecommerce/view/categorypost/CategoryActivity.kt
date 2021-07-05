@@ -14,6 +14,8 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.categorypost.AdapterCategoryPosting
 import haina.ecommerce.databinding.ActivityCategoryBinding
 import haina.ecommerce.model.categorypost.DataCategory
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.property.PropertyActivity
 
 class CategoryActivity : AppCompatActivity(), CategoryPostContract.View, AdapterCategoryPosting.ItemAdapterCallback {
@@ -21,11 +23,15 @@ class CategoryActivity : AppCompatActivity(), CategoryPostContract.View, Adapter
     private lateinit var binding:ActivityCategoryBinding
     private var progressDialog:Dialog? = null
     private lateinit var presenter: CategoryPostPresenter
+    private lateinit var sharedPref:SharedPreferenceHelper
+    private var codeLanguage:String =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         presenter = CategoryPostPresenter(this, this)
+        sharedPref = SharedPreferenceHelper(this)
+        codeLanguage = sharedPref.getValueString(Constants.LANGUAGE_APP).toString()
         setContentView(binding.root)
         dialogLoading()
         binding.toolbar6.setNavigationOnClickListener {
@@ -46,7 +52,7 @@ class CategoryActivity : AppCompatActivity(), CategoryPostContract.View, Adapter
 
     override fun getListCategory(data: List<DataCategory?>?) {
         binding.rvCategoryPost.apply {
-            adapter = AdapterCategoryPosting(applicationContext, data, this@CategoryActivity)
+            adapter = AdapterCategoryPosting(applicationContext, data, this@CategoryActivity, sharedPref.getValueString(Constants.LANGUAGE_APP).toString())
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         }
     }
