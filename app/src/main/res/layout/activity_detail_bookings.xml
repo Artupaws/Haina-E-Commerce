@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.hotels.transactionhotel.DetailBookingsActivity">
+    tools:context=".view.hotels.transactionhotel.detailbook.DetailBookingsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_detail_booking"
@@ -53,14 +53,15 @@
                         android:layout_height="wrap_content"
                         android:text="@string/booking_id"
                         android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        style="@style/TextView.Poppins14spBlack"
+                        android:textFontWeight="600"/>
 
                     <TextView
                         android:id="@+id/tv_booking_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="123456789013"
-                        android:textColor="@color/black" />
+                        style="@style/TextView.Poppins14spBlack"
+                        tools:text="123456789013" />
 
                 </LinearLayout>
 
@@ -76,14 +77,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/status"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        style="@style/TextView.Poppins14spBlack"
+                        android:textFontWeight="600" />
 
                     <TextView
                         android:id="@+id/tv_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Complete"
+                        style="@style/TextView.Poppins14spBlack"
+                        tools:text="Complete"
                         android:textColor="@color/black" />
 
                 </LinearLayout>
@@ -96,22 +98,23 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:text="Hotel Details"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                style="@style/TextView.Poppins14spBlack"
+                android:textFontWeight="600" />
 
             <TextView
                 android:id="@+id/tv_hotel_name_and_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Borobudur Hotel, Jakarta"
-                android:textColor="@color/black" />
+                style="@style/TextView.Poppins14spBlack"
+                android:text="Borobudur Hotel, Jakarta" />
 
             <TextView
                 android:id="@+id/tv_address_hotel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                style="@style/TextView.Poppins14spGrey"
                 android:text="Jl Jakarta Pusat, 10000, INDONESIA" />
 
             <TextView
@@ -143,8 +146,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Check in"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        style="@style/TextView.Poppins14spBlack"
+                        android:textFontWeight="600"
+                        android:textColor="@color/black"/>
 
                     <TextView
                         android:id="@+id/tv_check_in_date"
@@ -166,8 +170,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Check out"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        style="@style/TextView.Poppins14spBlack"
+                        android:textFontWeight="600" />
 
                     <TextView
                         android:id="@+id/tv_check_out_date"
@@ -189,8 +193,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/total_guest_s"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        style="@style/TextView.Poppins14spBlack"
+                        android:textFontWeight="600"/>
 
                     <TextView
                         android:id="@+id/tv_total_guest"
@@ -209,8 +213,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:text="Price Detail"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                style="@style/TextView.Poppins14spBlack"
+                android:textFontWeight="600"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -224,6 +228,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins12spGrey"
                     android:layout_weight="1"
                     android:text="Room Name"
                     android:textColor="@color/black" />
@@ -232,6 +237,7 @@
                     android:id="@+id/tv_room_type"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins12spGrey"
                     android:layout_weight="1"
                     tools:text="VIP"
                     android:textAlignment="textEnd"
@@ -252,6 +258,7 @@
                     android:id="@+id/tv_total_night"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins12spGrey"
                     android:layout_weight="1"
                     tools:text="1 Night(s) x"
                     android:textColor="@color/black" />
@@ -260,6 +267,7 @@
                     android:id="@+id/tv_price"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins12spGrey"
                     android:layout_weight="1"
                     tools:text="IDR 200,000"
                     android:textAlignment="textEnd"
@@ -281,6 +289,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    style="@style/TextView.Poppins12spGrey"
                     android:text="@string/taxes_service_charge"
                     android:textColor="@color/black" />
 
@@ -288,6 +297,7 @@
                     android:id="@+id/tv_tax_and_service"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins12spGrey"
                     android:layout_weight="1"
                     android:text="IDR 10,000"
                     android:textAlignment="textEnd"
@@ -308,6 +318,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    style="@style/TextView.Poppins12spGrey"
                     android:text="Payment Method"
                     android:textColor="@color/black" />
 
@@ -317,6 +328,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     tools:text="Virtual Account BCA"
+                    style="@style/TextView.Poppins12spGrey"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black" />
 
@@ -336,6 +348,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Breakfast"
+                    style="@style/TextView.Poppins12spGrey"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -344,6 +357,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     tools:text="Included"
+                    style="@style/TextView.Poppins12spGrey"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black" />
 
@@ -362,55 +376,54 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Total Amount Booking"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    style="@style/TextView.Poppins12spGrey"
+                    android:textFontWeight="500"
+                    tools:text="Total Amount Booking"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/tv_total_price_book"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:textFontWeight="500"
                     tools:text="IDR 210,000"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel_policy"
                 android:layout_marginTop="10dp"
-                android:background="@color/light_grey" />
+                android:layout_marginStart="10dp"
+                style="@style/TextView.Poppins14spBlack"
+                android:textFontWeight="600"/>
 
             <TextView
+                android:id="@+id/tv_cancel_policy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Haina Policy"
-                android:layout_margin="10dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:drawableEndCompat="@drawable/ic_next" />
+                android:layout_marginStart="10dp"
+                tools:text="Breakfast"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/light_grey" />
 
-            <TextView
+            <Button
+                android:id="@+id/btn_cancel"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Help"
+                android:layout_height="45dp"
                 android:layout_margin="10dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                app:drawableEndCompat="@drawable/ic_next" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/light_grey" />
+                style="@style/Button.Cancel"
+                android:text="@string/cancel"/>
 
         </LinearLayout>
 

@@ -58,7 +58,7 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
                 "ListTransaction" -> {
 //                    Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
                     val dataTransactionUnfinish = intent.getParcelableExtra<DataTransaction>("Transaction")
-                    setupListUnfinishTransaction(dataTransactionUnfinish.pending)
+                    setupListUnfinishTransaction(dataTransactionUnfinish?.pending)
                 }
             }
         }

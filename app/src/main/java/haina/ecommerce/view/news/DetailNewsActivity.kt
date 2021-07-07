@@ -17,7 +17,7 @@ class DetailNewsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val dataNews = intent.getParcelableExtra<DataNews>("data")
-        setNewsToView(dataNews)
+        setNewsToView(dataNews!!)
 
         binding.toolbarDetailNews.setNavigationOnClickListener { onBackPressed() }
     }

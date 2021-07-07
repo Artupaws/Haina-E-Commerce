@@ -78,7 +78,7 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
                     val dataSeats = intent.getParcelableArrayListExtra<SeatInfosItem>("dataSeats")
                     val departure = intent.getStringExtra("departure")
                     val arrival = intent.getStringExtra("arrival")
-                    popupDialogChooseSeat(dataSeats,departure,arrival)
+                    popupDialogChooseSeat(dataSeats!!,departure!!,arrival!!)
                     popupShowChooseSeat?.show()
                 }
                 "addOn" -> {
@@ -90,7 +90,7 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
                     dataBaggage = getListAddOn
                     dataMeals = getListMeals
 
-                    popupDialogSetAddOn(dataBaggage, dataMeals,departure,arrival)
+                    popupDialogSetAddOn(dataBaggage, dataMeals,departure!!,arrival!!)
 
                     popupSetAddOn?.show()
                 }
@@ -115,7 +115,7 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun popupDialogChooseSeat(dataSeat: List<SeatInfosItem>, departure: String, arrival: String) {
+    private fun popupDialogChooseSeat(dataSeat: java.util.ArrayList<SeatInfosItem>, departure: String, arrival: String) {
         popupShowChooseSeat = Dialog(requireActivity())
         popupShowChooseSeat?.setContentView(R.layout.layout_pop_up_choose_seat)
         popupShowChooseSeat?.setCancelable(true)

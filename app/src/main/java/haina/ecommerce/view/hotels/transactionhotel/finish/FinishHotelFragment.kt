@@ -18,9 +18,7 @@ import haina.ecommerce.adapter.hotel.AdapterTransactionFinish
 import haina.ecommerce.databinding.FragmentFinishHotelBinding
 import haina.ecommerce.model.hotels.Bookings
 import haina.ecommerce.model.hotels.newHotel.DataBooking
-import haina.ecommerce.model.hotels.transactionhotel.DataTransactionHotel
-import haina.ecommerce.model.hotels.transactionhotel.PaidItem
-import haina.ecommerce.view.hotels.transactionhotel.DetailBookingsActivity
+import haina.ecommerce.view.hotels.transactionhotel.detailbook.DetailBookingsActivity
 
 class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCallback, FinishHotelContract {
 
@@ -54,7 +52,7 @@ class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
             when(intent?.action){
                 "dataBooking" -> {
                     val dataTransactionFinish = intent.getParcelableExtra<DataBooking>("bookingHotel")
-                    setListTransaction(dataTransactionFinish.paid)
+                    setListTransaction(dataTransactionFinish?.paid)
                 }
             }
         }

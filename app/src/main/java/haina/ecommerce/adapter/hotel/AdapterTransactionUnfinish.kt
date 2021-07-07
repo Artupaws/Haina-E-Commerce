@@ -29,7 +29,7 @@ class AdapterTransactionUnfinish(val context: Context, private val listHotel: Li
         private val binding = ListItemUnpaidHotelBinding.bind(view)
         fun bind(itemHaina: PaidItem, itemAdapterCallback: ItemAdapterCallback) {
             with(binding) {
-                val timer: Long = 1.toLong()
+//                val timer: Long = 1.toLong()
                 bookingId = itemHaina.id!!
                 tvHotelName.text = itemHaina.hotel?.hotelName
                 tvAddressHotel.text = itemHaina.hotel?.hotelAddress
@@ -102,12 +102,12 @@ class AdapterTransactionUnfinish(val context: Context, private val listHotel: Li
 //        super.onViewDetachedFromWindow(holder)
 //    }
 
-    private fun countDownStart(minuteSession:Int, secondSession:Int){
+//    private fun countDownStart(minuteSession:Int, secondSession:Int){
 //        if (minuteSession != 0){
 //            val countDownTimer = SimpleCountDownTimerKotlin(minuteSession.toLong(), secondSession.toLong())
 //            countDownTimer.start()
 //        }
-    }
+//    }
 
 //    private fun setColorTextStatus(status: String, binding: ListItemUnpaidHotelBinding) {
 //        binding.tvStatusBooking.text = status

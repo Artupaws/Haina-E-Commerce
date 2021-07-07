@@ -248,7 +248,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
     }
 
     private fun radioGroup(){
-        binding.rdSmokingRoom.setOnCheckedChangeListener { radioGroup, i ->
+        binding.rdSmokingRoom.setOnCheckedChangeListener { _, i ->
             val radio: RadioButton = requireActivity().findViewById(i)
             radioButtonSmokingRoom(radio)
         }

@@ -24,7 +24,7 @@ class AdapterPhotoCompany(val context: Context, private val listPhoto: List<Phot
             with(binding){
                 Glide.with(context).load(item.photoUrl).skipMemoryCache(false).diskCacheStrategy(
                     DiskCacheStrategy.NONE).into(ivCompany)
-                Log.d("photo", item.photoUrl)
+                Log.d("photo", item.photoUrl.toString())
 
                 ivAction.setOnClickListener {
                     val deleteImage = Intent("delete")

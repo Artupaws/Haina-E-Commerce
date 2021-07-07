@@ -44,7 +44,7 @@ class CancelHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
             when(intent?.action){
                 "dataBooking" -> {
                     val dataTransactionFinish = intent.getParcelableExtra<DataBooking>("bookingHotel")
-                    setListTransaction(dataTransactionFinish.cancelled)
+                    setListTransaction(dataTransactionFinish?.cancelled)
                 }
             }
         }

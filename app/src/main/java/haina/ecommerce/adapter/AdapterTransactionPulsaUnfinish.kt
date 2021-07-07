@@ -37,7 +37,7 @@ class AdapterTransactionPulsaUnfinish(
                         setLayoutVirtualAccount(binding, itemHaina.payment.vaNumber.toString(), itemHaina.totalPayment.toString())
                     }
                     2 -> {
-                        setLayoutBankTransfer(binding, itemHaina.payment.vaNumber.toString(), itemHaina.totalPayment.toString())
+                        setLayoutBankTransfer(binding, itemHaina.payment.vaNumber.toString())
                     }
                 }
 
@@ -105,7 +105,7 @@ class AdapterTransactionPulsaUnfinish(
         binding.includeVirtualAccount.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(totalPayment)
     }
 
-    private fun setLayoutBankTransfer(binding: ListItemUnfinishTransactionBinding, vaNumber: String, totalPayment: String) {
+    private fun setLayoutBankTransfer(binding: ListItemUnfinishTransactionBinding, totalPayment: String) {
         binding.includeVirtualAccount.linearVirtualAccount.visibility = View.GONE
         binding.includeBankTransfer.linearBankTransfer.visibility = View.VISIBLE
 //            binding.includeBankTransfer.tvPaymentMethod.text = paymentMethod

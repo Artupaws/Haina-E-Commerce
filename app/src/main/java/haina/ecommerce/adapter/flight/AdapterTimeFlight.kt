@@ -18,7 +18,7 @@ class AdapterTimeFlight(val context: Context, private val listAirlines: List<Tim
     private var indexItem:Int = 0
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemTimeFlightBinding.bind(view)
-        fun bind(itemHaina: TimeFlight, position: Int) {
+        fun bind(itemHaina: TimeFlight) {
             with(binding) {
                 if (adapterPosition+1 >= listAirlines!!.size){
                     binding.circleImageDestination.visibility = View.VISIBLE
@@ -47,7 +47,7 @@ class AdapterTimeFlight(val context: Context, private val listAirlines: List<Tim
     override fun onBindViewHolder(holder: AdapterTimeFlight.Holder, position: Int) {
         val data: TimeFlight = listAirlines?.get(position)!!
         Log.d("isinya", position.toString())
-        holder.bind(data, position)
+        holder.bind(data)
     }
 
     override fun getItemCount(): Int = listAirlines!!.size

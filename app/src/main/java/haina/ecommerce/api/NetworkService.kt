@@ -16,6 +16,9 @@ import haina.ecommerce.model.news.ResponseGetListNews
 import haina.ecommerce.model.notification.ResponseGetNotification
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.productservice.ResponseGetProductService
+import haina.ecommerce.model.property.ResponseGetCity
+import haina.ecommerce.model.property.ResponseGetFacilitiesProperty
+import haina.ecommerce.model.property.ResponseGetProvince
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
 import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
@@ -565,10 +568,25 @@ interface NetworkService {
     @FormUrlEncoded
     @POST("api/hotel_darma/cancel")
     fun cancelBookingHotelDarma(
-        @Field("bookig_id")bookingId:Int
+        @Field("booking_id")bookingId:Int
     ):Call<ResponseCancelBookingHotel>
 
     //CategoryPost
     @GET("api/post_category")
     fun getCategoryPost():Call<ResponseGetCategoryPost>
+
+    //Get Facilites Properties
+    @GET("api/property/facility")
+    fun getFacilities():Call<ResponseGetFacilitiesProperty>
+
+    //Get Province
+    @POST("api/provinceList")
+    fun getProvince():Call<ResponseGetProvince>
+
+    //Get City
+    @FormUrlEncoded
+    @POST("api/cityList")
+    fun getCity(
+        @Field("id_province") idProvince:Int
+    ):Call<ResponseGetCity>
 }

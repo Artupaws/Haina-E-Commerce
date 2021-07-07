@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.browser.customtabs.CustomTabsClient.getPackageName
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +19,7 @@ import haina.ecommerce.model.hotels.newHotel.DataBooking
 import haina.ecommerce.model.hotels.newHotel.PaidItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
-import haina.ecommerce.view.hotels.transactionhotel.DetailBookingsActivity
+import haina.ecommerce.view.hotels.transactionhotel.detailbook.DetailBookingsActivity
 import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
 import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
 
@@ -34,9 +33,9 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
     var countDown: TextView? = null
     private var minutes: Long = 1
     private var seconds: Long = 0
-//    private lateinit var countDownTimer: SimpleCountDownTimerKotlin
     private lateinit var sharedPref: SharedPreferenceHelper
     private var dataTransaction: DataBooking? = null
+    private var statusCountDown:String =""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentUnfinishHotelBinding.inflate(inflater, container, false)
@@ -50,6 +49,10 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
         super.onActivityCreated(savedInstanceState)
 //        val dataBooking = dataTransaction?.unpaid?.size
         countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
+        statusCountDown = sharedPref.getValueString(Constants.CURRENT_TIME_SESSION_PAYMENT).toString()
+        if (statusCountDown == "finish") {
+            countDown?.text = "expired"
+        }
 //        Log.d("dataBookingTop", dataBooking.toString())
 
         Log.i(TAG, "Started Service")
@@ -89,9 +92,11 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
                     adapterUnfinish = AdapterTransactionUnfinish(requireActivity(), dataTransaction?.unpaid, this@UnfinishHotelFragment)
                     adapterUnfinish!!.notifyDataSetChanged()
                     setListTransaction(dataTransaction!!.unpaid)
-                    if (dataTransaction!!.unpaid?.size != 0){
+                    if (dataTransaction!!.unpaid?.size != 0 && statusCountDown != "finish"){
                         requireActivity().startService(intentCountdown)
                     } else {
+                        countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
+                        countDown?.text = "expired"
                         Log.d("dataTransactionNull", dataTransaction!!.unpaid?.size.toString())
                         requireActivity().stopService(intentCountdown)
                     }

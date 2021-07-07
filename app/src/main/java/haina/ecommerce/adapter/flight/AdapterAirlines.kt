@@ -47,11 +47,11 @@ class AdapterAirlines(val context: Context, private val listAirlines: DataAirlin
     }
 
     override fun onBindViewHolder(holder: AdapterAirlines.Holder, position: Int) {
-        val depart: DepartItem = listAirlines.depart?.get(position)!!
+        val depart: DepartItem = listAirlines.depart[position]
         holder.bind(depart, itemAdapterCallback)
     }
 
-    override fun getItemCount(): Int = listAirlines.depart?.size!!
+    override fun getItemCount(): Int = listAirlines.depart.size
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setStepView(binding:ListItemAirlinesBinding){

@@ -29,7 +29,7 @@
         <activity android:name=".view.news.NewsActivity" />
         <activity android:name=".view.onlinepayment.OnlinePaymentActivity" />
         <activity android:name=".view.flight.FlightTicketActivity" />
-        <activity android:name=".view.hotels.transactionhotel.DetailBookingsActivity" />
+        <activity android:name=".view.hotels.transactionhotel.detailbook.DetailBookingsActivity" />
         <activity android:name=".view.hotels.transactionhotel.HistoryTransactionHotelActivity" />
         <activity android:name=".view.hotels.listphotohotels.ListPhotoHotelActivity" />
         <activity android:name=".view.hotels.selectdate.SelectDateHotelActivity" />

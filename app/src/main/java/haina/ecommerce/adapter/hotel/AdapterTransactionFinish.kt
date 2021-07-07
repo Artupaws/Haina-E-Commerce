@@ -70,14 +70,14 @@ private val adapterForCancel:Boolean) :
 
     override fun getItemCount(): Int = listHotel?.size!!
 
-    private fun setColorTextStatus(status: String, binding: ListItemFinishTransactionBinding) {
+//    private fun setColorTextStatus(status: String, binding: ListItemFinishTransactionBinding) {
 //        binding.tvStatusBooking.text = status
 //        if (status.contains("Waiting")) {
 //            binding.tvStatusBooking.setTextColor(context.resources.getColor(R.color.yellow))
 //        } else {
 //            binding.tvStatusBooking.setTextColor(context.resources.getColor(android.R.color.holo_green_dark))
 //        }
-    }
+//    }
 
     private fun showRatingOrButtonRating(binding: ListItemBookingHotelBinding, data: haina.ecommerce.model.hotels.newHotel.PaidItem) {
         val dateCheckout = helper.getOnlyDateFromStringDate(data.checkOut!!)

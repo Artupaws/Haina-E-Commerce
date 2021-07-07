@@ -17,7 +17,7 @@ import haina.ecommerce.view.topup.paketdata.PaketDataFragment
 class AdapterPaketDataName (val context: Context, private val listPaketData: List<DataItem?>?): RecyclerView.Adapter<AdapterPaketDataName.Holder>(){
 
     private var index:Int = -1
-    var onItemClick: (Int, String) -> Unit = { i: Int, s: String -> }
+    var onItemClick: (Int, String) -> Unit = { _: Int, _: String -> }
     private val helper:Helper = Helper
     private var broadcaster:LocalBroadcastManager? = null
 

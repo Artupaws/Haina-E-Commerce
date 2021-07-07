@@ -20,7 +20,7 @@ class AdapterSpecialRequestArray(val context: Context, private val listSpecialRe
                 when(statusEdit){
                     true -> {
                         cbAddon.isEnabled = true
-                        cbAddon.setOnCheckedChangeListener { compoundButton, b ->
+                        cbAddon.setOnCheckedChangeListener { _, b ->
                             if (b){
                                 itemAdapterCallback.onClickSpecialRequest(cbAddon, itemHaina!!, true)
                             } else {

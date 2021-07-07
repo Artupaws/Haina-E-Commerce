@@ -256,12 +256,12 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                 "dataDestination" -> {
                     val dataIntent = intent.getParcelableExtra<DataAirport>("data")
                     if (typeDestination == "From") {
-                        binding.tvFromDestination.text = dataIntent.iata
-                        binding.tvCityNameFrom.text = dataIntent.city
+                        binding.tvFromDestination.text = dataIntent?.iata
+                        binding.tvCityNameFrom.text = dataIntent?.city
                         popupDestination?.dismiss()
                     } else if (typeDestination == "To") {
-                        binding.tvToDestination.text = dataIntent.iata
-                        binding.tvCityNameTo.text = dataIntent.city
+                        binding.tvToDestination.text = dataIntent?.iata
+                        binding.tvCityNameTo.text = dataIntent?.city
                         popupDestination?.dismiss()
                     }
                 }
@@ -270,10 +270,10 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                     val totalAdultParams = intent.getStringExtra("totalAdult")
                     val totalChildParams = intent.getStringExtra("totalChild")
                     val totalBabyParams = intent.getStringExtra("totalBaby")
-                    totalPassenger = totalPassengerParams.toInt()
-                    totalAdult = totalAdultParams.toInt()
-                    totalChild = totalChildParams.toInt()
-                    totalBaby = totalBabyParams.toInt()
+                    totalPassenger = totalPassengerParams!!.toInt()
+                    totalAdult = totalAdultParams!!.toInt()
+                    totalChild = totalChildParams!!.toInt()
+                    totalBaby = totalBabyParams!!.toInt()
                     setDetailPassenger(totalAdultParams!!, totalChildParams, totalBabyParams, totalPassengerParams!!)
                 }
             }

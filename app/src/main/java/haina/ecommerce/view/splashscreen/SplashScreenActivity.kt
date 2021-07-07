@@ -78,6 +78,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun isConnect(): Boolean {
         val connect: ConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return connect.activeNetworkInfo != null && connect.activeNetworkInfo.isConnected
+        return connect.activeNetworkInfo != null && connect.activeNetworkInfo!!.isConnected
     }
 }

@@ -45,7 +45,10 @@ class NetworkConfig {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL_TO_DARMA)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).addInterceptor { chain ->
+            .client(OkHttpClient.Builder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS).addInterceptor { chain ->
                 val request = chain.request().newBuilder().addHeader("Authorization", "Bearer ${sharedPrefHelper.getValueString(Constants.PREF_TOKEN_USER)}")
                     .addHeader("Accept", "application/json")
                     .addHeader("apikey", Constants.APIKEY)

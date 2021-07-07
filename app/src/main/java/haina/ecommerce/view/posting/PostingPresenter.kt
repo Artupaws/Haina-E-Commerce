@@ -20,7 +20,7 @@ class PostingPresenter(val view:PostingContract, val context: Context) {
                     }
                 }
                 override fun onFailure(call: Call<ResponseCheckRegisterCompany>, t: Throwable) {
-                    Log.d("failure", t.message)
+                    Log.d("failure", t.message.toString())
                     view.checkRegisterCompanyFalse(t.localizedMessage)
                 }
 

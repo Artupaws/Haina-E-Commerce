@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/type_required"
+            android:textColor="@color/black"/>
+        <RadioGroup
+            android:id="@+id/rd_group_property_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rent_apartment"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/house_title"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/warehouse"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/office"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextView.Poppins12spGrey"
+            android:layout_marginTop="10dp"
+            android:text="@string/type_posting_required"
+            android:textColor="@color/black"/>
+
+        <RadioGroup
+            android:id="@+id/rd_group_type_posting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/for_sell"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/for_rent"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Both"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black"/>
+
+        </RadioGroup>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/building_area_required"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/et_building_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_line_corner_input_text_black"
+            android:inputType="number"
+            style="@style/TextView.Poppins14spBlack"
+            android:padding="5dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/in_meters"/>
+
+        <LinearLayout
+            android:id="@+id/linear_land_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                style="@style/TextView.Poppins12spGrey"
+                android:text="@string/surface_area_required"
+                android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/et_surface_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_line_corner_input_text_black"
+                android:inputType="number"
+                style="@style/TextView.Poppins14spBlack"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/in_meters"/>
+
+        <LinearLayout
+            android:id="@+id/linear_bedroom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                style="@style/TextView.Poppins12spGrey"
+                android:text="@string/bed_room_s_required"
+                android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/et_bedroom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_line_corner_input_text_black"
+                android:inputType="textPersonName"
+                style="@style/TextView.Poppins14spBlack"
+                android:padding="5dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/bath_room_s_required"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/et_bathroom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_line_corner_input_text_black"
+            android:inputType="textPersonName"
+            style="@style/TextView.Poppins14spBlack"
+            android:padding="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/floor"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/et_floor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_line_corner_input_text_black"
+            android:inputType="textPersonName"
+            style="@style/TextView.Poppins14spBlack"
+            android:padding="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/facilities_required"
+            android:textColor="@color/black"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_facility"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/list_item_choose_add_on"
+            tools:itemCount="5"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/type_required"
+            android:textColor="@color/black"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/shm"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/hgb"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/shmsrs"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/girik"
+                style="@style/TextView.Poppins12spGrey"
+                android:textColor="@color/black"/>
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/province_required"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/et_province"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_line_corner_input_text_black"
+            android:inputType="textPersonName"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            style="@style/TextView.Poppins14spBlack"
+            android:padding="5dp" />
+
+        <LinearLayout
+            android:id="@+id/linear_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                style="@style/TextView.Poppins12spGrey"
+                android:text="@string/city_required"
+                android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/et_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_line_corner_input_text_black"
+                android:inputType="textPersonName"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                style="@style/TextView.Poppins14spBlack"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/address_property"
+            android:textColor="@color/black"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/hideUnderBar"
+            app:counterEnabled="true"
+            app:counterMaxLength="254">
+            <EditText
+                android:id="@+id/et_address_property"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_line_corner_input_text_black"
+                android:inputType="textMultiLine"
+                android:maxLength="254"
+                style="@style/TextView.Poppins14spBlack"
+                android:padding="5dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/title_ads_required"
+            android:textColor="@color/black"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/hideUnderBar"
+            app:counterEnabled="true"
+            app:counterMaxLength="70">
+        <EditText
+            android:id="@+id/et_title_ads"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_line_corner_input_text_black"
+            android:inputType="textPersonName"
+            android:maxLength="70"
+            style="@style/TextView.Poppins14spBlack"
+            android:padding="5dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/description_ads"
+            android:textColor="@color/black"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/hideUnderBar"
+            app:counterEnabled="true"
+            app:counterMaxLength="4096">
+            <EditText
+                android:id="@+id/et_description_ads"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="6"
+                android:maxLines="6"
+                android:gravity="top|left"
+                android:background="@drawable/background_line_corner_input_text_black"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"
+                android:maxLength="4096"
+                style="@style/TextView.Poppins14spBlack" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_price_rent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextView.Poppins12spGrey"
+                android:text="@string/set_price_required"
+                android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/et_set_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_line_corner_input_text_black"
+                android:inputType="textPersonName"
+                style="@style/TextView.Poppins14spBlack"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_price_sell"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextView.Poppins12spGrey"
+                android:text="@string/set_price_sell_required"
+                android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/et_set_price_sell"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_line_corner_input_text_black"
+                android:inputType="textPersonName"
+                style="@style/TextView.Poppins14spBlack"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/next_title"
+            style="@style/Button.Primary"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
