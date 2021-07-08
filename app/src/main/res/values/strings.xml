@@ -336,5 +336,6 @@
     <string name="girik">Girik</string>
     <string name="city_required">City*</string>
     <string name="province_required">Province*</string>
+    <string name="year_required">Year*</string>
 
 </resources>

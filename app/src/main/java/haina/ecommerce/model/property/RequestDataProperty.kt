@@ -3,6 +3,7 @@ package haina.ecommerce.model.property
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import java.util.ArrayList
 
 @Parcelize
 data class RequestDataProperty (
@@ -49,7 +50,10 @@ data class RequestDataProperty (
     @SerializedName("description")
     var description:String,
 
-    @SerializedName("price")
-    var price:String
+    @SerializedName("price_sell")
+    var priceSell:String?,
+
+    @SerializedName("price_rent")
+    var priceRent:String?
 
     ):Parcelable

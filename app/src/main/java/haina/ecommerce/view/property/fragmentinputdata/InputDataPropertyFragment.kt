@@ -15,6 +15,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
+import haina.ecommerce.adapter.property.AdapterListAmountRoom
 import haina.ecommerce.adapter.property.AdapterListCity
 import haina.ecommerce.adapter.property.AdapterListFacility
 import haina.ecommerce.adapter.property.AdapterListProvince
@@ -22,22 +23,46 @@ import haina.ecommerce.databinding.FragmentInputDataPropertyBinding
 import haina.ecommerce.model.property.DataCity
 import haina.ecommerce.model.property.DataFacilitiesProperty
 import haina.ecommerce.model.property.DataProvince
+import haina.ecommerce.model.property.RequestDataProperty
 import haina.ecommerce.view.property.PropertyActivity
 import java.util.ArrayList
+import kotlin.math.floor
 
 class InputDataPropertyFragment : Fragment(), InputDataPropertyContract.View,
     AdapterListFacility.ItemAdapterCallback, AdapterListProvince.ItemAdapterCallback,
-AdapterListCity.ItemAdapterCallback, View.OnClickListener{
+AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom.ItemAdapterCallback{
 
     private lateinit var _binding :FragmentInputDataPropertyBinding
     private val binding get() = _binding
     private var progressDialog:Dialog? = null
     private var popupProvince:Dialog? = null
+    private var popupFloor:Dialog? = null
     private var popupCity:Dialog? = null
     private lateinit var presenter: InputDataPropertyPresenter
-    private var listFacility= ArrayList<String>()
+    private var listFacility: ArrayList<String?>? = null
+    private var amountRoom = listOf<Int>(1,2,3,4,5,6,7,8,9,10)
+    private var amountFloor = listOf<Int>()
     private var propertyType:String = ""
     private var typePosting:String = ""
+    private var typeCertificate:String = ""
+    private var typeAmountRoom:String = ""
+    private var isEmptyTypeProperty = true
+    private var isEmptyTypePosting = true
+    private var isEmptyBuildingArea = true
+    private var isEmptyLandArea = true
+    private var isEmptyBedRoom = true
+    private var isEmptyBathRoom = true
+    private var isEmptyFloor = true
+    private var isEmptyYear = true
+    private var isEmptyFacility = true
+    private var isEmptyTypeCertificate = true
+    private var isEmptyTypeProvince = true
+    private var isEmptyTypeCity = true
+    private var isEmptyAddress = true
+    private var isEmptyTitle = true
+    private var isEmptyDescription = true
+    private var isEmptyPriceSell = true
+    private var isEmptyPriceRent = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentInputDataPropertyBinding.inflate(inflater, container, false)
@@ -50,17 +75,26 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener{
         binding.toolbar7.setNavigationOnClickListener {
             (requireActivity() as PropertyActivity).onBackPressed()
         }
+        for (i in 1 until 100){
+            amountFloor = listOf(i)
+        }
+        Toast.makeText(requireActivity(), amountFloor.toString(), Toast.LENGTH_SHORT).show()
         binding.includeDataPropertyTop.etProvince.setOnClickListener(this)
         binding.includeDataPropertyTop.etCity.setOnClickListener(this)
         binding.includeDataPropertyTop.btnNext.setOnClickListener(this)
+        binding.includeDataPropertyTop.etFloor.setOnClickListener(this)
+        binding.includeDataPropertyTop.etBedroom.setOnClickListener(this)
+        binding.includeDataPropertyTop.etBathroom.setOnClickListener(this)
         presenter.getFacilities()
         presenter.getProvince()
-        radioGroupPropertyType()
+        radioGroup()
+        popupDialogFloor(amountRoom)
+        binding.includeDataPropertyTop.rbBoth.isChecked = true
     }
 
     override fun onResume() {
         super.onResume()
-        progressDialog?.dismiss()
+        binding.includeDataPropertyTop.rbBoth.isChecked = true
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -71,6 +105,27 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener{
         progressDialog?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.white))
         val window: Window = progressDialog?.window!!
         window.setGravity(Gravity.CENTER)
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun popupDialogFloor(dataProvince: List<Int>) {
+        popupFloor = Dialog(requireActivity())
+        popupFloor?.setContentView(R.layout.layout_popup_dialog_destination_flight)
+        popupFloor?.setCancelable(true)
+        popupFloor?.window?.setBackgroundDrawableResource(R.color.white)
+        val window: Window = popupFloor?.window!!
+        window.setGravity(Gravity.CENTER)
+        val actionClose = popupFloor?.findViewById<ImageView>(R.id.iv_close)
+        val rvDestination = popupFloor?.findViewById<RecyclerView>(R.id.rv_destination)
+        val searchView = popupFloor?.findViewById<SearchView>(R.id.sv_destination)
+        val title = popupFloor?.findViewById<TextView>(R.id.textView10)
+        actionClose?.setOnClickListener { popupFloor?.dismiss() }
+        rvDestination?.apply {
+            adapter = AdapterListAmountRoom(requireActivity(), dataProvince, this@InputDataPropertyFragment)
+            layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        }
+        searchView?.visibility= View.GONE
+        title?.text = "Amount"
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -144,14 +199,21 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener{
         })
     }
 
-    private fun radioGroupPropertyType(){
+    private fun radioGroup(){
         binding.includeDataPropertyTop.rdGroupPropertyType.setOnCheckedChangeListener { _, i ->
+            binding.includeDataPropertyTop.tvTitleTypeProperty.error = null
             val radio: RadioButton = requireActivity().findViewById(i)
             radioButtonTypeProperty(radio)
         }
         binding.includeDataPropertyTop.rdGroupTypePosting.setOnCheckedChangeListener { _, i ->
+            binding.includeDataPropertyTop.tvTitleTypePosting.error = null
             val radio: RadioButton = requireActivity().findViewById(i)
             radioButtonTypePosting(radio)
+        }
+        binding.includeDataPropertyTop.rdGroupCertificate.setOnCheckedChangeListener { _, i ->
+            binding.includeDataPropertyTop.tvTitleTypeCertificate.error = null
+            val radio :RadioButton = requireActivity().findViewById(i)
+            radioButtonTypeCertificate(radio)
         }
     }
 
@@ -162,14 +224,17 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener{
             "For Sell" -> {
                 binding.includeDataPropertyTop.linearPriceRent.visibility = View.GONE
                 binding.includeDataPropertyTop.linearPriceSell.visibility = View.VISIBLE
+                binding.includeDataPropertyTop.linearTypeCertificate.visibility = View.VISIBLE
             }
             "For Rent" -> {
                 binding.includeDataPropertyTop.linearPriceRent.visibility = View.VISIBLE
                 binding.includeDataPropertyTop.linearPriceSell.visibility = View.GONE
+                binding.includeDataPropertyTop.linearTypeCertificate.visibility = View.GONE
             }
             "Both" -> {
                 binding.includeDataPropertyTop.linearPriceRent.visibility = View.VISIBLE
                 binding.includeDataPropertyTop.linearPriceSell.visibility = View.VISIBLE
+                binding.includeDataPropertyTop.linearTypeCertificate.visibility = View.VISIBLE
             }
         }
     }
@@ -180,14 +245,271 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener{
         when(propertyType){
             "Warehouse" -> {
                 binding.includeDataPropertyTop.linearBedroom.visibility = View.GONE
+                binding.includeDataPropertyTop.linearLandArea.visibility = View.VISIBLE
             }
             "Office" -> {
+                binding.includeDataPropertyTop.linearLandArea.visibility = View.GONE
                 binding.includeDataPropertyTop.linearBedroom.visibility = View.GONE
             }
+            "Apartment" -> {
+                binding.includeDataPropertyTop.linearLandArea.visibility = View.GONE
+            }
             else -> {
+                binding.includeDataPropertyTop.linearLandArea.visibility = View.VISIBLE
                 binding.includeDataPropertyTop.linearBedroom.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun checkDataProperty(){
+        var typePropertyParams = propertyType
+        var typePostingParams = typePosting
+        var buildingAreaParams = binding.includeDataPropertyTop.etBuildingArea.text.toString()
+        var landAreaParams = binding.includeDataPropertyTop.etSurfaceArea.text.toString()
+        var bedRoomParams = binding.includeDataPropertyTop.etBedroom.text.toString()
+        var bathRoomParams = binding.includeDataPropertyTop.etBathroom.text.toString()
+        var floorParams = binding.includeDataPropertyTop.etFloor.text.toString()
+        var yearParams = binding.includeDataPropertyTop.etYear.text.toString()
+        var facilityParams = listFacility
+        var typeCertificateParams = typeCertificate
+        var provinceParams = binding.includeDataPropertyTop.etProvince.text.toString()
+        var cityParams = binding.includeDataPropertyTop.etCity.text.toString()
+        var addressParams = binding.includeDataPropertyTop.etAddressProperty.text.toString()
+        var titleParams = binding.includeDataPropertyTop.etTitleAds.text.toString()
+        var descriptionParams = binding.includeDataPropertyTop.etDescriptionAds.text.toString()
+        var priceSellParams = binding.includeDataPropertyTop.etSetPriceSell.text.toString()
+        var priceRentParams = binding.includeDataPropertyTop.etSetPrice.text.toString()
+
+        if (typePropertyParams.isNullOrEmpty()){
+            isEmptyTypeProperty = true
+            binding.includeDataPropertyTop.tvTitleTypeProperty.error = "Can't Empty"
+        } else {
+            isEmptyTypeProperty = false
+            binding.includeDataPropertyTop.tvTitleTypeProperty.error = null
+            typePropertyParams = propertyType
+        }
+
+        if (typePostingParams.isNullOrEmpty()){
+            isEmptyTypePosting = true
+            binding.includeDataPropertyTop.tvTitleTypePosting.error = "Can't Empty"
+        } else {
+            isEmptyTypePosting = false
+            binding.includeDataPropertyTop.tvTitleTypePosting.error = null
+            typePostingParams = typePosting
+        }
+
+        if (buildingAreaParams.isNullOrEmpty()){
+            isEmptyBuildingArea = true
+            binding.includeDataPropertyTop.tvTitleBuildingArea.error = "Can't Empty"
+        } else {
+            isEmptyBuildingArea = false
+            binding.includeDataPropertyTop.tvTitleBuildingArea.error = null
+            buildingAreaParams = binding.includeDataPropertyTop.etBuildingArea.text.toString()
+        }
+
+        if (landAreaParams.isNullOrEmpty()){
+            when(propertyType){
+                "Apartment" -> {
+                    isEmptyLandArea = false
+                    binding.includeDataPropertyTop.tvTitleLandArea.error = null
+                }
+                "Office" -> {
+                    isEmptyLandArea = false
+                    binding.includeDataPropertyTop.tvTitleLandArea.error = null
+                }else -> {
+                isEmptyLandArea = true
+                binding.includeDataPropertyTop.tvTitleLandArea.error = "Can't Empty" }
+            }
+        } else {
+            isEmptyLandArea = false
+            binding.includeDataPropertyTop.tvTitleLandArea.error = null
+            landAreaParams = binding.includeDataPropertyTop.etSurfaceArea.text.toString()
+        }
+
+        if (bedRoomParams.isNullOrEmpty()){
+            when(propertyType){
+                "Warehouse" -> {
+                    isEmptyBedRoom = false
+                    binding.includeDataPropertyTop.tvTitleBedRoom.error = null
+                }
+                "Office" -> {
+                    isEmptyBedRoom = false
+                    binding.includeDataPropertyTop.tvTitleBedRoom.error = null
+                }
+                else -> {
+                    isEmptyBedRoom = true
+                binding.includeDataPropertyTop.tvTitleBedRoom.error = "Can't Empty" }
+            }
+        } else {
+            isEmptyBedRoom = false
+            binding.includeDataPropertyTop.tvTitleBedRoom.error = null
+            bedRoomParams = binding.includeDataPropertyTop.etBedroom.text.toString()
+        }
+
+        if (bathRoomParams.isNullOrEmpty()){
+            isEmptyBathRoom = true
+            binding.includeDataPropertyTop.tvTitleBathRoom.error = "Can't Empty"
+        } else {
+            isEmptyBathRoom = false
+            binding.includeDataPropertyTop.tvTitleBathRoom.error = null
+            bathRoomParams = binding.includeDataPropertyTop.etBathroom.text.toString()
+        }
+
+        if (floorParams.isNullOrEmpty()){
+            isEmptyFloor = true
+            binding.includeDataPropertyTop.tvTitleFloor.error = "Can't Empty"
+        } else {
+            isEmptyFloor = false
+            binding.includeDataPropertyTop.tvTitleFloor.error = null
+            floorParams = binding.includeDataPropertyTop.etFloor.text.toString()
+        }
+
+        if (yearParams.isNullOrEmpty()){
+            isEmptyYear = true
+            binding.includeDataPropertyTop.tvTitleYear.error = "Can't Empty"
+        } else {
+            isEmptyYear = false
+            binding.includeDataPropertyTop.tvTitleYear.error = null
+            yearParams = binding.includeDataPropertyTop.etYear.text.toString()
+        }
+
+        if (facilityParams.isNullOrEmpty()){
+            isEmptyFacility = false
+        } else {
+            isEmptyFacility = false
+            facilityParams = listFacility
+        }
+
+        if (typeCertificateParams.isNullOrEmpty()){
+            when(typePosting){
+                "For Rent" -> {
+                    isEmptyTypeProperty = false
+                    binding.includeDataPropertyTop.tvTitleTypeCertificate.error = null
+                } else -> {
+                isEmptyTypeProperty = true
+                binding.includeDataPropertyTop.tvTitleTypeCertificate.error = "Can't Empty" }
+            }
+        } else {
+            isEmptyTypeProperty = false
+            binding.includeDataPropertyTop.tvTitleTypeCertificate.error = null
+            typeCertificateParams = typeCertificate
+        }
+
+        if (provinceParams.isNullOrEmpty()){
+            isEmptyTypeProvince = true
+            binding.includeDataPropertyTop.tvTitleProvince.error = "Can't Empty"
+        } else {
+            isEmptyTypeProvince = false
+            binding.includeDataPropertyTop.tvTitleProvince.error = null
+            provinceParams = binding.includeDataPropertyTop.etProvince.text.toString()
+        }
+
+        if (cityParams.isNullOrEmpty()){
+            isEmptyTypeCity = true
+            binding.includeDataPropertyTop.tvTitleCity.error = "Can't Empty"
+        } else {
+            isEmptyTypeCity = false
+            binding.includeDataPropertyTop.tvTitleCity.error = null
+            cityParams = binding.includeDataPropertyTop.etCity.text.toString()
+        }
+
+        if (addressParams.isNullOrEmpty()){
+            isEmptyAddress = true
+            binding.includeDataPropertyTop.tvTitleAddress.error = "Can't Empty"
+        } else {
+            isEmptyAddress = false
+            binding.includeDataPropertyTop.tvTitleAddress.error = null
+            addressParams = binding.includeDataPropertyTop.etAddressProperty.text.toString()
+        }
+
+        if (titleParams.isNullOrEmpty()){
+            isEmptyTitle = true
+            binding.includeDataPropertyTop.tvTitleAds.error = "Can't Empty"
+        } else {
+            isEmptyTitle = false
+            binding.includeDataPropertyTop.tvTitleAds.error = null
+            titleParams = binding.includeDataPropertyTop.etTitleAds.text.toString()
+        }
+
+        if (descriptionParams.isNullOrEmpty()){
+            isEmptyDescription = true
+            binding.includeDataPropertyTop.tvTitleDescription.error = "Can't Empty"
+        } else {
+            isEmptyDescription = false
+            binding.includeDataPropertyTop.tvTitleDescription.error = null
+            descriptionParams = binding.includeDataPropertyTop.etDescriptionAds.text.toString()
+        }
+
+        if (priceRentParams.isNullOrEmpty()){
+            when(typePosting){
+                "For Sell" -> {
+                    isEmptyPriceRent = false
+                    binding.includeDataPropertyTop.tvTitlePriceRent.error = null
+                } else -> {
+                isEmptyPriceRent = true
+                binding.includeDataPropertyTop.tvTitlePriceRent.error = "Can't Empty"
+                }
+            }
+        } else {
+            isEmptyPriceRent = false
+            binding.includeDataPropertyTop.tvTitlePriceRent.error = null
+            priceRentParams = binding.includeDataPropertyTop.etSetPrice.text.toString()
+        }
+
+        if (priceSellParams.isNullOrEmpty()){
+            when(typePosting){
+                "For Rent" -> {
+                    isEmptyPriceSell = false
+                    binding.includeDataPropertyTop.tvTitlePriceSell.error = null
+                } else -> {
+                isEmptyPriceSell = true
+                binding.includeDataPropertyTop.tvTitlePriceSell.error = "Can't Empty" }
+            }
+        } else {
+            isEmptyPriceSell = false
+            binding.includeDataPropertyTop.tvTitlePriceSell.error = null
+            priceSellParams = binding.includeDataPropertyTop.etSetPriceSell.text.toString()
+        }
+
+        if (typePropertyParams == "House" && typePostingParams == "For Sell"){
+            if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+            !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell){
+                val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(),
+                    landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(), floorParams.toInt(), facilityParams,
+                    typeCertificateParams, provinceParams.toInt(), cityParams.toInt(), addressParams, titleParams,
+                    descriptionParams, priceSellParams, null)
+                Log.d("houseSell", dataRequest.toString())
+                Toast.makeText(requireActivity(), dataRequest.toString(), Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        if (typePropertyParams == "House" && typePostingParams == "For Rent"){
+            if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+                !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent) {
+                val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(),
+                    floorParams.toInt(), facilityParams, null, provinceParams.toInt(), cityParams.toInt(), addressParams, titleParams,
+                    descriptionParams, null, priceRentParams
+                )
+                Log.d("houseRent", dataRequest.toString())
+            }
+        }
+
+        if (typePropertyParams == "House" && typePostingParams == "Both"){
+            if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+                !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell && !isEmptyPriceRent) {
+                val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(),
+                    floorParams.toInt(), facilityParams, typeCertificateParams, provinceParams.toInt(), cityParams.toInt(), addressParams,
+                    titleParams, descriptionParams, priceRentParams, priceSellParams
+                )
+                Log.d("houseBoth", dataRequest.toString())
+            }
+        }
+
+    }
+
+    private fun radioButtonTypeCertificate(view: View){
+        val radio: RadioButton = requireActivity().findViewById(binding.includeDataPropertyTop.rdGroupCertificate.checkedRadioButtonId)
+        typeCertificate = radio.text.toString()
     }
 
     override fun messageGetFacilities(msg: String) {
@@ -236,12 +558,10 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener{
             R.id.cb_addon -> {
                 when(status){
                     true -> {
-                        listFacility.add(data.name!!)
-                        Toast.makeText(requireActivity(), listFacility.toString(), Toast.LENGTH_SHORT).show()
+                        listFacility?.add(data.name!!)
                     }
                     false -> {
-                        listFacility.remove(data.name!!)
-                        Toast.makeText(requireActivity(), listFacility.toString(), Toast.LENGTH_SHORT).show()
+                        listFacility?.remove(data.name!!)
                     }
                 }
             }
@@ -280,7 +600,41 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener{
                 popupCity?.show()
             }
             R.id.btn_next -> {
-                Navigation.findNavController(binding.includeDataPropertyTop.btnNext).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment)
+                checkDataProperty()
+//                Navigation.findNavController(binding.includeDataPropertyTop.btnNext).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment)
+            }
+            R.id.et_floor -> {
+                typeAmountRoom = "Floor"
+                popupFloor?.show()
+            }
+            R.id.et_bedroom -> {
+                typeAmountRoom = "BedRoom"
+                popupFloor?.show()
+            }
+            R.id.et_bathroom -> {
+                typeAmountRoom = "BathRoom"
+                popupFloor?.show()
+            }
+        }
+    }
+
+    override fun onClickAdapterAmount(view: View, data: Int) {
+        when(view.id){
+            R.id.tv_province -> {
+                when(typeAmountRoom){
+                    "Floor" -> {
+                        popupFloor?.dismiss()
+                        binding.includeDataPropertyTop.etFloor.setText(data.toString())
+                    }
+                    "BedRoom" -> {
+                        popupFloor?.dismiss()
+                        binding.includeDataPropertyTop.etBedroom.setText(data.toString())
+                    }
+                    "BathRoom" -> {
+                        popupFloor?.dismiss()
+                        binding.includeDataPropertyTop.etBathroom.setText(data.toString())
+                    }
+                }
             }
         }
     }

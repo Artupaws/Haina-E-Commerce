@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/tv_title_type_property"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextView.Poppins12spGrey"
@@ -58,6 +59,7 @@
         </RadioGroup>
 
         <TextView
+            android:id="@+id/tv_title_type_posting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextView.Poppins12spGrey"
@@ -85,6 +87,7 @@
                 style="@style/TextView.Poppins12spGrey"
                 android:textColor="@color/black"/>
             <RadioButton
+                android:id="@+id/rb_both"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -96,6 +99,7 @@
 
 
         <TextView
+            android:id="@+id/tv_title_building_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -123,6 +127,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_title_land_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -137,14 +142,13 @@
                 android:inputType="number"
                 style="@style/TextView.Poppins14spBlack"
                 android:padding="5dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextView.Poppins12spGrey"
+                android:text="@string/in_meters"/>
 
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/TextView.Poppins12spGrey"
-            android:text="@string/in_meters"/>
 
         <LinearLayout
             android:id="@+id/linear_bedroom"
@@ -153,6 +157,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_title_bed_room"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -163,6 +168,8 @@
                 android:id="@+id/et_bedroom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:background="@drawable/background_line_corner_input_text_black"
                 android:inputType="textPersonName"
                 style="@style/TextView.Poppins14spBlack"
@@ -170,6 +177,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_title_bath_room"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -180,12 +188,15 @@
             android:id="@+id/et_bathroom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:background="@drawable/background_line_corner_input_text_black"
             android:inputType="textPersonName"
             style="@style/TextView.Poppins14spBlack"
             android:padding="5dp" />
 
         <TextView
+            android:id="@+id/tv_title_floor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -196,12 +207,34 @@
             android:id="@+id/et_floor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:background="@drawable/background_line_corner_input_text_black"
             android:inputType="textPersonName"
             style="@style/TextView.Poppins14spBlack"
             android:padding="5dp" />
 
         <TextView
+            android:id="@+id/tv_title_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            style="@style/TextView.Poppins12spGrey"
+            android:text="@string/year_required"
+            android:textColor="@color/black"/>
+        <EditText
+            android:id="@+id/et_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_line_corner_input_text_black"
+            android:inputType="number"
+            android:maxLength="4"
+            android:hint="Ex: 2012"
+            style="@style/TextView.Poppins14spBlack"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/tv_title_facility"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -216,7 +249,14 @@
             tools:listitem="@layout/list_item_choose_add_on"
             tools:itemCount="5"/>
 
+        <LinearLayout
+            android:id="@+id/linear_type_certificate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
         <TextView
+            android:id="@+id/tv_title_type_certificate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextView.Poppins12spGrey"
@@ -224,6 +264,7 @@
             android:textColor="@color/black"/>
 
         <RadioGroup
+            android:id="@+id/rd_group_certificate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -257,8 +298,10 @@
                 android:textColor="@color/black"/>
 
         </RadioGroup>
+        </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_title_province"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -283,6 +326,7 @@
             android:visibility="gone"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_title_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -303,6 +347,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_title_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -328,6 +373,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/tv_title_ads"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextView.Poppins12spGrey"
@@ -352,6 +398,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/tv_title_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextView.Poppins12spGrey"
@@ -385,6 +432,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_title_price_rent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextView.Poppins12spGrey"
@@ -409,6 +457,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_title_price_sell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextView.Poppins12spGrey"
