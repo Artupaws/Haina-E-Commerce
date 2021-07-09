@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="5dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="5sp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/iv_icon_airlines"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_airline_name"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginStart="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_icon_airlines"
+                app:layout_constraintStart_toEndOf="@+id/iv_icon_airlines"
+                app:layout_constraintTop_toTopOf="@+id/iv_icon_airlines"
+                tools:text="Lion" />
+
+            <TextView
+                android:id="@+id/tv_destination"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="@+id/iv_icon_airlines"
+                app:layout_constraintTop_toBottomOf="@+id/iv_icon_airlines"
+                tools:text="Denpasar(DPS) - Jakarta(CGK)" />
+
+            <TextView
+                android:id="@+id/tv_schedule"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="@+id/iv_icon_airlines"
+                app:layout_constraintTop_toBottomOf="@+id/tv_destination"
+                tools:text="23 APR - 05:00-06:55" />
+
+            <TextView
+                android:id="@+id/tv_type_flight"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="@+id/iv_icon_airlines"
+                app:layout_constraintTop_toBottomOf="@+id/tv_schedule"
+                tools:text="Direct"
+                app:drawableStartCompat="@drawable/ic_airplane" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

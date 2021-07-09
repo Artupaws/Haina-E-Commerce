@@ -7,6 +7,20 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="green">#008000</color>
 
+    <color name="black_60">#99000000</color>
     <color name="yellow">#fddb3a</color>
+
+    <color name="colorPrimary">#fddb3a</color>
+    <color name="colorAccent">#28324b</color>
+    <color name="baseColor">#ffffff</color>
+    <color name="baseColorDark">#000000</color>
+    <color name="google">#da4b42</color>
+    <color name="facebook">#3a559f</color>
+    <color name="light_grey">#d3d3d3</color>
+    <color name="dark_gray">#c1c1c1</color>
+    <color name="broken_white">#F4F4F4</color>
+    <color name="gray_shimmer">#dddddd</color>
+
 </resources>

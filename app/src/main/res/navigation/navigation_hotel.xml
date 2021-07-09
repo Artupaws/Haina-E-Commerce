@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_hotel"
+    app:startDestination="@id/listCityHotelFragment">
+
+    <fragment
+        android:id="@+id/listCityHotelFragment"
+        android:name="haina.ecommerce.view.hotels.listcity.ListCityHotelFragment"
+        android:label="fragment_list_city_hotel"
+        tools:layout="@layout/fragment_list_city_hotel" >
+        <action
+            android:id="@+id/action_listCityHotelFragment_to_scheduleHotelFragment"
+            app:destination="@id/scheduleHotelFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleHotelFragment"
+        android:name="haina.ecommerce.view.hotels.listhotel.ListHotelFragment"
+        android:label="fragment_schedule_hotel"
+        tools:layout="@layout/fragment_list_hotel" >
+        <action
+            android:id="@+id/action_scheduleHotelFragment_to_listRoomFragment"
+            app:destination="@id/listRoomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listRoomFragment"
+        android:name="haina.ecommerce.view.hotels.listroom.ListRoomFragment"
+        android:label="fragment_list_room"
+        tools:layout="@layout/fragment_list_room" >
+        <action
+            android:id="@+id/action_listRoomFragment_to_fillInDetailFragment"
+            app:destination="@id/fillInDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fillInDetailFragment"
+        android:name="haina.ecommerce.view.hotels.fillindetail.FillInDetailFragment"
+        android:label="fragment_fill_in_detail"
+        tools:layout="@layout/fragment_fill_in_detail" >
+        <action
+            android:id="@+id/action_fillInDetailFragment_to_detailFillDataPassengerFragment2"
+            app:destination="@id/detailFillDataPassengerFragment2" />
+        <action
+            android:id="@+id/action_fillInDetailFragment_to_reviewBookingFragment"
+            app:destination="@id/reviewBookingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFillDataPassengerFragment2"
+        android:name="haina.ecommerce.view.flight.detailfilldata.DetailFillDataPassengerFragment"
+        android:label="fragment_detail_fill_data_passenger"
+        tools:layout="@layout/fragment_detail_fill_data_passenger" />
+    <fragment
+        android:id="@+id/reviewBookingFragment"
+        android:name="haina.ecommerce.view.hotels.review.ReviewBookingFragment"
+        android:label="fragment_review_booking"
+        tools:layout="@layout/fragment_review_booking" />
+</navigation>

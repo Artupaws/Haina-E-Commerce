@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1039590465685",
+    "firebase_url": "https://haina-app-d960a.firebaseio.com",
+    "project_id": "haina-app-d960a",
+    "storage_bucket": "haina-app-d960a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039590465685:android:56b253745474bb904a7b9c",
+        "android_client_info": {
+          "package_name": "haina.ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1039590465685-33ne1lqafgpgvnra001pk9o3l4a5rn23.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "haina.ecommerce",
+            "certificate_hash": "524677b35d767c7643330b72e36ba85549f346d4"
+          }
+        },
+        {
+          "client_id": "1039590465685-1kdfumqufqj5r1cce102mjpueprp1fjq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTehgOdN8dHMiU3_OqU5BzOjPbT0j2SIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1039590465685-1kdfumqufqj5r1cce102mjpueprp1fjq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

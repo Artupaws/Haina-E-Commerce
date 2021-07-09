@@ -13,5 +13,33 @@
     <string name="apartment">&#xf1ad;</string>
     <string name="car">&#xf1b9;</string>
     <string name="plane">&#xf5b0;</string>
+    <string name="tool_service_car">&#xf7d9;</string>
+    <string name="translator">&#xf1ab;</string>
+    <string name="blender">&#xf517;</string>
+    <string name="house">&#xf015;</string>
+    <string name="bolt">&#xf0e7;</string>
+    <string name="wifi">&#xf1eb;</string>
+    <string name="water">&#xf043;</string>
+    <string name="book_visa">&#xf558;</string>
+    <string name="train">&#xf238;</string>
+    <string name="bus">&#xf207;</string>
+    <string name="travel">&#xf5b6;</string>
+    <string name="bookmark">&#xf02e;</string>
+    <string name="support">&#xf590;</string>
+    <string name="phonebook">&#xf2b9;</string>
+    <string name="phoneHouse">&#xf095;</string>
+    <string name="electronicmoney">&#xf09d;</string>
+    <string name="hotel">&#xf594;</string>
+    <string name="star">&#xf005;</string>
+    <string name="bed">&#xf236;</string>
+    <string name="breakfast">&#xf2e7;</string>
+    <string name="bathtub">&#xf2cd;</string>
+    <string name="swimmingpool">&#xf5c5;</string>
+    <string name="parking">&#xf540;</string>
+    <string name="television">&#xf26c;</string>
+    <string name="spa">&#xf5bb;</string>
+    <string name="dumbbell">&#xf44b;</string>
+    <string name="city_tour">&#xf5b6;</string>
+    <string name="insurance">&#xf6f1;</string>
 
 </resources>

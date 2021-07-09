@@ -24,6 +24,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/linear_news"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -41,8 +42,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
+                    style="@style/TextStyleMenuService"
                     android:text="@string/news_title"/>
 
             </LinearLayout>
@@ -65,38 +65,38 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
+                    style="@style/TextStyleMenuService"
                     android:text="@string/shipping_title"/>
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linear_topup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
                 android:layout_marginBottom="10dp"
-                android:gravity="center_horizontal">
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <haina.ecommerce.helper.FontAwesome
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/phone"
                     android:textColor="@color/yellow"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp" />
 
                 <TextView
+                    style="@style/TextStyleMenuService"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
-                    android:textAlignment="center"
-                    android:text="@string/internet_title"/>
+                    android:baselineAligned="false"
+                    android:text="@string/internet_credit" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linear_job"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -114,9 +114,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
-                    android:textAlignment="center"
+                    style="@style/TextStyleMenuService"
                     android:text="@string/job_vacancy"/>
 
             </LinearLayout>
@@ -137,6 +135,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/linear_hotel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -147,17 +146,15 @@
                     <haina.ecommerce.helper.FontAwesome
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/apartment"
+                        android:text="@string/hotel"
                         android:textColor="@android:color/holo_blue_dark"
                         android:textSize="25sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/black"
-                        android:textAlignment="center"
-                        android:text="@string/rent_apartment"/>
+                        style="@style/TextStyleMenuService"
+                        android:text="@string/hotels"/>
 
                 </LinearLayout>
 
@@ -179,14 +176,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/black"
-                        android:textAlignment="center"
-                        android:text="Rent Car"/>
+                        style="@style/TextStyleMenuService"
+                        android:text="@string/rent_car"/>
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_flight_ticket"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -204,14 +200,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/black"
-                        android:textAlignment="center"
-                        android:text="Flight Ticket"/>
+                        style="@style/TextStyleMenuService"
+                        android:text="@string/flight_ticket"/>
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_other"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -229,9 +224,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/black"
-                        android:textAlignment="center"
+                        style="@style/TextStyleMenuService"
                         android:text="@string/other_title"/>
 
                 </LinearLayout>

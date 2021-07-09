@@ -1,25 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="haina.ecommerce">
 
-    <!--    Icons made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>-->
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HainaECommerce.Light">
-        <activity android:name=".view.MainActivity"
-            android:screenOrientation="nosensor">
+        android:theme="@style/Theme.HainaECommerce.Light"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".view.categorypost.CategoryActivity"></activity>
+        <activity android:name=".view.property.PropertyActivity" />
+        <activity android:name=".view.hotels.HotelBaseActivity" />
+        <activity android:name=".view.news.DetailNewsActivity" />
+        <activity android:name=".view.news.NewsActivity" />
+        <activity android:name=".view.onlinepayment.OnlinePaymentActivity" />
+        <activity android:name=".view.flight.FlightTicketActivity" />
+        <activity android:name=".view.hotels.transactionhotel.detailbook.DetailBookingsActivity" />
+        <activity android:name=".view.hotels.transactionhotel.HistoryTransactionHotelActivity" />
+        <activity android:name=".view.hotels.listphotohotels.ListPhotoHotelActivity" />
+        <activity android:name=".view.hotels.selectdate.SelectDateHotelActivity" />
+        <activity android:name=".view.hotels.detailhotel.DetailHotelsActivity" />
+        <activity android:name=".view.hotels.dashboardhotel.HotelsActivity" />
+        <activity android:name=".view.topup.electronicmoney.ElectronicMoneyActivity" />
+        <activity android:name=".view.detailtransaction.DetailTransactionActivity" />
+        <activity android:name=".view.history.historytransaction.HistoryTransactionActivity" />
+        <activity android:name=".view.history.historyjobvacancy.HistoryJobVacancyActivity" />
+        <activity android:name=".view.paymentmethod.PaymentActivity" />
+        <activity android:name=".view.postpaid.PostpaidActivity" />
+        <activity android:name=".view.internetandtv.InternetActivity" />
+        <activity android:name=".view.housephone.HousePhoneActivity" />
+        <activity android:name=".view.water.WaterActivity" />
+        <activity android:name=".view.electricity.ElectricityActivity" />
+        <activity android:name=".view.checkout.CheckoutActivity" />
+        <activity android:name=".view.topup.TopupActivity" />
+        <activity android:name=".view.myaccount.changepassword.ChangePasswordActivity" />
+        <activity android:name=".view.notification.NotificationActivity" />
+        <activity android:name=".view.posting.applyapplicant.ApplyApplicantActivity" />
+        <activity android:name=".view.postingjob.skillrequires.AddSkillRequiresActivity" />
+        <activity android:name=".view.posting.detailvacancy.DetailPostingJobActivity" />
+        <activity android:name=".view.applyjob.ApplyJobActivity" />
+        <activity android:name=".view.myaccount.addskills.AddSkillsActivity" />
+        <activity android:name=".view.myaccount.addrequirement.AddRequirementActivity" />
+        <activity android:name=".view.myaccount.detailaccount.DetailAccountActivity" />
+        <activity android:name=".view.datacompany.address.AddAddressCompanyActivity" />
+        <activity android:name=".view.datacompany.DataCompanyActivity" />
+        <activity android:name=".view.register.company.RegisterCompanyActivity" />
+        <activity
+            android:name=".view.detailjob.DetailJobActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.job.JobActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.postingjob.datajob.PostingJobActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.covidlist.CovidListActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.webview.WebViewActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.register.account.RegisterActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/TranslucentStatusBar" />
+        <activity
+            android:name=".view.login.LoginActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/TranslucentStatusBar" />
+        <activity
+            android:name=".view.other.OtherActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".view.splashscreen.SplashScreenActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/TranslucentStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.MainActivity"
+            android:screenOrientation="nosensor" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path"
+                tools:replace="android:resource" />
+        </provider>
+
+        <service
+            android:name=".fcm.NotifInstanceService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".broadcastcountdown.BroadcastService" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_haina_icon" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/white" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_text_color"
+            android:resource="@color/yellow" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.onesignal.NotificationOpened.DEFAULT"
+            android:value="DISABLE" />
     </application>
 
 </manifest>
