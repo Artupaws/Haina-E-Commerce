@@ -4,19 +4,21 @@ import haina.ecommerce.model.*
 import haina.ecommerce.model.bill.ResponseAddBillTransaction
 import haina.ecommerce.model.bill.ResponseGetBillAmount
 import haina.ecommerce.model.bill.ResponseGetBillDirect
+import haina.ecommerce.model.categorypost.ResponseGetCategoryPost
 import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.flight.*
 import haina.ecommerce.model.hotels.*
-import haina.ecommerce.model.hotels.newHotel.ResponseGetCityHotel
-import haina.ecommerce.model.hotels.newHotel.ResponseGetHotelDarma
-import haina.ecommerce.model.hotels.newHotel.ResponseGetRoomHotel
+import haina.ecommerce.model.hotels.newHotel.*
 import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
 import haina.ecommerce.model.howtopay.ResponseGetHowToPay
 import haina.ecommerce.model.news.ResponseGetListNews
 import haina.ecommerce.model.notification.ResponseGetNotification
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.productservice.ResponseGetProductService
+import haina.ecommerce.model.property.ResponseGetCity
+import haina.ecommerce.model.property.ResponseGetFacilitiesProperty
+import haina.ecommerce.model.property.ResponseGetProvince
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
 import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
@@ -505,13 +507,6 @@ interface NetworkService {
     @GET("api/ticket/nationality")
     fun getListNationality():Call<ResponseGetListNationality>
 
-    //Set Data Passenger
-    @Headers("Content-Type: application/json")
-    @POST("api/ticket/passenger")
-    fun setDataPassenger(
-        @Body body:RequestSetPassenger
-    ):Call<ResponseSetDataPassenger>
-
     //Get Data Add On
     @GET("api/ticket/addons")
     fun getDataAddOn():Call<ResponseGetAddOn>
@@ -543,4 +538,55 @@ interface NetworkService {
         @Field("hotel_id")hotelId:String
     ):Call<ResponseGetRoomHotel>
 
+    //Get Price Policy
+    @FormUrlEncoded
+    @POST("api/hotel_darma/price_policy")
+    fun getPricePolicy(
+        @Field("room_id")roomId:String,
+        @Field("breakfast")breakfast:String
+    ):Call<ResponseGetPricePolicy>
+
+    //Set Booking Hotel Darma
+    @Headers("Content-Type: application/json")
+    @POST("api/hotel_darma/create_booking")
+    fun setBookingHotelDarma(
+        @Body body:RequestBookingHotelToDarma
+    ):Call<ResponseSetBooking>
+
+    //Set Data Passenger
+    @Headers("Content-Type: application/json")
+    @POST("api/ticket/passenger")
+    fun setDataPassenger(
+        @Body body:RequestSetPassenger
+    ):Call<ResponseSetDataPassenger>
+
+    //Get List Booking Hotel Darma
+    @POST("api/hotel_darma/booking_list")
+    fun getListBookingHotelDarma():Call<ResponseGetListBooking>
+
+    //Cancel List
+    @FormUrlEncoded
+    @POST("api/hotel_darma/cancel")
+    fun cancelBookingHotelDarma(
+        @Field("booking_id")bookingId:Int
+    ):Call<ResponseCancelBookingHotel>
+
+    //CategoryPost
+    @GET("api/post_category")
+    fun getCategoryPost():Call<ResponseGetCategoryPost>
+
+    //Get Facilites Properties
+    @GET("api/property/facility")
+    fun getFacilities():Call<ResponseGetFacilitiesProperty>
+
+    //Get Province
+    @POST("api/provinceList")
+    fun getProvince():Call<ResponseGetProvince>
+
+    //Get City
+    @FormUrlEncoded
+    @POST("api/cityList")
+    fun getCity(
+        @Field("id_province") idProvince:Int
+    ):Call<ResponseGetCity>
 }

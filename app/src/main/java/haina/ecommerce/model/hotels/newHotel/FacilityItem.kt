@@ -11,5 +11,8 @@ data class FacilityItem(
 	val facilityGroupName: String? = null,
 
 	@field:SerializedName("facilities")
-	val facilities: List<String?>? = null
+	val facilities: List<String?>? = null,
+
+	@field:SerializedName("icon")
+	val icon: String? = null
 ) : Parcelable

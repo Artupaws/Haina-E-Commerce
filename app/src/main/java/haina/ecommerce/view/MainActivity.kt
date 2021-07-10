@@ -47,6 +47,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setContentView(binding.root)
 
         sharedPref = SharedPreferenceHelper(this)
+        when(sharedPref.getValueString(Constants.LANGUAGE_APP)){
+            ""->{
+                sharedPref.save(Constants.LANGUAGE_APP, "en")
+            }
+        }
         broadcaster = LocalBroadcastManager.getInstance(this)
         loginMethod = intent.getIntExtra("loginMethod", 0)
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)

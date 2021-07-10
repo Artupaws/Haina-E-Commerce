@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
@@ -39,13 +40,13 @@ class AdapterAddressCompanyPostingJob(val context: Context, private val listAddr
                 }
 
                 if (index == adapterPosition){
-                    cvClicked.setBackgroundColor(context.resources.getColor(R.color.black))
-                    tvCity.setTextColor(context.resources.getColor(R.color.white))
-                    tvAddress.setTextColor(context.resources.getColor(R.color.white))
+                    cvClicked.setBackgroundColor(ContextCompat.getColor(context, R.color.black))
+                    tvCity.setTextColor(ContextCompat.getColor(context, R.color.white))
+                    tvAddress.setTextColor(ContextCompat.getColor(context, R.color.white))
                 } else {
-                    cvClicked.setBackgroundColor(context.resources.getColor(R.color.white))
-                    tvCity.setTextColor(context.resources.getColor(R.color.black))
-                    tvAddress.setTextColor(context.resources.getColor(R.color.black))
+                    cvClicked.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                    tvCity.setTextColor(ContextCompat.getColor(context, R.color.black))
+                    tvAddress.setTextColor(ContextCompat.getColor(context, R.color.black))
                 }
 
             }

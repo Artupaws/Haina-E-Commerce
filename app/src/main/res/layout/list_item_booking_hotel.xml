@@ -157,6 +157,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/linear_total_guest"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -192,6 +193,7 @@
                     </LinearLayout>
 
                     <FrameLayout
+                        android:id="@+id/frame_review_hotel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

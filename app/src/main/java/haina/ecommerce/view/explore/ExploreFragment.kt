@@ -172,17 +172,17 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
         _binding = null
     }
 
-    override fun errorMessage(msg: String?) {
+    override fun errorMessage(msg: String) {
         Log.d("errorExplore", msg)
         binding?.swipeRefresh?.isRefreshing = false
     }
 
-    override fun successMessage(msg: String?) {
+    override fun successMessage(msg: String) {
         Log.d("successExplore", msg)
         binding?.swipeRefresh?.isRefreshing = false
     }
 
-    override fun messageGetTransactionList(msg: String?) {
+    override fun messageGetTransactionList(msg: String) {
         Log.d("getListTransaction", msg!!)
         binding?.swipeRefresh?.isRefreshing = false
 //        if (!msg.contains("Success")){

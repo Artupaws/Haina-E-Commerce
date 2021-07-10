@@ -7,9 +7,9 @@ import haina.ecommerce.model.transactionlist.PendingItem
 
 interface ExploreContract {
 
-    fun errorMessage(msg: String?)
-    fun successMessage(msg: String?)
-    fun messageGetTransactionList(msg:String?)
+    fun errorMessage(msg: String)
+    fun successMessage(msg: String)
+    fun messageGetTransactionList(msg:String)
 //    fun getTransactionList(data:DataTransaction?)
     fun getTransactionPending(data:List<DataAllTransactionPending?>?)
     fun dismissShimmerHeadlineNews()

@@ -62,7 +62,7 @@ class ExplorePresenter(val view: ExploreContract, val context: Context) {
                     view.loadCovidJkt(data)
                     view.successMessage(response.body()?.message.toString())
                 } else {
-                    view.errorMessage(response.body()?.message)
+                    view.errorMessage(response.body()?.message!!)
                 }
             }
 
@@ -120,7 +120,7 @@ class ExplorePresenter(val view: ExploreContract, val context: Context) {
                 if (response.isSuccessful && response.body()?.value == 1){
                     val data = response.body()?.data
                     view.getTransactionPending(data)
-                    view.messageGetTransactionList(response.body()?.message)
+                    view.messageGetTransactionList(response.body()?.message!!)
                 } else {
                     val error = JSONObject(response.errorBody()?.string()!!)
                     view.messageGetTransactionList(error.getString("message"))

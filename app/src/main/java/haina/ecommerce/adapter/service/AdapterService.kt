@@ -36,7 +36,7 @@ class AdapterService(val context: Context, private val listService: List<Categor
         private val binding = ListItemServiceBinding.bind(view)
         fun bind(itemHaina: CategoryService){
             with(binding){
-                tvTitleService.text = itemHaina.name
+//                tvTitleService.text = itemHaina.name
                 val icon = HtmlCompat.fromHtml("${itemHaina.iconCode}",HtmlCompat.FROM_HTML_MODE_LEGACY)
                 ivIconService.text = icon
                 val codeLanguage = sharedPref.getValueString(Constants.LANGUAGE_APP)

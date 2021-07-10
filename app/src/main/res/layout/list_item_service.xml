@@ -28,7 +28,7 @@
             style="@style/TextView.Poppins12spGrey"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:text="@string/news_title"/>
+            tools:text="@string/news_title"/>
 
     </LinearLayout>
 

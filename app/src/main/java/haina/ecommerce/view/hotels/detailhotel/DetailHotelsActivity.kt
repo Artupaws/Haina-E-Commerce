@@ -34,7 +34,7 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener,
         binding = ActivityDetailHotelsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        dataHotel = intent.getParcelableExtra<DataHotel>("dataHotel")
+        dataHotel = intent.getParcelableExtra<DataHotel>("dataHotel")!!
         binding.toolbarDetailHotels.title = "Detail"
         binding.toolbarDetailHotels.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailHotels.setNavigationOnClickListener { onBackPressed() }

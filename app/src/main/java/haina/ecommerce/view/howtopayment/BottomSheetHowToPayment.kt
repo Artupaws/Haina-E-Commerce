@@ -12,6 +12,7 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.howtopay.AdapterHowToPayment
 import haina.ecommerce.databinding.FragmentBottomSheetHowToPaymentBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.hotels.newHotel.PaidItem
 import haina.ecommerce.model.howtopay.Data
 import haina.ecommerce.model.transactionlist.PendingItem
 
@@ -37,12 +38,27 @@ class BottomSheetHowToPayment : BottomSheetDialogFragment(), HowToPayContract {
         binding?.toolbarHowToPayment?.title = requireContext().getString(R.string.how_to_payment)
         binding?.toolbarHowToPayment?.setNavigationIcon(R.drawable.ic_close_black)
         binding?.toolbarHowToPayment?.setNavigationOnClickListener { dismiss() }
-        val data = arguments?.get("data")
-        data as PendingItem
-        Log.d("bottomSheet", data.payment!!.vaNumber)
-        presenter.getHowToPay(data.payment.idPaymentMethod!!)
-        binding?.tvTotalPayment?.text = helper.convertToFormatMoneyIDRFilter(data.totalPayment.toString())
-        binding?.tvNumberAccount?.text = data.payment.vaNumber
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val dataTransactionHotelDarma = arguments?.getParcelable<PaidItem?>("dataTransactionHotel")
+        dataTransactionHotelDarma as PaidItem
+        val dataTransactionPayment = arguments?.getParcelable<PendingItem?>("data")
+
+        val transaction = arguments?.getBoolean("transactionHotel")
+        if (transaction == true){
+            presenter.getHowToPay(dataTransactionHotelDarma.payment?.paymentMethodId!!)
+            binding?.tvTotalPayment?.text = helper.convertToFormatMoneyIDRFilter(dataTransactionHotelDarma.totalPrice.toString())
+            binding?.tvNumberAccount?.text = dataTransactionHotelDarma.payment.vaNumber
+        } else {
+            presenter.getHowToPay(dataTransactionPayment?.payment?.idPaymentMethod!!)
+            binding?.tvTotalPayment?.text = helper.convertToFormatMoneyIDRFilter(dataTransactionPayment.totalPayment.toString())
+            binding?.tvNumberAccount?.text = dataTransactionPayment.payment.vaNumber
+        }
+
+
     }
 
     private var mListener: ItemClickListener? = null

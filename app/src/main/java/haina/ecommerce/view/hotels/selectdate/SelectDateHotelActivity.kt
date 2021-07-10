@@ -50,8 +50,8 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         binding.btnLogin.setOnClickListener(this)
 
         sharedPref = SharedPreferenceHelper(this)
-        dataRoom = intent.getParcelableExtra("dataRoom")
-        dataHotel = intent.getParcelableExtra("dataHotel")
+        dataRoom = intent.getParcelableExtra("dataRoom")!!
+        dataHotel = intent.getParcelableExtra("dataHotel")!!
 
         binding.toolbarSelectDate.title = "Complete Order"
         binding.toolbarSelectDate.setNavigationOnClickListener { onBackPressed() }

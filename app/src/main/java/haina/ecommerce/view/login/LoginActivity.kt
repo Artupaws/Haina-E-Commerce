@@ -1,5 +1,6 @@
 package haina.ecommerce.view.login
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -8,7 +9,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
+import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +33,7 @@ import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.register.account.RegisterActivity
 import kotlin.math.log
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
+class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract.View {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
@@ -44,6 +47,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
     private var gsc:GoogleSignInClient? = null
     private val RC_SIGN_IN = 9001
     private var loginMethod:Int? = null
+    private var progressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +55,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         setContentView(binding.root)
         auth = FirebaseAuth.getInstance()
         presenter = LoginPresenter(this)
+        dialogLoading()
         sharedPreferenceHelper = SharedPreferenceHelper(this)
 
         val gso:GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -126,14 +131,12 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if(task.isSuccessful){
-
                     val user=FirebaseAuth.getInstance().currentUser
                     user?.getIdToken(true)?.addOnCompleteListener{task->
                         if(task.isSuccessful){
-                            sendToken(task.getResult()?.token)
+                            sendToken(task.result?.token)
                         }
                     }
-
                 } else {
                     loginMethod = 0
                     Snackbar.make(binding.linearGoogle, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
@@ -143,7 +146,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
 
     private fun sendToken(token:String?){
         val deviceToken = sharedPreferenceHelper.getValueString(Constants.PREF_TOKEN_FIREBASE).toString()
-
         presenter.loginWithGoogle( token ,deviceToken)
     }
 
@@ -193,6 +195,16 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
 
     }
 
+    private fun dialogLoading(){
+        progressDialog = Dialog(this)
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(getDrawable(android.R.color.white))
+        val window: Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
+    }
+
+
     private fun move(method:Int?){
         if (method == 0){
             sharedPreferenceHelper.save(Constants.PREF_IS_LOGIN, true)
@@ -234,6 +246,14 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract {
     override fun loginRegistration(){
         loginMethod = 1
         move(loginMethod)
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 
 }

@@ -23,12 +23,15 @@ import haina.ecommerce.databinding.ActivityPaymentBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.bill.RequestBill
 import haina.ecommerce.model.hotels.Requesthotel
+import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelDarma
+import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelToDarma
 import haina.ecommerce.model.paymentmethod.DataPaymentMethod
 import haina.ecommerce.model.pulsaanddata.RequestPulsa
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
+import java.util.ArrayList
 
-class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContract {
+class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContract.View {
 
     private lateinit var binding: ActivityPaymentBinding
     private var popupPaymentMethod: Dialog? = null
@@ -42,6 +45,13 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     private var dataPulsa:RequestPulsa? = null
     private var requestBill:RequestBill? = null
     private var dataBooking:Requesthotel? = null
+    private var dataBookingHotelDarma: RequestBookingHotelDarma? = null
+    private var requestToDarma : RequestBookingHotelToDarma? = null
+    private var progressDialog:Dialog? = null
+    private var list = ArrayList<String>()
+    private var stringRequest :String = ""
+    private var smokingRoomValue:Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +66,10 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         binding.frameChoosePaymentMethod.setOnClickListener(this)
         binding.btnPayment.setOnClickListener(this)
         typeTransactionParams = intent.getIntExtra("typeTransaction", 0)
+        dataBookingHotelDarma = intent.getParcelableExtra("dataBooking")
         Log.d("typeTransaction", typeTransactionParams.toString())
         setDetailOrder(typeTransactionParams)
+        dialogLoading()
     }
 
     override fun onClick(v: View?) {
@@ -75,9 +87,38 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                     3 -> { presenter.createBookingHotel(dataBooking?.hotelId!!, dataBooking?.roomId!!, dataBooking?.checkIn!!, dataBooking?.checkOut!!, dataBooking?.totalGuest!!,
                    helper.changeFormatMoneyToValueFilter(dataBooking?.totalPrice)?.toInt()!!, idPaymentMethod!!)
                     }
+                    4 -> {
+                        presenter.createBookingHotelDarma(requestToDarma!!)
+                    }
                 }
             }
         }
+    }
+
+    private fun setRequestSraAndSmokeRoom(idPaymentMethod: Int?){
+//        for (data in dataBookingHotelDarma?.special_request_array_complete!!){
+//            list.add(data.iD!!)
+//        }
+//        val separator = ", "
+//        stringRequest = list.joinToString(separator)
+//        smokingRoomValue = if (dataBookingHotelDarma?.smokingRoom == true){
+//            1
+//        } else {
+//            0
+//        }
+        stringRequest = dataBookingHotelDarma?.specialRequest!!
+        requestToDarma= RequestBookingHotelToDarma(smokingRoomValue, dataBookingHotelDarma!!.phone,
+            stringRequest, idPaymentMethod, dataBookingHotelDarma!!.paxes, dataBookingHotelDarma!!.email, dataBookingHotelDarma!!.price)
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun dialogLoading(){
+        progressDialog = Dialog(this)
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(getDrawable(android.R.color.white))
+        val window: Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
     }
 
     override fun onStart() {
@@ -96,6 +137,11 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                     binding.tvChoosePaymentMethod.visibility = View.GONE
                     binding.linearPaymentMethod.visibility = View.VISIBLE
                     binding.tvNameBank.text = bank
+                    when(typeTransactionParams){
+                        4 -> {
+                            setRequestSraAndSmokeRoom(idPaymentMethod)
+                        }
+                    }
                 }
             }
         }
@@ -121,6 +167,11 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                 dataBooking = intent.getParcelableExtra("dataBooking")
                 binding.tvTotalBill.text = dataBooking?.totalPrice
                 price = dataBooking?.totalPrice
+            }
+
+            4 -> {
+                binding.tvTotalBill.text = dataBookingHotelDarma?.price
+                price = dataBookingHotelDarma?.price
             }
         }
     }
@@ -194,5 +245,13 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         } else {
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 }

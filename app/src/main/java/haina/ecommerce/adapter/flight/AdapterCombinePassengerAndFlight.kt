@@ -19,7 +19,6 @@ class AdapterCombinePassengerAndFlight(
     private val dataAddOn: List<BaggageInfosItem?>?,
     private val dataMeals: List<MealInfosItem?>?,
     private val dataSeat: List<SeatInfosItem?>?
-
 ) :
         RecyclerView.Adapter<AdapterCombinePassengerAndFlight.Holder>() {
 
@@ -72,9 +71,16 @@ class AdapterCombinePassengerAndFlight(
 
     @Suppress("UNCHECKED_CAST")
     private fun setupListDataFlight(binding:ListItemSetAddonBinding){
-        binding.rvFlight.apply {
-            adapter = AdapterListFlight(context, dataTicket, dataAddOn, dataMeals, dataSeat)
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        if(dataSeat?.isEmpty() == true){
+            binding.rvFlight.apply {
+                adapter = AdapterListFlight(context, dataTicket, dataAddOn, dataMeals, dataSeat, false)
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            }
+        } else {
+            binding.rvFlight.apply {
+                adapter = AdapterListFlight(context, dataTicket, dataAddOn, dataMeals, dataSeat, true)
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            }
         }
     }
 

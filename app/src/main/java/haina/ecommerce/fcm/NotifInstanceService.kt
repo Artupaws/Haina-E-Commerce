@@ -35,7 +35,7 @@ class NotifInstanceService() : FirebaseMessagingService() {
             // Get new FCM registration token
             val msg = task.result
             msg?.let { sharedPrefHelper.save(Constants.PREF_TOKEN_FIREBASE, it) }
-            Log.d("tokenFirebase",msg)
+            Log.d("tokenFirebase",msg!!)
             // Log and toast
         })
     }

@@ -14,7 +14,7 @@ import haina.ecommerce.model.paymentmethod.PaymentmethodItem
 class AdapterPaymentMethod(val context: Context, private val list_payment_method: List<DataPaymentMethod?>?):
     RecyclerView.Adapter<AdapterPaymentMethod.Holder>() {
 
-    var onItemClick: (String, String) -> Unit = {serviceFee: String, nameBank: String->  }
+    var onItemClick: (String, String) -> Unit = { _: String, _: String->  }
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemPaymentMethodBinding.bind(view)

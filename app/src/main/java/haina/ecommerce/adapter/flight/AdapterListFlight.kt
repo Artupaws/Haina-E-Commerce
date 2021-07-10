@@ -18,7 +18,8 @@ import java.util.*
 class AdapterListFlight(val context: Context, private val listAirlines: MutableList<Ticket>?,
                         private val dataAddOn: List<BaggageInfosItem?>?,
                         private val dataMeals: List<MealInfosItem?>?,
-                        private val dataSeat: List<SeatInfosItem?>?
+                        private val dataSeat: List<SeatInfosItem?>?,
+                        private val showChooseSeat:Boolean
 ) :
         RecyclerView.Adapter<AdapterListFlight.Holder>() {
     private var broadcaster : LocalBroadcastManager? = null
@@ -28,6 +29,14 @@ class AdapterListFlight(val context: Context, private val listAirlines: MutableL
         private val binding = ListItemFlightAddOnBinding.bind(view)
         fun bind(itemHaina: Ticket) {
             with(binding) {
+
+                when(showChooseSeat){
+                    true -> {
+                        linearChooseSeat.visibility = View.VISIBLE
+                    } false -> {
+                    linearChooseSeat.visibility = View.GONE }
+                }
+
                 tvAirlineCode.text = itemHaina.nameAirlines
                 val originDestination = "${itemHaina.cityCodeDeparture} - ${itemHaina.cityCodeArrived}"
                 tvOriginDestination.text = originDestination

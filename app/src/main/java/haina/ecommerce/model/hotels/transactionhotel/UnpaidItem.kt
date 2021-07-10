@@ -10,6 +10,9 @@ data class UnpaidItem(
 	@field:SerializedName("room_id")
 	val roomId: Int? = null,
 
+	@field:SerializedName("os_ref_no")
+	val osRefNo: String? = null,
+
 	@field:SerializedName("total_price")
 	val totalPrice: Int? = null,
 

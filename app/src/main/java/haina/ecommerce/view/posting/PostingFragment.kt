@@ -18,6 +18,7 @@ import haina.ecommerce.databinding.FragmentPostingBinding
 import haina.ecommerce.model.DataCompany
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.categorypost.CategoryActivity
 import haina.ecommerce.view.postingjob.datajob.PostingJobActivity
 import haina.ecommerce.view.register.company.RegisterCompanyActivity
 
@@ -123,6 +124,8 @@ class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
             }
 
             R.id.floatingActionButton2 -> {
+                val intentToCategory = Intent(requireActivity(), CategoryActivity::class.java)
+                startActivity(intentToCategory)
             }
         }
     }

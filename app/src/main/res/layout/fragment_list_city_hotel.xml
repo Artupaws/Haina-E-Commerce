@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back_black"
-        app:title="@string/hotels" />
+        app:title="Choose City" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/sv_destination"
@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbarListCity"
-        app:queryHint="Find City" />
+        app:queryHint="Cities" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_city_hotel"

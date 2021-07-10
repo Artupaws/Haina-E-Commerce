@@ -92,7 +92,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
             when (intent?.action) {
                 "productPhone" -> {
                     val dataProductPhone = intent.getParcelableExtra<ProductPhone>("pulsa")
-                    if (dataProductPhone.provider?.name.isNullOrEmpty()){
+                    if (dataProductPhone?.provider?.name.isNullOrEmpty()){
                         binding?.tvNumberEmpty?.visibility = View.VISIBLE
                     } else {
                         getListPulsa(dataProductPhone)

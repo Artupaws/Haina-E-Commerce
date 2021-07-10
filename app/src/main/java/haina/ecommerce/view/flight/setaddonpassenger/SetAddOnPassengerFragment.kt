@@ -78,7 +78,7 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
                     val dataSeats = intent.getParcelableArrayListExtra<SeatInfosItem>("dataSeats")
                     val departure = intent.getStringExtra("departure")
                     val arrival = intent.getStringExtra("arrival")
-                    popupDialogChooseSeat(dataSeats,departure,arrival)
+                    popupDialogChooseSeat(dataSeats!!,departure!!,arrival!!)
                     popupShowChooseSeat?.show()
                 }
                 "addOn" -> {
@@ -90,14 +90,14 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
                     dataBaggage = getListAddOn
                     dataMeals = getListMeals
 
-                    popupDialogSetAddOn(dataBaggage, dataMeals,departure,arrival, totalPriceAddOn)
+                    popupDialogSetAddOn(dataBaggage, dataMeals,departure!!,arrival!!)
 
                     popupSetAddOn?.show()
                 }
-                "priceAddOn" -> {
-                    val price = intent.getIntExtra("price", 0)
-                    totalPriceAddOn = price
-                }
+//                "priceAddOn" -> {
+//                    val price = intent.getIntExtra("price", 0)
+//                    totalPriceAddOn = price
+//                }
             }
         }
     }
@@ -115,7 +115,7 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun popupDialogChooseSeat(dataSeat: List<SeatInfosItem>, departure: String, arrival: String) {
+    private fun popupDialogChooseSeat(dataSeat: java.util.ArrayList<SeatInfosItem>, departure: String, arrival: String) {
         popupShowChooseSeat = Dialog(requireActivity())
         popupShowChooseSeat?.setContentView(R.layout.layout_pop_up_choose_seat)
         popupShowChooseSeat?.setCancelable(true)
@@ -357,7 +357,7 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
 
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    fun popupDialogSetAddOn(data: List<BaggageInfosItem?>?, dataMeals: List<MealInfosItem?>?, departure: String, arrival: String, totalPriceParams: Int?) {
+    fun popupDialogSetAddOn(data: List<BaggageInfosItem?>?, dataMeals: List<MealInfosItem?>?, departure: String, arrival: String) {
         popupSetAddOn = Dialog(requireActivity())
         popupSetAddOn?.setContentView(R.layout.layout_popup_dialog_addon_flight)
         popupSetAddOn?.setCancelable(true)
@@ -374,7 +374,10 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
         spinnerBaggage?.adapter = adapterSpinnerBaggage
         spinnerBaggage?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                Log.d("chooseBaggage", data?.get(p2)?.code.toString())
+                val priceBaggage = data?.get(p2)?.fare!!
+                val priceBaggageValue = totalPriceAddOn+priceBaggage
+                totalPriceAddOn = priceBaggageValue
+                totalPrice?.text = priceBaggageValue.toString()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -386,8 +389,6 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
             adapter = AdapterAddOn(requireActivity(), dataMeals, this@SetAddOnPassengerFragment)
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
-        totalPrice?.text = "Total price Add-on : $totalPriceParams"
-
 
         ivClose?.setOnClickListener {
             popupSetAddOn?.cancel()
@@ -426,8 +427,8 @@ class SetAddOnPassengerFragment : Fragment(), SetAddOnContract, AdapterAddOn.Ite
         when(view.id){
             R.id.cb_addon -> {
                 Toast.makeText(requireActivity(), price.toString(), Toast.LENGTH_SHORT).show()
-
-                totalPrice?.text = "Total price -on : ${price.toString()}"
+                val priceTotal = price+totalPriceAddOn
+                totalPrice?.text = "Total price -on : $priceTotal"
 
             }
         }

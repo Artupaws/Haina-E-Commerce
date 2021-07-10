@@ -88,7 +88,7 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
     }
 
     override fun accessCode(accessCode: String?) {
-        Log.d("isinya", accessCode)
+        Log.d("isinya", accessCode!!)
         if (accessCode != null) {
             if (accessCode.isNotEmpty()){
                 popupDialogInputCaptcha(accessCode)

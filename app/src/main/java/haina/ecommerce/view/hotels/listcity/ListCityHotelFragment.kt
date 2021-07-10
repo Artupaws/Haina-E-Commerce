@@ -9,12 +9,14 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import haina.ecommerce.R
+import haina.ecommerce.adapter.flight.AdapterFlightDestinationCity
 import haina.ecommerce.adapter.hotel.newAdapterHotel.AdapterListCity
 import haina.ecommerce.databinding.FragmentListCityHotelBinding
 import haina.ecommerce.helper.Helper.convertLongtoTime
@@ -26,15 +28,17 @@ import haina.ecommerce.view.hotels.HotelBaseActivity
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity.ItemAdapterCallBack {
+class ListCityHotelFragment : Fragment(), ListCityHotelContract.View, AdapterListCity.ItemAdapterCallBack {
 
     private lateinit var _binding:FragmentListCityHotelBinding
     private val binding get() = _binding
     private lateinit var presenter: ListCityHotelPresenter
     private var popUpScheduleHotel:Dialog? = null
+    private var progressDialog:Dialog? = null
     private var totalNight: Int = 0
     private var cityId:Int = 0
     private lateinit var requestHotel: RequestBookingHotel
+    private var unfinishBookingSize:Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentListCityHotelBinding.inflate(inflater, container, false)
@@ -44,11 +48,36 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        dialogLoading()
         presenter.getListCity()
+        presenter.getListTransactionHotelDarma()
         binding.toolbarListCity.setNavigationOnClickListener {
             (requireActivity() as HotelBaseActivity).onBackPressed()
         }
         dialogScheduleHotel()
+        binding.svDestination.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
+            SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                if (p0?.isNotEmpty()!!){
+                    (binding.rvCityHotel.adapter as AdapterListCity).filter.filter(p0)
+                    (binding.rvCityHotel.adapter as AdapterListCity).notifyDataSetChanged()
+                }
+                return true
+            }
+        })
+    }
+
+    private fun dialogLoading(){
+        progressDialog = Dialog(requireActivity())
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.white))
+        val window:Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -94,9 +123,9 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity
 
         btnSave?.setOnClickListener {
             if (!tvCheckIn?.text?.contains("-")!!){
-                requestHotel = RequestBookingHotel("ID", cityId, "ID", checkInDate, checkOutDate )
-                presenter.getHotelDarma(requestHotel.countryID, requestHotel.cityId, requestHotel.paxPassport,
-                    requestHotel.checkIn, requestHotel.checkOut)
+                requestHotel = RequestBookingHotel("ID", cityId, "ID", checkInDate, checkOutDate, null)
+                presenter.getHotelDarma(requestHotel.countryID!!, requestHotel.cityId!!, requestHotel.paxPassport!!,
+                    requestHotel.checkIn!!, requestHotel.checkOut!!)
             } else {
                 popUpScheduleHotel?.show()
             }
@@ -131,12 +160,18 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity
 
     override fun messageGetHotelDarma(msg: String) {
         Log.d("getHotelDarma", msg)
+        Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
         if (msg.contains("Success!")){
             popUpScheduleHotel?.dismiss()
         }
     }
 
+    override fun messageGetListTransactionHotel(msg: String) {
+        Log.d("getListUnfinish", msg)
+    }
+
     override fun getListCity(data: List<DataCities?>?) {
+        progressDialog?.dismiss()
             binding.rvCityHotel.apply {
                 adapter = AdapterListCity(requireActivity(), data, this@ListCityHotelFragment)
                 layoutManager = GridLayoutManager(requireActivity(), 3)
@@ -147,15 +182,34 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract, AdapterListCity
         if (data != null){
             val bundle = Bundle()
             bundle.putParcelable("dataHotel", data)
+            bundle.putInt("totalNight", totalNight)
             Navigation.findNavController(binding.root).navigate(R.id.action_listCityHotelFragment_to_scheduleHotelFragment, bundle)
         }
+    }
+
+    override fun getSizeListUnfinish(size: Int?) {
+        if (size != null) {
+            unfinishBookingSize = size
+        }
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 
     override fun onClick(view: View, idDarma: Int) {
         when(view.id){
             R.id.cv_click -> {
                 cityId = idDarma
-                popUpScheduleHotel?.show()
+                if (unfinishBookingSize == 0){
+                    popUpScheduleHotel?.show()
+                } else {
+                    Toast.makeText(requireActivity(), getString(R.string.warning_booking_hotel), Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

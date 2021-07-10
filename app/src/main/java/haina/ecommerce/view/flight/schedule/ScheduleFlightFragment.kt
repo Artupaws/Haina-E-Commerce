@@ -33,12 +33,14 @@ import haina.ecommerce.databinding.LayoutSelectFlightClassBinding
 import haina.ecommerce.helper.Helper.convertLongtoTime
 import haina.ecommerce.helper.RangeValidator
 import haina.ecommerce.model.flight.*
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.flight.FlightTicketActivity
 import haina.ecommerce.view.flight.fragment.BottomSheetFlightFragment
 import java.util.*
 import kotlin.math.round
 
-class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContract, AdapterFlightDestinationCity.ItemAdapterCallback {
+class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContract.View, AdapterFlightDestinationCity.ItemAdapterCallback {
 
     private lateinit var _binding: FragmentScheduleFlightBinding
     private val binding get() = _binding
@@ -73,18 +75,18 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
     private var totalChild:Int = 0
     private var totalBaby:Int = 0
     private var totalPassenger:Int = 0
+    private lateinit var sharedPref : SharedPreferenceHelper
     var isEmptyOrigin = true
-    var isEmptyDestination = true
-    var isEmptyStart = true
-    var isEmptyFinish = true
+    private var isEmptyDestination = true
+    private var isEmptyStart = true
+    private var isEmptyFinish = true
     var isEmptyTotalPassenger = true
+    private var progressDialog:Dialog? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentScheduleFlightBinding.inflate(inflater, container, false)
+        sharedPref = SharedPreferenceHelper(requireActivity())
+        presenter = ScheduleFlightPresenter(this, requireActivity())
 //        imagesListener = ImageListener { position, imageView ->
 //            Glide.with(requireActivity()).load(listImage[position]).placeholder(R.drawable.ps5).into(
 //                imageView
@@ -109,13 +111,18 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
 //        binding.vpFlightTicket.setImageClickListener {
 //            Toast.makeText(requireActivity(), "Clicked", Toast.LENGTH_SHORT).show()
 //        }
+        dialogLoading()
         switchDestination()
         popupDialogFlightClass()
         binding.toolbarScheduleFlight.setNavigationOnClickListener {
             (activity as FlightTicketActivity).onBackPressed()
         }
-        presenter = ScheduleFlightPresenter(this, requireActivity())
-        presenter.getDataAirport()
+
+        if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+            presenter.getDataAirport()
+        } else {
+            Toast.makeText(requireActivity(), getString(R.string.please_login_account), Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onClick(v: View?) {
@@ -136,12 +143,20 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                 setDateFlight("Second")
             }
             R.id.tv_from_destination -> {
-                typeDestination = "From"
-                popupDestination?.show()
+                if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+                    typeDestination = "From"
+                    popupDestination?.show()
+                } else {
+                    Toast.makeText(requireActivity(), getString(R.string.please_login_account), Toast.LENGTH_SHORT).show()
+                }
             }
             R.id.tv_to_destination -> {
-                typeDestination = "To"
-                popupDestination?.show()
+                if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+                    typeDestination = "To"
+                    popupDestination?.show()
+                } else {
+                    Toast.makeText(requireActivity(), getString(R.string.please_login_account), Toast.LENGTH_SHORT).show()
+                }
             }
             R.id.linear_total_passenger -> {
                 childFragmentManager.let {
@@ -154,6 +169,15 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                 popupFlightClass?.show()
             }
         }
+    }
+
+    private fun dialogLoading(){
+        progressDialog = Dialog(requireActivity())
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.white))
+        val window:Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
     }
 
     override fun onStart() {
@@ -232,12 +256,12 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                 "dataDestination" -> {
                     val dataIntent = intent.getParcelableExtra<DataAirport>("data")
                     if (typeDestination == "From") {
-                        binding.tvFromDestination.text = dataIntent.iata
-                        binding.tvCityNameFrom.text = dataIntent.city
+                        binding.tvFromDestination.text = dataIntent?.iata
+                        binding.tvCityNameFrom.text = dataIntent?.city
                         popupDestination?.dismiss()
                     } else if (typeDestination == "To") {
-                        binding.tvToDestination.text = dataIntent.iata
-                        binding.tvCityNameTo.text = dataIntent.city
+                        binding.tvToDestination.text = dataIntent?.iata
+                        binding.tvCityNameTo.text = dataIntent?.city
                         popupDestination?.dismiss()
                     }
                 }
@@ -246,10 +270,10 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
                     val totalAdultParams = intent.getStringExtra("totalAdult")
                     val totalChildParams = intent.getStringExtra("totalChild")
                     val totalBabyParams = intent.getStringExtra("totalBaby")
-                    totalPassenger = totalPassengerParams.toInt()
-                    totalAdult = totalAdultParams.toInt()
-                    totalChild = totalChildParams.toInt()
-                    totalBaby = totalBabyParams.toInt()
+                    totalPassenger = totalPassengerParams!!.toInt()
+                    totalAdult = totalAdultParams!!.toInt()
+                    totalChild = totalChildParams!!.toInt()
+                    totalBaby = totalBabyParams!!.toInt()
                     setDetailPassenger(totalAdultParams!!, totalChildParams, totalBabyParams, totalPassengerParams!!)
                 }
             }
@@ -441,6 +465,14 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
 
     override fun getDataAirport(data: List<DataAirport?>?) {
         popupDialogDestination(data)
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 
     override fun onClickAdapter(view: View, data: DataAirport) {

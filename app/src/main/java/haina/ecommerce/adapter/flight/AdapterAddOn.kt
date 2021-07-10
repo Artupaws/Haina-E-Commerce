@@ -21,7 +21,7 @@ class AdapterAddOn(val context: Context, private val dataPassenger: List<MealInf
             with(binding) {
                 val descAndPrice = "${itemHaina.desc} - ${itemHaina.fare}"
                 cbAddon.text = descAndPrice
-                cbAddon.setOnCheckedChangeListener { view, isChecked ->
+                cbAddon.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked){
                         mCheckSum += itemHaina.fare!!
 //                        val intentDataPrice = Intent("priceAddOn")
