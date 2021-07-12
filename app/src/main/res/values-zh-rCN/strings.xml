@@ -335,5 +335,10 @@
     <string name="city_required">City*</string>
     <string name="province_required">Province*</string>
     <string name="year_required">年*</string>
+    <string name="deal">交易</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="want_to_upload_from">想从</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
 
 </resources>
