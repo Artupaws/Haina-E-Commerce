@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_show_property"
+    app:startDestination="@id/showPropertyFragment">
+
+    <fragment
+        android:id="@+id/showPropertyFragment"
+        android:name="haina.ecommerce.view.property.fragmentshowproperty.ShowPropertyFragment"
+        android:label="fragment_show_property"
+        tools:layout="@layout/fragment_show_property" >
+        <action
+            android:id="@+id/action_showPropertyFragment_to_inputDataPropertyFragment2"
+            app:destination="@id/inputDataPropertyFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputDataPropertyFragment2"
+        android:name="haina.ecommerce.view.property.fragmentinputdata.InputDataPropertyFragment"
+        android:label="fragment_input_data_property"
+        tools:layout="@layout/fragment_input_data_property" >
+        <action
+            android:id="@+id/action_inputDataPropertyFragment2_to_addPhotoFragment2"
+            app:destination="@id/addPhotoFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPhotoFragment2"
+        android:name="haina.ecommerce.view.property.fragmentaddphoto.AddPhotoFragment"
+        android:label="fragment_add_photo"
+        tools:layout="@layout/fragment_add_photo" />
+</navigation>

@@ -340,5 +340,8 @@
     <string name="want_to_upload_from">想从</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
+    <string name="property_title">Property</string>
+    <string name="price_sell">Price Sell</string>
+    <string name="price_rent">Price Rent</string>
 
 </resources>

@@ -31,7 +31,7 @@ data class RequestDataProperty (
     var floor:Int,
 
     @SerializedName("facility")
-    var facility:ArrayList<String?>?,
+    var facility:String?,
 
     @SerializedName("type_certificate")
     var typeCertificate:String?,
@@ -61,10 +61,13 @@ data class RequestDataProperty (
     var priceRent:String?,
 
     @SerializedName("list_photo")
-    var listPhoto:List<PhotoProprety?>?,
+    var listPhoto:ArrayList<PhotoProprety?>?,
 
     @SerializedName("lattitude")
     var lattitude:String?,
+
+    @SerializedName("condition")
+    var condition:String,
 
     @SerializedName("longitude")
     var longitude:String?

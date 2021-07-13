@@ -29,12 +29,14 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/rb_apartment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rent_apartment"
                 style="@style/TextView.Poppins12spGrey"
                 android:textColor="@color/black"/>
             <RadioButton
+                android:id="@+id/rb_house"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -42,6 +44,7 @@
                 style="@style/TextView.Poppins12spGrey"
                 android:textColor="@color/black"/>
             <RadioButton
+                android:id="@+id/rb_warehouse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -49,6 +52,7 @@
                 style="@style/TextView.Poppins12spGrey"
                 android:textColor="@color/black"/>
             <RadioButton
+                android:id="@+id/rb_office"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -74,12 +78,14 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/rb_for_sell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/for_sell"
                 style="@style/TextView.Poppins12spGrey"
                 android:textColor="@color/black"/>
             <RadioButton
+                android:id="@+id/rb_for_rent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -270,12 +276,14 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/rb_shm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/shm"
                 style="@style/TextView.Poppins12spGrey"
                 android:textColor="@color/black"/>
             <RadioButton
+                android:id="@+id/rb_hgb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -283,6 +291,7 @@
                 style="@style/TextView.Poppins12spGrey"
                 android:textColor="@color/black"/>
             <RadioButton
+                android:id="@+id/rb_srs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -290,6 +299,7 @@
                 style="@style/TextView.Poppins12spGrey"
                 android:textColor="@color/black"/>
             <RadioButton
+                android:id="@+id/rb_girik"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"

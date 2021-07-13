@@ -160,7 +160,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linear_apartment"
+                    android:id="@+id/linear_property"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -171,7 +171,7 @@
                     <haina.ecommerce.helper.FontAwesome
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/apartment"
+                        android:text="@string/property"
                         android:textColor="@color/yellow"
                         android:textSize="25sp"/>
 
@@ -179,7 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleMenuService"
-                        android:text="@string/rent_apartment"/>
+                        android:text="@string/property_title"/>
 
                 </LinearLayout>
 
