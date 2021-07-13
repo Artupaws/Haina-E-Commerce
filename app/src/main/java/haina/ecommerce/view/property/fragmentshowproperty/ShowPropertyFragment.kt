@@ -1,60 +1,100 @@
 package haina.ecommerce.view.property.fragmentshowproperty
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import haina.ecommerce.R
+import haina.ecommerce.adapter.property.AdapterShowProperty
+import haina.ecommerce.databinding.FragmentShowPropertyBinding
+import haina.ecommerce.model.property.DataShowProperty
+import haina.ecommerce.view.property.ShowPropertyActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClickListener, AdapterShowProperty.ItemAdapterCallback {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ShowPropertyFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ShowPropertyFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var _binding:FragmentShowPropertyBinding
+    private val binding get() = _binding
+    private lateinit var presenter: ShowPropertyPresenter
+    private var progressDialog:Dialog? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentShowPropertyBinding.inflate(inflater, container, false)
+        presenter = ShowPropertyPresenter(this, requireActivity())
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        dialogLoading()
+        binding.fabCreatePost.setOnClickListener(this)
+        presenter.getShowProperty()
+
+        binding.toolbarShowProperty.setNavigationOnClickListener {
+            (requireActivity() as ShowPropertyActivity).onBackPressed()
+        }
+
+        binding.rvProperty.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0){
+                    binding.fabCreatePost.visibility = View.GONE
+                } else if(dy < 0){
+                    binding.fabCreatePost.visibility = View.VISIBLE
+                }
+            }
+        })
+
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun dialogLoading(){
+        progressDialog = Dialog(requireActivity())
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.white))
+        val window: Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
+    }
+
+    override fun messageGetListProperty(msg: String) {
+        Log.d("showProperty", msg)
+    }
+
+    override fun getDataProperty(data: List<DataShowProperty?>?) {
+        binding.rvProperty.apply {
+            adapter = AdapterShowProperty(requireActivity(), data, this@ShowPropertyFragment)
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_show_property, container, false)
+    override fun showLoading() {
+        progressDialog?.show()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ShowPropertyFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ShowPropertyFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.fab_create_post -> {
+                Navigation.findNavController(binding.fabCreatePost).navigate(R.id.action_showPropertyFragment_to_inputDataPropertyFragment2)
+            }
+        }
+    }
+
+    override fun onClickAdapterCity(view: View, data: DataShowProperty) {
+        when(view.id){
+            R.id.cv_click -> {
+                Toast.makeText(requireActivity(), "clicked", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
 }
