@@ -38,6 +38,8 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
     private var popupProvince:Dialog? = null
     private var popupFloor:Dialog? = null
     private var popupCity:Dialog? = null
+    private var idProvince:Int = 0
+    private var idCity:Int = 0
     private lateinit var presenter: InputDataPropertyPresenter
     private var listFacility: ArrayList<String?>? = null
     private var amountRoom = listOf<Int>(1,2,3,4,5,6,7,8,9,10)
@@ -78,7 +80,6 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
         for (i in 1 until 100){
             amountFloor = listOf(i)
         }
-        Toast.makeText(requireActivity(), amountFloor.toString(), Toast.LENGTH_SHORT).show()
         binding.includeDataPropertyTop.etProvince.setOnClickListener(this)
         binding.includeDataPropertyTop.etCity.setOnClickListener(this)
         binding.includeDataPropertyTop.btnNext.setOnClickListener(this)
@@ -108,7 +109,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun popupDialogFloor(dataProvince: List<Int>) {
+    private fun popupDialogFloor(dataFloor: List<Int>) {
         popupFloor = Dialog(requireActivity())
         popupFloor?.setContentView(R.layout.layout_popup_dialog_destination_flight)
         popupFloor?.setCancelable(true)
@@ -120,10 +121,10 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
         val searchView = popupFloor?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupFloor?.findViewById<TextView>(R.id.textView10)
         actionClose?.setOnClickListener { popupFloor?.dismiss() }
-        rvDestination?.apply {
-            adapter = AdapterListAmountRoom(requireActivity(), dataProvince, this@InputDataPropertyFragment)
-            layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-        }
+            rvDestination?.apply {
+                adapter = AdapterListAmountRoom(requireActivity(), dataFloor, this@InputDataPropertyFragment)
+                layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            }
         searchView?.visibility= View.GONE
         title?.text = "Amount"
     }
@@ -272,8 +273,8 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
         var yearParams = binding.includeDataPropertyTop.etYear.text.toString()
         var facilityParams = listFacility
         var typeCertificateParams = typeCertificate
-        var provinceParams = binding.includeDataPropertyTop.etProvince.text.toString()
-        var cityParams = binding.includeDataPropertyTop.etCity.text.toString()
+        var provinceParams = idProvince
+        var cityParams = idCity
         var addressParams = binding.includeDataPropertyTop.etAddressProperty.text.toString()
         var titleParams = binding.includeDataPropertyTop.etTitleAds.text.toString()
         var descriptionParams = binding.includeDataPropertyTop.etDescriptionAds.text.toString()
@@ -383,34 +384,34 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
         if (typeCertificateParams.isNullOrEmpty()){
             when(typePosting){
                 "For Rent" -> {
-                    isEmptyTypeProperty = false
+                    isEmptyTypeCertificate = false
                     binding.includeDataPropertyTop.tvTitleTypeCertificate.error = null
                 } else -> {
-                isEmptyTypeProperty = true
+                isEmptyTypeCertificate = true
                 binding.includeDataPropertyTop.tvTitleTypeCertificate.error = "Can't Empty" }
             }
         } else {
-            isEmptyTypeProperty = false
+            isEmptyTypeCertificate = false
             binding.includeDataPropertyTop.tvTitleTypeCertificate.error = null
             typeCertificateParams = typeCertificate
         }
 
-        if (provinceParams.isNullOrEmpty()){
+        if (provinceParams == 0){
             isEmptyTypeProvince = true
             binding.includeDataPropertyTop.tvTitleProvince.error = "Can't Empty"
         } else {
             isEmptyTypeProvince = false
             binding.includeDataPropertyTop.tvTitleProvince.error = null
-            provinceParams = binding.includeDataPropertyTop.etProvince.text.toString()
+            provinceParams = idProvince
         }
 
-        if (cityParams.isNullOrEmpty()){
+        if (cityParams == 0){
             isEmptyTypeCity = true
             binding.includeDataPropertyTop.tvTitleCity.error = "Can't Empty"
         } else {
             isEmptyTypeCity = false
             binding.includeDataPropertyTop.tvTitleCity.error = null
-            cityParams = binding.includeDataPropertyTop.etCity.text.toString()
+            cityParams = idCity
         }
 
         if (addressParams.isNullOrEmpty()){
@@ -440,7 +441,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             descriptionParams = binding.includeDataPropertyTop.etDescriptionAds.text.toString()
         }
 
-        if (priceRentParams.isNullOrEmpty()){
+        if (priceRentParams.isEmpty()){
             when(typePosting){
                 "For Sell" -> {
                     isEmptyPriceRent = false
@@ -471,38 +472,153 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             priceSellParams = binding.includeDataPropertyTop.etSetPriceSell.text.toString()
         }
 
-        if (typePropertyParams == "House" && typePostingParams == "For Sell"){
-            if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
-            !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell){
-                val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(),
-                    landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(), floorParams.toInt(), facilityParams,
-                    typeCertificateParams, provinceParams.toInt(), cityParams.toInt(), addressParams, titleParams,
-                    descriptionParams, priceSellParams, null)
-                Log.d("houseSell", dataRequest.toString())
-                Toast.makeText(requireActivity(), dataRequest.toString(), Toast.LENGTH_SHORT).show()
-            }
+        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+            !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
+            && typePropertyParams == "House" && typePostingParams == "For Sell"){
+            val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(),
+                landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(), floorParams.toInt(), facilityParams,
+                typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams,
+                descriptionParams, priceSellParams, null, null, null, null)
+            Log.d("houseSell", dataRequest.toString())
+            val bundle = Bundle()
+            bundle.putParcelable("dataRequest", dataRequest)
+            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment, bundle)
+        } else {
+            Toast.makeText(requireActivity(), getString(R.string.message_fill_data), Toast.LENGTH_SHORT).show()
         }
 
-        if (typePropertyParams == "House" && typePostingParams == "For Rent"){
-            if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
-                !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent) {
+        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear
+            && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent &&
+            typePropertyParams == "House" && typePostingParams == "For Rent"){
                 val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(),
-                    floorParams.toInt(), facilityParams, null, provinceParams.toInt(), cityParams.toInt(), addressParams, titleParams,
-                    descriptionParams, null, priceRentParams
-                )
+                    floorParams.toInt(), facilityParams, null, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams,
+                    descriptionParams, null, priceRentParams, null, null, null)
                 Log.d("houseRent", dataRequest.toString())
-            }
+            val bundle = Bundle()
+            bundle.putParcelable("dataRequest", dataRequest)
+            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment, bundle)
+        } else {
+            Toast.makeText(requireActivity(), getString(R.string.message_fill_data), Toast.LENGTH_SHORT).show()
         }
 
-        if (typePropertyParams == "House" && typePostingParams == "Both"){
-            if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
-                !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell && !isEmptyPriceRent) {
+        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+            !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell && !isEmptyPriceRent
+            && typePropertyParams == "House" && typePostingParams == "Both"){
                 val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(),
-                    floorParams.toInt(), facilityParams, typeCertificateParams, provinceParams.toInt(), cityParams.toInt(), addressParams,
-                    titleParams, descriptionParams, priceRentParams, priceSellParams
-                )
+                    floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
+                    titleParams, descriptionParams, priceSellParams, priceRentParams, null, null, null)
                 Log.d("houseBoth", dataRequest.toString())
-            }
+            val bundle = Bundle()
+            bundle.putParcelable("dataRequest", dataRequest)
+            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment, bundle)
+        }
+
+        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+            !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
+            && typePropertyParams == "Apartment" && typePostingParams == "For Sell"){
+            val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), null, bedRoomParams.toInt(), bathRoomParams.toInt(),
+                floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(),provinceParams, cityParams, addressParams,
+                titleParams, descriptionParams, priceSellParams, null, null, null, null)
+            Log.d("ApartmentSell", dataRequest.toString())
+            val bundle = Bundle()
+            bundle.putParcelable("dataRequest", dataRequest)
+            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment, bundle)
+        }
+
+        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear
+            && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent
+            && typePropertyParams == "Apartment" && typePostingParams == "For Rent"){
+            val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), null, bedRoomParams.toInt(), bathRoomParams.toInt(),
+                floorParams.toInt(), facilityParams, null, yearParams.toInt(), provinceParams, cityParams, addressParams,
+                titleParams, descriptionParams, null, priceRentParams, null, null, null)
+            Log.d("ApartmentRent", dataRequest.toString())
+            val bundle = Bundle()
+            bundle.putParcelable("dataRequest", dataRequest)
+            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment, bundle)
+        }
+
+        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+            !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell && !isEmptyPriceRent
+            && typePropertyParams == "Apartment" && typePostingParams == "Both"){
+            val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), null, bedRoomParams.toInt(), bathRoomParams.toInt(),
+                floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
+                titleParams, descriptionParams, priceSellParams, priceRentParams, null, null, null)
+            Log.d("ApartmentRent", dataRequest.toString())
+            val bundle = Bundle()
+            bundle.putParcelable("dataRequest", dataRequest)
+            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment, bundle)
+        }
+
+        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+            !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
+            && typePropertyParams == "Warehouse" && typePostingParams == "For Sell"){
+            val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), null, bathRoomParams.toInt(),
+                floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
+                titleParams, descriptionParams, priceSellParams, null, null, null, null)
+            Log.d("WarehouseSell", dataRequest.toString())
+            val bundle = Bundle()
+            bundle.putParcelable("dataRequest", dataRequest)
+            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment, bundle)
+        }
+
+        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+            !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent
+            && typePropertyParams == "Warehouse" && typePostingParams == "For Rent"){
+            val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), null, bathRoomParams.toInt(),
+                floorParams.toInt(), facilityParams, null, yearParams.toInt(), provinceParams, cityParams,  addressParams,
+                titleParams, descriptionParams, null, priceRentParams, null, null, null)
+            Log.d("WarehouseRent", dataRequest.toString())
+            val bundle = Bundle()
+            bundle.putParcelable("dataRequest", dataRequest)
+            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment, bundle)
+        }
+
+        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+            !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
+            && !isEmptyPriceSell && typePropertyParams == "Warehouse" && typePostingParams == "Both"){
+            val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), null, bathRoomParams.toInt(),
+                floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
+                titleParams, descriptionParams, priceSellParams, priceRentParams, null, null, null)
+            Log.d("WarehouseBoth", dataRequest.toString())
+            val bundle = Bundle()
+            bundle.putParcelable("dataRequest", dataRequest)
+            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment, bundle)
+        }
+
+        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+            !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
+            && typePropertyParams == "Office" && typePostingParams == "For Sell"){
+            val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), null, null, bathRoomParams.toInt(),
+                floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
+                titleParams, descriptionParams, priceSellParams, null, null, null, null)
+            Log.d("WarehouseSell", dataRequest.toString())
+            val bundle = Bundle()
+            bundle.putParcelable("dataRequest", dataRequest)
+            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment, bundle)
+        }
+
+        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+            !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent
+            && typePropertyParams == "Office" && typePostingParams == "For Rent"){
+            val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), null, null, bathRoomParams.toInt(),
+                floorParams.toInt(), facilityParams, null, yearParams.toInt(), provinceParams, cityParams, addressParams,
+                titleParams, descriptionParams, null, priceRentParams, null, null, null)
+            Log.d("WarehouseRent", dataRequest.toString())
+            val bundle = Bundle()
+            bundle.putParcelable("dataRequest", dataRequest)
+            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment, bundle)
+        }
+
+        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+            !isEmptyTypeProvince && !isEmptyTypeCertificate && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent &&
+            !isEmptyPriceSell && typePropertyParams == "Office" && typePostingParams == "Both"){
+            val dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), null, null, bathRoomParams.toInt(),
+                floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
+                titleParams, descriptionParams, priceSellParams, priceRentParams, null, null, null)
+            Log.d("WarehouseBoth", dataRequest.toString())
+            val bundle = Bundle()
+            bundle.putParcelable("dataRequest", dataRequest)
+            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment_to_addPhotoFragment, bundle)
         }
 
     }
@@ -510,6 +626,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
     private fun radioButtonTypeCertificate(view: View){
         val radio: RadioButton = requireActivity().findViewById(binding.includeDataPropertyTop.rdGroupCertificate.checkedRadioButtonId)
         typeCertificate = radio.text.toString()
+        Log.d("certificate", typeCertificate)
     }
 
     override fun messageGetFacilities(msg: String) {
@@ -572,6 +689,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
         when(view.id){
             R.id.tv_province -> {
                 val provinceName = data.name
+                idProvince = data.id!!
                 if (provinceName != binding.includeDataPropertyTop.etProvince.text.toString() && binding.includeDataPropertyTop.etCity.text.isNotEmpty()){
                     binding.includeDataPropertyTop.etCity.setText("")
                 }
@@ -585,6 +703,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
     override fun onClickAdapterCity(view: View, data: DataCity) {
         when(view.id){
             R.id.tv_province -> {
+                idCity = data.id!!
                 binding.includeDataPropertyTop.etCity.setText(data.name.toString())
                 popupCity?.dismiss()
             }

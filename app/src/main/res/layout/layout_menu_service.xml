@@ -48,6 +48,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linear_deal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -58,7 +59,7 @@
                 <haina.ecommerce.helper.FontAwesome
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/shipping"
+                    android:text="@string/handshake"
                     android:textColor="@android:color/holo_blue_dark"
                     android:textSize="25sp"/>
 
@@ -66,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextStyleMenuService"
-                    android:text="@string/shipping_title"/>
+                    android:text="@string/deal"/>
 
             </LinearLayout>
 
@@ -159,6 +160,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_apartment"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -169,7 +171,7 @@
                     <haina.ecommerce.helper.FontAwesome
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/car"
+                        android:text="@string/apartment"
                         android:textColor="@color/yellow"
                         android:textSize="25sp"/>
 
@@ -177,7 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleMenuService"
-                        android:text="@string/rent_car"/>
+                        android:text="@string/rent_apartment"/>
 
                 </LinearLayout>
 

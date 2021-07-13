@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -23,19 +22,18 @@ import haina.ecommerce.model.DataCovidJkt
 import haina.ecommerce.model.DataCurrency
 import haina.ecommerce.model.DataUser
 import haina.ecommerce.model.transactionlist.DataAllTransactionPending
-import haina.ecommerce.model.transactionlist.DataTransaction
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.covidlist.CovidListActivity
 import haina.ecommerce.view.flight.FlightTicketActivity
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 import haina.ecommerce.view.hotels.HotelBaseActivity
-import haina.ecommerce.view.hotels.dashboardhotel.HotelsActivity
 import haina.ecommerce.view.topup.TopupActivity
 import haina.ecommerce.view.job.JobActivity
 import haina.ecommerce.view.news.NewsActivity
 import haina.ecommerce.view.notification.NotificationActivity
 import haina.ecommerce.view.other.OtherActivity
+import haina.ecommerce.view.property.PropertyActivity
 
 class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, AdapterUnfinishTransactionExplore.ItemAdapterCallback {
 
@@ -72,6 +70,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
         binding?.menuServices?.linearTopup?.setOnClickListener(this)
         binding?.menuServices?.linearHotel?.setOnClickListener(this)
         binding?.menuServices?.linearFlightTicket?.setOnClickListener(this)
+        binding?.menuServices?.linearDeal?.setOnClickListener(this)
 //        presenter.loadListBaseCurrency()
 //        presenter.loadCovidJkt()
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
@@ -154,6 +153,10 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
             R.id.linear_flight_ticket -> {
                 val flight = Intent(requireContext(), FlightTicketActivity::class.java)
                 startActivity(flight)
+            }
+            R.id.linear_deal -> {
+                val intentProperty = Intent(requireContext(), PropertyActivity::class.java)
+                startActivity(intentProperty)
             }
         }
     }

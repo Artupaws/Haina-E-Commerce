@@ -16,6 +16,7 @@ import haina.ecommerce.model.news.ResponseGetListNews
 import haina.ecommerce.model.notification.ResponseGetNotification
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.productservice.ResponseGetProductService
+import haina.ecommerce.model.property.ResponseCreatePostProperty
 import haina.ecommerce.model.property.ResponseGetCity
 import haina.ecommerce.model.property.ResponseGetFacilitiesProperty
 import haina.ecommerce.model.property.ResponseGetProvince
@@ -589,4 +590,28 @@ interface NetworkService {
     fun getCity(
         @Field("id_province") idProvince:Int
     ):Call<ResponseGetCity>
+
+    //Create Post Property
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/property/new_property")
+    fun createPostProperty(
+        @Field("property_type") propertyType:String,
+        @Field("condition") condition:String,
+        @Field("title") title:String,
+        @Field("year") year:String,
+        @Field("id_city") idCity:Int,
+        @Field("floor_level") floorLevel:String,
+        @Field("bedroom") bedRoom:Int,
+        @Field("bathroom") bathRoom:Int,
+        @Field("building_area") buildingArea:Int,
+        @Field("certificate_type") certificateType:String,
+        @Field("address") address:String,
+        @Field("latitude") latitude:Int,
+        @Field("longitude") longitude:Int,
+        @Field("selling_price") sellingPrice:Int,
+        @Field("rental_price") rentalPrice:Int,
+        @Field("facilities") facilities:String,
+        @Field("images") images:List<MultipartBody.Part>
+    ):Call<ResponseCreatePostProperty>
 }
