@@ -34,7 +34,7 @@ class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClick
         dialogLoading()
         binding.fabCreatePost.setOnClickListener(this)
         presenter.getShowProperty()
-
+        refresh()
         binding.toolbarShowProperty.setNavigationOnClickListener {
             (requireActivity() as ShowPropertyActivity).onBackPressed()
         }
@@ -62,8 +62,18 @@ class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClick
         window.setGravity(Gravity.CENTER)
     }
 
+    private fun refresh(){
+        binding.swipeRefresh.setOnRefreshListener {
+            presenter.getShowProperty()
+        }
+    }
+
     override fun messageGetListProperty(msg: String) {
         Log.d("showProperty", msg)
+        binding.swipeRefresh.isRefreshing = false
+        if (!msg.contains("Property loaded successfully!")){
+            Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getDataProperty(data: List<DataShowProperty?>?) {
@@ -92,7 +102,9 @@ class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClick
     override fun onClickAdapterCity(view: View, data: DataShowProperty) {
         when(view.id){
             R.id.cv_click -> {
-                Toast.makeText(requireActivity(), "clicked", Toast.LENGTH_SHORT).show()
+                val bundle=Bundle()
+                bundle.putParcelable("dataProperty", data)
+                Navigation.findNavController(binding.root).navigate(R.id.action_showPropertyFragment_to_detailPropertyFragment, bundle)
             }
         }
     }

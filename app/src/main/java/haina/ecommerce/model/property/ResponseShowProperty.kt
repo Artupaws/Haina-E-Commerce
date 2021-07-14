@@ -30,13 +30,13 @@ data class DataShowProperty(
 	val latitude: String? = null,
 
 	@field:SerializedName("description")
-	val description: Any? = null,
+	val description: String? = null,
 
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
 
 	@field:SerializedName("land_area")
-	val landArea: Any? = null,
+	val landArea: String? = null,
 
 	@field:SerializedName("title")
 	val title: String? = null,
@@ -69,7 +69,7 @@ data class DataShowProperty(
 	val idUser: Int? = null,
 
 	@field:SerializedName("deleted_at")
-	val deletedAt: Any? = null,
+	val deletedAt: String? = null,
 
 	@field:SerializedName("bedroom")
 	val bedroom: Int? = null,
@@ -112,7 +112,10 @@ data class FacilitiesItem(
 	val idFacility: Int? = null,
 
 	@field:SerializedName("facility_name")
-	val facilityName: String? = null
+	val facilityName: String? = null,
+
+	@field:SerializedName("facility_name_zh")
+	val facilityNameZh: String? = null
 ) : Parcelable
 
 @Parcelize
@@ -144,28 +147,28 @@ data class ImagesItem(
 data class Owner(
 
 	@field:SerializedName("address")
-	val address: Any? = null,
+	val address: String? = null,
 
 	@field:SerializedName("birthdate")
-	val birthdate: Any? = null,
+	val birthdate: String? = null,
 
 	@field:SerializedName("gender")
-	val gender: Any? = null,
+	val gender: String? = null,
 
 	@field:SerializedName("about")
-	val about: Any? = null,
+	val about: String? = null,
 
 	@field:SerializedName("photo")
-	val photo: Any? = null,
+	val photo: String? = null,
 
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
 
 	@field:SerializedName("firebase_uid")
-	val firebaseUid: Any? = null,
+	val firebaseUid: String? = null,
 
 	@field:SerializedName("email_verified_at")
-	val emailVerifiedAt: Any? = null,
+	val emailVerifiedAt: String? = null,
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String? = null,

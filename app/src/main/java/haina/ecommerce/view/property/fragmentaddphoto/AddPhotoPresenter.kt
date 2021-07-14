@@ -14,7 +14,7 @@ import java.util.ArrayList
 class AddPhotoPresenter(val view:AddPhotoContract.View, val context: Context) {
 
     fun createPostProperty(propertyType: RequestBody, condition:RequestBody, title:RequestBody, year:RequestBody, idCity:RequestBody,
-                           floorLevel:RequestBody, bedRoom:RequestBody?, bathRoom:RequestBody?, buildingArea:RequestBody, landArea:RequestBody, certificateType:RequestBody?, address:RequestBody, latitude:RequestBody?, longitude:RequestBody?,
+                           floorLevel:RequestBody, bedRoom:RequestBody?, bathRoom:RequestBody?, buildingArea:Int, landArea:Int, certificateType:RequestBody?, address:RequestBody, latitude:RequestBody?, longitude:RequestBody?,
                            sellingPrice:RequestBody?, rentalPrice:RequestBody?, facilities:RequestBody?, description:RequestBody, images:ArrayList<MultipartBody.Part>){
         view.showLoading()
         val getList = NetworkConfig().getConnectionHainaBearer(context).createPostProperty(propertyType, condition, title, year, idCity, floorLevel, bedRoom, bathRoom, buildingArea,landArea, certificateType, address, latitude, longitude, sellingPrice, rentalPrice, facilities, description, images)

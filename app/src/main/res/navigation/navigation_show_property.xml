@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_showPropertyFragment_to_inputDataPropertyFragment2"
             app:destination="@id/inputDataPropertyFragment2" />
+        <action
+            android:id="@+id/action_showPropertyFragment_to_detailPropertyFragment"
+            app:destination="@id/detailPropertyFragment" />
     </fragment>
     <fragment
         android:id="@+id/inputDataPropertyFragment2"
@@ -28,4 +31,9 @@
         android:name="haina.ecommerce.view.property.fragmentaddphoto.AddPhotoFragment"
         android:label="fragment_add_photo"
         tools:layout="@layout/fragment_add_photo" />
+    <fragment
+        android:id="@+id/detailPropertyFragment"
+        android:name="haina.ecommerce.view.property.fragmentdetailproperty.DetailPropertyFragment"
+        android:label="fragment_detail_property"
+        tools:layout="@layout/fragment_detail_property" />
 </navigation>

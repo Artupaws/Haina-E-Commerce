@@ -120,8 +120,6 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
                 val floor:RequestBody = RequestBody.create(MultipartBody.FORM, request.floor.toString())
                 val bedRoom:RequestBody = RequestBody.create(MultipartBody.FORM, request.bedRoom.toString())
                 val bathRoom:RequestBody = RequestBody.create(MultipartBody.FORM, request.bathRoom.toString())
-                val buildingArea:RequestBody = RequestBody.create(MultipartBody.FORM, request.buildingArea.toString())
-                val landArea:RequestBody = RequestBody.create(MultipartBody.FORM, request.surfaceArea.toString())
                 val typeCertificate:RequestBody = RequestBody.create(MultipartBody.FORM, request.typeCertificate)
                 val address:RequestBody = RequestBody.create(MultipartBody.FORM, request.address)
                 val latitude:RequestBody = RequestBody.create(MultipartBody.FORM, "0")
@@ -131,7 +129,7 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
                 val description:RequestBody = RequestBody.create(MultipartBody.FORM, request.description)
                 val facility:RequestBody = RequestBody.create(MultipartBody.FORM, request.facility)
                 presenter.createPostProperty(typeProperty, condition, title, year, city, floor,
-                    bedRoom, bathRoom, buildingArea, landArea, typeCertificate, address, latitude, longitude,
+                    bedRoom, bathRoom, request.buildingArea, request.surfaceArea, typeCertificate, address, latitude, longitude,
                     priceSell, priceRent, facility, description, listPhotoArray)
             }
         }

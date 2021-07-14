@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.synnapps.carouselview.ImageListener
+import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemShowPropertyBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.property.DataCity
@@ -35,7 +36,7 @@ class AdapterShowProperty(val context: Context, private var dataProperty: List<D
                         Log.d("listImageProperty", listParams.toString())
                         vpImageProperty.pageCount = listParams.size
                     imagesListener = ImageListener { position, imageView ->
-                        Glide.with(context).load(listParams[position]).into(imageView)
+                        Glide.with(context).load(listParams[position]).placeholder(R.drawable.ps5).into(imageView)
                     }
                     vpImageProperty.setImageListener(imagesListener)
                     vpImageProperty.setImageListener(imagesListener)

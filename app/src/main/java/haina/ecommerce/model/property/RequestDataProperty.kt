@@ -19,7 +19,7 @@ data class RequestDataProperty (
     var buildingArea:Int,
 
     @SerializedName("surface_area")
-    var surfaceArea:Int?,
+    var surfaceArea:Int,
 
     @SerializedName("bed_room")
     var bedRoom:Int?,
