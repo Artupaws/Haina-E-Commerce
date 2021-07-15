@@ -61,7 +61,6 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("urlImageHotel", listParams.toString())
         }
         binding.vpImageHotel.pageCount = listParams.size
-
         imagesListener = ImageListener { position, imageView ->
                     Glide.with(applicationContext).load(listParams[position]).into(imageView)
                 }

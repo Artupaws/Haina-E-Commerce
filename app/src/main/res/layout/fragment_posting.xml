@@ -22,10 +22,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/posting"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+            android:text="@string/job_vacancy"
+            style="@style/TextView.Poppins16spBlack"
+            android:textSize="20sp"
+            android:textFontWeight="600"/>
 
         <ImageView
             android:layout_width="40dp"

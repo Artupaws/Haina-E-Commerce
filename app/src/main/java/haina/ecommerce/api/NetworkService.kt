@@ -16,10 +16,7 @@ import haina.ecommerce.model.news.ResponseGetListNews
 import haina.ecommerce.model.notification.ResponseGetNotification
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.productservice.ResponseGetProductService
-import haina.ecommerce.model.property.ResponseCreatePostProperty
-import haina.ecommerce.model.property.ResponseGetCity
-import haina.ecommerce.model.property.ResponseGetFacilitiesProperty
-import haina.ecommerce.model.property.ResponseGetProvince
+import haina.ecommerce.model.property.*
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
 import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
@@ -29,6 +26,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.util.ArrayList
 
 interface NetworkService {
 
@@ -592,26 +590,34 @@ interface NetworkService {
     ):Call<ResponseGetCity>
 
     //Create Post Property
-    @FormUrlEncoded
+    @Multipart
     @Headers("No-Authentication: true")
     @POST("api/property/new_property")
     fun createPostProperty(
-        @Field("property_type") propertyType:String,
-        @Field("condition") condition:String,
-        @Field("title") title:String,
-        @Field("year") year:String,
-        @Field("id_city") idCity:Int,
-        @Field("floor_level") floorLevel:String,
-        @Field("bedroom") bedRoom:Int,
-        @Field("bathroom") bathRoom:Int,
-        @Field("building_area") buildingArea:Int,
-        @Field("certificate_type") certificateType:String,
-        @Field("address") address:String,
-        @Field("latitude") latitude:Int,
-        @Field("longitude") longitude:Int,
-        @Field("selling_price") sellingPrice:Int,
-        @Field("rental_price") rentalPrice:Int,
-        @Field("facilities") facilities:String,
-        @Field("images") images:List<MultipartBody.Part>
+        @Part("property_type") propertyType:RequestBody,
+        @Part("condition") condition:RequestBody,
+        @Part("title") title:RequestBody,
+        @Part("year") year:RequestBody,
+        @Part("id_city") idCity:RequestBody,
+        @Part("floor_level") floorLevel:RequestBody,
+        @Part("bedroom") bedRoom:RequestBody?,
+        @Part("bathroom") bathRoom:RequestBody?,
+        @Part("building_area") buildingArea:Int,
+        @Part("land_area") landArea:Int,
+        @Part("certificate_type") certificateType:RequestBody?,
+        @Part("address") address:RequestBody,
+        @Part("latitude") latitude:RequestBody?,
+        @Part("longitude") longitude:RequestBody?,
+        @Part("selling_price") sellingPrice:RequestBody?,
+        @Part("rental_price") rentalPrice:RequestBody?,
+        @Part("facilities") facilities:RequestBody?,
+        @Part("description") description:RequestBody?,
+        @Part images:ArrayList<MultipartBody.Part>
     ):Call<ResponseCreatePostProperty>
+
+    //Show Property
+    @Headers("No-Authentication: true")
+    @POST("api/property/show_property")
+    fun showProperty():Call<ResponseShowProperty>
+
 }

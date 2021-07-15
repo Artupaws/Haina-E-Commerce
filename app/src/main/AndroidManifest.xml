@@ -22,7 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.categorypost.CategoryActivity"></activity>
+        <activity android:name=".view.history.historymyproperty.MyPropertyActivity"></activity>
+        <activity android:name=".view.property.ShowPropertyActivity" />
+        <activity android:name=".view.property.FinishPropertyActivity" />
+        <activity android:name=".view.categorypost.CategoryActivity" />
         <activity android:name=".view.property.PropertyActivity" />
         <activity android:name=".view.hotels.HotelBaseActivity" />
         <activity android:name=".view.news.DetailNewsActivity" />

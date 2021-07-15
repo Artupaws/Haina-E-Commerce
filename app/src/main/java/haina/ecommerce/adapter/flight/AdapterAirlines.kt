@@ -24,7 +24,7 @@ class AdapterAirlines(val context: Context, private val listAirlines: DataAirlin
         fun bind(itemHaina: DepartItem, itemAdapterCallback:ItemAdapterCallback) {
             with(binding) {
                 tvAirlineName.text = itemHaina.airlineDetail?.airlineName
-                val priceTicket = "${helper.convertToFormatMoneyIDRFilter(itemHaina.price.toString())}/person"
+                val priceTicket = "${helper.convertToFormatMoneyIDRFilter(itemHaina.price.toString())}"
                 tvPriceTicket.text = priceTicket
                 setStepView(binding)
                 linearClick.setOnClickListener {

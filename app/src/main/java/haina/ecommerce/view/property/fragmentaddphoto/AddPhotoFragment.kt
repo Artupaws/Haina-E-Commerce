@@ -14,6 +14,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.TextView
@@ -28,6 +29,8 @@ import haina.ecommerce.model.property.RequestDataProperty
 import haina.ecommerce.room.roomphotoproperty.DataProperty
 import haina.ecommerce.room.roomphotoproperty.PropertyDao
 import haina.ecommerce.room.roomphotoproperty.RoomDataProperty
+import haina.ecommerce.view.MainActivity
+import haina.ecommerce.view.property.FinishPropertyActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -35,35 +38,41 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
 
-class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProperty.ItemAdapterCallback {
+class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProperty.ItemAdapterCallback, AddPhotoContract.View {
 
     private lateinit var _binding:FragmentAddPhotoBinding
     private val binding get() = _binding
     private var popupAddPhoto : Dialog? = null
     private lateinit var request:RequestDataProperty
     private var uri: Uri = Uri.EMPTY
-    private lateinit var listPhoto:PhotoProprety
     private var typeUpload:String = ""
     private var multipartProperty: MultipartBody.Part? = null
     private lateinit var dao:PropertyDao
     private lateinit var database:RoomDataProperty
     private lateinit var listPhotoProperty: ArrayList<DataProperty>
+    private var listPhotoArray = ArrayList<MultipartBody.Part>()
+    private var photo:MultipartBody.Part? = null
+    private var progressDialog:Dialog? = null
+    private lateinit var presenter:AddPhotoPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentAddPhotoBinding.inflate(inflater, container, false)
         database = RoomDataProperty.getDatabase(requireActivity())
         dao = database.getDataPropertyDao()
+        presenter = AddPhotoPresenter(this, requireActivity())
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnAddPhoto.setOnClickListener(this)
+        binding.btnPostingProperty.setOnClickListener(this)
         binding.toolbarAddPhotoProperty.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
         request = arguments?.getParcelable("dataRequest")!!
         dialogMethodUpload()
+        dialogLoading()
     }
 
     companion object {
@@ -102,6 +111,27 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
             R.id.btn_add_photo -> {
                 checkPermission()
             }
+            R.id.btn_posting_property -> {
+                val typeProperty:RequestBody = RequestBody.create(MultipartBody.FORM, request.typeProperty)
+                val condition:RequestBody = RequestBody.create(MultipartBody.FORM, request.condition)
+                val title:RequestBody = RequestBody.create(MultipartBody.FORM, request.title)
+                val year:RequestBody = RequestBody.create(MultipartBody.FORM, request.year.toString())
+                val city:RequestBody = RequestBody.create(MultipartBody.FORM, request.city.toString())
+                val floor:RequestBody = RequestBody.create(MultipartBody.FORM, request.floor.toString())
+                val bedRoom:RequestBody = RequestBody.create(MultipartBody.FORM, request.bedRoom.toString())
+                val bathRoom:RequestBody = RequestBody.create(MultipartBody.FORM, request.bathRoom.toString())
+                val typeCertificate:RequestBody = RequestBody.create(MultipartBody.FORM, request.typeCertificate)
+                val address:RequestBody = RequestBody.create(MultipartBody.FORM, request.address)
+                val latitude:RequestBody = RequestBody.create(MultipartBody.FORM, "0")
+                val longitude:RequestBody = RequestBody.create(MultipartBody.FORM, "0")
+                val priceSell:RequestBody = RequestBody.create(MultipartBody.FORM, request.priceSell)
+                val priceRent:RequestBody = RequestBody.create(MultipartBody.FORM, request.priceRent)
+                val description:RequestBody = RequestBody.create(MultipartBody.FORM, request.description)
+                val facility:RequestBody = RequestBody.create(MultipartBody.FORM, request.facility)
+                presenter.createPostProperty(typeProperty, condition, title, year, city, floor,
+                    bedRoom, bathRoom, request.buildingArea, request.surfaceArea, typeCertificate, address, latitude, longitude,
+                    priceSell, priceRent, facility, description, listPhotoArray)
+            }
         }
     }
 
@@ -129,34 +159,38 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
             if (Build.VERSION.SDK_INT < 28) {
                 val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes)
-                val path = MediaStore.MediaColumns.RELATIVE_PATH
+                val path = MediaStore.Images.Media.insertImage(requireActivity().contentResolver, bitmap, "Haina-Property", null)
                 val filePath = getRealPathFromURIPath(Uri.parse(path), this)
                 val file = File(filePath)
                 val mFile: RequestBody =
                     RequestBody.create(MediaType.parse("multipart/form-data"), file)
-                multipartProperty = MultipartBody.Part.createFormData("property", file.name, mFile)
+                multipartProperty = MultipartBody.Part.createFormData("images[]", file.name, mFile)
+                photo = multipartProperty!!
                 savePhotoProperty(DataProperty(0, uri.toString()))
+                listPhotoArray.add(multipartProperty!!)
             } else {
                 val source = ImageDecoder.createSource(requireActivity().contentResolver, uri)
                 val bitmap = ImageDecoder.decodeBitmap(source)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 10, bytes)
-
-                val path = MediaStore.MediaColumns.RELATIVE_PATH
+                val path = MediaStore.Images.Media.insertImage(requireActivity().contentResolver, bitmap, "Haina-Property", null)
                 val filePath = getRealPathFromURIPath(Uri.parse(path), this)
                 val file = File(filePath)
                 val mFile: RequestBody =
                     RequestBody.create(MediaType.parse("multipart/form-data"), file)
-                multipartProperty = MultipartBody.Part.createFormData("property", file.name, mFile)
+                multipartProperty = MultipartBody.Part.createFormData("images[]", file.name, mFile)
+                photo = multipartProperty!!
                 savePhotoProperty(DataProperty(0, uri.toString()))
+                listPhotoArray.add(multipartProperty!!)
             }
         } else if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE && typeUpload == "gallery"){
             uri = data?.data!!
             val filepath = getRealPathFromURIPath(uri, this)
                 val file = File(filepath)
                 val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
-                val body = MultipartBody.Part.createFormData("photo", file.name, mFile)
-                listPhoto = PhotoProprety(body)
+                val body = MultipartBody.Part.createFormData("images[]", file.name, mFile)
             savePhotoProperty(DataProperty(0, uri.toString()))
+            photo = body
+            listPhotoArray.add(body)
         }
     }
 
@@ -185,8 +219,10 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
         listPhotoProperty.addAll(dao.getAll())
         if (listPhotoProperty.size < 1){
             binding.btnPostingProperty.visibility = View.GONE
+            binding.rvPhotoProperty.visibility = View.GONE
         } else {
             binding.btnPostingProperty.visibility = View.VISIBLE
+            binding.rvPhotoProperty.visibility = View.VISIBLE
             setupListDataPassenger(listPhotoProperty)
         }
     }
@@ -213,6 +249,10 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
 
     private fun deleteProperty(dataProperty:DataProperty){
         dao.delete(dataProperty)
+    }
+
+    private fun deleteAll(){
+        dao.deleteAll()
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -247,5 +287,33 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
                 getListDataProperty(database, dao)
             }
         }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun dialogLoading(){
+        progressDialog = Dialog(requireActivity())
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.white))
+        val window:Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
+    }
+
+    override fun messageCreatePost(msg: String) {
+        Log.d("createPostProperty", msg)
+        if (msg.contains("Success!")){
+            val intentFinish = Intent(requireActivity(), FinishPropertyActivity::class.java)
+            startActivity(intentFinish)
+            requireActivity().finishAffinity()
+            deleteAll()
+        }
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 }

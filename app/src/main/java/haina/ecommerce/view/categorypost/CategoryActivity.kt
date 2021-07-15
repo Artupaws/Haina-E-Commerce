@@ -16,7 +16,6 @@ import haina.ecommerce.databinding.ActivityCategoryBinding
 import haina.ecommerce.model.categorypost.DataCategory
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
-import haina.ecommerce.view.property.PropertyActivity
 
 class CategoryActivity : AppCompatActivity(), CategoryPostContract.View, AdapterCategoryPosting.ItemAdapterCallback {
 
@@ -71,11 +70,7 @@ class CategoryActivity : AppCompatActivity(), CategoryPostContract.View, Adapter
 
     override fun onAdapterClick(view: View, data: DataCategory) {
         when(view.id){
-            R.id.linear_data_category -> {
-                val intent = Intent(applicationContext, PropertyActivity::class.java)
-                intent.putExtra("dataCategory", data)
-                startActivity(intent)
-            }
+
         }
     }
 }

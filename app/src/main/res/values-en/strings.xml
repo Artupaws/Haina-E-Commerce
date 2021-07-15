@@ -340,4 +340,15 @@
     <string name="want_to_upload_from">Want to upload from</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
+    <string name="property_title">Property</string>
+    <string name="price_sell">Price Sell</string>
+    <string name="price_rent">Price Rent</string>
+    <string name="type">Type</string>
+    <string name="building_area">Building Area</string>
+    <string name="land_area">Land Area</string>
+    <string name="bed_room">Bed Room</string>
+    <string name="bath_room">Bath Room</string>
+    <string name="floor_level">Floor/Level</string>
+    <string name="rent">Rent</string>
+    <string name="my_property">My Property</string>
 </resources>

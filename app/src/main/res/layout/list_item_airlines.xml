@@ -83,13 +83,18 @@
 
         <TextView
             android:id="@+id/tv_price_ticket"
-            style="@style/TextView.Poppins12spGrey"
+            style="@style/TextView.Poppins14spBlack"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="bottom|end"
-            android:textColor="@color/black"
-            tools:text="IDR580.000/person" />
+            android:textColor="@color/yellow"
+            android:shadowColor="@color/black"
+            android:shadowDx="1.5"
+            android:shadowDy="1.5"
+            android:shadowRadius="1.5"
+            android:textFontWeight="600"
+            tools:text="IDR580.000" />
 
     </LinearLayout>
 

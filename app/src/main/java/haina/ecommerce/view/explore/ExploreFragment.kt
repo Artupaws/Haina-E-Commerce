@@ -33,7 +33,8 @@ import haina.ecommerce.view.job.JobActivity
 import haina.ecommerce.view.news.NewsActivity
 import haina.ecommerce.view.notification.NotificationActivity
 import haina.ecommerce.view.other.OtherActivity
-import haina.ecommerce.view.property.PropertyActivity
+import haina.ecommerce.view.property.FinishPropertyActivity
+import haina.ecommerce.view.property.ShowPropertyActivity
 
 class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, AdapterUnfinishTransactionExplore.ItemAdapterCallback {
 
@@ -57,7 +58,6 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
         return binding?.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getListPendingTransaction()
@@ -71,6 +71,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
         binding?.menuServices?.linearHotel?.setOnClickListener(this)
         binding?.menuServices?.linearFlightTicket?.setOnClickListener(this)
         binding?.menuServices?.linearDeal?.setOnClickListener(this)
+        binding?.menuServices?.linearProperty?.setOnClickListener(this)
 //        presenter.loadListBaseCurrency()
 //        presenter.loadCovidJkt()
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
@@ -155,8 +156,12 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
                 startActivity(flight)
             }
             R.id.linear_deal -> {
-                val intentProperty = Intent(requireContext(), PropertyActivity::class.java)
+                val intentProperty = Intent(requireContext(), FinishPropertyActivity::class.java)
                 startActivity(intentProperty)
+            }
+            R.id.linear_property -> {
+                val intentShowProperty = Intent(requireActivity(), ShowPropertyActivity::class.java)
+                startActivity(intentShowProperty)
             }
         }
     }
