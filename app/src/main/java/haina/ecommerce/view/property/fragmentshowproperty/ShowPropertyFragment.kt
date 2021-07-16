@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -52,12 +53,11 @@ class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClick
 
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     private fun dialogLoading(){
         progressDialog = Dialog(requireActivity())
         progressDialog?.setContentView(R.layout.dialog_loader)
         progressDialog?.setCancelable(false)
-        progressDialog?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.white))
+        progressDialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(requireActivity(),android.R.color.white))
         val window: Window = progressDialog?.window!!
         window.setGravity(Gravity.CENTER)
     }
@@ -76,9 +76,13 @@ class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClick
         }
     }
 
+    override fun messageAddViews(msg: String) {
+        Log.d("addViewProperty",msg)
+    }
+
     override fun getDataProperty(data: List<DataShowProperty?>?) {
         binding.rvProperty.apply {
-            adapter = AdapterShowProperty(requireActivity(), data, this@ShowPropertyFragment)
+            adapter = AdapterShowProperty(requireActivity(), data, this@ShowPropertyFragment, true)
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
     }
@@ -102,6 +106,7 @@ class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClick
     override fun onClickAdapterCity(view: View, data: DataShowProperty) {
         when(view.id){
             R.id.cv_click -> {
+                presenter.addViews(data.id!!)
                 val bundle=Bundle()
                 bundle.putParcelable("dataProperty", data)
                 Navigation.findNavController(binding.root).navigate(R.id.action_showPropertyFragment_to_detailPropertyFragment, bundle)

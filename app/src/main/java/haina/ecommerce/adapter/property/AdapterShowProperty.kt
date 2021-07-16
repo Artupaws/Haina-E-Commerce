@@ -17,12 +17,14 @@ import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.property.DataCity
 import haina.ecommerce.model.property.DataShowProperty
 
-class AdapterShowProperty(val context: Context, private var dataProperty: List<DataShowProperty?>?, private val itemAdapterCallback: ItemAdapterCallback) :
+class AdapterShowProperty(val context: Context, private var dataProperty: List<DataShowProperty?>?,
+                          private val itemAdapterCallback: ItemAdapterCallback,
+                          private val showOnPublic:Boolean) :
         RecyclerView.Adapter<AdapterShowProperty.Holder>(), Filterable {
 
     private var listResultProperty : List<DataShowProperty?>? = dataProperty
     private val helper:Helper=Helper
-    private var  imagesListener : ImageListener? = null
+    private lateinit var imagesListener : ImageListener
     private lateinit var listParams: ArrayList<String>
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
@@ -30,20 +32,29 @@ class AdapterShowProperty(val context: Context, private var dataProperty: List<D
         fun bind(itemHaina: DataShowProperty, itemAdapterCallback: ItemAdapterCallback) {
             with(binding) {
                 listParams = ArrayList()
+                when(showOnPublic){
+                    true -> {
+                        tvStatus.visibility = View.GONE
+                    } false -> {
+                    tvStatus.visibility = View.VISIBLE
+                    tvStatus.text = itemHaina.status
+                    }
+                }
                 if (itemHaina.images != null){
                     for (i in itemHaina.images) {
                         i?.path?.let { listParams.add(it) }
                         Log.d("listImageProperty", listParams.toString())
                         vpImageProperty.pageCount = listParams.size
-                    imagesListener = ImageListener { position, imageView ->
-                        Glide.with(context).load(listParams[position]).placeholder(R.drawable.ps5).into(imageView)
+                    }
+                    imagesListener = ImageListener { _, imageView ->
+                        Glide.with(context).load(listParams[0]).placeholder(R.drawable.ps5).into(imageView)
                     }
                     vpImageProperty.setImageListener(imagesListener)
                     vpImageProperty.setImageListener(imagesListener)
-                    }
                 }
                 showPrice(binding, itemHaina)
-                tvConditionProperty.text = itemHaina.condition
+                val condition = "Condition : ${itemHaina.condition}"
+                tvConditionProperty.text = condition
                 tvNameProperty.text = itemHaina.title
                 tvYear.text = itemHaina.year
                 val address = "${itemHaina.city.province}, ${itemHaina.city.nameCity}"

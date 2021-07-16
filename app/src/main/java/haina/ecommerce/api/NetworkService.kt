@@ -604,7 +604,7 @@ interface NetworkService {
         @Part("bathroom") bathRoom:RequestBody?,
         @Part("building_area") buildingArea:Int,
         @Part("land_area") landArea:Int,
-        @Part("certificate_type") certificateType:RequestBody?,
+        @Part("certificate_type") certificateType:String?,
         @Part("address") address:RequestBody,
         @Part("latitude") latitude:RequestBody?,
         @Part("longitude") longitude:RequestBody?,
@@ -619,5 +619,26 @@ interface NetworkService {
     @Headers("No-Authentication: true")
     @POST("api/property/show_property")
     fun showProperty():Call<ResponseShowProperty>
+
+    //Show Myproperty
+    @Headers("No-Authentication: true")
+    @POST("api/property/my_property")
+    fun showMyProperty():Call<ResponseShowProperty>
+
+    //Delete Property
+    @FormUrlEncoded
+    @Headers("No-Atuhentication: true")
+    @POST("api/property/delete")
+    fun deleteProperty(
+        @Field("id_property")idProperty:Int
+    ):Call<ResponseDeleteProperty>
+
+    //View Detail Property
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/property/view_property")
+    fun addViewProperty(
+        @Field("id_property")idProperty:Int
+    ):Call<ResponseViewDetailProperty>
 
 }

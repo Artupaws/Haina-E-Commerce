@@ -53,6 +53,7 @@
     <string name="your_post">Your Post</string>
     <string name="choose_all">Choose All</string>
     <string name="delete"><u>Delete</u></string>
+    <string name="mark_as_sold"><u>Mark as Sold</u></string>
     <string name="total_price">Total Price</string>
     <string name="buy">Buy</string>
     <string name="please_login_account">To view this page, please login first</string>
@@ -353,5 +354,8 @@
     <string name="floor_level">Floor/Level</string>
     <string name="rent">Rent</string>
     <string name="my_property">My Property</string>
-
+    <string name="notes_transaction_property">Please note :\n 1.Don\'t immediately transfer money when you haven\'t seen the property in person. \n2.make sure the transaction has a valid sale and purchase agreement.
+        \n3.Make sure the property matches what is advertised.
+        \n 4.This transaction is beyond the control of Haina Service Indonesia.
+        \n 5.You will be forwarded to wa chat, please use polite language</string>
 </resources>
