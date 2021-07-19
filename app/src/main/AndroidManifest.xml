@@ -22,6 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light"
         android:usesCleartextTraffic="true">
+        <activity android:name=".view.history.historymyproperty.saved.DetailMyPropertySavedActivity"/>
         <activity android:name=".view.property.detailmyproperty.DetailMyPropertyActivity"/>
         <activity android:name=".view.history.historymyproperty.MyPropertyActivity"></activity>
         <activity android:name=".view.property.ShowPropertyActivity" />

@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class ResponseViewDetailProperty(
 
 	@field:SerializedName("data")
-	val dataViewDetailProperty: DataDetailProperty? = null,
+	val dataViewDetailProperty: DataShowProperty? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,

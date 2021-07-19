@@ -641,4 +641,13 @@ interface NetworkService {
         @Field("id_property")idProperty:Int
     ):Call<ResponseViewDetailProperty>
 
+    //Change Availability Property
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/property/new_transaction")
+    fun changeAvailability(
+        @Field("id_property")idProperty: Int,
+        @Field("transaction_type")transactionType:String
+    ):Call<ResponseChangeAvailability>
+
 }

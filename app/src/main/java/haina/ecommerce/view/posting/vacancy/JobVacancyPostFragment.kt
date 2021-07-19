@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterJobPosting
@@ -25,15 +26,10 @@ class JobVacancyPostFragment : Fragment(), VacancyContract, View.OnClickListener
     private lateinit var presenter: VacancyPresenter
     lateinit var sharedPref: SharedPreferenceHelper
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentHistoryBuyBinding.inflate(inflater, container, false)
         sharedPref = SharedPreferenceHelper(requireContext())
         presenter = VacancyPresenter(this, requireContext())
-
         return binding.root
     }
 
@@ -107,7 +103,7 @@ class JobVacancyPostFragment : Fragment(), VacancyContract, View.OnClickListener
         val getMyPost = AdapterJobPosting(requireContext(), list)
         binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
         binding.rvJobVacancy.apply {
-            layoutManager = GridLayoutManager(activity, 2)
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             adapter = getMyPost
         }
     }

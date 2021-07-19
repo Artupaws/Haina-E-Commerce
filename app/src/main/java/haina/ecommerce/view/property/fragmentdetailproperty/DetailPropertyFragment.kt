@@ -20,10 +20,15 @@ import haina.ecommerce.adapter.property.AdapterListFacilityShow
 import haina.ecommerce.databinding.FragmentDetailPropertyBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.property.DataShowProperty
+import haina.ecommerce.room.roomphotoproperty.DataProperty
+import haina.ecommerce.room.roomphotoproperty.PropertyDao
+import haina.ecommerce.room.roomsavedproperty.DataSavedProperty
+import haina.ecommerce.room.roomsavedproperty.RoomDataSavedProperty
+import haina.ecommerce.room.roomsavedproperty.SavedPropertyDao
 import java.net.URLEncoder
 
 
-class DetailPropertyFragment : Fragment(), View.OnClickListener {
+class DetailPropertyFragment : Fragment(), View.OnClickListener, DetailPropertyContract.View {
 
     private lateinit var _binding:FragmentDetailPropertyBinding
     private val binding get() = _binding
@@ -32,9 +37,19 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener {
     private val helper: Helper = Helper
     private var progressDialog:Dialog? = null
     private var confirmDialog:Dialog? = null
+    private lateinit var dao:SavedPropertyDao
+    private lateinit var database:RoomDataSavedProperty
+    private var dataProperty:DataShowProperty? = null
+    private lateinit var presenter: DetailPropertyPresenter
+    private var transactionType:String = ""
+    private var phoneNumber:String? = ""
+    private var message :String = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentDetailPropertyBinding.inflate(inflater, container, false)
+        database = RoomDataSavedProperty.getDatabase(requireActivity())
+        dao = database.getDataPropertyDao()
+        presenter = DetailPropertyPresenter(this, requireActivity())
         return binding.root
     }
 
@@ -43,13 +58,15 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener {
         binding.btnBuy.setOnClickListener(this)
         binding.btnRent.setOnClickListener(this)
         listParams = ArrayList()
-        val dataProperty = arguments?.getParcelable<DataShowProperty>("dataProperty")
-        val phoneForWhatsApp = dataProperty?.owner?.phone?.substring(0,1)?.replace("0",
-            "+62${dataProperty.owner.phone.substring(1, dataProperty.owner.phone.length)}")
-        val message = "Hello, i'am interested in *${dataProperty?.title}*,\n" +
+        dataProperty = arguments?.getParcelable("dataProperty")
+        getDataSaved(dataProperty?.id!!)
+        phoneNumber = dataProperty?.owner?.phone?.substring(0,1)?.replace("0",
+            "+62${dataProperty?.owner?.phone?.length?.let {
+                dataProperty?.owner?.phone?.substring(1, it) }}")
+        message = "Hello, i'am interested in *${dataProperty?.title}*,\n" +
                 "I got this information from *Haina Service Indonesia App*, can we discuss it further?"
         if (dataProperty?.images != null){
-            for (i in dataProperty.images) {
+            for (i in dataProperty!!.images!!) {
                 i?.path?.let { listParams.add(it) }
                 Log.d("listImageProperty", listParams.toString())
                 binding.vpImageProperty.pageCount = listParams.size
@@ -66,22 +83,34 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener {
         binding.toolbarDetailProperty.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
+
         dataProperty?.let { showData(it) }
-        dialogConfirm(phoneForWhatsApp.toString(), message)
+        dialogConfirm(dataProperty?.id!!)
+        toggleSavedProperty()
+        dialogLoading()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        progressDialog?.dismiss()
     }
 
     private fun showData(data:DataShowProperty){
         if (data.rentalPrice.toString() == "0" && data.sellingPrice.toString() != "0"){
             binding.tvPriceSell.text = helper.convertToFormatMoneyIDRFilter(data.sellingPrice.toString())
             binding.linearPriceRent.visibility = View.GONE
+            binding.btnRent.visibility = View.GONE
         } else if (data.rentalPrice.toString() != "0" && data.sellingPrice.toString() == "0"){
             binding.tvPriceRent.text = helper.convertToFormatMoneyIDRFilter(data.rentalPrice.toString())
             binding.linearPriceSell.visibility = View.GONE
+            binding.btnBuy.visibility = View.GONE
         } else {
             val priceSell = helper.convertToFormatMoneyIDRFilter(data.sellingPrice.toString())
             val priceRent = helper.convertToFormatMoneyIDRFilter(data.rentalPrice.toString())
             binding.tvPriceSell.text =  priceSell
             binding.tvPriceRent.text =  priceRent
+            binding.btnBuy.visibility = View.VISIBLE
+            binding.btnRent.visibility = View.VISIBLE
         }
 
         binding.tvPropertyType.text = data.propertyType
@@ -112,7 +141,7 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener {
         window.setGravity(Gravity.CENTER)
     }
 
-    private fun dialogConfirm(phoneNumber:String, message:String){
+    private fun dialogConfirm(idProperty:Int){
         confirmDialog = Dialog(requireActivity())
         confirmDialog?.setContentView(R.layout.popup_logout)
         confirmDialog?.setCancelable(false)
@@ -126,20 +155,54 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener {
         title?.text = "Confirmation"
         description?.text = requireActivity().getString(R.string.notes_transaction_property)
         yes?.setOnClickListener{
+            presenter.changeAvailability(idProperty, transactionType)
             confirmDialog?.dismiss()
-            openWhatsApp(phoneNumber, message)
         }
         cancel?.setOnClickListener {
             confirmDialog?.dismiss()
         }
     }
 
+    private fun toggleSavedProperty(){
+        binding.ivSaveProperty.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                savePhotoProperty(DataSavedProperty(dataProperty?.id!!,
+                    dataProperty?.images?.get(0)?.path.toString(), dataProperty?.sellingPrice, dataProperty?.title,
+                dataProperty?.address, dataProperty?.rentalPrice))
+                Toast.makeText(requireActivity(), "Property Saved", Toast.LENGTH_SHORT).show()
+            }else{
+                deleteProperty(DataSavedProperty(dataProperty?.id!!,
+                    dataProperty?.images?.get(0)?.path.toString(), dataProperty?.sellingPrice, dataProperty?.title,
+                    dataProperty?.address, dataProperty?.rentalPrice))
+                Toast.makeText(requireActivity(), "Property Unsaved", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun savePhotoProperty(dataProperty: DataSavedProperty){
+        if (dao.getById(dataProperty.id).isEmpty()){
+            dao.insert(dataProperty)
+        }else{
+            dao.update(dataProperty)
+        }
+    }
+
+    private fun getDataSaved(idProperty: Int){
+        binding.ivSaveProperty.isChecked = dao.getById(idProperty).isNotEmpty()
+    }
+
+    private fun deleteProperty(dataProperty:DataSavedProperty){
+        dao.delete(dataProperty)
+    }
+
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_buy -> {
+                transactionType = "buy"
                 confirmDialog?.show()
             }
             R.id.btn_rent -> {
+                transactionType = "rental"
                 confirmDialog?.show()
             }
         }
@@ -156,5 +219,21 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener {
             Log.e("ERROR WHATSAPP", e.toString())
             Toast.makeText(requireActivity(), e.toString(), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun messageChangeAvailability(msg: String) {
+        Log.d("changeAvailability", msg)
+        if (msg.contains("Success!")){
+            Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+            openWhatsApp(phoneNumber!!, message)
+        }
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.show()
     }
 }
