@@ -35,9 +35,12 @@ class AdapterShowProperty(val context: Context, private var dataProperty: List<D
                 when(showOnPublic){
                     true -> {
                         tvStatus.visibility = View.GONE
+                        tvExpiryDate.visibility = View.GONE
                     } false -> {
                     tvStatus.visibility = View.VISIBLE
                     tvStatus.text = itemHaina.status
+                    val expiryDate = "Expired on ${itemHaina.expiryDate?.substring(0,10)}"
+                    tvExpiryDate.text = expiryDate
                     }
                 }
                 if (itemHaina.images != null){

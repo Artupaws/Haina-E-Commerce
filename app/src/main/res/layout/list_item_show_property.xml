@@ -148,10 +148,19 @@
 
                     <TextView
                         android:id="@+id/tv_status"
-                        style="@style/TextView.Poppins14spBlack"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:textColor="@color/black"
+                        android:textFontWeight="700"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="Pending" />
+
+                    <TextView
+                        android:id="@+id/tv_expiry_date"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="12-12-2020" />
 
                     <TextView
                         android:id="@+id/tv_location"

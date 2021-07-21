@@ -1,6 +1,7 @@
 package haina.ecommerce.view.property.detailmyproperty
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +19,7 @@ import haina.ecommerce.adapter.property.AdapterListFacilityShow
 import haina.ecommerce.databinding.FragmentDetailPropertyBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.property.DataShowProperty
+import haina.ecommerce.view.property.editmyproperty.EditPropertyActivity
 
 class DetailMyPropertyActivity : AppCompatActivity(), View.OnClickListener, DetailMyPropertyContract.View {
 
@@ -28,6 +30,7 @@ class DetailMyPropertyActivity : AppCompatActivity(), View.OnClickListener, Deta
     private var progressDialog:Dialog? = null
     private lateinit var presenter: DetailMyPropertyPresenter
     private var idProperty:Int = 0
+    private var dataProperty:DataShowProperty? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,17 +41,18 @@ class DetailMyPropertyActivity : AppCompatActivity(), View.OnClickListener, Deta
 
         binding.btnRent.setOnClickListener(this)
         binding.btnBuy.setOnClickListener(this)
+        binding.ivActionEdit.setOnClickListener(this)
 
-        val dataProperty = intent.getParcelableExtra<DataShowProperty>("dataProperty")
+        dataProperty = intent.getParcelableExtra("dataProperty")
         if (dataProperty != null) {
-            idProperty = dataProperty.id!!
-            showData(dataProperty)
+            idProperty = dataProperty?.id!!
+            showData(dataProperty!!)
         }
         binding.toolbarDetailProperty.setNavigationOnClickListener {
             onBackPressed()
         }
         if (dataProperty?.images != null){
-            for (i in dataProperty.images) {
+            for (i in dataProperty?.images!!) {
                 i?.path?.let { listParams.add(it) }
                 Log.d("listImageProperty", listParams.toString())
                 binding.vpImageProperty.pageCount = listParams.size
@@ -62,6 +66,7 @@ class DetailMyPropertyActivity : AppCompatActivity(), View.OnClickListener, Deta
         val address = "${dataProperty?.city?.province}, ${dataProperty?.city?.nameCity}"
         binding.tvLocation.text = address
         binding.tvNameProperty.text = dataProperty?.title
+        binding.ivActionEdit.visibility = View.VISIBLE
         dialogLoading()
     }
 
@@ -69,6 +74,11 @@ class DetailMyPropertyActivity : AppCompatActivity(), View.OnClickListener, Deta
         when(v?.id){
             R.id.btn_rent -> {
                 presenter.deleteProperty(idProperty)
+            }
+            R.id.iv_action_edit -> {
+                val intentEdit = Intent(applicationContext, EditPropertyActivity::class.java)
+                intentEdit.putExtra("dataProperty", dataProperty)
+                startActivity(intentEdit)
             }
         }
     }

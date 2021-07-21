@@ -17,6 +17,7 @@ import haina.ecommerce.model.notification.ResponseGetNotification
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.productservice.ResponseGetProductService
 import haina.ecommerce.model.property.*
+import haina.ecommerce.model.property.FacilitiesItem
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
 import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
@@ -649,5 +650,29 @@ interface NetworkService {
         @Field("id_property")idProperty: Int,
         @Field("transaction_type")transactionType:String
     ):Call<ResponseChangeAvailability>
+
+    //Update MyProperty
+    @Headers("No-Authentication: true")
+    @POST("api/property/update_property")
+    fun updateMyProperty(
+        @Field("property_type") propertyType:String,
+        @Field("condition") condition:String,
+        @Field("title") title:String,
+        @Field("year") year:String,
+        @Field("id_city") idCity:Int,
+        @Field("floor_level") floorLevel:Int,
+        @Field("bedroom") bedRoom:Int?,
+        @Field("bathroom") bathRoom:Int?,
+        @Field("building_area") buildingArea:Int,
+        @Field("land_area") landArea:Int,
+        @Field("certificate_type") certificateType:String?,
+        @Field("address") address:String,
+        @Field("latitude") latitude:String?,
+        @Field("longitude") longitude:String?,
+        @Field("selling_price") sellingPrice:String?,
+        @Field("rental_price") rentalPrice:String?,
+        @Field("facilities") facilities:String,
+        @Field("description") description:String?
+    ):Call<ResponseCreatePostProperty>
 
 }

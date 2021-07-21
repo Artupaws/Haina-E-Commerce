@@ -516,7 +516,6 @@
             style="@style/Button.Primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:text="@string/rent" />
 
         <Button
@@ -524,9 +523,19 @@
             style="@style/Button.Primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:text="@string/buy" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_action_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_edit"
+        android:layout_marginEnd="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_detail_property"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_detail_property"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
