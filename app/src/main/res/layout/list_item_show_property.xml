@@ -134,26 +134,46 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_name_property"
                     android:textColor="@color/black"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_location"
                     app:layout_constraintStart_toStartOf="@+id/tv_name_property"
                     app:layout_constraintTop_toBottomOf="@+id/tv_name_property"
-                    app:layout_constraintVertical_bias="0.0"
                     tools:text="2021" />
 
-                <TextView
-                    android:id="@+id/tv_location"
-                    style="@style/TextView.Poppins14spGrey"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_year"
-                    android:gravity="center"
-                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/tv_year"
-                    tools:text="Banten, Maja"
-                    app:drawableStartCompat="@drawable/ic_location" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_year">
 
+                    <TextView
+                        android:id="@+id/tv_status"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:textColor="@color/black"
+                        android:textFontWeight="700"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Pending" />
+
+                    <TextView
+                        android:id="@+id/tv_expiry_date"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="12-12-2020" />
+
+                    <TextView
+                        android:id="@+id/tv_location"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center_vertical"
+                        app:drawableStartCompat="@drawable/ic_location"
+                        tools:text="Banten, Maja" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

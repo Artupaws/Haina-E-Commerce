@@ -3,6 +3,7 @@ package haina.ecommerce.view.property.fragmentshowproperty
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.property.ResponseShowProperty
+import haina.ecommerce.model.property.ResponseViewDetailProperty
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
@@ -30,6 +31,27 @@ class ShowPropertyPresenter(val view:ShowPropertyContract.View, val context: Con
                 view.messageGetListProperty(t.localizedMessage.toString())
             }
 
+        })
+    }
+
+    fun addViews(idProperty:Int){
+        view.showLoading()
+        val addViews = NetworkConfig().getConnectionHainaBearer(context).addViewProperty(idProperty)
+        addViews.enqueue(object : retrofit2.Callback<ResponseViewDetailProperty>{
+            override fun onResponse(call: Call<ResponseViewDetailProperty>, response: Response<ResponseViewDetailProperty>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageAddViews(response.body()?.message.toString())
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageAddViews(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseViewDetailProperty>, t: Throwable) {
+                view.dismissLoading()
+                view.messageAddViews(t.localizedMessage.toString())
+            }
         })
     }
 

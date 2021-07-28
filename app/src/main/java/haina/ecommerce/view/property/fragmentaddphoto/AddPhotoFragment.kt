@@ -69,6 +69,7 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
         binding.btnPostingProperty.setOnClickListener(this)
         binding.toolbarAddPhotoProperty.setNavigationOnClickListener {
             findNavController().navigateUp()
+            deleteAll()
         }
         request = arguments?.getParcelable("dataRequest")!!
         dialogMethodUpload()
@@ -112,26 +113,33 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
                 checkPermission()
             }
             R.id.btn_posting_property -> {
-                val typeProperty:RequestBody = RequestBody.create(MultipartBody.FORM, request.typeProperty)
-                val condition:RequestBody = RequestBody.create(MultipartBody.FORM, request.condition)
-                val title:RequestBody = RequestBody.create(MultipartBody.FORM, request.title)
-                val year:RequestBody = RequestBody.create(MultipartBody.FORM, request.year.toString())
-                val city:RequestBody = RequestBody.create(MultipartBody.FORM, request.city.toString())
-                val floor:RequestBody = RequestBody.create(MultipartBody.FORM, request.floor.toString())
-                val bedRoom:RequestBody = RequestBody.create(MultipartBody.FORM, request.bedRoom.toString())
-                val bathRoom:RequestBody = RequestBody.create(MultipartBody.FORM, request.bathRoom.toString())
-                val typeCertificate:RequestBody = RequestBody.create(MultipartBody.FORM, request.typeCertificate)
-                val address:RequestBody = RequestBody.create(MultipartBody.FORM, request.address)
-                val latitude:RequestBody = RequestBody.create(MultipartBody.FORM, "0")
-                val longitude:RequestBody = RequestBody.create(MultipartBody.FORM, "0")
-                val priceSell:RequestBody = RequestBody.create(MultipartBody.FORM, request.priceSell)
-                val priceRent:RequestBody = RequestBody.create(MultipartBody.FORM, request.priceRent)
-                val description:RequestBody = RequestBody.create(MultipartBody.FORM, request.description)
-                val facility:RequestBody = RequestBody.create(MultipartBody.FORM, request.facility)
-                presenter.createPostProperty(typeProperty, condition, title, year, city, floor,
-                    bedRoom, bathRoom, request.buildingArea, request.surfaceArea, typeCertificate, address, latitude, longitude,
-                    priceSell, priceRent, facility, description, listPhotoArray)
+                checkPhoto()
             }
+        }
+    }
+
+    private fun checkPhoto(){
+        val typeProperty:RequestBody = RequestBody.create(MultipartBody.FORM, request.typeProperty)
+        val condition:RequestBody = RequestBody.create(MultipartBody.FORM, request.condition)
+        val title:RequestBody = RequestBody.create(MultipartBody.FORM, request.title)
+        val year:RequestBody = RequestBody.create(MultipartBody.FORM, request.year.toString())
+        val city:RequestBody = RequestBody.create(MultipartBody.FORM, request.city.toString())
+        val floor:RequestBody = RequestBody.create(MultipartBody.FORM, request.floor.toString())
+        val bedRoom:RequestBody = RequestBody.create(MultipartBody.FORM, request.bedRoom.toString())
+        val bathRoom:RequestBody = RequestBody.create(MultipartBody.FORM, request.bathRoom.toString())
+        val address:RequestBody = RequestBody.create(MultipartBody.FORM, request.address)
+        val latitude:RequestBody = RequestBody.create(MultipartBody.FORM, "0")
+        val longitude:RequestBody = RequestBody.create(MultipartBody.FORM, "0")
+        val priceSell:RequestBody = RequestBody.create(MultipartBody.FORM, request.priceSell)
+        val priceRent:RequestBody = RequestBody.create(MultipartBody.FORM, request.priceRent)
+        val description:RequestBody = RequestBody.create(MultipartBody.FORM, request.description)
+        val facility:RequestBody = RequestBody.create(MultipartBody.FORM, request.facility)
+        if (listPhotoArray.size == 0){
+            Toast.makeText(requireActivity(), "Please insert minimal 1 photo of property", Toast.LENGTH_SHORT).show()
+        }else {
+            presenter.createPostProperty(typeProperty, condition, title, year, city, floor,
+                bedRoom, bathRoom, request.buildingArea, request.surfaceArea, request.typeCertificate, address, latitude, longitude,
+                priceSell, priceRent, facility, description, listPhotoArray)
         }
     }
 

@@ -20,7 +20,7 @@
         android:id="@+id/nestedScrollView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout13"
+        app:layout_constraintBottom_toTopOf="@+id/linear_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_detail_property">
@@ -39,6 +39,51 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/linear_looks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_looks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="70"
+                        android:layout_centerInParent="true"
+                        style="@style/TextView.Poppins16spBlack"
+                        android:textFontWeight="600"
+                        app:drawableStartCompat="@drawable/ic_looks" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_bookmarks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="70"
+                        android:layout_centerInParent="true"
+                        style="@style/TextView.Poppins16spBlack"
+                        android:textFontWeight="600"
+                        app:drawableStartCompat="@drawable/ic_bookmarkfill" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -409,6 +454,7 @@
                 android:background="@color/black" />
 
             <RelativeLayout
+                android:id="@+id/relative_seller"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp">
@@ -456,10 +502,10 @@
     </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
-        android:id="@+id/linearLayout13"
+        android:id="@+id/linear_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:weightSum="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -468,21 +514,28 @@
         <Button
             android:id="@+id/btn_rent"
             style="@style/Button.Primary"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
             android:text="@string/rent" />
 
         <Button
             android:id="@+id/btn_buy"
             style="@style/Button.Primary"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
             android:text="@string/buy" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_action_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_edit"
+        android:layout_marginEnd="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar_detail_property"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar_detail_property"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

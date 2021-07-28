@@ -42,7 +42,7 @@ data class DataShowProperty(
 	val title: String? = null,
 
 	@field:SerializedName("updated_at")
-	val updatedAt: Any? = null,
+	val updatedAt: String? = null,
 
 	@field:SerializedName("property_type")
 	val propertyType: String? = null,
@@ -83,6 +83,9 @@ data class DataShowProperty(
 	@field:SerializedName("post_date")
 	val postDate: String? = null,
 
+	@field:SerializedName("expiry_date")
+	val expiryDate: String? = null,
+
 	@field:SerializedName("rental_price")
 	val rentalPrice: Int? = null,
 
@@ -95,6 +98,9 @@ data class DataShowProperty(
 	@field:SerializedName("facilities")
 	val facilities: List<FacilitiesItem?>? = null,
 
+	@field:SerializedName("post_type")
+	val postType: String? = null,
+
 	@field:SerializedName("images")
 	val images: List<ImagesItem?>? = null,
 
@@ -102,7 +108,10 @@ data class DataShowProperty(
 	val city: CityItem,
 
 	@field:SerializedName("status")
-	val status: String? = null
+	val status: String? = null,
+
+	@field:SerializedName("views")
+	val views: Int? = null
 ) : Parcelable
 
 @Parcelize

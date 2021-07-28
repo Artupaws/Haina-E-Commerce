@@ -1,13 +1,12 @@
-package haina.ecommerce.view.property.fragmentshowproperty
+package haina.ecommerce.view.history.historymyproperty
 
 import haina.ecommerce.base.BaseView
 import haina.ecommerce.model.property.DataShowProperty
 
-interface ShowPropertyContract {
+interface MyPropertyContract {
 
-    interface View : BaseView {
+    interface View:BaseView{
         fun messageGetListProperty(msg:String)
-        fun messageAddViews(msg:String)
         fun getDataProperty(data:List<DataShowProperty?>?)
     }
 
