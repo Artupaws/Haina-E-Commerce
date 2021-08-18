@@ -6,5 +6,6 @@ interface DetailMyPropertyContract {
 
     interface View:BaseView{
         fun messageDeleteProperty(msg:String)
+        fun messageUpdateStatusProperty(msg:String)
     }
 }

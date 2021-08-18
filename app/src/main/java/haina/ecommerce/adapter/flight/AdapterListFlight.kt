@@ -24,6 +24,7 @@ class AdapterListFlight(val context: Context, private val listAirlines: MutableL
         RecyclerView.Adapter<AdapterListFlight.Holder>() {
     private var broadcaster : LocalBroadcastManager? = null
 
+
     @Suppress("UNCHECKED_CAST")
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemFlightAddOnBinding.bind(view)

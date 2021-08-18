@@ -2,6 +2,7 @@ package haina.ecommerce.view.property.editmyproperty
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +25,7 @@ import haina.ecommerce.adapter.property.AdapterListProvince
 import haina.ecommerce.databinding.ActivityEditPropertyBinding
 import haina.ecommerce.databinding.FragmentInputDataPropertyBinding
 import haina.ecommerce.model.property.*
+import haina.ecommerce.view.history.historymyproperty.MyPropertyActivity
 import haina.ecommerce.view.property.fragmentinputdata.InputDataPropertyContract
 import haina.ecommerce.view.property.fragmentinputdata.InputDataPropertyPresenter
 import java.util.*
@@ -39,6 +41,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
     private var popupFloor: Dialog? = null
     private var popupCity: Dialog? = null
     private var idProvince: Int = 0
+    private var idProperty: Int = 0
     private var idCity: Int = 0
     private lateinit var presenter: EditPropertyPresenter
     private var listFacility = ArrayList<Int>()
@@ -79,6 +82,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
         popupDialogFloor(amountRoom)
         binding.toolbar7.setNavigationOnClickListener { onBackPressed() }
         val dataProperty = intent?.getParcelableExtra<DataShowProperty>("dataProperty")
+        idProperty = dataProperty?.id!!
         showData(dataProperty!!)
         dialogLoading()
         binding.includeDataPropertyTop.btnNext.setText(R.string.save_changes)
@@ -565,7 +569,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("houseSell", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
-            presenter.updateProperty(propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
+            presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 bedRoomParams.toInt(), bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), typeCertificateParams, addressParams, null, null,
                 priceSellParams, "0", facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
@@ -580,7 +584,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("houseRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
-            presenter.updateProperty(propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
+            presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 bedRoomParams.toInt(), bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), null, addressParams, null, null,
                 "0", priceRentParams, facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
@@ -596,7 +600,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("houseBoth", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
-            presenter.updateProperty(propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
+            presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 bedRoomParams.toInt(), bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), typeCertificateParams, addressParams, null, null,
                 priceSellParams, priceRentParams, facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
@@ -612,7 +616,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("ApartmentSell", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
-            presenter.updateProperty(propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
+            presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 bedRoomParams.toInt(), bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, typeCertificateParams, addressParams, null, null,
                 priceSellParams, "0", facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
@@ -628,7 +632,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("ApartmentRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
-            presenter.updateProperty(propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
+            presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 bedRoomParams.toInt(), bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, null, addressParams, null, null,
                 "0", priceRentParams, facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
@@ -644,7 +648,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("ApartmentRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
-            presenter.updateProperty(propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
+            presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 bedRoomParams.toInt(), bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, typeCertificateParams, addressParams, null, null,
                 priceSellParams, priceRentParams, facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
@@ -660,7 +664,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("WarehouseSell", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
-            presenter.updateProperty(propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
+            presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 null, bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), typeCertificateParams, addressParams, null, null,
                 priceSellParams, "0", facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
@@ -676,7 +680,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("WarehouseRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
-            presenter.updateProperty(propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
+            presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 null, bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), null, addressParams, null, null,
                 "0", priceRentParams, facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
@@ -692,7 +696,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("WarehouseBoth", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
-            presenter.updateProperty(propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
+            presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 null, bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), typeCertificateParams, addressParams, null, null,
                 priceSellParams, priceRentParams, facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
@@ -708,7 +712,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("WarehouseSell", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
-            presenter.updateProperty(propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
+            presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 null, bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, typeCertificateParams, addressParams, null, null,
                 priceSellParams, "0", facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
@@ -724,7 +728,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("WarehouseRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
-            presenter.updateProperty(propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
+            presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 null, bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, null, addressParams, null, null,
                 "0", priceRentParams, facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
@@ -739,10 +743,9 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             Log.d("WarehouseBoth", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
-            presenter.updateProperty(propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
+            presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 null, bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, typeCertificateParams, addressParams, null, null,
             priceSellParams, priceRentParams, facilityParams, descriptionParams)
-//            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
     }
@@ -860,6 +863,12 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun messageUpdateProperty(msg: String) {
         Log.d("updateProprety", msg)
+        if (msg.contains("Property Data Updated!")){
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+            val intent = Intent(applicationContext, MyPropertyActivity::class.java)
+            intent.putExtra("finish", true)
+            startActivity(intent)
+            finishAffinity()}
     }
 
     override fun getDataFacilites(data: List<DataFacilitiesProperty?>?) {

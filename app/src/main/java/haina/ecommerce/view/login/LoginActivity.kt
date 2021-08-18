@@ -208,7 +208,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract.V
     private fun move(method:Int?){
         if (method == 0){
             sharedPreferenceHelper.save(Constants.PREF_IS_LOGIN, true)
-            onBackPressed()
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         } else if (method == 1){
             sharedPreferenceHelper.save(Constants.PREF_IS_LOGIN, true)
             val intent = Intent(applicationContext, MainActivity::class.java)

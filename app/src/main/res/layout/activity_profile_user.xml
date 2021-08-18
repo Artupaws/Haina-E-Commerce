@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.forum.profileuser.ProfileUserActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_profile_user"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back_black"
+        app:title="Subforum Profile" />
+
+    <RelativeLayout
+        android:id="@+id/relative_data_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_profile_user">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_image_user"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            tools:src="@drawable/ps5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/iv_image_user"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name_user"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Putra" />
+
+            <TextView
+                android:id="@+id/tv_category"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Member since : 1997" />
+
+            <TextView
+                android:id="@+id/tv_created_at"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Member since : 1997" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relative_data_user">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_post"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textFontWeight="600"
+                tools:text="46.000" />
+
+            <TextView
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="POST" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_followers"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textFontWeight="600"
+                tools:text="100" />
+
+            <TextView
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Followers" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout12"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_follow"
+            style="@style/Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/follow" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_unfollow"
+            style="@style/Button.Cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@string/unfollow" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

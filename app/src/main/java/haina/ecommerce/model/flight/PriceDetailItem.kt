@@ -8,10 +8,10 @@ import kotlinx.android.parcel.Parcelize
 data class PriceDetailItem(
 
 	@field:SerializedName("bagInfo")
-	val bagInfo: Any? = null,
+	val bagInfo: String? = null,
 
 	@field:SerializedName("priceInfo")
-	val priceInfo: Any? = null,
+	val priceInfo: String? = null,
 
 	@field:SerializedName("paxType")
 	val paxType: String? = null,

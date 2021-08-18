@@ -23,7 +23,7 @@ data class DataRealTicketPrice(
 	val priceReturn: List<PriceReturnItem?>? = null,
 
 	@field:SerializedName("searchKey")
-	val searchKey: Any? = null,
+	val searchKey: String? = null,
 
 	@field:SerializedName("accessToken")
 	val accessToken: String? = null,
@@ -38,7 +38,7 @@ data class DataRealTicketPrice(
 	val airlineID: String? = null,
 
 	@field:SerializedName("airlineAccessCode")
-	val airlineAccessCode: Any? = null,
+	val airlineAccessCode: String? = null,
 
 	@field:SerializedName("journeyDepartReference")
 	val journeyDepartReference: String? = null,
@@ -65,7 +65,7 @@ data class DataRealTicketPrice(
 	val departDate: String? = null,
 
 	@field:SerializedName("promoCode")
-	val promoCode: Any? = null,
+	val promoCode: String? = null,
 
 	@field:SerializedName("paxAdult")
 	val paxAdult: Int? = null,

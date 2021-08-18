@@ -101,6 +101,9 @@ data class DataShowProperty(
 	@field:SerializedName("post_type")
 	val postType: String? = null,
 
+	@field:SerializedName("id_transaction")
+	val idTransaction: Int? = null,
+
 	@field:SerializedName("images")
 	val images: List<ImagesItem?>? = null,
 
@@ -111,7 +114,10 @@ data class DataShowProperty(
 	val status: String? = null,
 
 	@field:SerializedName("views")
-	val views: Int? = null
+	val views: Int? = null,
+
+	@field:SerializedName("bookmark")
+	val bookmark: Int? = null
 ) : Parcelable
 
 @Parcelize

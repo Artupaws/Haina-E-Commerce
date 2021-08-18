@@ -29,6 +29,7 @@ import haina.ecommerce.room.roomdatapassenger.PassengerDao
 import haina.ecommerce.room.roomdatapassenger.RoomDataPassenger
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.paymentmethod.PaymentActivity
+import timber.log.Timber
 
 
 class FillDataPassengerFragment : Fragment(), View.OnClickListener,
@@ -235,14 +236,16 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     }
 
     override fun messageCalculationPrice(msg: String) {
-        Log.d("getCalculation", msg)
-        if (!msg.contains("Success")){
-            Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+        Timber.d(msg)
+        if (context != null){
+            if (!msg.contains("Success")){
+                Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     override fun messageSetDataPassenger(msg: String) {
-        Log.d("setDataPassenger", msg)
+        Timber.d(msg)
         binding.relativeLoading.visibility = View.INVISIBLE
         binding.btnContinuePayment.visibility = View.VISIBLE
         if (!msg.contains("Success!")){

@@ -29,6 +29,7 @@ class SplashScreenActivity : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         val dataParams= intent.extras
         Log.d("dataNotification", dataParams?.get("page").toString())
         when(dataParams?.get("page")){

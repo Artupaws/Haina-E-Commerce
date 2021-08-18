@@ -38,7 +38,5 @@ class FinishPropertyActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    override fun onBackPressed() {
-    }
 
 }

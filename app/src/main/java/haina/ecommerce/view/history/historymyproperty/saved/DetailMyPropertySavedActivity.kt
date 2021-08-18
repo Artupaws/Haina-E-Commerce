@@ -199,6 +199,10 @@ class DetailMyPropertySavedActivity : AppCompatActivity(), View.OnClickListener,
         }
     }
 
+    override fun messageUpdateBookmarkProperty(msg: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun showLoading() {
         progressDialog?.show()
     }

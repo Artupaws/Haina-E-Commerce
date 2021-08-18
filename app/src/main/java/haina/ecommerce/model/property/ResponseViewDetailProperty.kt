@@ -3,6 +3,7 @@ package haina.ecommerce.model.property
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class ResponseViewDetailProperty(
@@ -43,7 +44,7 @@ data class DataDetailProperty(
 	val title: String? = null,
 
 	@field:SerializedName("updated_at")
-	val updatedAt: Any? = null,
+	val updatedAt:  @RawValue Any? = null,
 
 	@field:SerializedName("property_type")
 	val propertyType: String? = null,

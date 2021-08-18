@@ -1,4 +1,4 @@
-package haina.ecommerce.view.property.fragmentshowproperty
+ package haina.ecommerce.view.property.fragmentshowproperty
 
 import android.app.Dialog
 import android.content.BroadcastReceiver
@@ -63,28 +63,6 @@ class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClick
                 }
             }
         })
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt("position", (binding.rvProperty.layoutManager as StaggeredGridLayoutManager).findFirstCompletelyVisibleItemPositions(
-            intArrayOf()).toString().toInt());
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mBundleRecyclerViewState = Bundle()
-        val listState = binding.rvProperty.layoutManager?.onSaveInstanceState()
-        mBundleRecyclerViewState.putParcelable("position", listState)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Handler(Looper.getMainLooper()).postDelayed( {
-            mListState = mBundleRecyclerViewState.getParcelable("position")
-            binding.rvProperty.layoutManager?.onRestoreInstanceState(mListState)
-        }, 50)
-        binding.rvProperty.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
     }
 
     private fun dialogLoading(){

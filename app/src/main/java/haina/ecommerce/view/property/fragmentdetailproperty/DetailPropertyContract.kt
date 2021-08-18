@@ -6,6 +6,7 @@ interface DetailPropertyContract {
 
     interface View:BaseView{
         fun messageChangeAvailability(msg:String)
+        fun messageUpdateBookmarkProperty(msg:String)
     }
 
 }

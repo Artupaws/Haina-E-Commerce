@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.forum.detailforum.DetailForumActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back_black"
+        app:title="@string/details" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar9">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@drawable/background_line_corner_input_text_black">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_image_subforum"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    tools:src="@drawable/ps5" />
+
+                <TextView
+                    android:id="@+id/tv_name_subforum"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_image_subforum"
+                    android:layout_centerHorizontal="true"
+                    tools:text="member name" />
+
+                <TextView
+                    android:id="@+id/tv_category"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/tv_name_subforum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="member name" />
+
+                <FrameLayout
+                    android:id="@+id/frame_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_follow"
+                        style="@style/Button.Primary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/follow" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_unfollow"
+                        style="@style/Button.Cancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="@string/unfollow" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_title_poster"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_below="@+id/tv_category"
+                    android:text="Poster :"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_title_poster"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_image_author"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    tools:src="@drawable/ps5" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_name_user"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="member name" />
+
+                    <TextView
+                        android:id="@+id/tv_member_since"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="member since : 2020-01-01" />
+                </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_title_forum"
+                style="@style/TextView.Poppins16spBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textFontWeight="600"
+                android:textSize="20sp"
+                tools:text="5 Facts About England Open" />
+
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/vp_image_forum"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/banner_height_high"
+                app:autoPlay="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/linear_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Video" />
+
+                <com.synnapps.carouselview.CarouselView
+                    android:id="@+id/vp_video_forum"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/banner_height_high"
+                    app:autoPlay="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_content"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum laoreet urna non urna rutrum accumsan. Mauris egestas, eros id viverra imperdiet, nisl turpis commodo massa, nec pulvinar ex ipsum auctor neque. Praesent euismod egestas enim, ac efficitur velit congue eget. Vestibulum ultrices ultrices eros, a bibendum odio hendrerit quis. Quisque eu mauris et quam malesuada ullamcorper ac vestibulum lectus. Mauris vitae tincidunt tellus. Morbi blandit viverra eleifend.
+Vestibulum at commodo massa. Aliquam non pretium ex. Pellentesque imperdiet molestie sagittis. Nulla rhoncus ligula leo, sed mattis nisi molestie eget. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras porttitor magna sed ligula porta, sit amet cursus leo tempor. Nullam in nunc volutpat purus interdum suscipit. Vivamus consectetur diam eu tempor fringilla. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nulla facilisi. Ut vehicula lectus quis justo aliquam, ut tincidunt sapien dignissim. Proin eu consequat sapien. Pellentesque erat arcu, mattis at augue quis, pulvinar faucibus massa. Aenean sed lorem efficitur, porta diam euismod, iaculis magna.
+Fusce euismod dapibus arcu, eu feugiat nulla consequat finibus. Fusce et tempor augue, in pharetra diam. In pulvinar auctor lorem. Ut orci arcu, fermentum quis nunc vitae, fermentum luctus felis. Fusce facilisis, dui et condimentum facilisis, quam ante fermentum nibh, faucibus sagittis libero elit non erat. Quisque sed tristique urna, eget malesuada nisi. Aliquam eget turpis a nisl egestas sollicitudin ut at velit. Pellentesque eu lacus sit amet ligula egestas efficitur ac in libero.
+Maecenas ipsum sapien, auctor et orci at, iaculis dapibus sapien. Sed sollicitudin in lacus rhoncus vehicula. Maecenas consequat gravida odio quis gravida. Donec eleifend risus vitae est feugiat posuere. Sed hendrerit augue vitae ligula dapibus, ut congue ex aliquet. Donec bibendum urna in metus pretium, a elementum ipsum efficitur. Quisque sit amet malesuada diam, ac dignissim sapien. Integer id justo sit amet diam ultrices fringilla a in elit. Curabitur ut faucibus urna. Vestibulum ut dui lacinia, dictum sem sit amet, venenatis tellus. Maecenas bibendum dignissim enim, vel luctus risus semper ac. Donec nec fermentum ex, non viverra neque. Mauris id orci id felis placerat gravida sit amet eget erat. Donec viverra nibh a hendrerit tristique. Aliquam posuere lacus in dolor sodales, quis vehicula sapien sagittis. Vivamus ut sem non sapien malesuada semper eget non nibh.
+Vivamus at libero convallis, blandit dolor id, dictum eros. Proin ipsum nunc, pellentesque cursus eros nec, dapibus vehicula justo. Donec fermentum condimentum sem, ut laoreet lorem. Sed sit amet blandit turpis. Donec interdum porta blandit. Aenean porta velit nulla. Donec pellentesque tincidunt orci, quis elementum mauris fringilla non. Etiam ut nisl efficitur, feugiat nunc nec, hendrerit tellus. Sed accumsan pharetra mi, et lobortis nulla sollicitudin et. Fusce non est sagittis, pharetra odio vel, rhoncus est. Pellentesque dolor sapien, pulvinar aliquam varius id, interdum et risus. Nunc iaculis pellentesque tristique. Integer pellentesque laoreet odio, ut pulvinar ante venenatis rhoncus. Fusce nec ipsum vel ex suscipit iaculis sed eu risus. Quisque vel enim eget diam eleifend vehicula. Nulla eget turpis ipsum." />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/light_grey" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comments"
+                    android:textFontWeight="600" />
+
+                <TextView
+                    android:id="@+id/tv_comment_count"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    tools:text="200"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:textFontWeight="600" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/include_loading"
+                        layout="@layout/dialog_loader" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        tools:itemCount="1"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="vertical"
+                        tools:listitem="@layout/list_item_comment_forum" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/background_line_corner_input_text_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/et_comment"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:inputType="textMultiLine"
+            android:layout_toStartOf="@+id/iv_action_send"
+            android:background="@android:color/transparent"
+            android:hint="Reply" />
+
+        <ImageButton
+            android:id="@+id/iv_action_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:clickable="false"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_send"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

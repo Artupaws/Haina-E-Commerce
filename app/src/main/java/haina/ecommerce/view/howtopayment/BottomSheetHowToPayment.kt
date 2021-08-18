@@ -96,8 +96,7 @@ class BottomSheetHowToPayment : BottomSheetDialogFragment(), HowToPayContract {
         val adapterHowToPay = AdapterHowToPayment(requireActivity(), data?.instructions)
         binding?.rvVirtualAccount?.apply {
             adapter = adapterHowToPay
-            layoutManager =
-                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
     }
 }

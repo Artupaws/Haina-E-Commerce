@@ -84,6 +84,14 @@
         <item name="textAllCaps">false</item>
     </style>
 
+    <style name="Button.StateFollow">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/background_state_follow</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
     <style name="Button.Secondary">
         <item name="fontFamily">@font/poppins</item>
         <item name="android:textColor">@color/yellow</item>

@@ -84,11 +84,11 @@ class EditPropertyPresenter(val view:EditPropertyContract.View, val context: Con
         })
     }
 
-    fun updateProperty(propertyType: String, condition: String, title: String, year: String, idCity: Int,
+    fun updateProperty(idProperty: Int, propertyType: String, condition: String, title: String, year: String, idCity: Int,
                            floorLevel: Int, bedRoom: Int?, bathRoom: Int?, buildingArea:Int, landArea:Int, certificateType:String?, address: String, latitude: String?, longitude: String?,
                            sellingPrice: String?, rentalPrice: String?, facilities: String, description: String){
         view.showLoading()
-        val getList = NetworkConfig().getConnectionHainaBearer(context).updateMyProperty(propertyType, condition, title, year, idCity, floorLevel, bedRoom, bathRoom, buildingArea,landArea, certificateType, address, latitude, longitude, sellingPrice, rentalPrice, facilities, description)
+        val getList = NetworkConfig().getConnectionHainaBearer(context).updateMyProperty(idProperty, propertyType, condition, title, year, idCity, floorLevel, bedRoom, bathRoom, buildingArea,landArea, certificateType, address, latitude, longitude, sellingPrice, rentalPrice, facilities, description)
         getList.enqueue(object : retrofit2.Callback<ResponseCreatePostProperty>{
             override fun onResponse(call: Call<ResponseCreatePostProperty>, response: Response<ResponseCreatePostProperty>) {
                 view.dismissLoading()

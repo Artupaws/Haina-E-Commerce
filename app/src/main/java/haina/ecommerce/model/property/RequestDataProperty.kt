@@ -3,6 +3,7 @@ package haina.ecommerce.model.property
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 import okhttp3.MultipartBody
 import java.util.ArrayList
 
@@ -77,5 +78,5 @@ data class RequestDataProperty (
 @Parcelize
 data class PhotoProprety(
     @SerializedName("uri_photo")
-    var PhotoUri:MultipartBody.Part
+    var PhotoUri: @RawValue MultipartBody.Part
     ):Parcelable
