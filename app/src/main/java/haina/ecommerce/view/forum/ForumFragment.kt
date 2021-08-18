@@ -6,23 +6,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import androidx.fragment.app.Fragment
-import android.widget.ImageView
-import android.widget.SearchView
 import android.widget.Toast
-import androidx.appcompat.widget.ActivityChooserView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.TabAdapterForum
 import haina.ecommerce.databinding.FragmentForumBinding
 import haina.ecommerce.model.forum.DataSearch
-import haina.ecommerce.model.forum.SubforumData
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.forum.bottomsheet.BottomSheetSubforum
 import haina.ecommerce.view.forum.forumactivity.ActivityForumActivity
 import haina.ecommerce.view.login.LoginActivity
 import timber.log.Timber
+
 
 class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.View {
 
@@ -38,7 +35,6 @@ class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.Vi
         sharedPreferenceHelper = SharedPreferenceHelper(requireActivity())
         binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
         binding.ivActionActivityForum.setOnClickListener(this)
-        binding.linearLayout.setOnClickListener(this)
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -50,6 +46,38 @@ class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.Vi
         binding.vpTransaction.offscreenPageLimit = 3
         binding.tabTransaction.setupWithViewPager(binding.vpTransaction)
         binding.toolbarFragmentForum.inflateMenu(R.menu.menu_search)
+        binding.toolbarFragmentForum.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId){
+                R.id.action_activity_forum -> {
+                    val intent = Intent(requireActivity(), ActivityForumActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.action_search -> {
+                    val searchView = menuItem.actionView as androidx.appcompat.widget.SearchView
+                    searchView.queryHint = "Search"
+                    searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
+                        override fun onQueryTextSubmit(query: String?): Boolean {
+                            if (query?.length!! >= 2){
+                                query.let {presenter.getSearch(it)}
+                                requireActivity().currentFocus?.let { view ->
+                                    val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                                    imm?.hideSoftInputFromWindow(view.windowToken, 0)
+                                }
+                            } else {
+                                Toast.makeText(requireActivity(), "minimum 2 characters", Toast.LENGTH_SHORT).show()
+                            }
+                            return true
+                        }
+                        override fun onQueryTextChange(newText: String?): Boolean {
+                            return false
+                        }
+                    })
+                    true
+                }
+                else -> false
+            }
+        }
         val menu = binding.toolbarFragmentForum.menu
         val search = menu.findItem(R.id.action_search)
         val searchView = search.actionView as androidx.appcompat.widget.SearchView
@@ -74,15 +102,12 @@ class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.Vi
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_search, menu)
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_activity_forum -> {
-                startActivity(Intent(requireActivity(), ActivityForumActivity::class.java))
+                Timber.d("Clicked Activity Forum")
+                val intent = Intent(requireActivity(), ActivityForumActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -98,7 +123,6 @@ class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.Vi
             binding.vpTransaction.visibility = View.GONE
         }
     }
-
 
     private fun dialogLoading(){
         progressDialog = Dialog(requireActivity())
@@ -116,10 +140,6 @@ class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.Vi
             }
             R.id.iv_action_activity_forum -> {
                 startActivity(Intent(requireActivity(), ActivityForumActivity::class.java))
-            }
-            R.id.linearLayout -> {
-                presenter.getSearch("berita")
-//                query?.let {presenter.getSearch(it)}
             }
         }
     }

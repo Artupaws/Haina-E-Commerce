@@ -144,16 +144,16 @@ class ActivityForumActivity : AppCompatActivity(), ActivityForumContract.View,
     }
 
     override fun listModRoleClick(view: View, data: ModListItem) {
-//        val dataDetail = SubforumData(data.subforumImage, data.categoryId, data.updatedAt,
-//            data.categoryZh, data.name, data.creatorId, data.description!!, data.createdAt, data.id,
-//            null, data.totalPoster, null, data.category!!, data.posts!!
-//        )
-//        when(view.id){
-//            R.id.cv_click -> {
-//                startActivity(Intent(applicationContext, DetailMySubforum::class.java)
-//                    .putExtra("dataDetail", dataDetail))
-//            }
-//        }
+        val dataDetail = SubforumData(data.subforumImage, data.categoryId, data.updatedAt,
+            data.categoryZh, data.name, data.creatorId, data.creatorName, data.description!!, data.createdAt, data.id,
+            null, data.totalPoster, null, data.category!!, data.posts!!
+        )
+        when(view.id){
+            R.id.cv_click -> {
+                startActivity(Intent(applicationContext, DetailMySubforum::class.java)
+                    .putExtra("dataDetail", dataDetail))
+            }
+        }
     }
 
     override fun onClick(v: View?) {
@@ -170,15 +170,15 @@ class ActivityForumActivity : AppCompatActivity(), ActivityForumContract.View,
     }
 
     override fun listBanClick(view: View, data: DataItemBan) {
-//        val dataDetail = SubforumData(data.subforumImage, data.categoryId, data.updatedAt,
-//            data.categoryZh, data.name, data.creatorId, data.description!!, data.createdAt, data.id!!,
-//            null, data.totalPoster, null, data.category!!, data.posts!!
-//        )
-//        when(view.id){
-//            R.id.cv_click -> {
-//                startActivity(Intent(applicationContext, DetailMySubforum::class.java)
-//                    .putExtra("dataDetail", dataDetail))
-//            }
-//        }
+        val dataDetail = SubforumData(data.subforumImage, data.categoryId, data.updatedAt,
+            data.categoryZh, data.name, data.creatorId, data.creatorName, data.description!!, data.createdAt, data.id!!,
+            null, data.totalPoster, null, data.category!!, data.posts!!
+        )
+        when(view.id){
+            R.id.cv_click -> {
+                startActivity(Intent(applicationContext, DetailMySubforum::class.java)
+                    .putExtra("dataDetail", dataDetail))
+            }
+        }
     }
 }

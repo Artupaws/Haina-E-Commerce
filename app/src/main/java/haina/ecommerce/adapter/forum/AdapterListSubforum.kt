@@ -20,7 +20,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import java.util.ArrayList
 
-class AdapterListSubforum(
+class AdapterListSubforum  (
     val context: Context,
     private val listSubforum: ArrayList<SubforumData?>?,
     val itemAdapterCallback: ItemAdapterCallback

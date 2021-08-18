@@ -67,6 +67,9 @@ data class ModListItem(
 	@field:SerializedName("creator_id")
 	val creatorId: Int? = null,
 
+	@field:SerializedName("creator_username")
+	val creatorName: String? = null,
+
 	@field:SerializedName("id")
 	val id: Int? = null,
 
