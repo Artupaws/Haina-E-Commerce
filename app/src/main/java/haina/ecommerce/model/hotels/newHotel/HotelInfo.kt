@@ -3,6 +3,7 @@ package haina.ecommerce.model.hotels.newHotel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class HotelInfo(
@@ -23,13 +24,13 @@ data class HotelInfo(
 	val rating: Float? = null,
 
 	@field:SerializedName("promoEndDate")
-	val promoEndDate: Any? = null,
+	val promoEndDate:  @RawValue Any? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
 
 	@field:SerializedName("market")
-	val market: Any? = null,
+	val market:  @RawValue Any? = null,
 
 	@field:SerializedName("bookingDaysBefore")
 	val bookingDaysBefore: Int? = null,

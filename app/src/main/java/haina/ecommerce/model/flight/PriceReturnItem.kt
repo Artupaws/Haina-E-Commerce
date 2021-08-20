@@ -3,6 +3,7 @@ package haina.ecommerce.model.flight
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class PriceReturnItem(
@@ -11,7 +12,7 @@ data class PriceReturnItem(
 	val psDate: String? = null,
 
 	@field:SerializedName("classId")
-	val classId: Any? = null,
+	val classId: @RawValue Any? = null,
 
 	@field:SerializedName("classFare")
 	val classFare: String? = null,
@@ -23,10 +24,10 @@ data class PriceReturnItem(
 	val currency: String? = null,
 
 	@field:SerializedName("garudaAvailability")
-	val garudaAvailability: Any? = null,
+	val garudaAvailability: @RawValue Any? = null,
 
 	@field:SerializedName("airlineSegmentCode")
-	val airlineSegmentCode: Any? = null,
+	val airlineSegmentCode:  @RawValue Any? = null,
 
 	@field:SerializedName("psDestination")
 	val psDestination: String? = null,
@@ -38,5 +39,5 @@ data class PriceReturnItem(
 	val psOrigin: String? = null,
 
 	@field:SerializedName("garudaNumber")
-	val garudaNumber: Any? = null
+	val garudaNumber:  @RawValue Any? = null
 ) : Parcelable

@@ -3,6 +3,7 @@ package haina.ecommerce.model.hotels.transactionhotel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class CancelledItem(
@@ -41,7 +42,7 @@ data class CancelledItem(
 	val hotel: Hotel? = null,
 
 	@field:SerializedName("payment")
-	val payment: Any? = null,
+	val payment:  @RawValue Any? = null,
 
 	@field:SerializedName("id")
 	val id: Int? = null,

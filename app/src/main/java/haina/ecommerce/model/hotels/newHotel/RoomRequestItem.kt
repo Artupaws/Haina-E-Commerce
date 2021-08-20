@@ -3,6 +3,7 @@ package haina.ecommerce.model.hotels.newHotel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class RoomRequestItem(
@@ -14,7 +15,7 @@ data class RoomRequestItem(
 	val isRequestChildBed: Boolean? = null,
 
 	@field:SerializedName("childAges")
-	val childAges: Any? = null,
+	val childAges:  @RawValue Any? = null,
 
 	@field:SerializedName("roomType")
 	val roomType: Int? = null

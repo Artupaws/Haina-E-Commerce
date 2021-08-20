@@ -5,7 +5,7 @@ class Constants {
     companion object{
         const val BASE_URL_HEADLINE = "https://newsapi.org/"
         const val BASE_URL_COVID_INDO = "https://indonesia-covid-19.mathdro.id/"
-        const val BASE_API_HAINA = "http://testgit.hainaservice.com/"
+        const val BASE_API_HAINA = "https://hainaservice.com/"
         const val BASE_API_HAINA_HOTEL = "http://hotel.hainaservice.com/"
         const val BASE_URL_TO_DARMA = "http://testgit.hainaservice.com/"
         const val BASE_URL_CURRENCY = "https://v6.exchangerate-api.com/"
@@ -20,6 +20,7 @@ class Constants {
         const val PREF_TOKEN_LOGIN = "PREF_TOKEN_LOGIN"
         const val PREF_TOKEN_FIREBASE = "PREF_TOKEN_FIREBASE"
         const val PREF_FULLNAME = "PREF_FULLNAME"
+        const val PREF_USERNAME = "PREF_USERNAME"
         const val PREF_PHONE_NUMBER = "PREF_PHONE_NUMBER"
         const val PREF_GENDER = "PREF_GENDER"
         const val PREF_EMAIL = "PREF_EMAIL"

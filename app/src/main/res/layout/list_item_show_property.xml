@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_click"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:elevation="5sp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="5dp"
+        android:focusable="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/vp_image_property"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/banner_height"
+                app:autoPlay="false"
+                android:layout_margin="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/linear_price_sell"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_condition_property"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textFontWeight="600"
+                        android:textSize="10sp"
+                        android:text="@string/price_sell"
+                        tools:ignore="SmallSp" />
+                    <TextView
+                        android:id="@+id/tv_price_sell"
+                        style="@style/TextView.Poppins14spBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textFontWeight="500"
+                        tools:text="IDR200,000,000"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_price_rent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_condition_property"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linear_price_sell"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textFontWeight="600"
+                        android:textSize="10sp"
+                        android:text="@string/price_rent"
+                        tools:ignore="SmallSp" />
+                <TextView
+                    android:id="@+id/tv_price_rent"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textFontWeight="500"
+                    tools:text="IDR200,000,000" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_name_property"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textFontWeight="300"
+                    android:layout_below="@+id/linear_price_rent"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="@+id/linear_price_rent"
+                    app:layout_constraintTop_toBottomOf="@+id/linear_price_rent"
+                    tools:text="Citra Maja Raya" />
+
+                <TextView
+                    android:id="@+id/tv_condition_property"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:textSize="8sp"
+                    android:background="@color/yellow"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Condition : Existing"
+                    tools:ignore="SmallSp" />
+
+                <TextView
+                    android:id="@+id/tv_year"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_name_property"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="@+id/tv_name_property"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_name_property"
+                    tools:text="2021" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_year">
+
+                    <TextView
+                        android:id="@+id/tv_status"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:textColor="@color/black"
+                        android:textFontWeight="700"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Pending" />
+
+                    <TextView
+                        android:id="@+id/tv_expiry_date"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="12-12-2020" />
+
+                    <TextView
+                        android:id="@+id/tv_location"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center_vertical"
+                        app:drawableStartCompat="@drawable/ic_location"
+                        tools:text="Banten, Maja" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

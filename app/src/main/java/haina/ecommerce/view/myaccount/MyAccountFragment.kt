@@ -289,6 +289,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         actionYes.setOnClickListener {
             popupLogout?.dismiss()
             sharedPref.removeValue(Constants.PREF_IS_LOGIN)
+            sharedPref.removeValue(Constants.PREF_USERNAME)
             presenter.resetTokenUser()
             val intent = Intent(requireContext(), MainActivity::class.java)
             FirebaseAuth.getInstance().signOut()

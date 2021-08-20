@@ -53,6 +53,7 @@
     <string name="your_post">Your Post</string>
     <string name="choose_all">Choose All</string>
     <string name="delete"><u>Delete</u></string>
+    <string name="mark_as_sold"><u>Mark as Sold</u></string>
     <string name="total_price">Total Price</string>
     <string name="buy">Buy</string>
     <string name="please_login_account">To view this page, please login first</string>
@@ -335,4 +336,40 @@
     <string name="city_required">City*</string>
     <string name="province_required">Province*</string>
     <string name="year_required">Year*</string>
+    <string name="deal">Deal</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="want_to_upload_from">Want to upload from</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="property_title">Property</string>
+    <string name="price_sell">Price Sell</string>
+    <string name="price_rent">Price Rent</string>
+    <string name="type">Type</string>
+    <string name="building_area">Building Area</string>
+    <string name="land_area">Land Area</string>
+    <string name="bed_room">Bed Room</string>
+    <string name="bath_room">Bath Room</string>
+    <string name="floor_level">Floor/Level</string>
+    <string name="rent">Rent</string>
+    <string name="my_property">My Property</string>
+    <string name="warning_edit_property">Please change your property status to available</string>
+    <string name="notes_transaction_property">Please note :\n 1.Don\'t immediately transfer money when you haven\'t seen the property in person. \n2.make sure the transaction has a valid sale and purchase agreement.
+        \n3.Make sure the property matches what is advertised.
+        \n 4.This transaction is beyond the control of Haina Service Indonesia.
+        \n 5.You will be forwarded to wa chat, please use polite language</string>
+    <string name="forum">forum</string>
+    <string name="create_sub_forum">Create Sub Forum</string>
+    <string name="new_post">New Post</string>
+    <string name="cant_empty">Can\'t Empty</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="category">Category</string>
+    <string name="created_at">Created At</string>
+    <string name="total_post">Total Post</string>
+    <string name="total_poster">Poster</string>
+    <string name="my_forum">My Forum</string>
+    <string name="role">Role</string>
+    <string name="ban_reason">Ban Reason</string>
+
+
 </resources>

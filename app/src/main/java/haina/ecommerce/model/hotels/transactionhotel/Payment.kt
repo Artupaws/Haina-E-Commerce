@@ -3,6 +3,7 @@ package haina.ecommerce.model.hotels.transactionhotel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class Payment(
@@ -32,5 +33,5 @@ data class Payment(
 	val vaNumber: String? = null,
 
 	@field:SerializedName("settlement_time")
-	val settlementTime: Any? = null
+	val settlementTime:  @RawValue Any? = null
 ) : Parcelable

@@ -3,6 +3,7 @@ package haina.ecommerce.model.hotels.newHotel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class DataPricePolicy(
@@ -92,7 +93,7 @@ data class DataPricePolicy(
 	val breakfast: String? = null,
 
 	@field:SerializedName("bedTypes")
-	val bedTypes: Any? = null,
+	val bedTypes:  @RawValue Any? = null,
 
 	@field:SerializedName("internalCode")
 	val internalCode: String? = null,

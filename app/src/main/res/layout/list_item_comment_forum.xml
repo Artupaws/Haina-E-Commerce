@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:padding="10dp"
+    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_image_user"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            tools:src="@drawable/ps5" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/iv_image_user"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_username"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="member name" />
+
+                <TextView
+                    android:id="@+id/tv_mod"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:background="@color/broken_white"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="10dp"
+                    tools:text="Moderator" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_member_since"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="member since : 2020-01-01" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_option_menu"
+            style="@style/TextView.Poppins16spBlack"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:gravity="center"
+            android:text="&#8942;"
+            android:textFontWeight="700" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout"
+        style="@style/TextView.Poppins14spBlack"
+        tools:text="asdhaskljdhjkashdjksahjkdsa"
+        android:layout_marginTop="5dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_comment"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_grey"/>
+
+</RelativeLayout>

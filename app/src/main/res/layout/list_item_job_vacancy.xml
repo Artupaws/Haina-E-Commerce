@@ -21,10 +21,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>
 
+        <TextureView
+            android:id="@+id/texture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
         <ImageView
             android:id="@+id/iv_image_company"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="visible"
             android:scaleType="centerCrop"
             tools:src="@mipmap/ic_launcher"/>
     </androidx.cardview.widget.CardView>

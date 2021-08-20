@@ -3,6 +3,7 @@ package haina.ecommerce.model.hotels.newHotel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class DataCancelBooking(
@@ -11,13 +12,13 @@ data class DataCancelBooking(
 	val roomId: Int? = null,
 
 	@field:SerializedName("os_ref_no")
-	val osRefNo: Any? = null,
+	val osRefNo: @RawValue Any? = null,
 
 	@field:SerializedName("total_price")
 	val totalPrice: String? = null,
 
 	@field:SerializedName("booking_date")
-	val bookingDate: Any? = null,
+	val bookingDate:  @RawValue Any? = null,
 
 	@field:SerializedName("hotel_id")
 	val hotelId: Int? = null,
@@ -32,7 +33,7 @@ data class DataCancelBooking(
 	val createdAt: String? = null,
 
 	@field:SerializedName("reservation_no")
-	val reservationNo: Any? = null,
+	val reservationNo:  @RawValue Any? = null,
 
 	@field:SerializedName("agent_os_ref")
 	val agentOsRef: String? = null,

@@ -96,15 +96,15 @@ class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
 
     private fun setVisibility(clicked: Boolean) {
         if (!clicked) {
-            binding.floatingActionButton2.visibility = View.VISIBLE
+//            binding.floatingActionButton2.visibility = View.VISIBLE
             binding.floatingActionButton3.visibility = View.VISIBLE
             binding.tvTitlePostingJob.visibility = View.VISIBLE
-            binding.tvTitleJobApplication.visibility = View.VISIBLE
+//            binding.tvTitleJobApplication.visibility = View.VISIBLE
         } else {
-            binding.floatingActionButton2.visibility = View.INVISIBLE
+//            binding.floatingActionButton2.visibility = View.INVISIBLE
             binding.floatingActionButton3.visibility = View.INVISIBLE
             binding.tvTitlePostingJob.visibility = View.INVISIBLE
-            binding.tvTitleJobApplication.visibility = View.INVISIBLE
+//            binding.tvTitleJobApplication.visibility = View.INVISIBLE
         }
     }
 

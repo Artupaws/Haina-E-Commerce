@@ -25,6 +25,7 @@ import haina.ecommerce.databinding.ActivityMainBinding
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.explore.ExploreFragment
+import haina.ecommerce.view.forum.ForumFragment
 import haina.ecommerce.view.history.HistoryFragment
 import haina.ecommerce.view.myaccount.MyAccountFragment
 import haina.ecommerce.view.posting.PostingFragment
@@ -71,7 +72,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 fragment = HistoryFragment()
             }
             R.id.postingFragment -> {
-                fragment = PostingFragment()
+//                fragment = PostingFragment()
+                fragment = ForumFragment()
             }
 //            R.id.cartFragment -> {
 //                fragment = CartFragment()

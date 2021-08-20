@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_click"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="8dp"
+        android:elevation="5sp"
+        app:cardBackgroundColor="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_image_user"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerHorizontal="true"
+                tools:src="@drawable/ps5"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_image_user"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_name_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_horizontal"
+                    style="@style/TextView.Poppins16spBlack"
+                    tools:text="Putra"/>
+
+                <TextView
+                    android:id="@+id/tv_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:textColor="@color/black"
+                    tools:text="Category : sport"/>
+
+                <TextView
+                    android:id="@+id/tv_created"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:textColor="@color/black"
+                    tools:text="Created at : 2021-08-01"/>
+
+                <TextView
+                    android:id="@+id/tv_total_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:textColor="@color/black"
+                    tools:text="Total Post : 40"/>
+
+                <TextView
+                    android:id="@+id/tv_total_contributor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:textColor="@color/black"
+                    tools:text="Contributor : 10"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_image_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_option"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

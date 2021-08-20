@@ -53,6 +53,7 @@
     <string name="your_post">您的帖子</string>
     <string name="choose_all">选择全部</string>
     <string name="delete"><u>删除</u></string>
+    <string name="mark_as_sold"><u>标记为已售</u></string>
     <string name="total_price">总价</string>
     <string name="buy">买</string>
     <string name="please_login_account">要查看此页面，请先登录</string>
@@ -335,5 +336,40 @@
     <string name="city_required">City*</string>
     <string name="province_required">Province*</string>
     <string name="year_required">年*</string>
+    <string name="deal">交易</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="want_to_upload_from">想从</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="property_title">Property</string>
+    <string name="price_sell">Price Sell</string>
+    <string name="price_rent">Price Rent</string>
+    <string name="type">Type</string>
+    <string name="building_area">Building Area</string>
+    <string name="land_area">Land Area</string>
+    <string name="bed_room">Bed Room</string>
+    <string name="bath_room">Bath Room</string>
+    <string name="floor_level">Floor/Level</string>
+    <string name="rent">Rent</string>
+    <string name="my_property">My Property</string>
+    <string name="warning_edit_property">请将您的财产状态更改为可用</string>
+    <string name="notes_transaction_property">请注意：\n1.没亲眼看到房产，不要马上转账
+        \n2.确保交易有有效的买卖协议
+        \n3.确保房产与广告相符
+        \n4.本次交易不在海纳服务印尼的控制范围内
+        \n5.您将被转发到wa chat，请使用礼貌语言</string>
+    <string name="forum">forum</string>
+    <string name="create_sub_forum">Create Sub Forum</string>
+    <string name="new_post">New Post</string>
+    <string name="cant_empty">Can\'t Empty</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="category">Category</string>
+    <string name="created_at">Created At</string>
+    <string name="total_post">Total Post</string>
+    <string name="total_poster">Poster</string>
+    <string name="my_forum">My Forum</string>
+    <string name="role">Role</string>
+    <string name="ban_reason">Ban Reason</string>
 
 </resources>

@@ -48,29 +48,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_horizontal">
-
-                <haina.ecommerce.helper.FontAwesome
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/shipping"
-                    android:textColor="@android:color/holo_blue_dark"
-                    android:textSize="25sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextStyleMenuService"
-                    android:text="@string/shipping_title"/>
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/linear_topup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -119,6 +96,30 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/linear_flight_ticket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal">
+
+                <haina.ecommerce.helper.FontAwesome
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plane"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="25sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleMenuService"
+                    android:text="@string/flight_ticket"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -159,6 +160,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_property"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -169,7 +171,7 @@
                     <haina.ecommerce.helper.FontAwesome
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/car"
+                        android:text="@string/property"
                         android:textColor="@color/yellow"
                         android:textSize="25sp"/>
 
@@ -177,31 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextStyleMenuService"
-                        android:text="@string/rent_car"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linear_flight_ticket"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center_horizontal">
-
-                    <haina.ecommerce.helper.FontAwesome
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/plane"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="25sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/TextStyleMenuService"
-                        android:text="@string/flight_ticket"/>
+                        android:text="@string/property_title"/>
 
                 </LinearLayout>
 
