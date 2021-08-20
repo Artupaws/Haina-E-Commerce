@@ -111,7 +111,6 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
             R.id.linear_other -> {
                 val intent = Intent(activity, OtherActivity::class.java)
                 startActivity(intent)
-//                throw RuntimeException("Test Crash")
             }
             R.id.linear_news -> {
                 val intent = Intent(activity, NewsActivity::class.java)
