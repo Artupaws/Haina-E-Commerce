@@ -23,6 +23,7 @@ class AdapterShowProperty(val context: Context, private var dataProperty: List<D
         RecyclerView.Adapter<AdapterShowProperty.Holder>(), Filterable {
 
     private var listResultProperty : List<DataShowProperty?>? = dataProperty
+
     private val helper:Helper=Helper
     private lateinit var imagesListener : ImageListener
     private lateinit var listParams: ArrayList<String>
@@ -90,13 +91,13 @@ class AdapterShowProperty(val context: Context, private var dataProperty: List<D
     override fun getFilter(): Filter {
         return object : Filter(){
             override fun performFiltering(p0: CharSequence?): FilterResults {
-                val querySearch = p0?.toString()?.toLowerCase()
+                val querySearch = p0?.toString()?.lowercase()
                 val filterResult = FilterResults()
                 filterResult.values = if (querySearch == null){
                     listResultProperty
                 } else {
                     listResultProperty?.filter {
-                        it?.title?.toLowerCase()!!.contains(querySearch,ignoreCase = true)
+                        it?.title?.lowercase()!!.contains(querySearch,ignoreCase = true)
                     }
                 }
                 return filterResult

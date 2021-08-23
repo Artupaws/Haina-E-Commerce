@@ -55,13 +55,13 @@ class AdapterListCity(val context: Context, private var listCity: List<DataCitie
     override fun getFilter(): Filter {
         return object :Filter(){
             override fun performFiltering(p0: CharSequence?): FilterResults {
-                val querySearch = p0?.toString()?.toLowerCase()
+                val querySearch = p0?.toString()?.lowercase()
                 val filterResult = FilterResults()
                 filterResult.values = if (querySearch == null){
                     listResultCity
                 } else {
                     listResultCity?.filter {
-                        it?.name?.toLowerCase()!!.contains(querySearch,ignoreCase = true)
+                        it?.name?.lowercase()!!.contains(querySearch,ignoreCase = true)
                     }
                 }
                 return filterResult
@@ -69,7 +69,6 @@ class AdapterListCity(val context: Context, private var listCity: List<DataCitie
 
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
                 listCity = p1?.values as List<DataCities?>?
-
                 notifyDataSetChanged()
             }
 

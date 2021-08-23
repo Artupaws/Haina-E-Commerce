@@ -354,8 +354,22 @@
     <string name="floor_level">Floor/Level</string>
     <string name="rent">Rent</string>
     <string name="my_property">My Property</string>
+    <string name="warning_edit_property">Please change your property status to available</string>
     <string name="notes_transaction_property">Please note :\n 1.Don\'t immediately transfer money when you haven\'t seen the property in person. \n2.make sure the transaction has a valid sale and purchase agreement.
         \n3.Make sure the property matches what is advertised.
         \n 4.This transaction is beyond the control of Haina Service Indonesia.
         \n 5.You will be forwarded to wa chat, please use polite language</string>
+    <string name="forum">forum</string>
+    <string name="create_sub_forum">Create Sub Forum</string>
+    <string name="new_post">New Post</string>
+    <string name="cant_empty">Can\'t Empty</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="category">Category</string>
+    <string name="created_at">Created At</string>
+    <string name="total_post">Total Post</string>
+    <string name="total_poster">Poster</string>
+    <string name="my_forum">My Forum</string>
+    <string name="role">Role</string>
+    <string name="ban_reason">Ban Reason</string>
 </resources>

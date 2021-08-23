@@ -3,6 +3,7 @@ package haina.ecommerce.model.hotels.newHotel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class RoomsItemDarma(
@@ -29,7 +30,7 @@ data class RoomsItemDarma(
 	val name: String? = null,
 
 	@field:SerializedName("promoCode")
-	val promoCode: Any? = null,
+	val promoCode:  @RawValue Any? = null,
 
 	@field:SerializedName("ID")
 	val iD: String? = null,

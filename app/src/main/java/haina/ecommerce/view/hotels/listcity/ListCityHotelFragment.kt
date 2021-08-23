@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.datepicker.CalendarConstraints
@@ -75,7 +76,7 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract.View, AdapterLis
         progressDialog = Dialog(requireActivity())
         progressDialog?.setContentView(R.layout.dialog_loader)
         progressDialog?.setCancelable(false)
-        progressDialog?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.white))
+        progressDialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(requireActivity(),android.R.color.white))
         val window:Window = progressDialog?.window!!
         window.setGravity(Gravity.CENTER)
     }

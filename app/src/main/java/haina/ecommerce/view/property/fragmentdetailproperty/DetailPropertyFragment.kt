@@ -165,13 +165,15 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener, DetailPropertyC
     }
 
     private fun toggleSavedProperty(){
-        binding.ivSaveProperty.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.ivSaveProperty.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                presenter.updateBookmark(dataProperty?.id!!, "add")
                 savePhotoProperty(DataSavedProperty(dataProperty?.id!!,
                     dataProperty?.images?.get(0)?.path.toString(), dataProperty?.sellingPrice, dataProperty?.title,
                 dataProperty?.address, dataProperty?.rentalPrice))
                 Toast.makeText(requireActivity(), "Property Saved", Toast.LENGTH_SHORT).show()
             }else{
+                presenter.updateBookmark(dataProperty?.id!!, "remove")
                 deleteProperty(DataSavedProperty(dataProperty?.id!!,
                     dataProperty?.images?.get(0)?.path.toString(), dataProperty?.sellingPrice, dataProperty?.title,
                     dataProperty?.address, dataProperty?.rentalPrice))
@@ -230,11 +232,15 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener, DetailPropertyC
         }
     }
 
+    override fun messageUpdateBookmarkProperty(msg: String) {
+        Log.d("updateBookmark", msg)
+    }
+
     override fun showLoading() {
         progressDialog?.show()
     }
 
     override fun dismissLoading() {
-        progressDialog?.show()
+        progressDialog?.dismiss()
     }
 }

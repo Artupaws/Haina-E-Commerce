@@ -43,5 +43,6 @@
     <string name="insurance">&#xf6f1;</string>
     <string name="handshake">&#xf2b5;</string>
     <string name="property">&#xf64f;</string>
+    <string name="icon_add">&#xf067;</string>
 
 </resources>

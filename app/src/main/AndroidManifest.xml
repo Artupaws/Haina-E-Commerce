@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
+        android:name=".HainaApp"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,7 +23,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.property.editmyproperty.EditPropertyActivity"></activity>
+        <activity
+            android:name=".view.forum.search.SearchForumActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.forum.forumactivity.ActivityForumActivity"
+            android:exported="true" />
+        <activity android:name=".view.forum.tab.myforum.DetailMySubforum" />
+        <activity android:name=".view.forum.profileuser.ProfileUserActivity" />
+        <activity android:name=".view.forum.createsubforum.CreateSubforumActivity" />
+        <activity android:name=".view.forum.createnewpost.NewPostActivity" />
+        <activity android:name=".view.forum.detailforum.DetailForumActivity" />
+        <activity android:name=".view.property.editmyproperty.EditPropertyActivity" />
         <activity android:name=".view.history.historymyproperty.saved.DetailMyPropertySavedActivity" />
         <activity android:name=".view.property.detailmyproperty.DetailMyPropertyActivity" />
         <activity android:name=".view.history.historymyproperty.MyPropertyActivity" />

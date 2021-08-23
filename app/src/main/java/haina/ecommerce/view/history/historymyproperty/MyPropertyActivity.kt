@@ -9,6 +9,7 @@ import android.os.Parcelable
 import android.util.Log
 import android.view.Gravity
 import android.view.Window
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.readystatesoftware.chuck.internal.ui.MainActivity
@@ -42,6 +43,11 @@ class MyPropertyActivity : AppCompatActivity(), MyPropertyContract.View {
         presenter.getShowProperty()
         dialogLoading()
         refresh()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.getShowProperty()
     }
 
     private fun dialogLoading(){
@@ -81,7 +87,7 @@ class MyPropertyActivity : AppCompatActivity(), MyPropertyContract.View {
     override fun onBackPressed() {
         if (!intentFromFinish){
             super.onBackPressed()
-        } else {
+        } else if(intentFromFinish){
             val intentDashboard = Intent(applicationContext, haina.ecommerce.view.MainActivity::class.java)
             startActivity(intentDashboard)
             finishAffinity()

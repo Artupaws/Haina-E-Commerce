@@ -1,4 +1,4 @@
-package haina.ecommerce.view.property.detailmyproperty
+ package haina.ecommerce.view.property.detailmyproperty
 
 import android.app.Dialog
 import android.content.Intent
@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
 import haina.ecommerce.adapter.property.AdapterListFacilityShow
+import haina.ecommerce.adapter.property.AdapterSpinnerStatus
 import haina.ecommerce.databinding.FragmentDetailPropertyBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.property.DataShowProperty
@@ -31,6 +33,7 @@ class DetailMyPropertyActivity : AppCompatActivity(), View.OnClickListener, Deta
     private lateinit var presenter: DetailMyPropertyPresenter
     private var idProperty:Int = 0
     private var dataProperty:DataShowProperty? = null
+    private lateinit var listStatus:List<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +71,13 @@ class DetailMyPropertyActivity : AppCompatActivity(), View.OnClickListener, Deta
         binding.tvNameProperty.text = dataProperty?.title
         binding.ivActionEdit.visibility = View.VISIBLE
         dialogLoading()
+        listStatus = listOf("${dataProperty?.status}", "available")
+        if (dataProperty?.idTransaction != null){
+            binding.linearStatus.visibility = View.VISIBLE
+            setStatus(dataProperty?.idTransaction!!, listStatus)
+        } else {
+            binding.linearStatus.visibility = View.GONE
+        }
     }
 
     override fun onClick(v: View?) {
@@ -76,11 +86,25 @@ class DetailMyPropertyActivity : AppCompatActivity(), View.OnClickListener, Deta
                 presenter.deleteProperty(idProperty)
             }
             R.id.iv_action_edit -> {
-                val intentEdit = Intent(applicationContext, EditPropertyActivity::class.java)
-                intentEdit.putExtra("dataProperty", dataProperty)
-                startActivity(intentEdit)
+              checkBeforEdit(dataProperty!!)
             }
         }
+    }
+
+    private fun setStatus(idTransaction:Int, statusProperty:List<String?>?) {
+            val adapterSpinner = AdapterSpinnerStatus(applicationContext, statusProperty)
+            binding.spnStatus.adapter = adapterSpinner
+            binding.spnStatus.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    if (p2 == 0){
+                        binding.spnStatus.setSelection(0)
+                    }else{
+                        presenter.updateStatusProperty(idTransaction, "cancel")
+                    }
+                }
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                }
+            }
     }
 
     private fun showData(data: DataShowProperty){
@@ -96,8 +120,8 @@ class DetailMyPropertyActivity : AppCompatActivity(), View.OnClickListener, Deta
             binding.tvPriceSell.text =  priceSell
             binding.tvPriceRent.text =  priceRent
         }
-
         binding.tvLooks.text = data.views.toString()
+        binding.tvBookmarks.text = data.bookmark.toString()
         binding.tvPropertyType.text = data.propertyType
         binding.tvBuildingArea.text = data.buildingArea
         binding.tvLandArea.text = data.landArea
@@ -106,8 +130,7 @@ class DetailMyPropertyActivity : AppCompatActivity(), View.OnClickListener, Deta
         binding.tvFloor.text = data.floorLevel.toString()
         binding.rvFacility.apply {
             adapter = AdapterListFacilityShow(applicationContext, data.facilities)
-            layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
-        }
+            layoutManager = StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL) }
         binding.tvCertificate.text = data.certificateType
         binding.tvAddress.text = data.address
         binding.tvDescription.text = data.description
@@ -123,6 +146,16 @@ class DetailMyPropertyActivity : AppCompatActivity(), View.OnClickListener, Deta
         binding.btnBuy.setText(R.string.mark_as_sold)
     }
 
+    private fun checkBeforEdit(data:DataShowProperty){
+        if (data.status == "in_transaction"){
+            Toast.makeText(applicationContext, getString(R.string.warning_edit_property), Toast.LENGTH_SHORT).show()
+        }else{
+            val intentEdit = Intent(applicationContext, EditPropertyActivity::class.java)
+            intentEdit.putExtra("dataProperty", dataProperty)
+            startActivity(intentEdit)
+        }
+    }
+
     private fun dialogLoading(){
         progressDialog = Dialog(this)
         progressDialog?.setContentView(R.layout.dialog_loader)
@@ -136,6 +169,13 @@ class DetailMyPropertyActivity : AppCompatActivity(), View.OnClickListener, Deta
         Log.d("deleteProperty", msg)
         if (msg.contains("Property Deleted!")){
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+            onBackPressed()
+        }
+    }
+
+    override fun messageUpdateStatusProperty(msg: String) {
+        Log.d("updateStatus", msg)
+        if (msg.contains("Transaction List Successfully Updated!")){
             onBackPressed()
         }
     }

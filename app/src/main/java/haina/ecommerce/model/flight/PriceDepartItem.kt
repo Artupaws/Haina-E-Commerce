@@ -11,7 +11,7 @@ data class PriceDepartItem(
 	val psDate: String? = null,
 
 	@field:SerializedName("classId")
-	val classId: Any? = null,
+	val classId: Int? = null,
 
 	@field:SerializedName("classFare")
 	val classFare: String? = null,
@@ -23,10 +23,10 @@ data class PriceDepartItem(
 	val currency: String? = null,
 
 	@field:SerializedName("garudaAvailability")
-	val garudaAvailability: Any? = null,
+	val garudaAvailability: String? = null,
 
 	@field:SerializedName("airlineSegmentCode")
-	val airlineSegmentCode: Any? = null,
+	val airlineSegmentCode: String? = null,
 
 	@field:SerializedName("psDestination")
 	val psDestination: String? = null,
@@ -38,5 +38,5 @@ data class PriceDepartItem(
 	val psOrigin: String? = null,
 
 	@field:SerializedName("garudaNumber")
-	val garudaNumber: Any? = null
+	val garudaNumber: String? = null
 ) : Parcelable

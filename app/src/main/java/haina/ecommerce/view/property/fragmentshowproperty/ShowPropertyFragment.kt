@@ -1,4 +1,4 @@
-package haina.ecommerce.view.property.fragmentshowproperty
+ package haina.ecommerce.view.property.fragmentshowproperty
 
 import android.app.Dialog
 import android.content.BroadcastReceiver
@@ -13,6 +13,7 @@ import android.os.Parcelable
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -20,6 +21,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import haina.ecommerce.R
+import haina.ecommerce.adapter.hotel.newAdapterHotel.AdapterListCity
 import haina.ecommerce.adapter.property.AdapterShowProperty
 import haina.ecommerce.databinding.FragmentShowPropertyBinding
 import haina.ecommerce.model.property.DataShowProperty
@@ -63,28 +65,21 @@ class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClick
                 }
             }
         })
-    }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt("position", (binding.rvProperty.layoutManager as StaggeredGridLayoutManager).findFirstCompletelyVisibleItemPositions(
-            intArrayOf()).toString().toInt());
-        super.onSaveInstanceState(outState)
-    }
+        binding.svProperty.setOnQueryTextListener(object: SearchView.OnQueryTextListener,
+        android.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
 
-    override fun onPause() {
-        super.onPause()
-        mBundleRecyclerViewState = Bundle()
-        val listState = binding.rvProperty.layoutManager?.onSaveInstanceState()
-        mBundleRecyclerViewState.putParcelable("position", listState)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Handler(Looper.getMainLooper()).postDelayed( {
-            mListState = mBundleRecyclerViewState.getParcelable("position")
-            binding.rvProperty.layoutManager?.onRestoreInstanceState(mListState)
-        }, 50)
-        binding.rvProperty.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText?.isNotEmpty()!!) {
+                    (binding.rvProperty.adapter as AdapterShowProperty).filter.filter(newText)
+                    (binding.rvProperty.adapter as AdapterShowProperty).notifyDataSetChanged()
+                }
+                return true
+            }
+        })
     }
 
     private fun dialogLoading(){

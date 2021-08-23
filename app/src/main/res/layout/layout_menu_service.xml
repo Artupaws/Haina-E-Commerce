@@ -48,30 +48,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linear_deal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_horizontal">
-
-                <haina.ecommerce.helper.FontAwesome
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/handshake"
-                    android:textColor="@android:color/holo_blue_dark"
-                    android:textSize="25sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextStyleMenuService"
-                    android:text="@string/deal"/>
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/linear_topup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -117,6 +93,30 @@
                     android:layout_height="wrap_content"
                     style="@style/TextStyleMenuService"
                     android:text="@string/job_vacancy"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear_flight_ticket"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal">
+
+                <haina.ecommerce.helper.FontAwesome
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plane"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="25sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextStyleMenuService"
+                    android:text="@string/flight_ticket"/>
 
             </LinearLayout>
 
@@ -180,30 +180,6 @@
                         android:layout_height="wrap_content"
                         style="@style/TextStyleMenuService"
                         android:text="@string/property_title"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linear_flight_ticket"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="10dp"
-                    android:gravity="center_horizontal">
-
-                    <haina.ecommerce.helper.FontAwesome
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/plane"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="25sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/TextStyleMenuService"
-                        android:text="@string/flight_ticket"/>
 
                 </LinearLayout>
 

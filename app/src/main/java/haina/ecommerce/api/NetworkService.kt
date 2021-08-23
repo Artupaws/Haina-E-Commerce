@@ -8,6 +8,7 @@ import haina.ecommerce.model.categorypost.ResponseGetCategoryPost
 import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.flight.*
+import haina.ecommerce.model.forum.*
 import haina.ecommerce.model.hotels.*
 import haina.ecommerce.model.hotels.newHotel.*
 import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
@@ -652,9 +653,11 @@ interface NetworkService {
     ):Call<ResponseChangeAvailability>
 
     //Update MyProperty
+    @FormUrlEncoded
     @Headers("No-Authentication: true")
     @POST("api/property/update_property")
     fun updateMyProperty(
+        @Field("id_property") idProperty:Int,
         @Field("property_type") propertyType:String,
         @Field("condition") condition:String,
         @Field("title") title:String,
@@ -675,4 +678,174 @@ interface NetworkService {
         @Field("description") description:String?
     ):Call<ResponseCreatePostProperty>
 
+    //Update Bookmark Property
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/property/bookmark")
+    fun updateBookmarkProperty(
+        @Field("id_property")idProperty:Int,
+        @Field("bookmark")bookmark:String
+    ):Call<ResponseUpdateBookmarkProperty>
+
+    //Update Status Property
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/property/update_transaction")
+    fun updateStatusProperty(
+        @Field("id_transaction")idTransaction:Int,
+        @Field("status")status:String
+    ):Call<ResponseUpdateStatusProperty>
+
+    //Get Category Forum
+    @Headers("No-Authentication: true")
+    @GET("api/forum/category")
+    fun getCategoryForum():Call<ResponseGetCategoryForum>
+
+    //Get List Forum
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/post_list")
+    fun getListForum(@Field("subforum_id")subForumId:Int):Call<ResponseGetListForum>
+
+    //Get List Hot Threads
+    @Headers("No-Authentication: true")
+    @GET("api/forum/hot_post")
+    fun getListHotThreads():Call<ResponseGetHotpost>
+
+    //Give Upvote
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/upvote")
+    fun upvote(@Field("post_id")postId:Int):Call<ResponseGiveUpvote>
+
+    //Remove Upvote
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/cancel_upvote")
+    fun removeUpvote(@Field("post_id")postId:Int):Call<ResponseGiveUpvote>
+
+    //Get Subforum
+    @Headers("No-Authentication: true")
+    @POST("api/forum/subforum")
+    fun getSubforum():Call<ResponseGetListSubforum>
+
+    //Get List Comment
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/comment")
+    fun getListComment(@Field("post_id")postId:Int):Call<ResponseGetListComment>
+
+    //Get List Comment
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/new_comment")
+    fun newComment(@Field("post_id")postId:Int,
+                   @Field("content")comment:String
+    ):Call<ResponseNewComment>
+
+    //Create Subforum
+    @Multipart
+    @Headers("No-Authentication: true")
+    @POST("api/forum/new_subforum")
+    fun createSubForum(
+        @Part("name")name:String,
+        @Part("description")description:String,
+        @Part("category_id")categoryId:Int,
+        @Part image: MultipartBody.Part,
+        ):Call<ResponseGiveUpvote>
+
+    //Get Data Profile User Forum
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/user_profile")
+    fun getUserProfileForum(
+        @Field("user_id")userId:Int
+    ):Call<ResponseGetProfileUserForum>
+
+    //New Post
+    @Multipart
+    @Headers("No-Authentication: true")
+    @POST("api/forum/new_post")
+    fun createNewPost(
+        @Part("subforum_id")subforumId:Int,
+        @Part("title")title:String,
+        @Part("content")content:String,
+        @Part images :List<MultipartBody.Part>,
+        @Part video :List<MultipartBody.Part>?
+    ):Call<ResponseGiveUpvote>
+
+    //Get My Subforum
+    @Headers("No-Authentication: true")
+    @GET("api/forum/my_subforum")
+    fun getMySubforum():Call<ResponseGetMySubforum>
+
+    //Get My Post
+    @Headers("No-Authentication: true")
+    @GET("api/forum/my_post")
+    fun getMypost():Call<ResponseGetMypost>
+
+    //Follow Subforum
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/follow_subforum")
+    fun followSubforum(@Field("subforum_id")subforumId:Int
+    ):Call<ResponseFollowSubforum>
+
+    //Unfollow Subforum
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/unfollow_subforum")
+    fun unfollowSubforum(@Field("subforum_id")subforumId:Int
+    ):Call<ResponseUnfollowSubforum>
+
+    //Get My Follow subforum
+    @Headers("No-Authentication: true")
+    @GET("api/forum/following_subforum")
+    fun getFollowSubforum():Call<ResponseGetListSubforum>
+
+    //Get All Threads
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/all_post")
+    fun getAllThreads(@Field("page")page:Int):Call<ResponseGetAllThreads>
+
+    //Delete MyPost
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/delete_post")
+    fun deleteMyPost(@Field("post_id")postId:Int):Call<ResponseDeleteMyPost>
+
+    //Get List Role Subforum
+    @Headers("No-Authentication: true")
+    @GET("api/forum/my_role")
+    fun getListRoleSubforum():Call<ResponseGetListRoleMod>
+
+    //Get List Ban
+    @Headers("No-Authentication: true")
+    @GET("api/forum/my_ban")
+    fun getListBan():Call<ResponseGetListBan>
+
+    //Search Forum
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/search")
+    fun searchForum(@Field("keyword")keyword:String):Call<ResponseSearchForum>
+
+    //Add Mod/SubMod
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/assign_mod")
+    fun assignMod(
+        @Field("subforum_id") subForumId:Int,
+        @Field("user_id") userId:Int,
+        @Field("role")role:String
+    ):Call<ResponseAddMod>
+
+    //Delete Comment
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/delete_comment")
+    fun deleteComment(
+        @Field("comment_id") commentId:Int
+    ):Call<ResponseGiveUpvote>
 }

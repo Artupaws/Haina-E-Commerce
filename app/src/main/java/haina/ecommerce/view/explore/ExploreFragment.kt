@@ -70,7 +70,6 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
         binding?.menuServices?.linearTopup?.setOnClickListener(this)
         binding?.menuServices?.linearHotel?.setOnClickListener(this)
         binding?.menuServices?.linearFlightTicket?.setOnClickListener(this)
-        binding?.menuServices?.linearDeal?.setOnClickListener(this)
         binding?.menuServices?.linearProperty?.setOnClickListener(this)
 //        presenter.loadListBaseCurrency()
 //        presenter.loadCovidJkt()
@@ -95,7 +94,6 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
                     baseCurrency = "USD"
                     presenter.loadCurrency(baseCurrency)
                 }
-
             }
         }
     }
@@ -113,7 +111,6 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
             R.id.linear_other -> {
                 val intent = Intent(activity, OtherActivity::class.java)
                 startActivity(intent)
-//                throw RuntimeException("Test Crash")
             }
             R.id.linear_news -> {
                 val intent = Intent(activity, NewsActivity::class.java)
@@ -154,10 +151,6 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
             R.id.linear_flight_ticket -> {
                 val flight = Intent(requireContext(), FlightTicketActivity::class.java)
                 startActivity(flight)
-            }
-            R.id.linear_deal -> {
-                val intentProperty = Intent(requireContext(), FinishPropertyActivity::class.java)
-                startActivity(intentProperty)
             }
             R.id.linear_property -> {
                 val intentShowProperty = Intent(requireActivity(), ShowPropertyActivity::class.java)
@@ -223,6 +216,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
 
     override fun getDataUser(data: DataUser?) {
         sharedPref.save(Constants.PREF_FULLNAME, data?.fullname.toString())
+        sharedPref.save(Constants.PREF_USERNAME, data?.username.toString())
         sharedPref.save(Constants.PREF_PHONE_NUMBER, data?.phone.toString())
         sharedPref.save(Constants.PREF_EMAIL, data?.email.toString())
         sharedPref.save(Constants.PREF_GENDER, data?.gender.toString())
