@@ -4,10 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/drawable/ic_search.xml" value="0.2064814814814815" />
-        <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/activity_detail_forum.xml" value="0.22" />
+        <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/activity_detail_forum.xml" value="0.25" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/activity_detail_my_subforum.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/activity_forum.xml" value="0.20416666666666666" />
-        <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/activity_new_post.xml" value="0.1" />
+        <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/activity_new_post.xml" value="0.22" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/activity_profile_user.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/activity_search_forum.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/fragment_bottom_sheet_subforum.xml" value="0.15833333333333333" />
@@ -19,6 +19,7 @@
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/fragment_posting.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/fragment_show_forum.xml" value="0.22" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/fragment_show_property.xml" value="0.20416666666666666" />
+        <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/fragment_transaction_finish.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/layout_empty.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/layout_menu_service.xml" value="0.33" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/list_item_comment_forum.xml" value="0.25" />
@@ -27,6 +28,7 @@
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/list_item_property_saved.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/list_item_subforum.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/list_item_subforum_search.xml" value="0.20416666666666666" />
+        <entry key="..\:/Haina-E-Commerce/app/src/main/res/layout/popup_play_video.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/menu/menu_option_comment.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/menu/menu_option_delete_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/menu/menu_search.xml" value="0.1527777777777778" />

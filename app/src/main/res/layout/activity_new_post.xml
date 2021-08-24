@@ -78,6 +78,25 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="4"
                 tools:listitem="@layout/list_item_input_image"
+                tools:itemCount="3"
+                android:src="@drawable/ic_add" />
+
+            <TextView
+                android:id="@+id/tv_title_video"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Video" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="4"
+                tools:listitem="@layout/list_item_input_image"
+                tools:itemCount="3"
                 android:src="@drawable/ic_add" />
 
             <TextView
