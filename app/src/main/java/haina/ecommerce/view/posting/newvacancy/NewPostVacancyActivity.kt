@@ -39,6 +39,9 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
                 val intent = Intent(applicationContext, LoginActivity::class.java)
                 startActivity(intent)
             }
+            R.id.btn_next -> {
+                startActivity(Intent(applicationContext, SkillAndEducationActivity::class.java))
+            }
         }
     }
 
