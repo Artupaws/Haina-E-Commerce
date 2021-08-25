@@ -1,5 +1,6 @@
 package haina.ecommerce.view.detailjob
 
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -7,10 +8,13 @@ import android.content.IntentFilter
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -38,6 +42,7 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
     var refresh:String? = null
     var salary:String = "0"
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailJobBinding.inflate(layoutInflater)
@@ -52,12 +57,11 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         idJobVacancy?.let { presenter.checkAppliedJob(it) }
         binding.tvTitleJob.text = item?.title
         binding.tvCompanyName.text = item?.company?.name
-        binding.tvLocationJob.text = item?.location
+        binding.tvAddress.text = item?.location
         binding.tvDescriptionJob.text = item?.description
         salary ="${helper.convertToFormatMoneySalary(item?.salaryFrom.toString())} - ${helper.convertToFormatMoneySalary(item?.salaryTo.toString())}"
         binding.tvSalary.text = salary
         binding.tvDatePublish.text = item?.date
-        binding.tvJobCategory.text = item?.jobCategory
         Glide.with(applicationContext).load(item?.photoUrl).skipMemoryCache(true).diskCacheStrategy(
                 DiskCacheStrategy.NONE)
                 .listener(object : RequestListener<Drawable> {
@@ -120,35 +124,9 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("successApplied"))
-    }
-
     override fun onResume() {
         super.onResume()
         idJobVacancy?.let { presenter.checkAppliedJob(it) }
-    }
-
-    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver(){
-        override fun onReceive(context: Context?, intent: Intent?) {
-            when (intent?.action){
-                "successApplied" -> {
-                    val fromIntent = intent.getStringExtra("refresh")
-                    refresh = fromIntent
-                    Log.d("", fromIntent!!)
-                    if (refresh == "1") {
-                        idJobVacancy?.let { presenter.checkAppliedJob(it) }
-                    }
-                }
-            }
-        }
-
-    }
-
-    override fun onStop() {
-        super.onStop()
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver)
     }
 
     private fun stateLoading(){

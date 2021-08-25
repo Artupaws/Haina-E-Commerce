@@ -12,12 +12,14 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class ApplyJobPresenter(val view: ApplyJobContract, val context: Context) {
+class ApplyJobPresenter(val view: ApplyJobContract.View, val context: Context) {
 
     fun loadDocumentResume(idDocsCategory:Int){
+        view.showLoading()
         val loadDocumentUser = NetworkConfig().getConnectionHainaBearer(context).loadDocumentUser(idDocsCategory)
         loadDocumentUser.enqueue(object : retrofit2.Callback<ResponseLoadDocumentUser>{
             override fun onResponse(call: Call<ResponseLoadDocumentUser>, response: Response<ResponseLoadDocumentUser>) {
+                view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
                     val data = response.body()?.data
                     Log.d("document", response.body()?.data.toString())
@@ -30,6 +32,7 @@ class ApplyJobPresenter(val view: ApplyJobContract, val context: Context) {
             }
 
             override fun onFailure(call: Call<ResponseLoadDocumentUser>, t: Throwable) {
+                view.dismissLoading()
                 view.messagetGetDocument(t.localizedMessage.toString())
             }
 
@@ -37,9 +40,11 @@ class ApplyJobPresenter(val view: ApplyJobContract, val context: Context) {
     }
 
     fun getDataUserProfile(){
+        view.showLoading()
         NetworkConfig().getConnectionHainaBearer(context).getDataUser()
             .enqueue(object : retrofit2.Callback<ResponseGetDataUser>{
                 override fun onResponse(call: Call<ResponseGetDataUser>, response: Response<ResponseGetDataUser>) {
+                    view.dismissLoading()
                     if (response.isSuccessful && response.body()?.value == 1){
                         val data = response.body()?.data
                         view.getDataUser(data)
@@ -50,15 +55,18 @@ class ApplyJobPresenter(val view: ApplyJobContract, val context: Context) {
                 }
 
                 override fun onFailure(call: Call<ResponseGetDataUser>, t: Throwable) {
+                    view.dismissLoading()
                     view.messageGetDataPersonal(t.localizedMessage)
                 }
             })
     }
 
     fun applyJob(idJobVacancy:Int, idUserDocs:Int){
+        view.showLoading()
         val applyJob = NetworkConfig().getConnectionHainaBearer(context).applyJob(idJobVacancy, idUserDocs)
         applyJob.enqueue(object :retrofit2.Callback<ResponseApplyJob>{
             override fun onResponse(call: Call<ResponseApplyJob>, response: Response<ResponseApplyJob>) {
+                view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
                     view.messageApplyJob(response.body()?.message.toString())
                 } else {
@@ -67,6 +75,7 @@ class ApplyJobPresenter(val view: ApplyJobContract, val context: Context) {
             }
 
             override fun onFailure(call: Call<ResponseApplyJob>, t: Throwable) {
+                view.dismissLoading()
                 view.messageApplyJob(t.localizedMessage.toString())
             }
 

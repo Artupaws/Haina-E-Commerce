@@ -5,10 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.res.Configuration
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.os.Parcelable
 import android.util.Log
 import android.view.*
@@ -21,7 +18,6 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import haina.ecommerce.R
-import haina.ecommerce.adapter.hotel.newAdapterHotel.AdapterListCity
 import haina.ecommerce.adapter.property.AdapterShowProperty
 import haina.ecommerce.databinding.FragmentShowPropertyBinding
 import haina.ecommerce.model.property.DataShowProperty
@@ -156,7 +152,7 @@ class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClick
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.fab_create_post -> {
+            R.id.fab_create_vacancy -> {
                 Navigation.findNavController(binding.fabCreatePost).navigate(R.id.action_showPropertyFragment_to_inputDataPropertyFragment2)
             }
         }

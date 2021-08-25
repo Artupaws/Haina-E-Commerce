@@ -20,8 +20,11 @@ import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataItemJob
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.view.detailjob.DetailJobActivity
+import java.util.ArrayList
 
-class AdapterJobVacancy(private val context: Context, private val jobList: List<DataItemJob?>?): RecyclerView.Adapter<AdapterJobVacancy.Holder>(){
+class AdapterJobVacancy(private val context: Context,
+                        private val jobList: ArrayList<DataItemJob?>?,
+                        val itemAdapterCallBack: AdapterJobVacancy.ListJobClickListener): RecyclerView.Adapter<AdapterJobVacancy.Holder>(){
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val helper:Helper = Helper
@@ -53,9 +56,7 @@ class AdapterJobVacancy(private val context: Context, private val jobList: List<
                         })
                         .into(ivImageCompany)
                 linearJobVacancy.setOnClickListener {
-                    val intent = Intent(context, DetailJobActivity::class.java)
-                    intent.putExtra("detailJob", itemHaina)
-                    context.startActivity(intent)
+                    itemAdapterCallBack.listJobClick(linearJobVacancy, itemHaina)
                 }
             }
         }
@@ -72,4 +73,18 @@ class AdapterJobVacancy(private val context: Context, private val jobList: List<
     }
 
     override fun getItemCount(): Int = jobList?.size!!
+
+    interface ListJobClickListener {
+        fun listJobClick(view: View, data:DataItemJob)
+    }
+
+    fun add(data:List<DataItemJob?>?){
+        data?.let { jobList?.addAll(it) }
+        notifyItemRangeInserted((data?.size?.let { jobList?.size?.minus(it) }!!), data.size)
+    }
+
+    fun clear(){
+        jobList?.clear()
+        notifyDataSetChanged()
+    }
 }

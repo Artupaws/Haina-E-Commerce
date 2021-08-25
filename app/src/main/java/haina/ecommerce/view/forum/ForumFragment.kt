@@ -78,28 +78,28 @@ class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.Vi
                 else -> false
             }
         }
-        val menu = binding.toolbarFragmentForum.menu
-        val search = menu.findItem(R.id.action_search)
-        val searchView = search.actionView as androidx.appcompat.widget.SearchView
-        searchView.queryHint = "Search"
-        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query?.length!! >= 2){
-                    query.let {presenter.getSearch(it)}
-                    requireActivity().currentFocus?.let { view ->
-                        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                        imm?.hideSoftInputFromWindow(view.windowToken, 0)
-                    }
-                } else {
-                    Toast.makeText(requireActivity(), "minimum 2 characters", Toast.LENGTH_SHORT).show()
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
+//        val menu = binding.toolbarFragmentForum.menu
+//        val search = menu.findItem(R.id.action_search)
+//        val searchView = search.actionView as androidx.appcompat.widget.SearchView
+//        searchView.queryHint = "Search"
+//        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                if (query?.length!! >= 2){
+//                    query.let {presenter.getSearch(it)}
+//                    requireActivity().currentFocus?.let { view ->
+//                        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+//                        imm?.hideSoftInputFromWindow(view.windowToken, 0)
+//                    }
+//                } else {
+//                    Toast.makeText(requireActivity(), "minimum 2 characters", Toast.LENGTH_SHORT).show()
+//                }
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                return false
+//            }
+//        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

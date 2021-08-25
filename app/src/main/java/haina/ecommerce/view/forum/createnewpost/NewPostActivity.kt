@@ -394,8 +394,9 @@ import java.util.ArrayList
                      -1 -> {
                          checkPermission()
                      } else -> {
-                        dialogVideoView(data.video)
-                        videoViewDialog?.show()
+                     startActivity(Intent(applicationContext, ShowVideoActivity::class.java).putExtra("uri", data.video))
+//                     dialogVideoView(data.video)
+//                     videoViewDialog?.show()
                      }
                  }
              }

@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
+        app:navigationIcon="@drawable/ic_back_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,27 +25,15 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar_detail_job"
-        app:layout_constraintEnd_toEndOf="@+id/iv_save_job"
-        app:layout_constraintStart_toStartOf="@+id/toolbar_detail_job"
-        app:layout_constraintTop_toTopOf="@+id/toolbar_detail_job" />
-
-    <ToggleButton
-        android:id="@+id/iv_save_job"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/toggle_bookmark_selector"
-        android:textOff=""
-        android:textOn=""
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar_detail_job"
         app:layout_constraintEnd_toEndOf="@+id/toolbar_detail_job"
+        app:layout_constraintStart_toStartOf="@+id/toolbar_detail_job"
         app:layout_constraintTop_toTopOf="@+id/toolbar_detail_job" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_detail_job">
@@ -53,15 +42,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="10dp">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp">
+                android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card_image"
@@ -76,258 +63,323 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center" />
 
+                    <TextureView
+                        android:id="@+id/texture"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
                     <ImageView
                         android:id="@+id/iv_image_company"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="centerCrop"
+                        android:visibility="visible"
+                        tools:src="@mipmap/ic_launcher" />
                 </androidx.cardview.widget.CardView>
 
                 <TextView
                     android:id="@+id/tv_title_job"
+                    style="@style/TextView.Poppins16spBlack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_marginStart="10dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:textSize="17sp"
-                    android:textStyle="bold"
-                    tools:text="Fullstack Mobile Developer" />
+                    android:layout_toStartOf="@+id/iv_save_job"
+                    android:layout_toEndOf="@+id/card_image"
+                    android:textFontWeight="500"
+                    tools:text="Captain Marvel" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/company_name"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="@string/colon"
-                    android:textAlignment="center"
-                    android:textColor="@color/black" />
+                <ToggleButton
+                    android:id="@+id/iv_save_job"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/toggle_bookmark_selector"
+                    android:textOff=""
+                    android:textOn="" />
 
                 <TextView
                     android:id="@+id/tv_company_name"
-                    android:layout_width="0dp"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.7"
-                    android:text="@string/company_name"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                    android:layout_below="@+id/tv_title_job"
+                    android:layout_marginStart="10dp"
+                    android:layout_toStartOf="@+id/iv_save_job"
+                    android:layout_toEndOf="@+id/card_image"
+                    tools:text="PT MAJU TERUS" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_location"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/location"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="@string/colon"
-                    android:textAlignment="center"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/tv_location_job"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.7"
-                    android:text="@string/company_name"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/description"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="@string/colon"
-                    android:textAlignment="center"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/tv_description_job"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.7"
-                    android:text="@string/company_name"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/salary"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="@string/colon"
-                    android:textAlignment="center"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/tv_salary"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.7"
-                    android:text="@string/company_name"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/date_publish"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="@string/colon"
-                    android:textAlignment="center"
-                    android:textColor="@color/black" />
+                    android:layout_below="@+id/tv_company_name"
+                    android:layout_marginStart="10dp"
+                    android:layout_toStartOf="@+id/iv_save_job"
+                    android:layout_toEndOf="@+id/card_image"
+                    tools:text="Jakarta" />
 
                 <TextView
                     android:id="@+id/tv_date_publish"
-                    android:layout_width="0dp"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.7"
-                    android:text="@string/company_name"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                    android:layout_below="@+id/tv_location"
+                    android:layout_marginStart="10dp"
+                    android:layout_toStartOf="@+id/iv_save_job"
+                    android:layout_toEndOf="@+id/card_image"
+                    tools:text="12 Aug 2021" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_salary"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/category_job"
-                    android:textColor="@color/black" />
+                    android:layout_alignParentStart="true"
+                    android:layout_toEndOf="@+id/card_image"
+                    android:layout_below="@+id/tv_date_publish"
+                    tools:text="IDR15.0000.000 - IDR20.000.000" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3"
-                    android:text="@string/colon"
-                    android:textAlignment="center"
-                    android:textColor="@color/black" />
+            </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_job_category"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.7"
-                    android:text="@string/company_name"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <FrameLayout
+            <TextView
+                style="@style/TextView.Poppins16spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp">
+                android:layout_marginTop="10dp"
+                android:text="Job Description"
+                android:textFontWeight="500" />
 
-                <RelativeLayout
-                    android:id="@+id/relative_loading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/background_loading"
-                    android:gravity="center"
-                    android:visibility="invisible">
+            <TextView
+                android:id="@+id/tv_description_job"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus gravida tellus sit amet fringilla. Etiam aliquam feugiat libero, quis malesuada ligula aliquam vitae. Nunc pretium et est eu laoreet. Quisque lacinia dolor sed pretium lobortis. Phasellus et nibh leo. Maecenas at lectus mi. Sed porttitor vehicula mattis. Ut ut neque nunc. Pellentesque dapibus quam et tortor efficitur, vitae lobortis sapien volutpat.
+Etiam at pharetra mi, eu mattis ante. Proin convallis ligula vel diam egestas pulvinar. Sed a scelerisque urna, non molestie eros. Etiam enim lacus, auctor in sapien eget, ullamcorper placerat leo. Aliquam vel suscipit massa, ut tristique dolor. Suspendisse erat lorem, lobortis id suscipit sit amet, finibus sit amet nibh. Proin venenatis arcu nibh, a interdum tortor porttitor et. Sed fermentum lectus eros, eget sodales diam semper vel. Maecenas fermentum neque ac bibendum sollicitudin. Praesent at rutrum nisl. Nullam gravida sagittis quam. Sed venenatis, mauris at consequat luctus, magna nunc tristique nisi, quis sagittis nulla neque vitae nisi." />
 
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/iv_loading"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:visibility="invisible"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true"
-                        app:lottie_rawRes="@raw/load" />
-                </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/broken_white" />
 
-                <Button
-                    android:id="@+id/btn_apply"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/apply_job"
-                    android:textColor="@color/yellow" />
-            </FrameLayout>
+            <TextView
+                style="@style/TextView.Poppins16spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Additional Info"
+                android:textFontWeight="500" />
+
+            <TextView
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Position Level" />
+
+            <TextView
+                android:id="@+id/tv_position_level"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Staff(non-management &amp; non supervisor" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Qualification" />
+
+            <TextView
+                android:id="@+id/tv_qualification"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Bachelor's Degree" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Years of Experience" />
+
+            <TextView
+                android:id="@+id/tv_year_experience"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="3 Years" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Employment Type" />
+
+            <TextView
+                android:id="@+id/tv_employment_type"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Full-Time" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/dark_gray" />
+
+            <TextView
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Specializations" />
+
+            <TextView
+                android:id="@+id/tv_specialization"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="IT/Computer - Software" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/broken_white" />
+
+            <TextView
+                style="@style/TextView.Poppins16spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Company Overview"
+                android:textFontWeight="500" />
+
+            <TextView
+                android:id="@+id/tv_company_overview"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus gravida tellus sit amet fringilla. Etiam aliquam feugiat libero, quis malesuada ligula aliquam vitae. Nunc pretium et est eu laoreet. Quisque lacinia dolor sed pretium lobortis. Phasellus et nibh leo. Maecenas at lectus mi. Sed porttitor vehicula mattis. Ut ut neque nunc. Pellentesque dapibus quam et tortor efficitur, vitae lobortis sapien volutpat.
+Etiam at pharetra mi, eu mattis ante. Proin convallis ligula vel diam egestas pulvinar. Sed a scelerisque urna, non molestie eros. Etiam enim lacus, auctor in sapien eget, ullamcorper placerat leo. Aliquam vel suscipit massa, ut tristique dolor. Suspendisse erat lorem, lobortis id suscipit sit amet, finibus sit amet nibh. Proin venenatis arcu nibh, a interdum tortor porttitor et. Sed fermentum lectus eros, eget sodales diam semper vel. Maecenas fermentum neque ac bibendum sollicitudin. Praesent at rutrum nisl. Nullam gravida sagittis quam. Sed venenatis, mauris at consequat luctus, magna nunc tristique nisi, quis sagittis nulla neque vitae nisi." />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/broken_white" />
+
+            <TextView
+                style="@style/TextView.Poppins16spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Work Location"
+                android:textFontWeight="500" />
+
+            <TextView
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Jl Taman Aries, West Jakarta - Indonesia" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/broken_white" />
+
+            <TextView
+                style="@style/TextView.Poppins16spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Company Gallery"
+                android:textFontWeight="500" />
+
+            <com.synnapps.carouselview.CarouselView
+                android:id="@+id/vp_image_property"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/banner_height_high"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                app:autoPlay="false" />
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/frameLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/relative_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/background_loading"
+            android:gravity="center"
+            android:visibility="invisible">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/iv_loading"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="invisible"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/load" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_apply"
+            style="@style/Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/black"
+            android:text="@string/apply_job"
+            android:textColor="@color/yellow" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

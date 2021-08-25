@@ -1,4 +1,4 @@
-package haina.ecommerce.view.posting.vacancy
+package haina.ecommerce.view.posting.newvacancy
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig

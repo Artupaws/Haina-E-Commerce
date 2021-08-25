@@ -14,7 +14,6 @@ import haina.ecommerce.databinding.ActivityDetailPostingJobBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataMyJob
 import haina.ecommerce.model.JobapplicantItem
-import haina.ecommerce.view.posting.vacancy.VacancyContract
 
 class DetailPostingJobActivity : AppCompatActivity(),View.OnClickListener, DetailPostingJobContract {
 
