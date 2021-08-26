@@ -233,22 +233,25 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
     }
 
     override fun loadListCodeCurrency(list: List<DataCodeCurrency?>?) {
-        if (!list.isNullOrEmpty()){
-            binding?.shimmerCurrency?.visibility = View.GONE
-            binding?.includeCurrency?.constraintCurrency?.visibility = View.VISIBLE
-            val adapterCodeCurrency = activity?.let { AdapterSpinnerCurrency(it, list) }
-            binding?.includeCurrency?.spnCountry?.adapter = adapterCodeCurrency
-            binding?.includeCurrency?.spnCountry?.setSelection(100)
-            setBaseCurrency(list)
+        if (context !=null){
+            if (!list.isNullOrEmpty()){
+                binding?.shimmerCurrency?.visibility = View.GONE
+                binding?.includeCurrency?.constraintCurrency?.visibility = View.VISIBLE
+                val adapterCodeCurrency = activity?.let { AdapterSpinnerCurrency(it, list) }
+                binding?.includeCurrency?.spnCountry?.adapter = adapterCodeCurrency
+                binding?.includeCurrency?.spnCountry?.setSelection(100)
+                setBaseCurrency(list)
+            }
         }
-
     }
 
     override fun loadCurrency(item: DataCurrency?) {
-        if (item != null){
-            binding?.includeCurrency?.tvChnCurrency?.text = helper.convertToFormatMoneyCNY(item.currency?.cNY.toString())
-            binding?.includeCurrency?.tvIdrCurrency?.text = helper.convertToFormatMoneyIDR(item.currency?.iDR.toString())
-            binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item.currency?.uSD.toString())
+        if (context != null){
+            if (item != null){
+                binding?.includeCurrency?.tvChnCurrency?.text = helper.convertToFormatMoneyCNY(item.currency?.cNY.toString())
+                binding?.includeCurrency?.tvIdrCurrency?.text = helper.convertToFormatMoneyIDR(item.currency?.iDR.toString())
+                binding?.includeCurrency?.tvEurCurrency?.text = helper.convertToFormatMoneyUSD(item.currency?.uSD.toString())
+            }
         }
     }
 

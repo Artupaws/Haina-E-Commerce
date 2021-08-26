@@ -10,14 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemChooseAddOnBinding
 import haina.ecommerce.model.flight.MealInfosItem
 
-class AdapterAddOn(val context: Context, private val dataPassenger: List<MealInfosItem?>?, private val itemAdapterCallback: ItemAdapterCallback) :
+class AdapterAddOn(val context: Context, private val dataPassenger: List<MealInfosItem?>?,val callback:CallbackInterface) :
         RecyclerView.Adapter<AdapterAddOn.Holder>() {
 
     private var broadcaster: LocalBroadcastManager? = null
-    var mCheckSum = 0
+    private var mCheckSum = 0
+    var selectedMeal: MutableList<MealInfosItem> = ArrayList()
+    var selectedName: MutableList<String> = ArrayList()
+
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemChooseAddOnBinding.bind(view)
-        fun bind(itemHaina: MealInfosItem, itemAdapterCallback: ItemAdapterCallback) {
+        fun bind(itemHaina: MealInfosItem) {
             with(binding) {
                 val descAndPrice = "${itemHaina.desc} - ${itemHaina.fare}"
                 cbAddon.text = descAndPrice
@@ -27,13 +30,18 @@ class AdapterAddOn(val context: Context, private val dataPassenger: List<MealInf
 //                        val intentDataPrice = Intent("priceAddOn")
 //                        intentDataPrice.putExtra("price", mCheckSum)
 //                        broadcaster?.sendBroadcast(intentDataPrice)
-                        itemAdapterCallback.onClickAdapter(cbAddon, mCheckSum)
+                        selectedMeal.add(itemHaina)
+                        callback.passTotal(mCheckSum,selectedMeal)
+
                     } else {
                         mCheckSum -= itemHaina.fare!!
 //                        val intentDataPrice = Intent("priceAddOn")
 //                        intentDataPrice.putExtra("price", mCheckSum)
 //                        broadcaster?.sendBroadcast(intentDataPrice)
-                        itemAdapterCallback.onClickAdapter(cbAddon, mCheckSum)
+                        selectedMeal.remove(itemHaina)
+
+
+                        callback.passTotal(mCheckSum,selectedMeal)
                     }
                 }
             }
@@ -47,10 +55,15 @@ class AdapterAddOn(val context: Context, private val dataPassenger: List<MealInf
         return Holder(binding.root)
     }
 
+
     override fun onBindViewHolder(holder: AdapterAddOn.Holder, position: Int) {
         val depart: MealInfosItem = dataPassenger?.get(position)!!
-        holder.bind(depart, itemAdapterCallback)
+        holder.bind(depart)
 
+    }
+
+    interface CallbackInterface {
+        fun passTotal(sum: Int,code: MutableList<MealInfosItem>)
     }
 
     interface ItemAdapterCallback{

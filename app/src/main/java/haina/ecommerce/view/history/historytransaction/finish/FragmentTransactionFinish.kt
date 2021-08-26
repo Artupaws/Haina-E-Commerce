@@ -21,6 +21,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.detailtransaction.DetailTransactionActivity
 import haina.ecommerce.view.login.LoginActivity
+import timber.log.Timber
 
 class FragmentTransactionFinish : Fragment(), View.OnClickListener, AdapterTransactionPulsaFinish.ItemAdapterCallback {
 
@@ -82,6 +83,7 @@ class FragmentTransactionFinish : Fragment(), View.OnClickListener, AdapterTrans
     }
 
     private fun setupListTransactionFinish(data:DataTransaction?){
+        Timber.d(data?.process?.size.toString())
         showIsEmpty(data?.process?.size)
         binding?.rvTransactionFinish?.apply {
             adapter = AdapterTransactionPulsaFinish(requireContext(), data?.success, this@FragmentTransactionFinish)

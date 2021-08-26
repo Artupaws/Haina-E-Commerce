@@ -7,5 +7,6 @@ interface SetAddOnContract {
 
     fun messageGetAddOn(msg:String)
     fun getDataAddOn(data: List<AddOnsItem>?)
+    fun sendDataAddOnSuccess(msg:String)
 
 }

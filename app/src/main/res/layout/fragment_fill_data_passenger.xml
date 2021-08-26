@@ -214,13 +214,13 @@
                         app:lottie_rawRes="@raw/load" />
                 </RelativeLayout>
                 <Button
-                android:id="@+id/btn_continue_payment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/next_title"
-                android:textAllCaps="false"
-                style="@style/Button.Primary"/>
+                    android:id="@+id/btn_continue_payment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/next_title"
+                    android:textAllCaps="false"
+                    style="@style/Button.Primary"/>
             </FrameLayout>
 
         </LinearLayout>

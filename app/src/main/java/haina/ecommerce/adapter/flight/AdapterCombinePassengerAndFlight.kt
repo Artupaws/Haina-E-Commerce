@@ -1,6 +1,7 @@
 package haina.ecommerce.adapter.flight
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,11 +17,17 @@ import haina.ecommerce.model.flight.*
 class AdapterCombinePassengerAndFlight(
     val context: Context, private val dataPassenger: ArrayList<DataSetPassenger>,
     private val dataTicket:ArrayList<Ticket>,
-    private val dataAddOn: List<BaggageInfosItem?>?,
-    private val dataMeals: List<MealInfosItem?>?,
-    private val dataSeat: List<SeatInfosItem?>?
+    private val dataAddons:List<AddOnsItem>?,
+    val callback: AdapterCombinePassengerAndFlight.CallbackInterface
 ) :
-        RecyclerView.Adapter<AdapterCombinePassengerAndFlight.Holder>() {
+        RecyclerView.Adapter<AdapterCombinePassengerAndFlight.Holder>(),AdapterListFlight.CallbackInterface {
+
+
+    interface CallbackInterface {
+        fun passDataAddonsAll( dataAddonsAll:MutableList<PaxDataAddons>)
+    }
+
+    var allDataAddons: MutableList<PaxDataAddons> = mutableListOf()
 
     private var broadcaster:LocalBroadcastManager? =null
 
@@ -38,9 +45,11 @@ class AdapterCombinePassengerAndFlight(
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemSetAddonBinding.bind(view)
+        private var passengerId:Int = 0
         fun bind(itemHaina: DataSetPassenger) {
             with(binding) {
-               tvTitlePassenger.text = itemHaina.title
+                passengerId=itemHaina.id
+                tvTitlePassenger.text = itemHaina.title
                 val fullname = "${itemHaina.first_name} ${itemHaina.last_name}"
                 tvNamePassenger.text = fullname
                 tvBirthdate.text = itemHaina.birth_date
@@ -49,7 +58,17 @@ class AdapterCombinePassengerAndFlight(
                     onAddPostClicked(binding)
                     clicked = !clicked
                 }
-                setupListDataFlight(binding)
+                setupListDataFlight()
+
+                allDataAddons.add(PaxDataAddons(passengerId, mutableListOf(),0))
+            }
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        private fun setupListDataFlight(){
+            binding.rvFlight.apply {
+                adapter = AdapterListFlight(context, passengerId, dataTicket, dataAddons, this@AdapterCombinePassengerAndFlight)
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             }
         }
     }
@@ -69,20 +88,6 @@ class AdapterCombinePassengerAndFlight(
 
     override fun getItemCount(): Int = dataPassenger.size
 
-    @Suppress("UNCHECKED_CAST")
-    private fun setupListDataFlight(binding:ListItemSetAddonBinding){
-        if(dataSeat?.isEmpty() == true){
-            binding.rvFlight.apply {
-                adapter = AdapterListFlight(context, dataTicket, dataAddOn, dataMeals, dataSeat, false)
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            }
-        } else {
-            binding.rvFlight.apply {
-                adapter = AdapterListFlight(context, dataTicket, dataAddOn, dataMeals, dataSeat, true)
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            }
-        }
-    }
 
     private fun onAddPostClicked(binding: ListItemSetAddonBinding) {
         setVisibility(clicked, binding)
@@ -103,5 +108,21 @@ class AdapterCombinePassengerAndFlight(
         } else {
             binding.rvFlight.visibility = View.VISIBLE
         }
+    }
+
+    override fun passDataAddons(passengerId:Int, dataAddonsAll: MutableList<TripAddonsData>, totalAddons: Int) {
+        dataAddonsAll.forEach{ it ->
+            allDataAddons.find { data-> data.id==passengerId }?.trip=dataAddonsAll
+            allDataAddons.find { data-> data.id==passengerId }?.total=totalAddons
+
+
+            var meals = ""
+            it.meals?.forEach { meal ->
+                meals+= meal
+            }
+            Log.d("data",passengerId.toString()+" "+it.origin+it.destination+it.baggage+it.seat+meals)
+        }
+        callback.passDataAddonsAll(allDataAddons)
+
     }
 }
