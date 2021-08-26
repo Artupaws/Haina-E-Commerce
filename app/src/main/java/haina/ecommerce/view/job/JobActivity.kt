@@ -7,16 +7,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
+import android.os.Parcelable
 import android.view.Gravity
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,10 +25,14 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterJobCategoryOnJob
 import haina.ecommerce.adapter.AdapterJobVacancy
 import haina.ecommerce.adapter.AdapterLocationFilterJob
+import haina.ecommerce.adapter.vacancy.AdapterDataCreateVacancy
 import haina.ecommerce.databinding.ActivityJobBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataItemJob
+import haina.ecommerce.model.vacancy.DataCreateVacancy
+import haina.ecommerce.model.vacancy.VacancyLevelItem
+import haina.ecommerce.model.vacancy.VacancyTypeItem
 import haina.ecommerce.view.detailjob.DetailJobActivity
 import haina.ecommerce.view.posting.newvacancy.NewPostVacancyActivity
 import timber.log.Timber
@@ -54,15 +55,17 @@ class JobActivity : AppCompatActivity(), JobContract.View,
     private var isCategoryEmpty = true
     private var isLocationEmpty = true
     private var isStartSalaryEmpty = true
+    private var dataCreateVacancy:DataCreateVacancy? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityJobBinding.inflate(layoutInflater)
         setContentView(binding.root)
         broadcaster = LocalBroadcastManager.getInstance(this)
-        presenter = JobPresenter(this)
+        presenter = JobPresenter(this, this)
         presenter.loadListJobCategory()
         presenter.loadListJobLocation()
+        presenter.getDataCreateVacancy()
         refresh()
         loadingDialog()
         binding.toolbarJob.setNavigationIcon(R.drawable.ic_back_black)
@@ -97,6 +100,7 @@ class JobActivity : AppCompatActivity(), JobContract.View,
         binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             presenter.loadListJobCategory()
             presenter.loadListJobLocation()
+            presenter.getDataCreateVacancy()
         })
     }
 
@@ -132,7 +136,9 @@ class JobActivity : AppCompatActivity(), JobContract.View,
                 popupFilter?.show()
             }
             R.id.fab_create_vacancy -> {
-                startActivity(Intent(applicationContext, NewPostVacancyActivity::class.java))
+                startActivity(Intent(applicationContext, NewPostVacancyActivity::class.java)
+                    .putExtra("dataCreateVacancy", dataCreateVacancy)
+                    .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList))
             }
         }
     }
@@ -226,7 +232,7 @@ class JobActivity : AppCompatActivity(), JobContract.View,
         val rSliderStartSalary = popupFilter?.findViewById<RangeSlider>(R.id.rslider_start_salary)
         val tvStartSalary = popupFilter?.findViewById<TextView>(R.id.tv_start_salary)
         val jobLocationAdapter = AdapterLocationFilterJob(this, itemHaina)
-        rSliderStartSalary?.addOnChangeListener { slider, value, fromUser ->
+        rSliderStartSalary?.addOnChangeListener { _, value, _ ->
             action?.isEnabled = value.toString()!=""
             tvStartSalary?.text = helper.convertToFormatMoneyIDRFilter(value.toString())
             filterStartSalary = helper.changeFormatMoneyToValueFilter(tvStartSalary?.text.toString())!!.toInt()
@@ -250,6 +256,14 @@ class JobActivity : AppCompatActivity(), JobContract.View,
         binding.swipeRefresh.isRefreshing = false
     }
 
+    override fun getDataCreateVacancy(data: DataCreateVacancy?) {
+        dataCreateVacancy = data
+    }
+
+    override fun messageGetDataCreateVacancy(msg: String) {
+        Timber.d(msg)
+    }
+
     override fun showLoading() {
         progressDialog?.show()
     }
@@ -261,7 +275,8 @@ class JobActivity : AppCompatActivity(), JobContract.View,
     override fun listJobClick(view: View, data: DataItemJob) {
         when(view.id){
             R.id.linear_job_vacancy -> {
-                startActivity(Intent(applicationContext, DetailJobActivity::class.java).putExtra("detailJob", data))
+//                startActivity(Intent(applicationContext, DetailJobActivity::class.java)
+//                    .putExtra("detailJob", data))
             }
         }
     }

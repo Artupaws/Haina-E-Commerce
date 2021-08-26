@@ -14,7 +14,6 @@ import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
@@ -22,12 +21,9 @@ import haina.ecommerce.adapter.property.AdapterListAmountRoom
 import haina.ecommerce.adapter.property.AdapterListCity
 import haina.ecommerce.adapter.property.AdapterListFacility
 import haina.ecommerce.adapter.property.AdapterListProvince
-import haina.ecommerce.databinding.ActivityEditPropertyBinding
 import haina.ecommerce.databinding.FragmentInputDataPropertyBinding
 import haina.ecommerce.model.property.*
 import haina.ecommerce.view.history.historymyproperty.MyPropertyActivity
-import haina.ecommerce.view.property.fragmentinputdata.InputDataPropertyContract
-import haina.ecommerce.view.property.fragmentinputdata.InputDataPropertyPresenter
 import java.util.*
 
 class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
@@ -176,7 +172,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
         val actionClose = popupFloor?.findViewById<ImageView>(R.id.iv_close)
         val rvDestination = popupFloor?.findViewById<RecyclerView>(R.id.rv_destination)
         val searchView = popupFloor?.findViewById<SearchView>(R.id.sv_destination)
-        val title = popupFloor?.findViewById<TextView>(R.id.textView10)
+        val title = popupFloor?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupFloor?.dismiss() }
         rvDestination?.apply {
             adapter =
@@ -199,7 +195,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
         val actionClose = popupProvince?.findViewById<ImageView>(R.id.iv_close)
         val rvDestination = popupProvince?.findViewById<RecyclerView>(R.id.rv_destination)
         val searchView = popupProvince?.findViewById<SearchView>(R.id.sv_destination)
-        val title = popupProvince?.findViewById<TextView>(R.id.textView10)
+        val title = popupProvince?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupProvince?.dismiss() }
         title?.text = getString(R.string.province)
         rvDestination?.apply {
@@ -237,7 +233,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
         val actionClose = popupCity?.findViewById<ImageView>(R.id.iv_close)
         val rvDestination = popupCity?.findViewById<RecyclerView>(R.id.rv_destination)
         val searchView = popupCity?.findViewById<SearchView>(R.id.sv_destination)
-        val title = popupCity?.findViewById<TextView>(R.id.textView10)
+        val title = popupCity?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupCity?.dismiss() }
         title?.text = getString(R.string.city_required)
         rvDestination?.apply {

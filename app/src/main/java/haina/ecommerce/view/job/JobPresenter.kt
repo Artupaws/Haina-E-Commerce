@@ -1,14 +1,16 @@
 package haina.ecommerce.view.job
 
+import android.content.Context
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.ResponseGetJob
 import haina.ecommerce.model.ResponseJobCategory
 import haina.ecommerce.model.ResponseListJobLocation
+import haina.ecommerce.model.vacancy.ResponseGetDataCreateVacancy
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class JobPresenter(val view: JobContract.View){
+class JobPresenter(val view: JobContract.View, val context: Context){
 
     fun loadListJobVacancy(data:MutableMap<String, Int> = HashMap()){
         view.showLoading()
@@ -79,6 +81,29 @@ class JobPresenter(val view: JobContract.View){
             override fun onFailure(call: Call<ResponseListJobLocation>, t: Throwable) {
                 view.dismissLoading()
                 view.messageLoadListLocation(t.localizedMessage)
+            }
+
+        })
+    }
+
+    fun getDataCreateVacancy(){
+        view.showLoading()
+        val dataCreateVacancy = NetworkConfig().getConnectionHainaBearer(context).getDataCreateVacancy()
+        dataCreateVacancy.enqueue(object : retrofit2.Callback<ResponseGetDataCreateVacancy>{
+            override fun onResponse(call: Call<ResponseGetDataCreateVacancy>, response: Response<ResponseGetDataCreateVacancy>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageGetDataCreateVacancy(response.body()?.message.toString())
+                    val data = response.body()?.dataCreateVacancy
+                    view.getDataCreateVacancy(data)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageGetDataCreateVacancy(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetDataCreateVacancy>, t: Throwable) {
+                view.messageGetDataCreateVacancy(t.localizedMessage.toString())
             }
 
         })

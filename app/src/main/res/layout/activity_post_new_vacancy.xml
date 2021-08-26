@@ -57,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
                     android:background="@drawable/background_line_corner_input_text_black"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:paddingStart="10dp" />
 
                 <TextView
@@ -68,10 +68,21 @@
                     android:text="Type"
                     android:textFontWeight="500" />
 
+                <EditText
+                    android:id="@+id/et_type"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:focusable="false"
+                    android:background="@drawable/background_line_corner_input_text_black"
+                    android:inputType="text"
+                    android:paddingStart="10dp" />
+
                 <RadioGroup
                     android:id="@+id/rd_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <RadioButton
@@ -109,6 +120,7 @@
                     style="@style/TextView.Poppins16spBlack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:text="Level"
                     android:textFontWeight="500" />
 
@@ -117,6 +129,7 @@
                     style="@style/TextView.Poppins14spBlack"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
+                    android:focusable="false"
                     android:background="@drawable/background_line_corner_input_text_black"
                     android:inputType="text"
                     android:paddingStart="10dp" />
@@ -135,6 +148,7 @@
                     style="@style/TextView.Poppins14spBlack"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
+                    android:focusable="false"
                     android:background="@drawable/background_line_corner_input_text_black"
                     android:inputType="text"
                     android:paddingStart="10dp" />
@@ -153,6 +167,7 @@
                     style="@style/TextView.Poppins14spBlack"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
+                    android:focusable="false"
                     android:background="@drawable/background_line_corner_input_text_black"
                     android:inputType="text"
                     android:paddingStart="10dp" />
@@ -171,6 +186,7 @@
                     style="@style/TextView.Poppins14spBlack"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
+                    android:focusable="false"
                     android:background="@drawable/background_line_corner_input_text_black"
                     android:inputType="text"
                     android:paddingStart="10dp" />
@@ -190,7 +206,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
                     android:background="@drawable/background_line_corner_input_text_black"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:paddingStart="10dp" />
 
                 <RelativeLayout

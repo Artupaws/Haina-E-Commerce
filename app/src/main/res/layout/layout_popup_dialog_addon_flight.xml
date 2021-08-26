@@ -8,7 +8,7 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/tv_title_popup"
         style="@style/TextView.Poppins16spBlack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_popup"
         app:queryHint="Find Add On" />
 
     <Spinner
@@ -49,8 +49,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@+id/iv_close"
-        app:layout_constraintStart_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintStart_toStartOf="@+id/tv_title_popup"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_popup"
         tools:listitem="@android:layout/simple_spinner_dropdown_item" />
 
     <androidx.recyclerview.widget.RecyclerView

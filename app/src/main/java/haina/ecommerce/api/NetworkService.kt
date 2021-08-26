@@ -24,6 +24,7 @@ import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
 import haina.ecommerce.model.transactionlist.ResponseGetListTransactionPending
+import haina.ecommerce.model.vacancy.ResponseGetDataCreateVacancy
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -848,4 +849,9 @@ interface NetworkService {
     fun deleteComment(
         @Field("comment_id") commentId:Int
     ):Call<ResponseGiveUpvote>
+
+    //Data Create Vacancy
+    @Headers("No-Authentication: true")
+    @GET("api/job/vacancy/data")
+    fun getDataCreateVacancy():Call<ResponseGetDataCreateVacancy>
 }
