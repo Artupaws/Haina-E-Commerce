@@ -257,6 +257,7 @@
                         android:layout_width="0dp"
                         android:layout_height="38dp"
                         android:layout_weight="1.2"
+                        android:hint="From"
                         android:background="@drawable/background_line_corner_input_text_black"
                         android:inputType="number"
                         android:paddingStart="10dp" />
@@ -276,6 +277,7 @@
                         android:layout_width="0dp"
                         android:layout_height="38dp"
                         android:layout_weight="1.2"
+                        android:hint="To"
                         android:background="@drawable/background_line_corner_input_text_black"
                         android:inputType="number"
                         android:paddingStart="10dp" />

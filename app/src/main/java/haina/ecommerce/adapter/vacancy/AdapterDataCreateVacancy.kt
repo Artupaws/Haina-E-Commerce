@@ -183,7 +183,7 @@ class AdapterDataCreateVacancy(
     }
 
     interface ItemAdapterCallback {
-        fun listLevelClick(view: View, data: VacancyLevelItem)
+        fun listLevelClick(view: View, dataVacancyLevel: VacancyLevelItem)
         fun listTypeClick(view: View, data: VacancyTypeItem)
         fun listLocationClick(view: View, data: DataItemHaina)
         fun listExperienceClick(view: View, yearExperience: Int)

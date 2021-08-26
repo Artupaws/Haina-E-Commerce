@@ -1,10 +1,9 @@
 package haina.ecommerce.view.posting.newvacancy
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.text.TextWatcher
 import android.view.Gravity
 import android.view.View
 import android.view.Window
@@ -13,21 +12,16 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import haina.ecommerce.R
-import haina.ecommerce.adapter.AdapterJobPosting
 import haina.ecommerce.adapter.vacancy.AdapterDataCreateVacancy
 import haina.ecommerce.databinding.ActivityPostNewVacancyBinding
+import haina.ecommerce.helper.NumberTextWatcher
 import haina.ecommerce.model.DataItemHaina
-import haina.ecommerce.model.DataMyJob
 import haina.ecommerce.model.vacancy.*
-import haina.ecommerce.preference.SharedPreferenceHelper
-import haina.ecommerce.util.Constants
 import haina.ecommerce.view.login.LoginActivity
 import timber.log.Timber
-import java.sql.Time
-import java.util.ArrayList
+import java.util.*
 
 class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClickListener, AdapterDataCreateVacancy.ItemAdapterCallback {
 
@@ -62,6 +56,13 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         popupDialogLevel(dataCreateVacancy?.vacancyLevel)
         popupDialogLocation(dataLocationJob)
         popupDialogSpecialist(dataCreateVacancy?.vacancySpecialist)
+
+        val locale = Locale("es", "IDR")
+        val numDecs = 2 // Let's use 2 decimals
+        val low: TextWatcher = NumberTextWatcher(binding.etMinimSalary, locale, numDecs)
+        val high: TextWatcher = NumberTextWatcher(binding.etHighSalary, locale, numDecs)
+        binding.etMinimSalary.addTextChangedListener(low)
+        binding.etHighSalary.addTextChangedListener(high)
     }
 
     private fun refresh(){
@@ -100,27 +101,6 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
                 popupDialogSpecialist?.show()
             }
         }
-    }
-
-    override fun successLoadMyPost(msg: String) {
-        Log.d("MyPost", msg)
-        if (msg.isEmpty()) {
-//            binding.rvJobVacancy.visibility = View.INVISIBLE
-//            binding.includeEmpty.tvEmpty.text = "You haven't posted anything yet"
-//            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-            binding.swipeRefresh.isRefreshing = false
-        } else {
-//            binding.rvJobVacancy.visibility = View.VISIBLE
-//            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
-            binding.swipeRefresh.isRefreshing = false
-        }
-    }
-
-    override fun errorLoadMyPost(msg: String) {
-        Log.d("errorLoadPost", msg)
-    }
-
-    override fun getListMyPost(list: List<DataMyJob?>?) {
     }
 
     private val adapterType by lazy {
@@ -274,10 +254,10 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         })
     }
 
-    override fun listLevelClick(view: View, data: VacancyLevelItem) {
+    override fun listLevelClick(view: View, dataVacancyLevel: VacancyLevelItem) {
         when(view.id){
             R.id.relative_click -> {
-                binding.etLevel.setText(data.name)
+                binding.etLevel.setText(dataVacancyLevel?.name)
                 popupDialogLevel?.dismiss()
             }
         }
