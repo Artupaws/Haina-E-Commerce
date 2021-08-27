@@ -7,4 +7,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Ticket (val nameAirlines:String, val iconAirline:String,
                    val listFlightTime:List<TimeFlight?>?, val flightTime:String, val typeFlight:String,
-                   val cityCodeDeparture:String, val cityCodeArrived:String, val priceTicket:String, val departureTime:String, val arrivedTime:String):Parcelable
+                   val cityCodeDeparture:String, val cityCodeArrived:String, val priceTicket:String, val departureTime:String, val arrivedTime:String,
+                   var priceDetail:List<PriceDetailItem?>?, var totalAdult:Int, var totalChild:Int, var totalBaby:Int
+                   ):Parcelable
