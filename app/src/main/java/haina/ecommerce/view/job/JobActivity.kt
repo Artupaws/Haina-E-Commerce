@@ -33,7 +33,10 @@ import haina.ecommerce.model.DataItemJob
 import haina.ecommerce.model.vacancy.DataCreateVacancy
 import haina.ecommerce.model.vacancy.VacancyLevelItem
 import haina.ecommerce.model.vacancy.VacancyTypeItem
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.detailjob.DetailJobActivity
+import haina.ecommerce.view.login.LoginActivity
 import haina.ecommerce.view.posting.newvacancy.NewPostVacancyActivity
 import timber.log.Timber
 import java.util.*
@@ -56,6 +59,7 @@ class JobActivity : AppCompatActivity(), JobContract.View,
     private var isLocationEmpty = true
     private var isStartSalaryEmpty = true
     private var dataCreateVacancy:DataCreateVacancy? = null
+    private lateinit var sharedPref:SharedPreferenceHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,11 +67,24 @@ class JobActivity : AppCompatActivity(), JobContract.View,
         setContentView(binding.root)
         broadcaster = LocalBroadcastManager.getInstance(this)
         presenter = JobPresenter(this, this)
+        sharedPref = SharedPreferenceHelper(this)
+        binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
         presenter.loadListJobCategory()
         presenter.loadListJobLocation()
         presenter.getDataCreateVacancy()
         refresh()
         loadingDialog()
+        if (!sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+            binding.includeLogin.linearNotLogin.visibility = View.VISIBLE
+            binding.searchView.visibility = View.GONE
+            binding.fabCreateVacancy.visibility = View.GONE
+            binding.rvJob.visibility = View.GONE
+        } else{
+            binding.includeLogin.linearNotLogin.visibility = View.GONE
+            binding.searchView.visibility = View.VISIBLE
+            binding.fabCreateVacancy.visibility = View.VISIBLE
+            binding.rvJob.visibility = View.VISIBLE
+        }
         binding.toolbarJob.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarJob.setNavigationOnClickListener { onBackPressed() }
         binding.cvFilterJob.setOnClickListener(this)
@@ -139,6 +156,9 @@ class JobActivity : AppCompatActivity(), JobContract.View,
                 startActivity(Intent(applicationContext, NewPostVacancyActivity::class.java)
                     .putExtra("dataCreateVacancy", dataCreateVacancy)
                     .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList))
+            }
+            R.id.btn_login_not_login -> {
+                startActivity(Intent(applicationContext, LoginActivity::class.java))
             }
         }
     }

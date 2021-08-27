@@ -3,6 +3,7 @@ package haina.ecommerce.view.property.fragmentinputdata
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
@@ -20,6 +21,7 @@ import haina.ecommerce.adapter.property.AdapterListCity
 import haina.ecommerce.adapter.property.AdapterListFacility
 import haina.ecommerce.adapter.property.AdapterListProvince
 import haina.ecommerce.databinding.FragmentInputDataPropertyBinding
+import haina.ecommerce.helper.NumberTextWatcher
 import haina.ecommerce.model.property.DataCity
 import haina.ecommerce.model.property.DataFacilitiesProperty
 import haina.ecommerce.model.property.DataProvince
@@ -92,6 +94,12 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
         radioGroup()
         popupDialogFloor(amountRoom)
         binding.includeDataPropertyTop.rbBoth.isChecked = true
+        val locale = Locale("es", "IDR")
+        val numDecs = 2 // Let's use 2 decimals
+        val priceSell: TextWatcher = NumberTextWatcher(binding.includeDataPropertyTop.etSetPriceSell, locale, numDecs)
+        val priceRent: TextWatcher = NumberTextWatcher(binding.includeDataPropertyTop.etSetPrice, locale, numDecs)
+        binding.includeDataPropertyTop.etSetPrice.addTextChangedListener(priceRent)
+        binding.includeDataPropertyTop.etSetPriceSell.addTextChangedListener(priceSell)
     }
 
     override fun onResume() {

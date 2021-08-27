@@ -7,7 +7,11 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import haina.ecommerce.R
+import haina.ecommerce.databinding.ListItemChooseChipsBinding
 import haina.ecommerce.databinding.ListItemFacilitiesRoomBinding
+import haina.ecommerce.databinding.ListItemPackageVacancyBinding
+import haina.ecommerce.helper.Helper.convertToFormatMoneyIDRFilter
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.vacancy.*
 import haina.ecommerce.preference.SharedPreferenceHelper
@@ -24,9 +28,13 @@ class AdapterDataCreateVacancy(
     private val listExperience: ArrayList<Int?>?,
     private var listVacancyLocation: ArrayList<DataItemHaina?>?,
     private val listVacancySpecialist: ArrayList<VacancySpecialistItem?>?,
-    val itemAdapterCallback: ItemAdapterCallback
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
+    private val dataVacancyCallbackFillDataVacancyFirst: AdapterCallbackFillDataVacancy?,
+    private val dataVacancyCallbackSecond: AdapterCallbackSkillEdu?,
+    private val dataVacancyCallbackPackage: AdapterCallbackPackage?,
+    private val listVacancySkillChoosed: ArrayList<VacancySkillItem?>?
+    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), Filterable {
 
+    var index:Int = -1
     private lateinit var sharedPreferenceHelper: SharedPreferenceHelper
     private var listResultLocation: ArrayList<DataItemHaina?>? = listVacancyLocation
     companion object {
@@ -35,11 +43,11 @@ class AdapterDataCreateVacancy(
 
     inner class ViewHolderVacancyLevel(val binding: ListItemFacilitiesRoomBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(itemHaina: VacancyLevelItem, itemAdapterCallback: ItemAdapterCallback) {
+        fun bind(itemHaina: VacancyLevelItem, adapterCallbackFillDataVacancy: AdapterCallbackFillDataVacancy) {
             with(binding) {
                 tvNameFacilities.text = itemHaina.name
                 relativeClick.setOnClickListener {
-                    itemAdapterCallback.listLevelClick(relativeClick, itemHaina)
+                    adapterCallbackFillDataVacancy.listLevelClick(relativeClick, itemHaina)
                 }
             }
         }
@@ -47,11 +55,11 @@ class AdapterDataCreateVacancy(
 
     inner class ViewHolderType(val binding: ListItemFacilitiesRoomBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(itemHaina: VacancyTypeItem, itemAdapterCallback: ItemAdapterCallback) {
+        fun bind(itemHaina: VacancyTypeItem, adapterCallbackFillDataVacancy: AdapterCallbackFillDataVacancy) {
             with(binding) {
                 tvNameFacilities.text = itemHaina.name
                 relativeClick.setOnClickListener {
-                    itemAdapterCallback.listTypeClick(relativeClick, itemHaina)
+                    adapterCallbackFillDataVacancy.listTypeClick(relativeClick, itemHaina)
                 }
             }
         }
@@ -59,11 +67,11 @@ class AdapterDataCreateVacancy(
 
     inner class ViewHolderVacancyLocation(val binding: ListItemFacilitiesRoomBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(itemHaina: DataItemHaina, itemAdapterCallback: ItemAdapterCallback) {
+        fun bind(itemHaina: DataItemHaina, adapterCallbackFillDataVacancy: AdapterCallbackFillDataVacancy) {
             with(binding) {
                 tvNameFacilities.text = itemHaina.name
                 relativeClick.setOnClickListener {
-                    itemAdapterCallback.listLocationClick(relativeClick, itemHaina)
+                    adapterCallbackFillDataVacancy.listLocationClick(relativeClick, itemHaina)
                 }
             }
         }
@@ -71,11 +79,11 @@ class AdapterDataCreateVacancy(
 
     inner class ViewHolderVacancyExperience(val binding: ListItemFacilitiesRoomBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(itemHaina: Int, itemAdapterCallback: ItemAdapterCallback) {
+        fun bind(itemHaina: Int, adapterCallbackFillDataVacancy: AdapterCallbackFillDataVacancy) {
             with(binding) {
                 tvNameFacilities.text = itemHaina.toString()
                 relativeClick.setOnClickListener {
-                    itemAdapterCallback.listExperienceClick(relativeClick, itemHaina)
+                    adapterCallbackFillDataVacancy.listExperienceClick(relativeClick, itemHaina)
                 }
             }
         }
@@ -83,11 +91,68 @@ class AdapterDataCreateVacancy(
 
     inner class ViewHolderVacancySpecialist(val binding: ListItemFacilitiesRoomBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(itemHaina: VacancySpecialistItem, itemAdapterCallback: ItemAdapterCallback) {
+        fun bind(itemHaina: VacancySpecialistItem, adapterCallbackFillDataVacancy: AdapterCallbackFillDataVacancy) {
             with(binding) {
                 tvNameFacilities.text = itemHaina.name
                 relativeClick.setOnClickListener {
-                    itemAdapterCallback.listSpecialistClick(relativeClick, itemHaina)
+                    adapterCallbackFillDataVacancy.listSpecialistClick(relativeClick, itemHaina)
+                }
+            }
+        }
+    }
+
+    inner class ViewHolderVacancySkills(val binding: ListItemFacilitiesRoomBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(itemHaina: VacancySkillItem, dataVacancyCallbackSecond:AdapterCallbackSkillEdu?) {
+            with(binding) {
+                tvNameFacilities.text = itemHaina.name
+                relativeClick.setOnClickListener {
+                    dataVacancyCallbackSecond?.listSkillsClick(relativeClick, itemHaina)
+                }
+            }
+        }
+    }
+
+    inner class ViewHolderLastEducation(val binding: ListItemFacilitiesRoomBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(itemHaina: VacancyEducationItem, dataVacancyCallbackSecond:AdapterCallbackSkillEdu?) {
+            with(binding) {
+                tvNameFacilities.text = itemHaina.name
+                relativeClick.setOnClickListener {
+                    dataVacancyCallbackSecond?.listEduClick(relativeClick, itemHaina)
+                }
+            }
+        }
+    }
+
+    inner class ViewHolderSkillChoosed(val binding: ListItemChooseChipsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(itemHaina: VacancySkillItem, dataVacancyCallbackSecond:AdapterCallbackSkillEdu?) {
+            with(binding) {
+                chip.text = itemHaina.name
+                chip.setOnCloseIconClickListener {
+                    dataVacancyCallbackSecond?.listChipsSkillClick(chip,itemHaina)
+                }
+            }
+        }
+    }
+
+    inner class ViewHolderPackage(val binding: ListItemPackageVacancyBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(itemHaina: VacancyPackageItem, dataVacancyCallbackPackage:AdapterCallbackPackage?) {
+            with(binding) {
+               tvNamePackage.text = itemHaina.name
+                tvPricePackage.text = convertToFormatMoneyIDRFilter(itemHaina.price.toString())
+                tvDescriptionPackage.text = itemHaina.description
+                cvClick.setOnClickListener { index = adapterPosition
+                    notifyDataSetChanged()
+                    dataVacancyCallbackPackage?.listPackageClick(cvClick, itemHaina)
+                }
+                if (index == adapterPosition){
+                    relativeBackground.setBackgroundResource(R.drawable.background_line_corner_input_text_black)
+                }
+                else{
+                    relativeBackground.setBackgroundResource(R.drawable.background_card_edge)
                 }
             }
         }
@@ -125,9 +190,37 @@ class AdapterDataCreateVacancy(
                     )
                 )
             }
-            else -> {
+            5 -> {
                 ViewHolderVacancySpecialist(
                     ListItemFacilitiesRoomBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    )
+                )
+            }
+            6 -> {
+                ViewHolderVacancySkills(
+                    ListItemFacilitiesRoomBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    )
+                )
+            }
+            7 -> {
+                ViewHolderLastEducation(
+                    ListItemFacilitiesRoomBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    )
+                )
+            }
+            8 -> {
+                ViewHolderSkillChoosed(
+                    ListItemChooseChipsBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    )
+                )
+            }
+            else -> {
+                ViewHolderPackage(
+                    ListItemPackageVacancyBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
                     )
                 )
@@ -141,21 +234,37 @@ class AdapterDataCreateVacancy(
         val location: DataItemHaina? = listVacancyLocation?.get(position)
         val yearExperience: Int? = listExperience?.get(position)
         val specialist: VacancySpecialistItem? = listVacancySpecialist?.get(position)
+        val skills: VacancySkillItem? = listVacancySkill?.get(position)
+        val skillChoosed: VacancySkillItem? = listVacancySkillChoosed?.get(position)
+        val lastEdu: VacancyEducationItem? = listVacancyEducation?.get(position)
+        val packageAds: VacancyPackageItem? = listVacancyPackage?.get(position)
         when (VIEW_TYPE) {
             1 -> {
-                (holder as ViewHolderVacancyLevel).bind(level!!, itemAdapterCallback)
+                (holder as ViewHolderVacancyLevel).bind(level!!, dataVacancyCallbackFillDataVacancyFirst!!)
             }
             2 -> {
-                (holder as ViewHolderVacancyLocation).bind(location!!, itemAdapterCallback)
+                (holder as ViewHolderVacancyLocation).bind(location!!, dataVacancyCallbackFillDataVacancyFirst!!)
             }
             3 -> {
-                (holder as ViewHolderType).bind(type!!, itemAdapterCallback)
+                (holder as ViewHolderType).bind(type!!, dataVacancyCallbackFillDataVacancyFirst!!)
             }
             4 -> {
-                (holder as ViewHolderVacancyExperience).bind(yearExperience!!, itemAdapterCallback)
+                (holder as ViewHolderVacancyExperience).bind(yearExperience!!, dataVacancyCallbackFillDataVacancyFirst!!)
+            }
+            5 -> {
+                (holder as ViewHolderVacancySpecialist).bind(specialist!!, dataVacancyCallbackFillDataVacancyFirst!!)
+            }
+            6 -> {
+                (holder as ViewHolderVacancySkills).bind(skills!!, dataVacancyCallbackSecond)
+            }
+            7 -> {
+                (holder as ViewHolderLastEducation).bind(lastEdu!!, dataVacancyCallbackSecond)
+            }
+            8 -> {
+                (holder as ViewHolderSkillChoosed).bind(skillChoosed!!, dataVacancyCallbackSecond)
             }
             else -> {
-                (holder as ViewHolderVacancySpecialist).bind(specialist!!, itemAdapterCallback)
+                (holder as ViewHolderPackage).bind(packageAds!!, dataVacancyCallbackPackage)
             }
         }
     }
@@ -176,18 +285,40 @@ class AdapterDataCreateVacancy(
             4 -> {
                 listExperience!!.size
             }
-            else -> {
+            5 -> {
                 listVacancySpecialist!!.size
+            }
+            6 -> {
+                listVacancySkill!!.size
+            }
+            7 -> {
+                listVacancyEducation!!.size
+            }
+            8 -> {
+                listVacancySkillChoosed!!.size
+            }
+            else -> {
+                listVacancyPackage!!.size
             }
         }
     }
 
-    interface ItemAdapterCallback {
+    interface AdapterCallbackFillDataVacancy {
         fun listLevelClick(view: View, dataVacancyLevel: VacancyLevelItem)
         fun listTypeClick(view: View, data: VacancyTypeItem)
         fun listLocationClick(view: View, data: DataItemHaina)
         fun listExperienceClick(view: View, yearExperience: Int)
         fun listSpecialistClick(view: View, data: VacancySpecialistItem)
+    }
+
+    interface AdapterCallbackSkillEdu {
+        fun listSkillsClick(view: View, data: VacancySkillItem)
+        fun listEduClick(view: View, data: VacancyEducationItem)
+        fun listChipsSkillClick(view: View, data: VacancySkillItem)
+    }
+
+    interface AdapterCallbackPackage{
+        fun listPackageClick(view: View, data:VacancyPackageItem)
     }
 
     fun addVacancyLevel(data: List<VacancyLevelItem?>?) {
@@ -215,6 +346,26 @@ class AdapterDataCreateVacancy(
         notifyItemRangeInserted((listVacancySpecialist?.size?.minus(data?.size!!)!!), data?.size!!)
     }
 
+    fun addVacancySkills(data: List<VacancySkillItem?>?) {
+        data?.let { listVacancySkill?.addAll(it) }
+        notifyItemRangeInserted((listVacancySkill?.size?.minus(data?.size!!)!!), data?.size!!)
+    }
+
+    fun addVacancyEdu(data: List<VacancyEducationItem?>?) {
+        data?.let { listVacancyEducation?.addAll(it) }
+        notifyItemRangeInserted((listVacancyEducation?.size?.minus(data?.size!!)!!), data?.size!!)
+    }
+
+    fun addVacancySkillChoosed(data: List<VacancySkillItem?>?) {
+        data?.let { listVacancySkillChoosed?.addAll(it) }
+        notifyItemRangeInserted((listVacancySkillChoosed?.size?.minus(data?.size!!)!!), data?.size!!)
+    }
+
+    fun addVacancyPackageAds(data: List<VacancyPackageItem?>?) {
+        data?.let { listVacancyPackage?.addAll(it) }
+        notifyItemRangeInserted((listVacancyPackage?.size?.minus(data?.size!!)!!), data?.size!!)
+    }
+
     fun clear() {
         when(VIEW_TYPE) {
             1 -> {
@@ -233,8 +384,24 @@ class AdapterDataCreateVacancy(
                 listVacancyLocation?.clear()
                 notifyDataSetChanged()
             }
-            else -> {
+            5 -> {
                 listVacancySpecialist?.clear()
+                notifyDataSetChanged()
+            }
+            6 -> {
+                listVacancySkill?.clear()
+                notifyDataSetChanged()
+            }
+            7 -> {
+                listVacancyEducation?.clear()
+                notifyDataSetChanged()
+            }
+            8 -> {
+                listVacancySkillChoosed?.clear()
+                notifyDataSetChanged()
+            }
+            else -> {
+                listVacancyPackage?.clear()
                 notifyDataSetChanged()
             }
         }

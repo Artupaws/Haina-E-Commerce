@@ -9,6 +9,7 @@ import android.view.View
 import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import haina.ecommerce.R
 import haina.ecommerce.adapter.vacancy.AdapterDataCreateVacancy
 import haina.ecommerce.databinding.ActivityPostNewVacancyBinding
+import haina.ecommerce.helper.Helper.changeFormatMoneyToValue
 import haina.ecommerce.helper.NumberTextWatcher
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.vacancy.*
@@ -23,7 +25,7 @@ import haina.ecommerce.view.login.LoginActivity
 import timber.log.Timber
 import java.util.*
 
-class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClickListener, AdapterDataCreateVacancy.ItemAdapterCallback {
+class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClickListener, AdapterDataCreateVacancy.AdapterCallbackFillDataVacancy {
 
     private lateinit var binding:ActivityPostNewVacancyBinding
     private lateinit var presenter: VacancyPresenter
@@ -32,6 +34,15 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
     private var popupDialogExperience:Dialog? = null
     private var popupDialogSpecialist:Dialog? = null
     private var popupDialogLocation:Dialog? = null
+    private var type:Int? = null
+    private var idCompany:Int? = null
+    private var level:Int? = null
+    private var experience:Int? = null
+    private var specialist:Int? = null
+    private var location:Int? = null
+    private var showSalary:Int = 0
+    private lateinit var request : RequestCreateVacancy
+    private lateinit var dataCreateVacancy :DataCreateVacancy
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,15 +58,15 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         binding.toolbarCreateVacancy.setNavigationOnClickListener {
             onBackPressed()
         }
-        val dataCreateVacancy = intent.getParcelableExtra<DataCreateVacancy>("dataCreateVacancy")
+        dataCreateVacancy = intent.getParcelableExtra("dataCreateVacancy")!!
         val dataLocationJob = intent.getParcelableArrayListExtra<DataItemHaina>("locationJob")
         for (i in 1..10){
             popupDialogExperience(listOf(i))
         }
-        popupDialogType(dataCreateVacancy?.vacancyType)
-        popupDialogLevel(dataCreateVacancy?.vacancyLevel)
+        popupDialogType(dataCreateVacancy.vacancyType)
+        popupDialogLevel(dataCreateVacancy.vacancyLevel)
         popupDialogLocation(dataLocationJob)
-        popupDialogSpecialist(dataCreateVacancy?.vacancySpecialist)
+        popupDialogSpecialist(dataCreateVacancy.vacancySpecialist)
 
         val locale = Locale("es", "IDR")
         val numDecs = 2 // Let's use 2 decimals
@@ -63,6 +74,16 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         val high: TextWatcher = NumberTextWatcher(binding.etHighSalary, locale, numDecs)
         binding.etMinimSalary.addTextChangedListener(low)
         binding.etHighSalary.addTextChangedListener(high)
+
+        binding.cbShowSalary.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked){
+                showSalary = 1
+                Toast.makeText(applicationContext, "This salary will be show", Toast.LENGTH_SHORT).show()
+            }
+            else
+                showSalary = 0
+                Toast.makeText(applicationContext, "You hide the salary", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun refresh(){
@@ -78,7 +99,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
                 startActivity(intent)
             }
             R.id.btn_next -> {
-                startActivity(Intent(applicationContext, SkillAndEducationActivity::class.java))
+                checkDataVacancyFirst()
             }
             R.id.et_type -> {
                 AdapterDataCreateVacancy.VIEW_TYPE = 3
@@ -105,27 +126,32 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
 
     private val adapterType by lazy {
         AdapterDataCreateVacancy(applicationContext, null, null, arrayListOf(),
-            null, null, null, null, null, this)
+            null, null, null, null, null,
+            this, null, null, null)
     }
 
     private val adapterLevel by lazy {
         AdapterDataCreateVacancy(applicationContext, arrayListOf(), null, null,
-            null, null, null, null, null,this)
+            null, null, null, null, null,
+            this, null, null, null)
     }
 
     private val adapterLocation by lazy {
         AdapterDataCreateVacancy(applicationContext, null, null, null,
-            null, null, null, arrayListOf(), null,this)
+            null, null, null, arrayListOf(), null,
+            this, null, null, null)
     }
 
     private val adapterExperience by lazy {
         AdapterDataCreateVacancy(applicationContext, null, null, null,
-            null, null, arrayListOf(), null, null,this)
+            null, null, arrayListOf(), null, null,
+            this, null, null, null)
     }
 
     private val adapterSpecialist by lazy {
         AdapterDataCreateVacancy(applicationContext, null, null, null,
-            null, null, null, null, arrayListOf(),this)
+            null, null, null, null, arrayListOf(),
+            this, null, null, null)
     }
 
     private fun popupDialogType(data: List<VacancyTypeItem?>?) {
@@ -254,11 +280,138 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         })
     }
 
+    private fun checkDataVacancyFirst(){
+        val isEmptyPositionJob:Boolean
+        val isEmptyType:Boolean
+        val isEmptyLevel:Boolean
+        val isEmptyExperience:Boolean
+        val isEmptySpecialist:Boolean
+        val isEmptyLocation:Boolean
+        val isEmptyAddress:Boolean
+        val isEmptyMinSalary:Boolean
+        val isEmptyMaxSalary:Boolean
+        val isEmptyDescription:Boolean
+
+        var positionJob = binding.etPositionJob.text.toString()
+        var typeParams = type
+        var levelParams = level
+        var experienceParams = experience
+        var specialistParams = specialist
+        var locationParams = location
+        var address = binding.etAddress.text.toString()
+        var minSalary = changeFormatMoneyToValue(binding.etMinimSalary.text.toString())
+        var highSalary = changeFormatMoneyToValue(binding.etHighSalary.text.toString())
+        var description = binding.etDescriptionAds.text.toString()
+
+        if (positionJob.isNullOrEmpty()){
+            binding.tvTitlePositionJob.error = getString(R.string.cant_empty)
+            isEmptyPositionJob = true
+        } else {
+            binding.tvTitlePositionJob.error = null
+            isEmptyPositionJob = false
+            positionJob = binding.etPositionJob.text.toString()
+        }
+
+        if (typeParams == null){
+            binding.tvTitleType.error = getString(R.string.cant_empty)
+            isEmptyType = true
+        } else {
+            binding.tvTitleType.error = null
+            isEmptyType = false
+            typeParams = type
+        }
+
+        if (levelParams == null){
+            binding.tvTitleLevel.error = getString(R.string.cant_empty)
+            isEmptyLevel = true
+        } else {
+            binding.tvTitleLevel.error = null
+            isEmptyLevel = false
+            levelParams = level
+        }
+
+        if (experienceParams == null){
+            binding.tvTitleExperience.error = getString(R.string.cant_empty)
+            isEmptyExperience = true
+        } else {
+            binding.tvTitleExperience.error = null
+            isEmptyExperience = false
+            experienceParams = experience
+        }
+
+        if (specialistParams == null){
+            binding.tvTitleSpecialist.error = getString(R.string.cant_empty)
+            isEmptySpecialist = true
+        } else {
+            binding.tvTitleSpecialist.error = null
+            isEmptySpecialist = false
+            specialistParams = specialist
+        }
+
+        if (locationParams == null){
+            binding.tvTitleLocation.error = getString(R.string.cant_empty)
+            isEmptyLocation = true
+        } else {
+            binding.tvTitleLocation.error = null
+            isEmptyLocation = false
+            locationParams = location
+        }
+
+        if (minSalary.isNullOrEmpty()){
+            binding.tvTitleSalary.error = getString(R.string.cant_empty)
+            isEmptyMinSalary = true
+        } else {
+            binding.tvTitleSalary.error = null
+            isEmptyMinSalary = false
+            minSalary = changeFormatMoneyToValue(binding.etMinimSalary.text.toString())
+        }
+
+        if (highSalary.isNullOrEmpty()){
+            binding.tvTitleSalary.error = getString(R.string.cant_empty)
+            isEmptyMaxSalary = true
+        } else {
+            binding.tvTitleSalary.error = null
+            isEmptyMaxSalary = false
+            highSalary = changeFormatMoneyToValue(binding.etHighSalary.text.toString())
+        }
+
+        if (description.isNullOrEmpty()){
+            binding.tvDescriptionJob.error = getString(R.string.cant_empty)
+            isEmptyDescription = true
+        } else {
+            binding.tvDescriptionJob.error = null
+            isEmptyDescription = false
+            description = binding.etDescriptionAds.text.toString()
+        }
+
+        if (address.isNullOrEmpty()){
+            binding.tvTitleAddress.error = getString(R.string.cant_empty)
+            isEmptyAddress = true
+        } else {
+            binding.tvTitleAddress.error = null
+            isEmptyAddress = false
+            address = binding.etAddress.text.toString()
+        }
+
+        if (!isEmptyPositionJob && !isEmptyType && !isEmptyLevel && !isEmptyExperience && !isEmptySpecialist && !isEmptyLocation &&
+            !isEmptyAddress && !isEmptyMinSalary && !isEmptyMaxSalary && !isEmptyDescription){
+            request = RequestCreateVacancy(positionJob, 0, specialistParams!!, levelParams!!, typeParams!!, description,
+                experienceParams!!, null, minSalary, highSalary,
+                showSalary, address, locationParams!!, null, null, null)
+            startActivity(Intent(applicationContext, SkillAndEducationActivity::class.java)
+                .putExtra("dataRequest", request)
+                .putExtra("dataCreateVacancy", dataCreateVacancy))
+        } else {
+            Toast.makeText(applicationContext, "Please complete the form", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun listLevelClick(view: View, dataVacancyLevel: VacancyLevelItem) {
         when(view.id){
             R.id.relative_click -> {
-                binding.etLevel.setText(dataVacancyLevel?.name)
+                binding.etLevel.setText(dataVacancyLevel.name)
                 popupDialogLevel?.dismiss()
+                level = dataVacancyLevel.id
             }
         }
     }
@@ -268,6 +421,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
             R.id.relative_click -> {
                 binding.etType.setText(data.name)
                 popupDialogType?.dismiss()
+                type = data.id
             }
         }
     }
@@ -277,6 +431,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
             R.id.relative_click -> {
                 binding.etLocationJob.setText(data.name)
                 popupDialogLocation?.dismiss()
+                location = data.id
             }
         }
     }
@@ -286,6 +441,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
             R.id.relative_click -> {
                 binding.etExperience.setText(yearExperience.toString())
                 popupDialogExperience?.dismiss()
+                experience = yearExperience
             }
         }
     }
@@ -295,6 +451,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
             R.id.relative_click -> {
                 binding.etSpecialist.setText(data.name)
                 popupDialogSpecialist?.dismiss()
+                specialist = data.id
             }
         }
     }

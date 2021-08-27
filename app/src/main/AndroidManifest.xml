@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light"
         android:usesCleartextTraffic="true">
-        <activity android:name=".packagepricevacancy.PackagePriceVacancyActivity"></activity>
+        <activity android:name="haina.ecommerce.view.posting.newvacancy.PackagePriceVacancyActivity"></activity>
         <activity android:name=".view.posting.newvacancy.SkillAndEducationActivity" />
         <activity android:name=".view.forum.createnewpost.ShowVideoActivity" />
         <activity

@@ -24,6 +24,7 @@ import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
 import haina.ecommerce.model.transactionlist.ResponseGetListTransactionPending
+import haina.ecommerce.model.vacancy.ResponseCreateVacancy
 import haina.ecommerce.model.vacancy.ResponseGetDataCreateVacancy
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -854,4 +855,49 @@ interface NetworkService {
     @Headers("No-Authentication: true")
     @GET("api/job/vacancy/data")
     fun getDataCreateVacancy():Call<ResponseGetDataCreateVacancy>
+
+    //Create Post Vacancy Free
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/job/vacancy/post")
+    fun createPostVacancy(
+        @Field("position")positionJob:String,
+        @Field("id_company")idCompany:Int,
+        @Field("id_specialist")idSpecialist:Int,
+        @Field("level")level:Int,
+        @Field("type")type:Int,
+        @Field("description")description:String,
+        @Field("experience")experience:Int,
+        @Field("id_edu")idEdu:Int,
+        @Field("min_salary")minSalary:Int,
+        @Field("max_salary")maxSalary:Int,
+        @Field("salary_display")salaryDisplay:Int,
+        @Field("address")address:String,
+        @Field("id_city")idCity:Int,
+        @Field("package")packageId:Int,
+        @Field("skill")skill:String
+    ):Call<ResponseCreateVacancy>
+
+    //Create Post Vacancy Paid
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/job/vacancy/post")
+    fun createPostVacancyPaid(
+        @Field("position")positionJob:String,
+        @Field("id_company")idCompany:Int,
+        @Field("id_specialist")idSpecialist:Int,
+        @Field("level")level:Int,
+        @Field("type")type:Int,
+        @Field("description")description:String,
+        @Field("experience")experience:Int,
+        @Field("id_edu")idEdu:Int,
+        @Field("min_salary")minSalary:Int,
+        @Field("max_salary")maxSalary:Int,
+        @Field("salary_display")salaryDisplay:Int,
+        @Field("address")address:String,
+        @Field("id_city")idCity:Int,
+        @Field("package")packageId:Int,
+        @Field("payment_method_id")paymentMethodId:Int?,
+        @Field("skill")skill:String,
+    ):Call<ResponseCreateVacancy>
 }

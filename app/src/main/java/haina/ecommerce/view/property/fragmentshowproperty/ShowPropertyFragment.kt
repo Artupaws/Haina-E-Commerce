@@ -22,9 +22,10 @@ import haina.ecommerce.adapter.property.AdapterShowProperty
 import haina.ecommerce.databinding.FragmentShowPropertyBinding
 import haina.ecommerce.model.property.DataShowProperty
 import haina.ecommerce.view.property.ShowPropertyActivity
+import timber.log.Timber
 
 
-class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClickListener, AdapterShowProperty.ItemAdapterCallback {
+ class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClickListener, AdapterShowProperty.ItemAdapterCallback {
 
     private lateinit var _binding:FragmentShowPropertyBinding
     private val binding get() = _binding
@@ -152,7 +153,7 @@ class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClick
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.fab_create_vacancy -> {
+            R.id.fab_create_post -> {
                 Navigation.findNavController(binding.fabCreatePost).navigate(R.id.action_showPropertyFragment_to_inputDataPropertyFragment2)
             }
         }
