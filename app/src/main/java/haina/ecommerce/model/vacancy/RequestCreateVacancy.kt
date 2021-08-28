@@ -53,5 +53,5 @@ data class RequestCreateVacancy(
     val paymentMethod:Int?,
 
     @field:SerializedName("skill")
-    val Skill:String?
+    val skill:String?
 ):Parcelable

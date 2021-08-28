@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -28,6 +29,7 @@ import haina.ecommerce.adapter.AdapterLocationFilterJob
 import haina.ecommerce.adapter.vacancy.AdapterDataCreateVacancy
 import haina.ecommerce.databinding.ActivityJobBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.DataCompany
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataItemJob
 import haina.ecommerce.model.vacancy.DataCreateVacancy
@@ -38,6 +40,7 @@ import haina.ecommerce.util.Constants
 import haina.ecommerce.view.detailjob.DetailJobActivity
 import haina.ecommerce.view.login.LoginActivity
 import haina.ecommerce.view.posting.newvacancy.NewPostVacancyActivity
+import haina.ecommerce.view.register.company.RegisterCompanyActivity
 import timber.log.Timber
 import java.util.*
 
@@ -48,6 +51,7 @@ class JobActivity : AppCompatActivity(), JobContract.View,
     private lateinit var presenter: JobPresenter
     private var popupFilter: Dialog? = null
     private var progressDialog: Dialog? = null
+    private var popupCheckDataCompany: Dialog? = null
     private val helper: Helper = Helper
     private var broadcaster: LocalBroadcastManager? = null
     val data:MutableMap<String, Int> = HashMap()
@@ -60,6 +64,7 @@ class JobActivity : AppCompatActivity(), JobContract.View,
     private var isStartSalaryEmpty = true
     private var dataCreateVacancy:DataCreateVacancy? = null
     private lateinit var sharedPref:SharedPreferenceHelper
+    private var idCompany:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,8 +77,10 @@ class JobActivity : AppCompatActivity(), JobContract.View,
         presenter.loadListJobCategory()
         presenter.loadListJobLocation()
         presenter.getDataCreateVacancy()
+        presenter.checkRegisterCompany()
         refresh()
         loadingDialog()
+        showPopupRegisterCompany()
         if (!sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
             binding.includeLogin.linearNotLogin.visibility = View.VISIBLE
             binding.searchView.visibility = View.GONE
@@ -147,13 +154,30 @@ class JobActivity : AppCompatActivity(), JobContract.View,
         presenter.loadListJobVacancy(data)
     }
 
+    private fun showPopupRegisterCompany() {
+        popupCheckDataCompany = Dialog(this)
+        popupCheckDataCompany?.setContentView(R.layout.popup_check_register_company)
+        popupCheckDataCompany?.setCancelable(true)
+        popupCheckDataCompany?.window?.setBackgroundDrawable(ContextCompat.getDrawable(applicationContext, android.R.color.white))
+        val window:Window = popupCheckDataCompany?.window!!
+        window.setGravity(Gravity.CENTER)
+        val actionCancel = popupCheckDataCompany?.findViewById<TextView>(R.id.tv_action_cancel)
+        val actionYes = popupCheckDataCompany?.findViewById<TextView>(R.id.tv_action_yes)
+        actionCancel?.setOnClickListener { popupCheckDataCompany?.dismiss() }
+        actionYes?.setOnClickListener {
+            startActivity(Intent(applicationContext, RegisterCompanyActivity::class.java))
+            popupCheckDataCompany?.dismiss()
+        }
+    }
+
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.cv_filter_job -> {
                 popupFilter?.show()
             }
             R.id.fab_create_vacancy -> {
-                startActivity(Intent(applicationContext, NewPostVacancyActivity::class.java)
+                if (idCompany == 0) popupCheckDataCompany?.show()
+                else startActivity(Intent(applicationContext, NewPostVacancyActivity::class.java)
                     .putExtra("dataCreateVacancy", dataCreateVacancy)
                     .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList))
             }
@@ -282,6 +306,14 @@ class JobActivity : AppCompatActivity(), JobContract.View,
 
     override fun messageGetDataCreateVacancy(msg: String) {
         Timber.d(msg)
+    }
+
+    override fun messageCheckRegisterCompany(msg: String) {
+        Timber.d(msg)
+    }
+
+    override fun getDataRegisterCompany(data: DataCompany) {
+        idCompany = data.id!!
     }
 
     override fun showLoading() {

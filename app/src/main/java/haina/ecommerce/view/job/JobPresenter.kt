@@ -1,7 +1,9 @@
 package haina.ecommerce.view.job
 
 import android.content.Context
+import android.util.Log
 import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.model.ResponseCheckRegisterCompany
 import haina.ecommerce.model.ResponseGetJob
 import haina.ecommerce.model.ResponseJobCategory
 import haina.ecommerce.model.ResponseListJobLocation
@@ -104,6 +106,29 @@ class JobPresenter(val view: JobContract.View, val context: Context){
 
             override fun onFailure(call: Call<ResponseGetDataCreateVacancy>, t: Throwable) {
                 view.messageGetDataCreateVacancy(t.localizedMessage.toString())
+            }
+
+        })
+    }
+
+    fun checkRegisterCompany(){
+        view.showLoading()
+        val callCheckRegisterCompany = NetworkConfig().getConnectionHainaBearer(context).checkRegisterCompany()
+        callCheckRegisterCompany.enqueue(object : retrofit2.Callback<ResponseCheckRegisterCompany>{
+            override fun onResponse(call: Call<ResponseCheckRegisterCompany>, response: Response<ResponseCheckRegisterCompany>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageCheckRegisterCompany(response.body()?.message.toString())
+                    val data = response.body()?.dataCompany
+                    view.getDataRegisterCompany(data!!)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageCheckRegisterCompany(error.getString("message"))
+                }
+            }
+            override fun onFailure(call: Call<ResponseCheckRegisterCompany>, t: Throwable) {
+                view.dismissLoading()
+                view.messageCheckRegisterCompany(t.localizedMessage.toString())
             }
 
         })

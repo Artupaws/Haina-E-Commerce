@@ -65,7 +65,9 @@ VacancyContract.ViewCreateVacancyFree{
         if (!isEmptyIdPackage){
             request = RequestCreateVacancy(this.request!!.position, this.request!!.idCompany, this.request!!.idSpecialist, this.request!!.level, this.request!!.type, this.request!!.description,
                 this.request!!.experience, this.request!!.idEdu, this.request!!.minSalary, this.request!!.maxSalary, this.request!!.salaryDisplay,
-                this.request!!.address, this.request!!.idCity, idPackageParams, null, this.request!!.Skill)
+                this.request!!.address, this.request!!.idCity, idPackageParams, null, this.request!!.skill)
+            presenter.createVacancyFree(request!!.position, request!!.idCompany, request!!.idSpecialist, request!!.level, request!!.type, request!!.description, request!!.experience, request!!.idEdu!!, request!!.minSalary.toInt(),
+                request!!.maxSalary.toInt(), request!!.salaryDisplay, request!!.address, request!!.idCity, request!!.packageAds!!, request!!.skill!!)
         } else {
             binding.tvWarningEmpty.visibility = View.VISIBLE
         }

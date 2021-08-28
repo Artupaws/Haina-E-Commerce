@@ -1,6 +1,7 @@
 package haina.ecommerce.view.job
 
 import haina.ecommerce.base.BaseView
+import haina.ecommerce.model.DataCompany
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataItemJob
 import haina.ecommerce.model.vacancy.DataCreateVacancy
@@ -20,5 +21,8 @@ interface JobContract {
 
         fun getDataCreateVacancy(data:DataCreateVacancy?)
         fun messageGetDataCreateVacancy(msg:String)
+
+        fun messageCheckRegisterCompany(msg:String)
+        fun getDataRegisterCompany(data:DataCompany)
     }
 }
