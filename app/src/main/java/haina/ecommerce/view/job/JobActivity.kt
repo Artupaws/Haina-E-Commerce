@@ -179,12 +179,21 @@ class JobActivity : AppCompatActivity(), JobContract.View,
                 if (idCompany == 0) popupCheckDataCompany?.show()
                 else startActivity(Intent(applicationContext, NewPostVacancyActivity::class.java)
                     .putExtra("dataCreateVacancy", dataCreateVacancy)
-                    .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList))
+                    .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
+                    .putExtra("idCompany", idCompany))
             }
             R.id.btn_login_not_login -> {
                 startActivity(Intent(applicationContext, LoginActivity::class.java))
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.checkRegisterCompany()
+        presenter.getDataCreateVacancy()
+        presenter.loadListJobLocation()
+        presenter.loadListJobCategory()
     }
 
     override fun onStart() {

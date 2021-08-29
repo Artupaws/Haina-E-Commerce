@@ -58,6 +58,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         binding.toolbarCreateVacancy.setNavigationOnClickListener {
             onBackPressed()
         }
+        idCompany = intent.getIntExtra("idCompany", 0)
         dataCreateVacancy = intent.getParcelableExtra("dataCreateVacancy")!!
         val dataLocationJob = intent.getParcelableArrayListExtra<DataItemHaina>("locationJob")
         for (i in 1..10){
@@ -395,7 +396,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
 
         if (!isEmptyPositionJob && !isEmptyType && !isEmptyLevel && !isEmptyExperience && !isEmptySpecialist && !isEmptyLocation &&
             !isEmptyAddress && !isEmptyMinSalary && !isEmptyMaxSalary && !isEmptyDescription){
-            request = RequestCreateVacancy(positionJob, 0, specialistParams!!, levelParams!!, typeParams!!, description,
+            request = RequestCreateVacancy(positionJob, idCompany!!, specialistParams!!, levelParams!!, typeParams!!, description,
                 experienceParams!!, null, minSalary, highSalary,
                 showSalary, address, locationParams!!, null, null, null)
             startActivity(Intent(applicationContext, SkillAndEducationActivity::class.java)

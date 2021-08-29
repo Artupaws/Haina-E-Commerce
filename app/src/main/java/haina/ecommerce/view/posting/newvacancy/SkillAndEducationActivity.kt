@@ -22,7 +22,7 @@ import haina.ecommerce.model.vacancy.VacancySkillItem
 import timber.log.Timber
 import java.util.ArrayList
 
-class SkillAndEducationActivity : AppCompatActivity(), View.OnClickListener, AdapterDataCreateVacancy.AdapterCallbackSkillEdu {
+class  SkillAndEducationActivity : AppCompatActivity(), View.OnClickListener, AdapterDataCreateVacancy.AdapterCallbackSkillEdu {
 
     private lateinit var binding:ActivitySkillAndEducationBinding
     private var request:RequestCreateVacancy? = null

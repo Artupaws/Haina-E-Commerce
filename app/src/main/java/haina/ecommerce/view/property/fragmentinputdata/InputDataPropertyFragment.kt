@@ -21,6 +21,7 @@ import haina.ecommerce.adapter.property.AdapterListCity
 import haina.ecommerce.adapter.property.AdapterListFacility
 import haina.ecommerce.adapter.property.AdapterListProvince
 import haina.ecommerce.databinding.FragmentInputDataPropertyBinding
+import haina.ecommerce.helper.Helper.changeFormatMoneyToValue
 import haina.ecommerce.helper.NumberTextWatcher
 import haina.ecommerce.model.property.DataCity
 import haina.ecommerce.model.property.DataFacilitiesProperty
@@ -322,7 +323,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
     }
 
     private fun checkDataProperty(){
-        var typePropertyParams = propertyType.toLowerCase()
+        var typePropertyParams = propertyType.lowercase()
         var typePostingParams = typePosting
         var buildingAreaParams = binding.includeDataPropertyTop.etBuildingArea.text.toString()
         var landAreaParams = binding.includeDataPropertyTop.etSurfaceArea.text.toString()
@@ -337,8 +338,8 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
         var addressParams = binding.includeDataPropertyTop.etAddressProperty.text.toString()
         var titleParams = binding.includeDataPropertyTop.etTitleAds.text.toString()
         var descriptionParams = binding.includeDataPropertyTop.etDescriptionAds.text.toString()
-        var priceSellParams = binding.includeDataPropertyTop.etSetPriceSell.text.toString()
-        var priceRentParams = binding.includeDataPropertyTop.etSetPrice.text.toString()
+        var priceSellParams = changeFormatMoneyToValue(binding.includeDataPropertyTop.etSetPriceSell.text.toString())
+        var priceRentParams = changeFormatMoneyToValue(binding.includeDataPropertyTop.etSetPrice.text.toString())
         var condition:String = if (yearParams == Calendar.getInstance().get(Calendar.YEAR).toString()){
             "New"
         } else{

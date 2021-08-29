@@ -11,9 +11,11 @@ import androidx.core.content.ContextCompat
 import haina.ecommerce.R
 import haina.ecommerce.adapter.vacancy.AdapterDataCreateVacancy
 import haina.ecommerce.databinding.ActivityPackagePriceVacancyBinding
+import haina.ecommerce.helper.Helper.changeFormatMoneyToValue
 import haina.ecommerce.model.vacancy.DataCreateVacancy
 import haina.ecommerce.model.vacancy.RequestCreateVacancy
 import haina.ecommerce.model.vacancy.VacancyPackageItem
+import haina.ecommerce.view.checkout.CheckoutActivity
 import haina.ecommerce.view.property.FinishPropertyActivity
 import timber.log.Timber
 
@@ -27,6 +29,8 @@ VacancyContract.ViewCreateVacancyFree{
     private var idPackage:Int? = null
     private var progressDialog:Dialog? = null
     private lateinit var presenter: VacancyPresenter
+    private var price:Int = 0
+    private var packageNameAds:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,12 +66,34 @@ VacancyContract.ViewCreateVacancyFree{
             binding.tvWarningEmpty.visibility = View.GONE
             idPackageParams = idPackage
         }
+
         if (!isEmptyIdPackage){
             request = RequestCreateVacancy(this.request!!.position, this.request!!.idCompany, this.request!!.idSpecialist, this.request!!.level, this.request!!.type, this.request!!.description,
                 this.request!!.experience, this.request!!.idEdu, this.request!!.minSalary, this.request!!.maxSalary, this.request!!.salaryDisplay,
                 this.request!!.address, this.request!!.idCity, idPackageParams, null, this.request!!.skill)
-            presenter.createVacancyFree(request!!.position, request!!.idCompany, request!!.idSpecialist, request!!.level, request!!.type, request!!.description, request!!.experience, request!!.idEdu!!, request!!.minSalary.toInt(),
-                request!!.maxSalary.toInt(), request!!.salaryDisplay, request!!.address, request!!.idCity, request!!.packageAds!!, request!!.skill!!)
+            when(idPackageParams){
+                1 -> {
+                    Timber.d("packageOne")
+                    presenter.createVacancyFree(request!!.position, request!!.idCompany, request!!.idSpecialist, request!!.level, request!!.type, request!!.description, request!!.experience, request!!.idEdu!!, request!!.minSalary.toInt(),
+                        request!!.maxSalary.toInt(), request!!.salaryDisplay, request!!.address, request!!.idCity, request!!.packageAds!!, request!!.skill!!)
+                }
+                2 -> {
+                    Timber.d("packageTwo")
+                    startActivity(Intent(applicationContext, CheckoutActivity::class.java)
+                        .putExtra("typeTransaction", 3)
+                        .putExtra("dataRequest", request)
+                        .putExtra("priceVacancy", price)
+                        .putExtra("packageName", packageNameAds))
+                }
+                3 -> {
+                    Timber.d("packageThree")
+                    startActivity(Intent(applicationContext, CheckoutActivity::class.java)
+                        .putExtra("typeTransaction", 3)
+                        .putExtra("dataRequest", request)
+                        .putExtra("priceVacancy", price)
+                        .putExtra("packageName", packageNameAds))
+                }
+            }
         } else {
             binding.tvWarningEmpty.visibility = View.VISIBLE
         }
@@ -86,7 +112,6 @@ VacancyContract.ViewCreateVacancyFree{
         when(v?.id){
             R.id.button -> {
                 checkDataPackage()
-                Timber.d(request.toString())
             }
         }
     }
@@ -96,6 +121,9 @@ VacancyContract.ViewCreateVacancyFree{
             R.id.cv_click -> {
                 binding.tvWarningEmpty.visibility = View.INVISIBLE
                 idPackage = data.id
+                price = changeFormatMoneyToValue(data.price.toString()).toInt()
+                packageNameAds = data.name!!
+                Timber.d(data.id.toString())
             }
         }
     }
@@ -103,7 +131,8 @@ VacancyContract.ViewCreateVacancyFree{
     override fun messageCreateVacancy(msg: String) {
         Timber.d(msg)
         if (msg.contains("Free vacancy created successfully!"))
-            startActivity(Intent(applicationContext, FinishPropertyActivity::class.java))
+            startActivity(Intent(applicationContext, FinishPropertyActivity::class.java).putExtra("finish", "vacancy"))
+        finishAffinity()
     }
 
     override fun showLoading() {
