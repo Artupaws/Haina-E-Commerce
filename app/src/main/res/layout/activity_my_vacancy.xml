@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.history.historyjobvacancy.HistoryJobVacancyActivity">
+    tools:context=".view.history.historyjobvacancy.MyVacancyActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_history"
@@ -13,27 +13,33 @@
         android:background="@color/yellow"
         app:contentInsetStart="20dp"
         app:contentInsetEnd="0dp"
+        app:title="My Vacancy"
+        app:navigationIcon="@drawable/ic_back_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayoutHistory"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/yellow"
-        app:tabMode="fixed"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_history" />
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPagerHistory"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayoutHistory" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_history">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/list_item_my_vacancy"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        </LinearLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

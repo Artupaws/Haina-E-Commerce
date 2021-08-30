@@ -22,11 +22,11 @@ class AdapterHistorySubmitJob(val context: Context, private val listJob: List<Da
         private val binding = ListItemSubmitApplicationBinding.bind(view)
         fun bin(item: DataJobApplication?){
             with(binding) {
-                tvTitle.text = item?.jobtitle
-                tvNameCompany.text = item?.company?.name
-                tvAppliedDate.text = item?.date
-                tvStatus.text = item?.status
-                Glide.with(context).load(item?.company?.iconUrl).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivImagePost)
+//                tvTitle.text = item?.jobtitle
+//                tvNameCompany.text = item?.company?.name
+//                tvAppliedDate.text = item?.date
+//                tvStatus.text = item?.status
+//                Glide.with(context).load(item?.company?.iconUrl).skipMemoryCache(false).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivImagePost)
             }
         }
     }

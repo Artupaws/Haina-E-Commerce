@@ -21,6 +21,7 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterPaymentMethod
 import haina.ecommerce.databinding.ActivityPaymentBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.helper.Helper.changeFormatMoneyToValue
 import haina.ecommerce.helper.Helper.convertToFormatMoneyIDRFilter
 import haina.ecommerce.model.bill.RequestBill
 import haina.ecommerce.model.hotels.Requesthotel
@@ -195,7 +196,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener,
                 packageNameVacancyAds = intent.getStringExtra("packageName")
                 priceVacancyAds = intent.getIntExtra("priceVacancy", 0)
                 binding.tvTotalBill.text = convertToFormatMoneyIDRFilter(priceVacancyAds.toString())
-                price = priceVacancyAds.toString()
+                price = changeFormatMoneyToValue(priceVacancyAds.toString())
             }
         }
     }
@@ -224,7 +225,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener,
         if (idPaymentMethod != 0) {
             popupPaymentMethod?.dismiss()
             binding.linearTotalPrice.visibility = View.VISIBLE
-            binding.tvTotalMustPay.text = convertToFormatMoneyIDRFilter(price)
+             binding.tvTotalMustPay.text = price
 //            valueTotalPayment = helper.changeFormatMoneyToValueFilter(price!!)?.toInt()
         } else {
             binding.linearTotalPrice.visibility = View.GONE

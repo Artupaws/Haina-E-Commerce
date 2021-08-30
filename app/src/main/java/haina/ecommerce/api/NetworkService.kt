@@ -26,6 +26,7 @@ import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
 import haina.ecommerce.model.transactionlist.ResponseGetListTransactionPending
 import haina.ecommerce.model.vacancy.ResponseCreateVacancy
 import haina.ecommerce.model.vacancy.ResponseGetDataCreateVacancy
+import haina.ecommerce.model.vacancy.ResponseGetListMyVacancy
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -900,4 +901,9 @@ interface NetworkService {
         @Field("payment_method_id")paymentMethodId:Int?,
         @Field("skill")skill:String,
     ):Call<ResponseCreateVacancy>
+
+    //Get List My Vacancy
+    @Headers("No-Authentication: true")
+    @GET("api/job/vacancy")
+    fun getListMyVacancy():Call<ResponseGetListMyVacancy>
 }
