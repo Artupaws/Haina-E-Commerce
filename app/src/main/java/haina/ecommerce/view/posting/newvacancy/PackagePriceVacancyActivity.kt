@@ -80,7 +80,7 @@ VacancyContract.ViewCreateVacancyFree{
                 2 -> {
                     Timber.d("packageTwo")
                     startActivity(Intent(applicationContext, CheckoutActivity::class.java)
-                        .putExtra("typeTransaction", 3)
+                        .putExtra("typeTransaction", 5)
                         .putExtra("dataRequest", request)
                         .putExtra("priceVacancy", price)
                         .putExtra("packageName", packageNameAds))
@@ -88,7 +88,7 @@ VacancyContract.ViewCreateVacancyFree{
                 3 -> {
                     Timber.d("packageThree")
                     startActivity(Intent(applicationContext, CheckoutActivity::class.java)
-                        .putExtra("typeTransaction", 3)
+                        .putExtra("typeTransaction", 5)
                         .putExtra("dataRequest", request)
                         .putExtra("priceVacancy", price)
                         .putExtra("packageName", packageNameAds))

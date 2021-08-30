@@ -71,8 +71,9 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
 //        customerNumber = sharedPref.getValueString(Constants.PREF_PHONE_NUMBER_PULSA)
 //        binding.tvNumber.text = customerNumber
 
-        val typeTransactionParams = intent.getIntExtra("typeTransaction", 0)
-        typeTransaction(typeTransactionParams)
+        typeTransaction = intent.getIntExtra("typeTransaction", 0)
+        Timber.d(typeTransaction.toString())
+        typeTransaction(typeTransaction)
         statusLogin(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
     }
 
@@ -84,14 +85,17 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                         presenter.checkout(requestPulsa!!.phoneNumber, requestPulsa!!.productCode)
                     }
                     2 -> {
-                        val requestBillFromCheckout = RequestBill(requestBill?.productCode,
-                            totalPay.toString(), adminFee, this.requestBill?.customerNumber,
+                        val requestBillFromCheckout = RequestBill(requestBill?.productCode, totalPay.toString(), adminFee, this.requestBill?.customerNumber,
                             null, dataBill?.inquiry)
-                        val intent = Intent(applicationContext, PaymentActivity::class.java)
+                        startActivity(Intent(applicationContext, PaymentActivity::class.java)
                             .putExtra("request", requestBillFromCheckout)
-                            .putExtra("typeTransaction", typeTransaction)
-                        startActivity(intent)
-//                        }
+                            .putExtra("typeTransaction", typeTransaction))
+                    }
+                    5 -> {
+                        startActivity(Intent(applicationContext, PaymentActivity::class.java)
+                            .putExtra("requestCreateVacancy", requestCreateVacancy)
+                            .putExtra("priceVacancy", pricePackageVacancy)
+                            .putExtra("typeTransaction", typeTransaction))
                     }
                 }
             }
@@ -148,12 +152,12 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                 }
                 typeTransaction = 2
             }
-            3 -> {
+            5 -> {
                 requestCreateVacancy = intent.getParcelableExtra("dataRequest")!!
                 pricePackageVacancy = intent.getIntExtra("priceVacancy", 0)
                 packageNameVacancyAds = intent.getStringExtra("packageName")!!
                 Timber.d(pricePackageVacancy.toString())
-                setDetailVacancy(requestCreateVacancy, pricePackageVacancy, packageNameVacancyAds)
+                setDetailVacancy(pricePackageVacancy, packageNameVacancyAds)
             }
         }
     }
@@ -249,7 +253,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         }
     }
 
-    private fun setDetailVacancy(dataRequest: RequestCreateVacancy, pricePackageVacancy:Int, packageNameAds:String) {
+    private fun setDetailVacancy(pricePackageVacancy:Int, packageNameAds:String) {
         binding.tvTitleService.text = "Vacancy Ads"
         binding.faIcon.text = getString(R.string.job)
         binding.includeDataProductBill.linearBill.visibility = View.GONE

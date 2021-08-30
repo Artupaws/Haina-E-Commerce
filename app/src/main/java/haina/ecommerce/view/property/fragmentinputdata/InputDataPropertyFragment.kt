@@ -340,12 +340,11 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
         var descriptionParams = binding.includeDataPropertyTop.etDescriptionAds.text.toString()
         var priceSellParams = changeFormatMoneyToValue(binding.includeDataPropertyTop.etSetPriceSell.text.toString())
         var priceRentParams = changeFormatMoneyToValue(binding.includeDataPropertyTop.etSetPrice.text.toString())
-        var condition:String = if (yearParams == Calendar.getInstance().get(Calendar.YEAR).toString()){
+        val condition:String = if (yearParams == Calendar.getInstance().get(Calendar.YEAR).toString()){
             "New"
         } else{
             "Existing"
         }
-
         if (typePropertyParams.isNullOrEmpty()){
             isEmptyTypeProperty = true
             binding.includeDataPropertyTop.tvTitleTypeProperty.error = "Can't Empty"
@@ -547,7 +546,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
                 dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(),
                 landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(), floorParams.toInt(), facilityParams,
                 typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams,
-                descriptionParams, priceSellParams, "0", null, null, condition,null)
+                descriptionParams, changeFormatMoneyToValue(priceSellParams), "0", null, null, condition,null)
             Log.d("houseSell", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
@@ -561,7 +560,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             typePropertyParams == "house" && typePostingParams == "For Rent"){
                  dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(),
                     floorParams.toInt(), facilityParams, null, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams,
-                    descriptionParams, "0", priceRentParams, null, null, condition,null)
+                    descriptionParams, "0", changeFormatMoneyToValue(priceRentParams), null, null, condition,null)
                 Log.d("houseRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
@@ -575,7 +574,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             && typePropertyParams == "house" && typePostingParams == "Both"){
                  dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(),
                     floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
-                    titleParams, descriptionParams, priceSellParams, priceRentParams, null, null, condition,null)
+                    titleParams, descriptionParams, priceSellParams, changeFormatMoneyToValue(priceRentParams) , null, null, condition,null)
                 Log.d("houseBoth", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
@@ -587,7 +586,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             && typePropertyParams == "apartment" && typePostingParams == "For Sell"){
              dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, bedRoomParams.toInt(), bathRoomParams.toInt(),
                 floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(),provinceParams, cityParams, addressParams,
-                titleParams, descriptionParams, priceSellParams, "0", null, null, condition,null)
+                titleParams, descriptionParams, changeFormatMoneyToValue(priceSellParams), "0", null, null, condition,null)
             Log.d("ApartmentSell", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
@@ -599,7 +598,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             && typePropertyParams == "apartment" && typePostingParams == "For Rent"){
              dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, bedRoomParams.toInt(), bathRoomParams.toInt(),
                 floorParams.toInt(), facilityParams, null, yearParams.toInt(), provinceParams, cityParams, addressParams,
-                titleParams, descriptionParams, "0", priceRentParams, null, null, condition,null)
+                titleParams, descriptionParams, "0", changeFormatMoneyToValue(priceRentParams), null, null, condition,null)
             Log.d("ApartmentRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
@@ -611,7 +610,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             && typePropertyParams == "apartment" && typePostingParams == "Both"){
              dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, bedRoomParams.toInt(), bathRoomParams.toInt(),
                 floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
-                titleParams, descriptionParams, priceSellParams, priceRentParams, null, null, condition,null)
+                titleParams, descriptionParams, priceSellParams, changeFormatMoneyToValue(priceRentParams), null, null, condition,null)
             Log.d("ApartmentRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
@@ -623,7 +622,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             && typePropertyParams == "warehouse" && typePostingParams == "For Sell"){
              dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), null, bathRoomParams.toInt(),
                 floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
-                titleParams, descriptionParams, priceSellParams, "0", null, null, condition,null)
+                titleParams, descriptionParams, changeFormatMoneyToValue(priceSellParams), "0", null, null, condition,null)
             Log.d("WarehouseSell", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
@@ -635,7 +634,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             && typePropertyParams == "warehouse" && typePostingParams == "For Rent"){
              dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), null, bathRoomParams.toInt(),
                 floorParams.toInt(), facilityParams, null, yearParams.toInt(), provinceParams, cityParams,  addressParams,
-                titleParams, descriptionParams, "0", priceRentParams, null, null, condition,null)
+                titleParams, descriptionParams, "0", changeFormatMoneyToValue(priceRentParams), null, null, condition,null)
             Log.d("WarehouseRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
@@ -647,7 +646,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             && !isEmptyPriceSell && typePropertyParams == "warehouse" && typePostingParams == "Both"){
              dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), null, bathRoomParams.toInt(),
                 floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
-                titleParams, descriptionParams, priceSellParams, priceRentParams, null, null, condition,null)
+                titleParams, descriptionParams, priceSellParams, changeFormatMoneyToValue(priceRentParams), null, null, condition,null)
             Log.d("WarehouseBoth", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
@@ -659,7 +658,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             && typePropertyParams == "office" && typePostingParams == "For Sell"){
              dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, null, bathRoomParams.toInt(),
                 floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
-                titleParams, descriptionParams, priceSellParams, "0", null, null, condition,null)
+                titleParams, descriptionParams, changeFormatMoneyToValue(priceSellParams), "0", null, null, condition,null)
             Log.d("WarehouseSell", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
@@ -671,7 +670,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             && typePropertyParams == "office" && typePostingParams == "For Rent"){
              dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, null, bathRoomParams.toInt(),
                 floorParams.toInt(), facilityParams, null, yearParams.toInt(), provinceParams, cityParams, addressParams,
-                titleParams, descriptionParams, "0", priceRentParams, null, null, condition,null)
+                titleParams, descriptionParams, "0", changeFormatMoneyToValue(priceRentParams), null, null, condition,null)
             Log.d("WarehouseRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
@@ -683,7 +682,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             !isEmptyPriceSell && typePropertyParams == "office" && typePostingParams == "Both"){
              dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, null, bathRoomParams.toInt(),
                 floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
-                titleParams, descriptionParams, priceSellParams, priceRentParams, null, null, condition,null)
+                titleParams, descriptionParams, priceSellParams, changeFormatMoneyToValue(priceRentParams), null, null, condition,null)
             Log.d("WarehouseBoth", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)

@@ -21,17 +21,23 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterPaymentMethod
 import haina.ecommerce.databinding.ActivityPaymentBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.helper.Helper.convertToFormatMoneyIDRFilter
 import haina.ecommerce.model.bill.RequestBill
 import haina.ecommerce.model.hotels.Requesthotel
 import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelDarma
 import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelToDarma
 import haina.ecommerce.model.paymentmethod.DataPaymentMethod
 import haina.ecommerce.model.pulsaanddata.RequestPulsa
+import haina.ecommerce.model.vacancy.RequestCreateVacancy
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
+import haina.ecommerce.view.posting.newvacancy.VacancyContract
+import haina.ecommerce.view.property.FinishPropertyActivity
+import timber.log.Timber
 import java.util.ArrayList
 
-class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContract.View {
+class PaymentActivity : AppCompatActivity(), View.OnClickListener,
+    PaymentContract.View{
 
     private lateinit var binding: ActivityPaymentBinding
     private var popupPaymentMethod: Dialog? = null
@@ -52,6 +58,10 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
     private var stringRequest :String = ""
     private var smokingRoomValue:Int = 0
 
+    private var requestCreateVacancy:RequestCreateVacancy? = null
+    private var priceVacancyAds:Int = 0
+    private var packageNameVacancyAds:String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +76,9 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         binding.frameChoosePaymentMethod.setOnClickListener(this)
         binding.btnPayment.setOnClickListener(this)
         typeTransactionParams = intent.getIntExtra("typeTransaction", 0)
+        //DarmaWisata
         dataBookingHotelDarma = intent.getParcelableExtra("dataBooking")
-        Log.d("typeTransaction", typeTransactionParams.toString())
+
         setDetailOrder(typeTransactionParams)
         dialogLoading()
     }
@@ -89,6 +100,11 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                     }
                     4 -> {
                         presenter.createBookingHotelDarma(requestToDarma!!)
+                    }
+                    5 -> {
+                        presenter.createVacancyPaid(this.requestCreateVacancy!!.position, this.requestCreateVacancy!!.idCompany, this.requestCreateVacancy!!.idSpecialist, this.requestCreateVacancy!!.level, this.requestCreateVacancy!!.type,
+                            this.requestCreateVacancy!!.description, this.requestCreateVacancy!!.experience, this.requestCreateVacancy!!.idEdu!!, this.requestCreateVacancy!!.minSalary.toInt(), this.requestCreateVacancy!!.maxSalary.toInt(), this.requestCreateVacancy!!.salaryDisplay,
+                            this.requestCreateVacancy!!.address, this.requestCreateVacancy!!.idCity, this.requestCreateVacancy!!.packageAds!!, idPaymentMethod!!, this.requestCreateVacancy!!.skill!!)
                     }
                 }
             }
@@ -173,6 +189,14 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
                 binding.tvTotalBill.text = dataBookingHotelDarma?.price
                 price = dataBookingHotelDarma?.price
             }
+
+            5 -> {
+                requestCreateVacancy = intent.getParcelableExtra("requestCreateVacancy")
+                packageNameVacancyAds = intent.getStringExtra("packageName")
+                priceVacancyAds = intent.getIntExtra("priceVacancy", 0)
+                binding.tvTotalBill.text = convertToFormatMoneyIDRFilter(priceVacancyAds.toString())
+                price = priceVacancyAds.toString()
+            }
         }
     }
 
@@ -200,7 +224,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
         if (idPaymentMethod != 0) {
             popupPaymentMethod?.dismiss()
             binding.linearTotalPrice.visibility = View.VISIBLE
-            binding.tvTotalMustPay.text = price
+            binding.tvTotalMustPay.text = convertToFormatMoneyIDRFilter(price)
 //            valueTotalPayment = helper.changeFormatMoneyToValueFilter(price!!)?.toInt()
         } else {
             binding.linearTotalPrice.visibility = View.GONE
@@ -244,6 +268,13 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener, PaymentContra
             startActivity(intent)
         } else {
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun messageCreateVacancy(msg: String) {
+        Timber.d(msg)
+        if (msg.contains("Paid vacancy created successfully!")){
+            startActivity(Intent(applicationContext, FinishPropertyActivity::class.java).putExtra("finish", "vacancy"))
         }
     }
 

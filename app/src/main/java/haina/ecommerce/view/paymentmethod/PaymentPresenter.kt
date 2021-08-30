@@ -8,6 +8,7 @@ import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelToDarma
 import haina.ecommerce.model.hotels.newHotel.ResponseSetBooking
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
+import haina.ecommerce.model.vacancy.ResponseCreateVacancy
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
@@ -122,6 +123,31 @@ class PaymentPresenter(val view:PaymentContract.View, val context: Context) {
                 view.messageBookingHotel(t.localizedMessage.toString())
             }
         })
+    }
+
+    fun createVacancyPaid(positionJob:String, idCompany:Int, idSpecialist:Int, level:Int, type:Int,
+                          description:String, experience:Int, idEdu:Int, minSalary:Int, maxSalary:Int, salaryDisplay:Int, address:String,
+                          idCity:Int, packageId:Int, paymentMethodId:Int, skill:String){
+        view.showLoading()
+        val createVacancyPaid = NetworkConfig().getConnectionHainaBearer(context).createPostVacancyPaid(positionJob, idCompany, idSpecialist, level, type, description, experience, idEdu, minSalary, maxSalary, salaryDisplay, address, idCity, packageId, paymentMethodId, skill)
+        createVacancyPaid.enqueue(object : retrofit2.Callback<ResponseCreateVacancy>{
+            override fun onResponse(call: Call<ResponseCreateVacancy>, response: Response<ResponseCreateVacancy>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageCreateVacancy(response.body()?.message.toString())
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageCreateVacancy(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseCreateVacancy>, t: Throwable) {
+                view.dismissLoading()
+                view.messageCreateVacancy(t.localizedMessage.toString())
+            }
+
+        })
+
     }
 
 }

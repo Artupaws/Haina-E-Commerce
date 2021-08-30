@@ -35,8 +35,10 @@
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/menu/menu_option_comment.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/menu/menu_option_delete_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Haina-E-Commerce/app/src/main/res/menu/menu_search.xml" value="0.1527777777777778" />
+        <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/activity_checkout.xml" value="0.24010416666666667" />
         <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/activity_job.xml" value="0.36018518518518516" />
         <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/activity_package_price_vacancy.xml" value="0.2421875" />
+        <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/activity_payment.xml" value="0.24010416666666667" />
         <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/activity_post_new_vacancy.xml" value="0.17037037037037037" />
         <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/activity_skill_and_education.xml" value="0.36018518518518516" />
         <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/fragment_add_photo.xml" value="0.24270833333333333" />
@@ -47,6 +49,8 @@
         <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/layout_not_login.xml" value="0.36018518518518516" />
         <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/list_item_choose_chips.xml" value="0.36614583333333334" />
         <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/list_item_facilities_room.xml" value="0.33" />
+        <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/list_item_job_vacancy.xml" value="0.19537037037037036" />
+        <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/list_item_my_vacancy.xml" value="0.36614583333333334" />
         <entry key="..\:/haina-ecommerce/Haina-E-Commerce/app/src/main/res/layout/list_item_package_vacancy.xml" value="0.2421875" />
       </map>
     </option>

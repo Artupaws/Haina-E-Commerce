@@ -277,7 +277,6 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
 
         camera?.setOnClickListener {
             typeUpload = "camera"
-            Toast.makeText(requireActivity(), typeUpload, Toast.LENGTH_SHORT).show()
             openCamera()
             popupAddPhoto?.dismiss()
         }
