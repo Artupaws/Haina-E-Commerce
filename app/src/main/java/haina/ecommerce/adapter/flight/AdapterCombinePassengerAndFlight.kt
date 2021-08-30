@@ -13,13 +13,17 @@ import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemSetAddonBinding
 import haina.ecommerce.model.flight.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.log
 
 class AdapterCombinePassengerAndFlight(
     val context: Context, private val dataPassenger: ArrayList<DataSetPassenger>,
     private val dataTicket:ArrayList<Ticket>,
     private val dataAddons:List<AddOnsItem>?,
-    val callback: AdapterCombinePassengerAndFlight.CallbackInterface
+    val callback: CallbackInterface
 ) :
+
         RecyclerView.Adapter<AdapterCombinePassengerAndFlight.Holder>(),AdapterListFlight.CallbackInterface {
 
 
@@ -41,14 +45,27 @@ class AdapterCombinePassengerAndFlight(
 
     private var clicked = false
 
-    val dataBaggage = arrayListOf<BaggageInfosItem>()
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemSetAddonBinding.bind(view)
         private var passengerId:Int = 0
+        private var passengerType:Int = 1
         fun bind(itemHaina: DataSetPassenger) {
             with(binding) {
                 passengerId=itemHaina.id
+
+                passengerType = when {
+                    itemHaina.type =="Adult" -> {
+                        1
+                    }
+                    itemHaina.type =="Child" -> {
+                        2
+                    }
+                    else -> {
+                        3
+                    }
+                }
+
                 tvTitlePassenger.text = itemHaina.title
                 val fullname = "${itemHaina.first_name} ${itemHaina.last_name}"
                 tvNamePassenger.text = fullname
@@ -60,6 +77,8 @@ class AdapterCombinePassengerAndFlight(
                 }
                 setupListDataFlight()
 
+
+
                 allDataAddons.add(PaxDataAddons(passengerId, mutableListOf(),0))
             }
         }
@@ -67,10 +86,12 @@ class AdapterCombinePassengerAndFlight(
         @Suppress("UNCHECKED_CAST")
         private fun setupListDataFlight(){
             binding.rvFlight.apply {
-                adapter = AdapterListFlight(context, passengerId, dataTicket, dataAddons, this@AdapterCombinePassengerAndFlight)
+                adapter = AdapterListFlight(context, passengerId, passengerType, dataTicket, dataAddons, this@AdapterCombinePassengerAndFlight)
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             }
         }
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterCombinePassengerAndFlight.Holder {
@@ -111,7 +132,7 @@ class AdapterCombinePassengerAndFlight(
     }
 
     override fun passDataAddons(passengerId:Int, dataAddonsAll: MutableList<TripAddonsData>, totalAddons: Int) {
-        dataAddonsAll.forEach{ it ->
+        dataAddonsAll.forEach{
             allDataAddons.find { data-> data.id==passengerId }?.trip=dataAddonsAll
             allDataAddons.find { data-> data.id==passengerId }?.total=totalAddons
 
@@ -120,8 +141,8 @@ class AdapterCombinePassengerAndFlight(
             it.meals?.forEach { meal ->
                 meals+= meal
             }
-            Log.d("data",passengerId.toString()+" "+it.origin+it.destination+it.baggage+it.seat+meals)
         }
+        Log.d("totalAddons",totalAddons.toString())
         callback.passDataAddonsAll(allDataAddons)
 
     }

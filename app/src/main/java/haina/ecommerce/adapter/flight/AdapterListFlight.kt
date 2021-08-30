@@ -2,7 +2,6 @@ package haina.ecommerce.adapter.flight
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.util.TypedValue
@@ -11,7 +10,6 @@ import android.view.LayoutInflater
 import android.widget.*
 import android.widget.LinearLayout
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.isGone
 import androidx.core.widget.NestedScrollView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,17 +18,15 @@ import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemFlightAddOnBinding
 import haina.ecommerce.model.flight.*
 import java.util.*
-import kotlin.math.log
 
 
-class AdapterListFlight(val context: Context, private val passengerId: Int, private val listAirlines: MutableList<Ticket>?,
+class AdapterListFlight(val context: Context, private val passengerId: Int,private val passengerType: Int, private val listAirlines: MutableList<Ticket>?,
                         private val dataAddons: List<AddOnsItem>?,val callback:CallbackInterface
 ) :
         RecyclerView.Adapter<AdapterListFlight.Holder>(){
     private var broadcaster : LocalBroadcastManager? = null
 
     private val STATUS_AVAILABLE = 1
-    private val STATUS_BOOKED = 2
     private val STATUS_RESERVED = 3
     private val STATUS_SELECTED = 4
 
@@ -55,11 +51,11 @@ class AdapterListFlight(val context: Context, private val passengerId: Int, priv
 
         var totalSum:Int = 0
         var totalAddons:Int = 0
-        var totalSeat:Int = 0
         var baggageFare:Int = 0
         var tvTotalPrice: TextView? = null
         var tvSeatSelected: TextView? = null
         var tvPriceSeat: TextView? = null
+        var ticketPrice:Int = 0
 
 
         var selectedSeat:SeatInfosItem? = null
@@ -81,7 +77,7 @@ class AdapterListFlight(val context: Context, private val passengerId: Int, priv
             dataaddons.compartment=selectedSeat?.compartment
             dataaddons.seat=selectedSeat?.seatDesignator
 
-            var listmeal:MutableList<String> = mutableListOf()
+            val listmeal:MutableList<String> = mutableListOf()
             selectedMeal?.forEach {
                 listmeal.add(it.code!!)
             }
@@ -90,11 +86,11 @@ class AdapterListFlight(val context: Context, private val passengerId: Int, priv
 
             dataAddonsAll?.add(dataaddons)
             callback.passDataAddons(passengerId,dataAddonsAll!!,totalAddonsPrice)
+
         }
 
         fun bind(itemHaina: Ticket) {
             with(binding) {
-
                 dataaddons=TripAddonsData(itemHaina.cityCodeDeparture,itemHaina.cityCodeArrived,null,null,null,null)
                 dataAddonsAll?.add(dataaddons)
                 if (dataAddons != null) {
@@ -113,8 +109,36 @@ class AdapterListFlight(val context: Context, private val passengerId: Int, priv
                     tvOriginDestination.text = originDestination
                     val originDestinationTime = "(${itemHaina.departureTime.substring(11, 19)} - ${itemHaina.arrivedTime.substring(11, 19)})"
                     tvTimeFlight.text = originDestinationTime
-                    val numberFlight = "FLIGHT ${adapterPosition + 1}"
-                    tvTypeFlight.text = numberFlight
+
+                    if(itemHaina.priceDetail?.size==1){
+                        ticketPrice=(itemHaina.priceDetail?.find { it?.paxType == "Adult" }!!.baseFare?.div(
+                            itemHaina.totalAdult
+                        ))!!
+                    }else{
+                        when (passengerType) {
+                            1 -> {
+                                ticketPrice=(itemHaina.priceDetail?.find { it?.paxType == "Adult" }!!.baseFare?.div(
+                                    itemHaina.totalAdult
+                                ))!!
+                            }
+                            2 -> {
+
+                                ticketPrice=(itemHaina.priceDetail?.find { it?.paxType == "Child" }!!.baseFare?.div(
+                                    itemHaina.totalChild
+                                ))!!
+                            }
+                            3 -> {
+                                ticketPrice=(itemHaina.priceDetail?.find { it?.paxType == "Infant" }!!.baseFare?.div(
+                                    itemHaina.totalBaby
+                                ))!!
+                            }
+                        }
+                    }
+
+                    tvPriceFlight.text="Rp. " +ticketPrice
+
+
+
                     tvTotalPrice=tvFlightTotalPrice
                     tvSeatSelected=tvSelectedSeat
                     tvPriceSeat=tvSeatPrice
@@ -173,6 +197,9 @@ class AdapterListFlight(val context: Context, private val passengerId: Int, priv
                     }else{
                         layoutChooseSeat.visibility = View.GONE
                     }
+
+                    checkTotal()
+                    finalizeDataAddons()
                 }
 
 
@@ -181,7 +208,6 @@ class AdapterListFlight(val context: Context, private val passengerId: Int, priv
         }
 
         override fun passTotal(sum: Int, meal: MutableList<MealInfosItem>) {
-            Log.d("sum",sum.toString())
 
             binding.layoutSelectedAddons.removeAllViewsInLayout()
             totalAddons=0
@@ -286,15 +312,13 @@ class AdapterListFlight(val context: Context, private val passengerId: Int, priv
 
             if (dataSeat != null) {
                 for (i in dataSeat){
-                    Log.d("x",i!!.X.toString())
-                    i.X = i.X?.plus(2)
-                    i.Y = i.Y?.plus(2)
+                    i!!.X = i!!.X?.plus(2)
+                    i!!.Y = i!!.Y?.plus(2)
                 }
                 var maxY = dataSeat.maxByOrNull { it!!.Y!! }?.Y!!
                 var maxX = dataSeat.maxByOrNull { it!!.X!! }?.X!!
 
                 var data= arrayListOf<ArrayList<SeatInfosItem>>()
-                Log.d("max",maxX.toString()+"x"+maxY.toString())
 
                 for (i in 0 until maxY ){
                     var cols=ArrayList<SeatInfosItem>()
@@ -431,7 +455,6 @@ class AdapterListFlight(val context: Context, private val passengerId: Int, priv
                             }
                         }
                     }
-                    Log.d("count",colCount.toString())
 
                     if(colCount>0){
                         layoutSeat.addView(layout)
@@ -452,9 +475,11 @@ class AdapterListFlight(val context: Context, private val passengerId: Int, priv
 
         fun checkTotal(){
             totalAddonsPrice-=totalSum
-            totalSum=totalAddons+baggageFare+seatPrice
+            totalSum=totalAddons+baggageFare+seatPrice+ticketPrice
             tvTotalPrice?.text= "Total : $totalSum"
             totalAddonsPrice+=totalSum
+
+
 
 
         }

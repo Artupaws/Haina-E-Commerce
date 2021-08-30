@@ -61,7 +61,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_type_flight"
+                android:id="@+id/tv_price_flight"
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

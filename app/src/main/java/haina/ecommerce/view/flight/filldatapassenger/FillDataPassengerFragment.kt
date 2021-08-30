@@ -48,7 +48,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
     private lateinit var presenter:FillDataPassengerPresenter
     private var popupInputCaptcha: Dialog? = null
     private var total_price: Int = 0
-    val ticket = mutableListOf<Ticket>()
+    var ticket = mutableListOf<Ticket>()
 
 
     override fun onCreateView(
@@ -68,7 +68,6 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         binding.toolbarFillDataPassenger.setNavigationOnClickListener {
             deleteAllPassenger()
             findNavController().navigateUp()
-
         }
         dataRequest = arguments?.getParcelable<Request>("data")!!
         val airlineCode = arguments?.getString("airlineCode")!!
@@ -133,7 +132,6 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
             binding.btnContinuePayment.visibility = View.VISIBLE
             Toast.makeText(requireActivity(), "Please complete data passenger", Toast.LENGTH_SHORT).show()
         }
-
     }
 
     private fun getListDataPassengerDao(database: RoomDataPassenger, dao: PassengerDao) {
@@ -226,7 +224,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         Glide.with(requireActivity()).load(decodedByte).into(imageCaptcha!!)
         buttonNext?.setOnClickListener {
             if (etCaptcha?.text.toString().isNotEmpty()){
-                presenter.getCalculationTicketPrice(RequestPrice(airlineCodeParams, departParams, returnParams, etCaptcha.toString()))
+                presenter.getCalculationTicketPrice(RequestPrice(airlineCodeParams, departParams, returnParams, etCaptcha?.text.toString()))
             } else {
                 etCaptcha?.error = "Please input captcha here"
             }
@@ -259,9 +257,10 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         Toast.makeText(requireActivity(),data?.sumFare.toString(),Toast.LENGTH_LONG).show()
         var flightPrice: List<PriceDetailItem?>? = null
 
-        data?.priceDepart?.filter { it?.priceDetail!=null }?.forEach{
+        data?.priceDepart?.filter { it?.priceDetail?.size!=0 }?.forEach{
             flightPrice=it?.priceDetail
         }
+        ticket= mutableListOf<Ticket>()
 
         ticket.add(Ticket(dataRequest.airlinesFirst?.nameAirlines!!,"", dataRequest.airlinesFirst!!.listFlightTime,
             dataRequest.airlinesFirst?.flightTime!!,dataRequest.airlinesFirst?.typeFlight!!, dataRequest.airlinesFirst?.cityCodeDeparture!!,

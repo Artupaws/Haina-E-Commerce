@@ -21,9 +21,9 @@
         android:id="@+id/rv_setAddOn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:itemCount="7"
-        android:layout_below="@id/toolbar_set_add_on"
         android:layout_above="@id/toolbar_checkout_add_on"
+        android:layout_below="@id/toolbar_set_add_on"
+        tools:itemCount="7"
         tools:listitem="@layout/list_item_set_addon" />
 
     <androidx.cardview.widget.CardView
@@ -42,7 +42,7 @@
             android:padding="10dp">
             <TextView
                 android:id="@+id/tv_total_price_add_on"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_centerVertical="true"
