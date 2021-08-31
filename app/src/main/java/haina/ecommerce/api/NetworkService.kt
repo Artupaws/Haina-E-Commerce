@@ -24,10 +24,7 @@ import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
 import haina.ecommerce.model.transactionlist.ResponseGetListTransactionPending
-import haina.ecommerce.model.vacancy.ResponseCreateVacancy
-import haina.ecommerce.model.vacancy.ResponseGetDataCreateVacancy
-import haina.ecommerce.model.vacancy.ResponseGetListMyVacancy
-import haina.ecommerce.model.vacancy.ResponseUpdateDataMyVacancy
+import haina.ecommerce.model.vacancy.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -928,4 +925,9 @@ interface NetworkService {
         @Field("id_city")idCity:Int,
         @Field("skill")skill:String
     ):Call<ResponseUpdateDataMyVacancy>
+
+    @Headers("No-Authentication: true")
+    @GET("api/job/vacancy/show_all")
+    fun getListAllVacancy():Call<ResponseGetAllVacancy>
+
 }
