@@ -314,6 +314,52 @@
                         android:scrollbars="vertical" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <LinearLayout
+                    android:id="@+id/linear_skill_education"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title_skills"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Skills"
+                    android:textFontWeight="500" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_skill_choose"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/list_item_choose_chips" />
+
+                <TextView
+                    android:id="@+id/tv_title_last_education"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Last Education"
+                    android:textFontWeight="500" />
+
+                <EditText
+                    android:id="@+id/et_last_education"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:focusable="false"
+                    android:background="@drawable/background_line_corner_input_text_black"
+                    android:hint="Choose Last Education"
+                    android:inputType="text"
+                    android:paddingStart="10dp" />
+                </LinearLayout>
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

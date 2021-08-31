@@ -54,7 +54,7 @@ data class DataMyVacancy(
 	val updatedAt: String? = null,
 
 	@field:SerializedName("skill")
-	val skill: List<SkillItem?>? = null,
+	val skill: List<VacancySkillItem?>? = null,
 
 	@field:SerializedName("min_salary")
 	val minSalary: Int? = null,

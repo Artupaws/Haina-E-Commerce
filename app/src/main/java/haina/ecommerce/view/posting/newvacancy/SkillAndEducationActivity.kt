@@ -11,18 +11,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
 import haina.ecommerce.adapter.vacancy.AdapterDataCreateVacancy
 import haina.ecommerce.databinding.ActivitySkillAndEducationBinding
-import haina.ecommerce.model.vacancy.DataCreateVacancy
-import haina.ecommerce.model.vacancy.RequestCreateVacancy
-import haina.ecommerce.model.vacancy.VacancyEducationItem
-import haina.ecommerce.model.vacancy.VacancySkillItem
+import haina.ecommerce.helper.Helper
+import haina.ecommerce.helper.Helper.changeFormatMoneyToValueFilter
+import haina.ecommerce.model.vacancy.*
+import haina.ecommerce.view.history.historyjobvacancy.MyVacancyActivity
 import timber.log.Timber
 import java.util.ArrayList
 
-class  SkillAndEducationActivity : AppCompatActivity(), View.OnClickListener, AdapterDataCreateVacancy.AdapterCallbackSkillEdu {
+class  SkillAndEducationActivity : AppCompatActivity(), View.OnClickListener,
+    AdapterDataCreateVacancy.AdapterCallbackSkillEdu, VacancyContract.ViewUpdateDataVacancy {
 
     private lateinit var binding:ActivitySkillAndEducationBinding
     private var request:RequestCreateVacancy? = null
@@ -32,22 +34,35 @@ class  SkillAndEducationActivity : AppCompatActivity(), View.OnClickListener, Ad
     private var popupDialogLastEdu:Dialog? = null
     private lateinit var dataCreateVacancy:DataCreateVacancy
     private var idEdu:Int? = null
+    private var dataDetailVacancy : DataMyVacancy? = null
+    private var stateEdit:Boolean = true
+    private lateinit var presenter:VacancyPresenter.UpdateVacancyData
+    private var progressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySkillAndEducationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        presenter = VacancyPresenter.UpdateVacancyData(this, this)
         binding.btnNext.setOnClickListener(this)
         binding.btnAddSkills.setOnClickListener(this)
         binding.etLastEducation.setOnClickListener(this)
-
         binding.toolbarSkillEducation.setNavigationOnClickListener {
             onBackPressed()
         }
 
         dataCreateVacancy = intent.getParcelableExtra("dataCreateVacancy")!!
         request = intent.getParcelableExtra("dataRequest")
-        Timber.d(dataCreateVacancy.vacancySkill?.size.toString())
+        dataDetailVacancy = intent.getParcelableExtra("detailVacancy")
+        Timber.d(request.toString())
+
+        if (dataDetailVacancy != null){
+            stateEdit = true
+            setDataDetailVacancy(dataDetailVacancy)
+        } else {
+            stateEdit = false
+        }
+        loadingDialog()
         popupDialogExperience(dataCreateVacancy.vacancySkill)
         popupDialogLastEducation(dataCreateVacancy.vacancyEducation)
     }
@@ -65,6 +80,20 @@ class  SkillAndEducationActivity : AppCompatActivity(), View.OnClickListener, Ad
     private val adapterSkillChoosed by lazy {
         AdapterDataCreateVacancy(applicationContext, null, null, null, null, null,
             null, null, null, null, this, null, arrayListOf())
+    }
+
+    private fun setDataDetailVacancy(data:DataMyVacancy?){
+        AdapterDataCreateVacancy.VIEW_TYPE = 8
+        adapterSkillChoosed.clear()
+        adapterSkillChoosed.addVacancySkillChoosed(data!!.skill)
+        binding.rvSkillChoose.adapter = adapterSkillChoosed
+        binding.etLastEducation.setText(data.eduName)
+            for (i in data.skill!!){
+                listSkills.add(i!!)
+                listSkillId = arrayListOf(i.id.toString())
+            }
+        idEdu = data.idEdu
+        binding.btnNext.text = getString(R.string.save_changes)
     }
 
     private fun popupDialogExperience(data: List<VacancySkillItem?>?) {
@@ -131,16 +160,25 @@ class  SkillAndEducationActivity : AppCompatActivity(), View.OnClickListener, Ad
         }
 
         if (!isEmptySkills && !isEmptyLastEducation){
-            val separator = ", "
+            val separator = ","
             val stringIdSkill = listSkillId.joinToString(separator)
             request = RequestCreateVacancy(this.request!!.position,
                 this.request!!.idCompany, this.request!!.idSpecialist, this.request!!.level, this.request!!.type, this.request!!.description,
-            this.request!!.experience, idEdu, this.request!!.minSalary, this.request!!.maxSalary, this.request!!.salaryDisplay,
-            this.request!!.address, this.request!!.idCity, null, null, stringIdSkill)
-            startActivity(Intent(applicationContext, PackagePriceVacancyActivity::class.java)
-                .putExtra("dataRequest", request)
-                .putExtra("dataCreateVacancy", dataCreateVacancy))
-            Timber.d(stringIdSkill)
+                this.request!!.experience, idEdu, this.request!!.minSalary, this.request!!.maxSalary, this.request!!.salaryDisplay,
+                this.request!!.address, this.request!!.idCity, null, null, stringIdSkill)
+            when(stateEdit){
+                true -> {
+                    presenter.updateDataVacancy(this.request!!.position,
+                        dataDetailVacancy!!.id!!, this.request!!.idSpecialist, this.request!!.level, this.request!!.type, this.request!!.description,
+                        this.request!!.experience, idEdu!!, this.request!!.minSalary.toInt(), this.request!!.maxSalary.toInt(), this.request!!.salaryDisplay,
+                        this.request!!.address, this.request!!.idCity, stringIdSkill)
+                }
+                else -> {
+                    startActivity(Intent(applicationContext, PackagePriceVacancyActivity::class.java)
+                        .putExtra("dataRequest", request)
+                        .putExtra("dataCreateVacancy", dataCreateVacancy))
+                }
+            }
         } else {
             Toast.makeText(applicationContext, "Please complete the form", Toast.LENGTH_SHORT).show()
         }
@@ -149,7 +187,7 @@ class  SkillAndEducationActivity : AppCompatActivity(), View.OnClickListener, Ad
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.btn_next -> {
-                checkDataCreateVacancy()
+               checkDataCreateVacancy()
             }
             R.id.btn_add_skills -> {
                 AdapterDataCreateVacancy.VIEW_TYPE = 6
@@ -197,6 +235,33 @@ class  SkillAndEducationActivity : AppCompatActivity(), View.OnClickListener, Ad
                 binding.rvSkillChoose.adapter = adapterSkillChoosed
             }
         }
+    }
+
+    private fun loadingDialog(){
+        progressDialog = Dialog(this)
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(applicationContext,android.R.color.white))
+        val window: Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
+    }
+
+    override fun messageUpdateVacancy(msg: String) {
+        Timber.d(msg)
+        if (msg.contains("Update Vacancy Success!")){
+            startActivity(Intent(applicationContext, MyVacancyActivity::class.java))
+            finishAffinity()
+        } else {
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 
 }

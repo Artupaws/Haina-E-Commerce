@@ -27,6 +27,7 @@ import haina.ecommerce.model.transactionlist.ResponseGetListTransactionPending
 import haina.ecommerce.model.vacancy.ResponseCreateVacancy
 import haina.ecommerce.model.vacancy.ResponseGetDataCreateVacancy
 import haina.ecommerce.model.vacancy.ResponseGetListMyVacancy
+import haina.ecommerce.model.vacancy.ResponseUpdateDataMyVacancy
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -906,4 +907,25 @@ interface NetworkService {
     @Headers("No-Authentication: true")
     @GET("api/job/vacancy")
     fun getListMyVacancy():Call<ResponseGetListMyVacancy>
+
+    //Update Data My Vacancy
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/job/vacancy/update")
+    fun updateDataMyVacancy(
+        @Field("position")positionJob:String,
+        @Field("id_vacancy")idVacancy:Int,
+        @Field("id_specialist")idSpecialist:Int,
+        @Field("level")level:Int,
+        @Field("type")type:Int,
+        @Field("description")description:String,
+        @Field("experience")experience:Int,
+        @Field("id_edu")idEdu:Int,
+        @Field("min_salary")minSalary:Int,
+        @Field("max_salary")maxSalary:Int,
+        @Field("salary_display")salaryDisplay:Int,
+        @Field("address")address:String,
+        @Field("id_city")idCity:Int,
+        @Field("skill")skill:String
+    ):Call<ResponseUpdateDataMyVacancy>
 }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityFinishPropertyBinding
 import haina.ecommerce.view.MainActivity
+import haina.ecommerce.view.history.historyjobvacancy.MyVacancyActivity
 import haina.ecommerce.view.history.historymyproperty.MyPropertyActivity
 
 class FinishPropertyActivity : AppCompatActivity(), View.OnClickListener {
@@ -39,6 +40,9 @@ class FinishPropertyActivity : AppCompatActivity(), View.OnClickListener {
                     "property" -> {
                         startActivity(Intent(applicationContext, MyPropertyActivity::class.java).putExtra("finish", true))
                         finishAffinity()
+                    }
+                    "vacancy" -> {
+                        startActivity(Intent(applicationContext, MyVacancyActivity::class.java))
                     }
                 }
             }

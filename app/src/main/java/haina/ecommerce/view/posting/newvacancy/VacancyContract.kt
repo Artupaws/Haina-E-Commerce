@@ -9,4 +9,8 @@ interface VacancyContract {
         fun messageCreateVacancy(msg:String)
     }
 
+    interface ViewUpdateDataVacancy:BaseView{
+        fun messageUpdateVacancy(msg:String)
+    }
+
 }

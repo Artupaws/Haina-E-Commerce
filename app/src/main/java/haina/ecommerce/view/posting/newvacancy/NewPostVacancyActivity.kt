@@ -18,6 +18,9 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.vacancy.AdapterDataCreateVacancy
 import haina.ecommerce.databinding.ActivityPostNewVacancyBinding
 import haina.ecommerce.helper.Helper.changeFormatMoneyToValue
+import haina.ecommerce.helper.Helper.changeFormatMoneyToValueFilter
+import haina.ecommerce.helper.Helper.convertToFormatMoneyIDRFilter
+import haina.ecommerce.helper.Helper.convertToFormatMoneyNoCode
 import haina.ecommerce.helper.NumberTextWatcher
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.vacancy.*
@@ -25,7 +28,8 @@ import haina.ecommerce.view.login.LoginActivity
 import timber.log.Timber
 import java.util.*
 
-class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClickListener, AdapterDataCreateVacancy.AdapterCallbackFillDataVacancy {
+class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClickListener, AdapterDataCreateVacancy.AdapterCallbackFillDataVacancy,
+    AdapterDataCreateVacancy.AdapterCallbackSkillEdu {
 
     private lateinit var binding:ActivityPostNewVacancyBinding
     private lateinit var presenter: VacancyPresenter
@@ -42,7 +46,9 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
     private var location:Int? = null
     private var showSalary:Int = 0
     private lateinit var request : RequestCreateVacancy
-    private lateinit var dataCreateVacancy :DataCreateVacancy
+    private var dataCreateVacancy :DataCreateVacancy? = null
+    private var dataDetailVacancy :DataMyVacancy? = null
+    private var stateEdit:Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,15 +65,25 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
             onBackPressed()
         }
         idCompany = intent.getIntExtra("idCompany", 0)
-        dataCreateVacancy = intent.getParcelableExtra("dataCreateVacancy")!!
+        dataCreateVacancy = intent.getParcelableExtra("dataCreateVacancy")
+        dataDetailVacancy = intent.getParcelableExtra("detailVacancy")
+
+        if (dataDetailVacancy != null){
+            stateEdit = false
+            setDataDetailVacancy(dataDetailVacancy)
+        } else {
+            stateEdit = true
+        }
+        stateEdit()
+
         val dataLocationJob = intent.getParcelableArrayListExtra<DataItemHaina>("locationJob")
         for (i in 1..10){
             popupDialogExperience(listOf(i))
         }
-        popupDialogType(dataCreateVacancy.vacancyType)
-        popupDialogLevel(dataCreateVacancy.vacancyLevel)
+        popupDialogType(dataCreateVacancy?.vacancyType)
+        popupDialogLevel(dataCreateVacancy?.vacancyLevel)
         popupDialogLocation(dataLocationJob)
-        popupDialogSpecialist(dataCreateVacancy.vacancySpecialist)
+        popupDialogSpecialist(dataCreateVacancy?.vacancySpecialist)
 
         val locale = Locale("es", "IDR")
         val numDecs = 2 // Let's use 2 decimals
@@ -87,9 +103,49 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        stateEdit()
+    }
+
+    private fun stateEdit(){
+        when (stateEdit){
+            true -> {
+                binding.etPositionJob.isFocusableInTouchMode = true
+                binding.etType.isEnabled = true
+                binding.etLevel.isEnabled = true
+                binding.etExperience.isEnabled = true
+                binding.etSpecialist.isEnabled = true
+                binding.etLocationJob.isEnabled = true
+                binding.etAddress.isFocusableInTouchMode = true
+                binding.cbShowSalary.isEnabled = true
+                binding.etMinimSalary.isFocusableInTouchMode = true
+                binding.etHighSalary.isFocusableInTouchMode = true
+                binding.etDescriptionAds.isFocusableInTouchMode = true
+                binding.etLastEducation.isEnabled = true
+                binding.linearSkillEducation.visibility = View.GONE
+                binding.btnNext.text = getString(R.string.next_title)
+            }
+            false -> {
+                binding.etPositionJob.isFocusable = false
+                binding.etType.isEnabled = false
+                binding.etLevel.isEnabled = false
+                binding.etExperience.isEnabled = false
+                binding.etSpecialist.isEnabled = false
+                binding.etLocationJob.isEnabled = false
+                binding.etAddress.isFocusable = false
+                binding.cbShowSalary.isEnabled = false
+                binding.etMinimSalary.isFocusable = false
+                binding.etHighSalary.isFocusable = false
+                binding.etDescriptionAds.isFocusable = false
+                binding.etLastEducation.isEnabled = false
+            }
+        }
+    }
+
     private fun refresh(){
         binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            binding.swipeRefresh.isRefreshing = false
+            binding.swipeRefresh.isEnabled = false
         })
     }
 
@@ -100,7 +156,16 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
                 startActivity(intent)
             }
             R.id.btn_next -> {
-                checkDataVacancyFirst()
+                when (stateEdit){
+                    true -> {
+                        checkDataVacancyFirst()
+                    }
+                    false -> {
+                        stateEdit = true
+                        stateEdit()
+                    }
+                }
+                Timber.d(stateEdit.toString())
             }
             R.id.et_type -> {
                 AdapterDataCreateVacancy.VIEW_TYPE = 3
@@ -123,6 +188,35 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
                 popupDialogSpecialist?.show()
             }
         }
+    }
+
+    private fun setDataDetailVacancy(data:DataMyVacancy?){
+        binding.linearSkillEducation.visibility = View.VISIBLE
+        binding.toolbarCreateVacancy.title = "Detail"
+        binding.etPositionJob.setText(data?.position)
+        binding.etType.setText(data?.typeName)
+        binding.etLevel.setText(data?.levelName)
+        binding.etExperience.setText(data?.experience.toString())
+        binding.etSpecialist.setText(data?.specialistName)
+        binding.etLocationJob.setText(data?.cityName)
+        binding.etAddress.setText(data?.address)
+        binding.cbShowSalary.isChecked = data?.salaryDisplay == 1
+        binding.etMinimSalary.setText(convertToFormatMoneyNoCode(data?.minSalary.toString()))
+        binding.etHighSalary.setText(convertToFormatMoneyNoCode(data?.maxSalary.toString()))
+        binding.etDescriptionAds.setText(data?.description)
+        binding.etLastEducation.setText(data?.eduName)
+        binding.btnNext.text = getString(R.string.edit)
+        AdapterDataCreateVacancy.VIEW_TYPE = 8
+        adapterSkillChoosed.clear()
+        adapterSkillChoosed.addVacancySkillChoosed(data!!.skill)
+        binding.rvSkillChoose.adapter = adapterSkillChoosed
+        type = data.type
+        level = data.level
+        experience = data.experience
+        specialist = data.idSpecialist
+        location = data.idCity
+        showSalary = data.salaryDisplay!!
+        idCompany = data.idCompany
     }
 
     private val adapterType by lazy {
@@ -153,6 +247,16 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         AdapterDataCreateVacancy(applicationContext, null, null, null,
             null, null, null, null, arrayListOf(),
             this, null, null, null)
+    }
+
+    private val adapterLastEdu by lazy {
+        AdapterDataCreateVacancy(applicationContext, null, arrayListOf(), null, null, null,
+            null, null, null, null, this, null, null)
+    }
+
+    private val adapterSkillChoosed by lazy {
+        AdapterDataCreateVacancy(applicationContext, null, null, null, null, null,
+            null, null, null, null, this, null, arrayListOf())
     }
 
     private fun popupDialogType(data: List<VacancyTypeItem?>?) {
@@ -399,9 +503,15 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
             request = RequestCreateVacancy(positionJob, idCompany!!, specialistParams!!, levelParams!!, typeParams!!, description,
                 experienceParams!!, null, minSalary, highSalary,
                 showSalary, address, locationParams!!, null, null, null)
-            startActivity(Intent(applicationContext, SkillAndEducationActivity::class.java)
-                .putExtra("dataRequest", request)
-                .putExtra("dataCreateVacancy", dataCreateVacancy))
+            if (dataDetailVacancy==null)
+                startActivity(Intent(applicationContext, SkillAndEducationActivity::class.java)
+                    .putExtra("dataRequest", request)
+                    .putExtra("dataCreateVacancy", dataCreateVacancy))
+            else
+                startActivity(Intent(applicationContext, SkillAndEducationActivity::class.java)
+                    .putExtra("dataRequest", request)
+                    .putExtra("dataCreateVacancy", dataCreateVacancy)
+                    .putExtra("detailVacancy", dataDetailVacancy))
         } else {
             Toast.makeText(applicationContext, "Please complete the form", Toast.LENGTH_SHORT).show()
         }
@@ -453,6 +563,27 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
                 binding.etSpecialist.setText(data.name)
                 popupDialogSpecialist?.dismiss()
                 specialist = data.id
+            }
+        }
+    }
+
+    override fun listSkillsClick(view: View, data: VacancySkillItem) {
+        TODO("Not yet implemented")
+    }
+
+    override fun listEduClick(view: View, data: VacancyEducationItem) {
+        TODO("Not yet implemented")
+    }
+
+    override fun listChipsSkillClick(view: View, data: VacancySkillItem) {
+        when(view.id){
+            R.id.chip -> {
+                Toast.makeText(applicationContext, "Click edit button for remove this skills", Toast.LENGTH_SHORT).show()
+//                (dataDetailVacancy?.skill as ArrayList).remove(data)
+//                AdapterDataCreateVacancy.VIEW_TYPE = 8
+//                adapterSkillChoosed.clear()
+//                adapterSkillChoosed.addVacancySkillChoosed(dataDetailVacancy!!.skill)
+//                binding.rvSkillChoose.adapter = adapterSkillChoosed
             }
         }
     }
