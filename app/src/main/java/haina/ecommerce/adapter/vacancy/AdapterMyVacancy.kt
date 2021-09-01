@@ -43,7 +43,7 @@ class AdapterMyVacancy(val context: Context,
                 binding.tvApply.text = itemHaina.totalApplicant.toString()
                 binding.tvChoosed.text = itemHaina.shortlistedApplicant.toString()
                 binding.tvInterview.text = itemHaina.interviewApplicant.toString()
-                if (itemHaina.salaryDisplay == 0)
+                if (itemHaina.salaryDisplay == 1)
                     binding.tvSalary.text = "${convertToFormatMoneyIDRFilter(itemHaina.minSalary.toString())} - ${convertToFormatMoneyIDRFilter(itemHaina.maxSalary.toString())}"
                 else
                     binding.tvSalary.text = "${convertToFormatMoneyIDRFilter(itemHaina.minSalary.toString())} - ${convertToFormatMoneyIDRFilter(itemHaina.maxSalary.toString())} - hidden for user"

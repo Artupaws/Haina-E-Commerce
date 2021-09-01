@@ -2,6 +2,7 @@ package haina.ecommerce.model.vacancy
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import haina.ecommerce.model.PhotoItemDataCompany
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -89,9 +90,30 @@ data class DataAllVacancy(
 	@field:SerializedName("position")
 	val position: String? = null,
 
+	@field:SerializedName("company_name")
+	val companyName: String? = null,
+
 	@field:SerializedName("specialist_name")
 	val specialistName: String? = null,
 
 	@field:SerializedName("pinned")
-	val pinned: String? = null
+	val pinned: String? = null,
+
+	@field:SerializedName("company_photo")
+	val companyPhoto: List<CompanyPhotoItem?>? = null,
+
+	@field:SerializedName("company_url")
+	val photoCompany: String? = null
 ) : Parcelable
+
+@Parcelize
+data class CompanyPhotoItem(
+	@field:SerializedName("id")
+	val id:Int,
+	@field:SerializedName("id_company")
+	val idCompany:Int,
+	@field:SerializedName("photo_url")
+	val photoUrl:String,
+	@field:SerializedName("name")
+	val name:String
+):Parcelable

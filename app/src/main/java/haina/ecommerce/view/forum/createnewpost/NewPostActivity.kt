@@ -36,6 +36,14 @@ import okhttp3.RequestBody
 import timber.log.Timber
 import java.io.File
 import java.util.ArrayList
+import androidx.core.content.FileProvider
+import android.webkit.MimeTypeMap
+
+
+
+
+
+
 
  class NewPostActivity : AppCompatActivity(), AdapterInputImages.InputImageClick,
     CreateNewPostContract.View, AdapterListSubforum.ItemAdapterCallback,
@@ -157,7 +165,7 @@ import java.util.ArrayList
      private fun pickMediaFromGalery(typePick:Int) {
          //Intent to pick image
          val intent = Intent(Intent.ACTION_PICK)
-         if (typePick == 1) intent.type = "image/*" else if (typePick == 2) intent.type = "video/*"
+         if (typePick == 1) intent.type = "image/*" else if (typePick == 2) intent.type = "pdf/*"
          startActivityForResult(intent, IMAGE_PICK_CODE)
      }
 

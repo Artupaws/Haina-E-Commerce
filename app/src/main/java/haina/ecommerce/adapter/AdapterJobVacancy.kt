@@ -19,6 +19,7 @@ import haina.ecommerce.databinding.ListItemJobVacancyBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataItemJob
 import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.detailjob.DetailJobActivity
 import java.util.ArrayList
 
@@ -40,7 +41,7 @@ class AdapterJobVacancy(private val context: Context,
                 tvDatePublish.text = ("Post : ${itemHaina.date}")
                 tvLocation.text = itemHaina.location
                 tvSalary.text = ("${helper.convertToFormatMoneySalary(itemHaina.salaryFrom.toString())} - ${helper.convertToFormatMoneySalary(itemHaina.salaryTo.toString())}")
-                Glide.with(context).load(itemHaina.photoUrl).skipMemoryCache(true).diskCacheStrategy(
+                Glide.with(context).load("${Constants.BASE_API_HAINA}storage/${itemHaina.photoUrl}").skipMemoryCache(true).diskCacheStrategy(
                     DiskCacheStrategy.NONE)
                         .listener(object : RequestListener<Drawable>{
                             override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {

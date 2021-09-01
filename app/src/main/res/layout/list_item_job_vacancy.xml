@@ -5,6 +5,9 @@
     android:id="@+id/linear_job_vacancy"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:layout_margin="5dp"
     android:background="@drawable/background_line_corner_input_text_black"
     android:padding="5dp"
@@ -21,6 +24,7 @@
             android:id="@+id/progress_circular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_gravity="center"/>
 
         <TextureView
@@ -63,10 +67,10 @@
         style="@style/TextView.Poppins12spGrey"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title_job"
         android:layout_marginStart="10dp"
         android:layout_toStartOf="@+id/iv_save_job"
         android:layout_toEndOf="@+id/card_image"
-        android:layout_below="@+id/tv_title_job"
         tools:text="PT MAJU TERUS" />
 
     <TextView
@@ -74,10 +78,10 @@
         style="@style/TextView.Poppins12spGrey"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_company_name"
         android:layout_marginStart="10dp"
         android:layout_toStartOf="@+id/iv_save_job"
         android:layout_toEndOf="@+id/card_image"
-        android:layout_below="@+id/tv_company_name"
         tools:text="Jakarta" />
 
     <TextView
@@ -85,10 +89,10 @@
         style="@style/TextView.Poppins12spGrey"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_location"
         android:layout_marginStart="10dp"
         android:layout_toStartOf="@+id/iv_save_job"
         android:layout_toEndOf="@+id/card_image"
-        android:layout_below="@+id/tv_location"
         tools:text="12 Aug 2021" />
 
     <TextView

@@ -68,6 +68,8 @@
                     android:id="@+id/rv_job"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="vertical"
                     tools:listitem="@layout/list_item_job_vacancy"/>
 
                 <include

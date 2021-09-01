@@ -7,6 +7,7 @@ import haina.ecommerce.model.ResponseCheckRegisterCompany
 import haina.ecommerce.model.ResponseGetJob
 import haina.ecommerce.model.ResponseJobCategory
 import haina.ecommerce.model.ResponseListJobLocation
+import haina.ecommerce.model.vacancy.ResponseGetAllVacancy
 import haina.ecommerce.model.vacancy.ResponseGetDataCreateVacancy
 import org.json.JSONObject
 import retrofit2.Call
@@ -59,6 +60,30 @@ class JobPresenter(val view: JobContract.View, val context: Context){
             override fun onFailure(call: Call<ResponseJobCategory>, t: Throwable) {
                 view.dismissLoading()
                 view.messageLoadJobCategory(t.localizedMessage)
+            }
+
+        })
+    }
+
+    fun loadAllVacancy(){
+        view.showLoading()
+        val callListJobCategory = NetworkConfig().getConnectionHainaBearer(context).getListAllVacancy()
+        callListJobCategory.enqueue(object : retrofit2.Callback<ResponseGetAllVacancy> {
+            override fun onResponse(call: Call<ResponseGetAllVacancy>, response: Response<ResponseGetAllVacancy>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1) {
+                    val data = response.body()?.data
+                    view.getDataAllVacancy(data)
+                    view.messageGetAllVacancy(response.body()?.message.toString())
+                } else {
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.messageGetAllVacancy(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetAllVacancy>, t: Throwable) {
+                view.dismissLoading()
+                view.messageGetAllVacancy(t.localizedMessage)
             }
 
         })

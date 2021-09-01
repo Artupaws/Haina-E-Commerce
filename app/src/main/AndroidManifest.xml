@@ -24,6 +24,9 @@
         android:theme="@style/Theme.HainaECommerce.Light"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.job.detail.DetailJobActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.history.historyjobvacancy.ListApplicantActivity"
             android:exported="true" />
         <activity android:name=".view.posting.newvacancy.PackagePriceVacancyActivity" />

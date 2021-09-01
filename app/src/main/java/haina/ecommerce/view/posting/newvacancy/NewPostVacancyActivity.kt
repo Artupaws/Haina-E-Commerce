@@ -93,13 +93,14 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         binding.etHighSalary.addTextChangedListener(high)
 
         binding.cbShowSalary.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked){
-                showSalary = 1
-                Toast.makeText(applicationContext, "This salary will be show", Toast.LENGTH_SHORT).show()
+            showSalary = when(isChecked){
+                true -> {
+                    1
+                }
+                false -> {
+                    0
+                }
             }
-            else
-                showSalary = 0
-                Toast.makeText(applicationContext, "You hide the salary", Toast.LENGTH_SHORT).show()
         }
     }
 
