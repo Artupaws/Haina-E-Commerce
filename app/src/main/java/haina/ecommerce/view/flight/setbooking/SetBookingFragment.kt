@@ -46,6 +46,11 @@ class SetBookingFragment : Fragment(), View.OnClickListener,
     private lateinit var presenter:SetBookingPresenter
     private var popupInputCaptcha: Dialog? = null
 
+    var dataAddonsAll:ArrayList<PaxDataAddons>? = null
+    var dataFlight:ArrayList<Ticket>? = null
+    var dataPassenger:ArrayList<DataSetPassenger>? = null
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentBookingFlightBinding.inflate(inflater, container, false)
@@ -63,6 +68,7 @@ class SetBookingFragment : Fragment(), View.OnClickListener,
             findNavController().navigateUp()
 
         }
+
         dataRequest = arguments?.getParcelable<Request>("data")!!
         val airlineCode = arguments?.getString("airlineCode")!!
         airlineCodeParams = airlineCode
@@ -70,6 +76,11 @@ class SetBookingFragment : Fragment(), View.OnClickListener,
         departParams = depart
         val returnItem =arguments?.getParcelable<DepartItem>("return")
         returnParams =  returnItem
+
+        dataAddonsAll = arguments?.getParcelableArrayList<PaxDataAddons>("dataAddonsAll")!!
+
+        dataPassenger = arguments?.getParcelableArrayList<DataSetPassenger>("dataPassenger")
+        dataFlight = arguments?.getParcelableArrayList<Ticket>("dataFlight")
 
 //        presenter.getCalculationTicketPrice(RequestPrice(airlineCodeParams, departParams, returnParams, "1"))
         setDataOrderer()

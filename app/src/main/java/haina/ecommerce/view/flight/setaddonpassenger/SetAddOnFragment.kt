@@ -2,6 +2,7 @@ package haina.ecommerce.view.flight.setaddonpassenger
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.*
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import haina.ecommerce.adapter.flight.AdapterAddOn
 import haina.ecommerce.adapter.flight.AdapterCombinePassengerAndFlight
 import haina.ecommerce.databinding.FragmentSetAddOnPassengerBinding
 import haina.ecommerce.model.flight.*
+import java.util.ArrayList
 
 
 class SetAddOnFragment : Fragment(), SetAddOnContract, AdapterAddOn.ItemAdapterCallback, View.OnClickListener,AdapterCombinePassengerAndFlight.CallbackInterface{
@@ -34,7 +36,9 @@ class SetAddOnFragment : Fragment(), SetAddOnContract, AdapterAddOn.ItemAdapterC
     private val STATUS_RESERVED = 3
 
     private var selectedIds = ""
-    var dataAddonsAll:MutableList<PaxDataAddons> = mutableListOf()
+    private var dataAddonsAll:MutableList<PaxDataAddons> = mutableListOf()
+    private val bundle = Bundle()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentSetAddOnPassengerBinding.inflate(inflater, container, false)
@@ -54,6 +58,9 @@ class SetAddOnFragment : Fragment(), SetAddOnContract, AdapterAddOn.ItemAdapterC
         dataPassengerParams = dataSetPassenger!!
         val dataFlight = arguments?.getParcelableArrayList<Ticket>("dataFlight")
         dataFlightParams = dataFlight!!
+
+        bundle.putParcelableArrayList("dataFlight", dataFlight)
+        bundle.putParcelableArrayList("dataPassenger", dataSetPassenger)
     }
 
 
@@ -84,7 +91,7 @@ class SetAddOnFragment : Fragment(), SetAddOnContract, AdapterAddOn.ItemAdapterC
     override fun sendDataAddOnSuccess(msg:String) {
         Toast.makeText(context,msg,Toast.LENGTH_LONG).show()
 
-        val bundle = Bundle()
+        bundle.putParcelableArrayList("dataAddonsAll", dataAddonsAll as ArrayList<PaxDataAddons>)
 
         Navigation.findNavController(binding.buttonAddOn).navigate(R.id.action_setAddOnPassengerFragment_to_setBookingFragment, bundle)
 
