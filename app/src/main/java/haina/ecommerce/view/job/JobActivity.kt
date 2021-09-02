@@ -369,7 +369,8 @@ class JobActivity : AppCompatActivity(), JobContract.View,
     override fun listAllVacancyClick(view: View, dataMyVacancy: DataAllVacancy) {
         when(view.id){
             R.id.linear_job_vacancy -> {
-                startActivity(Intent(applicationContext, DetailJobActivity::class.java).putExtra("detailJob", dataMyVacancy))
+                startActivity(Intent(applicationContext, DetailJobActivity::class.java).putExtra("detailJob", dataMyVacancy)
+                    .putExtra("idCompany", idCompany))
             }
         }
     }

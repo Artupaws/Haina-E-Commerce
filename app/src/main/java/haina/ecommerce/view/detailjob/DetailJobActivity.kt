@@ -47,6 +47,7 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
     var salary:String = "0"
     private lateinit var listParams: ArrayList<String>
     private var  imagesListener : ImageListener? = null
+    private var idCompany:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +59,7 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         presenter = DetailJobPresenter(this, this)
         listParams = ArrayList()
         val item = intent.getParcelableExtra<DataAllVacancy>("detailJob")
+        idCompany = intent.getIntExtra("idCompany", 0)
         idJobVacancy = item?.id
         idJobVacancy?.let { presenter.checkAppliedJob(it) }
         binding.tvTitleJob.text = item?.position
@@ -104,6 +106,11 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         binding.ivSaveJob.setOnClickListener(this)
         binding.btnApply.setOnClickListener(this)
         toggleSaveJob()
+        setStateButtonApply(idCompany, item!!.idCompany!!)
+    }
+
+    private fun setStateButtonApply(idCompanyParams:Int, idCompanyVacancy:Int){
+        binding.btnApply.isEnabled = idCompanyParams != idCompanyVacancy
     }
 
     override fun onClick(p0: View?) {
