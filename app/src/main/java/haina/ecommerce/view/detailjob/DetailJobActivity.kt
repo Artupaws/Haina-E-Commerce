@@ -72,7 +72,12 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         binding.tvYearExperience.text = item?.experience.toString()
         binding.tvEmploymentType.text = item?.typeName
         binding.tvSpecialization.text = item?.specialistName
-        salary ="${helper.convertToFormatMoneySalary(item?.minSalary.toString())} - ${helper.convertToFormatMoneySalary(item?.maxSalary.toString())}"
+        if (item?.salaryDisplay == 1){
+            salary = "${Helper.convertToFormatMoneyIDRFilter(item.minSalary.toString())}-${Helper.convertToFormatMoneyIDRFilter(item.maxSalary.toString())}"
+            binding.tvSalary.text = salary
+        } else {
+            binding.tvSalary.text = "Salary hidden"
+        }
         binding.tvSalary.text = salary
         binding.tvDatePublish.text = dateFormat(item?.createdAt)
         Glide.with(applicationContext).load(item?.photoCompany).skipMemoryCache(true).diskCacheStrategy(

@@ -1,14 +1,17 @@
 package haina.ecommerce.view.myaccount.addrequirement
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.OpenableColumns
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -22,6 +25,7 @@ import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityAddRequirementBinding
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.applyjob.ApplyJobActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -37,6 +41,9 @@ class AddRequirementActivity : AppCompatActivity(), View.OnClickListener, AddReq
     var idCategoryDocument: String? = null
     lateinit var sharedPref : SharedPreferenceHelper
     private val BUFFER_SIZE = 1024 * 2
+    private var stateActivity = false
+    private var displayNamePdf = ""
+    private var uriPdf:Uri? = null
     private lateinit var presenter: AddRequirementPresenter
     val IMAGE_DIRECTORY = "/haina_document"
     companion object {
@@ -56,6 +63,7 @@ class AddRequirementActivity : AppCompatActivity(), View.OnClickListener, AddReq
         presenter = AddRequirementPresenter(this, this)
         titleToolbar = intent.getStringExtra("title")
 
+        stateActivity = intent.getBooleanExtra("fromApplyJob", false)
         binding.toolbarAddRequirement.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarAddRequirement.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarAddRequirement.title = titleToolbar
@@ -89,7 +97,17 @@ class AddRequirementActivity : AppCompatActivity(), View.OnClickListener, AddReq
                 if (binding.tvDocument.text.isNotEmpty()){
                     binding.relativeLoading.visibility = View.VISIBLE
                     binding.btnUploadDocument.visibility = View.INVISIBLE
-                    checkUpload(path)
+                    when(stateActivity){
+                        true -> {
+                            startActivity(Intent(applicationContext, ApplyJobActivity::class.java)
+                                .putExtra("namePdf", displayNamePdf)
+                                .putExtra("uriPdf", uriPdf.toString()))
+                            finishAffinity()
+                        }
+                        false -> {
+                            checkUpload(path)
+                        }
+                    }
                 } else{
                     Toast.makeText(applicationContext, "Please insert your document first!", Toast.LENGTH_SHORT).show()
                 }
@@ -97,17 +115,31 @@ class AddRequirementActivity : AppCompatActivity(), View.OnClickListener, AddReq
         }
     }
 
+
+    @SuppressLint("Range")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
-            // Get the Uri of the selected file
-            val uri = data!!.data
-            val uriString = uri.toString()
+            uriPdf = data!!.data
+            val uriString = uriPdf.toString()
             val myFile = File(uriString)
-            path = getFilePathFromURI(this, uri)
-//            Log.d("document", sharedPref.getValueString(Constants.PREF_FULLNAME).toString())
-            binding.tvDocument.text = uriString
+            var cursor:Cursor? = null
+            path = myFile.absolutePath
+//            path = getFilePathFromURI(this, uri)
+            if (uriString.startsWith("content://")){
+                try {
+                     cursor = contentResolver.query(uriPdf!!, null,null,null, null)
+                    if (cursor != null && cursor.moveToFirst()){
+                        displayNamePdf = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)).toString()
+                    }
+                } finally {
+                    cursor?.close()
+                }
+            } else if (uriString.startsWith("file://")){
+                displayNamePdf = myFile.name
+            }
+            binding.tvDocument.text = displayNamePdf
         }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun getFilePathFromURI(context: Context?, contentUri: Uri?): String? {

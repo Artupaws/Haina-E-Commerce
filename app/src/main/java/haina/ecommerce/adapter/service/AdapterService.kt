@@ -12,7 +12,6 @@ import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.caverock.androidsvg.SVG
 import haina.ecommerce.databinding.ListItemServiceBinding
 import haina.ecommerce.databinding.ListItemServiceCategoryBinding
 import haina.ecommerce.model.service.CategoryService
