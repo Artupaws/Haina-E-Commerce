@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
@@ -17,7 +17,6 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -159,5 +158,5 @@ dependencies {
     //Timber for Log
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-
+//    implementation 'androidx.work:work:2.7.0-alpha05'
 }

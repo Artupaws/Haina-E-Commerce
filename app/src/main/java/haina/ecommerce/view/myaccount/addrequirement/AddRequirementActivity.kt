@@ -105,7 +105,7 @@ class AddRequirementActivity : AppCompatActivity(), View.OnClickListener, AddReq
             val uriString = uri.toString()
             val myFile = File(uriString)
             path = getFilePathFromURI(this, uri)
-            Log.d("document", path!!)
+//            Log.d("document", sharedPref.getValueString(Constants.PREF_FULLNAME).toString())
             binding.tvDocument.text = uriString
         }
     }
