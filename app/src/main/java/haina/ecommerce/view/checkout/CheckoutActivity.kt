@@ -13,15 +13,19 @@ import androidx.core.text.HtmlCompat
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityCheckoutBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.helper.Helper.changeMoneyToValue
+import haina.ecommerce.helper.Helper.convertToFormatMoneyIDRFilter
 import haina.ecommerce.model.bill.DataInquiry
 import haina.ecommerce.model.bill.RequestBill
 import haina.ecommerce.model.checkout.DataCheckout
 import haina.ecommerce.model.pulsaanddata.RequestPulsa
+import haina.ecommerce.model.vacancy.RequestCreateVacancy
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.login.LoginActivity
 import haina.ecommerce.view.paymentmethod.PaymentActivity
+import timber.log.Timber
 
 class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutContract.View {
 
@@ -39,9 +43,15 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
     private var adminFee: String = ""
     private var totalPay: Int = 0
     private var dataBill: DataInquiry? = null
+
+    private lateinit var requestCreateVacancy: RequestCreateVacancy
+    private var pricePackageVacancy: Int = 0
+    private lateinit var packageNameVacancyAds: String
+
     private var backTo: Int = 0
     private var typeInquiry: Int = 0
     private var progressDialog: Dialog? = null
+    private lateinit var codeLanguage:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,12 +66,14 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         binding.toolbarCheckout.title = "Checkout"
         binding.btnPayment.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
+        codeLanguage = sharedPref.getValueString(Constants.LANGUAGE_APP).toString()
 
 //        customerNumber = sharedPref.getValueString(Constants.PREF_PHONE_NUMBER_PULSA)
 //        binding.tvNumber.text = customerNumber
 
-        val typeTransactionParams = intent.getIntExtra("typeTransaction", 0)
-        typeTransaction(typeTransactionParams)
+        typeTransaction = intent.getIntExtra("typeTransaction", 0)
+        Timber.d(typeTransaction.toString())
+        typeTransaction(typeTransaction)
         statusLogin(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
     }
 
@@ -73,19 +85,17 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                         presenter.checkout(requestPulsa!!.phoneNumber, requestPulsa!!.productCode)
                     }
                     2 -> {
-                        val requestBillFromCheckout = RequestBill(
-                            requestBill?.productCode,
-                            totalPay.toString(),
-                            adminFee,
-                            this.requestBill?.customerNumber,
-                            null,
-                            dataBill?.inquiry
-                        )
-                        val intent = Intent(applicationContext, PaymentActivity::class.java)
+                        val requestBillFromCheckout = RequestBill(requestBill?.productCode, totalPay.toString(), adminFee, this.requestBill?.customerNumber,
+                            null, dataBill?.inquiry)
+                        startActivity(Intent(applicationContext, PaymentActivity::class.java)
                             .putExtra("request", requestBillFromCheckout)
-                            .putExtra("typeTransaction", typeTransaction)
-                        startActivity(intent)
-//                        }
+                            .putExtra("typeTransaction", typeTransaction))
+                    }
+                    5 -> {
+                        startActivity(Intent(applicationContext, PaymentActivity::class.java)
+                            .putExtra("requestCreateVacancy", requestCreateVacancy)
+                            .putExtra("priceVacancy", pricePackageVacancy)
+                            .putExtra("typeTransaction", typeTransaction))
                     }
                 }
             }
@@ -106,13 +116,13 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         window.setGravity(Gravity.CENTER)
     }
 
-    override fun onResume() {
-        super.onResume()
-        statusLogin(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
-        if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
-            backTo = 1
-        }
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        statusLogin(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
+//        if (sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
+//            backTo = 1
+//        }
+//    }
 
     private fun typeTransaction(typeTransactionParams: Int) {
         when (typeTransactionParams) {
@@ -136,15 +146,18 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                 requestBill = intent?.getParcelableExtra("request")
                 Log.d("dataBillCheckout", dataBill.toString())
                 if (requestBill?.inquiry == 0) {
-                    dataBill?.let { setDetailNoInquiry(it, sharedPref.getValueString(Constants.LANGUAGE_APP), requestBill) }
+                    dataBill?.let { setDetailNoInquiry(it, requestBill) }
                 } else {
-                    dataBill?.let { setDetailBillToView(it, sharedPref.getValueString(Constants.LANGUAGE_APP)) }
+                    dataBill?.let { setDetailBillToView(it) }
                 }
                 typeTransaction = 2
             }
-            3 -> {
-                binding.linearDataProductTopup.visibility = View.GONE
-                binding.includeDataProductBill.linearDataProductBill.visibility = View.VISIBLE
+            5 -> {
+                requestCreateVacancy = intent.getParcelableExtra("dataRequest")!!
+                pricePackageVacancy = intent.getIntExtra("priceVacancy", 0)
+                packageNameVacancyAds = intent.getStringExtra("packageName")!!
+                Timber.d(pricePackageVacancy.toString())
+                setDetailVacancy(pricePackageVacancy, packageNameVacancyAds)
             }
         }
     }
@@ -192,7 +205,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         }
     }
 
-    private fun setDetailBillToView(data: DataInquiry, codeLanguage: String?) {
+    private fun setDetailBillToView(data: DataInquiry) {
         binding.linearDataProductTopup.visibility = View.GONE
         binding.includeDataProductBill.linearDataProductBill.visibility = View.VISIBLE
         binding.includeDataProductBill.tvCustomerNumber.text = data.billData?.customerId
@@ -217,7 +230,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
         }
     }
 
-    private fun setDetailNoInquiry(data: DataInquiry, codeLanguage: String?, dataRequest: RequestBill?) {
+    private fun setDetailNoInquiry(data: DataInquiry, dataRequest: RequestBill?) {
         binding.linearDataProductTopup.visibility = View.GONE
         binding.includeDataProductBill.linearDataProductBill.visibility = View.VISIBLE
         binding.includeDataProductBill.tvCustomerNumber.text = data.billData?.customerId
@@ -238,6 +251,23 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                 binding.tvTitleService.text = data.categoryZh
             }
         }
+    }
+
+    private fun setDetailVacancy(pricePackageVacancy:Int, packageNameAds:String) {
+        binding.tvTitleService.text = "Vacancy Ads"
+        binding.faIcon.text = getString(R.string.job)
+        binding.includeDataProductBill.linearBill.visibility = View.GONE
+        binding.includeDataProductBill.linearBillDate.visibility = View.GONE
+        binding.includeDataProductBill.linearAdminFee.visibility = View.GONE
+        binding.linearDataProductTopup.visibility = View.GONE
+        binding.includeDataProductBill.linearDataProductBill.visibility = View.VISIBLE
+        binding.includeDataProductBill.tvTitleCustomerNumber.text = "Service type"
+        binding.includeDataProductBill.tvCustomerNumber.text = packageNameAds
+        binding.includeDataProductBill.tvTitleCustomerName.text = "Price"
+        binding.includeDataProductBill.tvNameCustomer.text = convertToFormatMoneyIDRFilter(pricePackageVacancy.toString())
+        totalPay = changeMoneyToValue(pricePackageVacancy.toString()).toInt()
+        binding.tvProductName.text = "Vacancy"
+        binding.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(pricePackageVacancy.toString())
     }
 
     override fun messageCheckout(msg: String) {

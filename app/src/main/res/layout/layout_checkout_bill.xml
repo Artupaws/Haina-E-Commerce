@@ -19,6 +19,7 @@
         android:weightSum="2">
 
         <TextView
+            android:id="@+id/tv_title_customer_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -49,6 +50,7 @@
         android:weightSum="2">
 
         <TextView
+            android:id="@+id/tv_title_customer_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -79,6 +81,7 @@
         android:weightSum="2">
 
         <TextView
+            android:id="@+id/tv_title_bill"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -109,6 +112,7 @@
         android:weightSum="2">
 
         <TextView
+            android:id="@+id/tv_title_bill_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -140,6 +144,7 @@
         android:weightSum="2">
 
         <TextView
+            android:id="@+id/tv_title_admin_fee"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -29,9 +29,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <include
                 android:id="@+id/include_data_property_top"
-                layout="@layout/layout_description_property"/>
+                layout="@layout/layout_description_property" />
 
         </LinearLayout>
 

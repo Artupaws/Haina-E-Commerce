@@ -70,7 +70,7 @@ class AddRequirementActivity : AppCompatActivity(), View.OnClickListener, AddReq
 
     override fun onClick(p0: View?) {
         when(p0?.id){
-            R.id.relative -> {
+            R.id.linear_click -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                         val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)

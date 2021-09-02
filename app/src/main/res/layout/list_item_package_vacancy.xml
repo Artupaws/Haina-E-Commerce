@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_click"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="5sp"
+        app:cardBackgroundColor="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/relative_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_name_package"
+                style="@style/TextView.Poppins16spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:textFontWeight="600"
+                android:textSize="30sp"
+                tools:text="FREE" />
+
+            <TextView
+                android:id="@+id/tv_price_package"
+                style="@style/TextView.Poppins16spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/tv_name_package"
+                android:textAlignment="textEnd"
+                android:textFontWeight="600"
+                tools:text="IDR0" />
+
+            <TextView
+                android:id="@+id/tv_description_package"
+                style="@style/TextView.Poppins16spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_name_package"
+                android:textFontWeight="600"
+                tools:text="1 Week Promotion" />
+
+            <TextView
+                android:id="@+id/tv_bonus"
+                style="@style/TextView.Poppins16spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_description_package"
+                android:textFontWeight="600"
+                tools:text="Ads Always on Top" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

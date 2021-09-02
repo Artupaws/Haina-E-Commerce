@@ -24,11 +24,21 @@
         android:theme="@style/Theme.HainaECommerce.Light"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.job.detail.DetailJobActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.history.historyjobvacancy.ListApplicantActivity"
+            android:exported="true" />
+        <activity android:name=".view.posting.newvacancy.PackagePriceVacancyActivity" />
+        <activity android:name=".view.posting.newvacancy.SkillAndEducationActivity" />
+        <activity android:name=".view.forum.createnewpost.ShowVideoActivity" />
+        <activity
             android:name=".view.forum.search.SearchForumActivity"
             android:exported="true" />
         <activity
             android:name=".view.forum.forumactivity.ActivityForumActivity"
             android:exported="true" />
+        <activity android:name=".view.posting.newvacancy.NewPostVacancyActivity" />
         <activity android:name=".view.forum.tab.myforum.DetailMySubforum" />
         <activity android:name=".view.forum.profileuser.ProfileUserActivity" />
         <activity android:name=".view.forum.createsubforum.CreateSubforumActivity" />
@@ -55,7 +65,7 @@
         <activity android:name=".view.topup.electronicmoney.ElectronicMoneyActivity" />
         <activity android:name=".view.detailtransaction.DetailTransactionActivity" />
         <activity android:name=".view.history.historytransaction.HistoryTransactionActivity" />
-        <activity android:name=".view.history.historyjobvacancy.HistoryJobVacancyActivity" />
+        <activity android:name=".view.history.historyjobvacancy.MyVacancyActivity" />
         <activity android:name=".view.paymentmethod.PaymentActivity" />
         <activity android:name=".view.postpaid.PostpaidActivity" />
         <activity android:name=".view.internetandtv.InternetActivity" />

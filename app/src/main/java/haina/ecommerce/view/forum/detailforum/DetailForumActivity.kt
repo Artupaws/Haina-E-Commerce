@@ -92,7 +92,7 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
     }
 
     private fun showDataForum(subforumData: SubforumData, data:DataItemHotPost) {
-        Glide.with(applicationContext).load(data.authorPhoto).into(binding.ivImageAuthor)
+//        Glide.with(applicationContext).load(data.authorPhoto).into(binding.ivImageAuthor)
         binding.tvTitleForum.text = data.title
         val memberSince = "Member since : ${data.memberSince}"
         binding.tvMemberSince.text = memberSince

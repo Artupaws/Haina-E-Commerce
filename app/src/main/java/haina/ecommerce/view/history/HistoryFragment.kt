@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import haina.ecommerce.R
 import haina.ecommerce.databinding.FragmentHistoryBinding
-import haina.ecommerce.view.history.historyjobvacancy.HistoryJobVacancyActivity
+import haina.ecommerce.view.history.historyjobvacancy.MyVacancyActivity
 import haina.ecommerce.view.history.historymyproperty.MyPropertyActivity
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
@@ -43,7 +43,7 @@ class HistoryFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.cv_job_vacancy -> {
-                val intent = Intent(requireContext(), HistoryJobVacancyActivity::class.java)
+                val intent = Intent(requireContext(), MyVacancyActivity::class.java)
                 startActivity(intent)
             }
             R.id.cv_transaction -> {

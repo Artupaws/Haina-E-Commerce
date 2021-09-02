@@ -1,6 +1,7 @@
 package haina.ecommerce.helper
 
 import android.annotation.SuppressLint
+import android.text.TextWatcher
 import haina.ecommerce.helper.Helper.convertLongtoTime
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -33,6 +34,12 @@ object Helper {
         val formatter: NumberFormat = NumberFormat.getCurrencyInstance()
         formatter.maximumFractionDigits = 0
         formatter.currency = Currency.getInstance("IDR")
+        return formatter.format(formatMoney?.toDouble())
+    }
+
+    fun convertToFormatMoneyNoCode(formatMoney: String?): String? {
+        val formatter: NumberFormat = NumberFormat.getNumberInstance()
+        formatter.maximumFractionDigits = 0
         return formatter.format(formatMoney?.toDouble())
     }
 

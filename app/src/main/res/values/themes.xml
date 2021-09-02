@@ -20,6 +20,13 @@
         <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 
+    <style name="ChipsEntry" parent="Widget.MaterialComponents.Chip.Entry">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:textSize">12sp</item>
+        <item name="chipBackgroundColor">@color/yellow</item>
+    </style>
+    
     <style name="ToolbarTitleStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/black</item>

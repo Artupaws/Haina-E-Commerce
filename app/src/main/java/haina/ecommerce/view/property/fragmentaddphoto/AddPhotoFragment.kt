@@ -34,6 +34,7 @@ import haina.ecommerce.view.property.FinishPropertyActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
@@ -276,7 +277,6 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
 
         camera?.setOnClickListener {
             typeUpload = "camera"
-            Toast.makeText(requireActivity(), typeUpload, Toast.LENGTH_SHORT).show()
             openCamera()
             popupAddPhoto?.dismiss()
         }
@@ -308,12 +308,13 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
     }
 
     override fun messageCreatePost(msg: String) {
-        Log.d("createPostProperty", msg)
+        Timber.d(msg)
         if (msg.contains("Success!")){
-            val intentFinish = Intent(requireActivity(), FinishPropertyActivity::class.java)
-            startActivity(intentFinish)
+            startActivity(Intent(requireActivity(), FinishPropertyActivity::class.java).putExtra("finish", "property"))
             requireActivity().finishAffinity()
             deleteAll()
+        } else{
+            Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
         }
     }
 

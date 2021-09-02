@@ -14,7 +14,6 @@
         android:id="@+id/action_activity_forum"
         android:icon="@drawable/ic_account"
         android:title="Activity"
-        app:actionViewClass="Ac"
         app:showAsAction="ifRoom"
         tools:ignore="HardcodedText" />
 </menu>

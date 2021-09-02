@@ -9,116 +9,75 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_grey"
-        android:layout_marginBottom="3dp"
+        android:background="@drawable/background_line_corner_input_text_black"
         android:orientation="vertical"
-        android:gravity="center"
-        tools:ignore="UselessParent">
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tv_name_applicant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Darla"
+            style="@style/TextView.Poppins14spBlack"/>
+
+        <TextView
+            android:id="@+id/tv_last_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Android Developer"
+            style="@style/TextView.Poppins14spBlack"/>
+
+        <TextView
+            android:id="@+id/tv_last_company_and_experience"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="PT Maju (1 Year)"
+            style="@style/TextView.Poppins14spGrey"/>
+
+        <TextView
+            android:id="@+id/tv_expected_salary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Expected Salary : IDR10.000.000"
+            style="@style/TextView.Poppins14spBlack"/>
+
+        <TextView
+            android:id="@+id/tv_last_education"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Last Education : S1(Tenknik Informatika)"
+            style="@style/TextView.Poppins14spBlack"/>
+
 
         <LinearLayout
+            android:id="@+id/linear_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:weightSum="2">
 
-            <ImageView
-                android:id="@+id/iv_image_post"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                tools:src="@drawable/ic_launcher_background"
-                android:contentDescription="@string/image_company" />
+            <Button
+                android:id="@+id/btn_interview"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                style="@style/Button.Primary"
+                android:text="@string/interview"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:textSize="17sp"
-                    tools:text="Bla Bla" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:id="@+id/tv_name_company"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        tools:text="Trans Corp" />
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.8"
-                        android:background="@android:color/holo_red_dark">
-
-                        <TextView
-                            android:id="@+id/tv_status"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_margin="2dp"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            tools:text="Rejected" />
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:id="@+id/tv_applied_date"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
-                        android:textSize="12sp"
-                        tools:text="Applied : 2021-1-1" />
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.8">
-
-                        <TextView
-                            android:id="@+id/tv_status_vacancy"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_margin="2dp"
-                            android:textColor="@color/black"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:visibility="invisible"
-                            tools:text="Vacancy Closed" />
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
+            <Button
+                android:id="@+id/btn_reject"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                style="@style/Button.Primary"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:textColor="@color/white"
+                android:text="reject"/>
 
         </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

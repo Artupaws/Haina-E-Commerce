@@ -69,12 +69,10 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener, DetailPropertyC
         if (dataProperty?.images != null){
             for (i in dataProperty!!.images!!) {
                 i?.path?.let { listParams.add(it) }
-                Log.d("listImageProperty", listParams.toString())
                 binding.vpImageProperty.pageCount = listParams.size
                 imagesListener = ImageListener { position, imageView ->
                     Glide.with(this).load(listParams[position]).placeholder(R.drawable.ps5).into(imageView)
                 }
-                binding.vpImageProperty.setImageListener(imagesListener)
                 binding.vpImageProperty.setImageListener(imagesListener)
             }
         }

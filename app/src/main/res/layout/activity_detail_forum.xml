@@ -31,17 +31,24 @@
             android:padding="10dp">
 
             <RelativeLayout
-                android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:background="@drawable/background_line_corner_input_text_black">
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_title_subforum"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="Subforum :" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_image_subforum"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_centerHorizontal="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/tv_title_subforum"
                     tools:src="@drawable/ps5" />
 
                 <TextView
@@ -49,18 +56,19 @@
                     style="@style/TextView.Poppins14spBlack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_image_subforum"
-                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_toStartOf="@+id/frame_button"
+                    android:layout_toEndOf="@+id/iv_image_subforum"
                     tools:text="member name" />
 
                 <TextView
                     android:id="@+id/tv_category"
-                    style="@style/TextView.Poppins14spBlack"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/tv_name_subforum"
+                    style="@style/TextView.Poppins12spGrey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="member name" />
+                    android:layout_below="@+id/iv_image_subforum"
+                    android:layout_alignStart="@+id/iv_image_subforum"
+                    tools:text="member since : 2020-01-01" />
 
                 <FrameLayout
                     android:id="@+id/frame_button"
@@ -71,62 +79,122 @@
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_follow"
                         style="@style/Button.Primary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/follow" />
+                        android:layout_width="70dp"
+                        android:layout_height="40dp"
+                        android:text="@string/follow"
+                        android:textSize="11sp" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_unfollow"
                         style="@style/Button.Cancel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:text="@string/unfollow" />
+                        android:layout_width="70dp"
+                        android:layout_height="40dp"
+                        android:text="@string/unfollow"
+                        android:textSize="11sp"
+                        android:visibility="gone" />
 
                 </FrameLayout>
 
-                <TextView
-                    android:id="@+id/tv_title_poster"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/TextView.Poppins14spBlack"
-                    android:layout_below="@+id/tv_category"
-                    android:text="Poster :"/>
+            </RelativeLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_title_poster"
-                    android:orientation="horizontal">
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_line_corner_input_text_black"
+                android:padding="5dp"
+                android:visibility="gone">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_image_author"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    tools:src="@drawable/ps5" />
+                <!--                <de.hdodenhof.circleimageview.CircleImageView-->
+                <!--                    android:id="@+id/iv_image_subforum"-->
+                <!--                    android:layout_width="60dp"-->
+                <!--                    android:layout_height="60dp"-->
+                <!--                    android:layout_centerHorizontal="true"-->
+                <!--                    tools:src="@drawable/ps5" />-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/tv_name_user"
-                        style="@style/TextView.Poppins12spGrey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="member name" />
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tv_name_subforum"-->
+                <!--                    style="@style/TextView.Poppins14spBlack"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_below="@+id/iv_image_subforum"-->
+                <!--                    android:layout_centerHorizontal="true"-->
+                <!--                    tools:text="member name" />-->
 
-                    <TextView
-                        android:id="@+id/tv_member_since"
-                        style="@style/TextView.Poppins12spGrey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="member since : 2020-01-01" />
-                </LinearLayout>
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tv_category"-->
+                <!--                    style="@style/TextView.Poppins14spBlack"-->
+                <!--                    android:layout_centerHorizontal="true"-->
+                <!--                    android:layout_below="@+id/tv_name_subforum"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    tools:text="member name" />-->
 
-                </LinearLayout>
+                <!--                <FrameLayout-->
+                <!--                    android:id="@+id/frame_button"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_alignParentEnd="true">-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatButton-->
+                <!--                        android:id="@+id/btn_follow"-->
+                <!--                        style="@style/Button.Primary"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:text="@string/follow" />-->
+
+                <!--                    <androidx.appcompat.widget.AppCompatButton-->
+                <!--                        android:id="@+id/btn_unfollow"-->
+                <!--                        style="@style/Button.Cancel"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:visibility="gone"-->
+                <!--                        android:text="@string/unfollow" />-->
+
+                <!--                </FrameLayout>-->
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/tv_title_poster"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    style="@style/TextView.Poppins14spBlack"-->
+                <!--                    android:layout_below="@+id/tv_category"-->
+                <!--                    android:text="Poster :"/>-->
+
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_below="@+id/tv_title_poster"-->
+                <!--                    android:orientation="horizontal">-->
+
+                <!--                    <de.hdodenhof.circleimageview.CircleImageView-->
+                <!--                    android:id="@+id/iv_image_author"-->
+                <!--                    android:layout_width="40dp"-->
+                <!--                    android:layout_height="40dp"-->
+                <!--                    tools:src="@drawable/ps5" />-->
+
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginStart="10dp"-->
+                <!--                    android:gravity="center_vertical"-->
+                <!--                    android:orientation="vertical">-->
+                <!--                    <TextView-->
+                <!--                        android:id="@+id/tv_name_user"-->
+                <!--                        style="@style/TextView.Poppins12spGrey"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        tools:text="member name" />-->
+
+                <!--                    <TextView-->
+                <!--                        android:id="@+id/tv_member_since"-->
+                <!--                        style="@style/TextView.Poppins12spGrey"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        tools:text="member since : 2020-01-01" />-->
+                <!--                </LinearLayout>-->
+
+                <!--                </LinearLayout>-->
 
             </RelativeLayout>
 
@@ -135,10 +203,42 @@
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:textFontWeight="600"
                 android:textSize="20sp"
                 tools:text="5 Facts About England Open" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_title_poster"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:text="Writer :" />
+
+                <TextView
+                    android:id="@+id/tv_name_user"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/tv_title_poster"
+                    tools:text="Poster" />
+
+                <TextView
+                    android:id="@+id/tv_member_since"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_name_user"
+                    android:layout_alignStart="@+id/tv_name_user"
+                    tools:text="member since : 2020-01-01" />
+
+            </RelativeLayout>
 
             <com.synnapps.carouselview.CarouselView
                 android:id="@+id/vp_image_forum"
@@ -190,8 +290,8 @@ Vivamus at libero convallis, blandit dolor id, dictum eros. Proin ipsum nunc, pe
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="2dp"
+                android:layout_marginTop="20dp"
                 android:background="@color/light_grey" />
 
             <LinearLayout
@@ -214,9 +314,9 @@ Vivamus at libero convallis, blandit dolor id, dictum eros. Proin ipsum nunc, pe
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    tools:text="200"
                     android:textColor="@android:color/holo_blue_dark"
-                    android:textFontWeight="600" />
+                    android:textFontWeight="600"
+                    tools:text="200" />
 
             </LinearLayout>
 
@@ -238,9 +338,9 @@ Vivamus at libero convallis, blandit dolor id, dictum eros. Proin ipsum nunc, pe
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        tools:itemCount="1"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="1"
                         tools:listitem="@layout/list_item_comment_forum" />
 
                 </LinearLayout>
@@ -259,8 +359,8 @@ Vivamus at libero convallis, blandit dolor id, dictum eros. Proin ipsum nunc, pe
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:gravity="center_vertical"
         android:background="@drawable/background_line_corner_input_text_black"
+        android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -269,20 +369,20 @@ Vivamus at libero convallis, blandit dolor id, dictum eros. Proin ipsum nunc, pe
             android:id="@+id/et_comment"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:padding="5dp"
-            android:inputType="textMultiLine"
             android:layout_toStartOf="@+id/iv_action_send"
             android:background="@android:color/transparent"
-            android:hint="Reply" />
+            android:hint="Reply"
+            android:inputType="textMultiLine"
+            android:padding="5dp" />
 
         <ImageButton
             android:id="@+id/iv_action_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:clickable="false"
             android:layout_margin="5dp"
-            android:src="@drawable/ic_send"/>
+            android:clickable="false"
+            android:src="@drawable/ic_send" />
 
     </RelativeLayout>
 

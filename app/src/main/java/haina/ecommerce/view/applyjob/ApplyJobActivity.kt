@@ -1,5 +1,6 @@
 package haina.ecommerce.view.applyjob
 
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -8,8 +9,11 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -26,7 +30,7 @@ import haina.ecommerce.model.DataUser
 import haina.ecommerce.view.myaccount.addrequirement.AddRequirementActivity
 import haina.ecommerce.view.myaccount.detailaccount.DetailAccountActivity
 
-class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobContract {
+class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobContract.View {
 
     private lateinit var binding: ActivityApplyJobBinding
     private lateinit var presenter: ApplyJobPresenter
@@ -34,6 +38,7 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
     private var idDocumentResume:Int? = null
     var idJobVacancy:Int = 0
     val refresh:String?= "1"
+    private var progressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +53,11 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
         binding.toolbarApplyJob.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarApplyJob.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarApplyJob.title = intent.getStringExtra("titleJob")
-        binding.tvTitleJob.text = binding.toolbarApplyJob.title
         idJobVacancy = intent.getIntExtra("idJobVacancy", 0)
         binding.btnSubmit.setOnClickListener(this)
         binding.tvAddResume.setOnClickListener(this)
         binding.tvActionReviewProfile.setOnClickListener(this)
-
+        loadingDialog()
     }
 
     private fun refresh(){
@@ -82,28 +86,6 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
                 }
             }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter("idDocument"))
-    }
-
-    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver(){
-        override fun onReceive(context: Context?, intent: Intent?) {
-            when (intent?.action){
-                "idDocument" -> {
-                    val fromIntent = intent.getIntExtra("resume", 0)
-                    idDocumentResume = fromIntent
-                    Log.d("idDocument", idDocumentResume.toString())
-                }
-            }
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver)
     }
 
     override fun onResume() {
@@ -139,13 +121,22 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
         onBackPressed()
     }
 
+    private fun loadingDialog(){
+        progressDialog = Dialog(this)
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(applicationContext,android.R.color.white))
+        val window: Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
+    }
+
     override fun getDocumentResume(item: List<DataDocumentUser?>?) {
         val adapterResume = AdapterDocumentUserChoose(this, item)
-        binding.rvResume.apply {
-            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
-            adapter = adapterResume
-            adapterResume.notifyDataSetChanged()
-        }
+//        binding.rvResume.apply {
+//            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+//            adapter = adapterResume
+//            adapterResume.notifyDataSetChanged()
+//        }
     }
 
     override fun getDataUser(data: DataUser?) {
@@ -168,5 +159,13 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
         binding.tvName.text = data?.fullname
         binding.tvEmail.text = data?.email
         binding.tvPhone.text = data?.phone
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 }

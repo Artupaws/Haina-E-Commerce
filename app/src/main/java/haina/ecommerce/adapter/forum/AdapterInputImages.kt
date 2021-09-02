@@ -12,11 +12,11 @@ import haina.ecommerce.databinding.ListItemInputImageBinding
 import haina.ecommerce.model.forum.ImagePostData
 
 class AdapterInputImages(private val context: Context, private val imageList: MutableList<ImagePostData>?,
-                         val itemAdapterCallback: ItemAdapterCallback): RecyclerView.Adapter<AdapterInputImages.Holder>(){
+                         val inputImageClick: InputImageClick): RecyclerView.Adapter<AdapterInputImages.Holder>(){
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val binding = ListItemInputImageBinding.bind(itemView)
-        fun bind(itemHaina: ImagePostData, itemAdapterCallback: ItemAdapterCallback){
+        fun bind(itemHaina: ImagePostData, inputImageClick: InputImageClick){
             with(binding) {
                 if (itemHaina.id == -1){
                     ivAction.visibility = View.GONE
@@ -35,10 +35,10 @@ class AdapterInputImages(private val context: Context, private val imageList: Mu
                     Glide.with(context).load(uri).into(ivImages)
                 }
                 cvClick.setOnClickListener {
-                    itemAdapterCallback.onClickAddImage(cvClick, itemHaina, adapterPosition)
+                    inputImageClick.onClickAddImage(cvClick, itemHaina, adapterPosition)
                 }
                 ivAction.setOnClickListener {
-                    itemAdapterCallback.onClickAddImage(ivAction, itemHaina, adapterPosition)
+                    inputImageClick.onClickAddImage(ivAction, itemHaina, adapterPosition)
                 }
             }
         }
@@ -51,12 +51,12 @@ class AdapterInputImages(private val context: Context, private val imageList: Mu
 
     override fun onBindViewHolder(holder: AdapterInputImages.Holder, position: Int) {
         val image: ImagePostData = imageList!![position]
-        holder.bind(image, itemAdapterCallback)
+        holder.bind(image, inputImageClick)
     }
 
     override fun getItemCount(): Int = imageList?.size!!
 
-    interface ItemAdapterCallback{
+    interface InputImageClick{
         fun onClickAddImage(view: View, data:ImagePostData, position: Int)
     }
 

@@ -11,7 +11,8 @@
         android:id="@+id/toolbar_apply_job"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/yellow"
+        android:background="@color/white"
+        app:navigationIcon="@drawable/ic_back_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,7 +22,7 @@
         android:id="@+id/swipe_refresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_apply_job">
@@ -38,9 +39,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_margin="10dp"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
@@ -48,8 +49,8 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/iv_profile"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:src="@color/yellow"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -67,153 +68,214 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                     <TextView
                         android:id="@+id/tv_name"
+                        style="@style/TextView.Poppins14spBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="putra"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="10dp"/>
+                        tools:text="putra" />
+
+                    <TextView
+                        android:id="@+id/tv_position"
+                        style="@style/TextView.Poppins14spBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Android Developer" />
 
                     <TextView
                         android:id="@+id/tv_email"
+                        style="@style/TextView.Poppins14spBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="putra@gmail.com"
-                        android:textColor="@color/black"/>
+                        tools:text="putra@gmail.com" />
 
                     <TextView
                         android:id="@+id/tv_phone"
+                        style="@style/TextView.Poppins14spBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="08388619584"
-                        android:textColor="@color/black"/>
+                        tools:text="08388619584" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/broken_white" />
 
                     <TextView
                         android:id="@+id/tv_action_review_profile"
+                        style="@style/TextView.Poppins16spBlack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:text="@string/review_profile"
                         android:textAlignment="center"
-                        android:textColor="@android:color/holo_blue_dark"/>
+                        android:textColor="@android:color/holo_blue_dark" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="7dp"
-                    android:background="@color/light_grey"/>
+                    android:layout_height="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/broken_white" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:padding="10dp">
 
-                    <ImageView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:id="@+id/linear_title_resume"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.3"
-                        android:src="@drawable/ic_resume" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:src="@drawable/ic_resume" />
+
+                        <TextView
+                            style="@style/TextView.Poppins16spBlack"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="2.5"
+                            android:text="@string/resume"
+                            android:textFontWeight="500" />
+
+                        <TextView
+                            android:id="@+id/tv_add_resume"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:drawablePadding="5dp"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            app:drawableStartCompat="@drawable/ic_edit" />
+
+                    </LinearLayout>
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="2.2"
-                        android:text="@string/resume"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_add_resume"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:drawablePadding="5dp"
-                        android:gravity="center"
-                        android:text="@string/add"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        app:drawableStartCompat="@drawable/ic_add" />
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_resume"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="7dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/light_grey"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    android:orientation="vertical">
-                    <TextView
+                        style="@style/TextView.Poppins14spBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/the_job_you_wish_to_apply_for"/>
-                    <TextView
-                        android:id="@+id/tv_title_job"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/linear_title_resume"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="5dp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textAllCaps="true"/>
-                </LinearLayout>
+                        android:textColor="@android:color/holo_blue_dark"
+                        tools:text="Cv 2021.pdf" />
 
+                </RelativeLayout>
 
-                <FrameLayout
-                    android:layout_width="wrap_content"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/broken_white" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp">
+                    android:padding="10dp">
 
-                    <RelativeLayout
-                        android:id="@+id/relative_loading"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/linear_title_add_info"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@drawable/background_loading"
-                        android:gravity="center"
-                        android:visibility="invisible">
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
 
-                        <com.airbnb.lottie.LottieAnimationView
-                            android:id="@+id/iv_loading"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            app:lottie_autoPlay="true"
-                            app:lottie_loop="true"
-                            app:lottie_rawRes="@raw/loading" />
-                    </RelativeLayout>
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:src="@drawable/ic_resume" />
 
-                    <Button
-                        android:id="@+id/btn_submit"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            style="@style/TextView.Poppins16spBlack"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_weight="2.2"
+                            android:text="Additional Info"
+                            android:textFontWeight="500" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/hideUnderBar"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@string/submit"
-                        android:textColor="@color/yellow" />
-                </FrameLayout>
+                        android:layout_below="@+id/linear_title_add_info"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="300">
+
+                        <EditText
+                            android:id="@+id/et_description_ads"
+                            style="@style/TextView.Poppins14spBlack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/background_line_corner_input_text_black"
+                            android:gravity="top|left"
+                            android:hint="In a few sentences, let the employer know why you are right for this job"
+                            android:inputType="textMultiLine"
+                            android:lines="6"
+                            android:maxLength="300"
+                            android:maxLines="6"
+                            android:scrollbars="vertical" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </RelativeLayout>
 
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RelativeLayout
+            android:id="@+id/relative_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/background_loading"
+            android:gravity="center"
+            android:visibility="invisible">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/iv_loading"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Button.Primary"
+            android:backgroundTint="@color/black"
+            android:layout_gravity="center"
+            android:text="@string/submit"
+            android:textColor="@color/yellow" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

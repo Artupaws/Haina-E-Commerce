@@ -233,6 +233,7 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
 
     override fun getListAllThreads(data: List<ThreadsItem?>?) {
         if (context != null){
+            allThreadsAdapter.clear()
             allThreadsAdapter.add(data)
         }
     }

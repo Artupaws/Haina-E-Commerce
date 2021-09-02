@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.posting.newvacancy.NewPostVacancyActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_create_vacancy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:title="Create Vacancy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back_black" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_create_vacancy">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Type Job"
+                    android:textFontWeight="500" />
+
+                <TextView
+                    android:id="@+id/tv_title_position_job"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Position Job" />
+
+                <EditText
+                    android:id="@+id/et_position_job"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:background="@drawable/background_line_corner_input_text_black"
+                    android:inputType="textCapWords"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_title_type"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Type"
+                    android:textFontWeight="500" />
+
+                <EditText
+                    android:id="@+id/et_type"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:focusable="false"
+                    android:background="@drawable/background_line_corner_input_text_black"
+                    android:inputType="text"
+                    android:paddingStart="10dp" />
+
+                <RadioGroup
+                    android:id="@+id/rd_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/rb_fulltime"
+                        style="@style/TextView.Poppins14spBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Full Time" />
+
+                    <RadioButton
+                        android:id="@+id/rb_halftime"
+                        style="@style/TextView.Poppins14spBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Half Time" />
+
+                    <RadioButton
+                        android:id="@+id/rb_contract"
+                        style="@style/TextView.Poppins14spBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contract" />
+
+                    <RadioButton
+                        android:id="@+id/rb_intern"
+                        style="@style/TextView.Poppins14spBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Internship" />
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/tv_title_level"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Level"
+                    android:textFontWeight="500" />
+
+                <EditText
+                    android:id="@+id/et_level"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:focusable="false"
+                    android:background="@drawable/background_line_corner_input_text_black"
+                    android:inputType="text"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_title_experience"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Experience"
+                    android:textFontWeight="500" />
+
+                <EditText
+                    android:id="@+id/et_experience"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:focusable="false"
+                    android:background="@drawable/background_line_corner_input_text_black"
+                    android:inputType="text"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_title_specialist"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Specialist"
+                    android:textFontWeight="500" />
+
+                <EditText
+                    android:id="@+id/et_specialist"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:focusable="false"
+                    android:background="@drawable/background_line_corner_input_text_black"
+                    android:inputType="text"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_title_location"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Location Job"
+                    android:textFontWeight="500" />
+
+                <EditText
+                    android:id="@+id/et_location_job"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:focusable="false"
+                    android:background="@drawable/background_line_corner_input_text_black"
+                    android:inputType="text"
+                    android:paddingStart="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_title_address"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Address"
+                    android:textFontWeight="500" />
+
+                <EditText
+                    android:id="@+id/et_address"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:background="@drawable/background_line_corner_input_text_black"
+                    android:inputType="textCapWords"
+                    android:paddingStart="10dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_title_salary"
+                        style="@style/TextView.Poppins16spBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/cb_show_salary"
+                        android:text="@string/salary"
+                        android:textFontWeight="500" />
+
+                    <CheckBox
+                        android:id="@+id/cb_show_salary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="Show Salary" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        style="@style/TextView.Poppins16spBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="IDR"
+                        android:textFontWeight="500" />
+
+                    <EditText
+                        android:id="@+id/et_minim_salary"
+                        style="@style/TextView.Poppins14spBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1.2"
+                        android:hint="From"
+                        android:background="@drawable/background_line_corner_input_text_black"
+                        android:inputType="number"
+                        android:paddingStart="10dp" />
+
+                    <TextView
+                        style="@style/TextView.Poppins16spBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1"
+                        android:text="-"
+                        android:textAlignment="center"
+                        android:textFontWeight="500" />
+
+                    <EditText
+                        android:id="@+id/et_high_salary"
+                        style="@style/TextView.Poppins14spBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1.2"
+                        android:hint="To"
+                        android:background="@drawable/background_line_corner_input_text_black"
+                        android:inputType="number"
+                        android:paddingStart="10dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_description_job"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Description Job"
+                    android:textFontWeight="500" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/hideUnderBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    app:counterEnabled="true">
+
+                    <EditText
+                        android:id="@+id/et_description_ads"
+                        style="@style/TextView.Poppins14spBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/background_line_corner_input_text_black"
+                        android:gravity="top|left"
+                        android:inputType="textMultiLine"
+                        android:lines="6"
+                        android:maxLines="6"
+                        android:scrollbars="vertical" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_skill_education"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title_skills"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Skills"
+                    android:textFontWeight="500" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_skill_choose"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/list_item_choose_chips" />
+
+                <TextView
+                    android:id="@+id/tv_title_last_education"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Last Education"
+                    android:textFontWeight="500" />
+
+                <EditText
+                    android:id="@+id/et_last_education"
+                    style="@style/TextView.Poppins14spBlack"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:focusable="false"
+                    android:background="@drawable/background_line_corner_input_text_black"
+                    android:hint="Choose Last Education"
+                    android:inputType="text"
+                    android:paddingStart="10dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <Button
+        android:id="@+id/btn_next"
+        style="@style/Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:backgroundTint="@color/black"
+        android:text="@string/next_title"
+        android:textColor="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

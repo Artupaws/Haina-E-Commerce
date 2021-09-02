@@ -22,13 +22,13 @@
         app:lottie_rawRes="@raw/success" />
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/tv_title_success"
         style="@style/TextView.Poppins16spBlack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:gravity="center"
-        android:text="Success Create Posting Property"
+        tools:text="Success Create Posting Property"
         android:textFontWeight="600"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,29 +36,29 @@
         app:layout_constraintTop_toBottomOf="@+id/lottie_success" />
 
     <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/tv_title_description_success"
         style="@style/TextView.Poppins16spBlack"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="can be seen on MyProperty page "
+        tools:text="can be seen on MyProperty page "
         android:textFontWeight="500"
-        app:layout_constraintEnd_toEndOf="@+id/textView20"
-        app:layout_constraintStart_toStartOf="@+id/textView20"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_title_success"
+        app:layout_constraintStart_toStartOf="@+id/tv_title_success"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_success" />
 
     <Button
-        android:id="@+id/btn_to_myproperty"
+        android:id="@+id/btn_action_goto"
         style="@style/Button.Primary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:backgroundTint="@color/green"
-        android:text="Go To MyProperty Page"
+        tools:text="Go To MyProperty Page"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_description_success" />
 
     <Button
         android:id="@+id/btn_to_dashboard"
@@ -70,9 +70,9 @@
         android:text="Back To Dashboard"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/btn_to_myproperty"
-        app:layout_constraintStart_toStartOf="@+id/btn_to_myproperty"
-        app:layout_constraintTop_toBottomOf="@+id/btn_to_myproperty"
+        app:layout_constraintEnd_toEndOf="@+id/btn_action_goto"
+        app:layout_constraintStart_toStartOf="@+id/btn_action_goto"
+        app:layout_constraintTop_toBottomOf="@+id/btn_action_goto"
         app:layout_constraintVertical_bias="0.0" />
 
 

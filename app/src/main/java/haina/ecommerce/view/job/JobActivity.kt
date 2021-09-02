@@ -7,16 +7,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,18 +24,34 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterJobCategoryOnJob
 import haina.ecommerce.adapter.AdapterJobVacancy
 import haina.ecommerce.adapter.AdapterLocationFilterJob
+import haina.ecommerce.adapter.vacancy.AdapterAllVacancy
+import haina.ecommerce.adapter.vacancy.AdapterDataCreateVacancy
 import haina.ecommerce.databinding.ActivityJobBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.DataCompany
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataItemJob
+import haina.ecommerce.model.vacancy.DataAllVacancy
+import haina.ecommerce.model.vacancy.DataCreateVacancy
+import haina.ecommerce.model.vacancy.VacancyLevelItem
+import haina.ecommerce.model.vacancy.VacancyTypeItem
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
+import haina.ecommerce.view.detailjob.DetailJobActivity
+import haina.ecommerce.view.login.LoginActivity
+import haina.ecommerce.view.posting.newvacancy.NewPostVacancyActivity
+import haina.ecommerce.view.register.company.RegisterCompanyActivity
+import timber.log.Timber
 import java.util.*
 
-class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
+class JobActivity : AppCompatActivity(), JobContract.View,
+    View.OnClickListener, AdapterAllVacancy.AdapterCallbackAllVacancy{
 
     private lateinit var binding: ActivityJobBinding
     private lateinit var presenter: JobPresenter
     private var popupFilter: Dialog? = null
-    private var popupLoading: Dialog? = null
+    private var progressDialog: Dialog? = null
+    private var popupCheckDataCompany: Dialog? = null
     private val helper: Helper = Helper
     private var broadcaster: LocalBroadcastManager? = null
     val data:MutableMap<String, Int> = HashMap()
@@ -49,55 +62,96 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
     private var isCategoryEmpty = true
     private var isLocationEmpty = true
     private var isStartSalaryEmpty = true
+    private var dataCreateVacancy:DataCreateVacancy? = null
+    private lateinit var sharedPref:SharedPreferenceHelper
+    private var idCompany:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityJobBinding.inflate(layoutInflater)
         setContentView(binding.root)
         broadcaster = LocalBroadcastManager.getInstance(this)
-        presenter = JobPresenter(this)
-        presenter.loadListJobCategory()
+        presenter = JobPresenter(this, this)
+        sharedPref = SharedPreferenceHelper(this)
+        binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
+        presenter.loadAllVacancy()
         presenter.loadListJobLocation()
+        presenter.getDataCreateVacancy()
+        presenter.checkRegisterCompany()
         refresh()
         loadingDialog()
+        showPopupRegisterCompany()
+        if (!sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
+            binding.includeLogin.linearNotLogin.visibility = View.VISIBLE
+            binding.searchView.visibility = View.GONE
+            binding.fabCreateVacancy.visibility = View.GONE
+            binding.rvJob.visibility = View.GONE
+        } else{
+            binding.includeLogin.linearNotLogin.visibility = View.GONE
+            binding.searchView.visibility = View.VISIBLE
+            binding.fabCreateVacancy.visibility = View.VISIBLE
+            binding.rvJob.visibility = View.VISIBLE
+        }
         binding.toolbarJob.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarJob.setNavigationOnClickListener { onBackPressed() }
         binding.cvFilterJob.setOnClickListener(this)
-
+        binding.fabCreateVacancy.setOnClickListener(this)
+//        binding.rvJob.adapter = adapterListJob
         binding.rvJob.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0) {
-                    binding.cvFilterJob.visibility = View.GONE
+                    binding.fabCreateVacancy.visibility = View.GONE
                 }
                 if (dy < 0) {
-                    binding.cvFilterJob.visibility = View.VISIBLE
+                    binding.fabCreateVacancy.visibility = View.VISIBLE
                 }
+            }
+        })
+        binding.toolbarJob.inflateMenu(R.menu.menu_filter_job)
+        binding.toolbarJob.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId){
+                R.id.filter_job -> {
+                    popupFilter?.show()
+                    true
+                }
+                else -> false
+            }
+        }
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText?.isNotEmpty()!!){
+                    (binding.rvJob.adapter as AdapterAllVacancy).filter.filter(newText)
+                    (binding.rvJob.adapter as AdapterAllVacancy).notifyDataSetChanged()
+                }
+                return true
             }
 
         })
-        popupLoading?.show()
-
     }
 
     private fun refresh(){
         binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            presenter.loadListJobCategory()
+            presenter.loadAllVacancy()
             presenter.loadListJobLocation()
+            presenter.getDataCreateVacancy()
         })
     }
 
     private fun loadingDialog(){
-        popupLoading = Dialog(this)
-        popupLoading?.setContentView(R.layout.layout_popup_dialog)
-        popupLoading?.setCancelable(false)
-        popupLoading?.window?.setBackgroundDrawable(applicationContext.getDrawable(android.R.color.transparent))
-        val window: Window = popupLoading?.window!!
+        progressDialog = Dialog(this)
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(applicationContext,android.R.color.white))
+        val window: Window = progressDialog?.window!!
         window.setGravity(Gravity.CENTER)
     }
 
     private fun loadPresenterFilter(){
-        popupLoading?.show()
         data.clear()
         isCategoryEmpty = filterCategory == 0
         isLocationEmpty = filterLocation == 0
@@ -114,23 +168,52 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         presenter.loadListJobVacancy(data)
     }
 
+    private fun showPopupRegisterCompany() {
+        popupCheckDataCompany = Dialog(this)
+        popupCheckDataCompany?.setContentView(R.layout.popup_check_register_company)
+        popupCheckDataCompany?.setCancelable(true)
+        popupCheckDataCompany?.window?.setBackgroundDrawable(ContextCompat.getDrawable(applicationContext, android.R.color.white))
+        val window:Window = popupCheckDataCompany?.window!!
+        window.setGravity(Gravity.CENTER)
+        val actionCancel = popupCheckDataCompany?.findViewById<TextView>(R.id.tv_action_cancel)
+        val actionYes = popupCheckDataCompany?.findViewById<TextView>(R.id.tv_action_yes)
+        actionCancel?.setOnClickListener { popupCheckDataCompany?.dismiss() }
+        actionYes?.setOnClickListener {
+            startActivity(Intent(applicationContext, RegisterCompanyActivity::class.java))
+            popupCheckDataCompany?.dismiss()
+        }
+    }
+
     override fun onClick(p0: View?) {
         when(p0?.id){
             R.id.cv_filter_job -> {
                 popupFilter?.show()
             }
+            R.id.fab_create_vacancy -> {
+                if (idCompany == 0) popupCheckDataCompany?.show()
+                else startActivity(Intent(applicationContext, NewPostVacancyActivity::class.java)
+                    .putExtra("dataCreateVacancy", dataCreateVacancy)
+                    .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
+                    .putExtra("idCompany", idCompany))
+            }
+            R.id.btn_login_not_login -> {
+                startActivity(Intent(applicationContext, LoginActivity::class.java))
+            }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.checkRegisterCompany()
+        presenter.getDataCreateVacancy()
+        presenter.loadListJobLocation()
+//        presenter.loadListJobCategory()
     }
 
     override fun onStart() {
         super.onStart()
         broadcaster?.registerReceiver(mMessageReceiver, IntentFilter("jobLocationFilter"))
         broadcaster?.registerReceiver(mMessageReceiver, IntentFilter("jobCategoryFilter"))
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        popupLoading?.dismiss()
     }
 
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver(){
@@ -141,7 +224,6 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
                 }
                 "jobCategoryFilter" -> {
                     filterCategory = intent.getIntExtra("idCategoryJobFilter", 0)
-                    popupLoading?.show()
                     loadPresenterFilter()
                 }
             }
@@ -153,61 +235,46 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         broadcaster?.unregisterReceiver(mMessageReceiver)
     }
 
-    override fun successLoadListJob(msg: String) {
-        Log.d("loadlistJobSuccess", msg)
+    override fun messageLoadListJob(msg: String) {
+        Timber.d(msg)
         data.clear()
         binding.swipeRefresh.isRefreshing = false
-        binding.ivLoadingVacancy.visibility = View.INVISIBLE
-        popupLoading?.dismiss()
-    }
-
-    override fun errorLoadListJob(msg: String) {
-        Log.d("loadlistJobError", msg)
-        data.clear()
-        binding.swipeRefresh.isRefreshing = false
-        binding.ivLoadingVacancy.visibility = View.INVISIBLE
-        binding.rvJob.visibility = View.INVISIBLE
-        binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-        popupLoading?.dismiss()
     }
 
     override fun getLoadListJob(list: List<DataItemJob?>?) {
-        val listJobAdapter = AdapterJobVacancy(this, list)
-        if (list!!.isNotEmpty()) {
-            binding.rvJob.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                adapter = listJobAdapter
-                listJobAdapter.notifyDataSetChanged()
-                binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
-            }
-        } else {
-            binding.rvJob.visibility = View.INVISIBLE
-            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-        }
+//        if (list !=null){
+//            binding.includeEmpty.linearEmpty.visibility = View.GONE
+//            adapterListJob.clear()
+//            adapterListJob.add(list)
+//        } else {
+//            binding.rvJob.visibility = View.GONE
+//            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+//        }
     }
 
     override fun getDataSize(list: Int?) {
-        if (list == 0){
-            Toast.makeText(applicationContext, list.toString(), Toast.LENGTH_SHORT).show()
-            binding.rvJob.visibility = View.INVISIBLE
-            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-        } else {
-            binding.rvJob.visibility = View.VISIBLE
-            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
-        }
+//        if (list == 0){
+//            Toast.makeText(applicationContext, list.toString(), Toast.LENGTH_SHORT).show()
+//            binding.rvJob.visibility = View.INVISIBLE
+//            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+//        } else {
+//            binding.rvJob.visibility = View.VISIBLE
+//            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
+//        }
     }
 
-    override fun successLoadJobCategory(msg: String) {
-        Log.d("loadJobCategorySuccess", msg)
+//    private val adapterListJob by lazy {
+//        AdapterJobVacancy(applicationContext, arrayListOf(), this)
+//    }
+
+    private val adapterListAllVacancy by lazy {
+        AdapterAllVacancy(applicationContext, arrayListOf(), this)
+    }
+
+    override fun messageLoadJobCategory(msg: String) {
+        Timber.d(msg)
         binding.swipeRefresh.isRefreshing = false
-        binding.ivLoadingCategory.visibility = View.INVISIBLE
         presenter.loadListJobVacancy(data)
-    }
-
-    override fun errorLoadJobCategory(msg: String) {
-        Log.d("loadJobCategoryError", msg)
-        binding.swipeRefresh.isRefreshing = false
-        binding.ivLoadingCategory.visibility = View.INVISIBLE
     }
 
     override fun getLoadJobCategory(itemHaina: MutableList<DataItemHaina?>?) {
@@ -215,15 +282,9 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         category.addAll(listOf(DataItemHaina("All Category", "All Category", "",-1)))
         category.addAll(itemHaina!!)
         val jobCategoryAdapter = AdapterJobCategoryOnJob(this, category)
-        binding.rvCategoryJob.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = jobCategoryAdapter
-            jobCategoryAdapter.notifyDataSetChanged()
-        }
     }
 
     override fun getLoadListLocation(itemHaina: List<DataItemHaina?>?) {
-        Log.d("listJob", itemHaina?.size.toString())
         listLocationFilter = itemHaina
         dialogFilterJob(listLocationFilter)
     }
@@ -242,7 +303,7 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         val rSliderStartSalary = popupFilter?.findViewById<RangeSlider>(R.id.rslider_start_salary)
         val tvStartSalary = popupFilter?.findViewById<TextView>(R.id.tv_start_salary)
         val jobLocationAdapter = AdapterLocationFilterJob(this, itemHaina)
-        rSliderStartSalary?.addOnChangeListener { slider, value, fromUser ->
+        rSliderStartSalary?.addOnChangeListener { _, value, _ ->
             action?.isEnabled = value.toString()!=""
             tvStartSalary?.text = helper.convertToFormatMoneyIDRFilter(value.toString())
             filterStartSalary = helper.changeFormatMoneyToValueFilter(tvStartSalary?.text.toString())!!.toInt()
@@ -261,14 +322,56 @@ class JobActivity : AppCompatActivity(), JobContract, View.OnClickListener{
         }
     }
 
-    override fun successLoadListLocation(msg: String) {
-        Log.d("successLoadListLocation", msg)
+    override fun messageLoadListLocation(msg: String) {
+        Timber.d(msg)
         binding.swipeRefresh.isRefreshing = false
     }
 
-    override fun errorLoadListLocation(msg: String) {
-        Log.d("errorLoadListLocation", msg)
-        binding.swipeRefresh.isRefreshing = false
+    override fun getDataCreateVacancy(data: DataCreateVacancy?) {
+        dataCreateVacancy = data
+    }
+
+    override fun messageGetDataCreateVacancy(msg: String) {
+        Timber.d(msg)
+    }
+
+    override fun messageCheckRegisterCompany(msg: String) {
+        Timber.d(msg)
+    }
+
+    override fun getDataRegisterCompany(data: DataCompany) {
+        idCompany = data.id!!
+    }
+
+    override fun messageGetAllVacancy(msg: String) {
+        Timber.d(msg)
+    }
+
+    override fun getDataAllVacancy(data: List<DataAllVacancy?>?) {
+        Timber.d(data?.size.toString())
+        adapterListAllVacancy.clear()
+        adapterListAllVacancy.addAllVacancy(data)
+        binding.rvJob.adapter = adapterListAllVacancy
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
+    }
+
+//    override fun listJobClick(view: View, data: DataItemJob) {
+//
+//    }
+
+    override fun listAllVacancyClick(view: View, dataMyVacancy: DataAllVacancy) {
+        when(view.id){
+            R.id.linear_job_vacancy -> {
+                startActivity(Intent(applicationContext, DetailJobActivity::class.java).putExtra("detailJob", dataMyVacancy))
+            }
+        }
     }
 }
 

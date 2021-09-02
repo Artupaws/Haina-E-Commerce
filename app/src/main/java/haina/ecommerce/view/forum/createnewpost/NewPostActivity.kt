@@ -11,39 +11,57 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
+import android.widget.MediaController
 import android.widget.Toast
+import android.widget.VideoView
 import androidx.core.content.ContextCompat
 import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.AdapterInputImages
+import haina.ecommerce.adapter.forum.AdapterInputVideos
 import haina.ecommerce.adapter.forum.AdapterListSubforum
 import haina.ecommerce.databinding.ActivityNewPostBinding
-import haina.ecommerce.model.forum.DataSubforum
-import haina.ecommerce.model.forum.DataSubforumHotPost
 import haina.ecommerce.model.forum.ImagePostData
 import haina.ecommerce.model.forum.SubforumData
 import haina.ecommerce.room.roomimagepost.ImagePostClient
 import haina.ecommerce.room.roomimagepost.ImagePostDao
+import haina.ecommerce.room.roomvideopost.VideoPostClient
+import haina.ecommerce.room.roomvideopost.VideoPostDao
+import haina.ecommerce.room.roomvideopost.VideoPostData
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import timber.log.Timber
 import java.io.File
 import java.util.ArrayList
+import androidx.core.content.FileProvider
+import android.webkit.MimeTypeMap
 
- class NewPostActivity : AppCompatActivity(), AdapterInputImages.ItemAdapterCallback,
-    CreateNewPostContract.View, AdapterListSubforum.ItemAdapterCallback, View.OnClickListener {
+
+
+
+
+
+
+ class NewPostActivity : AppCompatActivity(), AdapterInputImages.InputImageClick,
+    CreateNewPostContract.View, AdapterListSubforum.ItemAdapterCallback,
+     View.OnClickListener, AdapterInputVideos.InputVideoClick {
 
     private lateinit var binding:ActivityNewPostBinding
     private lateinit var listImages:MutableList<ImagePostData>
+    private lateinit var listVideos:MutableList<VideoPostData>
     private var uri: Uri = Uri.EMPTY
-    private lateinit var dao: ImagePostDao
-    private lateinit var database: ImagePostClient
+    private lateinit var daoImage: ImagePostDao
+    private lateinit var daoVideo: VideoPostDao
+    private lateinit var databaseImage: ImagePostClient
+    private lateinit var databaseVideo: VideoPostClient
     private var progressDialog:Dialog? = null
+    private var videoViewDialog:Dialog? = null
     private var listPhotoArray = ArrayList<MultipartBody.Part>()
+    private var listVideoArray: ArrayList<MultipartBody.Part>? = null
+    private var typePick:Int = 1
     private lateinit var presenter: CreateNewPostPresenter
     private var subforumId:Int = 0
 
@@ -51,13 +69,17 @@ import java.util.ArrayList
         super.onCreate(savedInstanceState)
         binding = ActivityNewPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        database = ImagePostClient.getDatabase(this)
-        dao = database.getImagePostDao()
+        databaseImage = ImagePostClient.getDatabase(this)
+        databaseVideo = VideoPostClient.getDatabase(this)
+        daoImage = databaseImage.getImagePostDao()
+        daoVideo = databaseVideo.getVideoPostDao()
         presenter = CreateNewPostPresenter(this, this)
         presenter.getListSubForum()
         binding.btnNewPost.setOnClickListener(this)
         binding.rvImages.adapter = imagesAdapter
-        getListImagePost(database, dao)
+        binding.rvVideo.adapter = videosAdapter
+        getListImagePost(databaseImage, daoImage)
+        getListVideoPost(databaseVideo, daoVideo)
         binding.toolbarNewPost.setNavigationOnClickListener {
             deleteAll()
             onBackPressed()
@@ -76,6 +98,23 @@ import java.util.ArrayList
         window.setGravity(Gravity.CENTER)
     }
 
+     private fun dialogVideoView(uri:String){
+         videoViewDialog = Dialog(this)
+         videoViewDialog?.setContentView(R.layout.popup_play_video)
+         videoViewDialog?.setCancelable(true)
+         videoViewDialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(applicationContext,android.R.color.white))
+         val window: Window = progressDialog?.window!!
+         window.setGravity(Gravity.CENTER.and(Gravity.TOP))
+         val videoView = videoViewDialog?.findViewById<VideoView>(R.id.video_view)
+         val mediaController = MediaController(applicationContext)
+         val uriParams = Uri.parse(uri)
+         mediaController.setAnchorView(videoView)
+         videoView?.setMediaController(mediaController)
+         videoView?.setVideoURI(uriParams)
+         videoView?.requestFocus()
+         videoView?.start()
+     }
+
     companion object {
         //image pick code
         private val IMAGE_PICK_CODE = 1000
@@ -88,17 +127,18 @@ import java.util.ArrayList
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
                 || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 requestPermissions(permissions, PERMISSION_CODE)
-                pickImageFromGallery()
-
+                pickMediaFromGalery(typePick)
             } else {
                 //permission already granted
-                pickImageFromGallery()
+                pickMediaFromGalery(typePick)
             }
         } else {
             //system OS is < Marshmallow
-            pickImageFromGallery()
+            pickMediaFromGalery(typePick)
         }
     }
 
@@ -107,7 +147,7 @@ import java.util.ArrayList
         when (requestCode) {
             PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    pickImageFromGallery()
+                        pickMediaFromGalery(typePick)
                 } else {
                     Toast.makeText(applicationContext, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
@@ -122,9 +162,16 @@ import java.util.ArrayList
         startActivityForResult(intent, IMAGE_PICK_CODE)
     }
 
+     private fun pickMediaFromGalery(typePick:Int) {
+         //Intent to pick image
+         val intent = Intent(Intent.ACTION_PICK)
+         if (typePick == 1) intent.type = "image/*" else if (typePick == 2) intent.type = "pdf/*"
+         startActivityForResult(intent, IMAGE_PICK_CODE)
+     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE && typePick == 1){
             imagesAdapter.clear()
             uri = data?.data!!
             val filepath = getRealPathFromURIPath(uri)
@@ -132,9 +179,18 @@ import java.util.ArrayList
             val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
             val body = MultipartBody.Part.createFormData("images[]", file.name, mFile)
             saveImagePost(ImagePostData(0, uri.toString()))
-            getListImagePost(database, dao)
+            getListImagePost(databaseImage, daoImage)
             listPhotoArray.add(body)
-
+        } else if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE && typePick == 2){
+            videosAdapter.clear()
+            uri = data?.data!!
+            val filepath = getRealPathFromURIPath(uri)
+            val file = File(filepath!!)
+            val mFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+            val body = MultipartBody.Part.createFormData("videos[]", file.name, mFile)
+            saveVideoPost(VideoPostData(0, uri.toString()))
+            getListVideoPost(databaseVideo, daoVideo)
+            listVideoArray?.add(body)
         }
     }
 
@@ -161,9 +217,25 @@ import java.util.ArrayList
         }
     }
 
+     private fun getListVideoPost(database: VideoPostClient, dao: VideoPostDao) {
+         listVideos = mutableListOf()
+         listVideos.addAll(dao.getAll())
+         listVideos.addAll(listOf(VideoPostData(-1, "&#xf067;")))
+         if (listVideos.size < 1){
+             binding.rvVideo.visibility = View.GONE
+         } else {
+             binding.rvVideo.visibility = View.VISIBLE
+             videosAdapter.add(listVideos)
+         }
+     }
+
     private val imagesAdapter by lazy {
         AdapterInputImages(applicationContext, mutableListOf(), this)
     }
+
+     private val videosAdapter by lazy {
+         AdapterInputVideos(applicationContext, mutableListOf(), this)
+     }
 
     private fun checkDataPost(){
         var isEmptyTitle = true
@@ -175,6 +247,7 @@ import java.util.ArrayList
         var content = binding.etDescription.text.toString()
         var images = listPhotoArray
         var subforumIdParams = subforumId
+        val videos = listVideoArray
 
         if (title.isEmpty()){
             isEmptyTitle = true
@@ -213,45 +286,41 @@ import java.util.ArrayList
         }
 
         if (!isEmptyTitle && !isEmptyContent && !isEmptyImages && !isEmptySubforumId){
-            presenter.createNewPost(subforumIdParams, title, content, images, null)
+            presenter.createNewPost(subforumIdParams, title, content, images, videos)
         }
     }
 
     private fun saveImagePost(imagePost: ImagePostData){
-        if (dao.getById(imagePost.id).isEmpty()){
-            dao.insert(imagePost)
+        if (daoImage.getById(imagePost.id).isEmpty()){
+            daoImage.insert(imagePost)
         }else{
-            dao.update(imagePost)
+            daoImage.update(imagePost)
         }
     }
 
     private fun deleteImagePost(imagePost: ImagePostData){
-        dao.delete(imagePost)
+        daoImage.delete(imagePost)
     }
 
     private fun deleteAll(){
-        dao.deleteAll()
+        daoImage.deleteAll()
     }
 
-    override fun onClickAddImage(view: View, data: ImagePostData, position:Int) {
-        when(view.id){
-            R.id.cv_click -> {
-                when(data.id) {
-                    -1 -> {
-                        checkPermission()
-                    } else -> {
-                        Toast.makeText(applicationContext, position.toString() , Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-            R.id.iv_action -> {
-                deleteImagePost(data)
-                imagesAdapter.notifyItemRangeRemoved(position,position)
-                imagesAdapter.clear()
-                getListImagePost(database, dao)
-            }
-        }
-    }
+     private fun saveVideoPost(videoPost: VideoPostData){
+         if (daoVideo.getById(videoPost.id).isEmpty()){
+             daoVideo.insert(videoPost)
+         }else{
+             daoVideo.update(videoPost)
+         }
+     }
+
+     private fun deleteVideoPost(videoPost: VideoPostData){
+         daoVideo.delete(videoPost)
+     }
+
+     private fun deleteAllVideos(){
+         daoVideo.deleteAll()
+     }
 
     override fun onBackPressed() {
         deleteAll()
@@ -306,4 +375,46 @@ import java.util.ArrayList
         }
     }
 
-}
+     override fun onClickAddImage(view: View, data: ImagePostData, position:Int) {
+         when(view.id){
+             R.id.cv_click -> {
+                 typePick = 1
+                when(data.id) {
+                    -1 -> {
+                        checkPermission()
+                    }
+                }
+             }
+             R.id.iv_action -> {
+                 deleteImagePost(data)
+                 imagesAdapter.notifyItemRangeRemoved(position,position)
+                 imagesAdapter.clear()
+                getListImagePost(databaseImage, daoImage)
+             }
+         }
+     }
+
+     override fun onClickAddVideo(view: View, data: VideoPostData, position: Int) {
+         when(view.id){
+             R.id.cv_click -> {
+                 typePick = 2
+                 when(data.id) {
+                     -1 -> {
+                         checkPermission()
+                     } else -> {
+                     startActivity(Intent(applicationContext, ShowVideoActivity::class.java).putExtra("uri", data.video))
+//                     dialogVideoView(data.video)
+//                     videoViewDialog?.show()
+                     }
+                 }
+             }
+             R.id.iv_action -> {
+                 deleteVideoPost(data)
+                 videosAdapter.notifyItemRangeRemoved(position,position)
+                 videosAdapter.clear()
+                 getListVideoPost(databaseVideo, daoVideo)
+             }
+         }
+     }
+
+ }
