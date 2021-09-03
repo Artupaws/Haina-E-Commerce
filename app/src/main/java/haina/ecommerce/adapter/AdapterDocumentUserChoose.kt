@@ -16,9 +16,12 @@ import haina.ecommerce.databinding.ListItemListDocumentBinding
 import haina.ecommerce.model.AddressItemCompany
 import haina.ecommerce.model.DataDocumentUser
 import haina.ecommerce.view.datacompany.address.AddAddressCompanyActivity
+import java.util.ArrayList
 
 
-class AdapterDocumentUserChoose(val context: Context, private val listDocumentUser: List<DataDocumentUser?>?):
+class AdapterDocumentUserChoose(val context: Context,
+                                private val listDocumentUser: List<DataDocumentUser?>?,
+                                private val adapterResumeClick:AdapterResumeClick):
     RecyclerView.Adapter<AdapterDocumentUserChoose.Holder>() {
 
     private var index:Int = -1
@@ -27,7 +30,7 @@ class AdapterDocumentUserChoose(val context: Context, private val listDocumentUs
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemListDocumentBinding.bind(view)
         private var nameDocument:String? = null
-        fun bind(itemHaina: DataDocumentUser){
+        fun bind(itemHaina: DataDocumentUser, adapterResumeClick: AdapterResumeClick){
             with(binding){
                 nameDocument = (itemHaina.docs_name)
                 tvTitleDocument.text = nameDocument
@@ -35,9 +38,10 @@ class AdapterDocumentUserChoose(val context: Context, private val listDocumentUs
                 cardView2.setOnClickListener {
                     index = adapterPosition
                     notifyDataSetChanged()
-                    val sendIdDocument = Intent("idDocument")
-                        .putExtra("resume", itemHaina.id)
-                    broadcaster?.sendBroadcast(sendIdDocument)
+                    adapterResumeClick.listResumeClicked(cardView2, itemHaina)
+//                    val sendIdDocument = Intent("idDocument")
+//                        .putExtra("resume", itemHaina.id)
+//                    broadcaster?.sendBroadcast(sendIdDocument)
                 }
                 if (index == adapterPosition){
                     clClick.setBackgroundResource(R.drawable.background_line_corner_input_text_black)
@@ -57,7 +61,21 @@ class AdapterDocumentUserChoose(val context: Context, private val listDocumentUs
 
     override fun onBindViewHolder(holder: AdapterDocumentUserChoose.Holder, position: Int) {
         val photo: DataDocumentUser = listDocumentUser?.get(position)!!
-        holder.bind(photo)
+        holder.bind(photo, adapterResumeClick)
+    }
+
+    fun addResume(data:List<DataDocumentUser?>?){
+        data?.let { (listDocumentUser as ArrayList<DataDocumentUser?>?)?.addAll(it) }
+        notifyItemRangeInserted((listDocumentUser?.size?.minus(data?.size!!)!!), data?.size!!)
+    }
+
+    fun clear(){
+        (listDocumentUser as ArrayList<DataDocumentUser?>?)?.clear()
+        notifyDataSetChanged()
+    }
+
+    interface AdapterResumeClick{
+        fun listResumeClicked(view:View, data:DataDocumentUser)
     }
 
     override fun getItemCount(): Int = listDocumentUser?.size!!

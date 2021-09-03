@@ -9,6 +9,7 @@ interface ApplyJobContract {
     interface View:BaseView{
         fun messageGetDataPersonal(msg:String)
         fun messagetGetDocument(msg:String)
+        fun messageUploadDocument(msg:String)
         fun messageApplyJob(msg:String)
 
         fun getDocumentResume(item: List<DataDocumentUser?>?)

@@ -83,8 +83,8 @@ class FragmentTransactionFinish : Fragment(), View.OnClickListener, AdapterTrans
     }
 
     private fun setupListTransactionFinish(data:DataTransaction?){
-        Timber.d(data?.process?.size.toString())
-        showIsEmpty(data?.process?.size)
+        Timber.d(data?.success?.size.toString())
+        showIsEmpty(data?.success?.size)
         binding?.rvTransactionFinish?.apply {
             adapter = AdapterTransactionPulsaFinish(requireContext(), data?.success, this@FragmentTransactionFinish)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

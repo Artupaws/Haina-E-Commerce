@@ -1,41 +1,48 @@
 package haina.ecommerce.view.applyjob
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.provider.OpenableColumns
 import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterDocumentUserChoose
 import haina.ecommerce.databinding.ActivityApplyJobBinding
 import haina.ecommerce.model.DataDocumentUser
 import haina.ecommerce.model.DataUser
-import haina.ecommerce.view.myaccount.addrequirement.AddRequirementActivity
 import haina.ecommerce.view.myaccount.detailaccount.DetailAccountActivity
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import timber.log.Timber
+import java.io.File
 
-class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobContract.View {
+class ApplyJobActivity : AppCompatActivity(), View.OnClickListener,
+    ApplyJobContract.View, AdapterDocumentUserChoose.AdapterResumeClick {
 
     private lateinit var binding: ActivityApplyJobBinding
     private lateinit var presenter: ApplyJobPresenter
@@ -46,11 +53,11 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
     private var progressDialog: Dialog? = null
     private var uriPdf: Uri? = null
     private var namePdf:String? = null
+    var path: String? = null
+    private var fileToUpload:MultipartBody.Part? = null
+    private var idResume:Int = 0
 
     companion object {
-        //pick Pdf
-        private val PICK_PDF = 21
-
         //Permission code
         private val PERMISSION_CODE_PDF = 123
     }
@@ -71,11 +78,10 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
         idJobVacancy = intent.getIntExtra("idJobVacancy", 0)
         binding.btnSubmit.setOnClickListener(this)
         binding.tvAddResume.setOnClickListener(this)
+//        binding.tvResume.setOnClickListener(this)
         binding.tvActionReviewProfile.setOnClickListener(this)
-//        uriPdf = Uri.parse(intent.getStringExtra("uriPdf"))
-//        namePdf = intent.getStringExtra("namePdf")
-//        Timber.d(uriPdf.toString(), namePdf)
         loadingDialog()
+        requestMultiplePermissions()
     }
 
     private fun refresh(){
@@ -95,7 +101,7 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                         val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        requestPermissions(permissions, ApplyJobActivity.PERMISSION_CODE_PDF)
+                        requestPermissions(permissions, PERMISSION_CODE_PDF)
                     } else {
                         //permission already granted
                         pickPdf()
@@ -110,13 +116,27 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
 //                startActivity(intent)
             }
             R.id.btn_submit -> {
-                if (idDocumentResume == null || idJobVacancy == 0){
-                    Toast.makeText(applicationContext, "Please choose 1 resume for apply this job", Toast.LENGTH_SHORT).show()
-                } else {
-                    presenter.applyJob(idJobVacancy, idDocumentResume!!)
-                }
+                checkDataApply()
+//                if (idDocumentResume == null || idJobVacancy == 0){
+//                    Toast.makeText(applicationContext, "Please choose 1 resume for apply this job", Toast.LENGTH_SHORT).show()
+//                } else {
+//                    presenter.applyJob(idJobVacancy, binding.etDescriptionAds.text.toString())
+//                }
             }
+//            R.id.tv_resume -> {
+//
+//            }
         }
+    }
+
+    private fun checkUpload(path: String?){
+        // Parsing any Media type file
+        val file = File(path!!)
+        val requestBody: RequestBody = RequestBody.create(MediaType.parse("*/*"), file.toString())
+        fileToUpload = MultipartBody.Part.createFormData("docs", file.name, requestBody)
+        val filename: RequestBody = RequestBody.create(MediaType.parse("text/plain"), namePdf!!)
+        val idCategory = RequestBody.create(MediaType.parse("text/plain"), "1")
+        presenter.uploadDocument(fileToUpload!!, filename, idCategory)
     }
 
     private fun pickPdf() {
@@ -127,28 +147,86 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
         startActivityForResult(intent, 1)
     }
 
-    override fun onResume() {
-        presenter.loadDocumentResume(1)
-        Timber.d("comeback")
-        super.onResume()
+    private fun checkDataApply(){
+        var isEmptyNotes = true
+        var isEmptyResume = true
+
+        var notes = binding.etDescriptionAds.text.toString()
+        var resume = idResume
+
+        if (notes.isNullOrEmpty()){
+            isEmptyNotes = true
+            binding.tvTitleAdditionalInfo.error = getString(R.string.cant_empty)
+        } else {
+            isEmptyNotes = false
+            binding.tvTitleAdditionalInfo.error = null
+            notes = binding.etDescriptionAds.text.toString()
+        }
+
+        if (resume == 0){
+            isEmptyResume = true
+            binding.tvTitleResume.error = getString(R.string.cant_empty)
+        } else {
+            isEmptyResume = false
+            binding.tvTitleResume.error = null
+            resume = idResume
+        }
+
+        if (!isEmptyResume && !isEmptyNotes){
+            presenter.applyJob(idJobVacancy, notes, resume)
+        } else {
+            Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    @SuppressLint("Range")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(resultCode == Activity.RESULT_OK){
+            uriPdf = data!!.data
+            val uriString = uriPdf.toString()
+            val myFile = File(uriString)
+            var cursor: Cursor? = null
+            path = myFile.absolutePath
+//            path = getFilePathFromURI(this, uri)
+            if (uriString.startsWith("content://")){
+                try {
+                    cursor = contentResolver.query(uriPdf!!, null,null,null, null)
+                    if (cursor != null && cursor.moveToFirst()){
+                        namePdf = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)).toString()
+                    }
+                } finally {
+                    cursor?.close()
+                }
+            } else if (uriString.startsWith("file://")){
+                namePdf = myFile.name
+            }
+            checkUpload(path)
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun messageGetDataPersonal(msg: String) {
-        Log.d("getDataPersonal", msg)
+        Timber.d(msg)
         if (msg.contains("Success")){
             binding.swipeRefresh.isRefreshing = false
         }
     }
 
     override fun messagetGetDocument(msg: String) {
-        Log.d("getDocument", msg)
+        Timber.d(msg)
         if (msg.contains("Success")){
             binding.swipeRefresh.isRefreshing = false
         }
     }
 
+    override fun messageUploadDocument(msg: String) {
+        Timber.d(msg)
+        if (msg.contains("upload file success")){
+            presenter.loadDocumentResume(1)
+        }
+    }
+
     override fun messageApplyJob(msg: String) {
-        Log.d("applyJob", msg)
         if (msg.contains("Success!")){
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
             move()
@@ -161,6 +239,33 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
         onBackPressed()
     }
 
+    private fun requestMultiplePermissions() {
+        Dexter.withContext(this)
+            .withPermissions(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+            .withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                    // check if all permissions are granted
+                    if (report.areAllPermissionsGranted()) {
+                        Toast.makeText(applicationContext, "All permissions are granted, ready for upload!", Toast.LENGTH_SHORT).show()
+                    }
+
+                    // check for permanent denial of any permission
+                    if (report.isAnyPermissionPermanentlyDenied) {
+                        Toast.makeText(applicationContext, "Please grant permission for storage!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(permissions: MutableList<com.karumi.dexter.listener.PermissionRequest>?, token: PermissionToken?) {
+                    token?.continuePermissionRequest()
+                }
+
+            }).withErrorListener { Toast.makeText(applicationContext, "Some Error! ", Toast.LENGTH_SHORT).show() }
+            .onSameThread()
+            .check()
+    }
+
     private fun loadingDialog(){
         progressDialog = Dialog(this)
         progressDialog?.setContentView(R.layout.dialog_loader)
@@ -170,10 +275,16 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
         window.setGravity(Gravity.CENTER)
     }
 
+    private val adapterDocumentResume by lazy {
+        AdapterDocumentUserChoose(applicationContext, arrayListOf(), this)
+    }
+
     override fun getDocumentResume(item: List<DataDocumentUser?>?) {
-        val adapterResume = AdapterDocumentUserChoose(this, item)
+        adapterDocumentResume.clear()
+        adapterDocumentResume.addResume(item)
+        binding.rvResume.adapter = adapterDocumentResume
+//        val adapterResume = AdapterDocumentUserChoose(this, item, this)
 //        binding.rvResume.apply {
-//            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
 //            adapter = adapterResume
 //            adapterResume.notifyDataSetChanged()
 //        }
@@ -207,5 +318,13 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener, ApplyJobCont
 
     override fun dismissLoading() {
         progressDialog?.dismiss()
+    }
+
+    override fun listResumeClicked(view: View, data: DataDocumentUser) {
+        when(view.id){
+            R.id.cardView2 -> {
+                idResume = data.id!!
+            }
+        }
     }
 }

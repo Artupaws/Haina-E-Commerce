@@ -139,6 +139,7 @@
                             android:src="@drawable/ic_resume" />
 
                         <TextView
+                            android:id="@+id/tv_title_resume"
                             style="@style/TextView.Poppins16spBlack"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -160,15 +161,15 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        style="@style/TextView.Poppins14spBlack"
-                        android:layout_width="wrap_content"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_resume"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/linear_title_resume"
-                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="5dp"
-                        android:textColor="@android:color/holo_blue_dark"
-                        tools:text="Cv 2021.pdf" />
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/list_item_facilities_room" />
 
                 </RelativeLayout>
 
@@ -198,6 +199,7 @@
                             android:src="@drawable/ic_resume" />
 
                         <TextView
+                            android:id="@+id/tv_title_additional_info"
                             style="@style/TextView.Poppins16spBlack"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"

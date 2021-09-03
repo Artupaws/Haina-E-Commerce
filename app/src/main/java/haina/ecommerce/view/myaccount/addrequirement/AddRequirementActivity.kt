@@ -97,17 +97,7 @@ class AddRequirementActivity : AppCompatActivity(), View.OnClickListener, AddReq
                 if (binding.tvDocument.text.isNotEmpty()){
                     binding.relativeLoading.visibility = View.VISIBLE
                     binding.btnUploadDocument.visibility = View.INVISIBLE
-                    when(stateActivity){
-                        true -> {
-                            startActivity(Intent(applicationContext, ApplyJobActivity::class.java)
-                                .putExtra("namePdf", displayNamePdf)
-                                .putExtra("uriPdf", uriPdf.toString()))
-                            finishAffinity()
-                        }
-                        false -> {
                             checkUpload(path)
-                        }
-                    }
                 } else{
                     Toast.makeText(applicationContext, "Please insert your document first!", Toast.LENGTH_SHORT).show()
                 }

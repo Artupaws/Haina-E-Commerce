@@ -122,8 +122,8 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
         when(p0?.id){
             R.id.btn_apply -> {
                 val intent = Intent(applicationContext, ApplyJobActivity::class.java)
-                        .putExtra("titleJob", intent.getStringExtra("title"))
-                        .putExtra("idJobVacancy", idJobVacancy)
+                    .putExtra("titleJob", intent.getStringExtra("title"))
+                    .putExtra("idJobVacancy", idJobVacancy)
                 startActivity(intent)
             }
             R.id.iv_save_job -> {
