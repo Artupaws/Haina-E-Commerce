@@ -513,6 +513,21 @@ interface NetworkService {
     @GET("api/ticket/addons")
     fun getDataAddOn():Call<ResponseGetAddOn>
 
+    //Get Data Add On
+    @Headers("Content-Type: application/json")
+    @POST("api/ticket/setaddons")
+    fun sendDataAddOn(
+        @Body body:RequestSetPassengerAddOn
+    ):Call<ResponseSetAddOn>
+
+
+    @Headers("Content-Type: application/json")
+    @POST("api/ticket/booking")
+    fun setBooking(
+        @Field("amount")amount:Int,
+
+        ):Call<ResponseGetRealTicketPrice>
+
 
     //Get List City Hotel
     @POST("api/hotel_darma/all_cities")

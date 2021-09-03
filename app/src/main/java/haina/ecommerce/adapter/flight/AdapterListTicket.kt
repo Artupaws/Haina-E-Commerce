@@ -1,6 +1,7 @@
 package haina.ecommerce.adapter.flight
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,41 @@ class AdapterListTicket(val context: Context, private val listAirlines: MutableL
                 val schedule = "${itemHaina.departureTime.substring(11, 19)} - ${itemHaina.arrivedTime.substring(11, 19)}"
                 tvSchedule.text = schedule
                 tvTypeFlight.text = itemHaina.typeFlight
+
+                if (itemHaina.priceDetail?.size!=0){
+                    tvPriceAdult.text="Rp. " +  (itemHaina.priceDetail?.find { it?.paxType == "Adult" }!!.baseFare?.div(
+                        itemHaina.totalAdult
+                    )).toString()
+
+
+                    if (itemHaina.priceDetail?.find { it?.paxType == "Child" }!=null) {
+                        tvPriceChild.text="Rp. " +  (itemHaina.priceDetail?.find { it?.paxType == "Child" }!!.baseFare?.div(
+                            itemHaina.totalChild
+                        )).toString()
+
+                    }else{
+                        tvPriceChild.visibility=View.GONE
+                        tvColonChild.visibility=View.GONE
+                        tvChild.visibility=View.GONE
+
+                    }
+
+                    if (itemHaina.priceDetail?.find { it?.paxType == "Infant" } !=null) {
+                        tvPriceInfant.text="Rp. " +  (itemHaina.priceDetail?.find { it?.paxType == "Infant" }!!.baseFare?.div(
+                            itemHaina.totalBaby
+                        )).toString()
+                    }else{
+                        tvPriceInfant.visibility=View.GONE
+                        tvColonInfant.visibility=View.GONE
+                        tvInfant.visibility=View.GONE
+                    }
+                }else{
+                    linearPrice.visibility=View.GONE
+                }
+
+
+
+
                 itemView.setOnClickListener { itemAdapterCallback.onClick(itemView, itemHaina) }
             }
         }

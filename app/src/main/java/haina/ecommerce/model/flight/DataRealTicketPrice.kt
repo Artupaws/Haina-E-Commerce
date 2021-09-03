@@ -20,7 +20,7 @@ data class DataRealTicketPrice(
 	val destination: String? = null,
 
 	@field:SerializedName("priceReturn")
-	val priceReturn: List<PriceReturnItem?>? = null,
+	val priceReturn: List<PriceDepartItem?>? = null,
 
 	@field:SerializedName("searchKey")
 	val searchKey: String? = null,

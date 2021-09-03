@@ -114,8 +114,8 @@
         <activity
             android:name=".view.splashscreen.SplashScreenActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/TranslucentStatusBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/TranslucentStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

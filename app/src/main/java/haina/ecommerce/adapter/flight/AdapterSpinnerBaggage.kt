@@ -36,7 +36,7 @@ class AdapterSpinnerBaggage(val context: Context, private val listBaggage: List<
             view = p1
             vh = view.tag as ItemHolder
         }
-        val descBaggage = "+${listBaggage?.get(p0)?.desc} - ${listBaggage?.get(p0)?.fare}"
+        val descBaggage = "${listBaggage?.get(p0)?.desc} - ${listBaggage?.get(p0)?.fare}"
         vh.label.text = descBaggage
 
         return view

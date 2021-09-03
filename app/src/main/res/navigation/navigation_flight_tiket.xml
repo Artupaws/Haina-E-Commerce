@@ -59,7 +59,16 @@
         tools:layout="@layout/fragment_detail_fill_data_passenger" />
     <fragment
         android:id="@+id/setAddOnPassengerFragment"
-        android:name="haina.ecommerce.view.flight.setaddonpassenger.SetAddOnPassengerFragment"
+        android:name="haina.ecommerce.view.flight.setaddonpassenger.SetAddOnFragment"
         android:label="fragment_set_add_on_passenger"
-        tools:layout="@layout/fragment_set_add_on_passenger" />
+        tools:layout="@layout/fragment_set_add_on_passenger" >
+        <action
+            android:id="@+id/action_setAddOnPassengerFragment_to_setBookingFragment"
+            app:destination="@id/setBookingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setBookingFragment"
+        android:name="haina.ecommerce.view.flight.setbooking.SetBookingFragment"
+        android:label="fragment_set_booking"
+        tools:layout="@layout/fragment_booking_flight" />
 </navigation>
