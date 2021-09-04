@@ -23,6 +23,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
 import haina.ecommerce.view.login.LoginActivity
+import timber.log.Timber
 
 class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
     BottomSheetHowToPayment.ItemClickListener,
@@ -67,21 +68,22 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
     }
 
     private fun setupListUnfinishTransaction(data:List<PendingItem?>?, dataJob:List<PendingJobItem?>?){
+        Timber.d(data?.size.toString(), dataJob?.size.toString())
 //        showIsEmpty(data?.size)
+//        adapterTransactionUnfinish.clear()
         adapterTransactionUnfinish.clear()
-        adapterTransactionUnfinishJob.clear()
+//        adapterTransactionUnfinish.addTransactionPulsaPending(data)
+        AdapterTransactionPulsaUnfinish.VIEW_TYPE = 1
         adapterTransactionUnfinish.addTransactionPulsaPending(data)
-        adapterTransactionUnfinishJob.addTransactionJobPending(dataJob)
         binding?.rvUnfinishTransaction?.adapter = adapterTransactionUnfinish
     }
 
     private val adapterTransactionUnfinish by lazy {
-        AdapterTransactionPulsaUnfinish.VIEW_TYPE = 1
+//        AdapterTransactionPulsaUnfinish.VIEW_TYPE = 1
         AdapterTransactionPulsaUnfinish(requireActivity(), arrayListOf(), this, arrayListOf())
     }
 
     private val adapterTransactionUnfinishJob by lazy {
-        AdapterTransactionPulsaUnfinish.VIEW_TYPE = 2
         AdapterTransactionPulsaUnfinish(requireActivity(), arrayListOf(), this, arrayListOf())
     }
 
@@ -93,12 +95,12 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
 //        }
 //    }
 //
-//    private fun showIsEmpty(listItem:Int?){
-//        if (listItem == 0){
-//            binding?.rvUnfinishTransaction?.visibility = View.GONE
-//            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
-//        }
-//    }
+    private fun showIsEmpty(listItem:Int?){
+        if (listItem == 0){
+            binding?.rvUnfinishTransaction?.visibility = View.GONE
+            binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
+        }
+    }
 
     override fun onStop() {
         super.onStop()
