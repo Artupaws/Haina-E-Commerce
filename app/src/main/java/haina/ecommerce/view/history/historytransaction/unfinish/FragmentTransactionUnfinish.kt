@@ -18,12 +18,15 @@ import haina.ecommerce.adapter.AdapterTransactionPulsaUnfinish
 import haina.ecommerce.databinding.FragmentTransactionUnfinishBinding
 import haina.ecommerce.model.transactionlist.DataTransaction
 import haina.ecommerce.model.transactionlist.PendingItem
+import haina.ecommerce.model.transactionlist.PendingJobItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
 import haina.ecommerce.view.login.LoginActivity
+import timber.log.Timber
 
-class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomSheetHowToPayment.ItemClickListener,
+class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
+    BottomSheetHowToPayment.ItemClickListener,
     AdapterTransactionPulsaUnfinish.ItemAdapterCallback {
 
     private var _binding:FragmentTransactionUnfinishBinding? = null
@@ -42,9 +45,9 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         statusLogin = sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)
-        showNotLogin(statusLogin)
-
-        binding?.includeNotLogin?.btnLoginNotLogin?.setOnClickListener(this)
+//        showNotLogin(statusLogin)
+//
+//        binding?.includeNotLogin?.btnLoginNotLogin?.setOnClickListener(this)
     }
 
     override fun onStart() {
@@ -58,29 +61,40 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
                 "ListTransaction" -> {
 //                    Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
                     val dataTransactionUnfinish = intent.getParcelableExtra<DataTransaction>("Transaction")
-                    setupListUnfinishTransaction(dataTransactionUnfinish?.pending)
+                    setupListUnfinishTransaction(dataTransactionUnfinish?.pending, dataTransactionUnfinish?.pendingJob)
                 }
             }
         }
     }
 
-    private fun setupListUnfinishTransaction(data:List<PendingItem?>?){
-        showIsEmpty(data?.size)
-        val adapterParams = AdapterTransactionPulsaUnfinish(requireActivity(), data, this)
-        binding?.rvUnfinishTransaction?.apply {
-            adapter = adapterParams
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        }
+    private fun setupListUnfinishTransaction(data:List<PendingItem?>?, dataJob:List<PendingJobItem?>?){
+        Timber.d(data?.size.toString(), dataJob?.size.toString())
+//        showIsEmpty(data?.size)
+//        adapterTransactionUnfinish.clear()
+        adapterTransactionUnfinish.clear()
+//        adapterTransactionUnfinish.addTransactionPulsaPending(data)
+        AdapterTransactionPulsaUnfinish.VIEW_TYPE = 1
+        adapterTransactionUnfinish.addTransactionPulsaPending(data)
+        binding?.rvUnfinishTransaction?.adapter = adapterTransactionUnfinish
     }
 
-    private fun showNotLogin(statusLogin:Boolean){
-        if (!statusLogin){
-            binding?.includeNotLogin?.linearNotLogin?.visibility = View.VISIBLE
-        } else {
-            binding?.includeNotLogin?.linearNotLogin?.visibility = View.GONE
-        }
+    private val adapterTransactionUnfinish by lazy {
+//        AdapterTransactionPulsaUnfinish.VIEW_TYPE = 1
+        AdapterTransactionPulsaUnfinish(requireActivity(), arrayListOf(), this, arrayListOf())
     }
 
+    private val adapterTransactionUnfinishJob by lazy {
+        AdapterTransactionPulsaUnfinish(requireActivity(), arrayListOf(), this, arrayListOf())
+    }
+
+//    private fun showNotLogin(statusLogin:Boolean){
+//        if (!statusLogin){
+//            binding?.includeNotLogin?.linearNotLogin?.visibility = View.VISIBLE
+//        } else {
+//            binding?.includeNotLogin?.linearNotLogin?.visibility = View.GONE
+//        }
+//    }
+//
     private fun showIsEmpty(listItem:Int?){
         if (listItem == 0){
             binding?.rvUnfinishTransaction?.visibility = View.GONE
@@ -109,7 +123,7 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
 //        }
     }
 
-    override fun onClickAdapter(view: View, data: PendingItem) {
+    override fun onClickAdapter(view: View, data: PendingItem?) {
         when(view.id){
             R.id.iv_option -> {
                 val popup = PopupMenu(requireContext(), view)
@@ -117,7 +131,7 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener, BottomShee
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.action_cancel_transaction -> {
-                            Toast.makeText(context, "${data.payment?.idPaymentMethod}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "${data?.payment?.idPaymentMethod}", Toast.LENGTH_SHORT).show()
                             true
                         } else -> false
                     }

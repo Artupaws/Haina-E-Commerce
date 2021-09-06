@@ -945,4 +945,13 @@ interface NetworkService {
     @GET("api/job/vacancy/show_all")
     fun getListAllVacancy():Call<ResponseGetAllVacancy>
 
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/job/vacancy/apply")
+    fun applyJobVacancy(
+        @Field("id_vacancy")idVacancy:Int,
+        @Field("applicant_notes")applicantNotes:String,
+        @Field("id_resume")idResume:Int
+    ):Call<ResponseGiveUpvote>
+
 }
