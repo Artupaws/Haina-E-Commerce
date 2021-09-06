@@ -39,7 +39,6 @@ class SetAddOnFragment : Fragment(), SetAddOnContract, AdapterAddOn.ItemAdapterC
     private var dataAddonsAll:MutableList<PaxDataAddons> = mutableListOf()
     private val bundle = Bundle()
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentSetAddOnPassengerBinding.inflate(inflater, container, false)
         presenter = SetAddOnPresenter(this, requireActivity())
@@ -62,7 +61,6 @@ class SetAddOnFragment : Fragment(), SetAddOnContract, AdapterAddOn.ItemAdapterC
         bundle.putParcelableArrayList("dataFlight", dataFlight)
         bundle.putParcelableArrayList("dataPassenger", dataSetPassenger)
     }
-
 
     override fun messageGetAddOn(msg: String) {
         Log.d("getDataAddOn", msg)
@@ -94,9 +92,7 @@ class SetAddOnFragment : Fragment(), SetAddOnContract, AdapterAddOn.ItemAdapterC
         bundle.putParcelableArrayList("dataAddonsAll", dataAddonsAll as ArrayList<PaxDataAddons>)
 
         Navigation.findNavController(binding.buttonAddOn).navigate(R.id.action_setAddOnPassengerFragment_to_setBookingFragment, bundle)
-
     }
-
 
     override fun onClickAdapter(view: View, price: Int) {
         when(view.id){
@@ -104,7 +100,6 @@ class SetAddOnFragment : Fragment(), SetAddOnContract, AdapterAddOn.ItemAdapterC
                 Toast.makeText(requireActivity(), price.toString(), Toast.LENGTH_SHORT).show()
                 val priceTotal = price+totalPriceAddOn
                 totalPrice?.text = "Total price -on : $priceTotal"
-
             }
         }
     }

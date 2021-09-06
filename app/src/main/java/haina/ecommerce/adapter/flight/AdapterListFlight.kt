@@ -240,7 +240,6 @@ class AdapterListFlight(val context: Context, private val passengerId: Int,priva
             popupSetAddOn?.window?.setBackgroundDrawableResource(R.color.white)
             val window: Window = popupSetAddOn?.window!!
             window.setGravity(Gravity.CENTER)
-            val searchAddOn = popupSetAddOn?.findViewById<SearchView>(R.id.sv_addOn)
             val rvAddOn = popupSetAddOn?.findViewById<RecyclerView>(R.id.rv_addon)
             val btnSave = popupSetAddOn?.findViewById<Button>(R.id.btn_save)
             val ivClose = popupSetAddOn?.findViewById<ImageView>(R.id.iv_close)
@@ -302,6 +301,10 @@ class AdapterListFlight(val context: Context, private val passengerId: Int,priva
 
             var count = 0
             val seatSize = 40
+
+            btnSave?.setOnClickListener{
+                popupShowChooseSeat!!.hide()
+            }
 
 
 

@@ -7,8 +7,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class FlightDetailItem(
 
-	@field:SerializedName("flightDetail")
-	val flightDetail: List<FlightDetailItem?>? = null,
 
 	@field:SerializedName("availableDetail")
 	val availableDetail: List<AvailableDetailItem?>? = null,
