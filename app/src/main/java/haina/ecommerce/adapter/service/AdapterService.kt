@@ -1,5 +1,6 @@
 package haina.ecommerce.adapter.service
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.text.Html
@@ -23,6 +24,7 @@ import haina.ecommerce.view.housephone.HousePhoneActivity
 import haina.ecommerce.view.internetandtv.InternetActivity
 import haina.ecommerce.view.topup.TopupActivity
 import haina.ecommerce.view.water.WaterActivity
+import timber.log.Timber
 import java.net.URL
 
 
@@ -39,6 +41,7 @@ class AdapterService(val context: Context, private val listService: List<Categor
                 val icon = HtmlCompat.fromHtml("${itemHaina.iconCode}",HtmlCompat.FROM_HTML_MODE_LEGACY)
                 ivIconService.text = icon
                 val codeLanguage = sharedPref.getValueString(Constants.LANGUAGE_APP)
+                Timber.d(codeLanguage)
                 setLanguage(codeLanguage, binding, itemHaina)
                 itemView.setOnClickListener {
                     when(itemHaina.name){

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,8 +32,6 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
     private var broadcaster: LocalBroadcastManager? = null
     private var adapterUnfinish: AdapterTransactionUnfinish? = null
     var countDown: TextView? = null
-    private var minutes: Long = 1
-    private var seconds: Long = 0
     private lateinit var sharedPref: SharedPreferenceHelper
     private var dataTransaction: DataBooking? = null
     private var statusCountDown:String =""
@@ -70,8 +69,15 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
     }
 
     override fun onStart() {
-        super.onStart()
+        when(statusCountDown){
+            "finish" -> {
+                val intentCancelBooking = Intent("cancelBooking")
+                broadcaster?.sendBroadcast(intentCancelBooking)
+                sharedPref.save(Constants.CURRENT_TIME_SESSION_PAYMENT, "expired")
+            }
+        }
         LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(mMessageReceiver, IntentFilter("dataBooking"))
+        super.onStart()
     }
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -85,8 +91,7 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
         override fun onReceive(p0: Context?, intent: Intent?) {
             when (intent?.action) {
                 "dataBooking" -> {
-                    val statusCountDown = sharedPref.getValueString(Constants.CURRENT_TIME_SESSION_PAYMENT)
-                    Log.d("statusCountDown", statusCountDown.toString())
+                    statusCountDown = sharedPref.getValueString(Constants.CURRENT_TIME_SESSION_PAYMENT).toString()
                     val intentCountdown = Intent(requireActivity(), BroadcastService::class.java)
                     dataTransaction = intent.getParcelableExtra<DataBooking>("bookingHotel")
                     adapterUnfinish = AdapterTransactionUnfinish(requireActivity(), dataTransaction?.unpaid, this@UnfinishHotelFragment)
@@ -99,6 +104,7 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
                         countDown?.text = "expired"
                         Log.d("dataTransactionNull", dataTransaction!!.unpaid?.size.toString())
                         requireActivity().stopService(intentCountdown)
+                        statusCountDown = "finish"
                     }
                     Log.d("dataBooking", dataTransaction!!.unpaid?.size.toString())
                 }
@@ -155,9 +161,8 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
                     .putExtra("data", data)
                 startActivity(intent)
             }
-            R.id.iv_action_cancel -> {
-                val popup =
-                    androidx.appcompat.widget.PopupMenu(requireActivity(), binding.rvUnfinishHotel)
+            R.id.tv_option_menu -> {
+                val popup = androidx.appcompat.widget.PopupMenu(requireActivity(), view)
                 popup.inflate(R.menu.menu_cancel_transaction)
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
@@ -170,6 +175,7 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
                         else -> false
                     }
                 }
+                popup.show()
             }
             R.id.btn_how_pay -> {
                 val bundle = Bundle()

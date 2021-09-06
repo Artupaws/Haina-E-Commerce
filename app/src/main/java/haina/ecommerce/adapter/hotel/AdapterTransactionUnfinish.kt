@@ -50,7 +50,8 @@ class AdapterTransactionUnfinish(val context: Context, private val listHotel: Li
                 cvClick.setOnClickListener {
                     itemAdapterCallback.onClick(cvClick, itemHaina)
                 }
-                ivActionCancel.setOnClickListener {
+                tvOptionMenu.setOnClickListener {
+                    itemAdapterCallback.onClick(tvOptionMenu, itemHaina)
 //                    val popup = PopupMenu(context, ivActionCancel)
 //                    popup.inflate(R.menu.menu_option_address_company)
 //                    popup.setOnMenuItemClickListener{

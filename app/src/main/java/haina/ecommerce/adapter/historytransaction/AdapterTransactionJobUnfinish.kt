@@ -1,4 +1,4 @@
-package haina.ecommerce.adapter
+package haina.ecommerce.adapter.historytransaction
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemUnfinishTransactionBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.helper.Helper.dateFormat
@@ -18,70 +19,58 @@ import haina.ecommerce.model.transactionlist.PendingItem
 import haina.ecommerce.model.transactionlist.PendingJobItem
 import java.util.ArrayList
 
-class AdapterTransactionPulsaUnfinish(
+class AdapterTransactionJobUnfinish(
     val context: Context,
-    private val listTransactionUnfinish: List<PendingItem?>?,
-    private var itemAdapterCallBack: ItemAdapterCallback
+    private val listTransactionUnfinishJob : List<PendingJobItem?>?,
+    private val itemAdapterCallback: ItemAdapterCallback,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val helper:Helper = Helper
 
-    companion object {
-        var VIEW_TYPE = 1
-    }
-
-    inner class ViewHolderTransactionUnfinishPulsa(val binding: ListItemUnfinishTransactionBinding):
+    inner class ViewHolderTransactionUnfinishJob(val binding: ListItemUnfinishTransactionBinding):
         RecyclerView.ViewHolder(binding.root){
-        fun bind(itemHaina: PendingItem?, itemAdapterCallBack: ItemAdapterCallback){
+        fun bind(itemHaina: PendingJobItem?, itemAdapterCallback: ItemAdapterCallback){
             with(binding){
                 tvDateTransaction.text = dateFormat(itemHaina?.transactionTime)
-                tvDescriptionProduct.text = itemHaina?.product?.description
+                tvDescriptionProduct.text = itemHaina?.product
                 tvDueDate.text = itemHaina?.status
-                when(itemHaina?.payment?.idPaymentMethod){
+                ivIcon.text = context.getString(R.string.job)
+                when(itemHaina?.idPaymentMethod){
                     1 -> {
                         setLayoutVirtualAccount(binding, itemHaina)
                     }
                     2 -> {
-                        setLayoutBankTransfer(binding, itemHaina.payment.vaNumber.toString())
+                        setLayoutBankTransfer(binding, itemHaina.vaNumber)
                     }
                 }
-                when(itemHaina?.status?.lowercase()){
-                    "pending payment" -> {
-                        tvOptionMenu.visibility = View.VISIBLE
-                    }
-                    else -> {
-                        tvOptionMenu.visibility = View.GONE
-                    }
-                }
+
                 copyVirtualAccount(binding)
                 btnHowPay.setOnClickListener {
-                    itemAdapterCallBack.onClickAdapter(binding.btnHowPay, itemHaina)
+//                        itemAdapterCallBack.onClickAdapter(binding.btnHowPay, itemHaina)
                 }
 
                 tvOptionMenu.setOnClickListener {
-                    itemAdapterCallBack.onClickAdapter(tvOptionMenu, itemHaina)
+                    itemAdapterCallback.onTransactionJobClick(tvOptionMenu, itemHaina)
                 }
 
                 relativeClick.setOnClickListener {
-                    itemAdapterCallBack.onClickAdapter(binding.relativeClick, itemHaina)
+//                        itemAdapterCallBack.onClickAdapter(binding.relativeClick, itemHaina)
                 }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ViewHolderTransactionUnfinishPulsa(
-                    ListItemUnfinishTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
+        return ViewHolderTransactionUnfinishJob(ListItemUnfinishTransactionBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val transactionUnfinish: PendingItem? = listTransactionUnfinish?.get(position)
-        (holder as ViewHolderTransactionUnfinishPulsa).bind(transactionUnfinish, itemAdapterCallBack)
+        val transactionJob : PendingJobItem? = listTransactionUnfinishJob?.get(position)
+        (holder as ViewHolderTransactionUnfinishJob).bind(transactionJob, itemAdapterCallback)
     }
 
     override fun getItemCount(): Int {
-        return listTransactionUnfinish?.size ?: 0
+    return listTransactionUnfinishJob?.size ?: 0
     }
 
     private fun setLayoutPayment(
@@ -108,18 +97,19 @@ class AdapterTransactionPulsaUnfinish(
         }
     }
 
-    private fun setLayoutVirtualAccount(binding: ListItemUnfinishTransactionBinding, itemHaina: PendingItem?) {
+    private fun setLayoutVirtualAccount(binding: ListItemUnfinishTransactionBinding, itemHaina:PendingJobItem) {
+        binding.includeVirtualAccount.linearVirtualAccount.visibility = View.VISIBLE
         binding.includeBankTransfer.linearBankTransfer.visibility = View.GONE
         binding.includeVirtualAccount.tvPaymentMethod.text = "Virtual Account"
-        binding.includeVirtualAccount.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(itemHaina?.totalPayment.toString())
-        if (itemHaina?.status?.lowercase()?.contains("process") == true){
+        if (itemHaina.status.lowercase().contains("process")){
             binding.includeVirtualAccount.linearVirtualAccount.visibility = View.GONE
             binding.btnHowPay.visibility = View.GONE
         }
         else{
             binding.includeVirtualAccount.linearVirtualAccount.visibility = View.VISIBLE
-            binding.includeVirtualAccount.tvVirtualAccountNumber.text = itemHaina?.payment?.vaNumber
+            binding.includeVirtualAccount.tvVirtualAccountNumber.text = itemHaina.vaNumber
         }
+        binding.includeVirtualAccount.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(itemHaina.totalPayment.toString())
     }
 
     private fun setLayoutBankTransfer(binding: ListItemUnfinishTransactionBinding, totalPayment: String) {
@@ -139,16 +129,16 @@ class AdapterTransactionPulsaUnfinish(
     }
 
     interface ItemAdapterCallback {
-        fun onClickAdapter(view: View, data: PendingItem?)
+        fun onTransactionJobClick(view: View, data: PendingJobItem?)
     }
 
-    fun addTransactionPulsaPending(data: List<PendingItem?>?) {
-        data?.let { (listTransactionUnfinish as ArrayList<PendingItem?>?)?.addAll(it) }
-        notifyItemRangeInserted((listTransactionUnfinish?.size?.minus(data?.size!!)!!), data?.size!!)
+    fun addTransactionJobPending(data: List<PendingJobItem?>?) {
+        data?.let { (listTransactionUnfinishJob as ArrayList<PendingJobItem?>?)?.addAll(it)}
+        notifyItemRangeInserted((listTransactionUnfinishJob?.size?.minus(data?.size!!)!!), data?.size!!)
     }
 
     fun clear() {
-        (listTransactionUnfinish as ArrayList<PendingItem?>?)?.clear()
+        (listTransactionUnfinishJob as ArrayList<PendingJobItem?>?)?.clear()
     }
 
 }
