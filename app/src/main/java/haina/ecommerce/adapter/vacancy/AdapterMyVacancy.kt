@@ -29,7 +29,7 @@ class AdapterMyVacancy(val context: Context,
                     binding.tvDateEnd.text = "Expired On: ${dateFormat(itemHaina.deletedAt)}"
                     binding.tvDateEnd.setTextColor(context.resources.getColor(android.R.color.black))
                 }
-                else{
+                if (itemHaina.status == "pending"){
                     binding.tvDateEnd.text = "Please do payment for showing this ads"
                     binding.tvDateEnd.setTextColor(context.resources.getColor(android.R.color.holo_red_dark))
                     binding.btnShowAgain.text = "make payment"

@@ -31,13 +31,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_my_vacancy"
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/list_item_my_vacancy"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_my_vacancy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/list_item_my_vacancy"
+                    android:orientation="vertical"
+                    tools:visibility="visible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+                <include
+                    android:id="@+id/include_empty"
+                    layout="@layout/layout_empty" />
+
+            </FrameLayout>
 
         </LinearLayout>
 

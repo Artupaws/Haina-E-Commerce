@@ -37,6 +37,9 @@ data class PendingJobItem(
 	@field:SerializedName("id_payment_method")
 	val idPaymentMethod: Int,
 
+	@field:SerializedName("id_vacancy")
+	val idJob: Int,
+
 	@field:SerializedName("va_number")
 	val vaNumber: String,
 

@@ -1,15 +1,15 @@
 package haina.ecommerce.view.history.historytransaction.unfinish
 
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,33 +22,40 @@ import haina.ecommerce.model.transactionlist.PendingItem
 import haina.ecommerce.model.transactionlist.PendingJobItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.history.historytransaction.HistoryTransactionContract
+import haina.ecommerce.view.history.historytransaction.TransactionUnfinishPresenter
 import haina.ecommerce.view.howtopayment.BottomSheetHowToPayment
 import haina.ecommerce.view.login.LoginActivity
 import timber.log.Timber
+import java.util.ArrayList
 
 class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
     BottomSheetHowToPayment.ItemClickListener,
     AdapterTransactionPulsaUnfinish.ItemAdapterCallback,
-    AdapterTransactionJobUnfinish.ItemAdapterCallback{
+    AdapterTransactionJobUnfinish.ItemAdapterCallback,
+HistoryTransactionContract.TransactionUnfinishContract.View{
 
     private var _binding:FragmentTransactionUnfinishBinding? = null
     private val binding get()= _binding
     private var broadcaster:LocalBroadcastManager? = null
     private lateinit var sharedPref:SharedPreferenceHelper
     private var statusLogin = false
+    private var progressDialog : Dialog? = null
+    private lateinit var presenter : TransactionUnfinishPresenter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentTransactionUnfinishBinding.inflate(inflater, container, false)
         broadcaster = LocalBroadcastManager.getInstance(requireContext())
         sharedPref = SharedPreferenceHelper(requireContext())
+        presenter = TransactionUnfinishPresenter(this, requireContext())
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         statusLogin = sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)
+        dialogLoading()
 //        showNotLogin(statusLogin)
-//
 //        binding?.includeNotLogin?.btnLoginNotLogin?.setOnClickListener(this)
     }
 
@@ -69,6 +76,15 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
                 }
             }
         }
+    }
+
+    private fun dialogLoading(){
+        progressDialog = Dialog(requireActivity())
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(requireActivity(), android.R.color.white))
+        val window:Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
     }
 
     private fun setupListUnfinishTransaction(data:List<PendingItem?>?){
@@ -131,7 +147,7 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
 //        }
     }
 
-    override fun onClickAdapter(view: View, data: PendingItem?) {
+    override fun onClickAdapter(view: View, data: PendingItem?, adapterPosition:Int, listTransaction:ArrayList<PendingItem?>?) {
         when(view.id){
             R.id.tv_option_menu -> {
                 val popup = PopupMenu(requireContext(), view)
@@ -139,7 +155,9 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.action_cancel_transaction -> {
-
+                            presenter.cancelTransaction(data!!.id!!, null)
+                            listTransaction?.removeAt(adapterPosition)
+                            adapterTransactionUnfinish.notifyItemRemoved(adapterPosition)
                             true
                         } else -> false
                     }
@@ -164,7 +182,7 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
         }
     }
 
-    override fun onTransactionJobClick(view: View, data: PendingJobItem?) {
+    override fun onTransactionJobClick(view: View, data: PendingJobItem?, adapterPosition:Int, listTransaction:ArrayList<PendingJobItem?>?) {
         when (view.id) {
             R.id.tv_option_menu -> {
                 val popup = PopupMenu(requireContext(), view)
@@ -172,6 +190,9 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.action_cancel_transaction -> {
+                            presenter.cancelTransaction(null, data?.idJob)
+                            listTransaction?.removeAt(adapterPosition)
+                            adapterTransactionUnfinishJob.notifyItemRemoved(adapterPosition)
                             true
                         }
                         else -> false
@@ -180,5 +201,17 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
                 popup.show()
             }
         }
+    }
+
+    override fun messageCancelTransaction(msg: String) {
+        Timber.d(msg)
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 }

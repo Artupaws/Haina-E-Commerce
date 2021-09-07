@@ -284,6 +284,8 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         binding.tvGender.visibility = View.INVISIBLE
         binding.etAbout.visibility = View.VISIBLE
         binding.tvAbout.visibility = View.INVISIBLE
+        binding.tvLastEducation.visibility = View.INVISIBLE
+        binding.etLastEducation.visibility = View.VISIBLE
     }
 
     private fun stateSave() {
@@ -305,6 +307,8 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         binding.tvGender.visibility = View.VISIBLE
         binding.etAbout.visibility = View.INVISIBLE
         binding.tvAbout.visibility = View.VISIBLE
+        binding.tvLastEducation.visibility = View.VISIBLE
+        binding.etLastEducation.visibility = View.INVISIBLE
         presenter.getDataUserProfile()
     }
 

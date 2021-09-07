@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemCancelTransactionBinding
+import haina.ecommerce.helper.Helper.dateFormat
 import haina.ecommerce.model.transactionlist.CancelItem
 import haina.ecommerce.view.detailtransaction.DetailTransactionActivity
 
@@ -27,7 +28,7 @@ class AdapterTransactionPulsaCancel(val context: Context, private val listTransa
                     context.startActivity(intent)
                 }
                 tvTitleService.text = itemHaina.product?.description
-                tvDateTransaction.text = itemHaina.transactionTime
+                tvDateTransaction.text = dateFormat(itemHaina.transactionTime)
                 tvStatusTransaction.text = itemHaina.status
                 tvTitleTransaction.text = itemHaina.product?.description
                 tvCustomerNumber.text = itemHaina.customerNumber

@@ -52,8 +52,8 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
         binding.includeReviewHotel.tvNameHotel.text = dataPricePolicy.hotelName
         val totalGuestParams = "Total Guest $totalGuest"
         binding.includeReviewHotel.tvTotalGuest.text = totalGuestParams
-        binding.includeReviewHotel.tvCheckIn.text = dataPricePolicy.checkInDate
-        binding.includeReviewHotel.tvCheckOut.text = dataPricePolicy.checkOutDate
+        binding.includeReviewHotel.tvCheckIn.text = Helper.dateFormatHotelDarma(dataPricePolicy.checkInDate)
+        binding.includeReviewHotel.tvCheckOut.text = Helper.dateFormatHotelDarma(dataPricePolicy.checkOutDate)
         val totalNightParams = "$totalNight Night"
         binding.includeReviewHotel.tvTotalNight.text = totalNightParams
         val nameRoom = "(1x) ${dataPricePolicy.roomName}"

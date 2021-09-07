@@ -2,6 +2,7 @@ package haina.ecommerce.view.history.historytransaction
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.model.forum.ResponseGiveUpvote
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
 import org.json.JSONObject
 import retrofit2.Call
@@ -27,6 +28,31 @@ class HistoryTransactionPresenter(val view:HistoryTransactionContract, val conte
                 view.messageGetListTransaction(t.localizedMessage.toString())
             }
 
+        })
+    }
+
+}
+
+class TransactionUnfinishPresenter(val view: HistoryTransactionContract.TransactionUnfinishContract.View, val context: Context){
+
+    fun cancelTransaction(idTransaction:Int?, idJob:Int?){
+        view.showLoading()
+        val getListTransaction = NetworkConfig().getConnectionHainaBearer(context).cancelTransaction(idTransaction, idJob)
+        getListTransaction.enqueue(object : retrofit2.Callback<ResponseGiveUpvote>{
+            override fun onResponse(call: Call<ResponseGiveUpvote>, response: Response<ResponseGiveUpvote>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageCancelTransaction(response.body()?.message.toString())
+                } else {
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.messageCancelTransaction(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGiveUpvote>, t: Throwable) {
+                view.dismissLoading()
+                view.messageCancelTransaction(t.localizedMessage.toString())
+            }
         })
     }
 

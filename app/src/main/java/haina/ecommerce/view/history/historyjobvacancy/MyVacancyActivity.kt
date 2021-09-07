@@ -59,8 +59,17 @@ class MyVacancyActivity : AppCompatActivity(), MyVacancyContract.View, AdapterMy
     }
 
     override fun getListMyVacancy(data: List<DataMyVacancy?>?) {
-        adapterMyVacancy.clear()
-        adapterMyVacancy.addVacancyLevel(data)
+        Timber.d(data?.size.toString())
+        if (data?.size != 0){
+            binding.includeEmpty.linearEmpty.visibility = View.GONE
+            binding.rvMyVacancy.visibility = View.VISIBLE
+            adapterMyVacancy.clear()
+            adapterMyVacancy.addVacancyLevel(data)
+        } else {
+            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+            binding.rvMyVacancy.visibility = View.GONE
+            binding.includeEmpty.tvEmpty.text = "Empty"
+        }
     }
 
     override fun getDataCreateVacancy(data: DataCreateVacancy?) {

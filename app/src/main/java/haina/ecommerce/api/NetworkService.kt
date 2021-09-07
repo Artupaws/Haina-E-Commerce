@@ -954,4 +954,12 @@ interface NetworkService {
         @Field("id_resume")idResume:Int
     ):Call<ResponseGiveUpvote>
 
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/pulsa/cancel")
+    fun cancelTransaction(
+        @Field("id_transaction")idTransaction:Int?,
+        @Field("id_job")idJob:Int?
+    ):Call<ResponseGiveUpvote>
+
 }
