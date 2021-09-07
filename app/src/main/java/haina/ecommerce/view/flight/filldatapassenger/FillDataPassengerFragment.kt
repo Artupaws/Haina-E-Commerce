@@ -2,12 +2,10 @@ package haina.ecommerce.view.flight.filldatapassenger
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Base64
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.EditText
@@ -28,7 +26,6 @@ import haina.ecommerce.room.roomdatapassenger.DataPassenger
 import haina.ecommerce.room.roomdatapassenger.PassengerDao
 import haina.ecommerce.room.roomdatapassenger.RoomDataPassenger
 import haina.ecommerce.util.Constants
-import haina.ecommerce.view.paymentmethod.PaymentActivity
 import timber.log.Timber
 
 
