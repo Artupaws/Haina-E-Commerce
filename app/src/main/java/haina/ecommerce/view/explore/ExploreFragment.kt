@@ -28,6 +28,7 @@ import haina.ecommerce.view.covidlist.CovidListActivity
 import haina.ecommerce.view.flight.FlightTicketActivity
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 import haina.ecommerce.view.hotels.HotelBaseActivity
+import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
 import haina.ecommerce.view.topup.TopupActivity
 import haina.ecommerce.view.job.JobActivity
 import haina.ecommerce.view.news.NewsActivity
@@ -35,6 +36,7 @@ import haina.ecommerce.view.notification.NotificationActivity
 import haina.ecommerce.view.other.OtherActivity
 import haina.ecommerce.view.property.FinishPropertyActivity
 import haina.ecommerce.view.property.ShowPropertyActivity
+import timber.log.Timber
 
 class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, AdapterUnfinishTransactionExplore.ItemAdapterCallback {
 
@@ -257,9 +259,20 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
 
 
     override fun onClickAdapterPending(view: View, data: DataAllTransactionPending) {
-        val intent = Intent(context, HistoryTransactionActivity::class.java)
-            .putExtra("id", data.orderId)
-        requireActivity().startActivity(intent)
+        when(view.id){
+            R.id.relative_click -> {
+                when(data.icon){
+                    "&#xf594;" -> {
+                        startActivity(Intent(requireActivity(), HistoryTransactionHotelActivity::class.java))
+                    }
+                    else -> {
+                        val intent = Intent(context, HistoryTransactionActivity::class.java)
+                            .putExtra("id", data.orderId)
+                        requireActivity().startActivity(intent)
+                    }
+                }
+            }
+        }
     }
 
     override fun loadCovidJkt(item: DataCovidJkt?) {

@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.snackbar.Snackbar
 import haina.ecommerce.databinding.ActivitySplashScreenBinding
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
@@ -23,13 +25,14 @@ class SplashScreenActivity : AppCompatActivity() {
     lateinit var handler: Handler
     private var broadcaster: LocalBroadcastManager? = null
     private var firebaseToken: String = ""
+    private lateinit var sharedPref:SharedPreferenceHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        sharedPref = SharedPreferenceHelper(this)
         val dataParams= intent.extras
         Log.d("dataNotification", dataParams?.get("page").toString())
         when(dataParams?.get("page")){
@@ -72,9 +75,14 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun goToExplore() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+        if (sharedPref.getValueString(Constants.LANGUAGE_APP) == null){
+            sharedPref.save(Constants.LANGUAGE_APP, "en")
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+            finish()
+        } else{
+            startActivity(Intent(applicationContext, MainActivity::class.java))
+            finish()
+        }
     }
 
     private fun isConnect(): Boolean {

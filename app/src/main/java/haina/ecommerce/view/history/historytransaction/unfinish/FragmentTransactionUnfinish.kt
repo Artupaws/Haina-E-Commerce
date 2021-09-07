@@ -15,6 +15,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterTransactionPulsaUnfinish
+import haina.ecommerce.adapter.historytransaction.AdapterTransactionJobUnfinish
 import haina.ecommerce.databinding.FragmentTransactionUnfinishBinding
 import haina.ecommerce.model.transactionlist.DataTransaction
 import haina.ecommerce.model.transactionlist.PendingItem
@@ -27,7 +28,8 @@ import timber.log.Timber
 
 class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
     BottomSheetHowToPayment.ItemClickListener,
-    AdapterTransactionPulsaUnfinish.ItemAdapterCallback {
+    AdapterTransactionPulsaUnfinish.ItemAdapterCallback,
+    AdapterTransactionJobUnfinish.ItemAdapterCallback{
 
     private var _binding:FragmentTransactionUnfinishBinding? = null
     private val binding get()= _binding
@@ -61,30 +63,36 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
                 "ListTransaction" -> {
 //                    Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
                     val dataTransactionUnfinish = intent.getParcelableExtra<DataTransaction>("Transaction")
-                    setupListUnfinishTransaction(dataTransactionUnfinish?.pending, dataTransactionUnfinish?.pendingJob)
+                    setupListUnfinishTransaction(dataTransactionUnfinish?.pending)
+                    setupListUnfinishTransactionJob(dataTransactionUnfinish?.pendingJob)
+                    showIsEmpty(dataTransactionUnfinish?.pending?.let { dataTransactionUnfinish.pendingJob?.size?.plus(it.size) })
                 }
             }
         }
     }
 
-    private fun setupListUnfinishTransaction(data:List<PendingItem?>?, dataJob:List<PendingJobItem?>?){
-        Timber.d(data?.size.toString(), dataJob?.size.toString())
+    private fun setupListUnfinishTransaction(data:List<PendingItem?>?){
 //        showIsEmpty(data?.size)
-//        adapterTransactionUnfinish.clear()
         adapterTransactionUnfinish.clear()
-//        adapterTransactionUnfinish.addTransactionPulsaPending(data)
         AdapterTransactionPulsaUnfinish.VIEW_TYPE = 1
         adapterTransactionUnfinish.addTransactionPulsaPending(data)
         binding?.rvUnfinishTransaction?.adapter = adapterTransactionUnfinish
     }
 
+    private fun setupListUnfinishTransactionJob(dataJob:List<PendingJobItem?>?){
+//        showIsEmpty(dataJob?.size)
+        adapterTransactionUnfinishJob.clear()
+        AdapterTransactionPulsaUnfinish.VIEW_TYPE = 2
+        adapterTransactionUnfinishJob.addTransactionJobPending(dataJob)
+        binding?.rvUnfinishTransactionJob?.adapter = adapterTransactionUnfinishJob
+    }
+
     private val adapterTransactionUnfinish by lazy {
-//        AdapterTransactionPulsaUnfinish.VIEW_TYPE = 1
-        AdapterTransactionPulsaUnfinish(requireActivity(), arrayListOf(), this, arrayListOf())
+        AdapterTransactionPulsaUnfinish(requireActivity(), arrayListOf(), this)
     }
 
     private val adapterTransactionUnfinishJob by lazy {
-        AdapterTransactionPulsaUnfinish(requireActivity(), arrayListOf(), this, arrayListOf())
+        AdapterTransactionJobUnfinish(requireActivity(), arrayListOf(), this)
     }
 
 //    private fun showNotLogin(statusLogin:Boolean){
@@ -125,13 +133,13 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
 
     override fun onClickAdapter(view: View, data: PendingItem?) {
         when(view.id){
-            R.id.iv_option -> {
+            R.id.tv_option_menu -> {
                 val popup = PopupMenu(requireContext(), view)
                 popup.inflate(R.menu.menu_cancel_transaction)
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.action_cancel_transaction -> {
-                            Toast.makeText(context, "${data?.payment?.idPaymentMethod}", Toast.LENGTH_SHORT).show()
+
                             true
                         } else -> false
                     }
@@ -153,6 +161,24 @@ class FragmentTransactionUnfinish : Fragment(), View.OnClickListener,
 //                    .putExtra("dataFinish", data)
 //                startActivity(intent)
 //            }
+        }
+    }
+
+    override fun onTransactionJobClick(view: View, data: PendingJobItem?) {
+        when (view.id) {
+            R.id.tv_option_menu -> {
+                val popup = PopupMenu(requireContext(), view)
+                popup.inflate(R.menu.menu_cancel_transaction)
+                popup.setOnMenuItemClickListener { item ->
+                    when (item.itemId) {
+                        R.id.action_cancel_transaction -> {
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                popup.show()
+            }
         }
     }
 }

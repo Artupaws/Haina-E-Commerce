@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemFinishTransactionBinding
+import haina.ecommerce.helper.Helper
+import haina.ecommerce.helper.Helper.convertToFormatMoneyIDRFilter
+import haina.ecommerce.helper.Helper.dateFormat
 import haina.ecommerce.model.transactionlist.ProcessItem
 import haina.ecommerce.model.transactionlist.SuccessItem
 
@@ -22,11 +25,11 @@ private val itemAdapterCallback: ItemAdapterCallback):
                     itemAdapterCallback.onClickAdapter(binding.relativeClick, itemHaina)
                 }
                 tvTitleService.text = itemHaina.product?.description
-                tvDateTransaction.text = itemHaina.transactionTime
+                tvDateTransaction.text = dateFormat(itemHaina.transactionTime)
                 tvStatusPayment.text = itemHaina.status
                 tvTitleTransaction.text = itemHaina.product?.description
                 tvCustomerNumber.text = itemHaina.customerNumber
-                tvTotalPrice.text = itemHaina.totalPayment.toString()
+                tvTotalPrice.text = convertToFormatMoneyIDRFilter(itemHaina.totalPayment.toString())
             }
         }
     }

@@ -30,6 +30,7 @@ import haina.ecommerce.view.history.HistoryFragment
 import haina.ecommerce.view.myaccount.MyAccountFragment
 import haina.ecommerce.view.posting.PostingFragment
 import haina.ecommerce.view.register.account.RegisterActivity
+import timber.log.Timber
 import java.util.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -149,7 +150,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val resource:Resources = resources
         val dm:DisplayMetrics = resource.displayMetrics
         val config:Configuration = resource.configuration
-        config.setLocale(Locale(languageParams.toLowerCase()))
+        config.setLocale(Locale(languageParams.lowercase()))
         resource.updateConfiguration(config,dm)
     }
 
