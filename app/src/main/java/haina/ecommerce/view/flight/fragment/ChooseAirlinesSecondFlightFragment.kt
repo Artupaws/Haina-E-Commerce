@@ -56,7 +56,7 @@ class ChooseAirlinesSecondFlightFragment : Fragment(), AdapterAirlinesReturn.Ite
     override fun onClick(view: View, returnParams: DepartItem, timeFlight: List<TimeFlight?>?) {
         val dataFlight = Request(this.data.startDate, this.data.finishDate, this.data.fromDestination, this.data.toDestination, this.data.totalPassenger,
             this.data.totalAdult, this.data.totalChild, this.data.totalBaby,this.data.airlinesFirst, airlinesSecond = AirlinesSecond(returnParams.airlineCode!!,
-                "", null, returnParams.departTime!!, "",
+                returnParams.airlineDetail?.image!!, null, returnParams.departTime!!, "",
                 returnParams.origin!!,returnParams.destination!!, returnParams.price.toString(), returnParams.departTime.toString(),
                 returnParams.arrivalTime!!),null, this.data.airlineDepart, this.data.airlineReturn)
         val bundle = Bundle()

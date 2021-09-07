@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemAirlinesBinding
 import haina.ecommerce.helper.Helper
@@ -35,6 +37,8 @@ class AdapterAirlines(val context: Context, private val listAirlines: DataAirlin
                 } else {
                     tvTypeFlight.text = "Direct"
                 }
+                Glide.with(context).load(itemHaina.airlineDetail?.image).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding?.ivAirlineIcon!!)
+
             }
         }
     }

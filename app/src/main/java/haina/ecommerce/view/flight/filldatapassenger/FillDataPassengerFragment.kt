@@ -259,7 +259,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         }
         ticket= mutableListOf<Ticket>()
 
-        ticket.add(Ticket(dataRequest.airlinesFirst?.nameAirlines!!,"", dataRequest.airlinesFirst!!.listFlightTime,
+        ticket.add(Ticket(dataRequest.airlinesFirst?.nameAirlines!!,dataRequest.airlinesFirst?.iconAirline!!, dataRequest.airlinesFirst!!.listFlightTime,
             dataRequest.airlinesFirst?.flightTime!!,dataRequest.airlinesFirst?.typeFlight!!, dataRequest.airlinesFirst?.cityCodeDeparture!!,
             dataRequest.airlinesFirst?.cityCodeArrived!!, dataRequest.airlinesFirst?.priceTicket!!,
             dataRequest.airlinesFirst?.departureTime!!, dataRequest.airlinesFirst?.arrivedTime!!,flightPrice,dataRequest.totalAdult,dataRequest.totalChild,dataRequest.totalBaby))
@@ -269,7 +269,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
             data?.priceReturn?.filter { it?.priceDetail!=null }?.forEach{
                 flightPrice=it?.priceDetail
             }
-            ticket.add(Ticket(dataRequest.airlinesSecond?.nameAirlines!!,"", dataRequest.airlinesSecond!!.listFlightTime,
+            ticket.add(Ticket(dataRequest.airlinesSecond?.nameAirlines!!,dataRequest.airlinesSecond?.iconAirline!!, dataRequest.airlinesSecond!!.listFlightTime,
                 dataRequest.airlinesSecond?.flightTime!!,dataRequest.airlinesSecond?.typeFlight!!, dataRequest.airlinesSecond?.cityCodeDeparture!!,
                 dataRequest.airlinesSecond?.cityCodeArrived!!, dataRequest.airlinesSecond?.priceTicket!!,
                 dataRequest.airlinesSecond?.departureTime!!, dataRequest.airlinesSecond?.arrivedTime!!,flightPrice,dataRequest.totalAdult,dataRequest.totalChild,dataRequest.totalBaby))

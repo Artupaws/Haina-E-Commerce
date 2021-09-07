@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import haina.ecommerce.databinding.ListItemTicketChooseBinding
 import haina.ecommerce.model.flight.AirlinesFirst
 import haina.ecommerce.model.flight.Ticket
+import timber.log.Timber
 
 class AdapterListTicket(val context: Context, private val listAirlines: MutableList<Ticket>?,
                         private val itemAdapterCallback: ItemAdapterCallback) :
@@ -55,6 +58,12 @@ class AdapterListTicket(val context: Context, private val listAirlines: MutableL
                 }else{
                     linearPrice.visibility=View.GONE
                 }
+
+                Timber.d(itemHaina.iconAirline)
+
+                Glide.with(context).load(itemHaina.iconAirline).skipMemoryCache(true).diskCacheStrategy(
+                    DiskCacheStrategy.NONE).into(binding?.ivIconAirlines!!)
+
 
 
 

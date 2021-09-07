@@ -114,7 +114,7 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
             R.id.linear_click -> {
                 val dataFlight = Request(this.data.startDate, this.data.finishDate, this.data.fromDestination, this.data.toDestination,
                     this.data.totalPassenger, this.data.totalAdult, this.data.totalChild, this.data.totalBaby, airlinesFirst = AirlinesFirst(
-                        dataDepart.airlineCode!!, "", null, dataDepart.departTime!!, "Direct Flight",
+                        dataDepart.airlineCode!!, dataDepart.airlineDetail?.image!!, null, dataDepart.departTime!!, "Direct Flight",
                         dataDepart.origin!!, dataDepart.destination!!, dataDepart.price.toString(), dataDepart.departTime.toString(), dataDepart.arrivalTime!!), null, null,
                      depart, returnParams)
                 airlineCode = dataDepart.airlineCode

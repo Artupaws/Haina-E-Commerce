@@ -14,6 +14,8 @@ import androidx.core.widget.NestedScrollView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemFlightAddOnBinding
 import haina.ecommerce.model.flight.*
@@ -109,6 +111,9 @@ class AdapterListFlight(val context: Context, private val passengerId: Int,priva
                     tvOriginDestination.text = originDestination
                     val originDestinationTime = "(${itemHaina.departureTime.substring(11, 19)} - ${itemHaina.arrivedTime.substring(11, 19)})"
                     tvTimeFlight.text = originDestinationTime
+
+                    Glide.with(context).load(itemHaina.iconAirline).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding?.ivAirlineIcon!!)
+
 
                     if(itemHaina.priceDetail?.size==1){
                         ticketPrice=(itemHaina.priceDetail?.find { it?.paxType == "Adult" }!!.baseFare?.div(
