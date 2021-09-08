@@ -3,6 +3,7 @@ package haina.ecommerce.view.job
 import android.content.Context
 import android.util.Log
 import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.helper.NoConnectivityException
 import haina.ecommerce.model.ResponseCheckRegisterCompany
 import haina.ecommerce.model.ResponseGetJob
 import haina.ecommerce.model.ResponseJobCategory
@@ -60,6 +61,9 @@ class JobPresenter(val view: JobContract.View, val context: Context){
             override fun onFailure(call: Call<ResponseJobCategory>, t: Throwable) {
                 view.dismissLoading()
                 view.messageLoadJobCategory(t.localizedMessage)
+//                if(t is NoConnectivityException) {
+//                    view.showLoading()
+//                }
             }
 
         })
