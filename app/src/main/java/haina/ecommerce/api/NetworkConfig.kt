@@ -40,15 +40,17 @@ class NetworkConfig {
         return retrofit.create(NetworkService::class.java)
     }
 
+    
+
     fun getConnectionToDarma(context: Context): NetworkService{
         sharedPrefHelper = SharedPreferenceHelper(context)
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL_TO_DARMA)
             .addConverterFactory(GsonConverterFactory.create())
             .client(OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS).addInterceptor { chain ->
+                .connectTimeout(5, TimeUnit.MINUTES)
+                .readTimeout(5, TimeUnit.MINUTES)
+                .writeTimeout(5, TimeUnit.MINUTES).addInterceptor { chain ->
                 val request = chain.request().newBuilder().addHeader("Authorization", "Bearer ${sharedPrefHelper.getValueString(Constants.PREF_TOKEN_USER)}")
                     .addHeader("Accept", "application/json")
                     .addHeader("apikey", Constants.APIKEY)

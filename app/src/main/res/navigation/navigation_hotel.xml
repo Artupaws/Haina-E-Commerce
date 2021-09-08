@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_hotel"
-    app:startDestination="@id/listCityHotelFragment">
+    app:startDestination="@id/hotelSelectionFragment">
 
     <fragment
         android:id="@+id/listCityHotelFragment"
@@ -14,6 +14,17 @@
             android:id="@+id/action_listCityHotelFragment_to_scheduleHotelFragment"
             app:destination="@id/scheduleHotelFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/hotelSelectionFragment"
+        android:name="haina.ecommerce.view.hotels.selection.HotelSelectionFragment"
+        android:label="fragment_list_city_hotel"
+        tools:layout="@layout/fragment_hotel_selection" >
+        <action
+            android:id="@+id/action_hotelSelectionFragment_to_scheduleHotelFragment"
+            app:destination="@id/scheduleHotelFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/scheduleHotelFragment"
         android:name="haina.ecommerce.view.hotels.listhotel.ListHotelFragment"
