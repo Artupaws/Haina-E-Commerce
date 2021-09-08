@@ -962,4 +962,17 @@ interface NetworkService {
         @Field("id_job")idJob:Int?
     ):Call<ResponseGiveUpvote>
 
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/work_exp/add")
+    fun addWorkExperience(
+        @Field("company")company:String,
+        @Field("city")city:String,
+        @Field("date_start")dateStart:String,
+        @Field("date_end")dateEnd:String,
+        @Field("position")position:String,
+        @Field("description")description:String,
+        @Field("salary")salary:Int
+    ):Call<ResponseGiveUpvote>
+
 }

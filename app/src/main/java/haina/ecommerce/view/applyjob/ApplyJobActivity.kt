@@ -310,6 +310,7 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener,
         binding.tvName.text = data?.fullname
         binding.tvEmail.text = data?.email
         binding.tvPhone.text = data?.phone
+        binding.tvPosition.text = data?.latestWork?.position
     }
 
     override fun showLoading() {

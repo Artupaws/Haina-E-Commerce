@@ -4,11 +4,13 @@ import android.content.Context
 import android.util.Log
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.*
+import haina.ecommerce.model.forum.ResponseGiveUpvote
 import haina.ecommerce.util.Constants
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class DetailAccountPresenter(val view:DetailAccountContract, val context: Context) {
+class DetailAccountPresenter(val view:DetailAccountContract.View, val context: Context) {
 
     fun loadDocumentResume(idDocsCategory:Int){
         val loadDocumentUser = NetworkConfig().getConnectionHainaBearer(context).loadDocumentUser(idDocsCategory)
@@ -87,7 +89,6 @@ class DetailAccountPresenter(val view:DetailAccountContract, val context: Contex
             }
 
         })
-
     }
 
     fun getDataUserProfile(){
@@ -147,6 +148,30 @@ class DetailAccountPresenter(val view:DetailAccountContract, val context: Contex
             }
 
         })
+    }
+
+
+    fun addWorkExperience(company:String, city:String, dateStart:String, dateEnd:String, position:String, description:String, salary:Int){
+        view.showLoading()
+        val addDataPersonalUser = NetworkConfig().getConnectionHainaBearer(context).addWorkExperience(company, city, dateStart, dateEnd, position, description, salary)
+        addDataPersonalUser.enqueue(object : retrofit2.Callback<ResponseGiveUpvote>{
+            override fun onResponse(call: Call<ResponseGiveUpvote>, response: Response<ResponseGiveUpvote>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageAddWorkExperience(response.body()?.value.toString())
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageAddWorkExperience(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGiveUpvote>, t: Throwable) {
+                view.dismissLoading()
+                view.messageAddWorkExperience(t.localizedMessage.toString())
+            }
+
+        })
+
     }
 
 

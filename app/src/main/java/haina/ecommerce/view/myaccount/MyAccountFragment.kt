@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -16,6 +17,7 @@ import android.view.*
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -41,15 +43,17 @@ import haina.ecommerce.view.register.company.RegisterCompanyActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import timber.log.Timber
 import java.io.File
 
-class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
+class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.View {
 
     private var _binding: FragmentMyAccountBinding? = null
     private val binding get() = _binding
     lateinit var sharedPref: SharedPreferenceHelper
     private var broadcaster: LocalBroadcastManager? = null
     private var popupLogout: AlertDialog? = null
+    private var progressDialog:Dialog? = null
     private lateinit var presenter: MyAccountPresenter
     private lateinit var uri: Uri
     private lateinit var language:String
@@ -113,6 +117,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         setLanguage(sharedPref.getValueString(Constants.LANGUAGE_APP).toString())
         switchLanguage()
         showPopupLogout()
+        dialogLoading()
     }
 
     override fun onClick(p0: View?) {
@@ -271,7 +276,6 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             binding?.switchLanguage?.isChecked = true
             binding?.tvNameLanguage?.text = getString(R.string.chinese)
         }
-
     }
 
     @SuppressLint("InflateParams")
@@ -299,46 +303,34 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
         }
     }
 
-    override fun successGetDataUser(msg: String) {
-        Log.d("getDataSuccess", msg)
-        binding?.swipeRefresh?.isRefreshing = false
-    }
-
-    override fun errorGetDataUSer(msg: String) {
-        Log.d("getDataError", msg)
+    override fun messageGetDataUser(msg: String) {
+        Timber.d(msg)
         binding?.swipeRefresh?.isRefreshing = false
     }
 
     override fun getDataUser(data: DataUser?) {
+        Timber.d(data.toString())
         sharedPref.save(Constants.PREF_PHONE_NUMBER, data?.phone.toString())
         sharedPref.save(Constants.PREF_EMAIL, data?.email.toString())
         binding?.tvNameUser?.text = data?.fullname.toString()
         activity?.let { Glide.with(it).load(data?.photo).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding?.ivProfile!!) }
     }
 
-    override fun successLogout(msg: String) {
-        Log.d("successLogout", msg)
-    }
-
-    override fun errorLogout(msg: String) {
-        Log.d("errorLogout", msg)
+    override fun messageLogout(msg: String) {
+        Timber.d(msg)
     }
 
     override fun resetTokenUser(data: String?) {
         sharedPref.save(Constants.PREF_TOKEN_LOGIN, data.toString())
     }
 
-    override fun successChangeImageProfile(msg: String) {
-        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+    override fun messageChangeImageProfile(msg: String) {
+        Timber.d(msg)
         presenter.getDataUserProfile()
     }
 
-    override fun errorChangeImageProfile(msg: String) {
-        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun checkDataCompany(msg: String) {
-        Log.d("statusLogin", sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN).toString())
+    override fun messageCheckDataCompany(msg: String) {
+        Timber.d(msg)
         if (msg == "Company Registered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
             val intent = Intent(requireContext(), DataCompanyActivity::class.java)
             startActivity(intent)
@@ -349,4 +341,22 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract {
             Toast.makeText(requireContext(), "Please Login First", Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun dialogLoading(){
+        progressDialog = Dialog(requireActivity())
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(requireActivity(), android.R.color.white))
+        val window:Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
+    }
+
 }

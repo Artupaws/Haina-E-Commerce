@@ -152,6 +152,16 @@ object Helper {
         }
     }
 
+    fun dateFormatWorkExperience(date: String?):String {
+        return if (date.isNullOrEmpty())""
+        else {
+            val currentFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val dateParse = currentFormat.parse( date )
+            val toFormat = SimpleDateFormat("MMM, dd yyyy", Locale.getDefault())
+            toFormat.format(dateParse!!)
+        }
+    }
+
     fun dateFormatHotelDarma(date: String?):String {
         return if (date.isNullOrEmpty())""
         else {

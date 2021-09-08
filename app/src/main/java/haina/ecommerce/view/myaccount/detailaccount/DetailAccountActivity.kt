@@ -2,6 +2,7 @@ package haina.ecommerce.view.myaccount.detailaccount
 
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -11,11 +12,14 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -29,15 +33,22 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterDocumentUser
 import haina.ecommerce.adapter.AdapterSkillsUser
 import haina.ecommerce.databinding.ActivityDetailAccountBinding
+import haina.ecommerce.helper.Helper
+import haina.ecommerce.helper.Helper.changeFormatMoneyToValueFilter
+import haina.ecommerce.helper.Helper.convertToFormatMoneyIDRFilter
+import haina.ecommerce.helper.Helper.dateFormatWorkExperience
 import haina.ecommerce.model.DataDocumentUser
 import haina.ecommerce.model.DataSkillsUser
 import haina.ecommerce.model.DataUser
+import haina.ecommerce.model.LatestWork
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.view.myaccount.addrequirement.AddRequirementActivity
 import haina.ecommerce.view.myaccount.addskills.AddSkillsActivity
+import timber.log.Timber
+import java.text.SimpleDateFormat
 import java.util.*
 
-class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailAccountContract {
+class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailAccountContract.View {
 
     private lateinit var binding: ActivityDetailAccountBinding
     private lateinit var presenter: DetailAccountPresenter
@@ -57,8 +68,12 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
     private var address:String? = null
     private var birthdate:String? = null
     private var about:String? = null
+    private var lastEducation:String? = null
     private var username:String? = null
+    private var progressDialog:Dialog? = null
     var refresh:Int = 0
+    private var dataWorkExperience: LatestWork? = null
+    private var stateSetDate:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +89,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         setTextBirthDate()
         refresh()
         loadAllDocument()
+        dialogLoading()
 
         binding.toolbarDetailAccount.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailAccount.setNavigationOnClickListener { onBackPressed() }
@@ -85,6 +101,10 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         binding.tvAddPorto.setOnClickListener(this)
         binding.tvAddCertificate.setOnClickListener(this)
         binding.tvAddSkills.setOnClickListener(this)
+        binding.etStart.setOnClickListener(this)
+        binding.etEnd.setOnClickListener(this)
+        binding.ivActionAddWorkExperience.setOnClickListener(this)
+        binding.ivActionSaveWorkExperience.setOnClickListener(this)
 
     }
 
@@ -145,6 +165,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         birthdate = data?.birthdate
         gender = data?.gender
         about = data?.about
+        lastEducation = "${data?.lastEducation}-${data?.educationDetail?.major}"
         Glide.with(this).load(data?.photo)
             .skipMemoryCache(false).diskCacheStrategy(
                 DiskCacheStrategy.NONE
@@ -189,8 +210,24 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
                 binding.rbMale.isChecked = false
             }
         }
-        binding.tvAbout.text = data?.about
+        binding.tvAbout.text = about
         binding.etAbout.setText(binding.tvAbout.text)
+        binding.tvLastEducation.text = lastEducation
+        binding.etLastEducation.setText(lastEducation)
+        binding.tvCompanyName.text = data?.latestWork?.company
+        binding.etCompanyName.setText(data?.latestWork?.company)
+        binding.tvPosition.text = data?.latestWork?.position
+        binding.etPosition.setText(data?.latestWork?.position)
+        binding.tvCityCompany.text = data?.latestWork?.city
+        binding.etCityCompany.setText(data?.latestWork?.city)
+        binding.tvStart.text = dateFormatWorkExperience(data?.latestWork?.dateStart)
+        binding.etStart.setText(dateFormatWorkExperience(data?.latestWork?.dateStart))
+        binding.tvEnd.text = dateFormatWorkExperience(data?.latestWork?.dateEnd)
+        binding.etEnd.setText(dateFormatWorkExperience(data?.latestWork?.dateEnd))
+        if (data?.latestWork?.salary != null){
+            binding.tvSalary.text = convertToFormatMoneyIDRFilter(data.latestWork.salary.toString())
+            binding.etSalary.setText(convertToFormatMoneyIDRFilter(data.latestWork.salary.toString()))
+        }
     }
 
     override fun onClick(p0: View?) {
@@ -201,7 +238,14 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
             R.id.iv_action_save_personal_data -> {
                 stateCancelSave()
             }
+            R.id.iv_action_add_work_experience -> {
+                stateEditWorkExperience()
+            }
+            R.id.iv_action_save_work_experience -> {
+                stateCancelSaveWorkExperience()
+            }
             R.id.et_birthdate -> {
+                stateSetDate = "birthdate"
                 setDatePicker()
             }
             R.id.tv_add_resume ->{
@@ -223,6 +267,15 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
                 val intent = Intent(this, AddSkillsActivity::class.java)
                 startActivity(intent)
             }
+            R.id.et_start -> {
+                stateSetDate = "startwork"
+                setDatePicker()
+            }
+            R.id.et_end -> {
+                stateSetDate = "endwork"
+                setDatePicker()
+            }
+
         }
     }
 
@@ -238,12 +291,19 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
     }
 
     private fun setTextBirthDate(){
-        dateSetListener = OnDateSetListener { datePicker, year, month, day ->
-                var month = month
-                month += 1
-                Log.d("date", "onDateSet: yyyy/mm/dd: $year-$month-$day")
+        dateSetListener = OnDateSetListener { _, year, month, day ->
                 val date = "$year-$month-$day"
-                binding.etBirthdate.setText(date)
+            when(stateSetDate){
+                "birthdate" -> {
+                    binding.etBirthdate.setText(date)
+                }
+                "startwork" -> {
+                    binding.etStart.setText(date)
+                }
+                "endwork" -> {
+                    binding.etEnd.setText(date)
+                }
+                }
             }
     }
 
@@ -288,6 +348,23 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         binding.etLastEducation.visibility = View.VISIBLE
     }
 
+    private fun stateEditWorkExperience(){
+        binding.ivActionAddWorkExperience.visibility = View.INVISIBLE
+        binding.ivActionSaveWorkExperience.visibility = View.VISIBLE
+        binding.tvCompanyName.visibility = View.INVISIBLE
+        binding.etCompanyName.visibility = View.VISIBLE
+        binding.tvPosition.visibility = View.INVISIBLE
+        binding.etPosition.visibility = View.VISIBLE
+        binding.tvCityCompany.visibility = View.INVISIBLE
+        binding.etCityCompany.visibility = View.VISIBLE
+        binding.tvStart.visibility = View.INVISIBLE
+        binding.etStart.visibility = View.VISIBLE
+        binding.tvEnd.visibility = View.INVISIBLE
+        binding.etEnd.visibility = View.VISIBLE
+        binding.tvSalary.visibility = View.INVISIBLE
+        binding.etSalary.visibility = View.VISIBLE
+    }
+
     private fun stateSave() {
         binding.ivActionEditPersonalData.visibility = View.VISIBLE
         binding.ivActionSavePersonalData.visibility = View.INVISIBLE
@@ -312,15 +389,141 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         presenter.getDataUserProfile()
     }
 
+    private fun stateSaveWorkExperience(){
+        binding.ivActionAddWorkExperience.visibility = View.VISIBLE
+        binding.ivActionSaveWorkExperience.visibility = View.INVISIBLE
+        binding.tvCompanyName.visibility = View.VISIBLE
+        binding.etCompanyName.visibility = View.INVISIBLE
+        binding.tvPosition.visibility = View.VISIBLE
+        binding.etPosition.visibility = View.INVISIBLE
+        binding.tvCityCompany.visibility = View.VISIBLE
+        binding.etCityCompany.visibility = View.INVISIBLE
+        binding.tvStart.visibility = View.VISIBLE
+        binding.etStart.visibility = View.INVISIBLE
+        binding.tvEnd.visibility = View.VISIBLE
+        binding.etEnd.visibility = View.INVISIBLE
+        binding.tvSalary.visibility = View.VISIBLE
+        binding.etSalary.visibility = View.INVISIBLE
+    }
+
     private fun stateCancelSave(){
         if ((binding.etFullname.text.toString() == fullname
                 && binding.etAddress.text.toString() == address
                 && binding.etBirthdate.text.toString() == birthdate
-                && binding.etAbout.text.toString() == about
-                        && genderRadio == gender)){
+                && binding.etAbout.text.toString() == about && genderRadio == gender && binding.etLastEducation.text.toString() == lastEducation)){
             stateSave()
         } else {
             checkAddDataPersonal()
+        }
+    }
+
+    private fun stateCancelSaveWorkExperience(){
+        if (dataWorkExperience != null){
+            if ((binding.etCompanyName.text.toString() == dataWorkExperience?.company
+                        && binding.etPosition.text.toString() == dataWorkExperience?.position
+                        && binding.etCityCompany.text.toString() == dataWorkExperience?.city
+                        && binding.etStart.text.toString() == dataWorkExperience?.dateStart
+                        && binding.etEnd.text.toString() == dataWorkExperience?.dateEnd
+                        && binding.etSalary.text.toString() == dataWorkExperience?.salary.toString())){
+                stateSaveWorkExperience()
+            } else {
+                checkDataworkExperience()
+            }
+        } else {
+                if ((binding.etCompanyName.text.toString() == ""
+                        && binding.etPosition.text.toString() == ""
+                        && binding.etCityCompany.text.toString() == ""
+                        && binding.etStart.text.toString() == ""
+                        && binding.etEnd.text.toString() == ""
+                        && binding.etSalary.text.toString() == "")){
+                stateSaveWorkExperience()
+            } else
+                checkDataworkExperience()
+        }
+
+    }
+
+    private fun checkDataworkExperience(){
+        var isEmptyCompany = true
+        var isEmptyPosition = true
+        var isEmptyCity = true
+        var isEmptyStart = true
+        var isEmptyEnd = true
+        var isEmptySalary = true
+        var company = binding.etCompanyName.text.toString()
+        var position = binding.etPosition.text.toString()
+        var city = binding.etCityCompany.text.toString()
+        var start = binding.etStart.text.toString()
+        var end = binding.etEnd.text.toString()
+        var salary = changeFormatMoneyToValueFilter(binding.etSalary.text.toString())
+
+        if (company.isNullOrEmpty()){
+            isEmptyCompany = true
+            binding.etCompanyName.error = getString(R.string.cant_empty)
+        } else {
+            isEmptyCompany = false
+            binding.etCompanyName.error = null
+            company = binding.etCompanyName.text.toString()
+        }
+
+        if (position.isNullOrEmpty()){
+            isEmptyPosition = true
+            binding.etPosition.error = getString(R.string.cant_empty)
+        } else {
+            isEmptyPosition = false
+            binding.etPosition.error = null
+            position = binding.etPosition.text.toString()
+        }
+
+        if (city.isNullOrEmpty()){
+            isEmptyCity = true
+            binding.etCityCompany.error = getString(R.string.cant_empty)
+        } else {
+            isEmptyCity = false
+            binding.etCityCompany.error = null
+            city = binding.etCityCompany.text.toString()
+        }
+
+        if (city.isNullOrEmpty()){
+            isEmptyCity = true
+            binding.etCityCompany.error = getString(R.string.cant_empty)
+        } else {
+            isEmptyCity = false
+            binding.etCityCompany.error = null
+            city = binding.etCityCompany.text.toString()
+        }
+
+        if (start.isNullOrEmpty()){
+            isEmptyStart = true
+            binding.etStart.error = getString(R.string.cant_empty)
+        } else {
+            isEmptyStart = false
+            binding.etStart.error = null
+            start = binding.etStart.text.toString()
+        }
+
+        if (end.isNullOrEmpty()){
+            isEmptyEnd = true
+            binding.etEnd.error = getString(R.string.cant_empty)
+        } else {
+            isEmptyEnd = false
+            binding.etEnd.error = null
+            end = binding.etEnd.text.toString()
+        }
+
+        if (salary.isNullOrEmpty()){
+            isEmptySalary = true
+            binding.etSalary.error = getString(R.string.cant_empty)
+        } else {
+            isEmptySalary = false
+            binding.etSalary.error = null
+            salary = binding.etSalary.text.toString()
+        }
+
+        if (!isEmptyCompany && !isEmptyPosition && !isEmptyCity && !isEmptyCity && !isEmptyStart && !isEmptyEnd && !isEmptySalary){
+            presenter.addWorkExperience(company, city, start, end, position, ".", salary!!.toInt())
+        } else {
+            Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -409,6 +612,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
 
     override fun getDataUser(data: DataUser?) {
         setDataProfile(data)
+        dataWorkExperience = data?.latestWork
     }
 
     override fun getSkillsUser(data: List<DataSkillsUser?>?) {
@@ -450,6 +654,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
             binding.ivLoading.visibility = View.INVISIBLE
             binding.ivActionEditPersonalData.visibility = View.VISIBLE
         }
+        presenter.getDataUserProfile()
     }
 
     override fun messageDeleteSkill(msg: String) {
@@ -459,6 +664,27 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         } else {
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun dialogLoading(){
+        progressDialog = Dialog(this)
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(applicationContext, android.R.color.white))
+        val window: Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
+    }
+
+    override fun messageAddWorkExperience(msg: String) {
+        Timber.d(msg)
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 
 }
