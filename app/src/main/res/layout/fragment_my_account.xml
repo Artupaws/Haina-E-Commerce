@@ -152,12 +152,13 @@
                                 android:text="My Order"
                                 android:textStyle="bold"
                                 android:textColor="@color/black"/>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Packages, invoice, order"
-                                android:textSize="13sp"
-                                android:textColor="@color/black"/>
+                                android:text="@string/package_invoice_order"
+                                android:textColor="@color/black"
+                                android:textSize="13sp" />
                         </LinearLayout>
 
                         <ImageView
@@ -338,17 +339,12 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="64dp"
+                                android:layout_height="30dp"
                                 android:text="@string/logout"
-                                android:textStyle="bold"
-                                android:textColor="@color/black"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Packages, invoice, order"
-                                android:textSize="13sp"
-                                android:textColor="@color/black"/>
+                                android:textColor="@color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
 
                         <ImageView

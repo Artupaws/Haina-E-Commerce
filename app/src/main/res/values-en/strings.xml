@@ -371,6 +371,5 @@
     <string name="my_forum">My Forum</string>
     <string name="role">Role</string>
     <string name="ban_reason">Ban Reason</string>
-
-
+    <string name="package_invoice_order">Package, Invoice, Order</string>
 </resources>
