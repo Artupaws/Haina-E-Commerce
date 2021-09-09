@@ -35,9 +35,30 @@ class HistoryTransactionPresenter(val view:HistoryTransactionContract, val conte
 
 class TransactionUnfinishPresenter(val view: HistoryTransactionContract.TransactionUnfinishContract.View, val context: Context){
 
-    fun cancelTransaction(idTransaction:Int?, idJob:Int?){
+    fun cancelTransaction(idTransaction:Int?){
         view.showLoading()
-        val getListTransaction = NetworkConfig().getConnectionHainaBearer(context).cancelTransaction(idTransaction, idJob)
+        val getListTransaction = NetworkConfig().getConnectionHainaBearer(context).cancelTransaction(idTransaction)
+        getListTransaction.enqueue(object : retrofit2.Callback<ResponseGiveUpvote>{
+            override fun onResponse(call: Call<ResponseGiveUpvote>, response: Response<ResponseGiveUpvote>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageCancelTransaction(response.body()?.message.toString())
+                } else {
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                    view.messageCancelTransaction(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGiveUpvote>, t: Throwable) {
+                view.dismissLoading()
+                view.messageCancelTransaction(t.localizedMessage.toString())
+            }
+        })
+    }
+
+    fun cancelTransactionJob(idJob:Int?){
+        view.showLoading()
+        val getListTransaction = NetworkConfig().getConnectionHainaBearer(context).cancelTransactionJob(idJob)
         getListTransaction.enqueue(object : retrofit2.Callback<ResponseGiveUpvote>{
             override fun onResponse(call: Call<ResponseGiveUpvote>, response: Response<ResponseGiveUpvote>) {
                 view.dismissLoading()

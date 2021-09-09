@@ -11,17 +11,18 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -32,15 +33,18 @@ import com.bumptech.glide.request.target.Target
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterDocumentUser
 import haina.ecommerce.adapter.AdapterSkillsUser
+import haina.ecommerce.adapter.vacancy.AdapterDataCreateVacancy
 import haina.ecommerce.databinding.ActivityDetailAccountBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.helper.Helper.changeFormatMoneyToValue
 import haina.ecommerce.helper.Helper.changeFormatMoneyToValueFilter
 import haina.ecommerce.helper.Helper.convertToFormatMoneyIDRFilter
 import haina.ecommerce.helper.Helper.dateFormatWorkExperience
-import haina.ecommerce.model.DataDocumentUser
-import haina.ecommerce.model.DataSkillsUser
-import haina.ecommerce.model.DataUser
-import haina.ecommerce.model.LatestWork
+import haina.ecommerce.helper.NumberTextWatcher
+import haina.ecommerce.model.*
+import haina.ecommerce.model.vacancy.DataCreateVacancy
+import haina.ecommerce.model.vacancy.VacancyEducationItem
+import haina.ecommerce.model.vacancy.VacancySkillItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.view.myaccount.addrequirement.AddRequirementActivity
 import haina.ecommerce.view.myaccount.addskills.AddSkillsActivity
@@ -48,7 +52,8 @@ import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailAccountContract.View {
+class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
+    DetailAccountContract.View, AdapterDataCreateVacancy.AdapterCallbackSkillEdu {
 
     private lateinit var binding: ActivityDetailAccountBinding
     private lateinit var presenter: DetailAccountPresenter
@@ -71,9 +76,15 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
     private var lastEducation:String? = null
     private var username:String? = null
     private var progressDialog:Dialog? = null
+    private var idEdu:Int = 0
     var refresh:Int = 0
     private var dataWorkExperience: LatestWork? = null
     private var stateSetDate:String = ""
+    private var popupAddEducation:Dialog? = null
+    private var popupDialogLastEdu:Dialog? = null
+    private var etLastEdu:EditText? = null
+    private var linearGpa:LinearLayout? = null
+    private var etGpa:EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,11 +96,17 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         sharedPref = SharedPreferenceHelper(this)
         presenter.getDataUserProfile()
         presenter.getSkillsUser()
+        presenter.getDataCreateVacancy()
         radioGrroup()
         setTextBirthDate()
         refresh()
         loadAllDocument()
         dialogLoading()
+
+        val locale = Locale("es", "IDR")
+        val numDecs = 2 // Let's use 2 decimals
+        val salary: TextWatcher = NumberTextWatcher(binding.etSalary, locale, numDecs)
+        binding.etSalary.addTextChangedListener(salary)
 
         binding.toolbarDetailAccount.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailAccount.setNavigationOnClickListener { onBackPressed() }
@@ -103,6 +120,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         binding.tvAddSkills.setOnClickListener(this)
         binding.etStart.setOnClickListener(this)
         binding.etEnd.setOnClickListener(this)
+        binding.etLastEducation.setOnClickListener(this)
         binding.ivActionAddWorkExperience.setOnClickListener(this)
         binding.ivActionSaveWorkExperience.setOnClickListener(this)
 
@@ -154,6 +172,97 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         presenter.loadDocumentResume(1)
         presenter.loadDocumentPortfolio(2)
         presenter.loadDocumentCertificate(3)
+    }
+
+    private fun dialogAddEducation(dataEducation: EducationDetail?){
+        popupAddEducation = Dialog(this)
+        popupAddEducation?.setContentView(R.layout.popup_add_education)
+        popupAddEducation?.setCancelable(true)
+        popupAddEducation?.window?.setBackgroundDrawable(ContextCompat.getDrawable(applicationContext, android.R.color.white))
+        val window:Window = popupAddEducation?.window!!
+        window.setGravity(Gravity.CENTER)
+        AdapterDataCreateVacancy.VIEW_TYPE = 7
+//        val etDegree = popupAddEducation?.findViewById<EditText>(R.id.et_degree)
+        etLastEdu = popupAddEducation?.findViewById<EditText>(R.id.et_degree)
+        etGpa = popupAddEducation?.findViewById<EditText>(R.id.et_gpa)
+        linearGpa = popupAddEducation?.findViewById<LinearLayout>(R.id.linear_gpa)
+        etLastEdu?.setOnClickListener {
+            popupDialogLastEdu?.show()
+        }
+        val buttonSave = popupAddEducation?.findViewById<Button>(R.id.btn_save_education)
+        val etInstitution = popupAddEducation?.findViewById<EditText>(R.id.et_institution)
+        val etStartYear = popupAddEducation?.findViewById<EditText>(R.id.et_year_start)
+        val etEndYear = popupAddEducation?.findViewById<EditText>(R.id.et_year_end)
+        val etMajor = popupAddEducation?.findViewById<EditText>(R.id.et_major)
+        val etCity = popupAddEducation?.findViewById<EditText>(R.id.et_city)
+
+        if (dataEducation != null){
+            etInstitution?.setText(dataEducation.institution)
+            etStartYear?.setText(dataEducation.yearStart)
+            etEndYear?.setText(dataEducation.yearEnd)
+            if (dataEducation.idEdu == 1) linearGpa?.visibility = View.GONE else linearGpa?.visibility = View.VISIBLE
+            etGpa?.setText(dataEducation.gpa)
+            etMajor?.setText(dataEducation.major)
+            etLastEdu?.setText(dataEducation.degreeName)
+            etCity?.setText(dataEducation.city)
+            buttonSave?.text = "update"
+        }
+
+        buttonSave?.setOnClickListener {
+            if (dataEducation != null){
+                if (etInstitution?.text.toString().isNotEmpty() && etStartYear?.text.toString().isNotEmpty() && etEndYear?.text.toString().isNotEmpty() && etGpa?.text.toString().isNotEmpty()
+                    && etMajor?.text.toString().isNotEmpty() && etCity?.text.toString().isNotEmpty() && etLastEdu?.text.toString().isNotEmpty()){
+                        when(idEdu){
+                            1-> {
+                                presenter.updateLastEducation(etInstitution?.text.toString(), etStartYear?.text.toString(), etEndYear?.text.toString(),
+                                    0.0, etMajor?.text.toString(), idEdu, etCity?.text.toString())
+                            }
+                            else -> {
+                                presenter.updateLastEducation(etInstitution?.text.toString(), etStartYear?.text.toString(), etEndYear?.text.toString(),
+                                    etGpa?.text.toString().toDouble(), etMajor?.text.toString(), idEdu, etCity?.text.toString())
+                            }
+                        }
+                } else {
+                    Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                if (etInstitution?.text.toString().isNotEmpty() && etStartYear?.text.toString().isNotEmpty() && etEndYear?.text.toString().isNotEmpty() && etGpa?.text.toString().isNotEmpty()
+                    && etMajor?.text.toString().isNotEmpty() && etCity?.text.toString().isNotEmpty() && etLastEdu?.text.toString().isNotEmpty()){
+                    when(idEdu){
+                        1-> {
+                            presenter.addLastEducation(etInstitution?.text.toString(), etStartYear?.text.toString(), etEndYear?.text.toString(),
+                                0.0, etMajor?.text.toString(), idEdu, etCity?.text.toString())
+                        }
+                        else -> {
+                            presenter.addLastEducation(etInstitution?.text.toString(), etStartYear?.text.toString(), etEndYear?.text.toString(),
+                                etGpa?.text.toString().toDouble(), etMajor?.text.toString(), idEdu, etCity?.text.toString())
+                        }
+                    }
+                } else {
+                    Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+    }
+
+    private fun popupDialogLastEducation(data: List<VacancyEducationItem?>?) {
+        adapterLastEdu.clear()
+        adapterLastEdu.addVacancyEdu(data)
+        popupDialogLastEdu = Dialog(this)
+        popupDialogLastEdu?.setContentView(R.layout.layout_popup_dialog_destination_flight)
+        popupDialogLastEdu?.setCancelable(true)
+        popupDialogLastEdu?.window?.setBackgroundDrawableResource(R.color.white)
+        val window: Window = popupDialogLastEdu?.window!!
+        window.setGravity(Gravity.CENTER)
+        val actionClose = popupDialogLastEdu?.findViewById<ImageView>(R.id.iv_close)
+        val rvDestination = popupDialogLastEdu?.findViewById<RecyclerView>(R.id.rv_destination)
+        val searchView = popupDialogLastEdu?.findViewById<SearchView>(R.id.sv_destination)
+        val title = popupDialogLastEdu?.findViewById<TextView>(R.id.tv_title_popup)
+        actionClose?.setOnClickListener { popupDialogLastEdu?.dismiss() }
+        title?.text = "Last Education"
+        searchView?.visibility = View.GONE
+        rvDestination?.adapter = adapterLastEdu
     }
 
     private fun setDataProfile(data: DataUser?) {
@@ -221,12 +330,12 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         binding.tvCityCompany.text = data?.latestWork?.city
         binding.etCityCompany.setText(data?.latestWork?.city)
         binding.tvStart.text = dateFormatWorkExperience(data?.latestWork?.dateStart)
-        binding.etStart.setText(dateFormatWorkExperience(data?.latestWork?.dateStart))
+        binding.etStart.setText(data?.latestWork?.dateStart)
         binding.tvEnd.text = dateFormatWorkExperience(data?.latestWork?.dateEnd)
-        binding.etEnd.setText(dateFormatWorkExperience(data?.latestWork?.dateEnd))
+        binding.etEnd.setText(data?.latestWork?.dateEnd)
         if (data?.latestWork?.salary != null){
             binding.tvSalary.text = convertToFormatMoneyIDRFilter(data.latestWork.salary.toString())
-            binding.etSalary.setText(convertToFormatMoneyIDRFilter(data.latestWork.salary.toString()))
+            binding.etSalary.setText(data.latestWork.salary.toString())
         }
     }
 
@@ -275,7 +384,9 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
                 stateSetDate = "endwork"
                 setDatePicker()
             }
-
+            R.id.et_last_education -> {
+                popupAddEducation?.show()
+            }
         }
     }
 
@@ -424,7 +535,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
                         && binding.etCityCompany.text.toString() == dataWorkExperience?.city
                         && binding.etStart.text.toString() == dataWorkExperience?.dateStart
                         && binding.etEnd.text.toString() == dataWorkExperience?.dateEnd
-                        && binding.etSalary.text.toString() == dataWorkExperience?.salary.toString())){
+                        && binding.etSalary.text.toString() == changeFormatMoneyToValue(dataWorkExperience?.salary.toString()))){
                 stateSaveWorkExperience()
             } else {
                 checkDataworkExperience()
@@ -455,7 +566,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         var city = binding.etCityCompany.text.toString()
         var start = binding.etStart.text.toString()
         var end = binding.etEnd.text.toString()
-        var salary = changeFormatMoneyToValueFilter(binding.etSalary.text.toString())
+        var salary = Helper.changeFormatMoneyToValue(binding.etSalary.text.toString())
 
         if (company.isNullOrEmpty()){
             isEmptyCompany = true
@@ -520,10 +631,18 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
             salary = binding.etSalary.text.toString()
         }
 
-        if (!isEmptyCompany && !isEmptyPosition && !isEmptyCity && !isEmptyCity && !isEmptyStart && !isEmptyEnd && !isEmptySalary){
-            presenter.addWorkExperience(company, city, start, end, position, ".", salary!!.toInt())
+        if (dataWorkExperience != null){
+            if (!isEmptyCompany && !isEmptyPosition && !isEmptyCity && !isEmptyCity && !isEmptyStart && !isEmptyEnd && !isEmptySalary){
+                presenter.updateWorkExperience(company, city, start, end, position, ".", Helper.changeFormatMoneyToValue(salary).toInt())
+            } else {
+                Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+            }
         } else {
-            Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+            if (!isEmptyCompany && !isEmptyPosition && !isEmptyCity && !isEmptyCity && !isEmptyStart && !isEmptyEnd && !isEmptySalary){
+                presenter.addWorkExperience(company, city, start, end, position, ".", Helper.changeFormatMoneyToValue(salary).toInt())
+            } else {
+                Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -613,6 +732,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
     override fun getDataUser(data: DataUser?) {
         setDataProfile(data)
         dataWorkExperience = data?.latestWork
+        dialogAddEducation(data?.educationDetail)
     }
 
     override fun getSkillsUser(data: List<DataSkillsUser?>?) {
@@ -622,6 +742,19 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
             adapter = adapterDocument
             adapterDocument.notifyDataSetChanged()
         }
+    }
+
+    override fun getDataCreateVacancy(data: DataCreateVacancy?) {
+        popupDialogLastEducation(data?.vacancyEducation)
+    }
+
+    private val adapterLastEdu by lazy {
+        AdapterDataCreateVacancy(applicationContext, null, arrayListOf(), null, null, null,
+            null, null, null, null, this, null, null)
+    }
+
+    override fun messageGetDataCreateVacancy(msg: String) {
+        Timber.d(msg)
     }
 
     override fun messageLoadDataPersonal(msg: String) {
@@ -657,6 +790,17 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
         presenter.getDataUserProfile()
     }
 
+    override fun messageAddLastEducation(msg: String) {
+        Timber.d(msg)
+        if(msg == "1"){
+            Toast.makeText(applicationContext, "Success Add Last Education", Toast.LENGTH_SHORT).show()
+            popupAddEducation?.dismiss()
+        } else {
+            Toast.makeText(applicationContext, "Failed Add Last Education", Toast.LENGTH_SHORT).show()
+        }
+        presenter.getDataUserProfile()
+    }
+
     override fun messageDeleteSkill(msg: String) {
         if (msg.contains("Success!")){
             presenter.getSkillsUser()
@@ -677,6 +821,14 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
 
     override fun messageAddWorkExperience(msg: String) {
         Timber.d(msg)
+        if(msg == "1"){
+            Toast.makeText(applicationContext, "Success Add Work Experience", Toast.LENGTH_SHORT).show()
+            stateSaveWorkExperience()
+        } else {
+            Toast.makeText(applicationContext, "Failed Add Work Experience", Toast.LENGTH_SHORT).show()
+            stateEditWorkExperience()
+        }
+        presenter.getDataUserProfile()
     }
 
     override fun showLoading() {
@@ -685,6 +837,31 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener, DetailA
 
     override fun dismissLoading() {
         progressDialog?.dismiss()
+    }
+
+    override fun listSkillsClick(view: View, data: VacancySkillItem) {
+        TODO("Not yet implemented")
+    }
+
+    override fun listEduClick(view: View, data: VacancyEducationItem) {
+        when(view.id){
+            R.id.relative_click -> {
+                popupDialogLastEdu?.dismiss()
+                idEdu = data.id!!
+                etLastEdu?.setText(data.name)
+                if (idEdu == 1){
+                    linearGpa?.visibility = View.GONE
+                    etGpa?.setText("0.0")
+                } else {
+                    linearGpa?.visibility = View.VISIBLE
+                    etGpa?.setText(null)
+                }
+            }
+        }
+    }
+
+    override fun listChipsSkillClick(view: View, data: VacancySkillItem) {
+        TODO("Not yet implemented")
     }
 
 }

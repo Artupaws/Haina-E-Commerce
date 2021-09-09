@@ -69,6 +69,9 @@ data class EducationDetail(
 	@field:SerializedName("major")
 	val major: String,
 
+	@field:SerializedName("education_level")
+	val degreeName: String,
+
 	@field:SerializedName("id_edu")
 	val idEdu: Int,
 

@@ -155,7 +155,7 @@ HistoryTransactionContract.TransactionUnfinishContract.View{
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.action_cancel_transaction -> {
-                            presenter.cancelTransaction(data!!.id!!, null)
+                            presenter.cancelTransaction(data!!.id!!)
                             listTransaction?.removeAt(adapterPosition)
                             adapterTransactionUnfinish.notifyItemRemoved(adapterPosition)
                             true
@@ -190,7 +190,7 @@ HistoryTransactionContract.TransactionUnfinishContract.View{
                 popup.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.action_cancel_transaction -> {
-                            presenter.cancelTransaction(null, data?.idJob)
+                            presenter.cancelTransactionJob(data?.idJob)
                             listTransaction?.removeAt(adapterPosition)
                             adapterTransactionUnfinishJob.notifyItemRemoved(adapterPosition)
                             true

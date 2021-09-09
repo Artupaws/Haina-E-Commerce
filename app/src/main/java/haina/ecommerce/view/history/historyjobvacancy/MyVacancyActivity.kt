@@ -115,6 +115,10 @@ class MyVacancyActivity : AppCompatActivity(), MyVacancyContract.View, AdapterMy
                     }
                 }
             }
+            R.id.linear_apply -> {
+                startActivity(Intent(applicationContext, ListApplicantActivity::class.java)
+                    .putExtra("idVacancy", dataMyVacancy.id))
+            }
         }
     }
 

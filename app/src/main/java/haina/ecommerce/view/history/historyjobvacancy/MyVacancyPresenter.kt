@@ -4,6 +4,7 @@ import android.content.Context
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.ResponseListJobLocation
 import haina.ecommerce.model.vacancy.ResponseGetDataCreateVacancy
+import haina.ecommerce.model.vacancy.ResponseGetListApplicant
 import haina.ecommerce.model.vacancy.ResponseGetListMyVacancy
 import org.json.JSONObject
 import retrofit2.Call

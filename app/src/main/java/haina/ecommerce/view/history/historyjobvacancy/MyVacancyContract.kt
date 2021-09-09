@@ -3,6 +3,7 @@ package haina.ecommerce.view.history.historyjobvacancy
 import haina.ecommerce.base.BaseView
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.vacancy.DataCreateVacancy
+import haina.ecommerce.model.vacancy.DataListApplicant
 import haina.ecommerce.model.vacancy.DataMyVacancy
 
 interface MyVacancyContract {
@@ -18,4 +19,8 @@ interface MyVacancyContract {
         fun messageLoadListLocation(msg:String)
     }
 
+    interface ViewListApplicant:BaseView{
+        fun messageGetListApplicant(msg:String)
+        fun getDataListApplicant(data:List<DataListApplicant?>?)
+    }
 }

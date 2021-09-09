@@ -50,6 +50,9 @@ class AdapterMyVacancy(val context: Context,
                 relativeClick.setOnClickListener {
                     adapterCallbackMyVacancy.listMyVacancy(relativeClick, itemHaina, null)
                 }
+                linearApply.setOnClickListener {
+                    adapterCallbackMyVacancy.listMyVacancy(linearApply, itemHaina, null)
+                }
             }
         }
     }
