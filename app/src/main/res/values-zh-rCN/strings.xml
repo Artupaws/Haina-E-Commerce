@@ -86,7 +86,7 @@
     <string name="job_application">工作申请</string>
     <string name="logout">登出</string>
     <string name="view_or_edit_profile"><u>查看/编辑个人资料 ></u></string>
-    <string name="haina_help_support"><![CDATA[海纳帮助与支持]]></string>
+    <string name="haina_help_support"><![CDATA[海纳帮助与支持中心]]></string>
     <string name="help_center"><![CDATA[帮助中心以及条款和条件]]></string>
     <string name="yes">是的，我想</string>
     <string name="sub_title_logout">您确定要注销吗？</string>
@@ -373,5 +373,5 @@
     <string name="my_forum">我的吧</string>
     <string name="role">角色</string>
     <string name="ban_reason">禁言原因</string>
-
+    <string name="package_invoice_order">发票与预订清单</string>
 </resources>
