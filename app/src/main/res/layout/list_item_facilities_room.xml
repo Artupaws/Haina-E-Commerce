@@ -9,11 +9,14 @@
 
     <TextView
         android:id="@+id/tv_name_facilities"
+        style="@style/TextView.Poppins12spGrey"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_margin="3dp"
-        style="@style/TextView.Poppins12spGrey"
-        tools:text="bathub"/>
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        tools:text="bathub" />
 
 </RelativeLayout>

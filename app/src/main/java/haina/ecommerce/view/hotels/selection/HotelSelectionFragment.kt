@@ -104,6 +104,13 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
                 }
             }
         }
+        binding.tvHotelName.setOnClickListener{
+            childFragmentManager.let {
+                BottomSheetSearchHotelFragment.newInstance(Bundle()).apply {
+                    show(it, tag)
+                }
+            }
+        }
 //        dialogScheduleHotel()
 //        binding.svDestination.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
 //            SearchView.OnQueryTextListener{

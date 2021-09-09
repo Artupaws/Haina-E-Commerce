@@ -32,7 +32,7 @@ class AdapterAddOn(val context: Context, private val dataPassenger: List<MealInf
 //                        broadcaster?.sendBroadcast(intentDataPrice)
                         selectedMeal.add(itemHaina)
                         callback.passTotal(mCheckSum,selectedMeal)
-
+ 
                     } else {
                         mCheckSum -= itemHaina.fare!!
 //                        val intentDataPrice = Intent("priceAddOn")
