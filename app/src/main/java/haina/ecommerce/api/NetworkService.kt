@@ -1029,7 +1029,7 @@ interface NetworkService {
 
     @FormUrlEncoded
     @Headers("No-Authentication: true")
-    @POST("/api/job/applicant")
+    @POST("/api/job/applicant/update")
     fun updateApplicantStatus(
         @Field("id_applicant")idVacancy:Int,
         @Field("status")status:String
