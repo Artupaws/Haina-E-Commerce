@@ -11,15 +11,15 @@
     <string name="password">密码</string>
     <string name="register">登记</string>
     <string name="explore">探索</string>
-    <string name="posting">过帐</string>
-    <string name="my_account">轮廓</string>
+    <string name="posting">发帖</string>
+    <string name="my_account">个人中心</string>
     <string name="hint_search">今天的新闻，新冠肺炎新闻...</string>
     <string name="categories">分类目录</string>
     <string name="recomendations">推荐</string>
     <string name="news_title">消息</string>
     <string name="shipping_title">船运</string>
     <string name="topup_title">充值</string>
-    <string name="job_vacancy">工作</string>
+    <string name="job_vacancy">求职</string>
     <string name="other_title">其它</string>
     <string name="rent_apartment">公寓</string>
     <string name="title_scan_qr">扫描二维码</string>
@@ -29,8 +29,8 @@
     <string name="today">今天</string>
     <string name="covid_19_indonesia">新冠肺炎 | 印度尼西亚</string>
     <string name="total_cases">案件总数</string>
-    <string name="recover">恢复</string>
-    <string name="see_cases_other_countries"><u>查看其他省份的病例 ></u></string>
+    <string name="recover">治愈</string>
+    <string name="see_cases_other_countries"><u>查看其它国家 ></u></string>
     <string name="house_maid_title">女仆</string>
     <string name="car_service_title">服务车</string>
     <string name="visa_agent_title">签证代理</string>
@@ -48,7 +48,7 @@
     <string name="house_title">屋</string>
     <string name="information_title">信息</string>
     <string name="history">历史</string>
-    <string name="cart">大车</string>
+    <string name="cart">购物车</string>
     <string name="transaction_in_progress">交易进行中</string>
     <string name="your_post">您的帖子</string>
     <string name="choose_all">选择全部</string>
@@ -88,7 +88,7 @@
     <string name="view_or_edit_profile"><u>查看/编辑个人资料 ></u></string>
     <string name="haina_help_support"><![CDATA[海纳帮助与支持中心]]></string>
     <string name="help_center"><![CDATA[帮助中心以及条款和条件]]></string>
-    <string name="yes">是的，我想</string>
+    <string name="yes">确定</string>
     <string name="sub_title_logout">您确定要注销吗？</string>
     <string name="dash_line">-</string>
     <string name="all_category">所有类别</string>

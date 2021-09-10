@@ -93,6 +93,8 @@
         <entry key="app/src/main/res/layout/fragment_input_data_property.xml" value="0.215625" />
         <entry key="app/src/main/res/layout/fragment_my_account.xml" value="0.335" />
         <entry key="app/src/main/res/layout/layout_description_property.xml" value="0.215625" />
+        <entry key="app/src/main/res/layout/layout_menu_service.xml" value="0.159375" />
+        <entry key="app/src/main/res/layout/popup_add_post.xml" value="0.159375" />
       </map>
     </option>
   </component>
