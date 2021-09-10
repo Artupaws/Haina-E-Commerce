@@ -372,4 +372,5 @@
     <string name="my_forum">My Forum</string>
     <string name="role">Role</string>
     <string name="ban_reason">Ban Reason</string>
+    <string name="close">Close</string>
 </resources>

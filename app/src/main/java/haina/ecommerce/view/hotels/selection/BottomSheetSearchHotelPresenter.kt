@@ -15,7 +15,7 @@ class BottomSheetSearchHotelPresenter(val view:BottomSheetSearchHotelContract.Vi
 
     fun getSearchHotel(searchQuery:String,checkInDate:String,checkOutDate:String){
         view.showLoading()
-        val getList = NetworkConfig().getConnectionHainaBearer(context).getHotelSearch(searchQuery,checkInDate,checkOutDate)
+        val getList = NetworkConfig().getConnectionToDarma(context).getHotelSearch(searchQuery,checkInDate,checkOutDate)
         getList.enqueue(object : retrofit2.Callback<ResponseHotelSearch>{
             override fun onResponse(call: Call<ResponseHotelSearch>, response: Response<ResponseHotelSearch>) {
                 view.dismissLoading()

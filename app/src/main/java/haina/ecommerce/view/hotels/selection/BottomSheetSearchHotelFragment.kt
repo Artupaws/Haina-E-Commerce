@@ -24,6 +24,8 @@ class BottomSheetSearchHotelFragment : BottomSheetDialogFragment(),BottomSheetSe
     private var maxBaby: Int = 2
     private var totalKids: Int = 0
     private var totalBaby: Int = 0
+    private var data:List<HotelSearchItem?>? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,9 +42,14 @@ class BottomSheetSearchHotelFragment : BottomSheetDialogFragment(),BottomSheetSe
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         binding.tvClose.setOnClickListener { dismiss() }
+        data = arguments?.getParcelableArrayList("data")
 
-        selectionPresenter.getSearchHotel("jakarta","2021-09-19","2021-09-20");
 
+
+        binding.rvCityHotel.apply {
+            adapter = AdapterListSearchHotel(requireActivity(), data)
+            layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        }
     }
 
     companion object {
@@ -55,11 +62,11 @@ class BottomSheetSearchHotelFragment : BottomSheetDialogFragment(),BottomSheetSe
     }
 
     override fun onClick(p0: View?) {
+
     }
 
     override fun getSearch(data: List<HotelSearchItem?>) {
         binding.rvCityHotel.apply {
-
             adapter = AdapterListSearchHotel(requireActivity(), data)
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }

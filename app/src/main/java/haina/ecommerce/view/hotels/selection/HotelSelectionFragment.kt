@@ -27,6 +27,7 @@ import haina.ecommerce.databinding.FragmentHotelSelectionBinding
 import haina.ecommerce.helper.Helper.convertLongtoTime
 import haina.ecommerce.helper.RangeValidator
 import haina.ecommerce.model.flight.DataAirport
+import haina.ecommerce.model.hotels.HotelSearchItem
 import haina.ecommerce.model.hotels.newHotel.DataCities
 import haina.ecommerce.model.hotels.newHotel.DataHotelDarma
 import haina.ecommerce.model.hotels.newHotel.RequestBookingHotel
@@ -51,6 +52,7 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
     private var totalChild:Int = 0
     private var totalBaby:Int = 0
     private var totalPassenger:Int = 0
+    var bottomsheet:BottomSheetSearchHotelFragment? = null
 
     var checkInDate: String = ""
     var checkOutDate: String = ""
@@ -73,6 +75,7 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
         binding.toolbarHotelSelection.setNavigationOnClickListener {
             (requireActivity() as HotelBaseActivity).onBackPressed()
         }
+        selectionPresenter.getSearchHotel("Jakarta","2021-09-19","2021-09-20")
         binding.tvStartDate.setOnClickListener {
             val builder = MaterialDatePicker.Builder.dateRangePicker()
             val now = Calendar.getInstance()
@@ -99,14 +102,9 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
         }
         binding.clPax.setOnClickListener {
             childFragmentManager.let {
-                BottomSheetHotelFragment.newInstance(Bundle()).apply {
-                    show(it, tag)
-                }
-            }
-        }
-        binding.tvHotelName.setOnClickListener{
-            childFragmentManager.let {
-                BottomSheetSearchHotelFragment.newInstance(Bundle()).apply {
+                var bundle:Bundle= Bundle()
+
+                BottomSheetHotelFragment.newInstance(bundle).apply {
                     show(it, tag)
                 }
             }
@@ -253,6 +251,23 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
     override fun getSizeListUnfinish(size: Int?) {
         if (size != null) {
             unfinishBookingSize = size
+        }
+    }
+
+    override fun getSearch(data: List<HotelSearchItem?>) {
+        var bundle:Bundle=Bundle()
+        bundle.putParcelableArrayList("data",data as java.util.ArrayList)
+
+        bottomsheet=BottomSheetSearchHotelFragment()
+
+        bottomsheet?.arguments=bundle
+
+        binding.tvHotelName.setOnClickListener{
+            childFragmentManager.let {
+                bottomsheet?.apply {
+                    show(it, tag)
+                }
+            }
         }
     }
 

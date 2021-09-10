@@ -534,6 +534,7 @@ interface NetworkService {
     fun getListAllCityHotel():Call<ResponseGetCityHotel>
 
 
+    @FormUrlEncoded
     @POST("api/hotel_darma/search")
     fun getHotelSearch(
         @Field("search")searchQuery:String,

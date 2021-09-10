@@ -7,13 +7,13 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class HotelSearchItem(
 
-	@field:SerializedName("city")
+	@field:SerializedName("City")
 	val city: String? = null,
 
 	@field:SerializedName("ID")
 	val iD: String? = null,
 
-	@field:SerializedName("type")
+	@field:SerializedName("Type")
 	val type: String? = null,
 
 	@field:SerializedName("Name")
