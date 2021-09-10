@@ -20,6 +20,7 @@ class AdapterMyVacancy(val context: Context,
 
     private lateinit var sharedPreferenceHelper: SharedPreferenceHelper
 
+
     inner class ViewHolderMyVacancy(val binding: ListItemMyVacancyBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(itemHaina: DataMyVacancy, adapterCallbackMyVacancy: AdapterCallbackMyVacancy) {
@@ -43,6 +44,7 @@ class AdapterMyVacancy(val context: Context,
                 binding.tvApply.text = itemHaina.totalApplicant.toString()
                 binding.tvChoosed.text = itemHaina.shortlistedApplicant.toString()
                 binding.tvInterview.text = itemHaina.interviewApplicant.toString()
+                binding.tvAccepted.text = itemHaina.accpetedApplicant.toString()
                 if (itemHaina.salaryDisplay == 1)
                     binding.tvSalary.text = "${convertToFormatMoneyIDRFilter(itemHaina.minSalary.toString())} - ${convertToFormatMoneyIDRFilter(itemHaina.maxSalary.toString())}"
                 else
@@ -51,6 +53,15 @@ class AdapterMyVacancy(val context: Context,
                     adapterCallbackMyVacancy.listMyVacancy(relativeClick, itemHaina, null)
                 }
                 linearApply.setOnClickListener {
+                    adapterCallbackMyVacancy.listMyVacancy(linearApply, itemHaina, null)
+                }
+                linearChoosed.setOnClickListener {
+                    adapterCallbackMyVacancy.listMyVacancy(linearChoosed, itemHaina, null)
+                }
+                linearInterview.setOnClickListener {
+                    adapterCallbackMyVacancy.listMyVacancy(linearInterview, itemHaina, null)
+                }
+                linearAccepted.setOnClickListener {
                     adapterCallbackMyVacancy.listMyVacancy(linearApply, itemHaina, null)
                 }
             }

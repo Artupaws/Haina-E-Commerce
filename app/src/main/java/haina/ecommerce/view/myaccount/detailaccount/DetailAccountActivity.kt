@@ -793,10 +793,10 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
     override fun messageAddLastEducation(msg: String) {
         Timber.d(msg)
         if(msg == "1"){
-            Toast.makeText(applicationContext, "Success Add Last Education", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
             popupAddEducation?.dismiss()
         } else {
-            Toast.makeText(applicationContext, "Failed Add Last Education", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         }
         presenter.getDataUserProfile()
     }
@@ -822,10 +822,10 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
     override fun messageAddWorkExperience(msg: String) {
         Timber.d(msg)
         if(msg == "1"){
-            Toast.makeText(applicationContext, "Success Add Work Experience", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
             stateSaveWorkExperience()
         } else {
-            Toast.makeText(applicationContext, "Failed Add Work Experience", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
             stateEditWorkExperience()
         }
         presenter.getDataUserProfile()

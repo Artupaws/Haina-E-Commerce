@@ -12,7 +12,8 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import java.util.ArrayList
 
 class AdapterListApplicant(val context: Context,
-                           private val listApplicant: ArrayList<DataListApplicant?>?, )
+                           private val listApplicant: ArrayList<DataListApplicant?>?,
+                           private val adapterListApplicantCallback: AdapterListApplicantCallback)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private lateinit var sharedPreferenceHelper: SharedPreferenceHelper
@@ -21,21 +22,24 @@ class AdapterListApplicant(val context: Context,
         var VIEW_TYPE = 1
     }
 
-    inner class ViewHolderAllApplicant(val binding: ListItemSubmitApplicationBinding) :
+    inner class ViewHolderAllApplicant(private val binding: ListItemSubmitApplicationBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(itemHaina: DataListApplicant) {
+        fun bind(itemHaina: DataListApplicant, adapterListApplicantCallback: AdapterListApplicantCallback) {
             with(binding) {
                 tvNameApplicant.text = itemHaina.user?.fullname
                 tvLastPosition.text = itemHaina.user?.workExperience?.position
                 val dateStartExperience = itemHaina.user?.workExperience?.dateStart?.substring(0, 4)
                 val dateEndExperience = itemHaina.user?.workExperience?.dateStart?.substring(0, 4)
                 val totalExperience = (dateEndExperience?.toInt()?.minus(dateStartExperience?.toInt()!!))
-                val companyAndExperience = "${itemHaina.user?.workExperience?.company}(${totalExperience})"
+                val companyAndExperience = "${itemHaina.user?.workExperience?.company}(${totalExperience} Year(s))"
                 tvLastCompanyAndExperience.text = companyAndExperience
                 val expectedSalary = "Expected Salary : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user?.workExperience?.salary.toString())}"
                 tvExpectedSalary.text = expectedSalary
-                val lastEducation = "Last Education : ${itemHaina.user?.education?.degreeName}(${itemHaina.user?.education?.major})"
+                val lastEducation = "Last Education : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
                 tvLastEducation.text = lastEducation
+                btnReject.setOnClickListener {
+                    adapterListApplicantCallback.rejectApplicantClick(btnReject, adapterPosition, itemHaina, listApplicant)
+                }
             }
         }
     }
@@ -58,7 +62,7 @@ class AdapterListApplicant(val context: Context,
         val allApplicant: DataListApplicant? = listApplicant?.get(position)
         when(VIEW_TYPE){
             1-> {
-                allApplicant?.let { (holder as ViewHolderAllApplicant).bind(it) }
+                allApplicant?.let { (holder as ViewHolderAllApplicant).bind(it, adapterListApplicantCallback) }
             }
         }
     }
@@ -76,9 +80,9 @@ class AdapterListApplicant(val context: Context,
 
     override fun getItemViewType(position: Int): Int = VIEW_TYPE
 
-    interface AdapterCallbackMyVacancy {
-        fun listMyVacancy(view: View, dataMyVacancy: DataMyVacancy, buttonState:Int?)
-    }
+  interface AdapterListApplicantCallback{
+      fun rejectApplicantClick(view:View, adapterPosition:Int, data:DataListApplicant, listApplicant:ArrayList<DataListApplicant?>?)
+  }
 
     fun addListApplicant(data: List<DataListApplicant?>?) {
         data?.let { listApplicant?.addAll(it) }

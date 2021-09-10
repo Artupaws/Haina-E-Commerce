@@ -22,5 +22,6 @@ interface MyVacancyContract {
     interface ViewListApplicant:BaseView{
         fun messageGetListApplicant(msg:String)
         fun getDataListApplicant(data:List<DataListApplicant?>?)
+        fun messageUpdateApplicantStatus(msg:String)
     }
 }

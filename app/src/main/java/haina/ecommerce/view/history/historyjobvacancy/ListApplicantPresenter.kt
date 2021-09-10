@@ -2,6 +2,7 @@ package haina.ecommerce.view.history.historyjobvacancy
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.model.forum.ResponseGiveUpvote
 import haina.ecommerce.model.vacancy.ResponseGetListApplicant
 import org.json.JSONObject
 import retrofit2.Call
@@ -28,6 +29,27 @@ class ListApplicantPresenter(private val view:MyVacancyContract.ViewListApplican
             override fun onFailure(call: Call<ResponseGetListApplicant>, t: Throwable) {
                 view.dismissLoading()
                 view.messageGetListApplicant(t.localizedMessage.toString())
+            }
+        })
+    }
+
+    fun rejectAppliocant(idApplicant:Int, status:String){
+        view.showLoading()
+        val getListMyVacancy = NetworkConfig().getConnectionHainaBearer(context).updateApplicantStatus(idApplicant, status)
+        getListMyVacancy.enqueue(object : retrofit2.Callback<ResponseGiveUpvote>{
+            override fun onResponse(call: Call<ResponseGiveUpvote>, response: Response<ResponseGiveUpvote>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageUpdateApplicantStatus(response.body()?.message.toString())
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageUpdateApplicantStatus(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGiveUpvote>, t: Throwable) {
+                view.dismissLoading()
+                view.messageUpdateApplicantStatus(t.localizedMessage.toString())
             }
         })
     }

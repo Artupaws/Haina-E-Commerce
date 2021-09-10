@@ -117,7 +117,31 @@ class MyVacancyActivity : AppCompatActivity(), MyVacancyContract.View, AdapterMy
             }
             R.id.linear_apply -> {
                 startActivity(Intent(applicationContext, ListApplicantActivity::class.java)
-                    .putExtra("idVacancy", dataMyVacancy.id))
+                    .putExtra("dataVacancy", dataMyVacancy)
+                    .putExtra("dataCreateVacancy", dataCreateVacancy)
+                    .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
+                    .putExtra("title", "Unprocess Applicant"))
+            }
+            R.id.linear_choosed -> {
+                startActivity(Intent(applicationContext, ListApplicantActivity::class.java)
+                    .putExtra("dataVacancy", dataMyVacancy)
+                    .putExtra("dataCreateVacancy", dataCreateVacancy)
+                    .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
+                    .putExtra("title", "Choosed Applicant"))
+            }
+            R.id.linear_interview -> {
+                startActivity(Intent(applicationContext, ListApplicantActivity::class.java)
+                    .putExtra("dataVacancy", dataMyVacancy)
+                    .putExtra("dataCreateVacancy", dataCreateVacancy)
+                    .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
+                    .putExtra("title", "Interview Applicant"))
+            }
+            R.id.linear_accepted -> {
+                startActivity(Intent(applicationContext, ListApplicantActivity::class.java)
+                    .putExtra("dataVacancy", dataMyVacancy)
+                    .putExtra("dataCreateVacancy", dataCreateVacancy)
+                    .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
+                    .putExtra("title", "Accepted Applicant"))
             }
         }
     }

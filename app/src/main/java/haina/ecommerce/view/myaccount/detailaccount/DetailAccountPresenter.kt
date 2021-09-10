@@ -158,7 +158,7 @@ class DetailAccountPresenter(val view:DetailAccountContract.View, val context: C
             override fun onResponse(call: Call<ResponseGiveUpvote>, response: Response<ResponseGiveUpvote>) {
                 view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
-                    view.messageAddWorkExperience(response.body()?.value.toString())
+                    view.messageAddWorkExperience(response.body()?.message.toString())
                 } else {
                     val error = JSONObject(response.errorBody()?.string())
                     view.messageAddWorkExperience(error.getString("message"))
@@ -180,7 +180,7 @@ class DetailAccountPresenter(val view:DetailAccountContract.View, val context: C
             override fun onResponse(call: Call<ResponseGiveUpvote>, response: Response<ResponseGiveUpvote>) {
                 view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
-                    view.messageAddWorkExperience(response.body()?.value.toString())
+                    view.messageAddWorkExperience(response.body()?.message.toString())
                 } else {
                     val error = JSONObject(response.errorBody()?.string())
                     view.messageAddWorkExperience(error.getString("message"))
@@ -202,7 +202,7 @@ class DetailAccountPresenter(val view:DetailAccountContract.View, val context: C
             override fun onResponse(call: Call<ResponseGiveUpvote>, response: Response<ResponseGiveUpvote>) {
                 view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
-                    view.messageAddLastEducation(response.body()?.value.toString())
+                    view.messageAddLastEducation(response.body()?.message.toString())
                 } else {
                     val error = JSONObject(response.errorBody()?.string())
                     view.messageAddLastEducation(error.getString("message"))
@@ -224,7 +224,7 @@ class DetailAccountPresenter(val view:DetailAccountContract.View, val context: C
             override fun onResponse(call: Call<ResponseGiveUpvote>, response: Response<ResponseGiveUpvote>) {
                 view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
-                    view.messageAddLastEducation(response.body()?.value.toString())
+                    view.messageAddLastEducation(response.body()?.message.toString())
                 } else {
                     val error = JSONObject(response.errorBody()?.string())
                     view.messageAddLastEducation(error.getString("message"))

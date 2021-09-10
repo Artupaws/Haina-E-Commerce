@@ -30,6 +30,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/relative_click"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="5dp"
@@ -37,10 +38,10 @@
 
                 <TextView
                     android:id="@+id/tv_title_position_job"
+                    style="@style/TextView.Poppins16spBlack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextView.Poppins16spBlack"
-                    tools:text="Android Developer"/>
+                    tools:text="Android Developer" />
 
                 <ImageView
                     android:id="@+id/iv_action_goto"
