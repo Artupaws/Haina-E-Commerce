@@ -42,11 +42,29 @@ class ListApplicantActivity : AppCompatActivity(),
         dataVacancy = intent.getParcelableExtra("dataVacancy")
         dataCreateVacancy = intent.getParcelableExtra("dataCreateVacancy")
         listLocationFilter = intent.getParcelableArrayListExtra("locationJob")
-        dataVacancy.let { it?.id?.let { it1 -> presenter.getListApplicant(it1) } }
-        setDataVacancy(dataVacancy)
         val title = intent?.getStringExtra("title")
         binding.toolbarListApplicant.title = title
         binding.toolbarListApplicant.setNavigationOnClickListener { onBackPressed() }
+        when(title){
+            "Unprocess Applicant" -> {
+                dataVacancy.let { it?.id?.let { it1 -> presenter.getListApplicant(it1) } }
+                AdapterListApplicant.VIEW_TYPE = 1
+            }
+            "Choosed Applicant" -> {
+                dataVacancy.let { it?.id?.let { it1 -> presenter.getListApplicantShortListed(it1) } }
+                AdapterListApplicant.VIEW_TYPE = 2
+            }
+            "Interview Applicant" -> {
+                dataVacancy.let { it?.id?.let { it1 -> presenter.getListApplicantInterview(it1) } }
+                AdapterListApplicant.VIEW_TYPE = 3
+            }
+            "Accepted Applicant" -> {
+                dataVacancy.let { it?.id?.let { it1 -> presenter.getListApplicantAccepted(it1) } }
+                AdapterListApplicant.VIEW_TYPE = 4
+            }
+        }
+        setDataVacancy(dataVacancy)
+
     }
 
     private fun setDataVacancy(data:DataMyVacancy?){
@@ -69,7 +87,6 @@ class ListApplicantActivity : AppCompatActivity(),
     }
 
     override fun getDataListApplicant(data: List<DataListApplicant?>?) {
-        AdapterListApplicant.VIEW_TYPE = 1
         adapterListApplicant.clear()
         listApplicant = data as ArrayList
         adapterListApplicant.addListApplicant(data)
@@ -78,10 +95,6 @@ class ListApplicantActivity : AppCompatActivity(),
 
     override fun messageUpdateApplicantStatus(msg: String) {
         Timber.d(msg)
-        if (msg.contains("success")){
-            listApplicant?.removeAt(adapterPositionParams)
-            adapterListApplicant.notifyItemRemoved(adapterPositionParams)
-        }
     }
 
     private val adapterListApplicant by lazy {
@@ -111,8 +124,14 @@ class ListApplicantActivity : AppCompatActivity(),
     override fun rejectApplicantClick(view: View, adapterPosition: Int, data: DataListApplicant, listApplicant: ArrayList<DataListApplicant?>?) {
         when(view.id){
             R.id.btn_reject -> {
-                adapterPositionParams = adapterPosition
                 presenter.rejectAppliocant(data.id!!, "not accepted")
+                listApplicant?.removeAt(adapterPosition)
+                adapterListApplicant.notifyItemRemoved(adapterPosition)
+            }
+            R.id.btn_shortlisted -> {
+                presenter.rejectAppliocant(data.id!!, "shortlisted")
+                listApplicant?.removeAt(adapterPosition)
+                adapterListApplicant.notifyItemRemoved(adapterPosition)
             }
         }
     }

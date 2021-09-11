@@ -62,7 +62,7 @@ class AdapterMyVacancy(val context: Context,
                     adapterCallbackMyVacancy.listMyVacancy(linearInterview, itemHaina, null)
                 }
                 linearAccepted.setOnClickListener {
-                    adapterCallbackMyVacancy.listMyVacancy(linearApply, itemHaina, null)
+                    adapterCallbackMyVacancy.listMyVacancy(linearAccepted, itemHaina, null)
                 }
             }
         }

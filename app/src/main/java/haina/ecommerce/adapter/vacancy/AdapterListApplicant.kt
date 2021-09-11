@@ -26,6 +26,8 @@ class AdapterListApplicant(val context: Context,
         RecyclerView.ViewHolder(binding.root) {
         fun bind(itemHaina: DataListApplicant, adapterListApplicantCallback: AdapterListApplicantCallback) {
             with(binding) {
+                linearButton1.visibility = View.VISIBLE
+                linearButton2.visibility = View.GONE
                 tvNameApplicant.text = itemHaina.user?.fullname
                 tvLastPosition.text = itemHaina.user?.workExperience?.position
                 val dateStartExperience = itemHaina.user?.workExperience?.dateStart?.substring(0, 4)
@@ -33,13 +35,117 @@ class AdapterListApplicant(val context: Context,
                 val totalExperience = (dateEndExperience?.toInt()?.minus(dateStartExperience?.toInt()!!))
                 val companyAndExperience = "${itemHaina.user?.workExperience?.company}(${totalExperience} Year(s))"
                 tvLastCompanyAndExperience.text = companyAndExperience
-                val expectedSalary = "Expected Salary : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user?.workExperience?.salary.toString())}"
-                tvExpectedSalary.text = expectedSalary
+                if (itemHaina.user?.workExperience == null){
+                    tvLastCompanyAndExperience.visibility = View.GONE
+                    tvLastPosition.text = "No Work Experience"
+                    tvExpectedSalary.visibility = View.GONE
+                } else {
+                    val expectedSalary = "Last Salary : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user.workExperience.salary.toString())}"
+                    tvExpectedSalary.text = expectedSalary
+                }
                 val lastEducation = "Last Education : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
                 tvLastEducation.text = lastEducation
                 btnReject.setOnClickListener {
                     adapterListApplicantCallback.rejectApplicantClick(btnReject, adapterPosition, itemHaina, listApplicant)
                 }
+                btnShortlisted.setOnClickListener {
+                    adapterListApplicantCallback.rejectApplicantClick(btnShortlisted, adapterPosition, itemHaina, listApplicant)
+                }
+                btnInterview.setOnClickListener {
+                    adapterListApplicantCallback.rejectApplicantClick(btnInterview, adapterPosition, itemHaina, listApplicant)
+                }
+            }
+        }
+    }
+
+    inner class ViewHolderApplicantShortlisted(private val binding:ListItemSubmitApplicationBinding): RecyclerView.ViewHolder(binding.root){
+        fun bind(itemHaina: DataListApplicant, adapterListApplicantCallback: AdapterListApplicantCallback){
+            with(binding){
+                linearButton1.visibility = View.GONE
+                linearButton2.visibility = View.VISIBLE
+                tvNameApplicant.text = itemHaina.user?.fullname
+                tvLastPosition.text = itemHaina.user?.workExperience?.position
+                val dateStartExperience = itemHaina.user?.workExperience?.dateStart?.substring(0, 4)
+                val dateEndExperience = itemHaina.user?.workExperience?.dateStart?.substring(0, 4)
+                val totalExperience = (dateEndExperience?.toInt()?.minus(dateStartExperience?.toInt()!!))
+                val companyAndExperience = "${itemHaina.user?.workExperience?.company}(${totalExperience} Year(s))"
+                tvLastCompanyAndExperience.text = companyAndExperience
+                if (itemHaina.user?.workExperience == null){
+                    tvLastCompanyAndExperience.visibility = View.GONE
+                    tvLastPosition.text = "No Work Experience"
+                    tvExpectedSalary.visibility = View.GONE
+                } else {
+                    val expectedSalary = "Last Salary : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user.workExperience.salary.toString())}"
+                    tvExpectedSalary.text = expectedSalary
+                }
+                val lastEducation = "Last Education : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
+                tvLastEducation.text = lastEducation
+                btnInterview.setOnClickListener {
+                    adapterListApplicantCallback.rejectApplicantClick(btnReject, adapterPosition, itemHaina, listApplicant)
+                }
+                btnReject.setOnClickListener {
+                    adapterListApplicantCallback.rejectApplicantClick(btnShortlisted, adapterPosition, itemHaina, listApplicant)
+                }
+            }
+        }
+    }
+
+    inner class ViewHolderInterview(private val binding:ListItemSubmitApplicationBinding): RecyclerView.ViewHolder(binding.root){
+        fun bind(itemHaina: DataListApplicant, adapterListApplicantCallback: AdapterListApplicantCallback){
+            with(binding){
+                linearButton1.visibility = View.GONE
+                linearButton2.visibility = View.GONE
+                linearButton3.visibility = View.VISIBLE
+                tvNameApplicant.text = itemHaina.user?.fullname
+                tvLastPosition.text = itemHaina.user?.workExperience?.position
+                val dateStartExperience = itemHaina.user?.workExperience?.dateStart?.substring(0, 4)
+                val dateEndExperience = itemHaina.user?.workExperience?.dateStart?.substring(0, 4)
+                val totalExperience = (dateEndExperience?.toInt()?.minus(dateStartExperience?.toInt()!!))
+                val companyAndExperience = "${itemHaina.user?.workExperience?.company}(${totalExperience} Year(s))"
+                tvLastCompanyAndExperience.text = companyAndExperience
+                if (itemHaina.user?.workExperience == null){
+                    tvLastCompanyAndExperience.visibility = View.GONE
+                    tvLastPosition.text = "No Work Experience"
+                    tvExpectedSalary.visibility = View.GONE
+                } else {
+                    val expectedSalary = "Last Salary : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user.workExperience.salary.toString())}"
+                    tvExpectedSalary.text = expectedSalary
+                }
+                val lastEducation = "Last Education : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
+                tvLastEducation.text = lastEducation
+                btnInviteInterview.setOnClickListener {
+                    adapterListApplicantCallback.rejectApplicantClick(btnReject, adapterPosition, itemHaina, listApplicant)
+                }
+                btnReject.setOnClickListener {
+                    adapterListApplicantCallback.rejectApplicantClick(btnShortlisted, adapterPosition, itemHaina, listApplicant)
+                }
+            }
+        }
+    }
+
+    inner class ViewHolderApplicantAccepted(private val binding:ListItemSubmitApplicationBinding): RecyclerView.ViewHolder(binding.root){
+        fun bind(itemHaina: DataListApplicant, adapterListApplicantCallback: AdapterListApplicantCallback){
+            with(binding){
+                linearButton1.visibility = View.GONE
+                linearButton2.visibility = View.GONE
+                linearButton3.visibility = View.GONE
+                tvNameApplicant.text = itemHaina.user?.fullname
+                tvLastPosition.text = itemHaina.user?.workExperience?.position
+                val dateStartExperience = itemHaina.user?.workExperience?.dateStart?.substring(0, 4)
+                val dateEndExperience = itemHaina.user?.workExperience?.dateStart?.substring(0, 4)
+                val totalExperience = (dateEndExperience?.toInt()?.minus(dateStartExperience?.toInt()!!))
+                val companyAndExperience = "${itemHaina.user?.workExperience?.company}(${totalExperience} Year(s))"
+                tvLastCompanyAndExperience.text = companyAndExperience
+                if (itemHaina.user?.workExperience == null){
+                    tvLastCompanyAndExperience.visibility = View.GONE
+                    tvLastPosition.text = "No Work Experience"
+                    tvExpectedSalary.visibility = View.GONE
+                } else {
+                    val expectedSalary = "Last Salary : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user.workExperience.salary.toString())}"
+                    tvExpectedSalary.text = expectedSalary
+                }
+                val lastEducation = "Last Education : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
+                tvLastEducation.text = lastEducation
             }
         }
     }
@@ -51,8 +157,16 @@ class AdapterListApplicant(val context: Context,
                 ViewHolderAllApplicant(
                     ListItemSubmitApplicationBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             }
+            2 -> {
+                ViewHolderApplicantShortlisted(
+                    ListItemSubmitApplicationBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            }
+            3 -> {
+                ViewHolderInterview(
+                    ListItemSubmitApplicationBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            }
             else -> {
-                ViewHolderAllApplicant(
+                ViewHolderApplicantAccepted(
                     ListItemSubmitApplicationBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             }
         }
@@ -64,12 +178,27 @@ class AdapterListApplicant(val context: Context,
             1-> {
                 allApplicant?.let { (holder as ViewHolderAllApplicant).bind(it, adapterListApplicantCallback) }
             }
+            2-> {
+                allApplicant?.let { (holder as ViewHolderApplicantShortlisted).bind(it, adapterListApplicantCallback) }
+            }
+            3-> {
+                allApplicant?.let { (holder as ViewHolderInterview).bind(it, adapterListApplicantCallback) }
+            }
+            else-> {
+                allApplicant?.let { (holder as ViewHolderApplicantAccepted).bind(it, adapterListApplicantCallback) }
+            }
         }
     }
 
     override fun getItemCount(): Int {
         return when(VIEW_TYPE){
             1->{
+                listApplicant?.size?:0
+            }
+            2 -> {
+                listApplicant?.size?:0
+            }
+            3 -> {
                 listApplicant?.size?:0
             }
             else -> {

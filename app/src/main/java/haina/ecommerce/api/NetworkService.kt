@@ -1020,10 +1020,35 @@ interface NetworkService {
         @Field("city")city:String
     ):Call<ResponseGiveUpvote>
 
+    //List Applicant Unprocess
     @FormUrlEncoded
     @Headers("No-Authentication: true")
     @POST("/api/job/applicant")
     fun getListApplicant(
+        @Field("id_vacancy")idVacancy:Int
+    ):Call<ResponseGetListApplicant>
+
+    //List Applicant ShortListed
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/job/applicant/shortlisted")
+    fun getListApplicantShortListed(
+        @Field("id_vacancy")idVacancy:Int
+    ):Call<ResponseGetListApplicant>
+
+    //List Applicant Interview
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/job/applicant/interview")
+    fun getListApplicantInterview(
+        @Field("id_vacancy")idVacancy:Int
+    ):Call<ResponseGetListApplicant>
+
+    //List Applicant Accepted
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/job/applicant/accepted")
+    fun getListApplicantAccepted(
         @Field("id_vacancy")idVacancy:Int
     ):Call<ResponseGetListApplicant>
 

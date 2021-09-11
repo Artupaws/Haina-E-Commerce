@@ -33,6 +33,76 @@ class ListApplicantPresenter(private val view:MyVacancyContract.ViewListApplican
         })
     }
 
+    fun getListApplicantShortListed(idVacancy:Int){
+        view.showLoading()
+        val getListMyVacancy = NetworkConfig().getConnectionHainaBearer(context).getListApplicantShortListed(idVacancy)
+        getListMyVacancy.enqueue(object : retrofit2.Callback<ResponseGetListApplicant>{
+            override fun onResponse(call: Call<ResponseGetListApplicant>, response: Response<ResponseGetListApplicant>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageGetListApplicant(response.body()?.message.toString())
+                    val data = response.body()?.data
+                    view.getDataListApplicant(data)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageGetListApplicant(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetListApplicant>, t: Throwable) {
+                view.dismissLoading()
+                view.messageGetListApplicant(t.localizedMessage.toString())
+            }
+        })
+    }
+
+    fun getListApplicantInterview(idVacancy:Int){
+        view.showLoading()
+        val getListMyVacancy = NetworkConfig().getConnectionHainaBearer(context).getListApplicantInterview(idVacancy)
+        getListMyVacancy.enqueue(object : retrofit2.Callback<ResponseGetListApplicant>{
+            override fun onResponse(call: Call<ResponseGetListApplicant>, response: Response<ResponseGetListApplicant>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageGetListApplicant(response.body()?.message.toString())
+                    val data = response.body()?.data
+                    view.getDataListApplicant(data)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageGetListApplicant(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetListApplicant>, t: Throwable) {
+                view.dismissLoading()
+                view.messageGetListApplicant(t.localizedMessage.toString())
+            }
+        })
+    }
+
+    fun getListApplicantAccepted(idVacancy:Int){
+        view.showLoading()
+        val getListMyVacancy = NetworkConfig().getConnectionHainaBearer(context).getListApplicantAccepted(idVacancy)
+        getListMyVacancy.enqueue(object : retrofit2.Callback<ResponseGetListApplicant>{
+            override fun onResponse(call: Call<ResponseGetListApplicant>, response: Response<ResponseGetListApplicant>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageGetListApplicant(response.body()?.message.toString())
+                    val data = response.body()?.data
+                    view.getDataListApplicant(data)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageGetListApplicant(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetListApplicant>, t: Throwable) {
+                view.dismissLoading()
+                view.messageGetListApplicant(t.localizedMessage.toString())
+            }
+        })
+    }
+
+
     fun rejectAppliocant(idApplicant:Int, status:String){
         view.showLoading()
         val getListMyVacancy = NetworkConfig().getConnectionHainaBearer(context).updateApplicantStatus(idApplicant, status)

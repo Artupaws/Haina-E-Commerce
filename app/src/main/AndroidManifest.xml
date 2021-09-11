@@ -23,21 +23,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HainaECommerce.Light"
         android:usesCleartextTraffic="true">
-<!--        <activity-->
-<!--            android:name=".view.job.detail.DetailJobActivity"-->
-<!--            android:exported="true" />-->
         <activity
-            android:name=".view.history.historyjobvacancy.ListApplicantActivity" />
+            android:name=".view.history.historyjobvacancy.DetailProfileApplicant"
+            android:exported="true" />
+        <!-- <activity -->
+        <!-- android:name=".view.job.detail.DetailJobActivity" -->
+        <!-- android:exported="true" /> -->
+        <activity android:name=".view.history.historyjobvacancy.ListApplicantActivity" />
         <activity android:name=".view.posting.newvacancy.PackagePriceVacancyActivity" />
         <activity android:name=".view.posting.newvacancy.SkillAndEducationActivity" />
-        <activity android:name=".view.forum.createnewpost.ShowVideoActivity" />
-<!--        <activity-->
-<!--            android:name=".view.forum.search.SearchForumActivity"-->
-<!--            android:exported="true" />-->
-        <activity
-            android:name=".view.forum.forumactivity.ActivityForumActivity" />
-        <activity
-            android:name=".view.posting.newvacancy.NewPostVacancyActivity"/>
+        <activity android:name=".view.forum.createnewpost.ShowVideoActivity" /> <!-- <activity -->
+        <!-- android:name=".view.forum.search.SearchForumActivity" -->
+        <!-- android:exported="true" /> -->
+        <activity android:name=".view.forum.forumactivity.ActivityForumActivity" />
+        <activity android:name=".view.posting.newvacancy.NewPostVacancyActivity" />
         <activity android:name=".view.forum.tab.myforum.DetailMySubforum" />
         <activity android:name=".view.forum.profileuser.ProfileUserActivity" />
         <activity android:name=".view.forum.createsubforum.CreateSubforumActivity" />
@@ -71,20 +70,20 @@
         <activity android:name=".view.housephone.HousePhoneActivity" />
         <activity android:name=".view.water.WaterActivity" />
         <activity android:name=".view.electricity.ElectricityActivity" />
-        <activity android:name=".view.checkout.CheckoutActivity"/>
-        <activity android:name=".view.topup.TopupActivity"/>
-        <activity android:name=".view.myaccount.changepassword.ChangePasswordActivity"/>
-        <activity android:name=".view.notification.NotificationActivity"/>
-        <activity android:name=".view.posting.applyapplicant.ApplyApplicantActivity"/>
-        <activity android:name=".view.postingjob.skillrequires.AddSkillRequiresActivity"/>
-        <activity android:name=".view.posting.detailvacancy.DetailPostingJobActivity"/>
-        <activity android:name=".view.applyjob.ApplyJobActivity"/>
-        <activity android:name=".view.myaccount.addskills.AddSkillsActivity"/>
-        <activity android:name=".view.myaccount.addrequirement.AddRequirementActivity"/>
-        <activity android:name=".view.myaccount.detailaccount.DetailAccountActivity"/>
-        <activity android:name=".view.datacompany.address.AddAddressCompanyActivity"/>
-        <activity android:name=".view.datacompany.DataCompanyActivity"/>
-        <activity android:name=".view.register.company.RegisterCompanyActivity"/>
+        <activity android:name=".view.checkout.CheckoutActivity" />
+        <activity android:name=".view.topup.TopupActivity" />
+        <activity android:name=".view.myaccount.changepassword.ChangePasswordActivity" />
+        <activity android:name=".view.notification.NotificationActivity" />
+        <activity android:name=".view.posting.applyapplicant.ApplyApplicantActivity" />
+        <activity android:name=".view.postingjob.skillrequires.AddSkillRequiresActivity" />
+        <activity android:name=".view.posting.detailvacancy.DetailPostingJobActivity" />
+        <activity android:name=".view.applyjob.ApplyJobActivity" />
+        <activity android:name=".view.myaccount.addskills.AddSkillsActivity" />
+        <activity android:name=".view.myaccount.addrequirement.AddRequirementActivity" />
+        <activity android:name=".view.myaccount.detailaccount.DetailAccountActivity" />
+        <activity android:name=".view.datacompany.address.AddAddressCompanyActivity" />
+        <activity android:name=".view.datacompany.DataCompanyActivity" />
+        <activity android:name=".view.register.company.RegisterCompanyActivity" />
         <activity
             android:name=".view.detailjob.DetailJobActivity"
             android:screenOrientation="nosensor" />
@@ -113,8 +112,8 @@
             android:screenOrientation="nosensor" />
         <activity
             android:name=".view.splashscreen.SplashScreenActivity"
-            android:screenOrientation="nosensor"
             android:exported="true"
+            android:screenOrientation="nosensor"
             android:theme="@style/TranslucentStatusBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

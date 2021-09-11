@@ -176,17 +176,17 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener,
             resume = idResume
         }
 
-        if (workExperience == null){
-            isEmptyWorkExperience = true
-            binding.tvPosition.error = getString(R.string.cant_empty)
-            binding.tvActionReviewProfile.error = getString(R.string.cant_empty)
-        } else {
-            isEmptyWorkExperience = false
-            binding.tvPosition.error = null
-            workExperience = dataWorkExperience
-        }
+//        if (workExperience == null){
+//            isEmptyWorkExperience = true
+//            binding.tvPosition.error = getString(R.string.cant_empty)
+//            binding.tvActionReviewProfile.error = getString(R.string.cant_empty)
+//        } else {
+//            isEmptyWorkExperience = false
+//            binding.tvPosition.error = null
+//            workExperience = dataWorkExperience
+//        }
 
-        if (!isEmptyResume && !isEmptyNotes && !isEmptyWorkExperience){
+        if (!isEmptyResume && !isEmptyNotes){
             presenter.applyJob(idJobVacancy, notes, resume)
         } else {
             Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
@@ -320,11 +320,11 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener,
             }
 
         }).into(binding.ivProfile)
-        dataWorkExperience = data?.latestWork
+        dataWorkExperience = data?.latestWork       
         binding.tvName.text = data?.fullname
         binding.tvEmail.text = data?.email
         binding.tvPhone.text = data?.phone
-        binding.tvPosition.text = data?.latestWork?.position
+        if (data?.latestWork == null) binding.tvPosition.text = "No work experience" else  binding.tvPosition.text = data.latestWork.position
     }
 
     override fun onResume() {
