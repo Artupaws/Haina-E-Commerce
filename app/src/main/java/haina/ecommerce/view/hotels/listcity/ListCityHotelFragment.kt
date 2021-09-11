@@ -99,27 +99,27 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract.View, AdapterLis
         var checkOutDate:String = ""
 
         cvCheckIn?.setOnClickListener {
-        val builder = MaterialDatePicker.Builder.dateRangePicker()
-        val now = Calendar.getInstance()
-        val tomorrow = Calendar.getInstance()
-        tomorrow.add(Calendar.DAY_OF_MONTH, 1)
-        builder.setTitleText(R.string.select_date_stay)
-        builder.setSelection(androidx.core.util.Pair(now.timeInMillis,tomorrow.timeInMillis))
-        builder.setCalendarConstraints(limitRange().build())
+            val builder = MaterialDatePicker.Builder.dateRangePicker()
+            val now = Calendar.getInstance()
+            val tomorrow = Calendar.getInstance()
+            tomorrow.add(Calendar.DAY_OF_MONTH, 1)
+            builder.setTitleText(R.string.select_date_stay)
+            builder.setSelection(androidx.core.util.Pair(now.timeInMillis,tomorrow.timeInMillis))
+            builder.setCalendarConstraints(limitRange().build())
 
-        val picker = builder.build()
-        picker.show(childFragmentManager, picker.toString())
-        picker.addOnNegativeButtonClickListener { picker.dismiss() }
-        picker.addOnPositiveButtonClickListener {
-            tvCheckIn?.text = it.first?.convertLongtoTime("dd MMM")
-            checkInDate = it.first?.convertLongtoTime("yyyy-MM-dd").toString()
-            tvCheckOut?.text = it.second?.convertLongtoTime("dd MMM")
-            checkOutDate = it.second?.convertLongtoTime("yyyy-MM-dd").toString()
-            val totalDays: Long = (it.second?.minus(it.first!!)!!)
-            totalNight = TimeUnit.MILLISECONDS.toDays(totalDays).toInt()
-            tvTotalNight?.text = "$totalNight"
-            picker.dismiss()
-        }
+            val picker = builder.build()
+            picker.show(childFragmentManager, picker.toString())
+            picker.addOnNegativeButtonClickListener { picker.dismiss() }
+            picker.addOnPositiveButtonClickListener {
+                tvCheckIn?.text = it.first?.convertLongtoTime("dd MMM")
+                checkInDate = it.first?.convertLongtoTime("yyyy-MM-dd").toString()
+                tvCheckOut?.text = it.second?.convertLongtoTime("dd MMM")
+                checkOutDate = it.second?.convertLongtoTime("yyyy-MM-dd").toString()
+                val totalDays: Long = (it.second?.minus(it.first!!)!!)
+                totalNight = TimeUnit.MILLISECONDS.toDays(totalDays).toInt()
+                tvTotalNight?.text = "$totalNight"
+                picker.dismiss()
+            }
         }
 
         btnSave?.setOnClickListener {

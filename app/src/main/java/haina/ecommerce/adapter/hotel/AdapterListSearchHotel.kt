@@ -1,15 +1,17 @@
 package haina.ecommerce.adapter.hotel
 
 import android.content.Context
+import android.telecom.Call
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.databinding.ListItemHotelSearchBinding
+import haina.ecommerce.model.flight.MealInfosItem
 import haina.ecommerce.model.hotels.HotelSearchItem
 
 
-class AdapterListSearchHotel(val context: Context, private val listSearch: List<HotelSearchItem?>?):
+class AdapterListSearchHotel(val context: Context, private val listSearch: List<HotelSearchItem?>?,private val callback:CallbackInterface):
     RecyclerView.Adapter<AdapterListSearchHotel.Holder>() {
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
@@ -19,6 +21,9 @@ class AdapterListSearchHotel(val context: Context, private val listSearch: List<
                 binding.tvNameHotel.text=itemHaina.name
                 binding.tvAddress.text=itemHaina.city
                 binding.tvType.text=itemHaina.type
+                cvClick.setOnClickListener{
+                    callback.passSearch(itemHaina)
+                }
             }
         }
     }
@@ -36,5 +41,8 @@ class AdapterListSearchHotel(val context: Context, private val listSearch: List<
 
     override fun getItemCount(): Int = listSearch?.size!!
 
+    interface CallbackInterface {
+        fun passSearch(data:HotelSearchItem)
+    }
 
 }

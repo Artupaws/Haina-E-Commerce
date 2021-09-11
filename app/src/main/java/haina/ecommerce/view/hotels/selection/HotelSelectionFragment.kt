@@ -33,6 +33,8 @@ import haina.ecommerce.model.hotels.newHotel.DataHotelDarma
 import haina.ecommerce.model.hotels.newHotel.RequestBookingHotel
 import haina.ecommerce.view.flight.fragment.BottomSheetFlightFragment
 import haina.ecommerce.view.hotels.HotelBaseActivity
+import timber.log.Timber
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -56,6 +58,8 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
 
     var checkInDate: String = ""
     var checkOutDate: String = ""
+    var searchType:String? = null
+    var searchid:String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,7 +79,19 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
         binding.toolbarHotelSelection.setNavigationOnClickListener {
             (requireActivity() as HotelBaseActivity).onBackPressed()
         }
-        selectionPresenter.getSearchHotel("Jakarta","2021-09-19","2021-09-20")
+        checkInDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
+        var dt=Date()
+        val c = Calendar.getInstance()
+        c.time = dt
+        c.add(Calendar.DATE, 1)
+        dt=c.time
+        checkOutDate = SimpleDateFormat("yyyy-MM-dd").format(dt)
+        binding.tvStartDate?.text =
+            SimpleDateFormat("dd MMM").format(Date()) + " - " + SimpleDateFormat("dd MMM").format(dt)
+        binding.tvTotalNight?.text = "1 Night(s)"
+
+
+        selectionPresenter.getSearchHotel("Jakarta",checkInDate,checkOutDate)
         binding.tvStartDate.setOnClickListener {
             val builder = MaterialDatePicker.Builder.dateRangePicker()
             val now = Calendar.getInstance()
@@ -109,7 +125,6 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
                 }
             }
         }
-//        dialogScheduleHotel()
 //        binding.svDestination.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
 //            SearchView.OnQueryTextListener{
 //            override fun onQueryTextSubmit(p0: String?): Boolean {
@@ -140,57 +155,6 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
         window.setGravity(Gravity.CENTER)
     }
 
-//    @SuppressLint("UseCompatLoadingForDrawables")
-//    private fun dialogScheduleHotel(){
-//        popUpScheduleHotel = Dialog(requireActivity())
-//        popUpScheduleHotel?.setContentView(R.layout.popup_schedule_hotel)
-//        popUpScheduleHotel?.setCancelable(true)
-//        popUpScheduleHotel?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.transparent))
-//        val window:Window = popUpScheduleHotel?.window!!
-//        window.setGravity(Gravity.CENTER)
-//        val cvCheckIn = popUpScheduleHotel?.findViewById<CardView>(R.id.cv_check_in_date)
-//        val tvCheckIn = popUpScheduleHotel?.findViewById<TextView>(R.id.tv_check_in_date)
-//        val cvCheckOut = popUpScheduleHotel?.findViewById<CardView>(R.id.cv_check_out_date)
-//        val tvCheckOut = popUpScheduleHotel?.findViewById<TextView>(R.id.tv_check_out_date)
-//        val tvTotalNight = popUpScheduleHotel?.findViewById<TextView>(R.id.tv_total_night)
-//        val btnSave = popUpScheduleHotel?.findViewById<Button>(R.id.btn_save)
-//        var checkInDate:String = ""
-//        var checkOutDate:String = ""
-//
-//        cvCheckIn?.setOnClickListener {
-//            val builder = MaterialDatePicker.Builder.dateRangePicker()
-//            val now = Calendar.getInstance()
-//            val tomorrow = Calendar.getInstance()
-//            tomorrow.add(Calendar.DAY_OF_MONTH, 1)
-//            builder.setTitleText(R.string.select_date_stay)
-//            builder.setSelection(androidx.core.util.Pair(now.timeInMillis,tomorrow.timeInMillis))
-//            builder.setCalendarConstraints(limitRange().build())
-//
-//            val picker = builder.build()
-//            picker.show(childFragmentManager, picker.toString())
-//            picker.addOnNegativeButtonClickListener { picker.dismiss() }
-//            picker.addOnPositiveButtonClickListener {
-//                tvCheckIn?.text = it.first?.convertLongtoTime("dd MMM")
-//                checkInDate = it.first?.convertLongtoTime("yyyy-MM-dd").toString()
-//                tvCheckOut?.text = it.second?.convertLongtoTime("dd MMM")
-//                checkOutDate = it.second?.convertLongtoTime("yyyy-MM-dd").toString()
-//                val totalDays: Long = (it.second?.minus(it.first!!)!!)
-//                totalNight = TimeUnit.MILLISECONDS.toDays(totalDays).toInt()
-//                tvTotalNight?.text = "$totalNight"
-//                picker.dismiss()
-//            }
-//        }
-//
-//        btnSave?.setOnClickListener {
-//            if (!tvCheckIn?.text?.contains("-")!!){
-//                requestHotel = RequestBookingHotel("ID", cityId, "ID", checkInDate, checkOutDate, null)
-//                selectionPresenter.getHotelDarma(requestHotel.countryID!!, requestHotel.cityId!!, requestHotel.paxPassport!!,
-//                    requestHotel.checkIn!!, requestHotel.checkOut!!)
-//            } else {
-//                popUpScheduleHotel?.show()
-//            }
-//        }
-//    }
 
     private fun limitRange(): CalendarConstraints.Builder {
         val constraintsBuilderRange = CalendarConstraints.Builder()
@@ -257,6 +221,8 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
     override fun getSearch(data: List<HotelSearchItem?>) {
         var bundle:Bundle=Bundle()
         bundle.putParcelableArrayList("data",data as java.util.ArrayList)
+        bundle.putString("checkindate",checkInDate)
+        bundle.putString("checkoutdate",checkOutDate)
 
         bottomsheet=BottomSheetSearchHotelFragment()
 
@@ -298,8 +264,15 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
 
     override fun onStart() {
         super.onStart()
+        var intent:IntentFilter= IntentFilter()
+        intent.addAction("dataPassenger")
+        intent.addAction("dataSearch")
+
         LocalBroadcastManager.getInstance(requireActivity())
-            .registerReceiver(mMessageReceiver, IntentFilter("dataPassenger"))
+            .registerReceiver(
+                mMessageReceiver,intent
+            )
+
     }
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -315,8 +288,22 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
                     totalBaby = totalBabyParams!!.toInt()
                     setDetailPassenger(totalAdultParams!!, totalChildParams, totalBabyParams, totalPassengerParams!!)
                 }
+                "dataSearch" -> {
+                    bottomsheet?.dismiss()
+                    val dataSearch = intent.getParcelableExtra<HotelSearchItem>("data")
+
+                    Timber.d(dataSearch?.name)
+                    setSearchData(dataSearch!!)
+                }
             }
         }
+    }
+
+    private fun setSearchData(dataSearch:HotelSearchItem){
+        binding.tvHotelName.text=dataSearch.name
+        searchType=dataSearch.type
+        searchid=dataSearch.iD
+
     }
 
     private fun setDetailPassenger(totalAdult:String, totalChildParams:String?, totalBabyParams:String?, totalPassenger:String){

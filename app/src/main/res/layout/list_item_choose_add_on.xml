@@ -6,9 +6,9 @@
 
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/cb_addon"
+        style="@style/TextView.Poppins12spGrey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/TextView.Poppins12spGrey"
         tools:text="Kursi roda" />
 
 </RelativeLayout>
