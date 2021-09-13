@@ -27,9 +27,11 @@ import haina.ecommerce.databinding.FragmentHotelSelectionBinding
 import haina.ecommerce.helper.Helper.convertLongtoTime
 import haina.ecommerce.helper.RangeValidator
 import haina.ecommerce.model.flight.DataAirport
+import haina.ecommerce.model.flight.Request
 import haina.ecommerce.model.hotels.HotelSearchItem
 import haina.ecommerce.model.hotels.newHotel.DataCities
 import haina.ecommerce.model.hotels.newHotel.DataHotelDarma
+import haina.ecommerce.model.hotels.newHotel.DataRoom
 import haina.ecommerce.model.hotels.newHotel.RequestBookingHotel
 import haina.ecommerce.view.flight.fragment.BottomSheetFlightFragment
 import haina.ecommerce.view.hotels.HotelBaseActivity
@@ -60,6 +62,7 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
     var checkOutDate: String = ""
     var searchType:String? = null
     var searchid:String? = null
+    var searchidCity:Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -125,21 +128,24 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
                 }
             }
         }
-//        binding.svDestination.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
-//            SearchView.OnQueryTextListener{
-//            override fun onQueryTextSubmit(p0: String?): Boolean {
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(p0: String?): Boolean {
-//                if (p0?.isNotEmpty()!!){
-//                    (binding.rvCityHotel.adapter as AdapterListCity).filter.filter(p0)
-//                    (binding.rvCityHotel.adapter as AdapterListCity).notifyDataSetChanged()
-//                }
-//                return true
-//            }
-//        })
+        binding.btnFindHotel.setOnClickListener{
+            checkHotelSearch()
+        }
     }
+
+    private fun checkHotelSearch(){
+        var totalPassengerParams = binding.tvTotalPax.text.toString()
+
+
+        if (totalPassengerParams.contains(getString(R.string.input_total_passenger))){
+            binding.tvTotalPax.error = "Please input total passenger"
+
+        } else {
+            selectionPresenter.getSearchHotelDone(binding.tvHotelName.text.toString(),checkInDate,checkOutDate)
+        }
+
+    }
+
 
     private fun dialogLoading() {
         progressDialog = Dialog(requireActivity())
@@ -196,10 +202,11 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
 
     override fun getListCity(data: List<DataCities?>?) {
         progressDialog?.dismiss()
-//            binding.rvCityHotel.apply {
-//                adapter = AdapterListCity(requireActivity(), data, this@HotelSelectionFragment)
-//                layoutManager = GridLayoutManager(requireActivity(), 3)
-//            }
+        val dataCityDefault= data?.find { it?.name=="Surabaya"}
+
+        searchType="city"
+        searchid=dataCityDefault?.idDarma.toString()
+        searchidCity=dataCityDefault?.idDarma
     }
 
     override fun getHotelDarma(data: DataHotelDarma?) {
@@ -208,7 +215,7 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
             bundle.putParcelable("dataHotel", data)
             bundle.putInt("totalNight", totalNight)
             Navigation.findNavController(binding.root)
-                .navigate(R.id.action_listCityHotelFragment_to_scheduleHotelFragment, bundle)
+                .navigate(R.id.action_hotelSelectionFragment_to_scheduleHotelFragment, bundle)
         }
     }
 
@@ -235,6 +242,29 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
                 }
             }
         }
+
+    }
+
+    override fun search(data: List<HotelSearchItem?>) {
+        when (searchType) {
+            "city" -> {
+                requestHotel = RequestBookingHotel("ID", searchidCity, "ID", checkInDate, checkOutDate, null)
+                selectionPresenter.getHotelDarma(requestHotel.countryID!!, requestHotel.cityId!!, requestHotel.paxPassport!!,
+                    requestHotel.checkIn!!, requestHotel.checkOut!!)
+            }
+            "hotels" -> {
+                selectionPresenter.getRoomHotel(searchid!!,searchidCity.toString())
+            }
+        }
+    }
+
+    override fun getDataRoom(data: DataRoom?) {
+        if (data != null){
+            val bundle = Bundle()
+            bundle.putParcelable("dataRoom", data)
+            totalNight?.let { bundle.putInt("totalNight", it) }
+            Navigation.findNavController(binding.root).navigate(R.id.action_hotelSelectionFragment_to_listRoomFragment, bundle)
+        }
     }
 
     override fun showLoading() {
@@ -243,23 +273,6 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
 
     override fun dismissLoading() {
         progressDialog?.dismiss()
-    }
-
-    override fun onClick(view: View, idDarma: Int) {
-        when (view.id) {
-            R.id.cv_click -> {
-                cityId = idDarma
-                if (unfinishBookingSize == 0) {
-                    popUpScheduleHotel?.show()
-                } else {
-                    Toast.makeText(
-                        requireActivity(),
-                        getString(R.string.warning_booking_hotel),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
     }
 
     override fun onStart() {
@@ -303,7 +316,7 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
         binding.tvHotelName.text=dataSearch.name
         searchType=dataSearch.type
         searchid=dataSearch.iD
-
+        searchidCity=dataSearch.idCity
     }
 
     private fun setDetailPassenger(totalAdult:String, totalChildParams:String?, totalBabyParams:String?, totalPassenger:String){
@@ -324,6 +337,10 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
         binding.tvTotalPax.error = null
         binding.tvTotalAdult.text = "$totalAdult Adult(s)"
         binding.tvTotalPax.text = "$totalPassenger consists of : "
+    }
+
+    override fun onClick(view: View, idDarma: Int) {
+
     }
 
 }

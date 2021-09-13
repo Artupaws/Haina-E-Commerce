@@ -11,6 +11,7 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.news.AdapterNews
 import haina.ecommerce.databinding.ActivityNewsBinding
 import haina.ecommerce.model.news.DataNews
+import haina.ecommerce.model.news.DataNewsTable
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.webview.WebViewActivity
@@ -37,13 +38,13 @@ class NewsActivity : AppCompatActivity(), NewsContract, AdapterNews.ItemAdapterC
         binding.swipeRefresh.setOnRefreshListener {
             when (language) {
                 "en" -> {
-                    presenter.getNews("eng")
+                    presenter.getNewsTable("eng")
                 }
                 "zh" -> {
-                    presenter.getNews("zho")
+                    presenter.getNewsTable("zho")
                 }
                 else -> {
-                    presenter.getNews("eng")
+                    presenter.getNewsTable("eng")
                 }
             }
         }
@@ -52,13 +53,13 @@ class NewsActivity : AppCompatActivity(), NewsContract, AdapterNews.ItemAdapterC
     private fun setPresenterBasedLanguage(language: String) {
         when (language) {
             "en" -> {
-                presenter.getNews("eng")
+                presenter.getNewsTable("eng")
             }
             "zh" -> {
-                presenter.getNews("zho")
+                presenter.getNewsTable("zho")
             }
             else -> {
-                presenter.getNews("eng")
+                presenter.getNewsTable("eng")
             }
         }
     }
@@ -70,7 +71,7 @@ class NewsActivity : AppCompatActivity(), NewsContract, AdapterNews.ItemAdapterC
         }
     }
 
-    override fun getNews(data: List<DataNews?>?) {
+    override fun getNews(data: List<DataNewsTable?>?) {
         binding.rvNews.apply {
             adapter = AdapterNews(this@NewsActivity, data, this@NewsActivity)
             layoutManager =
@@ -78,10 +79,10 @@ class NewsActivity : AppCompatActivity(), NewsContract, AdapterNews.ItemAdapterC
         }
     }
 
-    override fun onClick(view: View, data: DataNews) {
+    override fun onClick(view: View, data: DataNewsTable) {
         when (view.id) {
             R.id.linear_list -> {
-                val intentToWeb = Intent(applicationContext, DetailNewsActivity::class.java)
+                val intentToWeb = Intent(applicationContext, DetailNewsWebViewActivity::class.java)
                     .putExtra("data", data)
                 startActivity(intentToWeb)
             }

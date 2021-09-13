@@ -1,10 +1,10 @@
 package haina.ecommerce.view.news
 
-import haina.ecommerce.model.news.DataNews
+import haina.ecommerce.model.news.DataNewsTable
 
 interface NewsContract {
 
     fun messageGetNews(msg:String)
-    fun getNews(data:List<DataNews?>?)
+    fun getNews(data:List<DataNewsTable?>?)
 
 }

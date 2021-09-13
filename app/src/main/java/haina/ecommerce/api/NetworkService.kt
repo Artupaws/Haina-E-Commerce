@@ -14,6 +14,7 @@ import haina.ecommerce.model.hotels.newHotel.*
 import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
 import haina.ecommerce.model.howtopay.ResponseGetHowToPay
 import haina.ecommerce.model.news.ResponseGetListNews
+import haina.ecommerce.model.news.ResponseGetListNewsTable
 import haina.ecommerce.model.notification.ResponseGetNotification
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.productservice.ResponseGetProductService
@@ -83,6 +84,12 @@ interface NetworkService {
     fun getNews(
         @Query("lang")lang:String
     ):Call<ResponseGetListNews>
+
+    @FormUrlEncoded
+    @POST("api/news/get-article")
+    fun getNewsTable(
+        @Field("lang")lang:String
+    ):Call<ResponseGetListNewsTable>
 
     //Covid Indo
     @GET("api/covid")
@@ -562,6 +569,14 @@ interface NetworkService {
     @POST("api/hotel_darma/search_room")
     fun getDataRoom(
         @Field("hotel_id")hotelId:String
+    ):Call<ResponseGetRoomHotel>
+
+    //Get Room Hotel
+    @FormUrlEncoded
+    @POST("api/hotel_darma/search_room")
+    fun getDataRoomFromSearch(
+        @Field("hotel_id")hotelId:String,
+        @Field("city_id")cityId:String
     ):Call<ResponseGetRoomHotel>
 
     //Get Price Policy

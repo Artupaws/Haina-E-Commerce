@@ -13,6 +13,9 @@ data class HotelSearchItem(
 	@field:SerializedName("ID")
 	val iD: String? = null,
 
+	@field:SerializedName("id_city")
+	val idCity: Int? = null,
+
 	@field:SerializedName("Type")
 	val type: String? = null,
 

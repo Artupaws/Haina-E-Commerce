@@ -11,18 +11,18 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import haina.ecommerce.databinding.ListItemNewsBinding
 import haina.ecommerce.model.ArticlesItem
 import haina.ecommerce.model.news.DataNews
+import haina.ecommerce.model.news.DataNewsTable
 import haina.ecommerce.view.webview.WebViewActivity
 
-class AdapterNews (private val context: Context, private val newsList: List<DataNews?>?, private val itemAdapterCallback: ItemAdapterCallback): RecyclerView.Adapter<AdapterNews.Holder>(){
+class AdapterNews (private val context: Context, private val newsList: List<DataNewsTable?>?, private val itemAdapterCallback: ItemAdapterCallback): RecyclerView.Adapter<AdapterNews.Holder>(){
 
     inner class Holder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val binding = ListItemNewsBinding.bind(itemView)
         private var url: String = ""
-        fun bind(item: DataNews, itemAdapterCallback: ItemAdapterCallback){
+        fun bind(item: DataNewsTable, itemAdapterCallback: ItemAdapterCallback){
             with(binding){
-                url = item.source.toString()
                 tvTitleNews.text = item.title
-                tvMediaName.text = item.date
+                tvMediaName.text = item.sourceName
                 Glide.with(context).load(item.image).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(ivNews)
                 linearList.setOnClickListener {
                     itemAdapterCallback.onClick(binding.linearList, item)
@@ -38,13 +38,13 @@ class AdapterNews (private val context: Context, private val newsList: List<Data
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val news: DataNews = newsList?.get(position)!!
+        val news: DataNewsTable = newsList?.get(position)!!
         holder.bind(news, itemAdapterCallback)
     }
 
     override fun getItemCount(): Int = newsList?.size!!
 
     interface ItemAdapterCallback{
-        fun onClick(view:View, data:DataNews)
+        fun onClick(view:View, data:DataNewsTable)
     }
 }

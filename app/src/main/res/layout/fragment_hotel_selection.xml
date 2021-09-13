@@ -93,7 +93,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Hotels In Jakarta"
+                            android:text="Surabaya"
                             android:textColor="@color/black"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -260,13 +260,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
-                                android:text="1 Person"/>
+                                android:text="@string/input_total_passenger"/>
                             <TextView
                                 android:id="@+id/tv_total_adult"
                                 style="@style/TextView.Poppins12spGrey"
                                 android:layout_marginStart="10dp"
                                 android:layout_width="wrap_content"
-                                android:text="1 Adult"
                                 android:layout_height="wrap_content" />
                             <TextView
                                 android:id="@+id/tv_total_child"

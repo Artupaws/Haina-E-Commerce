@@ -52,6 +52,7 @@
         <activity android:name=".view.categorypost.CategoryActivity" />
         <activity android:name=".view.hotels.HotelBaseActivity" />
         <activity android:name=".view.news.DetailNewsActivity" />
+        <activity android:name=".view.news.DetailNewsWebViewActivity" />
         <activity android:name=".view.news.NewsActivity" />
         <activity android:name=".view.onlinepayment.OnlinePaymentActivity" />
         <activity android:name=".view.flight.FlightTicketActivity" />

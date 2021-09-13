@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_hotelSelectionFragment_to_scheduleHotelFragment"
             app:destination="@id/scheduleHotelFragment" />
+        <action
+            android:id="@+id/action_hotelSelectionFragment_to_listRoomFragment"
+            app:destination="@id/listRoomFragment" />
     </fragment>
 
     <fragment

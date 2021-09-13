@@ -4,6 +4,7 @@ import haina.ecommerce.base.BaseView
 import haina.ecommerce.model.hotels.HotelSearchItem
 import haina.ecommerce.model.hotels.newHotel.DataCities
 import haina.ecommerce.model.hotels.newHotel.DataHotelDarma
+import haina.ecommerce.model.hotels.newHotel.DataRoom
 
 interface HotelSelectionContract {
 
@@ -15,6 +16,8 @@ interface HotelSelectionContract {
         fun getHotelDarma(data: DataHotelDarma?)
         fun getSizeListUnfinish(size:Int?)
         fun getSearch(data:List<HotelSearchItem?>)
+        fun search(data:List<HotelSearchItem?>)
+        fun getDataRoom(data: DataRoom?)
     }
 
 }

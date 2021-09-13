@@ -6,6 +6,7 @@ import haina.ecommerce.model.ResponseHotelSearch
 import haina.ecommerce.model.hotels.newHotel.ResponseGetCityHotel
 import haina.ecommerce.model.hotels.newHotel.ResponseGetHotelDarma
 import haina.ecommerce.model.hotels.newHotel.ResponseGetListBooking
+import haina.ecommerce.model.hotels.newHotel.ResponseGetRoomHotel
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
@@ -77,6 +78,24 @@ class HotelSelectionPresenter(val view:HotelSelectionContract.View, val context:
             }
         })
     }
+    fun getSearchHotelDone(searchQuery:String,checkInDate:String,checkOutDate:String){
+        view.showLoading()
+        val getList = NetworkConfig().getConnectionToDarma(context).getHotelSearch(searchQuery,checkInDate,checkOutDate)
+        getList.enqueue(object : retrofit2.Callback<ResponseHotelSearch>{
+            override fun onResponse(call: Call<ResponseHotelSearch>, response: Response<ResponseHotelSearch>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.search(response.body()?.data!!)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseHotelSearch>, t: Throwable) {
+                view.dismissLoading()
+            }
+        })
+    }
 
     fun getListTransactionHotelDarma(){
         view.showLoading()
@@ -96,6 +115,27 @@ class HotelSelectionPresenter(val view:HotelSelectionContract.View, val context:
             override fun onFailure(call: Call<ResponseGetListBooking>, t: Throwable) {
                 view.dismissLoading()
                 view.messageGetListTransactionHotel(t.localizedMessage.toString())
+            }
+
+        })
+    }
+
+    fun getRoomHotel(idHotel:String,idCity:String){
+        view.showLoading()
+        val getRoom = NetworkConfig().getConnectionToDarma(context).getDataRoomFromSearch(idHotel,idCity)
+        getRoom.enqueue(object : retrofit2.Callback<ResponseGetRoomHotel>{
+            override fun onResponse(call: Call<ResponseGetRoomHotel>, response: Response<ResponseGetRoomHotel>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    val data = response.body()?.dataRoom
+                    view.getDataRoom(data)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetRoomHotel>, t: Throwable) {
+                view.dismissLoading()
             }
 
         })
