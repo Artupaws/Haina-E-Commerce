@@ -12,26 +12,24 @@ class AdapterSpecialRequestArray(val context: Context, private val listSpecialRe
                                  private val itemAdapterCallback: ItemAdapterCallback, private val statusEdit:Boolean) :
         RecyclerView.Adapter<AdapterSpecialRequestArray.Holder>() {
 
+    private var listSpecialRequestArrayItem = ArrayList<SpecialRequestArrayItem>()
+
+
+
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemChooseAddOnBinding.bind(view)
         fun bind(itemHaina: SpecialRequestArrayItem?, itemAdapterCallback:ItemAdapterCallback) {
             with(binding) {
                 cbAddon.text = itemHaina?.description
-                when(statusEdit){
-                    true -> {
-                        cbAddon.isEnabled = true
-                        cbAddon.setOnCheckedChangeListener { _, b ->
-                            if (b){
-                                itemAdapterCallback.onClickSpecialRequest(cbAddon, itemHaina!!, true)
-                            } else {
-                                itemAdapterCallback.onClickSpecialRequest(cbAddon, itemHaina!!, false)
-                            }
-                        }
+
+                cbAddon.setOnCheckedChangeListener { _, isChecked ->
+                    if(isChecked){
+                        listSpecialRequestArrayItem.add(itemHaina!!)
+                    }else{
+                        listSpecialRequestArrayItem.remove(itemHaina!!)
                     }
-                    false -> {
-                        cbAddon.isEnabled = false
-                        cbAddon.isChecked = true
-                    }
+
+                    itemAdapterCallback.onClickSpecialRequest(listSpecialRequestArrayItem)
                 }
 
             }
@@ -55,7 +53,7 @@ class AdapterSpecialRequestArray(val context: Context, private val listSpecialRe
     }
 
     interface ItemAdapterCallback{
-        fun onClickSpecialRequest(view:View, dataRequest:SpecialRequestArrayItem, status:Boolean)
+        fun onClickSpecialRequest(dataRequest:ArrayList<SpecialRequestArrayItem>)
     }
 
 }

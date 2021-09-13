@@ -11,11 +11,13 @@
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/activity_webview.xml" value="0.18085106382978725" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_bottomsheet_flight.xml" value="0.15185185185185185" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_bottomsheet_pax_hotel.xml" value="0.15" />
+        <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_fill_in_detail.xml" value="0.25" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_hotel_search.xml" value="0.2" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_hotel_selection.xml" value="0.33" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_list_city_hotel.xml" value="0.22" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_list_hotel.xml" value="0.1712962962962963" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_list_room.xml" value="0.18085106382978725" />
+        <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_review_booking.xml" value="0.18085106382978725" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_schedule_flight.xml" value="0.33" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/layout_hotel_pax.xml" value="0.25" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/layout_select_passenger.xml" value="0.1" />
@@ -30,6 +32,8 @@
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_ticket_choose.xml" value="0.1287037037037037" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_time_flight.xml" value="0.1287037037037037" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/popup_schedule_hotel.xml" value="0.25" />
+        <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/view_data_hotel_review.xml" value="0.33" />
+        <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/view_special_request.xml" value="0.1712962962962963" />
       </map>
     </option>
   </component>

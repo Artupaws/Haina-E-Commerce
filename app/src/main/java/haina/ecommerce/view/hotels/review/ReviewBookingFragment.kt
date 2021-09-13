@@ -19,6 +19,8 @@ import haina.ecommerce.model.hotels.newHotel.DataPricePolicy
 import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelDarma
 import haina.ecommerce.model.hotels.newHotel.SpecialRequestArrayItem
 import haina.ecommerce.view.paymentmethod.PaymentActivity
+import timber.log.Timber
+import kotlin.properties.Delegates
 
 class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, AdapterSpecialRequestArray.ItemAdapterCallback, View.OnClickListener {
 
@@ -26,6 +28,7 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
     private val binding get() = _binding
     private val helper:Helper = Helper
     private var dataBooking:RequestBookingHotelDarma? = null
+    private var specialbooking:Boolean? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentReviewBookingBinding.inflate(inflater, container, false)
@@ -39,6 +42,8 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
         val totalNight = arguments?.getInt("totalNight")
         dataBooking = arguments?.getParcelable("dataBooking")
         val imageRoomUrl = arguments?.getString("imageRoomUrl")
+        specialbooking = arguments?.getBoolean("specialBooking")!!
+
         val dataPricePolicy = arguments?.getParcelable<DataPricePolicy>("dataPricePolicy")
         val totalGuest = dataBooking?.paxes?.size
         imageRoomUrl?.let { setViewDataHotel(it, dataPricePolicy!!, totalGuest!!, dataBooking!!, totalNight!!) }
@@ -87,11 +92,15 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
             adapter = AdapterDataGuest(requireActivity(), dataBooking.paxes, this@ReviewBookingFragment, false)
         }
 
-        if (dataBooking.specialRequest != null){
+        if (!specialbooking!!){
+            Timber.d("special")
             binding.includeReviewHotel.linearAddRequest.visibility = View.VISIBLE
             binding.includeReviewHotel.etSpecialRequest.setText(dataBooking.specialRequest)
             binding.includeReviewHotel.rvRequest.visibility = View.GONE
             binding.includeReviewHotel.btnAddRequest.visibility = View.GONE
+        }else{
+            Timber.d("nonspecial")
+
         }
 //        else {
 //            binding.includeReviewHotel.linearAddRequest.visibility = View.GONE
@@ -107,9 +116,6 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
         TODO("Not yet implemented")
     }
 
-    override fun onClickSpecialRequest(view: View, dataRequest: SpecialRequestArrayItem, status: Boolean) {
-        TODO("Not yet implemented")
-    }
 
     override fun onClick(view: View?) {
         when(view?.id){
@@ -120,6 +126,10 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
                 startActivity(intentPayment)
             }
         }
+    }
+
+    override fun onClickSpecialRequest(dataRequest: ArrayList<SpecialRequestArrayItem>) {
+        TODO("Not yet implemented")
     }
 
 }

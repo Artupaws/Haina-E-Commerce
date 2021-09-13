@@ -184,7 +184,7 @@ class ListCityHotelFragment : Fragment(), ListCityHotelContract.View, AdapterLis
             val bundle = Bundle()
             bundle.putParcelable("dataHotel", data)
             bundle.putInt("totalNight", totalNight)
-            Navigation.findNavController(binding.root).navigate(R.id.action_listCityHotelFragment_to_scheduleHotelFragment, bundle)
+//            Navigation.findNavController(binding.root).navigate(R.id.action_listCityHotelFragment_to_scheduleHotelFragment, bundle)
         }
     }
 

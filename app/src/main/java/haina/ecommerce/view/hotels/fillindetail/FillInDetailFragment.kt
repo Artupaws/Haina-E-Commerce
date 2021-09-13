@@ -24,6 +24,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.room.roomdataguest.GuestDao
 import haina.ecommerce.room.roomdataguest.RoomDataGuest
 import haina.ecommerce.util.Constants
+import timber.log.Timber
 
 class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.ItemAdapterCallback, AdapterSpecialRequestArray.ItemAdapterCallback {
 
@@ -43,7 +44,6 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
     private var dataPricePolicy:DataPricePolicy? = null
     private var imageRoomUrl:String? = null
     private var listSpecialRequestArrayItem = ArrayList<SpecialRequestArrayItem>()
-    private var sra = ArrayList<String>()
     private var stringRequest :String = ""
     private var specialRequestArray:Boolean = true
 
@@ -303,6 +303,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
                  binding.includeContactDetail.tvEmailContactDetail.text.toString(), binding.includePriceDetail.tvTotalPrice.text.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataBooking", dataBooking)
+            bundle.putBoolean("specialRequest", specialRequestArray)
             bundle.putParcelable("dataPricePolicy", dataPricePolicy)
             bundle.putString("imageRoomUrl", imageRoomUrl)
             totalNight?.let { bundle.putInt("totalNight", it) }
@@ -347,6 +348,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
             val bundle = Bundle()
             bundle.putParcelable("dataBooking", dataBooking)
             bundle.putParcelable("dataPricePolicy", dataPricePolicy)
+            bundle.putBoolean("specialRequest", specialRequestArray)
             bundle.putString("imageRoomUrl", imageRoomUrl)
             totalNight?.let { bundle.putInt("totalNight", it) }
             Navigation.findNavController(binding.btnNext).navigate(R.id.action_fillInDetailFragment_to_reviewBookingFragment, bundle)
@@ -359,23 +361,18 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
         }
     }
 
-    override fun onClickSpecialRequest(view: View, data: SpecialRequestArrayItem, status:Boolean) {
-        when(view.id){
-            R.id.cb_addon -> {
-                when (status){
-                    true -> {
-                        listSpecialRequestArrayItem.add(data)
-                        sra.add(data.iD!!)
-                        val separator = ", "
-                        stringRequest = sra.joinToString(separator)
-                    }
-                    false -> {
-                        listSpecialRequestArrayItem.remove(data)
-                        sra.remove(data.iD!!)
-                    }
-                }
-            }
+    override fun onClickSpecialRequest(data: ArrayList<SpecialRequestArrayItem>) {
+        listSpecialRequestArrayItem=data
+
+        var sra = ArrayList<String>()
+
+        stringRequest=""
+        data.forEach{
+            sra.add(it.iD!!)
         }
+        val separator = ", "
+        stringRequest = sra.joinToString(separator)
+        Timber.d(stringRequest)
     }
 
 }

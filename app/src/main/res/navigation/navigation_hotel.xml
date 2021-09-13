@@ -5,15 +5,6 @@
     android:id="@+id/navigation_hotel"
     app:startDestination="@id/hotelSelectionFragment">
 
-    <fragment
-        android:id="@+id/listCityHotelFragment"
-        android:name="haina.ecommerce.view.hotels.listcity.ListCityHotelFragment"
-        android:label="fragment_list_city_hotel"
-        tools:layout="@layout/fragment_list_city_hotel" >
-        <action
-            android:id="@+id/action_listCityHotelFragment_to_scheduleHotelFragment"
-            app:destination="@id/scheduleHotelFragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/hotelSelectionFragment"
