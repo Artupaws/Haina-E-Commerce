@@ -20,6 +20,7 @@ class AdapterMyVacancy(val context: Context,
 
     private lateinit var sharedPreferenceHelper: SharedPreferenceHelper
 
+
     inner class ViewHolderMyVacancy(val binding: ListItemMyVacancyBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(itemHaina: DataMyVacancy, adapterCallbackMyVacancy: AdapterCallbackMyVacancy) {
@@ -29,7 +30,7 @@ class AdapterMyVacancy(val context: Context,
                     binding.tvDateEnd.text = "Expired On: ${dateFormat(itemHaina.deletedAt)}"
                     binding.tvDateEnd.setTextColor(context.resources.getColor(android.R.color.black))
                 }
-                else{
+                if (itemHaina.status == "pending"){
                     binding.tvDateEnd.text = "Please do payment for showing this ads"
                     binding.tvDateEnd.setTextColor(context.resources.getColor(android.R.color.holo_red_dark))
                     binding.btnShowAgain.text = "make payment"
@@ -43,12 +44,25 @@ class AdapterMyVacancy(val context: Context,
                 binding.tvApply.text = itemHaina.totalApplicant.toString()
                 binding.tvChoosed.text = itemHaina.shortlistedApplicant.toString()
                 binding.tvInterview.text = itemHaina.interviewApplicant.toString()
+                binding.tvAccepted.text = itemHaina.accpetedApplicant.toString()
                 if (itemHaina.salaryDisplay == 1)
                     binding.tvSalary.text = "${convertToFormatMoneyIDRFilter(itemHaina.minSalary.toString())} - ${convertToFormatMoneyIDRFilter(itemHaina.maxSalary.toString())}"
                 else
                     binding.tvSalary.text = "${convertToFormatMoneyIDRFilter(itemHaina.minSalary.toString())} - ${convertToFormatMoneyIDRFilter(itemHaina.maxSalary.toString())} - hidden for user"
                 relativeClick.setOnClickListener {
                     adapterCallbackMyVacancy.listMyVacancy(relativeClick, itemHaina, null)
+                }
+                linearApply.setOnClickListener {
+                    adapterCallbackMyVacancy.listMyVacancy(linearApply, itemHaina, null)
+                }
+                linearChoosed.setOnClickListener {
+                    adapterCallbackMyVacancy.listMyVacancy(linearChoosed, itemHaina, null)
+                }
+                linearInterview.setOnClickListener {
+                    adapterCallbackMyVacancy.listMyVacancy(linearInterview, itemHaina, null)
+                }
+                linearAccepted.setOnClickListener {
+                    adapterCallbackMyVacancy.listMyVacancy(linearAccepted, itemHaina, null)
                 }
             }
         }

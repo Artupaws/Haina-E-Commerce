@@ -43,7 +43,10 @@ class AdapterPaketDataName (val context: Context, private val listPaketData: Lis
         holder.bind(paketDataName)
     }
 
-    override fun getItemCount(): Int = listPaketData?.size!!
+    override fun getItemCount(): Int {
+        return listPaketData?.size ?: 0
+    }
+
 
     private fun setupListPaketData(binding:ListItemNamePaketDataBinding, list:List<PaketDataItem?>?){
         val adapterPaketData = AdapterPaketData(context, list)

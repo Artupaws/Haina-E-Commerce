@@ -13,7 +13,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class MyAccountPresenter (val view: MyAccountContract, val context: Context){
+class MyAccountPresenter (val view: MyAccountContract.View, val context: Context){
 
     fun getDataUserProfile(){
         NetworkConfig().getConnectionHainaBearer(context).getDataUser()
@@ -22,15 +22,15 @@ class MyAccountPresenter (val view: MyAccountContract, val context: Context){
                         if (response.isSuccessful && response.body()?.value == 1){
                             val data = response.body()?.data
                             view.getDataUser(data)
-                            view.successGetDataUser(response.body()?.message.toString())
+                            view.messageGetDataUser(response.body()?.message.toString())
                         } else {
                             val error = JSONObject(response.errorBody()?.string()!!)
-                            view.errorGetDataUSer(error.getString("message"))
+                            view.messageGetDataUser(error.getString("message"))
                         }
                     }
 
                     override fun onFailure(call: Call<ResponseGetDataUser>, t: Throwable) {
-                        view.errorGetDataUSer(t.localizedMessage)
+                        view.messageGetDataUser(t.localizedMessage)
                     }
 
                 })
@@ -43,15 +43,15 @@ class MyAccountPresenter (val view: MyAccountContract, val context: Context){
                         if (response.isSuccessful && response.body()?.value == 1){
                             val data = response.body()?.data
                             view.resetTokenUser(data)
-                            view.successLogout(response.body()?.message.toString())
+                            view.messageLogout(response.body()?.message.toString())
                         } else {
                             val error = JSONObject(response.errorBody()?.string()!!)
-                            view.errorLogout(error.getString("message"))
+                            view.messageLogout(error.getString("message"))
                         }
                     }
 
                     override fun onFailure(call: Call<ResponseLogout>, t: Throwable) {
-                        view.errorLogout(t.localizedMessage)
+                        view.messageLogout(t.localizedMessage)
                     }
 
                 })
@@ -65,15 +65,15 @@ class MyAccountPresenter (val view: MyAccountContract, val context: Context){
                 response: Response<ResponseChangeImageProfile>
             ) {
                 if (response.isSuccessful && response.body()?.value == 1){
-                    view.successChangeImageProfile(response.body()?.message.toString())
+                    view.messageChangeImageProfile(response.body()?.message.toString())
                 } else {
                     val error = JSONObject(response.errorBody()?.string()!!)
-                    view.errorChangeImageProfile(error.getString("message"))
+                    view.messageChangeImageProfile(error.getString("message"))
                 }
             }
 
             override fun onFailure(call: Call<ResponseChangeImageProfile>, t: Throwable) {
-                view.errorChangeImageProfile("Failed")
+                view.messageChangeImageProfile("Failed")
             }
 
         })
@@ -84,15 +84,15 @@ class MyAccountPresenter (val view: MyAccountContract, val context: Context){
         callCheckDataCompany.enqueue(object : retrofit2.Callback<ResponseCheckRegisterCompany>{
             override fun onResponse(call: Call<ResponseCheckRegisterCompany>, response: Response<ResponseCheckRegisterCompany>) {
                 if (response.isSuccessful && response.body()?.value == 1){
-                    view.checkDataCompany("Company Registered")
+                    view.messageCheckDataCompany("Company Registered")
                 } else {
                     val error = JSONObject(response.errorBody()?.string()!!)
-                    view.checkDataCompany(error.getString("message"))
+                    view.messageCheckDataCompany(error.getString("message"))
                 }
             }
 
             override fun onFailure(call: Call<ResponseCheckRegisterCompany>, t: Throwable) {
-                view.checkDataCompany(t.localizedMessage.toString())
+                view.messageCheckDataCompany(t.localizedMessage.toString())
             }
 
         })

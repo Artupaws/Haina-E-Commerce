@@ -1,16 +1,16 @@
 package haina.ecommerce.view.topup.pulsa
 
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import haina.ecommerce.R
@@ -24,7 +24,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.view.checkout.CheckoutActivity
 import haina.ecommerce.view.topup.TopupActivity
 
-class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPulsa.ItemAdapterCallback {
+class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract.View, AdapterPulsa.ItemAdapterCallback {
 
     private var _binding: FragmentPulsaBinding? = null
     private val binding get() = _binding
@@ -37,6 +37,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
     private var productCode: String? = null
     private lateinit var sharedPref: SharedPreferenceHelper
     private var typeTransaction:Int = 1
+    private var progressDialog: Dialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentPulsaBinding.inflate(inflater, container, false)
@@ -50,6 +51,7 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
         broadcaster = LocalBroadcastManager.getInstance(requireContext())
         binding?.btnNext?.setOnClickListener(this)
 //        resetPrice()
+        dialogLoading()
     }
 
     override fun onClick(v: View?) {
@@ -148,7 +150,24 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract, AdapterPu
 //        }
     }
 
+    private fun dialogLoading(){
+        progressDialog = Dialog(requireActivity())
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(requireActivity(),R.color.white))
+        val window : Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
+    }
+
     override fun getProductPhone(data: ProductPhone?) {
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 
     override fun onClickAdapter(view: View, data: PulsaItem) {

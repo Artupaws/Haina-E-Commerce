@@ -1,21 +1,17 @@
 package haina.ecommerce.view.myaccount
 
+import haina.ecommerce.base.BaseView
 import haina.ecommerce.model.DataUser
 
 interface MyAccountContract {
 
-    fun successGetDataUser(msg:String)
-    fun errorGetDataUSer(msg:String)
+    interface View:BaseView{
+    fun messageGetDataUser(msg:String)
     fun getDataUser(data : DataUser?)
-
-    fun successLogout(msg:String)
-    fun errorLogout(msg:String)
+    fun messageLogout(msg:String)
     fun resetTokenUser(data: String?)
-
-    fun successChangeImageProfile(msg:String)
-    fun errorChangeImageProfile(msg:String)
-
-    fun checkDataCompany(msg:String)
-
+    fun messageChangeImageProfile(msg:String)
+    fun messageCheckDataCompany(msg:String)
+    }
 
 }

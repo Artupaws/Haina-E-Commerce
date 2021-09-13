@@ -20,7 +20,7 @@ import java.util.ArrayList
 
 class AdapterTransactionPulsaUnfinish(
     val context: Context,
-    private val listTransactionUnfinish: List<PendingItem?>?,
+    private val listTransactionUnfinish: ArrayList<PendingItem?>?,
     private var itemAdapterCallBack: ItemAdapterCallback
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -55,15 +55,15 @@ class AdapterTransactionPulsaUnfinish(
                 }
                 copyVirtualAccount(binding)
                 btnHowPay.setOnClickListener {
-                    itemAdapterCallBack.onClickAdapter(binding.btnHowPay, itemHaina)
+                    itemAdapterCallBack.onClickAdapter(binding.btnHowPay, itemHaina, adapterPosition, listTransactionUnfinish)
                 }
 
                 tvOptionMenu.setOnClickListener {
-                    itemAdapterCallBack.onClickAdapter(tvOptionMenu, itemHaina)
+                    itemAdapterCallBack.onClickAdapter(tvOptionMenu, itemHaina, adapterPosition, listTransactionUnfinish)
                 }
 
                 relativeClick.setOnClickListener {
-                    itemAdapterCallBack.onClickAdapter(binding.relativeClick, itemHaina)
+                    itemAdapterCallBack.onClickAdapter(binding.relativeClick, itemHaina, adapterPosition, listTransactionUnfinish)
                 }
             }
         }
@@ -139,7 +139,7 @@ class AdapterTransactionPulsaUnfinish(
     }
 
     interface ItemAdapterCallback {
-        fun onClickAdapter(view: View, data: PendingItem?)
+        fun onClickAdapter(view: View, data: PendingItem?, adapterPosition:Int, listTransaction:ArrayList<PendingItem?>?)
     }
 
     fun addTransactionPulsaPending(data: List<PendingItem?>?) {

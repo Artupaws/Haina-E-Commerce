@@ -91,7 +91,6 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         val high: TextWatcher = NumberTextWatcher(binding.etHighSalary, locale, numDecs)
         binding.etMinimSalary.addTextChangedListener(low)
         binding.etHighSalary.addTextChangedListener(high)
-
         binding.cbShowSalary.setOnCheckedChangeListener { _, isChecked ->
             showSalary = when(isChecked){
                 true -> {
@@ -472,13 +471,20 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
             minSalary = changeFormatMoneyToValue(binding.etMinimSalary.text.toString())
         }
 
-        if (highSalary.isNullOrEmpty()){
-            binding.tvTitleSalary.error = getString(R.string.cant_empty)
-            isEmptyMaxSalary = true
-        } else {
-            binding.tvTitleSalary.error = null
-            isEmptyMaxSalary = false
-            highSalary = changeFormatMoneyToValue(binding.etHighSalary.text.toString())
+        when {
+            highSalary.isNullOrEmpty() -> {
+                binding.tvTitleSalary.error = getString(R.string.cant_empty)
+                isEmptyMaxSalary = true
+            }
+            minSalary.toInt() >= highSalary.toInt() -> {
+                binding.tvTitleSalary.error = "Max salary must higher then min salary!"
+                isEmptyMaxSalary = true
+            }
+            else -> {
+                binding.tvTitleSalary.error = null
+                isEmptyMaxSalary = false
+                highSalary = changeFormatMoneyToValue(binding.etHighSalary.text.toString())
+            }
         }
 
         if (description.isNullOrEmpty()){

@@ -86,6 +86,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         return loadFragment(fragment)
     }
 
+    override fun recreate() {
+        loadFragment(MyAccountFragment())
+        binding.bottomNavigationView.menu.findItem(R.id.myAccountFragment).isChecked = true
+        super.recreate()
+    }
+
     private fun loadFragment(fragment: Fragment?): Boolean {
         if (fragment != null) {
             supportFragmentManager.beginTransaction()
@@ -146,7 +152,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver)
     }
 
-    private fun setLanguageApp(languageParams:String){
+    fun setLanguageApp(languageParams:String){
         val resource:Resources = resources
         val dm:DisplayMetrics = resource.displayMetrics
         val config:Configuration = resource.configuration

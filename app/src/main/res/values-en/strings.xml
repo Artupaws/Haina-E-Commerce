@@ -13,9 +13,9 @@
     <string name="explore">Explore</string>
     <string name="posting">Posting</string>
     <string name="my_account">Profile</string>
-    <string name="hint_search">News Today, Covid-19 News...</string>
+    <string name="hint_search">Today\'s News, Covid-19 News...</string>
     <string name="categories">Categories</string>
-    <string name="recomendations">RECOMENDATIONS</string>
+    <string name="recomendations">RECOMMENDATIONS</string>
     <string name="news_title">News</string>
     <string name="shipping_title">Shipping</string>
     <string name="topup_title">Topup</string>
@@ -29,7 +29,7 @@
     <string name="today">Today</string>
     <string name="covid_19_indonesia">Covid-19 | Indonesia</string>
     <string name="total_cases">Total cases</string>
-    <string name="recover">Recover</string>
+    <string name="recover">Recovered</string>
     <string name="see_cases_other_countries"><u>See cases in other province ></u></string>
     <string name="house_maid_title">House Maid</string>
     <string name="car_service_title">Service Car</string>
@@ -57,7 +57,7 @@
     <string name="total_price">Total Price</string>
     <string name="buy">Buy</string>
     <string name="please_login_account">To view this page, please login first</string>
-    <string name="havent_transaction">You haven\'t done any transactions</string>
+    <string name="havent_transaction">You have not done any transactions</string>
     <string name="currency">| Currency</string>
     <string name="one">1</string>
     <string name="idr">IDR</string>
@@ -72,7 +72,7 @@
     <string name="die_title">Die</string>
     <string name="covid_19_info">| Covid-19 Info</string>
     <string name="search_province_here">Search Province Here</string>
-    <string name="title_job">Title Job</string>
+    <string name="title_job">Job Title</string>
     <string name="location_company">Location Company</string>
     <string name="category_job">Job Category</string>
     <string name="description">Description</string>
@@ -104,7 +104,7 @@
     <string name="apply">Apply</string>
     <string name="apply_filter">Apply Filter</string>
     <string name="register_your_data_company_here">Register your data company here</string>
-    <string name="warning_data_company">You don\'t have data company, please register your company first for posting job vacancy.</string>
+    <string name="warning_data_company">You do not have any company registered, please register your company first before posting job vacancy.</string>
     <string name="company_name">Company Name</string>
     <string name="register_my_company">Register My Company</string>
     <string name="data_company">Data Company</string>
@@ -170,7 +170,7 @@
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="title_info_change_password">After success change password, you must to login with the new password</string>
     <string name="title_info_old_password">We need your old password, to make sure you change your password</string>
-    <string name="message_fill_data">Please fill your personal data for better experience :)</string>
+    <string name="message_fill_data">Please complete all required data</string>
     <string name="title_attention">Attention!</string>
     <string name="google">Google</string>
     <string name="facebook">Facebook</string>
@@ -195,7 +195,7 @@
     <string name="water_management">water management</string>
     <string name="phone_number">phone number</string>
     <string name="internet_tv_services">internet provider</string>
-    <string name="customer_number_internet_tv">customer number internet</string>
+    <string name="customer_number_internet_tv">Customer number</string>
     <string name="postpaid">Postpaid</string>
     <string name="telkom">Telkom</string>
     <string name="payment_method">Payment Method</string>
@@ -205,7 +205,7 @@
     <string name="discounts">Discounts</string>
     <string name="service_fee">Admin Fee</string>
     <string name="filter_job">Filter Job</string>
-    <string name="how_to_payment">how to payment</string>
+    <string name="how_to_payment">How to paym</string>
     <string name="review_hotel">Reviews</string>
     <string name="your_bank_account">Your Bank Account</string>
     <string name="destination_bank_account">Destination Bank Account</string>
@@ -239,18 +239,19 @@
     <string name="hotels">Hotels</string>
     <string name="ratings_and_reviews">Ratings and Reviews</string>
     <string name="see_all_reviews"><u>See All Reviews</u></string>
-    <string name="image_room_hotel">Image Room Hotel</string>
+    <string name="image_room_hotel">Hotel Room Image</string>
     <string name="book_now">Book Now</string>
     <string name="facilities">Facilities</string>
     <string name="check_in_title">Select Dates</string>
     <string name="check_in">Check in</string>
     <string name="check_out">Check out</string>
-    <string name="type_room">Type Room</string>
+    <string name="type_room">Room Type</string>
     <string name="address_hotel">Address Hotel</string>
     <string name="night">Total Night(s)</string>
-    <string name="see_on_map"><u>see on map</u></string>
+    <string name="see_on_map"><u>See on map</u></string>
     <string name="give_your_rating">Give your rating</string>
     <string name="booking_id">Booking ID</string>
+    <string name="both">Both</string>
     <string name="total_guest_s">Total Guest(s)</string>
     <string name="taxes_service_charge"><![CDATA[Taxes & Service Charge]]></string>
     <string name="destination">Destination</string>
@@ -262,13 +263,13 @@
     <string name="very_good">Very Good</string>
     <string name="good">Good</string>
     <string name="bad">Bad</string>
-    <string name="worse">Worse</string>
+    <string name="worse">Very bad</string>
     <string name="_5">5</string>
     <string name="_4">4</string>
     <string name="rent_car">Rent Car</string>
     <string name="flight_ticket">Flight Ticket</string>
     <string name="input_your_review_here">Add review</string>
-    <string name="name_customer">Name Customer</string>
+    <string name="name_customer">Customer Name</string>
     <string name="bill_title">Bill</string>
     <string name="bill_date">Bill Date</string>
     <string name="total_amount">Total Amount</string>
@@ -280,7 +281,7 @@
     <string name="transaction_hotel">Transaction Hotel</string>
     <string name="change_review">Change Review</string>
     <string name="your_review_on">Your review on</string>
-    <string name="input_captcha_here">Input captcha here</string>
+    <string name="input_captcha_here">Input Captcha here</string>
     <string name="insert_captcha_below">Insert Captcha Below</string>
     <string name="captcha_is_needed_for_security_reason">captcha is needed for security reason.</string>
     <string name="input_adult">Please input adult passenger</string>
@@ -288,19 +289,19 @@
     <string name="adult">Adult</string>
     <string name="_12_or_above">12 Or Above</string>
     <string name="child">Child</string>
-    <string name="_2_age_12_age">2 Age - 12 Age</string>
-    <string name="under_2_age">Under 2 Age</string>
+    <string name="_2_age_12_age">Age 2 - 12</string>
+    <string name="under_2_age">Under Age 2</string>
     <string name="baby">Baby</string>
-    <string name="warning_input_passport">如果您的国籍不是印度尼西亚，那么只需输入您的护照号码</string>
+    <string name="warning_input_passport">For non-Indonesian citizens, please input passport number.</string>
     <string name="title">Title :</string>
-    <string name="passenger_indentity">Passenger Indentity</string>
+    <string name="passenger_indentity">Passenger Identity</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="gender_with_colon">Gender :</string>
     <string name="nationality">Nationality</string>
     <string name="birth_country">Birth Country</string>
     <string name="id_card_number">ID Card Number</string>
-    <string name="warning_input_data_passenger">for first passenger, please input adult data passenger</string>
+    <string name="warning_input_data_passenger">For the first passenger, please input an adult passenger</string>
     <string name="add_on">Add On</string>
     <string name="select">Select</string>
     <string name="see_all_facilities"><u>See all facilities</u></string>
@@ -319,15 +320,15 @@
     <string name="facilities_required">Facilities*</string>
     <string name="shm">SHM</string>
     <string name="hgb">HGB</string>
-    <string name="address_property">Address Property</string>
-    <string name="title_ads_required">Title Ads*</string>
-    <string name="description_ads">Description Ads*</string>
+    <string name="address_property">Property address</string>
+    <string name="title_ads_required">Ad Title*</string>
+    <string name="description_ads">Ad Description*</string>
     <string name="set_price_required">Set Price for Rent*</string>
-    <string name="set_price_sell_required">Set Price for Sell*</string>
+    <string name="set_price_sell_required">Set Price for Sale*</string>
     <string name="sell_rent">Sell/Rent</string>
-    <string name="for_sell">For Sell</string>
+    <string name="for_sell">For Sale</string>
     <string name="for_rent">For Rent</string>
-    <string name="type_posting_required">Type Posting*</string>
+    <string name="type_posting_required">Ad Type*</string>
     <string name="in_meters">In square meters</string>
     <string name="warehouse">Warehouse</string>
     <string name="office">Office</string>
@@ -353,14 +354,14 @@
     <string name="rent">Rent</string>
     <string name="my_property">My Property</string>
     <string name="warning_edit_property">Please change your property status to available</string>
-    <string name="notes_transaction_property">Please note :\n 1.Don\'t immediately transfer money when you haven\'t seen the property in person. \n2.make sure the transaction has a valid sale and purchase agreement.
+    <string name="notes_transaction_property">Please note :\n 1.Do not immediately transfer any amount until you are sure with the property. \n2.Make sure the transaction has a valid sale and purchase agreement.
         \n3.Make sure the property matches what is advertised.
         \n 4.This transaction is beyond the control of Haina Service Indonesia.
-        \n 5.You will be forwarded to wa chat, please use polite language</string>
+        \n 5.You will be forwarded to WhatsApp chat, please mind your language during chat</string>
     <string name="forum">forum</string>
     <string name="create_sub_forum">Create Sub Forum</string>
     <string name="new_post">New Post</string>
-    <string name="cant_empty">Can\'t Empty</string>
+    <string name="cant_empty">Cannot be empty</string>
     <string name="follow">Follow</string>
     <string name="unfollow">Unfollow</string>
     <string name="category">Category</string>
@@ -370,6 +371,5 @@
     <string name="my_forum">My Forum</string>
     <string name="role">Role</string>
     <string name="ban_reason">Ban Reason</string>
-
-
+    <string name="package_invoice_order">Package, Invoice, Order</string>
 </resources>

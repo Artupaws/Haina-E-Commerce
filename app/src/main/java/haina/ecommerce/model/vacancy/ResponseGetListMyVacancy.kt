@@ -74,8 +74,11 @@ data class DataMyVacancy(
 	@field:SerializedName("level")
 	val level: Int? = null,
 
-	@field:SerializedName("total_applicant")
+	@field:SerializedName("unprocessed_applicant")
 	val totalApplicant: Int? = null,
+
+	@field:SerializedName("accepted_applicant")
+	val accpetedApplicant: Int? = null,
 
 	@field:SerializedName("deleted_at")
 	val deletedAt: String? = null,

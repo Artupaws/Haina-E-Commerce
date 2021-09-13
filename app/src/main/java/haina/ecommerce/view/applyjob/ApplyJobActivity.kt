@@ -34,6 +34,7 @@ import haina.ecommerce.adapter.AdapterDocumentUserChoose
 import haina.ecommerce.databinding.ActivityApplyJobBinding
 import haina.ecommerce.model.DataDocumentUser
 import haina.ecommerce.model.DataUser
+import haina.ecommerce.model.LatestWork
 import haina.ecommerce.view.myaccount.detailaccount.DetailAccountActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -56,6 +57,7 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener,
     var path: String? = null
     private var fileToUpload:MultipartBody.Part? = null
     private var idResume:Int = 0
+    private var dataWorkExperience: LatestWork? = null
 
     companion object {
         //Permission code
@@ -150,9 +152,11 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener,
     private fun checkDataApply(){
         var isEmptyNotes = true
         var isEmptyResume = true
+        var isEmptyWorkExperience = true
 
         var notes = binding.etDescriptionAds.text.toString()
         var resume = idResume
+        var workExperience = dataWorkExperience
 
         if (notes.isNullOrEmpty()){
             isEmptyNotes = true
@@ -171,6 +175,16 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener,
             binding.tvTitleResume.error = null
             resume = idResume
         }
+
+//        if (workExperience == null){
+//            isEmptyWorkExperience = true
+//            binding.tvPosition.error = getString(R.string.cant_empty)
+//            binding.tvActionReviewProfile.error = getString(R.string.cant_empty)
+//        } else {
+//            isEmptyWorkExperience = false
+//            binding.tvPosition.error = null
+//            workExperience = dataWorkExperience
+//        }
 
         if (!isEmptyResume && !isEmptyNotes){
             presenter.applyJob(idJobVacancy, notes, resume)
@@ -306,10 +320,16 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener,
             }
 
         }).into(binding.ivProfile)
-
+        dataWorkExperience = data?.latestWork       
         binding.tvName.text = data?.fullname
         binding.tvEmail.text = data?.email
         binding.tvPhone.text = data?.phone
+        if (data?.latestWork == null) binding.tvPosition.text = "No work experience" else  binding.tvPosition.text = data.latestWork.position
+    }
+
+    override fun onResume() {
+        presenter.getDataUserProfile()
+        super.onResume()
     }
 
     override fun showLoading() {

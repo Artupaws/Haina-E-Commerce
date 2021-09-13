@@ -21,7 +21,7 @@ import java.util.ArrayList
 
 class AdapterTransactionJobUnfinish(
     val context: Context,
-    private val listTransactionUnfinishJob : List<PendingJobItem?>?,
+    private val listTransactionUnfinishJob : ArrayList<PendingJobItem?>?,
     private val itemAdapterCallback: ItemAdapterCallback,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -50,7 +50,7 @@ class AdapterTransactionJobUnfinish(
                 }
 
                 tvOptionMenu.setOnClickListener {
-                    itemAdapterCallback.onTransactionJobClick(tvOptionMenu, itemHaina)
+                    itemAdapterCallback.onTransactionJobClick(tvOptionMenu, itemHaina, adapterPosition, listTransactionUnfinishJob)
                 }
 
                 relativeClick.setOnClickListener {
@@ -129,7 +129,7 @@ class AdapterTransactionJobUnfinish(
     }
 
     interface ItemAdapterCallback {
-        fun onTransactionJobClick(view: View, data: PendingJobItem?)
+        fun onTransactionJobClick(view: View, data: PendingJobItem?, adapterPosition:Int, listTransaction:ArrayList<PendingJobItem?>?)
     }
 
     fun addTransactionJobPending(data: List<PendingJobItem?>?) {

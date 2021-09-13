@@ -1,8 +1,10 @@
 package haina.ecommerce.api
 
 import android.content.Context
+import haina.ecommerce.BuildConfig
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.util.Constants.Companion.APIKEY
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -27,12 +29,13 @@ class NetworkConfig {
     fun getConnectionHainaBearer(context: Context): NetworkService{
         sharedPrefHelper = SharedPreferenceHelper(context)
         val retrofit: Retrofit = Retrofit.Builder()
-                .baseUrl(Constants.BASE_API_HAINA)
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(OkHttpClient.Builder().connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES).addInterceptor { chain ->
+                .client(OkHttpClient.Builder().connectTimeout(2, TimeUnit.MINUTES).readTimeout(2, TimeUnit.MINUTES).writeTimeout(2, TimeUnit.MINUTES)
+                    .addInterceptor { chain ->
                     val request = chain.request().newBuilder().addHeader("Authorization", "Bearer ${sharedPrefHelper.getValueString(Constants.PREF_TOKEN_USER)}")
                             .addHeader("Accept", "application/json")
-                            .addHeader("apikey", Constants.APIKEY)
+                            .addHeader("apikey", BuildConfig.APIKEY)
                             .build()
                     chain.proceed(request)
                 }.build())
@@ -53,7 +56,7 @@ class NetworkConfig {
                 .writeTimeout(5, TimeUnit.MINUTES).addInterceptor { chain ->
                 val request = chain.request().newBuilder().addHeader("Authorization", "Bearer ${sharedPrefHelper.getValueString(Constants.PREF_TOKEN_USER)}")
                     .addHeader("Accept", "application/json")
-                    .addHeader("apikey", Constants.APIKEY)
+                    .addHeader("apikey", BuildConfig.APIKEY)
                     .build()
                 chain.proceed(request)
             }.build())
@@ -68,7 +71,7 @@ class NetworkConfig {
                 .client(OkHttpClient.Builder().connectTimeout(300, TimeUnit.SECONDS).addInterceptor { chain ->
                     val request = chain.request().newBuilder()
                             .addHeader("Accept", "application/json")
-                            .addHeader("apikey", Constants.APIKEY)
+                            .addHeader("apikey", BuildConfig.APIKEY)
                             .build()
                     chain.proceed(request)
                 }.build())

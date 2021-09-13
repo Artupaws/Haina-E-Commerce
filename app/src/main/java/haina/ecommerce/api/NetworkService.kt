@@ -978,4 +978,110 @@ interface NetworkService {
         @Field("id_resume")idResume:Int
     ):Call<ResponseGiveUpvote>
 
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/pulsa/cancel")
+    fun cancelTransaction(
+        @Field("id_transaction")idTransaction:Int?
+    ):Call<ResponseGiveUpvote>
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/pulsa/cancel")
+    fun cancelTransactionJob(
+        @Field("id_vacancy")idJob:Int?
+    ):Call<ResponseGiveUpvote>
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/work_exp/add")
+    fun addWorkExperience(
+        @Field("company")company:String,
+        @Field("city")city:String,
+        @Field("date_start")dateStart:String,
+        @Field("date_end")dateEnd:String,
+        @Field("position")position:String,
+        @Field("description")description:String,
+        @Field("salary")salary:Int
+    ):Call<ResponseGiveUpvote>
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/work_exp/update")
+    fun updateWorkExperience(
+        @Field("company")company:String,
+        @Field("city")city:String,
+        @Field("date_start")dateStart:String,
+        @Field("date_end")dateEnd:String,
+        @Field("position")position:String,
+        @Field("description")description:String,
+        @Field("salary")salary:Int
+    ):Call<ResponseGiveUpvote>
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/education/add")
+    fun addLastEducation(
+        @Field("institution")institution:String,
+        @Field("year_start")yearStart:String,
+        @Field("year_end")yearEnd:String,
+        @Field("gpa")gpa:Double?,
+        @Field("major")major:String,
+        @Field("id_edu")idEdu:Int,
+        @Field("city")city:String
+    ):Call<ResponseGiveUpvote>
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/education/update")
+    fun updateLastEducation(
+        @Field("institution")institution:String,
+        @Field("year_start")yearStart:String,
+        @Field("year_end")yearEnd:String,
+        @Field("gpa")gpa:Double?,
+        @Field("major")major:String,
+        @Field("id_edu")idEdu:Int,
+        @Field("city")city:String
+    ):Call<ResponseGiveUpvote>
+
+    //List Applicant Unprocess
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/job/applicant")
+    fun getListApplicant(
+        @Field("id_vacancy")idVacancy:Int
+    ):Call<ResponseGetListApplicant>
+
+    //List Applicant ShortListed
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/job/applicant/shortlisted")
+    fun getListApplicantShortListed(
+        @Field("id_vacancy")idVacancy:Int
+    ):Call<ResponseGetListApplicant>
+
+    //List Applicant Interview
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/job/applicant/interview")
+    fun getListApplicantInterview(
+        @Field("id_vacancy")idVacancy:Int
+    ):Call<ResponseGetListApplicant>
+
+    //List Applicant Accepted
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/job/applicant/accepted")
+    fun getListApplicantAccepted(
+        @Field("id_vacancy")idVacancy:Int
+    ):Call<ResponseGetListApplicant>
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/job/applicant/update")
+    fun updateApplicantStatus(
+        @Field("id_applicant")idVacancy:Int,
+        @Field("status")status:String
+    ):Call<ResponseGiveUpvote>
+
 }

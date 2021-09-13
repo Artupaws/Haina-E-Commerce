@@ -1,6 +1,7 @@
 package haina.ecommerce.view.topup
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,10 +14,14 @@ import android.telephony.TelephonyManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.bumptech.glide.Glide
 import haina.ecommerce.R
 import haina.ecommerce.adapter.TabAdapterInternet
 import haina.ecommerce.databinding.ActivityTopupBinding
@@ -28,7 +33,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.topup.pulsa.PulsaFragment
 
-class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
+class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract.View {
 
     private lateinit var binding: ActivityTopupBinding
     private lateinit var sharedPref: SharedPreferenceHelper
@@ -38,6 +43,7 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
     private var phoneNumber: String? = null
     private val helper: Helper = Helper
     private var loadStatus:Int? = 0
+    private var progressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +83,7 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
         })
         getPhoneNumber()
         refresh()
+        dialogLoading()
     }
 
     override fun onClick(v: View?) {
@@ -96,6 +103,15 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
                 }
             }
         }
+    }
+
+    private fun dialogLoading(){
+        progressDialog = Dialog(this)
+        progressDialog?.setContentView(R.layout.dialog_loader)
+        progressDialog?.setCancelable(false)
+        progressDialog?.window?.setBackgroundDrawable(ContextCompat.getDrawable(applicationContext,R.color.white))
+        val window : Window = progressDialog?.window!!
+        window.setGravity(Gravity.CENTER)
     }
 
     fun getNumber():String{
@@ -216,9 +232,17 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract {
     }
 
     override fun getProviderName(data: ProductPhone?) {
-        binding.tvNameProvider.text = data?.provider?.name
+        Glide.with(applicationContext).load(data?.provider?.photoUrl).into(binding.ivLogoProvider)
         val sendPulsa = Intent("productPhone")
                 .putExtra("pulsa", data)
         broadcaster?.sendBroadcast(sendPulsa)
+    }
+
+    override fun showLoading() {
+        progressDialog?.show()
+    }
+
+    override fun dismissLoading() {
+        progressDialog?.dismiss()
     }
 }

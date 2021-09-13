@@ -92,14 +92,15 @@
                 android:text="@string/for_rent"
                 style="@style/TextView.Poppins12spGrey"
                 android:textColor="@color/black"/>
+
             <RadioButton
                 android:id="@+id/rb_both"
+                style="@style/TextView.Poppins12spGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Both"
-                style="@style/TextView.Poppins12spGrey"
-                android:textColor="@color/black"/>
+                android:text="@str"
+                android:textColor="@color/black" />
 
         </RadioGroup>
 
@@ -134,12 +135,12 @@
 
             <TextView
                 android:id="@+id/tv_title_land_area"
+                style="@style/TextView.Poppins12spGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/TextView.Poppins12spGrey"
-                android:text="@string/surface_area_required"
-                android:textColor="@color/black"/>
+                android:text="@string/land_area"
+                android:textColor="@color/black" />
             <EditText
                 android:id="@+id/et_surface_area"
                 android:layout_width="match_parent"

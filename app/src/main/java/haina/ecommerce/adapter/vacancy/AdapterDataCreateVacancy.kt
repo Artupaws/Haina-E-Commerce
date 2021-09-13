@@ -274,31 +274,31 @@ class AdapterDataCreateVacancy(
     override fun getItemCount(): Int {
         return when (VIEW_TYPE) {
             1 -> {
-                listVacancyLevel!!.size
+                listVacancyLevel?.size?:0
             }
             2 -> {
-                listVacancyLocation!!.size
+                listVacancyLocation?.size?:0
             }
             3 -> {
-                listVacancyType!!.size
+                listVacancyType?.size?:0
             }
             4 -> {
-                listExperience!!.size
+                listExperience?.size?:0
             }
             5 -> {
-                listVacancySpecialist!!.size
+                listVacancySpecialist?.size?:0
             }
             6 -> {
-                listVacancySkill!!.size
+                listVacancySkill?.size?:0
             }
             7 -> {
-                listVacancyEducation!!.size
+                listVacancyEducation?.size?:0
             }
             8 -> {
-                listVacancySkillChoosed!!.size
+                listVacancySkillChoosed?.size?:0
             }
             else -> {
-                listVacancyPackage!!.size
+                listVacancyPackage?.size?:0
             }
         }
     }

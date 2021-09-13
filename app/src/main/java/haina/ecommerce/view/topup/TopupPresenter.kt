@@ -9,12 +9,14 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class TopupPresenter(val view: TopupContract, val context: Context) {
+class TopupPresenter(val view: TopupContract.View, val context: Context) {
 
     fun getDataUserProfile(){
+        view.showLoading()
         NetworkConfig().getConnectionHainaBearer(context).getDataUser()
                 .enqueue(object : retrofit2.Callback<ResponseGetDataUser>{
                     override fun onResponse(call: Call<ResponseGetDataUser>, response: Response<ResponseGetDataUser>) {
+                        view.dismissLoading()
                         if (response.isSuccessful && response.body()?.value == 1){
                             val data = response.body()?.data
                             view.getDataUser(data)
@@ -26,6 +28,7 @@ class TopupPresenter(val view: TopupContract, val context: Context) {
                     }
 
                     override fun onFailure(call: Call<ResponseGetDataUser>, t: Throwable) {
+                        view.dismissLoading()
                         view.messageGetDataUser(t.localizedMessage)
                     }
 

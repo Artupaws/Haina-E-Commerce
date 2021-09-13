@@ -59,8 +59,17 @@ class MyVacancyActivity : AppCompatActivity(), MyVacancyContract.View, AdapterMy
     }
 
     override fun getListMyVacancy(data: List<DataMyVacancy?>?) {
-        adapterMyVacancy.clear()
-        adapterMyVacancy.addVacancyLevel(data)
+        Timber.d(data?.size.toString())
+        if (data?.size != 0){
+            binding.includeEmpty.linearEmpty.visibility = View.GONE
+            binding.rvMyVacancy.visibility = View.VISIBLE
+            adapterMyVacancy.clear()
+            adapterMyVacancy.addVacancyLevel(data)
+        } else {
+            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+            binding.rvMyVacancy.visibility = View.GONE
+            binding.includeEmpty.tvEmpty.text = "Empty"
+        }
     }
 
     override fun getDataCreateVacancy(data: DataCreateVacancy?) {
@@ -105,6 +114,34 @@ class MyVacancyActivity : AppCompatActivity(), MyVacancyContract.View, AdapterMy
                         startActivity(Intent(applicationContext, HistoryTransactionActivity::class.java))
                     }
                 }
+            }
+            R.id.linear_apply -> {
+                startActivity(Intent(applicationContext, ListApplicantActivity::class.java)
+                    .putExtra("dataVacancy", dataMyVacancy)
+                    .putExtra("dataCreateVacancy", dataCreateVacancy)
+                    .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
+                    .putExtra("title", "Unprocess Applicant"))
+            }
+            R.id.linear_choosed -> {
+                startActivity(Intent(applicationContext, ListApplicantActivity::class.java)
+                    .putExtra("dataVacancy", dataMyVacancy)
+                    .putExtra("dataCreateVacancy", dataCreateVacancy)
+                    .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
+                    .putExtra("title", "Choosed Applicant"))
+            }
+            R.id.linear_interview -> {
+                startActivity(Intent(applicationContext, ListApplicantActivity::class.java)
+                    .putExtra("dataVacancy", dataMyVacancy)
+                    .putExtra("dataCreateVacancy", dataCreateVacancy)
+                    .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
+                    .putExtra("title", "Interview Applicant"))
+            }
+            R.id.linear_accepted -> {
+                startActivity(Intent(applicationContext, ListApplicantActivity::class.java)
+                    .putExtra("dataVacancy", dataMyVacancy)
+                    .putExtra("dataCreateVacancy", dataCreateVacancy)
+                    .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
+                    .putExtra("title", "Accepted Applicant"))
             }
         }
     }

@@ -17,5 +17,5 @@ data class Provider(
 	val id: Int? = null,
 
 	@field:SerializedName("photo_url")
-	val photoUrl: Any? = null
+	val photoUrl: String? = null
 )

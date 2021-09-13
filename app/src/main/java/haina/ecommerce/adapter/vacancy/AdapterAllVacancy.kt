@@ -57,7 +57,6 @@ class AdapterAllVacancy(val context: Context,
                             progressCircular.visibility = View.GONE
                             return false
                         }
-
                     })
                     .into(ivImageCompany)
                 linearJobVacancy.setOnClickListener {
