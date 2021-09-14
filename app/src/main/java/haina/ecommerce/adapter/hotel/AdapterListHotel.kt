@@ -26,7 +26,7 @@ class AdapterListHotel(val context: Context, private val listHotel: List<DataHot
                 val startPrice = helper.convertToFormatMoneyIDRFilter(hotelHaina.startingPrice!!)
                 tvStartPrice.text = startPrice
                 cvClick.setOnClickListener { itemAdapterCallback.onClick(binding.cvClick, hotelHaina) }
-                Glide.with(context).load(hotelHaina.hotelImage).into(ivHotels)
+//                Glide.with(context).load(hotelHaina.hotelImage).into(ivHotels)
                 ratingBarHotel.rating = hotelHaina.avgRating!!
             }
         }
