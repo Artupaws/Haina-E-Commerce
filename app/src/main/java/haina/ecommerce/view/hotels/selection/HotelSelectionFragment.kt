@@ -294,12 +294,10 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
                     val totalPassengerParams = intent.getStringExtra("total")
                     val totalAdultParams = intent.getStringExtra("totalAdult")
                     val totalChildParams = intent.getStringExtra("totalChild")
-                    val totalBabyParams = intent.getStringExtra("totalBaby")
                     totalPassenger = totalPassengerParams!!.toInt()
                     totalAdult = totalAdultParams!!.toInt()
                     totalChild = totalChildParams!!.toInt()
-                    totalBaby = totalBabyParams!!.toInt()
-                    setDetailPassenger(totalAdultParams!!, totalChildParams, totalBabyParams, totalPassengerParams!!)
+                    setDetailPassenger(totalAdultParams!!, totalChildParams, totalPassengerParams!!)
                 }
                 "dataSearch" -> {
                     bottomsheet?.dismiss()
@@ -319,20 +317,13 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
         searchidCity=dataSearch.idCity
     }
 
-    private fun setDetailPassenger(totalAdult:String, totalChildParams:String?, totalBabyParams:String?, totalPassenger:String){
+    private fun setDetailPassenger(totalAdult:String, totalChildParams:String?, totalPassenger:String){
         if (totalChildParams != "0"){
             binding.tvTotalChild.visibility = View.VISIBLE
             binding.tvTotalChild.text = "$totalChild Child(s)"
         } else {
             binding.tvTotalChild.visibility = View.GONE
             totalChild = 0
-        }
-        if (totalBabyParams != "0"){
-            binding.tvTotalBaby.visibility = View.VISIBLE
-            binding.tvTotalBaby.text = "$totalBaby Baby(s)"
-        } else {
-            binding.tvTotalBaby.visibility = View.GONE
-            totalBaby = 0
         }
         binding.tvTotalPax.error = null
         binding.tvTotalAdult.text = "$totalAdult Adult(s)"

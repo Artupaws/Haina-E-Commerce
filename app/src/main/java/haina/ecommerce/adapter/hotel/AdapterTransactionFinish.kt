@@ -19,8 +19,7 @@ import java.util.*
 
 class AdapterTransactionFinish(val context: Context,
                                private val listHotel: List<haina.ecommerce.model.hotels.newHotel.PaidItem?>?,
-                               private val itemAdapterCallback: ItemAdapterCallback,
-private val adapterForCancel:Boolean) :
+                               private val itemAdapterCallback: ItemAdapterCallback, private val tab:String) :
         RecyclerView.Adapter<AdapterTransactionFinish.Holder>() {
 
     private val helper:Helper = Helper
@@ -30,16 +29,6 @@ private val adapterForCancel:Boolean) :
         private val binding = ListItemBookingHotelBinding.bind(view)
         fun bind(itemHaina: haina.ecommerce.model.hotels.newHotel.PaidItem, itemAdapterCallback: ItemAdapterCallback) {
             with(binding) {
-                when(adapterForCancel){
-                    true -> {
-                        frameReviewHotel.visibility = View.GONE
-                        linearTotalGuest.visibility = View.GONE
-                    }
-                    false -> {
-                        frameReviewHotel.visibility = View.VISIBLE
-                        showRatingOrButtonRating(binding, itemHaina)
-                    }
-                }
                 tvHotelName.text = itemHaina.hotel?.hotelName
                 tvAddressHotel.text = itemHaina.hotel?.hotelAddress
                 val priceAndNight = "${helper.convertToFormatMoneyIDRFilter(itemHaina.totalPrice.toString())} (${itemHaina.totalNight}) Night"
@@ -47,11 +36,16 @@ private val adapterForCancel:Boolean) :
                 val checkinCheckout = "${itemHaina.checkIn} to ${itemHaina.checkOut}"
                 tvCheckinCheckout.text = checkinCheckout
 //                Glide.with(context).load(itemHaina.hotel?.hotelImage).into(ivImageRoom)
-                tvIdBooking.text = itemHaina.id.toString()
-//                tvTotalGuest.text = itemHaina.totalGuest.toString()
-                btnInputRating.setOnClickListener {
-                    itemAdapterCallback.onClick(btnInputRating, itemHaina)
+                when (tab) {
+                    "cancel" -> {
+                        lnReservationNo.visibility=View.GONE
+                    }
+                    "finish" -> {
+                        tvIdBooking.text = itemHaina.reservationNo?.toString()
+
+                    }
                 }
+//                tvTotalGuest.text = itemHaina.totalGuest.toString()
 
             }
         } 
@@ -78,10 +72,10 @@ private val adapterForCancel:Boolean) :
 //            binding.tvStatusBooking.setTextColor(context.resources.getColor(android.R.color.holo_green_dark))
 //        }
 //    }
-
-    private fun showRatingOrButtonRating(binding: ListItemBookingHotelBinding, data: haina.ecommerce.model.hotels.newHotel.PaidItem) {
-        val dateCheckout = helper.getOnlyDateFromStringDate(data.checkOut!!)
-        Log.d("resultConvert", dateCheckout)
+//
+//    private fun showRatingOrButtonRating(binding: ListItemBookingHotelBinding, data: haina.ecommerce.model.hotels.newHotel.PaidItem) {
+//        val dateCheckout = helper.getOnlyDateFromStringDate(data.checkOut!!)
+//        Log.d("resultConvert", dateCheckout)
 //        if (now >= dateCheckout.toInt()){
 //            if (data.rating == null){
 //                binding.linearRatingUser.visibility = View.GONE
@@ -117,7 +111,7 @@ private val adapterForCancel:Boolean) :
 //            binding.linearRatingUser.visibility = View.GONE
 //            binding.btnInputRating.visibility = View.GONE
 //        }
-    }
+//    }
 
     interface ItemAdapterCallback{
         fun onClick(view: View, data:haina.ecommerce.model.hotels.newHotel.PaidItem)

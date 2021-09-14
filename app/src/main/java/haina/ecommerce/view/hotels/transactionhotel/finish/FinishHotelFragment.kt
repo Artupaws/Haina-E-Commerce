@@ -66,7 +66,7 @@ class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
     private fun setListTransaction(data:List<haina.ecommerce.model.hotels.newHotel.PaidItem?>?){
         showIsEmpty(data?.size)
         binding.rvBooking.apply {
-            adapter = AdapterTransactionFinish(requireActivity(), data, this@FinishHotelFragment, false)
+            adapter = AdapterTransactionFinish(requireActivity(), data, this@FinishHotelFragment,"finish")
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
     }
@@ -82,52 +82,47 @@ class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun dialogInputReview(statusInputReview:String){
-        popupInputReview = Dialog(requireActivity())
-        popupInputReview?.setContentView(R.layout.popup_review_hotel)
-        popupInputReview?.setCancelable(true)
-        popupInputReview?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.white))
-        val window:Window = popupInputReview?.window!!
-        window.setGravity(Gravity.CENTER)
-        val btnInputReview = popupInputReview?.findViewById<Button>(R.id.btn_send_review)
-        val etReview = popupInputReview?.findViewById<EditText>(R.id.et_input_review)
-        val ratingBar = popupInputReview?.findViewById<RatingBar>(R.id.ratingBar)
-        val relativeLoading = popupInputReview?.findViewById<RelativeLayout>(R.id.relative_loading)
-
-        ratingBar?.onRatingBarChangeListener =
-            RatingBar.OnRatingBarChangeListener { view, rating, boolean ->
-                Toast.makeText(requireActivity(), rating.toString(), Toast.LENGTH_SHORT).show()
-            }
-
-        btnInputReview?.setOnClickListener {
-            val review = etReview?.text.toString()
-            val rating = ratingBar?.rating
-
-            if (review.isNullOrEmpty() && rating == 0F){
-                etReview?.error = "Please input rating"
-            } else {
-                presenter.inputRatingHotel(idHotel, rating!!, review)
-                relativeLoading?.visibility = View.VISIBLE
-                btnInputReview.visibility = View.GONE
-            }
-        }
-        if (statusInputReview.contains("Success")){
-            popupInputReview?.dismiss()
-        } else if (statusInputReview.contains("Failed")) {
-            Toast.makeText(requireActivity(), "Input Review Failed", Toast.LENGTH_SHORT).show()
-            relativeLoading?.visibility = View.INVISIBLE
-            btnInputReview?.visibility = View.VISIBLE
-        }
-    }
+//    @SuppressLint("UseCompatLoadingForDrawables")
+//    private fun dialogInputReview(statusInputReview:String){
+//        popupInputReview = Dialog(requireActivity())
+//        popupInputReview?.setContentView(R.layout.popup_review_hotel)
+//        popupInputReview?.setCancelable(true)
+//        popupInputReview?.window?.setBackgroundDrawable(requireActivity().getDrawable(android.R.color.white))
+//        val window:Window = popupInputReview?.window!!
+//        window.setGravity(Gravity.CENTER)
+//        val btnInputReview = popupInputReview?.findViewById<Button>(R.id.btn_send_review)
+//        val etReview = popupInputReview?.findViewById<EditText>(R.id.et_input_review)
+//        val ratingBar = popupInputReview?.findViewById<RatingBar>(R.id.ratingBar)
+//        val relativeLoading = popupInputReview?.findViewById<RelativeLayout>(R.id.relative_loading)
+//
+//        ratingBar?.onRatingBarChangeListener =
+//            RatingBar.OnRatingBarChangeListener { view, rating, boolean ->
+//                Toast.makeText(requireActivity(), rating.toString(), Toast.LENGTH_SHORT).show()
+//            }
+//
+//        btnInputReview?.setOnClickListener {
+//            val review = etReview?.text.toString()
+//            val rating = ratingBar?.rating
+//
+//            if (review.isNullOrEmpty() && rating == 0F){
+//                etReview?.error = "Please input rating"
+//            } else {
+//                presenter.inputRatingHotel(idHotel, rating!!, review)
+//                relativeLoading?.visibility = View.VISIBLE
+//                btnInputReview.visibility = View.GONE
+//            }
+//        }
+//        if (statusInputReview.contains("Success")){
+//            popupInputReview?.dismiss()
+//        } else if (statusInputReview.contains("Failed")) {
+//            Toast.makeText(requireActivity(), "Input Review Failed", Toast.LENGTH_SHORT).show()
+//            relativeLoading?.visibility = View.INVISIBLE
+//            btnInputReview?.visibility = View.VISIBLE
+//        }
+//    }
 
     override fun onClick(view: View, data: haina.ecommerce.model.hotels.newHotel.PaidItem) {
         when(view.id){
-            R.id.btn_input_rating -> {
-                idHotel = data.hotelId!!
-                dialogInputReview("")
-                popupInputReview?.show()
-            }
             R.id.cv_click -> {
                 val intent = Intent(context, DetailBookingsActivity::class.java)
                     requireActivity().startActivity(intent)
@@ -137,6 +132,6 @@ class FinishHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
 
     override fun messageInputReview(msg: String) {
         Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
-        dialogInputReview(msg)
+//        dialogInputReview(msg)
     }
 }

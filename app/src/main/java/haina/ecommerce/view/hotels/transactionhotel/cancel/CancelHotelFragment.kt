@@ -58,7 +58,7 @@ class CancelHotelFragment : Fragment(), AdapterTransactionFinish.ItemAdapterCall
     private fun setListTransaction(data:List<haina.ecommerce.model.hotels.newHotel.PaidItem?>?){
         showIsEmpty(data?.size)
         binding.rvBooking.apply {
-            adapter = AdapterTransactionFinish(requireActivity(), data, this@CancelHotelFragment, true)
+            adapter = AdapterTransactionFinish(requireActivity(), data, this@CancelHotelFragment,"cancel")
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
     }

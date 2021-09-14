@@ -2,6 +2,7 @@ package haina.ecommerce.view.hotels.fillindetail
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -46,6 +47,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
     private var listSpecialRequestArrayItem = ArrayList<SpecialRequestArrayItem>()
     private var stringRequest :String = ""
     private var specialRequestArray:Boolean = true
+    private var specialRequestData:List<SpecialRequestArrayItem?>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentFillInDetailBinding.inflate(inflater, container, false)
@@ -129,9 +131,10 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
             binding.includeSpecialRequest.rvRequest.visibility = View.VISIBLE
             binding.includeSpecialRequest.linearAddRequest.visibility = View.GONE
             binding.includeSpecialRequest.rvRequest.apply {
-                adapter = AdapterSpecialRequestArray(requireActivity(), data.specialRequestArray, this@FillInDetailFragment, true)
+                adapter = AdapterSpecialRequestArray(requireActivity(), data.specialRequestArray, this@FillInDetailFragment, true,"")
                 layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             }
+            specialRequestData=data.specialRequestArray
         }
     }
 
@@ -350,6 +353,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
             bundle.putParcelable("dataPricePolicy", dataPricePolicy)
             bundle.putBoolean("specialRequest", specialRequestArray)
             bundle.putString("imageRoomUrl", imageRoomUrl)
+            bundle.putParcelableArrayList("specialRequestData", specialRequestData as java.util.ArrayList<SpecialRequestArrayItem>)
             totalNight?.let { bundle.putInt("totalNight", it) }
             Navigation.findNavController(binding.btnNext).navigate(R.id.action_fillInDetailFragment_to_reviewBookingFragment, bundle)
             Log.d("dataRequestArray", "$smokingRoom, ${binding.includeContactDetail.tvPhoneNumber.text}, ${binding.includeContactDetail.tvEmailContactDetail.text}," +

@@ -29,6 +29,7 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
     private val helper:Helper = Helper
     private var dataBooking:RequestBookingHotelDarma? = null
     private var specialbooking:Boolean? = null
+    private var specialRequestData:List<SpecialRequestArrayItem?>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentReviewBookingBinding.inflate(inflater, container, false)
@@ -43,6 +44,13 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
         dataBooking = arguments?.getParcelable("dataBooking")
         val imageRoomUrl = arguments?.getString("imageRoomUrl")
         specialbooking = arguments?.getBoolean("specialBooking")!!
+
+        if(arguments?.getBoolean("specialBooking")!!){
+            Timber.d("special")
+            specialRequestData=arguments?.getParcelableArrayList("specialRequestData")
+        }else{
+            Timber.d("nonspecial")
+        }
 
         val dataPricePolicy = arguments?.getParcelable<DataPricePolicy>("dataPricePolicy")
         val totalGuest = dataBooking?.paxes?.size
@@ -93,22 +101,27 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
         }
 
         if (!specialbooking!!){
-            Timber.d("special")
             binding.includeReviewHotel.linearAddRequest.visibility = View.VISIBLE
             binding.includeReviewHotel.etSpecialRequest.setText(dataBooking.specialRequest)
             binding.includeReviewHotel.rvRequest.visibility = View.GONE
             binding.includeReviewHotel.btnAddRequest.visibility = View.GONE
-        }else{
-            Timber.d("nonspecial")
 
         }
-//        else {
-//            binding.includeReviewHotel.linearAddRequest.visibility = View.GONE
-//            binding.includeReviewHotel.rvRequest.visibility = View.VISIBLE
-//            binding.includeReviewHotel.rvRequest.apply {
-//                adapter = AdapterSpecialRequestArray(requireActivity(), dataBooking.special_request_array_complete, this@ReviewBookingFragment, false)
-//                layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
-//            }
+        else {
+            binding.includeReviewHotel.linearAddRequest.visibility = View.GONE
+            binding.includeReviewHotel.rvRequest.visibility = View.VISIBLE
+            binding.includeReviewHotel.rvRequest.apply {
+                adapter = AdapterSpecialRequestArray(
+                    requireActivity(),
+                    specialRequestData,
+                    this@ReviewBookingFragment,
+                    false,
+                    dataBooking.specialRequest
+                )
+                layoutManager =
+                    LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+            }
+        }
         binding.tvTotalPrice.text = helper.convertToFormatMoneyIDRFilter(dataPricePolicy.totalPrice.toString())
     }
 
@@ -129,7 +142,14 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
     }
 
     override fun onClickSpecialRequest(dataRequest: ArrayList<SpecialRequestArrayItem>) {
-        TODO("Not yet implemented")
+        var sra = ArrayList<String>()
+
+        dataBooking?.specialRequest=""
+        dataRequest?.forEach{
+            sra.add(it.iD!!)
+        }
+        val separator = ", "
+        dataBooking?.specialRequest = sra.joinToString(separator)
     }
 
 }

@@ -43,10 +43,8 @@ class BottomSheetHotelFragment : BottomSheetDialogFragment(), View.OnClickListen
         binding.toolbarHotelSelection.title = "Select Passenger"
         binding.includePax.cvAddAdult.setOnClickListener(this)
         binding.includePax.cvAddKid.setOnClickListener(this)
-        binding.includePax.cvAddBaby.setOnClickListener(this)
         binding.includePax.cvMinusAdult.setOnClickListener(this)
         binding.includePax.cvMinusKid.setOnClickListener(this)
-        binding.includePax.cvMinusBaby.setOnClickListener(this)
         binding.includePax.btnSaveTotalPassenger.setOnClickListener(this)
     }
 
@@ -99,25 +97,6 @@ class BottomSheetHotelFragment : BottomSheetDialogFragment(), View.OnClickListen
         }
     }
 
-    private fun addBaby() {
-        if (totalBaby < maxBaby) {
-            totalBaby++
-            binding.includePax.etTotalBaby.setText(totalBaby.toString())
-        } else if (totalBaby == maxBaby) {
-            totalBaby = maxBaby
-            binding.includePax.etTotalBaby.setText(totalBaby.toString())
-        }
-    }
-
-    private fun minusBaby() {
-        if (totalBaby > 0) {
-            totalBaby--
-            binding.includePax.etTotalBaby.setText(totalBaby.toString())
-        } else if (totalBaby == 0) {
-            totalBaby = 0
-            binding.includePax.etTotalBaby.setText(totalBaby.toString())
-        }
-    }
 
     override fun onClick(v: View?) {
             when (v?.id) {
@@ -133,12 +112,6 @@ class BottomSheetHotelFragment : BottomSheetDialogFragment(), View.OnClickListen
                 R.id.cv_minus_kid -> {
                     minusKids()
                 }
-                R.id.cv_add_baby -> {
-                    addBaby()
-                }
-                R.id.cv_minus_baby -> {
-                    minusBaby()
-                }
                 R.id.btn_save_total_passenger -> {
                     checkTotalPassenger()
                     dismiss()
@@ -149,7 +122,6 @@ class BottomSheetHotelFragment : BottomSheetDialogFragment(), View.OnClickListen
     private fun checkTotalPassenger(){
         var totalAdult = binding.includePax.etTotalAdult.text.toString()
         val totalChild = binding.includePax.etTotalKid.text.toString()
-        val totalBaby = binding.includePax.etTotalBaby.text.toString()
 
         if (totalAdult == "0"){
             binding.includePax.etTotalAdult.error = getString(R.string.input_adult)
@@ -158,7 +130,6 @@ class BottomSheetHotelFragment : BottomSheetDialogFragment(), View.OnClickListen
             val intentDataPassenger =Intent("dataPassenger")
                 .putExtra("totalAdult", totalAdult)
                 .putExtra("totalChild", totalChild)
-                .putExtra("totalBaby", totalBaby)
                 .putExtra("total", "${(totalAdult.toInt()+totalChild.toInt()+totalBaby.toInt())}")
             broadcaster?.sendBroadcast(intentDataPassenger)
         }

@@ -6,10 +6,12 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
+import haina.ecommerce.adapter.hotel.newAdapterHotel.AdapterListCity
 import haina.ecommerce.adapter.hotel.newAdapterHotel.AdapterListHotelDarma
 import haina.ecommerce.databinding.FragmentListHotelBinding
 import haina.ecommerce.model.hotels.newHotel.DataHotelDarma
@@ -46,6 +48,28 @@ class ListHotelFragment : Fragment(), AdapterListHotelDarma.ItemAdapterCallBack,
             adapter = adapterHotel
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
+
+        binding.searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
+            SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                if (p0?.isNotEmpty()!!){
+                    binding.rvHotels.apply {
+                        adapter = AdapterListHotelDarma(requireActivity(), dataHotelDarma?.hotels?.filter { it?.name!!.toLowerCase().contains(p0.toLowerCase()) }, this@ListHotelFragment)
+                        layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+                    }
+                }else{
+                    binding.rvHotels.apply {
+                        adapter = adapterHotel
+                        layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+                    }
+                }
+                return true
+            }
+        })
     }
 
     override fun onClick(view: View, idHotel: String) {
