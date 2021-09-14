@@ -3,8 +3,6 @@ package haina.ecommerce.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import haina.ecommerce.view.history.historyjobvacancy.historyinterviewapplicant.HistoryInterviewFragment
-import haina.ecommerce.view.history.historysubmitapplication.HistorySubmitJobFragment
 import haina.ecommerce.view.history.historytransaction.cancel.FragmentTransactionCancel
 import haina.ecommerce.view.history.historytransaction.finish.FragmentTransactionFinish
 import haina.ecommerce.view.history.historytransaction.unfinish.FragmentTransactionUnfinish

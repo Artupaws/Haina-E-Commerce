@@ -10,6 +10,7 @@ import haina.ecommerce.R
 import haina.ecommerce.databinding.FragmentHistoryBinding
 import haina.ecommerce.view.history.historyjobvacancy.MyVacancyActivity
 import haina.ecommerce.view.history.historymyproperty.MyPropertyActivity
+import haina.ecommerce.view.history.historysubmitapplication.HistorySubmitJobActivity
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
 
@@ -33,6 +34,7 @@ class HistoryFragment : Fragment(), View.OnClickListener {
         binding?.cvTransaction?.setOnClickListener(this)
         binding?.cvHistoryHotel?.setOnClickListener(this)
         binding?.cvMyproperty?.setOnClickListener(this)
+        binding?.cvApplyingJob?.setOnClickListener(this)
     }
 
     override fun onDestroyView() {
@@ -56,6 +58,10 @@ class HistoryFragment : Fragment(), View.OnClickListener {
             }
             R.id.cv_myproperty -> {
                 val intent = Intent(requireContext(), MyPropertyActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.cv_applying_job -> {
+                val intent = Intent(requireContext(), HistorySubmitJobActivity::class.java)
                 startActivity(intent)
             }
         }

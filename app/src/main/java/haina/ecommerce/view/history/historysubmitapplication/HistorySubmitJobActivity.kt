@@ -8,42 +8,49 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterHistorySubmitJob
+import haina.ecommerce.adapter.property.TabAdapterMyProperty
+import haina.ecommerce.databinding.ActivityMyApplicationBinding
+import haina.ecommerce.databinding.ActivityMyPropertyBinding
 import haina.ecommerce.databinding.FragmentHistorySubmitApplicationBinding
 import haina.ecommerce.model.DataJobApplication
+import haina.ecommerce.model.vacancy.MyApplication
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.history.historymyproperty.MyPropertyPresenter
 import haina.ecommerce.view.login.LoginActivity
 
-class HistorySubmitJobFragment : Fragment(), HistorySubmitJobContract, View.OnClickListener {
+class HistorySubmitJobActivity : AppCompatActivity(), HistorySubmitJobContract, View.OnClickListener {
 
-    private var _binding: FragmentHistorySubmitApplicationBinding? = null
-    private val binding get() = _binding
+    private var binding: ActivityMyApplicationBinding? = null
     private lateinit var presenter: HistorySubmitJobPresenter
+    private var broadcaster: LocalBroadcastManager? = null
+
     private var totalSubmit:String = ""
     private lateinit var sharedPreferenceHelper: SharedPreferenceHelper
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentHistorySubmitApplicationBinding.inflate(inflater, container, false)
-        presenter = HistorySubmitJobPresenter(this, requireContext())
-        sharedPreferenceHelper = SharedPreferenceHelper(requireContext())
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMyApplicationBinding.inflate(layoutInflater)
+        setContentView(binding!!.root)
+        presenter = HistorySubmitJobPresenter(this, this)
+        broadcaster = LocalBroadcastManager.getInstance(this)
+        binding!!.toolbarHistory!!.setNavigationOnClickListener { onBackPressed() }
+        sharedPreferenceHelper = SharedPreferenceHelper(this)
         refresh()
-        return binding?.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         presenter.getJobSubmit()
         binding?.includeLogin?.btnLoginNotLogin?.setOnClickListener(this)
+
     }
 
     override fun onClick(v: View?) {
         when (v?.id){
             R.id.btn_login_not_login -> {
-                val intent = Intent(requireContext(), LoginActivity::class.java)
+                val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -71,20 +78,17 @@ class HistorySubmitJobFragment : Fragment(), HistorySubmitJobContract, View.OnCl
         presenter.getJobSubmit()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
-    override fun getListSubmitJob(item: List<DataJobApplication?>?) {
-        val adapterHistorySubmitJob = activity?.let { AdapterHistorySubmitJob(it, item) }
-        binding?.rvHistoryJobSubmit?.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            adapter = adapterHistorySubmitJob
-            adapterHistorySubmitJob?.notifyDataSetChanged()
-        }
-        totalSubmit = "Total submit : ${item?.size.toString()} Application"
-        binding?.tvTotalSubmit?.text = totalSubmit
+    override fun getListSubmitJob(item: List<MyApplication?>?) {
+
+//        val adapterHistorySubmitJob =  AdapterHistorySubmitJob(this, item)
+//        binding?.rvHistoryJobSubmit?.apply {
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//            adapter = adapterHistorySubmitJob
+//            adapterHistorySubmitJob?.notifyDataSetChanged()
+//        }
+//        totalSubmit = "Total submit : ${item?.size.toString()} Application"
+//        binding?.tvTotalSubmit?.text = totalSubmit
     }
 
     override fun messageGetSubmitJobSuccess(msg: String) {

@@ -1084,4 +1084,7 @@ interface NetworkService {
         @Field("status")status:String
     ):Call<ResponseGiveUpvote>
 
+    @GET("api/job/vacancy/my_applications")
+    fun getMyApplication():Call<ResponseMyApplication>
+
 }

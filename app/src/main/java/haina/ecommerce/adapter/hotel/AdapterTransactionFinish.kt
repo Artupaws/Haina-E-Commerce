@@ -41,7 +41,11 @@ class AdapterTransactionFinish(val context: Context,
                         lnReservationNo.visibility=View.GONE
                     }
                     "finish" -> {
-                        tvIdBooking.text = itemHaina.reservationNo?.toString()
+                        if(itemHaina.reservationNo==null){
+                            tvIdBooking.text = "Waiting for reservation number"
+                        }else{
+                            tvIdBooking.text = itemHaina.reservationNo?.toString()
+                        }
 
                     }
                 }
