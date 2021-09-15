@@ -80,11 +80,11 @@ class AdapterListApplicant(val context: Context,
                 }
                 val lastEducation = "Last Education : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
                 tvLastEducation.text = lastEducation
-                btnInterview.setOnClickListener {
-                    adapterListApplicantCallback.rejectApplicantClick(btnReject, adapterPosition, itemHaina, listApplicant)
+                btnInterviewShortlisted.setOnClickListener {
+                    adapterListApplicantCallback.rejectApplicantClick(btnInterview, adapterPosition, itemHaina, listApplicant)
                 }
                 btnReject.setOnClickListener {
-                    adapterListApplicantCallback.rejectApplicantClick(btnShortlisted, adapterPosition, itemHaina, listApplicant)
+                    adapterListApplicantCallback.rejectApplicantClick(btnReject, adapterPosition, itemHaina, listApplicant)
                 }
             }
         }
@@ -113,11 +113,11 @@ class AdapterListApplicant(val context: Context,
                 }
                 val lastEducation = "Last Education : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
                 tvLastEducation.text = lastEducation
-                btnInviteInterview.setOnClickListener {
-                    adapterListApplicantCallback.rejectApplicantClick(btnReject, adapterPosition, itemHaina, listApplicant)
+                btnAccept.setOnClickListener {
+                    adapterListApplicantCallback.rejectApplicantClick(btnAccept, adapterPosition, itemHaina, listApplicant)
                 }
                 btnReject.setOnClickListener {
-                    adapterListApplicantCallback.rejectApplicantClick(btnShortlisted, adapterPosition, itemHaina, listApplicant)
+                    adapterListApplicantCallback.rejectApplicantClick(btnReject, adapterPosition, itemHaina, listApplicant)
                 }
             }
         }

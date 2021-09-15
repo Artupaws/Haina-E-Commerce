@@ -1084,6 +1084,16 @@ interface NetworkService {
         @Field("status")status:String
     ):Call<ResponseGiveUpvote>
 
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/job/applicant/invite_interview")
+    fun inviteInterview(
+        @Field("id_applicant")idVacancy:Int,
+        @Field("status")status:String
+    ):Call<ResponseGiveUpvote>
+
+
     @GET("api/job/vacancy/my_applications")
     fun getMyApplication():Call<ResponseMyApplication>
 

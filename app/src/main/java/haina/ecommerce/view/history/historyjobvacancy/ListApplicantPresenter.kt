@@ -123,5 +123,25 @@ class ListApplicantPresenter(private val view:MyVacancyContract.ViewListApplican
             }
         })
     }
+    fun inviteInterview(idApplicant:Int){
+        view.showLoading()
+        val getListMyVacancy = NetworkConfig().getConnectionHainaBearer(context).updateApplicantStatus(idApplicant)
+        getListMyVacancy.enqueue(object : retrofit2.Callback<ResponseGiveUpvote>{
+            override fun onResponse(call: Call<ResponseGiveUpvote>, response: Response<ResponseGiveUpvote>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageUpdateApplicantStatus(response.body()?.message.toString())
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageUpdateApplicantStatus(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGiveUpvote>, t: Throwable) {
+                view.dismissLoading()
+                view.messageUpdateApplicantStatus(t.localizedMessage.toString())
+            }
+        })
+    }
 
 }

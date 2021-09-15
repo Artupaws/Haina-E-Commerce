@@ -7,11 +7,18 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.view.Window
+import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
+import haina.ecommerce.adapter.flight.AdapterAddOn
 import haina.ecommerce.adapter.vacancy.AdapterListApplicant
 import haina.ecommerce.databinding.ActivityListApplicantBinding
+import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataItemHaina
+import haina.ecommerce.model.flight.MealInfosItem
 import haina.ecommerce.model.vacancy.DataCreateVacancy
 import haina.ecommerce.model.vacancy.DataListApplicant
 import haina.ecommerce.model.vacancy.DataMyVacancy
@@ -21,7 +28,7 @@ import java.sql.Array
 import java.util.ArrayList
 
 class ListApplicantActivity : AppCompatActivity(),
-    MyVacancyContract.ViewListApplicant, View.OnClickListener, AdapterListApplicant.AdapterListApplicantCallback {
+    MyVacancyContract.ViewListApplicant, View.OnClickListener, AdapterListApplicant.AdapterListApplicantCallback, AdapterView.OnItemSelectedListener {
 
     private lateinit var binding:ActivityListApplicantBinding
     private var progressDialog: Dialog? = null
@@ -31,6 +38,16 @@ class ListApplicantActivity : AppCompatActivity(),
     private var listLocationFilter: List<DataItemHaina?>? = null
     private var listApplicant: ArrayList<DataListApplicant?>? = null
     private var adapterPositionParams:Int = 0
+    private var popupSetInterview:Dialog? = null
+    private var clLocation:ConstraintLayout? = null
+    private var clContactNumber:ConstraintLayout? = null
+    private var clContactPerson:ConstraintLayout? = null
+    private var etContactPerson:EditText? = null
+    private var etLocation:EditText? = null
+    private var etContactNumber:EditText? = null
+    private var interviewMethod = arrayOf("phone", "live", "online")
+
+    private var spinnerMethod:Spinner? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,6 +150,101 @@ class ListApplicantActivity : AppCompatActivity(),
                 listApplicant?.removeAt(adapterPosition)
                 adapterListApplicant.notifyItemRemoved(adapterPosition)
             }
+            R.id.btn_accept -> {
+                presenter.rejectAppliocant(data.id!!, "accepted")
+                listApplicant?.removeAt(adapterPosition)
+                adapterListApplicant.notifyItemRemoved(adapterPosition)
+            }
+            R.id.btn_interview -> {
+                popupInterview(data,adapterPosition)
+            }
         }
     }
+
+
+    private fun popupInterview(dataApplicant: DataListApplicant, adapterPosition:Int) {
+        Timber.d("interview")
+        popupSetInterview = Dialog(this)
+        popupSetInterview?.setContentView(R.layout.popup_invite_interview)
+        popupSetInterview?.setCancelable(true)
+        popupSetInterview?.window?.setBackgroundDrawableResource(R.color.white)
+        val window: Window = popupSetInterview?.window!!
+        window.setGravity(Gravity.CENTER)
+
+        val tvNameApplicant = popupSetInterview?.findViewById<TextView>(R.id.tv_name_applicant)
+        val tvLastPosition = popupSetInterview?.findViewById<TextView>(R.id.tv_last_position)
+        val tvLastCompany = popupSetInterview?.findViewById<TextView>(R.id.tv_last_company_and_experience)
+        val tvExpectedSalary = popupSetInterview?.findViewById<TextView>(R.id.tv_expected_salary)
+        val tvLastEducation = popupSetInterview?.findViewById<TextView>(R.id.tv_last_education)
+
+        tvNameApplicant?.text=dataApplicant.user?.fullname
+
+        tvLastPosition?.text = dataApplicant.user?.workExperience?.position
+        val dateStartExperience = dataApplicant.user?.workExperience?.dateStart?.substring(0, 4)
+        val dateEndExperience = dataApplicant.user?.workExperience?.dateStart?.substring(0, 4)
+        val totalExperience = (dateEndExperience?.toInt()?.minus(dateStartExperience?.toInt()!!))
+        val companyAndExperience = "${dataApplicant.user?.workExperience?.company}(${totalExperience} Year(s))"
+        tvLastCompany?.text = companyAndExperience
+        if (dataApplicant.user?.workExperience == null){
+            tvLastCompany?.visibility = View.GONE
+            tvLastPosition?.text = "No Work Experience"
+            tvExpectedSalary?.visibility = View.GONE
+        } else {
+            val expectedSalary = "Last Salary : ${Helper.convertToFormatMoneyIDRFilter(dataApplicant.user.workExperience.salary.toString())}"
+            tvExpectedSalary?.text = expectedSalary
+        }
+        val lastEducation = "Last Education : ${dataApplicant.user?.education?.degreeName}-${dataApplicant.user?.education?.major}"
+        tvLastEducation?.text = lastEducation
+
+
+        clLocation = popupSetInterview?.findViewById<ConstraintLayout>(R.id.cl_location)
+        clContactPerson = popupSetInterview?.findViewById<ConstraintLayout>(R.id.cl_contact_person)
+        clContactNumber = popupSetInterview?.findViewById<ConstraintLayout>(R.id.cl_contact_number)
+
+        etLocation = popupSetInterview?.findViewById<EditText>(R.id.et_interview_location)
+        etContactNumber = popupSetInterview?.findViewById<EditText>(R.id.et_interview_contact_number)
+        etContactPerson= popupSetInterview?.findViewById<EditText>(R.id.et_interview_contact_person)
+
+        spinnerMethod = popupSetInterview?.findViewById<Spinner>(R.id.spinner_interview)
+
+        spinnerMethod?.adapter=ArrayAdapter(this, R.layout.list_item_invite_interview, interviewMethod)
+
+        spinnerMethod?.onItemSelectedListener=this
+
+        popupSetInterview?.show()
+    }
+
+    private fun checkInterviewData(applicantID:Int){
+        var isLocationEmpty:Boolean = true
+        var isContactPersonEmpty:Boolean = true
+        var isContactNumberEmpty:Boolean = true
+        var isDateEmpty:Boolean = true
+        if(spinnerMethod?.selectedItem != "phone"){
+            if(etLocation?.text.isNullOrEmpty()){
+                isLocationEmpty=false
+            }
+        }
+        if(etContactNumber?.text.isNullOrEmpty()){
+            isContactNumberEmpty=false
+        }
+
+        if(etContactPerson?.text.isNullOrEmpty()){
+            isContactPersonEmpty=false
+        }
+
+        if(isLocationEmpty && isContactNumberEmpty && isContactPersonEmpty && isDateEmpty){
+            presenter.inviteInterview(applicantID)
+        }
+    }
+
+    override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
+        if(interviewMethod[position] =="phone"){
+            clLocation!!.visibility=View.GONE
+        }
+    }
+
+    override fun onNothingSelected(arg0: AdapterView<*>) {
+
+    }
+
 }

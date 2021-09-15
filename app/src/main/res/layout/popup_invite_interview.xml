@@ -1,12 +1,377 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+
 
     <TextView
+        android:id="@+id/tv_title_popup"
+        style="@style/TextView.Poppins16spBlack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text =""/>
+        android:text="Invite Interview"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/iv_close"
+        style="@style/TextView.Poppins16spBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close_black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ln_applicant_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_margin="5dp"
+
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="8sp"
+        app:layout_constraintStart_toStartOf="@id/tv_title_popup"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_popup"
+        app:layout_constraintEnd_toEndOf="@+id/iv_close"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/tv_name_applicant"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Darla" />
+
+            <TextView
+                android:id="@+id/tv_last_position"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Android Developer" />
+
+            <TextView
+                android:id="@+id/tv_last_company_and_experience"
+                style="@style/TextView.Poppins14spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="PT Maju (1 Year)" />
+
+            <TextView
+                android:id="@+id/tv_expected_salary"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Expected Salary : IDR10.000.000" />
+
+            <TextView
+                android:id="@+id/tv_last_education"
+                style="@style/TextView.Poppins14spBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Last Education : S1(Tenknik Informatika)" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ln_interview_option"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="5dp"
+        android:padding="5dp"
+        app:cardElevation="8sp"
+        app:layout_constraintEnd_toEndOf="@+id/iv_close"
+        app:layout_constraintStart_toStartOf="@id/tv_title_popup"
+        app:layout_constraintTop_toBottomOf="@id/ln_applicant_detail">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/image_view_method"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_company"
+                    app:layout_constraintBottom_toBottomOf="@+id/view1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_interview_method"
+                    app:tint="#787878" />
+
+                <Spinner
+                    android:id="@+id/spinner_interview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    tools:itemCount="5"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/image_view_method"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_interview_method"
+                    tools:listitem="@layout/list_item_invite_interview" />
+
+
+                <TextView
+                    android:id="@+id/tv_interview_method"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Interview Method"
+                    app:layout_constraintStart_toEndOf="@+id/image_view_method"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/spinner_interview"
+                    app:layout_constraintTop_toBottomOf="@+id/spinner_interview" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/image_view_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_calendar"
+                    app:layout_constraintBottom_toBottomOf="@+id/view2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_date" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Interview Date"
+                    app:layout_constraintStart_toEndOf="@+id/image_view_date"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_interview_date"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="select date"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/tv_date"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/tv_interview_date"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_interview_date" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_contact_person"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/image_view_contact_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_person"
+                    app:layout_constraintBottom_toBottomOf="@+id/view3"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_cp" />
+
+                <TextView
+                    android:id="@+id/tv_cp"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Contact Person"
+                    app:layout_constraintStart_toEndOf="@+id/image_view_contact_person"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_interview_contact_person"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:hint="Enter Contact Person Name"
+                    android:background="@null"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/tv_cp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_cp" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/et_interview_contact_person"
+                    app:layout_constraintTop_toBottomOf="@+id/et_interview_contact_person" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_contact_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/image_view_contact_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_phone"
+                    app:layout_constraintBottom_toBottomOf="@+id/view4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_cp_number" />
+
+                <TextView
+                    android:id="@+id/tv_cp_number"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Contact Number"
+                    app:layout_constraintStart_toEndOf="@+id/image_view_contact_number"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_interview_contact_number"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:hint="Enter Contact Person Number"
+                    android:background="@null"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/tv_cp_number"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_cp_number" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/et_interview_contact_number"
+                    app:layout_constraintTop_toBottomOf="@+id/et_interview_contact_number" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/image_view_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_location"
+                    app:layout_constraintBottom_toBottomOf="@+id/view5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_location"
+                    app:tint="@color/black_60" />
+
+                <TextView
+                    android:id="@+id/tv_location"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Interview Location"
+                    app:layout_constraintStart_toEndOf="@+id/image_view_location"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_interview_location"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:hint="Enter Interview Location"
+                    android:lines="3"
+                    android:background="@null"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/tv_location"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_location" />
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/et_interview_location"
+                    app:layout_constraintTop_toBottomOf="@+id/et_interview_location" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <Button
+        android:id="@+id/btn_save"
+        style="@style/Button.Primary"
+        android:layout_width="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:text="Send Invitation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ln_interview_option" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

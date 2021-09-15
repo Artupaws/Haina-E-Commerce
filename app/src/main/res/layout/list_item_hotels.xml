@@ -25,10 +25,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             tools:ignore="WebViewLayout">
-            <WebView
-                android:id="@+id/wv_hotels"
+            <ImageView
+                android:id="@+id/iv_hotels"
                 android:layout_width="110dp"
                 android:layout_height="150dp"
+                android:scaleType="centerCrop"
                 android:visibility="visible"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
