@@ -2,6 +2,8 @@ package haina.ecommerce.view.hotels.selection
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +36,8 @@ class BottomSheetSearchHotelFragment : BottomSheetDialogFragment(),BottomSheetSe
     private var checkindate: String? = null
     private var checkoutdate: String? = null
 
+    var handler:Handler? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +58,9 @@ class BottomSheetSearchHotelFragment : BottomSheetDialogFragment(),BottomSheetSe
         checkindate= arguments?.getString("checkindate")
         checkoutdate= arguments?.getString("checkoutdate")
 
+        handler = Handler(Looper.getMainLooper())
+
+
         binding.rvCityHotel.apply {
             adapter = AdapterListSearchHotel(requireActivity(), data,this@BottomSheetSearchHotelFragment)
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
@@ -65,9 +72,15 @@ class BottomSheetSearchHotelFragment : BottomSheetDialogFragment(),BottomSheetSe
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if(newText?.isNotEmpty()!!){
-                    selectionPresenter.getSearchHotel(newText,checkindate!!,checkoutdate!!)
+                    handler!!.removeCallbacksAndMessages(null)
+                    handler!!.postDelayed({
+                        selectionPresenter.getSearchHotel(newText,checkindate!!,checkoutdate!!)
+                    }, 1000)
                 }else{
-                    selectionPresenter.getSearchHotel("Jakarta",checkindate!!,checkoutdate!!)
+                    handler!!.removeCallbacksAndMessages(null)
+                    handler!!.postDelayed({
+                        selectionPresenter.getSearchHotel("Jakarta",checkindate!!,checkoutdate!!)
+                    }, 1000)
                 }
                 return true
             }

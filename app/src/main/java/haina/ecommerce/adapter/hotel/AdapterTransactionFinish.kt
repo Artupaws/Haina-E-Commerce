@@ -49,7 +49,7 @@ class AdapterTransactionFinish(val context: Context,
 
                     }
                 }
-//                tvTotalGuest.text = itemHaina.totalGuest.toString()
+                tvTotalGuest.text = itemHaina.totalGuest.toString()
 
             }
         } 

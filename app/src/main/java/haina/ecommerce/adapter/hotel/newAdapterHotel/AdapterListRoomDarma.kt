@@ -36,7 +36,11 @@ class AdapterListRoomDarma(val context: Context, private val listRoom: List<Room
                 btnSelect.setOnClickListener {
                     itemAdapterCallback.onClick(btnSelect, itemHaina)
                 }
-                setupListFacilities(binding, itemHaina.facilites)
+                if(itemHaina.facilites?.size!=0){
+                    setupListFacilities(binding, itemHaina.facilites)
+                }else{
+                    lnFacilities.visibility=View.GONE
+                }
             }
         }
     }

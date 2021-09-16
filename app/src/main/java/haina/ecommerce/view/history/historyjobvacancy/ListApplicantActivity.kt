@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import haina.ecommerce.R
 import haina.ecommerce.adapter.flight.AdapterAddOn
 import haina.ecommerce.adapter.vacancy.AdapterListApplicant
@@ -49,6 +51,8 @@ class ListApplicantActivity : AppCompatActivity(),
     private var clContactPerson:ConstraintLayout? = null
     private var etContactPerson:EditText? = null
     private var etLocation:EditText? = null
+    private var tvLocation:TextView? = null
+    private var tvInterviewDate:TextView? = null
     private var etContactNumber:EditText? = null
     private var interviewMethod = arrayOf("phone", "live", "online")
 
@@ -207,8 +211,7 @@ class ListApplicantActivity : AppCompatActivity(),
         }
         val lastEducation = "Last Education : ${dataApplicant.user?.education?.degreeName}-${dataApplicant.user?.education?.major}"
         tvLastEducation?.text = lastEducation
-
-        val tvInterviewDate = popupSetInterview?.findViewById<TextView>(R.id.tv_interview_date)
+        tvInterviewDate = popupSetInterview?.findViewById<TextView>(R.id.tv_interview_date)
 
         tvInterviewDate?.setOnClickListener {
             setDateInterview()
@@ -220,6 +223,7 @@ class ListApplicantActivity : AppCompatActivity(),
         clContactNumber = popupSetInterview?.findViewById<ConstraintLayout>(R.id.cl_contact_number)
 
         etLocation = popupSetInterview?.findViewById<EditText>(R.id.et_interview_location)
+        tvLocation = popupSetInterview?.findViewById<TextView>(R.id.tv_location)
         etContactNumber = popupSetInterview?.findViewById<EditText>(R.id.et_interview_contact_number)
         etContactPerson= popupSetInterview?.findViewById<EditText>(R.id.et_interview_contact_person)
 
@@ -256,6 +260,9 @@ class ListApplicantActivity : AppCompatActivity(),
         if(etContactPerson?.text.isNullOrEmpty()){
             isContactPersonEmpty=false
         }
+        if(tvInterviewDate?.text!!.equals("select date")){
+            isDateEmpty=false
+        }
 
         if(isLocationEmpty && isContactNumberEmpty && isContactPersonEmpty && isDateEmpty){
             presenter.inviteInterview(
@@ -272,23 +279,76 @@ class ListApplicantActivity : AppCompatActivity(),
     }
 
     private fun setDateInterview() {
-        val builder = MaterialDatePicker.Builder.datePicker()
+        val datebuilder = MaterialDatePicker.Builder.datePicker()
         val now = Calendar.getInstance()
-        builder.setTitleText("Select Date Interview")
-        builder.setSelection(now.timeInMillis)
-        builder.setCalendarConstraints(limitRangeDate().build())
+        datebuilder.setTitleText("Select Date Interview")
+        datebuilder.setSelection(now.timeInMillis)
+        datebuilder.setCalendarConstraints(limitRangeDate().build())
 
-        val picker = builder.build()
-        picker.show(supportFragmentManager, picker.toString())
-        picker.addOnNegativeButtonClickListener { picker.dismiss() }
-        picker.addOnPositiveButtonClickListener {
-//            binding.tvStartDate.text = it?.convertLongtoTime("yyyy-MM-dd")
-//            date = it?.convertLongtoTime("dd-MM").toString().substring(0,2)
-//            month = it?.convertLongtoTime("dd-MM").toString().substring(3,5)
-//            binding.tvStartDate.error= null
-            picker.dismiss()
+        val datepicker = datebuilder.build()
+        datepicker.show(supportFragmentManager, datepicker.toString())
+        datepicker.addOnNegativeButtonClickListener { datepicker.dismiss() }
+
+        var date:String = Calendar.getInstance().get(Calendar.DATE).toString()
+        var month:String = Calendar.getInstance().get(Calendar.MONTH).toString()
+        var year:String = Calendar.getInstance().get(Calendar.YEAR).toString()
+        var timefrom:String = ""
+        var hourfrom:Int = 0
+        var minutefrom:Int = 0
+
+        var timeto:String = ""
+        var hourto:Int = 0
+        var minuteto:Int = 0
+        var datefull:String = ""
+
+        datepicker.addOnPositiveButtonClickListener {
+
+            date = it?.convertLongtoTime("dd-MM-yyyy").toString().substring(0,2)
+            month = it?.convertLongtoTime("dd-MM-yyyy").toString().substring(3,5)
+
+            year = it?.convertLongtoTime("dd-MM-yyyy").toString().substring(6,10)
+
+            datefull = it?.convertLongtoTime("yyyy-MM-dd").toString()
+
+            val timebuilder = MaterialTimePicker.Builder()
+            timebuilder.setTitleText("Select Time From")
+            timebuilder.setHour(10)
+            timebuilder.setMinute(0)
+            timebuilder.setTimeFormat(TimeFormat.CLOCK_24H)
+
+            val timepicker = timebuilder.build()
+            timepicker.show(supportFragmentManager, timepicker.toString())
+            timepicker.addOnNegativeButtonClickListener { timepicker.dismiss() }
+            timepicker.addOnPositiveButtonClickListener {
+                timefrom=timepicker.hour.toString()+":"+timepicker.minute.toString()+":00"
+                hourfrom=timepicker.hour
+                minutefrom=timepicker.minute
+
+                val timetobuilder = MaterialTimePicker.Builder()
+                timetobuilder.setTitleText("Select Time To")
+                timetobuilder.setHour(10)
+                timetobuilder.setMinute(0)
+                timetobuilder.setTimeFormat(TimeFormat.CLOCK_24H)
+
+                val timetopicker = timetobuilder.build()
+                timetopicker.show(supportFragmentManager, timetopicker.toString())
+                timetopicker.addOnNegativeButtonClickListener { timetopicker.dismiss() }
+                timetopicker.addOnPositiveButtonClickListener {
+                    timeto=timetopicker.hour.toString()+":"+timetopicker.minute.toString()+":00"
+                    hourto=timetopicker.hour
+                    minuteto=timetopicker.minute
+
+                    duration=((hourto-hourfrom)*60) + (minuteto-minutefrom)
+                    datetime="$datefull $timefrom"
+                    Timber.d(duration.toString())
+
+                    tvInterviewDate!!.text= "$datefull  $timefrom - $timeto"
+                }
+
+            }
         }
     }
+
 
     private fun limitRangeDate(): CalendarConstraints.Builder {
         val constraintsBuilderRange = CalendarConstraints.Builder()
@@ -318,8 +378,21 @@ class ListApplicantActivity : AppCompatActivity(),
     }
 
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
-        if(interviewMethod[position] =="phone"){
-            clLocation!!.visibility=View.GONE
+        when {
+            interviewMethod[position] =="phone" -> {
+                clLocation!!.visibility=View.GONE
+            }
+            interviewMethod[position] =="live" -> {
+                clLocation!!.visibility=View.VISIBLE
+                tvLocation!!.text="Interview Location"
+                etLocation!!.hint="Enter Interview Location"
+            }
+            interviewMethod[position] =="online" -> {
+                clLocation!!.visibility=View.VISIBLE
+                tvLocation!!.text="Interview Link"
+                etLocation!!.hint="Enter Interview Link"
+
+            }
         }
     }
 

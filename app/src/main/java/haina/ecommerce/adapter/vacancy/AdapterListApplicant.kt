@@ -119,6 +119,12 @@ class AdapterListApplicant(val context: Context,
                 btnReject.setOnClickListener {
                     adapterListApplicantCallback.rejectApplicantClick(btnReject, adapterPosition, itemHaina, listApplicant)
                 }
+                cvInterview.visibility=View.VISIBLE
+                tvInterview.text = itemHaina.interviewData?.method
+                tvInterviewDate.text = itemHaina.interviewData?.time
+                etInterviewContactPerson.text = itemHaina.interviewData?.cpName
+                etInterviewContactNumber.text = itemHaina.interviewData?.cpPhone
+                etInterviewLocation.text = itemHaina.interviewData?.location
             }
         }
     }

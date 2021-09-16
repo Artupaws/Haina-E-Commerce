@@ -265,14 +265,14 @@
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/tv_notif_countdown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                style="@style/TextView.Poppins14spBlack"
-                android:layout_below="@+id/linear_data_booking"
-                tools:text="Finish Payment Before : 00:02:00"/>
+<!--            <TextView-->
+<!--                android:id="@+id/tv_notif_countdown"-->
+<!--                style="@style/TextView.Poppins14spBlack"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/linear_data_booking"-->
+<!--                android:gravity="center"-->
+<!--                tools:text="Finish Payment Before : 00:02:00" />-->
 
             <Button
                 android:id="@+id/btn_how_pay"
@@ -280,7 +280,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:layout_below="@+id/tv_notif_countdown"
+                android:layout_below="@+id/linear_data_booking"
                 android:text="@string/how_to_payment"
                 style="@style/Button.Primary"
                 android:backgroundTint="@color/yellow"/>

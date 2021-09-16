@@ -31,91 +31,82 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
     private val binding get() = _binding
     private var broadcaster: LocalBroadcastManager? = null
     private var adapterUnfinish: AdapterTransactionUnfinish? = null
-    var countDown: TextView? = null
+//    var countDown: TextView? = null
     private lateinit var sharedPref: SharedPreferenceHelper
     private var dataTransaction: DataBooking? = null
-    private var statusCountDown:String =""
+//    private var statusCountDown:String =""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentUnfinishHotelBinding.inflate(inflater, container, false)
         broadcaster = LocalBroadcastManager.getInstance(requireActivity())
         sharedPref = SharedPreferenceHelper(requireActivity())
-        countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
+//        countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 //        val dataBooking = dataTransaction?.unpaid?.size
-        countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
-        statusCountDown = sharedPref.getValueString(Constants.CURRENT_TIME_SESSION_PAYMENT).toString()
-        if (statusCountDown == "finish") {
-            countDown?.text = "expired"
-        }
+//        countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
+//        statusCountDown = sharedPref.getValueString(Constants.CURRENT_TIME_SESSION_PAYMENT).toString()
+//        if (statusCountDown == "finish") {
+//            countDown?.text = "expired"
+//        }
 //        Log.d("dataBookingTop", dataBooking.toString())
 
         Log.i(TAG, "Started Service")
     }
 
-    override fun onResume() {
-        super.onResume()
-        requireActivity().registerReceiver(broadcastReceiver, IntentFilter(BroadcastService().COUNTDOWN_BR))
-    }
-
     override fun onPause() {
         super.onPause()
-        requireActivity().unregisterReceiver(broadcastReceiver)
+//        requireActivity().unregisterReceiver(broadcastReceiver)
         Log.i(TAG, "Unregistered broadcast receiver")
     }
 
     override fun onStart() {
-        when(statusCountDown){
-            "finish" -> {
-                val intentCancelBooking = Intent("cancelBooking")
-                broadcaster?.sendBroadcast(intentCancelBooking)
-                sharedPref.save(Constants.CURRENT_TIME_SESSION_PAYMENT, "expired")
-            }
-        }
+//        when(statusCountDown){
+//            "finish" -> {
+//                val intentCancelBooking = Intent("cancelBooking")
+//                broadcaster?.sendBroadcast(intentCancelBooking)
+//                sharedPref.save(Constants.CURRENT_TIME_SESSION_PAYMENT, "expired")
+//            }
+//        }
         LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(mMessageReceiver, IntentFilter("dataBooking"))
         super.onStart()
     }
 
-    private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            //Update GUI
-            updateGUI(intent)
-        }
-    }
+//    private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+//        override fun onReceive(context: Context, intent: Intent) {
+//            //Update GUI
+//            updateGUI(intent)
+//        }
+//    }
 
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, intent: Intent?) {
             when (intent?.action) {
                 "dataBooking" -> {
-                    statusCountDown = sharedPref.getValueString(Constants.CURRENT_TIME_SESSION_PAYMENT).toString()
-                    val intentCountdown = Intent(requireActivity(), BroadcastService::class.java)
+//                    statusCountDown = sharedPref.getValueString(Constants.CURRENT_TIME_SESSION_PAYMENT).toString()
+//                    val intentCountdown = Intent(requireActivity(), BroadcastService::class.java)
                     dataTransaction = intent.getParcelableExtra<DataBooking>("bookingHotel")
                     adapterUnfinish = AdapterTransactionUnfinish(requireActivity(), dataTransaction?.unpaid, this@UnfinishHotelFragment)
                     adapterUnfinish!!.notifyDataSetChanged()
                     setListTransaction(dataTransaction!!.unpaid)
-                    if (dataTransaction!!.unpaid?.size != 0 && statusCountDown != "finish"){
-                        requireActivity().startService(intentCountdown)
-                    } else {
-                        countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
-                        countDown?.text = "expired"
-                        Log.d("dataTransactionNull", dataTransaction!!.unpaid?.size.toString())
-                        requireActivity().stopService(intentCountdown)
-                        statusCountDown = "finish"
-                    }
+//                    if (dataTransaction!!.unpaid?.size != 0 && statusCountDown != "finish"){
+//                        requireActivity().startService(intentCountdown)
+//                    } else {
+//                        countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
+//                        countDown?.text = "expired"
+//                        Log.d("dataTransactionNull", dataTransaction!!.unpaid?.size.toString())
+////                        requireActivity().stopService(intentCountdown)
+////                        statusCountDown = "finish"
+//                    }
                     Log.d("dataBooking", dataTransaction!!.unpaid?.size.toString())
                 }
             }
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(mMessageReceiver)
-    }
 
     private fun setListTransaction(data: List<PaidItem?>?) {
         showIsEmpty(data?.size)
@@ -125,22 +116,22 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
         }
     }
 
-    private fun updateGUI(intent: Intent) {
-        if (intent.extras != null) {
-            val millisUntilFinished = intent.getLongExtra("countdown", 1000)
-            Log.i(TAG, "Countdown seconds remaining:" + millisUntilFinished / 1000)
-            countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
-            countDown?.text = "Do payment before : ${millisUntilFinished / 1000} seconds"
-            if (countDown?.text == "Do payment before : 0 seconds"){
-                countDown?.text = "expired"
-                val intentCancelBooking = Intent("cancelBooking")
-                broadcaster?.sendBroadcast(intentCancelBooking)
-                sharedPref.save(Constants.CURRENT_TIME_SESSION_PAYMENT, "expired")
-            }
-            val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences(requireActivity().packageName, Context.MODE_PRIVATE)
-            sharedPreferences.edit().putLong("time", millisUntilFinished).apply()
-        }
-    }
+//    private fun updateGUI(intent: Intent) {
+//        if (intent.extras != null) {
+//            val millisUntilFinished = intent.getLongExtra("countdown", 1000)
+//            Log.i(TAG, "Countdown seconds remaining:" + millisUntilFinished / 1000)
+//            countDown = requireActivity().findViewById(R.id.tv_notif_countdown)
+//            countDown?.text = "Do payment before : ${millisUntilFinished / 1000} seconds"
+//            if (countDown?.text == "Do payment before : 0 seconds"){
+//                countDown?.text = "expired"
+//                val intentCancelBooking = Intent("cancelBooking")
+//                broadcaster?.sendBroadcast(intentCancelBooking)
+//                sharedPref.save(Constants.CURRENT_TIME_SESSION_PAYMENT, "expired")
+//            }
+//            val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences(requireActivity().packageName, Context.MODE_PRIVATE)
+//            sharedPreferences.edit().putLong("time", millisUntilFinished).apply()
+//        }
+//    }
 
     private fun showIsEmpty(listItem: Int?) {
         Log.d("item", listItem.toString())

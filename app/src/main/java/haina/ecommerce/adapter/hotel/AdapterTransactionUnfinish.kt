@@ -39,7 +39,7 @@ class AdapterTransactionUnfinish(val context: Context, private val listHotel: Li
                 tvCheckinCheckout.text = checkinCheckout
 //                Glide.with(context).load(itemHaina.hotel?.).into(ivImageRoom)
                 tvIdBooking.text = itemHaina.id.toString()
-//                tvTotalGuest.text = itemHaina.totalGuest.toString()
+                tvTotalGuest.text = itemHaina.totalGuest.toString()
                 tvNumberPayment.text = itemHaina.payment?.vaNumber
                 tvPaymentNumber.text = itemHaina.paymentMethod?.name
                 tvPaymentCategory.text = itemHaina.paymentMethod?.category?.name
