@@ -12,20 +12,25 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import haina.ecommerce.R
 import haina.ecommerce.adapter.flight.AdapterAddOn
 import haina.ecommerce.adapter.vacancy.AdapterListApplicant
 import haina.ecommerce.databinding.ActivityListApplicantBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.helper.Helper.convertLongtoTime
+import haina.ecommerce.helper.RangeValidator
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.flight.MealInfosItem
 import haina.ecommerce.model.vacancy.DataCreateVacancy
 import haina.ecommerce.model.vacancy.DataListApplicant
 import haina.ecommerce.model.vacancy.DataMyVacancy
+import haina.ecommerce.model.vacancy.InterviewData
 import haina.ecommerce.view.posting.newvacancy.NewPostVacancyActivity
 import timber.log.Timber
 import java.sql.Array
-import java.util.ArrayList
+import java.util.*
 
 class ListApplicantActivity : AppCompatActivity(),
     MyVacancyContract.ViewListApplicant, View.OnClickListener, AdapterListApplicant.AdapterListApplicantCallback, AdapterView.OnItemSelectedListener {
@@ -46,6 +51,12 @@ class ListApplicantActivity : AppCompatActivity(),
     private var etLocation:EditText? = null
     private var etContactNumber:EditText? = null
     private var interviewMethod = arrayOf("phone", "live", "online")
+
+    private var date: String = Calendar.getInstance().get(Calendar.DATE).toString()
+    private var month: String = Calendar.getInstance().get(Calendar.MONTH).toString()
+
+    private var datetime:String? = null
+    private var duration:Int = 0
 
     private var spinnerMethod:Spinner? = null
 
@@ -102,6 +113,7 @@ class ListApplicantActivity : AppCompatActivity(),
     override fun messageGetListApplicant(msg: String) {
         Timber.d(msg)
     }
+
 
     override fun getDataListApplicant(data: List<DataListApplicant?>?) {
         adapterListApplicant.clear()
@@ -196,6 +208,12 @@ class ListApplicantActivity : AppCompatActivity(),
         val lastEducation = "Last Education : ${dataApplicant.user?.education?.degreeName}-${dataApplicant.user?.education?.major}"
         tvLastEducation?.text = lastEducation
 
+        val tvInterviewDate = popupSetInterview?.findViewById<TextView>(R.id.tv_interview_date)
+
+        tvInterviewDate?.setOnClickListener {
+            setDateInterview()
+        }
+
 
         clLocation = popupSetInterview?.findViewById<ConstraintLayout>(R.id.cl_location)
         clContactPerson = popupSetInterview?.findViewById<ConstraintLayout>(R.id.cl_contact_person)
@@ -211,14 +229,21 @@ class ListApplicantActivity : AppCompatActivity(),
 
         spinnerMethod?.onItemSelectedListener=this
 
+        val btnSave=popupSetInterview?.findViewById<Button>(R.id.btn_save)
+
+        btnSave?.setOnClickListener {
+            checkInterviewData(dataApplicant.id!!,adapterPosition)
+        }
+
         popupSetInterview?.show()
     }
 
-    private fun checkInterviewData(applicantID:Int){
-        var isLocationEmpty:Boolean = true
-        var isContactPersonEmpty:Boolean = true
-        var isContactNumberEmpty:Boolean = true
-        var isDateEmpty:Boolean = true
+    private fun checkInterviewData(applicantID:Int,adapterPosition: Int){
+        var isLocationEmpty = true
+        var isContactPersonEmpty = true
+        var isContactNumberEmpty = true
+        var isDateEmpty = true
+
         if(spinnerMethod?.selectedItem != "phone"){
             if(etLocation?.text.isNullOrEmpty()){
                 isLocationEmpty=false
@@ -233,8 +258,63 @@ class ListApplicantActivity : AppCompatActivity(),
         }
 
         if(isLocationEmpty && isContactNumberEmpty && isContactPersonEmpty && isDateEmpty){
-            presenter.inviteInterview(applicantID)
+            presenter.inviteInterview(
+                applicantID,
+                spinnerMethod!!.selectedItem.toString(),
+                datetime!!,
+                duration,
+                etLocation?.text.toString(),
+                etContactPerson?.text.toString(),
+                etContactNumber?.text.toString(),
+                adapterPosition
+            )
         }
+    }
+
+    private fun setDateInterview() {
+        val builder = MaterialDatePicker.Builder.datePicker()
+        val now = Calendar.getInstance()
+        builder.setTitleText("Select Date Interview")
+        builder.setSelection(now.timeInMillis)
+        builder.setCalendarConstraints(limitRangeDate().build())
+
+        val picker = builder.build()
+        picker.show(supportFragmentManager, picker.toString())
+        picker.addOnNegativeButtonClickListener { picker.dismiss() }
+        picker.addOnPositiveButtonClickListener {
+//            binding.tvStartDate.text = it?.convertLongtoTime("yyyy-MM-dd")
+//            date = it?.convertLongtoTime("dd-MM").toString().substring(0,2)
+//            month = it?.convertLongtoTime("dd-MM").toString().substring(3,5)
+//            binding.tvStartDate.error= null
+            picker.dismiss()
+        }
+    }
+
+    private fun limitRangeDate(): CalendarConstraints.Builder {
+        val constraintsBuilderRange = CalendarConstraints.Builder()
+        val calendarStart: Calendar = Calendar.getInstance()
+        val calendarEnd: Calendar = Calendar.getInstance()
+        val year = Calendar.getInstance().get(Calendar.YEAR)
+        val startMonth = month.toInt()
+        val startDate = date.toInt()
+        val endMonth = 12
+        val endDate = 31
+
+        calendarStart.set(year, startMonth, startDate-1)
+        calendarEnd.set(year, endMonth - 1, endDate)
+
+        val minDate = calendarStart.timeInMillis
+        val maxDate = calendarEnd.timeInMillis
+
+        constraintsBuilderRange.setStart(minDate)
+        constraintsBuilderRange.setEnd(maxDate)
+        constraintsBuilderRange.setValidator(RangeValidator(minDate, maxDate))
+        return constraintsBuilderRange
+    }
+
+    override fun inviteInterviewSuccess(data: InterviewData,adapterPosition: Int) {
+        popupSetInterview?.dismiss()
+        listApplicant?.removeAt(adapterPosition)
     }
 
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {

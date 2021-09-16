@@ -4,6 +4,7 @@ import android.content.Context
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.forum.ResponseGiveUpvote
 import haina.ecommerce.model.vacancy.ResponseGetListApplicant
+import haina.ecommerce.model.vacancy.ResponseInviteInterview
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
@@ -123,21 +124,21 @@ class ListApplicantPresenter(private val view:MyVacancyContract.ViewListApplican
             }
         })
     }
-    fun inviteInterview(idApplicant:Int){
+    fun inviteInterview(idApplicant:Int,method:String,datetime:String,duration:Int,location:String,contactPerson:String,contactNumber:String,adapterPosition:Int){
         view.showLoading()
-        val getListMyVacancy = NetworkConfig().getConnectionHainaBearer(context).updateApplicantStatus(idApplicant)
-        getListMyVacancy.enqueue(object : retrofit2.Callback<ResponseGiveUpvote>{
-            override fun onResponse(call: Call<ResponseGiveUpvote>, response: Response<ResponseGiveUpvote>) {
+        val getListMyVacancy = NetworkConfig().getConnectionHainaBearer(context).inviteInterview(idApplicant,datetime, method,duration,location,contactPerson,contactNumber)
+        getListMyVacancy.enqueue(object : retrofit2.Callback<ResponseInviteInterview>{
+            override fun onResponse(call: Call<ResponseInviteInterview>, response: Response<ResponseInviteInterview>) {
                 view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
-                    view.messageUpdateApplicantStatus(response.body()?.message.toString())
+                    view.inviteInterviewSuccess(response.body()?.data!!,adapterPosition)
                 } else {
                     val error = JSONObject(response.errorBody()?.string())
                     view.messageUpdateApplicantStatus(error.getString("message"))
                 }
             }
 
-            override fun onFailure(call: Call<ResponseGiveUpvote>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseInviteInterview>, t: Throwable) {
                 view.dismissLoading()
                 view.messageUpdateApplicantStatus(t.localizedMessage.toString())
             }

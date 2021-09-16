@@ -5,6 +5,7 @@ import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.vacancy.DataCreateVacancy
 import haina.ecommerce.model.vacancy.DataListApplicant
 import haina.ecommerce.model.vacancy.DataMyVacancy
+import haina.ecommerce.model.vacancy.InterviewData
 
 interface MyVacancyContract {
 
@@ -21,6 +22,7 @@ interface MyVacancyContract {
 
     interface ViewListApplicant:BaseView{
         fun messageGetListApplicant(msg:String)
+        fun inviteInterviewSuccess(data:InterviewData,adapterPosition:Int)
         fun getDataListApplicant(data:List<DataListApplicant?>?)
         fun messageUpdateApplicantStatus(msg:String)
     }

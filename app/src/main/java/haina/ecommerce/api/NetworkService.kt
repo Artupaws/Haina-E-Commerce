@@ -1090,8 +1090,13 @@ interface NetworkService {
     @POST("/api/job/applicant/invite_interview")
     fun inviteInterview(
         @Field("id_applicant")idVacancy:Int,
-        @Field("status")status:String
-    ):Call<ResponseGiveUpvote>
+        @Field("time")datetime:String,
+        @Field("method")method:String,
+        @Field("duration")duration:Int,
+        @Field("location")location:String,
+        @Field("cp_name")contactPerson:String,
+        @Field("cp_phone")contactNumber:String,
+        ):Call<ResponseInviteInterview>
 
 
     @GET("api/job/vacancy/my_applications")
