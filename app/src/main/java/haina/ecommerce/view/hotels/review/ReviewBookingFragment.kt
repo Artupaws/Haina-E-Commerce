@@ -133,6 +133,9 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
     override fun onClick(view: View?) {
         when(view?.id){
             R.id.btn_payment -> {
+                if(dataBooking!!.specialRequest.isNullOrEmpty()){
+                    dataBooking!!.specialRequest="none"
+                }
                 val intentPayment = Intent(requireActivity(), PaymentActivity::class.java)
                 intentPayment.putExtra("dataBooking", dataBooking)
                 intentPayment.putExtra("typeTransaction", 4)
