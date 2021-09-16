@@ -23,6 +23,7 @@ class AdapterListRoomDarma(val context: Context, private val listRoom: List<Room
         fun bind(itemHaina: RoomsItemDarma, itemAdapterCallback: ItemAdapterCallback){
             binding.apply {
                 tvNameRoom.text = itemHaina.name
+                tvRoomPrice.text=itemHaina.price.toString()
                 var statusBreakfast = itemHaina.breakfast
                 val icon = HtmlCompat.fromHtml("<img${itemHaina.image}>", HtmlCompat.FROM_HTML_MODE_LEGACY)
                 Glide.with(context).load(icon).into(ivRoomHotel)
