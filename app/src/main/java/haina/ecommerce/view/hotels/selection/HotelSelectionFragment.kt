@@ -92,6 +92,8 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
         binding.tvStartDate?.text =
             SimpleDateFormat("dd MMM").format(Date()) + " - " + SimpleDateFormat("dd MMM").format(dt)
         binding.tvTotalNight?.text = "1 Night(s)"
+        totalNight = 1
+
 
 
         selectionPresenter.getSearchHotel("Jakarta",checkInDate,checkOutDate)

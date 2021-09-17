@@ -107,6 +107,9 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener,
                             this.requestCreateVacancy!!.description, this.requestCreateVacancy!!.experience, this.requestCreateVacancy!!.idEdu!!, this.requestCreateVacancy!!.minSalary.toInt(), this.requestCreateVacancy!!.maxSalary.toInt(), this.requestCreateVacancy!!.salaryDisplay,
                             this.requestCreateVacancy!!.address, this.requestCreateVacancy!!.idCity, this.requestCreateVacancy!!.packageAds!!, idPaymentMethod!!, this.requestCreateVacancy!!.skill!!)
                     }
+                    6 -> {
+
+                    }
                 }
             }
         }
@@ -198,6 +201,11 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener,
                 binding.tvTotalBill.text = convertToFormatMoneyIDRFilter(priceVacancyAds.toString())
                 price = changeFormatMoneyToValue(priceVacancyAds.toString())
             }
+
+            6 -> {
+                binding.tvTotalBill.text = dataBookingHotelDarma?.price
+                price = dataBookingHotelDarma?.price
+            }
         }
     }
 
@@ -267,6 +275,16 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener,
         if (msg.contains("Success")){
             val intent = Intent(applicationContext, HistoryTransactionHotelActivity::class.java)
             startActivity(intent)
+        } else {
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun messageBookingFlight(msg: String) {
+        if (msg.contains("Success")){
+//            val intent = Intent(applicationContext, HistoryTransactionHotelActivity::class.java)
+//            startActivity(intent)
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
         }

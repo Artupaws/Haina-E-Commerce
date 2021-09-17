@@ -131,7 +131,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
             binding.includeSpecialRequest.rvRequest.visibility = View.VISIBLE
             binding.includeSpecialRequest.linearAddRequest.visibility = View.GONE
             binding.includeSpecialRequest.rvRequest.apply {
-                adapter = AdapterSpecialRequestArray(requireActivity(), data.specialRequestArray, this@FillInDetailFragment, true,"")
+                adapter = AdapterSpecialRequestArray(requireActivity(), data.specialRequestArray, this@FillInDetailFragment, true,null)
                 layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             }
             specialRequestData=data.specialRequestArray

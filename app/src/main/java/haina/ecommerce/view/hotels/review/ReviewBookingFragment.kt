@@ -43,9 +43,9 @@ class ReviewBookingFragment : Fragment(), AdapterDataGuest.ItemAdapterCallback, 
         val totalNight = arguments?.getInt("totalNight")
         dataBooking = arguments?.getParcelable("dataBooking")
         val imageRoomUrl = arguments?.getString("imageRoomUrl")
-        specialbooking = arguments?.getBoolean("specialBooking")!!
+        specialbooking = arguments?.getBoolean("specialRequest")!!
 
-        if(arguments?.getBoolean("specialBooking")!!){
+        if(arguments?.getBoolean("specialRequest")!!){
             Timber.d("special")
             specialRequestData=arguments?.getParcelableArrayList("specialRequestData")
         }else{

@@ -170,7 +170,10 @@ interface NetworkService {
     fun registerCompany(
             @Part file: MultipartBody.Part,
             @Part("name") name: RequestBody,
-            @Part("description") description: RequestBody
+            @Part("description") description: RequestBody,
+            @Part("siup") siup: RequestBody,
+            @Part("id_province") idProvince: RequestBody
+
     ):Call<ResponseRegisterCompany>
 
     //Get Data Company
@@ -530,8 +533,8 @@ interface NetworkService {
 
     @Headers("Content-Type: application/json")
     @POST("api/ticket/booking")
-    fun setBooking(
-        @Field("amount")amount:Int,
+    fun setBookingFlight(
+        @Field("id_payment_method")paymentMethodId: Int?,
 
         ):Call<ResponseGetRealTicketPrice>
 

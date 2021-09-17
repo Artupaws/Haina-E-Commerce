@@ -24,74 +24,94 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/iv_room_hotel"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                tools:src="@drawable/ps5"
-                android:scaleType="centerCrop"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_name_room"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Queen"
-                    android:layout_alignParentStart="true"
-                    style="@style/TextView.Poppins14spBlack"/>
-
-                <TextView
-                    android:id="@+id/tv_room_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Rp 1.000.000"
-                    android:layout_alignParentEnd="true"
-                    style="@style/TextView.Poppins14spBlack"/>
-            </RelativeLayout>
+                android:layout_height="wrap_content">
 
 
-            <TextView
-                android:id="@+id/tv_status_breakfast"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Breakfast"
-                style="@style/TextView.Poppins12spGrey"/>
-
-            <LinearLayout
-                android:id="@+id/ln_facilities"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Faciities :"
-                    style="@style/TextView.Poppins12spGrey"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_facilities_room"
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_loading"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                    android:visibility="visible">
+
+
+                    <View
+                        android:layout_height="200dp"
+                        android:layout_width="match_parent"
+                        android:background="@color/gray_shimmer"></View>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+
+                <ImageView
+                    android:id="@+id/iv_room_hotel"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"/>
+
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_name_room"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Queen"
+                        android:layout_alignParentStart="true"
+                        style="@style/TextView.Poppins14spBlack"/>
+
+                    <TextView
+                        android:id="@+id/tv_room_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Rp 1.000.000"
+                        android:layout_alignParentEnd="true"
+                        style="@style/TextView.Poppins14spBlack"/>
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_status_breakfast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Breakfast"
+                    style="@style/TextView.Poppins12spGrey"/>
+
+                <LinearLayout
+                    android:id="@+id/ln_facilities"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Faciities :"
+                        style="@style/TextView.Poppins12spGrey"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_facilities_room"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+                </LinearLayout>
+
 
             </LinearLayout>
-
-
-        </LinearLayout>
 
             <Button
                 android:id="@+id/btn_select"

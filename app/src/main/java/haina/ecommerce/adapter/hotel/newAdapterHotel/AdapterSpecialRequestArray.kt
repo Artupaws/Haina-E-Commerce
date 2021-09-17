@@ -20,9 +20,11 @@ class AdapterSpecialRequestArray(val context: Context, private val listSpecialRe
         fun bind(itemHaina: SpecialRequestArrayItem?, itemAdapterCallback:ItemAdapterCallback) {
             with(binding) {
                 cbAddon.text = itemHaina?.description
-                arraySelected!!.forEach {
-                    if(itemHaina!!.iD==it){
-                        cbAddon.isChecked=true
+                if(arraySelected!=null){
+                    arraySelected!!.forEach {
+                        if(itemHaina!!.iD==it){
+                            cbAddon.isChecked=true
+                        }
                     }
                 }
 

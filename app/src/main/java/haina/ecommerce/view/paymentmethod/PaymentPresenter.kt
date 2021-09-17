@@ -3,6 +3,7 @@ package haina.ecommerce.view.paymentmethod
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.bill.ResponseAddBillTransaction
+import haina.ecommerce.model.flight.ResponseGetRealTicketPrice
 import haina.ecommerce.model.hotels.ResponseBookingHotel
 import haina.ecommerce.model.hotels.newHotel.RequestBookingHotelToDarma
 import haina.ecommerce.model.hotels.newHotel.ResponseSetBooking
@@ -148,6 +149,25 @@ class PaymentPresenter(val view:PaymentContract.View, val context: Context) {
 
         })
 
+    }
+    fun createBookingFlightDarma(paymentMethodId: Int){
+        view.showLoading()
+        val createBooking = NetworkConfig().getConnectionHainaBearer(context).setBookingFlight(paymentMethodId)
+        createBooking.enqueue(object : retrofit2.Callback<ResponseGetRealTicketPrice>{
+            override fun onResponse(call: Call<ResponseGetRealTicketPrice>, response: Response<ResponseGetRealTicketPrice>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageBookingFlight(response.body()?.message.toString())
+                } else {
+                    view.messageBookingFlight(response.body()?.message.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetRealTicketPrice>, t: Throwable) {
+                view.dismissLoading()
+                view.messageBookingFlight(t.localizedMessage.toString())
+            }
+        })
     }
 
 }

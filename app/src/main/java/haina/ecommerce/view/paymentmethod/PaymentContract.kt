@@ -11,6 +11,7 @@ interface PaymentContract {
         fun messageCreateBillTransaction(msg:String)
         fun getDataPaymentMethod(data:List<DataPaymentMethod?>?)
         fun messageBookingHotel(msg: String)
+        fun messageBookingFlight(msg: String)
         fun messageCreateVacancy(msg:String)
     }
 }

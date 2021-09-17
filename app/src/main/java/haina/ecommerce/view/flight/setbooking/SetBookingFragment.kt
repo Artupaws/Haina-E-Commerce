@@ -2,6 +2,7 @@ package haina.ecommerce.view.flight.setbooking
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Parcelable
@@ -27,6 +28,7 @@ import haina.ecommerce.room.roomdatapassenger.DataPassenger
 import haina.ecommerce.room.roomdatapassenger.PassengerDao
 import haina.ecommerce.room.roomdatapassenger.RoomDataPassenger
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.paymentmethod.PaymentActivity
 import timber.log.Timber
 
 
@@ -171,6 +173,13 @@ class SetBookingFragment : Fragment(), View.OnClickListener,
 
             R.id.tv_action_edit -> {
                 Toast.makeText(requireActivity(), data.first_name, Toast.LENGTH_SHORT).show()
+            }
+
+            R.id.button_submit -> {
+                val intentPayment = Intent(requireActivity(), PaymentActivity::class.java)
+//                intentPayment.putExtra("dataBooking", dataBooking)
+                intentPayment.putExtra("typeTransaction", 4)
+                startActivity(intentPayment)
             }
         }
     }

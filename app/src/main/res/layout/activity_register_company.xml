@@ -60,37 +60,208 @@
                         android:src="@drawable/ic_add" />
                 </androidx.cardview.widget.CardView>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/outlinedTextFieldNameCompany"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_company_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:hint="@string/company_name">
+                    android:layout_marginTop="25dp">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <ImageView
+                        android:id="@+id/iv_company_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_company"
+                        app:layout_constraintBottom_toBottomOf="@+id/view3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_company_name"
+                        app:tint="@color/black_60" />
+
+                    <TextView
+                        android:id="@+id/tv_company_name"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="Company Name"
+                        app:layout_constraintStart_toEndOf="@+id/iv_company_name"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
                         android:id="@+id/et_company_name"
-                        android:layout_width="match_parent"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:inputType="text" />
+                        android:textColor="@color/black"
+                        android:hint="Enter Company Name"
+                        android:background="@null"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/tv_company_name"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_company_name" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <View
+                        android:id="@+id/view3"
+                        android:layout_width="0dp"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/et_company_name"
+                        app:layout_constraintTop_toBottomOf="@+id/et_company_name" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/outlinedFieldDescriptionCompany"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="@string/description">
+                    android:layout_marginTop="10dp">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/et_description_company"
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:id="@+id/iv_province"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="textMultiLine" />
+                        android:src="@drawable/ic_location"
+                        app:layout_constraintBottom_toBottomOf="@+id/view1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_province"
+                        app:tint="#787878" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <Spinner
+                        android:id="@+id/spinner_province"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:itemCount="5"
+                        android:layout_marginStart="5dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/iv_province"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_province"
+                        tools:listitem="@layout/list_item_invite_interview" />
+
+
+                    <TextView
+                        android:id="@+id/tv_province"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="Company Province Based"
+                        app:layout_constraintStart_toEndOf="@+id/iv_province"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="0dp"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/spinner_province"
+                        app:layout_constraintTop_toBottomOf="@+id/spinner_province" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/iv_company_siup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_resume"
+                        app:layout_constraintBottom_toBottomOf="@+id/view4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_company_siup"
+                        app:tint="@color/black_60" />
+
+                    <TextView
+                        android:id="@+id/tv_company_siup"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="Company SIUP"
+                        app:layout_constraintStart_toEndOf="@+id/iv_company_siup"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/et_company_siup"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:hint="Enter Company SIUP"
+                        android:background="@null"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/tv_company_siup"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_company_siup" />
+
+                    <View
+                        android:id="@+id/view4"
+                        android:layout_width="0dp"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/et_company_siup"
+                        app:layout_constraintTop_toBottomOf="@+id/et_company_siup" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/ic_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_location"
+                        app:layout_constraintBottom_toBottomOf="@+id/view5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_description"
+                        app:tint="@color/black_60" />
+
+                    <TextView
+                        android:id="@+id/tv_description"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="Company Description"
+                        app:layout_constraintStart_toEndOf="@+id/ic_description"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/et_description"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:hint="Enter Interview Location"
+                        android:lines="3"
+                        android:background="@null"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/tv_description"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_description" />
+
+                    <View
+                        android:id="@+id/view5"
+                        android:layout_width="0dp"
+                        android:layout_height="0.5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/black"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/et_description"
+                        app:layout_constraintTop_toBottomOf="@+id/et_description" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <FrameLayout
                     android:layout_width="wrap_content"

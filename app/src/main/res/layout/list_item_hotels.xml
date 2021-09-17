@@ -25,12 +25,31 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             tools:ignore="WebViewLayout">
-            <ImageView
-                android:id="@+id/iv_hotels"
-                android:layout_width="110dp"
-                android:layout_height="150dp"
-                android:scaleType="centerCrop"
-                android:visibility="visible"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+
+                    <View
+                        android:layout_width="110dp"
+                        android:layout_height="150dp"
+                        android:background="@color/gray_shimmer"></View>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <ImageView
+                    android:id="@+id/iv_hotels"
+                    android:layout_width="110dp"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="visible"/>
+            </RelativeLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

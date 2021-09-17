@@ -43,18 +43,18 @@ class AdapterListHotelDarma(val context: Context, private val listHotel: List<Ho
 //                ivHotels.load("http://61.8.74.42:7080/H2H/hotel/logo?id=48659")
 //                Picasso.get().load("http://61.8.74.42:7080/H2H/hotel/logo?id=48659").into(ivHotels)
                 Glide.with(context)
-                    .load(hotelHaina.logo)
+                    .load("https://www.darmawisataindonesiah2h.co.id/hotel/Image?ID=2811467-1")
                     .listener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?,isFirstResource: Boolean): Boolean {
                             Timber.d(e!!)
                             return false
                         }
                         override fun onResourceReady(resource: Drawable?,model: Any?,target: Target<Drawable>?,dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                            shimmerLoading.visibility=View.GONE
                             return false
                         }
                     })
                     .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .apply(RequestOptions().override(110, 150))
                     .into(ivHotels)
 
 
