@@ -17,13 +17,15 @@ import haina.ecommerce.model.hotels.newHotel.RoomsItemDarma
 
 class AdapterListRoomDarma(val context: Context, private val listRoom: List<RoomsItemDarma?>?, private val itemAdapterCallback:ItemAdapterCallback):
     RecyclerView.Adapter<AdapterListRoomDarma.Holder>() {
+    private val helper:Helper = Helper
+
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemRoomDarmaBinding.bind(view)
         fun bind(itemHaina: RoomsItemDarma, itemAdapterCallback: ItemAdapterCallback){
             binding.apply {
                 tvNameRoom.text = itemHaina.name
-                tvRoomPrice.text=itemHaina.price.toString()
+                tvRoomPrice.text=helper.convertToFormatMoneyIDRFilter(itemHaina.price.toString())
                 var statusBreakfast = itemHaina.breakfast
                 val icon = HtmlCompat.fromHtml("<img${itemHaina.image}>", HtmlCompat.FROM_HTML_MODE_LEGACY)
                 Glide.with(context).load(icon).into(ivRoomHotel)
