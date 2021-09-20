@@ -23,5 +23,8 @@ data class Notificationcategory(
 	val createdAt: String? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null
+	val id: Int? = null,
+
+	@field:SerializedName("notif")
+	val notif: List<DataItemNotification>? = null
 ) : Parcelable

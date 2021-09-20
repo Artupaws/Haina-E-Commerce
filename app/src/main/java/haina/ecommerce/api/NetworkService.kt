@@ -16,6 +16,7 @@ import haina.ecommerce.model.howtopay.ResponseGetHowToPay
 import haina.ecommerce.model.news.ResponseGetListNews
 import haina.ecommerce.model.news.ResponseGetListNewsTable
 import haina.ecommerce.model.notification.ResponseGetNotification
+import haina.ecommerce.model.notification.ResponseOpenNotification
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.productservice.ResponseGetProductService
 import haina.ecommerce.model.property.*
@@ -492,6 +493,12 @@ interface NetworkService {
     //Get notification
     @POST("api/notification")
     fun getNotification():Call<ResponseGetNotification>
+
+    @FormUrlEncoded
+    @POST("api/open-notification")
+    fun openNotification(
+        @Field("id")id:Int,
+    ):Call<ResponseOpenNotification>
 
     //Get List Airlines
     @FormUrlEncoded

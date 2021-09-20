@@ -68,7 +68,6 @@
                     android:src="@drawable/ic_notification"
                     app:ibv_badgeColor="@android:color/holo_red_dark"
                     app:ibv_badgeTextColor="@color/white"
-                    app:ibv_badgeValue="10"
                     app:ibv_badgePadding="1.5dp"
                     app:ibv_badgeTextSize="11sp"
                     app:ibv_badgeLimitValue="false" />

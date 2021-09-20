@@ -17,6 +17,9 @@ data class DataUser(
 	@field:SerializedName("phone")
 	val phone: String? = null,
 
+	@field:SerializedName("notification_count")
+	val notificationCount: Int? = null,
+
 	@field:SerializedName("username")
 	val username: String? = null,
 

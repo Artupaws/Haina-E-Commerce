@@ -19,6 +19,9 @@ data class DataItemNotification(
 	@field:SerializedName("id")
 	val id: Int? = null,
 
+	@field:SerializedName("opened")
+	val opened: Int? = null,
+
 	@field:SerializedName("id_user")
 	val idUser: Int? = null,
 
@@ -26,8 +29,5 @@ data class DataItemNotification(
 	val title: String? = null,
 
 	@field:SerializedName("body")
-	val body: String? = null,
-
-	@field:SerializedName("notificationcategory")
-	val notificationcategory: Notificationcategory? = null
+	val body: String? = null
 ) : Parcelable

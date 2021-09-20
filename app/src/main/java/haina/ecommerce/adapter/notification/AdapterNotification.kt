@@ -19,12 +19,14 @@ class AdapterNotification(val context: Context, private val listNotification: Li
         fun bind(itemHaina: DataItemNotification, itemAdapterCallback: ItemAdapterCallback){
             with(binding){
                 tvDateNotification.text = itemHaina.createdAt
-                tvCategoryNotification.text = itemHaina.notificationcategory?.name
-                tvNotificationFor.text = itemHaina.notificationcategory?.notificationFor
+//                tvCategoryNotification.text = itemHaina.notificationcategory?.name
                 tvTitleNotification.text = itemHaina.title
                 tvDescriptionNotification.text = itemHaina.body
                 itemView.setOnClickListener {
                     itemAdapterCallback.onAdapterClick(itemView, itemHaina)
+                }
+                if(itemHaina.opened==0){
+                    linearNotification.setBackgroundColor(0x8DFDDB3A.toInt())
                 }
             }
         }

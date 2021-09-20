@@ -1,15 +1,14 @@
 package haina.ecommerce.model.notification
 
-import android.app.Notification
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ResponseGetNotification(
+data class ResponseOpenNotification(
 
 	@field:SerializedName("data")
-	val data: List<Notificationcategory?>? = null,
+	val data: Int? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,

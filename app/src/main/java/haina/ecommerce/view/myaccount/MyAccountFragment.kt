@@ -310,6 +310,8 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.Vi
 
     override fun getDataUser(data: DataUser?) {
         Timber.d(data.toString())
+
+        binding?.ivNotificationAccount?.badgeValue=data?.notificationCount!!
         sharedPref.save(Constants.PREF_PHONE_NUMBER, data?.phone.toString())
         sharedPref.save(Constants.PREF_EMAIL, data?.email.toString())
         binding?.tvNameUser?.text = data?.fullname.toString()
