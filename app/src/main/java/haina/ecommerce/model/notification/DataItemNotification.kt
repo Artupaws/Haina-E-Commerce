@@ -16,6 +16,9 @@ data class DataItemNotification(
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
 
+	@field:SerializedName("date")
+	val date: String? = null,
+
 	@field:SerializedName("id")
 	val id: Int? = null,
 

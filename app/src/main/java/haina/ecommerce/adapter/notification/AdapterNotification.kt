@@ -18,7 +18,7 @@ class AdapterNotification(val context: Context, private val listNotification: Li
         private val binding = ListItemNotificationBinding.bind(view)
         fun bind(itemHaina: DataItemNotification, itemAdapterCallback: ItemAdapterCallback){
             with(binding){
-                tvDateNotification.text = itemHaina.createdAt
+                tvDateNotification.text = itemHaina.date
 //                tvCategoryNotification.text = itemHaina.notificationcategory?.name
                 tvTitleNotification.text = itemHaina.title
                 tvDescriptionNotification.text = itemHaina.body

@@ -81,6 +81,7 @@ class HistorySubmitJobActivity : AppCompatActivity(), HistorySubmitJobContract, 
 
     override fun getListSubmitJob(item: List<MyApplication?>?) {
 
+
 //        val adapterHistorySubmitJob =  AdapterHistorySubmitJob(this, item)
 //        binding?.rvHistoryJobSubmit?.apply {
 //            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

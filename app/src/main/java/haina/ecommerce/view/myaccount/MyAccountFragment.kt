@@ -40,6 +40,7 @@ import haina.ecommerce.view.myaccount.changepassword.ChangePasswordActivity
 import haina.ecommerce.view.myaccount.detailaccount.DetailAccountActivity
 import haina.ecommerce.view.notification.NotificationActivity
 import haina.ecommerce.view.register.company.RegisterCompanyActivity
+import haina.ecommerce.view.webview.WebViewActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -108,6 +109,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.Vi
         binding?.includeLogin?.btnLoginNotLogin?.setOnClickListener(this)
         binding?.ivNotificationAccount?.setOnClickListener(this)
         binding?.linearLogout?.setOnClickListener(this)
+        binding?.linearHelp?.setOnClickListener(this)
         binding?.ivProfile?.setOnClickListener(this)
         binding?.tvActionEditProfile?.setOnClickListener(this)
         binding?.linearRegisterCompany?.setOnClickListener(this)
@@ -124,6 +126,13 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.Vi
         when (p0?.id) {
             R.id.btn_login_not_login -> {
                 val intent = Intent(activity, LoginActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.linear_help -> {
+                val intent = Intent(activity, WebViewActivity::class.java)
+                intent.putExtra("url","https://support.hainaservice.com/en/")
+
                 startActivity(intent)
             }
 

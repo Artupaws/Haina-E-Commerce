@@ -41,12 +41,19 @@ class WebViewActivity : AppCompatActivity() {
                 return
             }
         }
-        if (intentFrom == "document"){
-            binding.webView.loadUrl("http://docs.google.com/gview?embedded=true&url=${getUrl}")
-            binding.toolbar3.title = "Resume"
-        } else {
-            binding.toolbar3.title = getString(R.string.detail_news)
-            binding.webView.loadUrl(getUrl)
+        when (intentFrom) {
+            "document" -> {
+                binding.webView.loadUrl("http://docs.google.com/gview?embedded=true&url=${getUrl}")
+                binding.toolbar3.title = "Resume"
+            }
+            "help" -> {
+                binding.toolbar3.title = "Help & Support"
+                binding.webView.loadUrl(getUrl)
+            }
+            else -> {
+                binding.toolbar3.title = getString(R.string.detail_news)
+                binding.webView.loadUrl(getUrl)
+            }
         }
 
     }

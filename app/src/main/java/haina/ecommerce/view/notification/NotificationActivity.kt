@@ -106,6 +106,7 @@ class NotificationActivity : AppCompatActivity(), NotificationContract, AdapterN
 
     override fun onAdapterClick(view: View, data: DataItemNotification) {
         presenter.openNotification(data.id!!)
+        presenter.getNotification()
         Toast.makeText(applicationContext, data.title, Toast.LENGTH_SHORT).show()
     }
 }
