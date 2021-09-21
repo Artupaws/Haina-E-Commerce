@@ -109,6 +109,18 @@ interface NetworkService {
     @GET("api/jobs/category")
     fun getDataListJobCategory(): Call<ResponseJobCategory>
 
+    @FormUrlEncoded
+    @POST("api/job/vacancy/add_bookmark")
+    fun jobAddBookmark(
+        @Field("id_vacancy") idVacancy: Int
+    ): Call<ResponseJobBookmark>
+
+    @FormUrlEncoded
+    @POST("api/job/vacancy/remove_bookmark")
+    fun jobRemoveBookmark(
+        @Field("id_vacancy") idVacancy: Int
+    ): Call<ResponseJobBookmark>
+
     //Get List Job Location
     @GET("api/location")
     fun getDataListJobLocation(): Call<ResponseListJobLocation>
@@ -147,6 +159,11 @@ interface NetworkService {
     fun getListJobVacancy(
             @FieldMap data: Map<String, Int>
     ):Call<ResponseGetJob>
+
+    //Get List Job Bookmark
+    @GET("api/job/vacancy/my_bookmark")
+    fun getListJobBookmark(
+    ):Call<ResponseGetAllVacancy>
 
     //Change Image Profile
     @Multipart
@@ -975,9 +992,18 @@ interface NetworkService {
         @Field("skill")skill:String
     ):Call<ResponseUpdateDataMyVacancy>
 
+    @FormUrlEncoded
     @Headers("No-Authentication: true")
-    @GET("api/job/vacancy/show_all")
-    fun getListAllVacancy():Call<ResponseGetAllVacancy>
+    @POST("api/job/vacancy/search")
+    fun getListAllVacancy(
+        @Field("min_salary")minSalary:Int?,
+        @Field("id_edu")idEdu: Int?,
+        @Field("id_specialist")idSpecialist: Int?,
+        @Field("id_city")idCity: Int?,
+        @Field("type")type: Int?,
+        @Field("level")level: Int?,
+        @Field("experience")experience: Int?
+        ):Call<ResponseGetAllVacancy>
 
     @FormUrlEncoded
     @Headers("No-Authentication: true")

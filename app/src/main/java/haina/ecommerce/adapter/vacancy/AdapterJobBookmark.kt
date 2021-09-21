@@ -23,7 +23,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import java.util.ArrayList
 
-class AdapterAllVacancy(val context: Context,
+class AdapterJobBookmark(val context: Context,
                         private var listAllVacancy: ArrayList<DataAllVacancy?>?,
                         private val adapterCallbackAllVacancy:AdapterCallbackAllVacancy) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     Filterable {
@@ -61,16 +61,11 @@ class AdapterAllVacancy(val context: Context,
                     })
                     .into(ivImageCompany)
 
-                if(itemHaina.bookmarked==1){
-                    ivSaveJob.isChecked=true
-                }
+                ivSaveJob.isChecked=true
 
                 ivSaveJob.setOnCheckedChangeListener { _, isChecked ->
-                    if(isChecked){
-                        adapterCallbackAllVacancy.addBookmarkJob(itemHaina.id!!)
-                    }else{
-                        adapterCallbackAllVacancy.removeBookmarkJob(itemHaina.id!!)
-                    }
+                    adapterCallbackAllVacancy.removeBookmarkJob(itemHaina.id!!)
+
                 }
                 linearJobVacancy.setOnClickListener {
                     adapterCallbackAllVacancy.listAllVacancyClick(linearJobVacancy, itemHaina)
@@ -97,7 +92,6 @@ class AdapterAllVacancy(val context: Context,
 
     interface AdapterCallbackAllVacancy {
         fun listAllVacancyClick(view: View, dataMyVacancy: DataAllVacancy)
-        fun addBookmarkJob(idVacancy: Int)
         fun removeBookmarkJob(idVacancy: Int)
     }
 

@@ -6,6 +6,7 @@
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/drawable/ic_calendar.xml" value="0.3880208333333333" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/drawable/ic_company.xml" value="0.30277777777777776" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/drawable/ic_complete_flight.xml" value="0.24537037037037038" />
+        <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/drawable/toggle_bookmark_selector.xml" value="0.3880208333333333" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/activity_data_company.xml" value="0.25" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/activity_detail_account.xml" value="0.18085106382978725" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/activity_detail_news.xml" value="0.1361111111111111" />
@@ -14,6 +15,7 @@
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/activity_hotel_booking_detail.xml" value="0.25" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/activity_hotels.xml" value="0.371875" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/activity_job.xml" value="0.25" />
+        <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/activity_job_bookmark.xml" value="0.371875" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/activity_list_applicant.xml" value="0.25" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/activity_my_application.xml" value="0.2" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/activity_my_vacancy.xml" value="0.22" />
@@ -36,6 +38,7 @@
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_history_submit_application.xml" value="0.25" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_hotel_search.xml" value="0.2" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_hotel_selection.xml" value="0.33" />
+        <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_job_filter.xml" value="0.371875" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_list_city_hotel.xml" value="0.22" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_list_hotel.xml" value="0.1712962962962963" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/fragment_list_room.xml" value="0.22" />
@@ -66,7 +69,7 @@
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_hotels.xml" value="0.33" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_invite_interview.xml" value="0.2" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_job_category.xml" value="0.67" />
-        <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_job_vacancy.xml" value="0.371875" />
+        <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_job_vacancy.xml" value="0.33" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_my_forum.xml" value="0.371875" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_my_vacancy.xml" value="0.33" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_news.xml" value="0.5" />
@@ -81,6 +84,7 @@
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_ticket_choose.xml" value="0.1287037037037037" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_time_flight.xml" value="0.1287037037037037" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/list_item_unpaid_hotel.xml" value="0.25" />
+        <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/popup_filter_job.xml" value="0.371875" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/popup_invite_interview.xml" value="0.25" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/popup_schedule_hotel.xml" value="0.25" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/view_data_hotel_booking.xml" value="0.16203703703703703" />
@@ -88,6 +92,7 @@
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/view_hotel_choosed.xml" value="0.4701195219123506" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/view_price_detail.xml" value="0.16203703703703703" />
         <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/layout/view_special_request.xml" value="0.1712962962962963" />
+        <entry key="..\:/APP/Haina-E-Commerce/app/src/main/res/menu/menu_filter_job.xml" value="0.371875" />
       </map>
     </option>
   </component>

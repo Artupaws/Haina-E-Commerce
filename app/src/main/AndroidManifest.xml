@@ -93,6 +93,9 @@
             android:name=".view.job.JobActivity"
             android:screenOrientation="nosensor" />
         <activity
+            android:name=".view.job.bookmark.JobBookmarkActivity"
+            android:screenOrientation="nosensor" />
+        <activity
             android:name=".view.postingjob.datajob.PostingJobActivity"
             android:screenOrientation="nosensor" />
         <activity

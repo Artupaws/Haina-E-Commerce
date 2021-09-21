@@ -39,6 +39,9 @@ data class DataAllVacancy(
 	@field:SerializedName("id_edu")
 	val idEdu: Int? = null,
 
+	@field:SerializedName("bookmarked")
+	val bookmarked: Int? = null,
+
 	@field:SerializedName("description")
 	val description: String? = null,
 

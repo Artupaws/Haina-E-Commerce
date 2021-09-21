@@ -10,9 +10,11 @@ import haina.ecommerce.model.ResponseJobCategory
 import haina.ecommerce.model.ResponseListJobLocation
 import haina.ecommerce.model.vacancy.ResponseGetAllVacancy
 import haina.ecommerce.model.vacancy.ResponseGetDataCreateVacancy
+import haina.ecommerce.model.vacancy.ResponseJobBookmark
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.http.Field
 
 class JobPresenter(val view: JobContract.View, val context: Context){
 
@@ -68,10 +70,63 @@ class JobPresenter(val view: JobContract.View, val context: Context){
 
         })
     }
-
-    fun loadAllVacancy(){
+    fun addBookmark(idVacancy:Int){
         view.showLoading()
-        val callListJobCategory = NetworkConfig().getConnectionHainaBearer(context).getListAllVacancy()
+        val callListJobCategory = NetworkConfig().getConnectionHainaBearer(context).jobAddBookmark(idVacancy)
+        callListJobCategory.enqueue(object : retrofit2.Callback<ResponseJobBookmark> {
+            override fun onResponse(call: Call<ResponseJobBookmark>, response: Response<ResponseJobBookmark>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1) {
+                    val data = response.body()?.data
+                } else {
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseJobBookmark>, t: Throwable) {
+                view.dismissLoading()
+                view.messageLoadJobCategory(t.localizedMessage)
+//                if(t is NoConnectivityException) {
+//                    view.showLoading()
+//                }
+            }
+
+        })
+    }
+
+    fun removeBookmark(idVacancy: Int){
+        view.showLoading()
+        val callListJobCategory = NetworkConfig().getConnectionHainaBearer(context).jobRemoveBookmark(idVacancy)
+        callListJobCategory.enqueue(object : retrofit2.Callback<ResponseJobBookmark> {
+            override fun onResponse(call: Call<ResponseJobBookmark>, response: Response<ResponseJobBookmark>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1) {
+                    val data = response.body()?.data
+                } else {
+                    val error = JSONObject(response.errorBody()?.string()!!)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseJobBookmark>, t: Throwable) {
+                view.dismissLoading()
+                view.messageLoadJobCategory(t.localizedMessage)
+//                if(t is NoConnectivityException) {
+//                    view.showLoading()
+//                }
+            }
+
+        })
+    }
+
+    fun loadAllVacancy(minSalary:Int?,
+                       idEdu: Int?,
+                       idSpecialist: Int?,
+                       idCity: Int?,
+                       type: Int?,
+                       level: Int?,
+                       experience: Int?){
+        view.showLoading()
+        val callListJobCategory = NetworkConfig().getConnectionHainaBearer(context).getListAllVacancy(minSalary,idEdu,idSpecialist,idCity,type,level,experience)
         callListJobCategory.enqueue(object : retrofit2.Callback<ResponseGetAllVacancy> {
             override fun onResponse(call: Call<ResponseGetAllVacancy>, response: Response<ResponseGetAllVacancy>) {
                 view.dismissLoading()

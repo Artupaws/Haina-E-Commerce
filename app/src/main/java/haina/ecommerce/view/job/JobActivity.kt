@@ -38,6 +38,9 @@ import haina.ecommerce.model.vacancy.VacancyTypeItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.detailjob.DetailJobActivity
+import haina.ecommerce.view.hotels.selection.BottomSheetFilterFragment
+import haina.ecommerce.view.hotels.selection.BottomSheetHotelFragment
+import haina.ecommerce.view.job.bookmark.JobBookmarkActivity
 import haina.ecommerce.view.login.LoginActivity
 import haina.ecommerce.view.posting.newvacancy.NewPostVacancyActivity
 import haina.ecommerce.view.register.company.RegisterCompanyActivity
@@ -66,6 +69,14 @@ class JobActivity : AppCompatActivity(), JobContract.View,
     private lateinit var sharedPref:SharedPreferenceHelper
     private var idCompany:Int = 0
 
+    private var minSalary:Int? = null
+    private var idEdu: Int? = null
+    private var idSpecialist: Int? = null
+    private var idCity: Int? = null
+    private var type: Int? = null
+    private var level: Int? = null
+    private var experience: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityJobBinding.inflate(layoutInflater)
@@ -74,7 +85,15 @@ class JobActivity : AppCompatActivity(), JobContract.View,
         presenter = JobPresenter(this, this)
         sharedPref = SharedPreferenceHelper(this)
         binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
-        presenter.loadAllVacancy()
+        presenter.loadAllVacancy(
+            minSalary,
+            idEdu,
+            idSpecialist,
+            idCity,
+            type,
+            level,
+            experience
+        )
         presenter.loadListJobLocation()
         presenter.getDataCreateVacancy()
         presenter.checkRegisterCompany()
@@ -112,7 +131,13 @@ class JobActivity : AppCompatActivity(), JobContract.View,
         binding.toolbarJob.setOnMenuItemClickListener { menuItem ->
             when(menuItem.itemId){
                 R.id.filter_job -> {
-                    popupFilter?.show()
+                    showFilter()
+
+//                    popupFilter?.show()
+                    true
+                }
+                R.id.bookmark_job -> {
+                    startActivity(Intent(applicationContext, JobBookmarkActivity::class.java))
                     true
                 }
                 else -> false
@@ -134,9 +159,22 @@ class JobActivity : AppCompatActivity(), JobContract.View,
         })
     }
 
+    private fun showFilter(){
+        var filterSheet=BottomSheetFilterFragment()
+
+        filterSheet.show(supportFragmentManager,filterSheet.tag)
+
+    }
     private fun refresh(){
         binding.swipeRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            presenter.loadAllVacancy()
+            presenter.loadAllVacancy(
+                minSalary,
+                idEdu,
+                idSpecialist,
+                idCity,
+                type,
+                level,
+                experience)
             presenter.loadListJobLocation()
             presenter.getDataCreateVacancy()
         })
@@ -152,20 +190,15 @@ class JobActivity : AppCompatActivity(), JobContract.View,
     }
 
     private fun loadPresenterFilter(){
-        data.clear()
-        isCategoryEmpty = filterCategory == 0
-        isLocationEmpty = filterLocation == 0
-        isStartSalaryEmpty = filterStartSalary == 0
-        if (!isCategoryEmpty){
-            data["id_category"] = filterCategory
-        }
-        if (!isLocationEmpty){
-            data["id_location"] = filterLocation
-        }
-        if (!isStartSalaryEmpty){
-            data["salary_start"] = filterStartSalary
-        }
-        presenter.loadListJobVacancy(data)
+        presenter.loadAllVacancy(
+            minSalary,
+            idEdu,
+            idSpecialist,
+            idCity,
+            type,
+            level,
+            experience
+        )
     }
 
     private fun showPopupRegisterCompany() {
@@ -214,6 +247,7 @@ class JobActivity : AppCompatActivity(), JobContract.View,
         super.onStart()
         broadcaster?.registerReceiver(mMessageReceiver, IntentFilter("jobLocationFilter"))
         broadcaster?.registerReceiver(mMessageReceiver, IntentFilter("jobCategoryFilter"))
+        broadcaster?.registerReceiver(mMessageReceiver, IntentFilter("jobFilter"))
     }
 
     private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver(){
@@ -225,6 +259,9 @@ class JobActivity : AppCompatActivity(), JobContract.View,
                 "jobCategoryFilter" -> {
                     filterCategory = intent.getIntExtra("idCategoryJobFilter", 0)
                     loadPresenterFilter()
+                }
+                "jobFilter" -> {
+
                 }
             }
         }
@@ -253,14 +290,14 @@ class JobActivity : AppCompatActivity(), JobContract.View,
     }
 
     override fun getDataSize(list: Int?) {
-//        if (list == 0){
-//            Toast.makeText(applicationContext, list.toString(), Toast.LENGTH_SHORT).show()
-//            binding.rvJob.visibility = View.INVISIBLE
-//            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-//        } else {
-//            binding.rvJob.visibility = View.VISIBLE
-//            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
-//        }
+        if (list == 0){
+            Toast.makeText(applicationContext, list.toString(), Toast.LENGTH_SHORT).show()
+            binding.rvJob.visibility = View.INVISIBLE
+            binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
+        } else {
+            binding.rvJob.visibility = View.VISIBLE
+            binding.includeEmpty.linearEmpty.visibility = View.INVISIBLE
+        }
     }
 
 //    private val adapterListJob by lazy {
@@ -274,7 +311,7 @@ class JobActivity : AppCompatActivity(), JobContract.View,
     override fun messageLoadJobCategory(msg: String) {
         Timber.d(msg)
         binding.swipeRefresh.isRefreshing = false
-        presenter.loadListJobVacancy(data)
+//        presenter.loadListJobVacancy(data)
     }
 
     override fun getLoadJobCategory(itemHaina: MutableList<DataItemHaina?>?) {
@@ -305,14 +342,16 @@ class JobActivity : AppCompatActivity(), JobContract.View,
         val jobLocationAdapter = AdapterLocationFilterJob(this, itemHaina)
         rSliderStartSalary?.addOnChangeListener { _, value, _ ->
             action?.isEnabled = value.toString()!=""
+            minSalary = value.toInt()
             tvStartSalary?.text = helper.convertToFormatMoneyIDRFilter(value.toString())
             filterStartSalary = helper.changeFormatMoneyToValueFilter(tvStartSalary?.text.toString())!!.toInt()
         }
         jobLocationAdapter.onItemClick = {
-                action?.isEnabled = it.toString()!=""
+            action?.isEnabled = it.toString()!=""
         }
         action?.setOnClickListener{
             popupFilter!!.dismiss()
+
             loadPresenterFilter()
         }
         rvJobLocation?.apply {
@@ -373,6 +412,14 @@ class JobActivity : AppCompatActivity(), JobContract.View,
                     .putExtra("idCompany", idCompany))
             }
         }
+    }
+
+    override fun addBookmarkJob(idVacancy: Int) {
+        presenter.addBookmark(idVacancy)
+    }
+
+    override fun removeBookmarkJob(idVacancy: Int) {
+        presenter.removeBookmark(idVacancy)
     }
 }
 
