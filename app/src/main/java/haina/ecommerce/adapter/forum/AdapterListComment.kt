@@ -10,6 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemCommentForumBinding
+import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.forum.DataComment
 import haina.ecommerce.model.forum.DataForum
 import haina.ecommerce.model.forum.DataItemHotPost
@@ -25,6 +26,7 @@ class AdapterListComment(val context: Context,
     private lateinit var sharedPref:SharedPreferenceHelper
     private lateinit var imagesListener : ImageListener
     private lateinit var listParams: ArrayList<String>
+    private val helper:Helper = Helper
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemCommentForumBinding.bind(view)
@@ -37,10 +39,9 @@ class AdapterListComment(val context: Context,
                 tvComment.text = itemHaina.content
                 tvUsername.text = itemHaina.username
                 val memberSince = "Member since : ${itemHaina.memberSince}"
-                tvMemberSince.text = memberSince
+                tvMemberSince.text = helper.dateTimeFormat(itemHaina.createdAt)
                 if (!itemHaina.mod?.contains("none")!!){
                     binding.tvMod.text = itemHaina.mod
-                    binding.tvOptionMenu.visibility = View.GONE
                 } else{
                     binding.tvMod.visibility = View.GONE
                 }

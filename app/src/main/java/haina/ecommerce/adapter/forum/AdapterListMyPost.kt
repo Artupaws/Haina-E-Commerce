@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemForumBinding
+import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.forum.DataItemHotPost
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
@@ -25,6 +26,7 @@ class AdapterListMyPost(val context: Context,
     private lateinit var sharedPref:SharedPreferenceHelper
     private lateinit var imagesListener : ImageListener
     private lateinit var listParams: ArrayList<String>
+    private var helper:Helper = Helper
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemForumBinding.bind(view)
@@ -37,6 +39,7 @@ class AdapterListMyPost(val context: Context,
                 tvLooks.text = itemHaina.viewCount.toString()
                 tvUpvote.text = itemHaina.likeCount.toString()
                 tvComment.text = itemHaina.commentCount.toString()
+                tvDate.text = helper.dateTimeFormat(itemHaina.createdAt)
                 ivUpvote.isChecked = itemHaina.upvoted == true
                 ivUpvote.isEnabled = sharedPref.getValueString(Constants.PREF_USERNAME) != itemHaina.author
                 ivUpvote.setOnCheckedChangeListener { _, isChecked ->

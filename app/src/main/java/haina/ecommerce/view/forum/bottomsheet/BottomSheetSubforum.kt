@@ -98,7 +98,7 @@ class BottomSheetSubforum : BottomSheetDialogFragment(),View.OnClickListener,
         when(view.id){
             R.id.relative_click -> {
                 val dataParams = DataItemHotPost(data.memberSince, data.commentCount, data.images, data.likeCount,
-                    data.authorData, data.author, data.created, data.videos, data.title, data.content, data.shareCount,
+                    data.authorData, data.author, data.created,"", data.videos, data.title, data.content, data.shareCount,
                 data.authorPhoto, data.userId, data.subforumData, data.id, data.viewCount, data.subforumFollow,data.upvoted)
                 val intentDetail = Intent(requireActivity(), DetailForumActivity::class.java)
                 intentDetail.putExtra("dataDetail", dataParams)

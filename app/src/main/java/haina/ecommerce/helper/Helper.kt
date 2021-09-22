@@ -151,6 +151,15 @@ object Helper {
             toFormat.format(dateParse!!)
         }
     }
+    fun dateTimeFormat(date: String?):String {
+        return if (date.isNullOrEmpty())""
+        else {
+            val currentFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000000Z'", Locale.getDefault())
+            val dateParse = currentFormat.parse( date )
+            val toFormat = SimpleDateFormat("HH:mm  d MMM yyyy", Locale.getDefault())
+            toFormat.format(dateParse!!)
+        }
+    }
 
     fun dateFormatWorkExperience(date: String?):String {
         return if (date.isNullOrEmpty())""

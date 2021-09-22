@@ -14,6 +14,7 @@ import android.view.View
 import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
+import haina.ecommerce.helper.Helper
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.bumptech.glide.Glide
@@ -44,6 +45,7 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
     private lateinit var dataForum: DataItemHotPost
     private var progressDialog:Dialog? = null
     private var broadcaster:LocalBroadcastManager? = null
+    private var helper:Helper = Helper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,6 +120,7 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
             binding.vpImageForum.setImageListener(imagesListener)
             binding.vpImageForum.setImageListener(imagesListener)
         }
+        binding.tvDate.text = helper.dateTimeFormat(data.createdAt)
         binding.tvNameUser.text = data.author
         binding.tvContent.text = data.content?.replace("\\n", "\n")
         Glide.with(applicationContext).load(subforumData.subforumImage).into(binding.ivImageSubforum)
@@ -188,7 +191,11 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
         when(view.id){
             R.id.tv_option_menu -> {
                 val popup = PopupMenu(this, view)
-                popup.inflate(R.menu.menu_option_comment)
+                if (!data.mod?.contains("none")!!){
+                    popup.inflate(R.menu.menu_option_comment_nonmod)
+                } else{
+                    popup.inflate(R.menu.menu_option_comment)
+                }
                 popup.setOnMenuItemClickListener { item ->
                     when(item.itemId){
                         R.id.add_as_submod -> {

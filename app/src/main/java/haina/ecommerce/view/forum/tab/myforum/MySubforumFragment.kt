@@ -85,31 +85,31 @@ class MySubforumFragment : Fragment(), MySubforumContract.View,
     }
 
     private fun setAnimation(clicked:Boolean, typeClicked:Int){
-            if (!clicked && typeClicked == 1){
-                binding.ivArrowMyforum.startAnimation(positionExpand)
-            } else if (clicked && typeClicked == 1){
-                binding.ivArrowMyforum.startAnimation(positionCollaps)
-            }
+        if (!clicked && typeClicked == 1){
+            binding.ivArrowMyforum.startAnimation(positionExpand)
+        } else if (clicked && typeClicked == 1){
+            binding.ivArrowMyforum.startAnimation(positionCollaps)
+        }
 
-            if (!clicked && typeClicked == 2){
-                binding.ivArrow.startAnimation(positionExpand)
-            } else if (clicked && typeClicked == 2){
-                binding.ivArrow.startAnimation(positionCollaps)
-            }
+        if (!clicked && typeClicked == 2){
+            binding.ivArrow.startAnimation(positionExpand)
+        } else if (clicked && typeClicked == 2){
+            binding.ivArrow.startAnimation(positionCollaps)
+        }
     }
 
     private fun setVisibility(clicked: Boolean, typeClicked: Int){
-            if (clicked && typeClicked == 1){
-                binding.frameMysubforum.visibility = View.GONE
-            } else if (!clicked && typeClicked == 1){
-                binding.frameMysubforum.visibility = View.VISIBLE
-            }
+        if (clicked && typeClicked == 1){
+            binding.frameMysubforum.visibility = View.GONE
+        } else if (!clicked && typeClicked == 1){
+            binding.frameMysubforum.visibility = View.VISIBLE
+        }
 
-            if (clicked && typeClicked == 2){
-                binding.frameFollow.visibility = View.GONE
-            } else if (!clicked && typeClicked == 2){
-                binding.frameFollow.visibility = View.VISIBLE
-            }
+        if (clicked && typeClicked == 2){
+            binding.frameFollow.visibility = View.GONE
+        } else if (!clicked && typeClicked == 2){
+            binding.frameFollow.visibility = View.VISIBLE
+        }
     }
 
     override fun messageGetListSubforum(msg: String) {

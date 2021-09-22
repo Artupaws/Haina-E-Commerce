@@ -22,10 +22,8 @@ import com.google.android.gms.common.util.CollectionUtils.listOf
 import com.google.android.material.slider.RangeSlider
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterJobCategoryOnJob
-import haina.ecommerce.adapter.AdapterJobVacancy
 import haina.ecommerce.adapter.AdapterLocationFilterJob
 import haina.ecommerce.adapter.vacancy.AdapterAllVacancy
-import haina.ecommerce.adapter.vacancy.AdapterDataCreateVacancy
 import haina.ecommerce.databinding.ActivityJobBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataCompany
@@ -33,14 +31,11 @@ import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.DataItemJob
 import haina.ecommerce.model.vacancy.DataAllVacancy
 import haina.ecommerce.model.vacancy.DataCreateVacancy
-import haina.ecommerce.model.vacancy.VacancyLevelItem
-import haina.ecommerce.model.vacancy.VacancyTypeItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.detailjob.DetailJobActivity
-import haina.ecommerce.view.hotels.selection.BottomSheetFilterFragment
-import haina.ecommerce.view.hotels.selection.BottomSheetHotelFragment
 import haina.ecommerce.view.job.bookmark.JobBookmarkActivity
+import haina.ecommerce.view.job.filter.BottomSheetFilterFragment
 import haina.ecommerce.view.login.LoginActivity
 import haina.ecommerce.view.posting.newvacancy.NewPostVacancyActivity
 import haina.ecommerce.view.register.company.RegisterCompanyActivity
@@ -76,6 +71,8 @@ class JobActivity : AppCompatActivity(), JobContract.View,
     private var type: Int? = null
     private var level: Int? = null
     private var experience: Int? = null
+    private var filterSheet: BottomSheetFilterFragment? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +82,7 @@ class JobActivity : AppCompatActivity(), JobContract.View,
         presenter = JobPresenter(this, this)
         sharedPref = SharedPreferenceHelper(this)
         binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
+        filterSheet= BottomSheetFilterFragment()
         presenter.loadAllVacancy(
             minSalary,
             idEdu,
@@ -160,9 +158,8 @@ class JobActivity : AppCompatActivity(), JobContract.View,
     }
 
     private fun showFilter(){
-        var filterSheet=BottomSheetFilterFragment()
 
-        filterSheet.show(supportFragmentManager,filterSheet.tag)
+        filterSheet!!.show(supportFragmentManager, filterSheet!!.tag)
 
     }
     private fun refresh(){
@@ -261,6 +258,42 @@ class JobActivity : AppCompatActivity(), JobContract.View,
                     loadPresenterFilter()
                 }
                 "jobFilter" -> {
+                    minSalary = if(intent.getIntExtra("minSalary",0)==0){
+                        null
+                    }else{
+                        intent.getIntExtra("minSalary",0)
+                    }
+                    idEdu = if(intent.getIntExtra("idEdu",0)==0){
+                        null
+                    }else{
+                        intent.getIntExtra("idEdu",0)
+                    }
+                    idSpecialist = if(intent.getIntExtra("idSpecialist",0)==0){
+                        null
+                    }else{
+                        intent.getIntExtra("idSpecialist",0)
+                    }
+                    idCity = if(intent.getIntExtra("idCity",0)==0){
+                        null
+                    }else{
+                        intent.getIntExtra("idCity",0)
+                    }
+                    type = if(intent.getIntExtra("type",0)==0){
+                        null
+                    }else{
+                        intent.getIntExtra("type",0)
+                    }
+                    level = if(intent.getIntExtra("level",0)==0){
+                        null
+                    }else{
+                        intent.getIntExtra("level",0)
+                    }
+                    experience = if(intent.getIntExtra("experience",0)==0){
+                        null
+                    }else{
+                        intent.getIntExtra("experience",0)
+                    }
+                    loadPresenterFilter()
 
                 }
             }

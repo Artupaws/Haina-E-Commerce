@@ -207,6 +207,13 @@
                 android:textSize="20sp"
                 tools:text="5 Facts About England Open" />
 
+            <TextView
+                android:id="@+id/tv_date"
+                style="@style/TextView.Poppins12spGrey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Date Posted: 2020-01-01" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

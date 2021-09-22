@@ -48,7 +48,6 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
         binding.toolbar10.setNavigationOnClickListener {
             onBackPressed()
         }
-        binding.tvTotalPost.visibility = View.GONE
         dialogLoading()
         viewType = if (sharedPref.getValueString(Constants.PREF_USERNAME).toString().contains(dataSubforum.creatorName.toString())){
             2
@@ -60,12 +59,10 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
 
     private fun showData(data: SubforumData) {
         binding.tvNameUser.text = data.name
-        binding.tvCategory.text = data.category
-        binding.tvCreated.text = dateFormat(data.createdAt)
-        val totalPost = "Total Post : ${data.totalPost}"
-        binding.tvTotalPost.text = totalPost
-        val totalPoster = "Total Poster : ${data.totalPoster}"
-        binding.tvTotalPost.text = totalPoster
+        binding.tvCategory.text = "Category : ${data.category}"
+        binding.tvCreated.text = "Created At : ${dateFormat(data.createdAt)}"
+        binding.tvTotalPost.text = "Total Post : ${data.totalPost}"
+        binding.tvTotalContributor.text = "Contributor : ${data.totalPoster}"
         Glide.with(applicationContext).load(data.subforumImage).into(binding.ivImageUser)
         postAdapter.clear()
         postAdapter.add(data.posts)

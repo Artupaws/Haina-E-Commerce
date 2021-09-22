@@ -26,7 +26,7 @@
         android:text="&#8942;"
         android:textFontWeight="700" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linear_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,26 +37,34 @@
         <TextView
             android:id="@+id/tv_title"
             style="@style/TextView.Poppins16spBlack"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/vp_image_property"
             android:layout_weight="1.5"
             android:ellipsize="end"
             android:maxLines="3"
             android:textColor="@color/black"
             tools:text="Cari temen yang suka badminton hehe" />
 
+        <TextView
+            android:id="@+id/tv_date"
+            style="@style/TextView.Poppins12spGrey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title" />
+
         <com.synnapps.carouselview.CarouselView
             android:id="@+id/vp_image_property"
-            android:layout_width="0dp"
+            android:layout_width="100dp"
             android:layout_height="60dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="0.5"
+            android:layout_alignParentRight="true"
             app:autoPlay="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linear_upvote"
