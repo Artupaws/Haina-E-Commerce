@@ -1,6 +1,7 @@
 package haina.ecommerce.adapter.forum
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,10 @@ class AdapterListComment(val context: Context,
                 tvMemberSince.text = helper.dateTimeFormat(itemHaina.createdAt)
                 if (!itemHaina.mod?.contains("none")!!){
                     binding.tvMod.text = itemHaina.mod
+                    if(itemHaina.mod?.equals("banned")){
+                        binding.tvMod.setBackgroundColor(Color.rgb(194, 76, 76))
+                        binding.tvMod.setTextColor(Color.WHITE)
+                    }
                 } else{
                     binding.tvMod.visibility = View.GONE
                 }

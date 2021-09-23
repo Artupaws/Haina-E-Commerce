@@ -32,13 +32,12 @@ class MySubforumFragment : Fragment(), MySubforumContract.View,
     private val positionExpand: Animation by lazy {
         AnimationUtils.loadAnimation(context, R.anim.anim_expand)
     }
-    private var clicked = false
+    private var clickedFollow = false
+    private var clickedMy = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentMyForumBinding.inflate(inflater, container, false)
         presenter = MySubforumPresenter(this, requireActivity())
-        binding.ivArrowMyforum.setOnClickListener(this)
-        binding.ivArrow.setOnClickListener(this)
         return binding.root
     }
 
@@ -47,6 +46,8 @@ class MySubforumFragment : Fragment(), MySubforumContract.View,
         loading()
         presenter.getListSubForum()
         presenter.getListSubForumFollow()
+        binding.relativeFollowing.setOnClickListener(this)
+        binding.relativeMyForum.setOnClickListener(this)
         binding.rvMyforum.adapter = mySubforumAdapter
         binding.rvMyforumFollow.adapter = mySubforumFollowAdapter
         AdapterListSubforum.VIEW_TYPE = 1
@@ -78,7 +79,8 @@ class MySubforumFragment : Fragment(), MySubforumContract.View,
         }
     }
 
-    private fun onAddPostClicked(typeClicked: Int) {
+    private fun onAddPostClicked(clicked:Boolean,typeClicked: Int) {
+
         Timber.d(typeClicked.toString())
         setVisibility(clicked, typeClicked)
         setAnimation(clicked, typeClicked)
@@ -181,13 +183,13 @@ class MySubforumFragment : Fragment(), MySubforumContract.View,
 
     override fun onClick(v: View?) {
         when(v?.id){
-            R.id.iv_arrow_myforum -> {
-                onAddPostClicked(1)
-                clicked = !clicked
+            R.id.relative_my_forum -> {
+                onAddPostClicked(clickedMy,1)
+                clickedMy = !clickedMy
             }
-            R.id.iv_arrow -> {
-                onAddPostClicked(2)
-                clicked = !clicked
+            R.id.relative_following -> {
+                onAddPostClicked(clickedFollow,2)
+                clickedFollow = !clickedFollow
             }
         }
     }

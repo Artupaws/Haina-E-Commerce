@@ -65,7 +65,7 @@ class AdapterListMyPost(val context: Context,
                     }
                     vpImageProperty.setImageListener(imagesListener)
                     vpImageProperty.setImageListener(imagesListener)
-                }
+            }
                 if(itemHaina.images.isNullOrEmpty()) {
                     listParams.add("https://hainaservice.com/storage/empty.jpg")
                     vpImageProperty.pageCount = listParams.size

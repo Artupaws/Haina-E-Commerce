@@ -44,15 +44,16 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
     private val positionExpand: Animation by lazy {
         AnimationUtils.loadAnimation(context, R.anim.anim_expand)
     }
-    private var clicked = false
+    private var clickedHot = false
+    private var clickedAll = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentShowForumBinding.inflate(inflater, container, false)
         presenter = ShowForumPresenter(this, requireActivity())
         broadcaster = LocalBroadcastManager.getInstance(requireActivity())
         binding.fabCreateForum.setOnClickListener(this)
-        binding.ivArrowHotTheads.setOnClickListener(this)
-        binding.ivArrowAllThreads.setOnClickListener(this)
+        binding.relativeAllThreads.setOnClickListener(this)
+        binding.relativeHotThreads.setOnClickListener(this)
         binding.tvLoadMore.setOnClickListener(this)
         return binding.root
     }
@@ -97,8 +98,7 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
         })
     }
 
-    private fun onAddPostClicked(typeClicked: Int) {
-        Timber.d(typeClicked.toString())
+    private fun onAddPostClicked(clicked:Boolean,typeClicked: Int) {
         setVisibility(clicked, typeClicked)
         setAnimation(clicked, typeClicked)
     }
@@ -296,13 +296,13 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
             R.id.fab_create_forum -> {
                 popupCreatePost?.show()
             }
-            R.id.iv_arrow_hot_theads -> {
-                onAddPostClicked(1)
-                clicked = !clicked
+            R.id.relative_hot_threads -> {
+                onAddPostClicked(clickedHot,1)
+                clickedHot = !clickedHot
             }
-            R.id.iv_arrow_all_threads -> {
-                onAddPostClicked(2)
-                clicked = !clicked
+            R.id.relative_all_threads -> {
+                onAddPostClicked(clickedAll,2)
+                clickedAll = !clickedAll
             }
             R.id.tv_load_more -> {
                 presenter.getListAllThreads(page++)

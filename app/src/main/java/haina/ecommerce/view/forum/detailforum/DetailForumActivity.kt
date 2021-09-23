@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -192,10 +193,15 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
             R.id.tv_option_menu -> {
                 val popup = PopupMenu(this, view)
                 if (!data.mod?.contains("none")!!){
-                    popup.inflate(R.menu.menu_option_comment_nonmod)
+                    if(data.mod?.equals("banned")){
+                        popup.inflate(R.menu.menu_option_comment)
+                    }else{
+                        popup.inflate(R.menu.menu_option_comment)
+                    }
                 } else{
-                    popup.inflate(R.menu.menu_option_comment)
+                    popup.inflate(R.menu.menu_option_comment_nonmod)
                 }
+
                 popup.setOnMenuItemClickListener { item ->
                     when(item.itemId){
                         R.id.add_as_submod -> {
