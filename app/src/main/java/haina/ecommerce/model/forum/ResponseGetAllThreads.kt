@@ -59,6 +59,9 @@ data class ThreadsItem(
 	@field:SerializedName("created")
 	val created: String? = null,
 
+	@field:SerializedName("created_at")
+	val createdAt: String? = null,
+
 	@field:SerializedName("videos")
 	val videos: List<VideosItem?>? = null,
 

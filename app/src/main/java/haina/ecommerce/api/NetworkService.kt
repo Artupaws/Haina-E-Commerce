@@ -1,5 +1,6 @@
 package haina.ecommerce.api
 
+import haina.ecommerce.adapter.forum.ResponseGetPostDetail
 import haina.ecommerce.model.*
 import haina.ecommerce.model.bill.ResponseAddBillTransaction
 import haina.ecommerce.model.bill.ResponseGetBillAmount
@@ -779,6 +780,12 @@ interface NetworkService {
     @GET("api/forum/hot_post")
     fun getListHotThreads():Call<ResponseGetHotpost>
 
+    @FormUrlEncoded
+    @POST("api/forum/home_post")
+    fun getListHomePost(
+        @Field("page")page:Int
+    ):Call<ResponseGetAllThreads>
+
     //Give Upvote
     @FormUrlEncoded
     @Headers("No-Authentication: true")
@@ -801,6 +808,11 @@ interface NetworkService {
     @Headers("No-Authentication: true")
     @POST("api/forum/comment")
     fun getListComment(@Field("post_id")postId:Int):Call<ResponseGetListComment>
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/post_detail")
+    fun getPostDetail(@Field("post_id")postId:Int):Call<ResponseGetPostDetail>
 
     //Get List Comment
     @FormUrlEncoded

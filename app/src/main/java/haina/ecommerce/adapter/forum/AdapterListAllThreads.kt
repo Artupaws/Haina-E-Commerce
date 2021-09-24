@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemForumBinding
+import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.forum.ThreadsItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
@@ -24,6 +25,8 @@ class AdapterListAllThreads(val context: Context,
     private lateinit var sharedPref:SharedPreferenceHelper
     private lateinit var imagesListener : ImageListener
     private lateinit var listParams: ArrayList<String>
+    private var helper: Helper = Helper
+
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemForumBinding.bind(view)
@@ -31,9 +34,10 @@ class AdapterListAllThreads(val context: Context,
             with(binding){
                 listParams = ArrayList()
                 if (viewType == 1) tvOptionMenu.visibility = View.GONE else tvOptionMenu.visibility = View.VISIBLE
-                tvNameUser.text = itemHaina.author
+                tvNameUser.text = "Posted By ${itemHaina.author}"
                 tvTitle.text = itemHaina.title
                 tvLooks.text = itemHaina.viewCount.toString()
+                tvNameSubforum.text = itemHaina.subforumData!!.name
                 val totalUpvote = itemHaina.likeCount
                 tvUpvote.text = totalUpvote.toString()
                 tvComment.text = itemHaina.commentCount.toString()
@@ -61,7 +65,11 @@ class AdapterListAllThreads(val context: Context,
                     }
                     popup.show()
                 }
+                tvDate.text = helper.getTimeAgo(itemHaina.createdAt)
+
+                Glide.with(context).load(itemHaina.subforumData.subforumImage).into(ivImageSubforum)
                 if (itemHaina.images != null){
+                    vpImageProperty.visibility=View.VISIBLE
                     for (i in itemHaina.images) {
                         i?.path?.let { listParams.add(it) }
                         vpImageProperty.pageCount = listParams.size
@@ -73,15 +81,6 @@ class AdapterListAllThreads(val context: Context,
                     vpImageProperty.setImageListener(imagesListener)
                 }
 
-                if(itemHaina.images.isNullOrEmpty()) {
-                    listParams.add("https://hainaservice.com/storage/empty.jpg")
-                    vpImageProperty.pageCount = listParams.size
-                    imagesListener = ImageListener { _, imageView ->
-                        Glide.with(context).load(listParams[0]).placeholder(R.drawable.ps5).into(imageView)
-                    }
-                    vpImageProperty.setImageListener(imagesListener)
-                    vpImageProperty.setImageListener(imagesListener)
-                }
                 relativeClick.setOnClickListener {
                     itemAdapterCallback.listAllThreadsClick(relativeClick, false, itemHaina)
                 }

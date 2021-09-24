@@ -1,6 +1,7 @@
 package haina.ecommerce.view.forum.detailforum
 
 import android.content.Context
+import haina.ecommerce.adapter.forum.ResponseGetPostDetail
 import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.forum.*
 import org.json.JSONObject
@@ -8,6 +9,31 @@ import retrofit2.Call
 import retrofit2.Response
 
 class DetailForumPresenter(val view:DetailForumContract.View, val context: Context) {
+
+
+    fun getPostDetail(postId:Int){
+        view.showLoading()
+        val getListComment = NetworkConfig().getConnectionHainaBearer(context).getPostDetail(postId)
+        getListComment.enqueue(object : retrofit2.Callback<ResponseGetPostDetail>{
+            override fun onResponse(call: Call<ResponseGetPostDetail>, response: Response<ResponseGetPostDetail>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageGetComment(response.body()?.message.toString())
+                    val data = response.body()?.data!!
+                    view.getPostDetail(data)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageGetComment(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetPostDetail>, t: Throwable) {
+                view.dismissLoading()
+                view.messageGetComment(t.localizedMessage.toString())
+            }
+
+        })
+    }
 
     fun getListComment(postId:Int){
         view.showLoading()

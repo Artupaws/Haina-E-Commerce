@@ -6,6 +6,7 @@ import haina.ecommerce.helper.Helper.convertLongtoTime
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 object Helper {
 
@@ -151,6 +152,24 @@ object Helper {
             toFormat.format(dateParse!!)
         }
     }
+
+    fun getTimeAgo(date: String?):String{
+        return if (date.isNullOrEmpty())""
+        else {
+            val currentFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'.000000Z'", Locale.getDefault())
+            val past = currentFormat.parse( date )
+            val now = Date()
+            val hours = TimeUnit.MILLISECONDS.toHours(now.time - past.time)
+            if(hours>24){
+                val day = TimeUnit.MILLISECONDS.toDays(now.time - past.time)
+                return day.toString()+"d"
+
+            }
+
+            return hours.toString()+"h"
+        }
+    }
+
     fun dateTimeFormat(date: String?):String {
         return if (date.isNullOrEmpty())""
         else {

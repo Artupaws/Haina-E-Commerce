@@ -130,7 +130,10 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
         else "${getString(R.string.category)} : ${subforumData.categoryZh}"
         binding.tvCategory.text = categorySubforum
         if (data.subforumFollow == true) binding.btnUnfollow.visibility = View.VISIBLE else binding.btnUnfollow.visibility = View.GONE
-        data.id?.let { presenter.getListComment(it) }
+        data.id?.let {
+            presenter.getPostDetail(it)
+            presenter.getListComment(it)
+        }
     }
 
     private fun dialogLoading(){
@@ -174,6 +177,10 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
         adapterComment.clear()
         adapterComment.add(data)
         binding.tvCommentCount.text = data?.size.toString()
+    }
+
+    override fun getPostDetail(data: DataItemHotPost) {
+
     }
 
     override fun showLoading() {

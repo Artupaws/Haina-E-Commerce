@@ -7,27 +7,14 @@
     android:background="@color/broken_white"
     tools:context=".view.forum.tab.showforum.ShowForumFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_category"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:itemCount="5"
-        tools:listitem="@layout/list_item_category_forum" />
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_category">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollview"
@@ -39,76 +26,12 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/relative_hot_threads"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white">
-
-                    <TextView
-                        android:id="@+id/tv_title_hot_threads"
-                        style="@style/TextView.Poppins16spBlack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="Hot Threads"
-                        android:textFontWeight="600" />
-
-                    <ImageView
-                        android:id="@+id/iv_arrow_hot_theads"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/tv_title_hot_threads"
-                        android:layout_alignBottom="@+id/tv_title_hot_threads"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_arrow_up" />
-
-                </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_forum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="3"
-                    android:visibility="gone"
-                    tools:listitem="@layout/list_item_forum" />
-
-                <RelativeLayout
-                    android:id="@+id/relative_all_threads"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white">
-
-                    <TextView
-                        android:id="@+id/tv_title_all_threads"
-                        style="@style/TextView.Poppins16spBlack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="All Threads"
-                        android:textFontWeight="600" />
-
-                    <ImageView
-                        android:id="@+id/iv_arrow_all_threads"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/tv_title_all_threads"
-                        android:layout_alignBottom="@+id/tv_title_all_threads"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_arrow_up" />
-
-                </RelativeLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_all_post"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    tools:visibility="visible"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="3"
                     tools:listitem="@layout/list_item_forum" />
@@ -119,7 +42,6 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:layout_marginBottom="10dp"
-                    tools:visibility="visible"
                     android:visibility="gone"
                     android:textAlignment="center"
                     android:text="Load More..."

@@ -16,7 +16,6 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.AdapterCategoryForum
 import haina.ecommerce.adapter.forum.AdapterListAllThreads
 import haina.ecommerce.adapter.forum.AdapterListHotPost
-import haina.ecommerce.databinding.FragmentShowForumBinding
 import haina.ecommerce.model.forum.*
 import haina.ecommerce.view.forum.bottomsheet.BottomSheetSubforum
 import haina.ecommerce.view.forum.createnewpost.NewPostActivity
@@ -24,6 +23,8 @@ import haina.ecommerce.view.forum.createsubforum.CreateSubforumActivity
 import haina.ecommerce.view.forum.detailforum.DetailForumActivity
 import timber.log.Timber
 import java.util.ArrayList
+import android.widget.Toast
+import haina.ecommerce.databinding.FragmentShowForumBinding
 
 class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryForum.ItemAdapterCallback,
     AdapterListHotPost.ItemAdapterCallback, View.OnClickListener, AdapterListAllThreads.ItemAdapterCallback {
@@ -44,16 +45,14 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
     private val positionExpand: Animation by lazy {
         AnimationUtils.loadAnimation(context, R.anim.anim_expand)
     }
-    private var clickedHot = false
-    private var clickedAll = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentShowForumBinding.inflate(inflater, container, false)
         presenter = ShowForumPresenter(this, requireActivity())
         broadcaster = LocalBroadcastManager.getInstance(requireActivity())
         binding.fabCreateForum.setOnClickListener(this)
-        binding.relativeAllThreads.setOnClickListener(this)
-        binding.relativeHotThreads.setOnClickListener(this)
+//        binding.relativeAllThreads.setOnClickListener(this)
+//        binding.relativeHotThreads.setOnClickListener(this)
         binding.tvLoadMore.setOnClickListener(this)
         return binding.root
     }
@@ -61,13 +60,14 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.getCategory()
-        presenter.getListHotThreads()
-        presenter.getListAllThreads(page)
+        presenter.getHomePost(page)
+//        presenter.getListAllThreads(page)
         dialogLoading()
         dialogCreatePost()
         refresh()
-        binding.rvForum.adapter = showForumAdapter
-        binding.rvAllPost.adapter = allThreadsAdapter
+        binding.rvForum.adapter = allThreadsAdapter
+        binding.rvForum.visibility = View.VISIBLE
+//        binding.rvAllPost.adapter = allThreadsAdapter
 //        binding.rvForum.addOnScrollListener(object : RecyclerView.OnScrollListener(){
 //            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
 //                super.onScrolled(recyclerView, dx, dy)
@@ -82,60 +82,22 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
         binding.scrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener {
                 v, _, scrollY, _, oldScrollY ->
             if (scrollY > oldScrollY){
-                Timber.d("Scroll Down")
                 binding.fabCreateForum.visibility = View.GONE
             }
             if (scrollY < oldScrollY){
-                Timber.d("Scroll Up")
                 binding.fabCreateForum.visibility = View.VISIBLE
             }
-            if (scrollY == 0){
-                Timber.d("Top")
-            }
-            if (scrollY == (v.getChildAt(0).measuredHeight - v.measuredHeight)){
-                if (totalPage > page) binding.tvLoadMore.visibility = View.VISIBLE else binding.tvLoadMore.visibility = View.GONE
+            if(!v.canScrollVertically(1)){
+                Timber.d("last")
+                binding.tvLoadMore.visibility = View.VISIBLE
             }
         })
     }
 
-    private fun onAddPostClicked(clicked:Boolean,typeClicked: Int) {
-        setVisibility(clicked, typeClicked)
-        setAnimation(clicked, typeClicked)
-    }
-
-    private fun setAnimation(clicked:Boolean, typeClicked:Int){
-        if (!clicked && typeClicked == 1){
-            binding.ivArrowHotTheads.startAnimation(positionExpand)
-        } else if (clicked && typeClicked == 1){
-            binding.ivArrowHotTheads.startAnimation(positionCollaps)
-        }
-
-        if (!clicked && typeClicked == 2){
-            binding.ivArrowAllThreads.startAnimation(positionExpand)
-        } else if (clicked && typeClicked == 2){
-            binding.ivArrowAllThreads.startAnimation(positionCollaps)
-        }
-    }
-
-    private fun setVisibility(clicked: Boolean, typeClicked: Int){
-        if (clicked && typeClicked == 1){
-            binding.rvForum.visibility = View.GONE
-        } else if (!clicked && typeClicked == 1){
-            binding.rvForum.visibility = View.VISIBLE
-        }
-
-        if (clicked && typeClicked == 2){
-            binding.rvAllPost.visibility = View.GONE
-            binding.tvLoadMore.visibility = View.GONE
-        } else if (!clicked && typeClicked == 2){
-            binding.rvAllPost.visibility = View.VISIBLE
-            binding.tvLoadMore.visibility = View.VISIBLE
-        }
-    }
 
     override fun onResume() {
         super.onResume()
-        presenter.getListHotThreads()
+        presenter.getHomePost(page)
     }
 
     private fun dialogLoading(){
@@ -169,11 +131,9 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
         }
     }
 
-      private fun refresh(){
+    private fun refresh(){
         binding.swipeRefresh.setOnRefreshListener {
-            presenter.getListSubForum()
-            presenter.getListHotThreads()
-            presenter.getListAllThreads(page)
+            presenter.getHomePost(page)
         }
     }
 
@@ -204,6 +164,7 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
             listCategory = data
             binding.fabCreateForum.visibility = View.VISIBLE
         }
+
 //        if (context != null){
 //            binding.rvCategory.apply {
 //                adapter = AdapterCategoryForum(requireActivity(), data, this@ShowForumFragment)
@@ -213,7 +174,7 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
     }
 
     override fun getListForum(data: List<DataItemHotPost?>?) {
-        if (context != null){
+        if (data != null){
             showForumAdapter.clear()
             showForumAdapter.add(data)
         }
@@ -232,7 +193,7 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
     }
 
     override fun getListAllThreads(data: List<ThreadsItem?>?) {
-        if (context != null){
+        if (data != null){
             allThreadsAdapter.clear()
             allThreadsAdapter.add(data)
         }
@@ -264,9 +225,9 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
             R.id.cv_click -> {
                 when(data.id){
                     1 -> {
-                        presenter.getListHotThreads()
+                        presenter.getHomePost(page)
                     } else -> {
-                    presenter.getListSubForum()
+                        presenter.getListSubForum()
                     }
                 }
             }
@@ -296,16 +257,16 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
             R.id.fab_create_forum -> {
                 popupCreatePost?.show()
             }
-            R.id.relative_hot_threads -> {
-                onAddPostClicked(clickedHot,1)
-                clickedHot = !clickedHot
-            }
-            R.id.relative_all_threads -> {
-                onAddPostClicked(clickedAll,2)
-                clickedAll = !clickedAll
-            }
+//            R.id.relative_hot_threads -> {
+//                onAddPostClicked(clickedHot,1)
+//                clickedHot = !clickedHot
+//            }
+//            R.id.relative_all_threads -> {
+//                onAddPostClicked(clickedAll,2)
+//                clickedAll = !clickedAll
+//            }
             R.id.tv_load_more -> {
-                presenter.getListAllThreads(page++)
+                presenter.getHomePost(page++)
             }
         }
     }

@@ -54,6 +54,29 @@ class ShowForumPresenter(val view: ShowForumContract.View, val context: Context)
             }
         })
     }
+    fun getHomePost(page:Int){
+        view.showLoading()
+        val getListForum = NetworkConfig().getConnectionHainaBearer(context).getListHomePost(page)
+        getListForum.enqueue(object : retrofit2.Callback<ResponseGetAllThreads>{
+            override fun onResponse(call: Call<ResponseGetAllThreads>, response: Response<ResponseGetAllThreads>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageGetListForum(response.body()?.message.toString())
+                    val data = response.body()?.dataAllThreads
+                    view.getListAllThreads(data?.threads)
+                    response.body()?.dataAllThreads?.totalPage?.let { view.getTotalPage(it) }
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageGetListForum(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetAllThreads>, t: Throwable) {
+                view.dismissLoading()
+                view.messageGetListForum(t.localizedMessage.toString())
+            }
+        })
+    }
 
     fun getListAllThreads(page:Int){
         view.showLoading()
