@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class ResponseGetMypost(
 
 	@field:SerializedName("data")
-	val data: List<DataItemHotPost?>? = null,
+	val data: List<ThreadsItem?>? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,

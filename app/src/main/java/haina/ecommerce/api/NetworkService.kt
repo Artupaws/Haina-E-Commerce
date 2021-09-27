@@ -769,16 +769,29 @@ interface NetworkService {
     @GET("api/forum/category")
     fun getCategoryForum():Call<ResponseGetCategoryForum>
 
-    //Get List Forum
-    @FormUrlEncoded
-    @Headers("No-Authentication: true")
-    @POST("api/forum/post_list")
-    fun getListForum(@Field("subforum_id")subForumId:Int):Call<ResponseGetListForum>
-
     //Get List Hot Threads
     @Headers("No-Authentication: true")
     @GET("api/forum/hot_post")
     fun getListHotThreads():Call<ResponseGetHotpost>
+
+    //Get List Forum Post
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/post_list")
+    fun getListForumPost(
+        @Field("subforum_id")IdForum:Int,
+        @Field("sort_by")sort:String,
+        @Field("page")page:Int
+    ):Call<ResponseGetAllThreads>
+
+
+    //Get List Forum Post
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/mod_list")
+    fun getModList(
+        @Field("subforum_id")IdForum:Int
+    ):Call<ResponseModList>
 
     @FormUrlEncoded
     @POST("api/forum/home_post")

@@ -12,13 +12,14 @@ import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemForumBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.forum.DataItemHotPost
+import haina.ecommerce.model.forum.ThreadsItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import timber.log.Timber
 
 
 class AdapterListMyPost(val context: Context,
-                        private val listForum: java.util.ArrayList<DataItemHotPost?>?,
+                        private val listForum: java.util.ArrayList<ThreadsItem?>?,
                         val itemAdapterCallback: ItemAdapterCallback,
                         val viewType:Int):
     RecyclerView.Adapter<AdapterListMyPost.Holder>() {
@@ -30,7 +31,7 @@ class AdapterListMyPost(val context: Context,
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemForumBinding.bind(view)
-        fun bind(itemHaina: DataItemHotPost, itemAdapterCallback: ItemAdapterCallback, viewType: Int){
+        fun bind(itemHaina: ThreadsItem, itemAdapterCallback: ItemAdapterCallback, viewType: Int){
             with(binding){
                 listParams = ArrayList()
                 if (viewType == 1) tvOptionMenu.visibility = View.GONE else tvOptionMenu.visibility = View.VISIBLE
@@ -94,18 +95,18 @@ class AdapterListMyPost(val context: Context,
     }
 
     override fun onBindViewHolder(holder: AdapterListMyPost.Holder, position: Int) {
-        val photo: DataItemHotPost = listForum?.get(position)!!
+        val photo: ThreadsItem = listForum?.get(position)!!
         holder.bind(photo, itemAdapterCallback, viewType)
     }
 
     override fun getItemCount(): Int = listForum?.size!!
 
     interface ItemAdapterCallback{
-        fun listMyPostClick(view: View, isChecked:Boolean, data:DataItemHotPost)
-        fun deleteListMyPost(view: View, data:java.util.ArrayList<DataItemHotPost?>?, adapterPosition:Int, postId:Int)
+        fun listMyPostClick(view: View, isChecked:Boolean, data:ThreadsItem)
+        fun deleteListMyPost(view: View, data:java.util.ArrayList<ThreadsItem?>?, adapterPosition:Int, postId:Int)
     }
 
-    fun add(data:List<DataItemHotPost?>?){
+    fun add(data:List<ThreadsItem?>?){
         listForum?.addAll(data!!)
         notifyItemRangeInserted((listForum?.size?.minus(data?.size!!)!!), data!!.size)
     }

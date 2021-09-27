@@ -125,6 +125,12 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="TextView.ForumCategory">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/chuck_colorAccent</item>
+    </style>
+
     <style name="TextView.Poppins16spBlack">
         <item name="fontFamily">@font/poppins</item>
         <item name="android:textColor">@color/black</item>

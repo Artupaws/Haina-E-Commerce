@@ -33,7 +33,6 @@ class AdapterListAllThreads(val context: Context,
         fun bind(itemHaina: ThreadsItem, itemAdapterCallback: ItemAdapterCallback){
             with(binding){
                 listParams = ArrayList()
-                if (viewType == 1) tvOptionMenu.visibility = View.GONE else tvOptionMenu.visibility = View.VISIBLE
                 tvNameUser.text = "Posted By ${itemHaina.author}"
                 tvTitle.text = itemHaina.title
                 tvLooks.text = itemHaina.viewCount.toString()
@@ -68,7 +67,8 @@ class AdapterListAllThreads(val context: Context,
                 tvDate.text = helper.getTimeAgo(itemHaina.createdAt)
 
                 Glide.with(context).load(itemHaina.subforumData.subforumImage).into(ivImageSubforum)
-                if (itemHaina.images != null){
+
+                if(!itemHaina.images.isNullOrEmpty()){
                     vpImageProperty.visibility=View.VISIBLE
                     for (i in itemHaina.images) {
                         i?.path?.let { listParams.add(it) }
@@ -84,6 +84,8 @@ class AdapterListAllThreads(val context: Context,
                 relativeClick.setOnClickListener {
                     itemAdapterCallback.listAllThreadsClick(relativeClick, false, itemHaina)
                 }
+
+
             }
 
         }

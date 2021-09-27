@@ -2,6 +2,8 @@ package haina.ecommerce.view.forum.tab.myforum
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.model.forum.ResponseGetAllThreads
+import haina.ecommerce.model.forum.ResponseGetHotpost
 import haina.ecommerce.model.forum.ResponseGiveUpvote
 import haina.ecommerce.view.forum.tab.showforum.ShowForumContract
 import org.json.JSONObject
@@ -45,6 +47,30 @@ class DetailMySubforumPresenter(val view:ShowForumContract.ViewDetailMySubforum,
                 view.messageGiveUpvote(t.localizedMessage.toString())
             }
 
+        })
+    }
+
+
+    fun getListForumPost(IdForum:Int,page:Int){
+        view.showLoading()
+        val getListForum = NetworkConfig().getConnectionHainaBearer(context).getListForumPost(IdForum,"time",page)
+        getListForum.enqueue(object : retrofit2.Callback<ResponseGetAllThreads>{
+            override fun onResponse(call: Call<ResponseGetAllThreads>, response: Response<ResponseGetAllThreads>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.messageListPost(response.body()?.message.toString())
+                    val data = response.body()?.dataAllThreads
+                    view.getListPost(data!!)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.messageListPost(error.getString("message"))
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseGetAllThreads>, t: Throwable) {
+                view.dismissLoading()
+                view.messageListPost(t.localizedMessage.toString())
+            }
         })
     }
 

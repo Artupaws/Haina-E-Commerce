@@ -11,10 +11,7 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.AdapterListHotPost
 import haina.ecommerce.adapter.forum.AdapterListMyPost
 import haina.ecommerce.databinding.FragmentMyPostBinding
-import haina.ecommerce.model.forum.DataForum
-import haina.ecommerce.model.forum.DataItemHotPost
-import haina.ecommerce.model.forum.DataMypost
-import haina.ecommerce.model.forum.DataPostDeleted
+import haina.ecommerce.model.forum.*
 import haina.ecommerce.view.forum.detailforum.DetailForumActivity
 import timber.log.Timber
 import java.util.ArrayList
@@ -90,7 +87,7 @@ class MyPostFragment : Fragment(), MyPostContract.View, AdapterListMyPost.ItemAd
         Timber.d(msg)
     }
 
-    override fun getListMypost(data: List<DataItemHotPost?>?) {
+    override fun getListMypost(data: List<ThreadsItem?>?) {
         myPostAdapter.clear()
         myPostAdapter.add(data)
     }
@@ -111,7 +108,7 @@ class MyPostFragment : Fragment(), MyPostContract.View, AdapterListMyPost.ItemAd
         progressDialog?.dismiss()
     }
 
-    override fun listMyPostClick(view: View, isChecked: Boolean, data: DataItemHotPost) {
+    override fun listMyPostClick(view: View, isChecked: Boolean, data: ThreadsItem) {
         when (view.id) {
 //            R.id.iv_upvote -> {
 //                if (isChecked){
@@ -128,7 +125,7 @@ class MyPostFragment : Fragment(), MyPostContract.View, AdapterListMyPost.ItemAd
         }
     }
 
-    override fun deleteListMyPost(view: View, data: ArrayList<DataItemHotPost?>?, adapterPosition: Int, idPost:Int) {
+    override fun deleteListMyPost(view: View, data: ArrayList<ThreadsItem?>?, adapterPosition: Int, idPost:Int) {
         when (view.id) {
             R.id.tv_option_menu -> {
                 val popup = PopupMenu(requireActivity(), view)

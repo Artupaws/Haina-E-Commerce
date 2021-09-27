@@ -52,7 +52,7 @@
     <string name="transaction_in_progress">Transaction in progress</string>
     <string name="your_post">Your Post</string>
     <string name="choose_all">Choose All</string>
-    <string name="delete"><u>Delete</u></string>
+    <string name="delete">Delete</string>
     <string name="mark_as_sold"><u>Mark as Sold</u></string>
     <string name="total_price">Total Price</string>
     <string name="buy">Buy</string>

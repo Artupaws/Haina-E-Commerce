@@ -11,12 +11,11 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.AdapterListMyPost
+import haina.ecommerce.adapter.forum.TabAdapterForum
+import haina.ecommerce.adapter.forum.TabAdapterForumDetail
 import haina.ecommerce.databinding.ActivityDetailMySubforumBinding
 import haina.ecommerce.helper.Helper.dateFormat
-import haina.ecommerce.model.forum.DataItemHotPost
-import haina.ecommerce.model.forum.DataMypost
-import haina.ecommerce.model.forum.DataSubforum
-import haina.ecommerce.model.forum.SubforumData
+import haina.ecommerce.model.forum.*
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.forum.detailforum.DetailForumActivity
@@ -45,9 +44,9 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
         dataSubforum = intent?.getParcelableExtra("dataDetail")!!
         showData(dataSubforum)
         binding.rvPost.adapter = postAdapter
-        binding.toolbar10.setNavigationOnClickListener {
-            onBackPressed()
-        }
+//        binding.btnBack.setOnClickListener {
+//            onBackPressed()
+//        }
         dialogLoading()
         viewType = if (sharedPref.getValueString(Constants.PREF_USERNAME).toString().contains(dataSubforum.creatorName.toString())){
             2
@@ -55,17 +54,21 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
             1
         }
         Timber.d(viewType.toString())
+        binding.nestedProfile.isFillViewport = true
+
+        binding.vpTransaction.adapter = TabAdapterForumDetail(supportFragmentManager, 0,dataSubforum.id!!)
+        binding.vpTransaction.offscreenPageLimit = 3
+        binding.tabTransaction.setupWithViewPager(binding.vpTransaction)
     }
 
     private fun showData(data: SubforumData) {
         binding.tvNameUser.text = data.name
-        binding.tvCategory.text = "Category : ${data.category}"
+        binding.tvCategory.text = data.category
         binding.tvCreated.text = "Created At : ${dateFormat(data.createdAt)}"
-        binding.tvTotalPost.text = "Total Post : ${data.totalPost}"
-        binding.tvTotalContributor.text = "Contributor : ${data.totalPoster}"
+        binding.tvAbout.text = data.description
+        binding.tvTotalFollowers.text = "${data.totalFollowers} Followers"
         Glide.with(applicationContext).load(data.subforumImage).into(binding.ivImageUser)
-        postAdapter.clear()
-        postAdapter.add(data.posts)
+//        presenter.getListForumPost(data.id!!,page)
     }
 
     private fun dialogLoading() {
@@ -86,7 +89,7 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
         AdapterListMyPost(applicationContext, arrayListOf(), this, viewType)
     }
 
-    override fun listMyPostClick(view: View, isChecked: Boolean, data: DataItemHotPost) {
+    override fun listMyPostClick(view: View, isChecked: Boolean, data: ThreadsItem) {
         when (view.id) {
             R.id.iv_upvote -> {
                 if (isChecked) {
@@ -103,10 +106,19 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
         }
     }
 
-    override fun deleteListMyPost(view: View, data: ArrayList<DataItemHotPost?>?, adapterPosition: Int, postId: Int) {
+    override fun deleteListMyPost(view: View, data: ArrayList<ThreadsItem?>?, adapterPosition: Int, postId: Int) {
     }
 
     override fun messageGiveUpvote(msg: String) {
+        Timber.d(msg)
+    }
+
+    override fun getListPost(data: DataAllThreads) {
+        postAdapter.clear()
+        postAdapter.add(data.threads)
+    }
+
+    override fun messageListPost(msg: String) {
         Timber.d(msg)
     }
 
