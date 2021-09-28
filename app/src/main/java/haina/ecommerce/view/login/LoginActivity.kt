@@ -31,6 +31,7 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.register.account.RegisterActivity
+import timber.log.Timber
 import kotlin.math.log
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract.View {
@@ -242,7 +243,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract.V
 
     override fun getToken(token: String) {
         sharedPreferenceHelper.save(Constants.PREF_TOKEN_USER, token)
-        Log.d("token", token)
+        Timber.d(token)
     }
 
     override fun loginRegistration(){

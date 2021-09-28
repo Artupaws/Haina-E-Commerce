@@ -5,6 +5,7 @@ import haina.ecommerce.api.NetworkConfig
 import haina.ecommerce.model.forum.ResponseGetAllThreads
 import haina.ecommerce.model.forum.ResponseGetHotpost
 import haina.ecommerce.model.forum.ResponseGiveUpvote
+import haina.ecommerce.model.forum.ResponseSubforumData
 import haina.ecommerce.view.forum.tab.showforum.ShowForumContract
 import org.json.JSONObject
 import retrofit2.Call
@@ -51,23 +52,23 @@ class DetailMySubforumPresenter(val view:ShowForumContract.ViewDetailMySubforum,
     }
 
 
-    fun getListForumPost(IdForum:Int,page:Int){
+    fun getSubforumData(IdForum:Int){
         view.showLoading()
-        val getListForum = NetworkConfig().getConnectionHainaBearer(context).getListForumPost(IdForum,"time",page)
-        getListForum.enqueue(object : retrofit2.Callback<ResponseGetAllThreads>{
-            override fun onResponse(call: Call<ResponseGetAllThreads>, response: Response<ResponseGetAllThreads>) {
+        val getListForum = NetworkConfig().getConnectionHainaBearer(context).getSubforumData(IdForum)
+        getListForum.enqueue(object : retrofit2.Callback<ResponseSubforumData>{
+            override fun onResponse(call: Call<ResponseSubforumData>, response: Response<ResponseSubforumData>) {
                 view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){
                     view.messageListPost(response.body()?.message.toString())
-                    val data = response.body()?.dataAllThreads
-                    view.getListPost(data!!)
+                    val data = response.body()?.data
+                    view.getSubforumData(data!!)
                 } else {
                     val error = JSONObject(response.errorBody()?.string())
                     view.messageListPost(error.getString("message"))
                 }
             }
 
-            override fun onFailure(call: Call<ResponseGetAllThreads>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseSubforumData>, t: Throwable) {
                 view.dismissLoading()
                 view.messageListPost(t.localizedMessage.toString())
             }

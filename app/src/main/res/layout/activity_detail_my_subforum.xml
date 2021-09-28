@@ -10,8 +10,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        >
+        android:background="@android:color/transparent">
+
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,9 +28,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_collapseMode="parallax"
-
-                >
+                app:layout_collapseMode="parallax">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -71,6 +69,7 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:civ_border_color="@color/baseColor"
                                 app:civ_border_width="2dp"
+                                app:civ_circle_background_color="@color/baseColor"
                                 tools:src="@drawable/ps5" />
 
                             <LinearLayout
@@ -85,6 +84,7 @@
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
+
                                     <TextView
                                         android:id="@+id/tv_name_user"
                                         style="@style/TextView.Poppins16spBlack"
@@ -97,11 +97,22 @@
                                     <Button
                                         android:id="@+id/btn_follow"
                                         style="@style/Button.Primary"
-                                        android:layout_width="70dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="40dp"
                                         android:layout_alignParentEnd="true"
                                         android:layout_centerVertical="true"
                                         android:text="@string/follow"
+                                        android:textSize="11sp" />
+
+                                    <Button
+                                        android:id="@+id/btn_edit"
+                                        style="@style/Button.Secondary"
+                                        android:layout_width="wrap_content"
+                                        android:visibility="gone"
+                                        android:layout_height="40dp"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerVertical="true"
+                                        android:text="Edit Profile"
                                         android:textSize="11sp" />
                                 </RelativeLayout>
 

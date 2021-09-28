@@ -47,6 +47,7 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
 //        binding.btnBack.setOnClickListener {
 //            onBackPressed()
 //        }
+        presenter.getSubforumData(dataSubforum.id!!)
         dialogLoading()
         viewType = if (sharedPref.getValueString(Constants.PREF_USERNAME).toString().contains(dataSubforum.creatorName.toString())){
             2
@@ -56,9 +57,6 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
         Timber.d(viewType.toString())
         binding.nestedProfile.isFillViewport = true
 
-        binding.vpTransaction.adapter = TabAdapterForumDetail(supportFragmentManager, 0,dataSubforum.id!!)
-        binding.vpTransaction.offscreenPageLimit = 3
-        binding.tabTransaction.setupWithViewPager(binding.vpTransaction)
     }
 
     private fun showData(data: SubforumData) {
@@ -120,6 +118,14 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
 
     override fun messageListPost(msg: String) {
         Timber.d(msg)
+    }
+
+    override fun getSubforumData(data: SubforumEngagement) {
+
+        binding.vpTransaction.adapter = TabAdapterForumDetail(supportFragmentManager, 0,dataSubforum.id!!, data)
+
+        binding.vpTransaction.offscreenPageLimit = 3
+        binding.tabTransaction.setupWithViewPager(binding.vpTransaction)
     }
 
     override fun showLoading() {

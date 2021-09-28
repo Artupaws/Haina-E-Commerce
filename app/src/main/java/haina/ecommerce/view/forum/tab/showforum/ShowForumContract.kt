@@ -23,6 +23,8 @@ interface ShowForumContract {
         fun getListPost(data:DataAllThreads)
 
         fun messageListPost(msg:String)
+        fun getSubforumData(data:SubforumEngagement)
+
 
     }
 

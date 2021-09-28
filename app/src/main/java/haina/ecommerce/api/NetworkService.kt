@@ -784,6 +784,13 @@ interface NetworkService {
         @Field("page")page:Int
     ):Call<ResponseGetAllThreads>
 
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("api/forum/subforum_data")
+    fun getSubforumData(
+        @Field("subforum_id")IdForum:Int
+    ):Call<ResponseSubforumData>
+
 
     //Get List Forum Post
     @FormUrlEncoded

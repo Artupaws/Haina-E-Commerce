@@ -11,8 +11,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import haina.ecommerce.adapter.forum.AdapterListHotPost
 import haina.ecommerce.adapter.forum.AdapterListModerator
 import haina.ecommerce.databinding.FragmentForumAboutBinding
-import haina.ecommerce.databinding.FragmentShowForumBinding
 import haina.ecommerce.model.forum.Moderator
+import haina.ecommerce.model.forum.SubforumEngagement
 import haina.ecommerce.view.forum.tab.forumpost.ForumListPostPresenter
 import timber.log.Timber
 import java.util.ArrayList
@@ -26,6 +26,7 @@ class ForumAboutFragment : Fragment(),ForumAboutContract.View,AdapterListModerat
     private lateinit var presenter: ForumAboutPresenter
     private var broadcaster: LocalBroadcastManager? = null
     private var idForum by Delegates.notNull<Int>()
+    private var dataEngagement:SubforumEngagement? = null
 
 
     private val moderatorAdapter by lazy {
@@ -46,9 +47,15 @@ class ForumAboutFragment : Fragment(),ForumAboutContract.View,AdapterListModerat
         super.onViewCreated(view, savedInstanceState)
 
         idForum = arguments?.getInt("idForum",0)!!
+        dataEngagement = arguments?.getParcelable("dataEngagement")!!
         presenter.getModList(idForum)
         binding.rvModerator.adapter = moderatorAdapter
         binding.rvModerator.visibility = View.VISIBLE
+
+        binding.tvFollowersCount.text = dataEngagement!!.followersCount.toString()
+        binding.tvLikeCount.text = dataEngagement!!.likes.toString()
+        binding.tvTotalView.text = dataEngagement!!.views.toString()
+        binding.tvPostCount.text = dataEngagement!!.postCount.toString()
 
     }
 
