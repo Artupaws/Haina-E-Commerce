@@ -54,6 +54,7 @@ class ShowForumPresenter(val view: ShowForumContract.View, val context: Context)
             }
         })
     }
+
     fun getHomePost(page:Int){
         view.showLoading()
         val getListForum = NetworkConfig().getConnectionHainaBearer(context).getListHomePost(page)

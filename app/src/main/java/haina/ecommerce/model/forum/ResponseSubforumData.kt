@@ -45,5 +45,8 @@ data class SubforumEngagement(
 	val views: Int? = null,
 
 	@field:SerializedName("likes")
-	val likes: Int? = null
+	val likes: Int? = null,
+
+	@field:SerializedName("following")
+	val following: Boolean? = null
 ) : Parcelable

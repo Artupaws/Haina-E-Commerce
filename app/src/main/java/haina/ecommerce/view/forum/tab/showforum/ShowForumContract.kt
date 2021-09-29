@@ -26,6 +26,9 @@ interface ShowForumContract {
         fun getSubforumData(data:SubforumEngagement)
 
 
+        fun messageFollowSubforum(msg:String)
+
+
     }
 
 }

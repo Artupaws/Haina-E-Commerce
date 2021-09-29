@@ -29,6 +29,7 @@ import haina.ecommerce.model.forum.SubforumData
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.forum.profileuser.ProfileUserActivity
+import haina.ecommerce.view.forum.tab.myforum.DetailMySubforum
 import timber.log.Timber
 
 class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
@@ -270,8 +271,8 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
                 }
             }
             R.id.iv_image_subforum -> {
-                val intent = Intent(applicationContext, ProfileUserActivity::class.java)
-                intent.putExtra("dataSubforum", dataForum.subforumData)
+                val intent = Intent(applicationContext, DetailMySubforum::class.java)
+                intent.putExtra("dataDetail", dataForum.subforumData)
                 startActivity(intent)
             }
             R.id.btn_follow -> {

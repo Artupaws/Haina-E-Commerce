@@ -1,7 +1,9 @@
 package haina.ecommerce.view.forum.tab.myforum
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
@@ -23,6 +25,10 @@ import haina.ecommerce.view.forum.profileuser.ProfileUserActivity
 import haina.ecommerce.view.forum.tab.showforum.ShowForumContract
 import timber.log.Timber
 import java.util.ArrayList
+import com.google.android.material.appbar.AppBarLayout
+
+import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
+
 
 class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallback,
     ShowForumContract.ViewDetailMySubforum, View.OnClickListener {
@@ -44,9 +50,9 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
         dataSubforum = intent?.getParcelableExtra("dataDetail")!!
         showData(dataSubforum)
         binding.rvPost.adapter = postAdapter
-//        binding.btnBack.setOnClickListener {
-//            onBackPressed()
-//        }
+        binding.toolbarForumDetail.setNavigationOnClickListener {
+            onBackPressed()
+        }
         presenter.getSubforumData(dataSubforum.id!!)
         dialogLoading()
         viewType = if (sharedPref.getValueString(Constants.PREF_USERNAME).toString().contains(dataSubforum.creatorName.toString())){
@@ -57,8 +63,33 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
         Timber.d(viewType.toString())
         binding.nestedProfile.isFillViewport = true
 
+
+
+        var state:String = "Expanded"
+        binding.appbarForumDetail.addOnOffsetChangedListener(OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if (verticalOffset == 0) {
+                if (state !== "Expanded") {
+                    state = "Expanded"
+                    binding.collapsingForumDetail.title = ""
+
+                }
+            } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange) {
+                if (state !== "Collapsed") {
+                    state = "Collapsed"
+                    binding.collapsingForumDetail.title = dataSubforum.name
+
+                }
+            } else {
+                if (state !== "Internediate") {
+                    binding.collapsingForumDetail.title = ""
+                    state = "Internediate"
+                }
+            }
+        })
+
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showData(data: SubforumData) {
         binding.tvNameUser.text = data.name
         binding.tvCategory.text = data.category
@@ -66,6 +97,7 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
         binding.tvAbout.text = data.description
         binding.tvTotalFollowers.text = "${data.totalFollowers} Followers"
         Glide.with(applicationContext).load(data.subforumImage).into(binding.ivImageUser)
+
 //        presenter.getListForumPost(data.id!!,page)
     }
 
@@ -126,6 +158,46 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
 
         binding.vpTransaction.offscreenPageLimit = 3
         binding.tabTransaction.setupWithViewPager(binding.vpTransaction)
+
+        if(data.following == null ){
+            binding.btnFollow.setBackgroundColor(resources.getColor(R.color.yellow))
+            binding.btnFollow.text = "Follow"
+        }else{
+            if(data.role == "mod"||data.role == "submod"){
+
+                binding.btnFollow.setBackgroundColor(Color.WHITE)
+                binding.btnFollow.text = "Edit Forum Detail"
+                binding.btnFollow.setOnClickListener {
+
+                }
+            } else{
+                if(data.following!!){
+                    binding.btnFollow.setBackgroundColor(Color.WHITE)
+                    binding.btnFollow.text = "Unfollow"
+                    binding.btnFollow.setOnClickListener {
+                        presenter.unfollowSubforum(data.subforumId!!)
+                    }
+                }else{
+                    binding.btnFollow.setBackgroundColor(resources.getColor(R.color.yellow))
+                    binding.btnFollow.text = "Follow"
+
+                    binding.btnFollow.setOnClickListener {
+                        presenter.followSubforum(data.subforumId!!)
+                    }
+                }
+            }
+        }
+
+        binding.tvNameUser.text = data.subforumName
+        binding.tvAbout.text = data.description
+        binding.tvTotalFollowers.text = "${data.followersCount} Followers"
+        Glide.with(applicationContext).load(data.image).into(binding.ivImageUser)
+
+
+    }
+
+    override fun messageFollowSubforum(msg: String) {
+        presenter.getSubforumData(dataSubforum.id!!)
     }
 
     override fun showLoading() {

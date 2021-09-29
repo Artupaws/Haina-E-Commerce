@@ -8,38 +8,42 @@
     tools:context=".view.forum.tab.myforum.DetailMySubforum">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_forum_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_forum_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:title="BLABLA"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:titleEnabled="true"
+            app:statusBarScrim="@android:color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
                 android:id="@+id/relative_click"
                 android:layout_width="match_parent"
+                android:background="@android:color/transparent"
 
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_collapseMode="parallax">
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    android:background="@color/chuck_colorAccent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:background="@color/yellow"/>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:paddingTop="?attr/actionBarSize"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingTop="?attr/actionBarSize">
 
 
                     <LinearLayout
@@ -65,22 +69,23 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginEnd="10dp"
                                 android:layout_marginBottom="10dp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
                                 app:civ_border_color="@color/baseColor"
                                 app:civ_border_width="2dp"
                                 app:civ_circle_background_color="@color/baseColor"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
                                 tools:src="@drawable/ps5" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
+                                android:orientation="vertical"
                                 android:paddingBottom="10dp"
-                                app:layout_constraintTop_toBottomOf="@id/iv_image_user"
                                 app:layout_constraintStart_toStartOf="@id/iv_image_user"
 
-                                android:orientation="vertical">
+                                app:layout_constraintTop_toBottomOf="@id/iv_image_user">
+
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
@@ -108,12 +113,12 @@
                                         android:id="@+id/btn_edit"
                                         style="@style/Button.Secondary"
                                         android:layout_width="wrap_content"
-                                        android:visibility="gone"
                                         android:layout_height="40dp"
                                         android:layout_alignParentEnd="true"
                                         android:layout_centerVertical="true"
                                         android:text="Edit Profile"
-                                        android:textSize="11sp" />
+                                        android:textSize="11sp"
+                                        android:visibility="gone" />
                                 </RelativeLayout>
 
                                 <LinearLayout
@@ -145,11 +150,11 @@
 
 
                                 <TextView
-                                    android:layout_marginVertical="5dp"
                                     android:id="@+id/tv_about"
                                     style="@style/TextView.Poppins14spBlack"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginVertical="5dp"
                                     tools:text="Tempat share hal hal lucu" />
 
                                 <TextView
@@ -168,12 +173,22 @@
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.cardview.widget.CardView>
+            </RelativeLayout>
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_forum_detail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|enterAlways">
-
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/back">
+                <TextView
+                    android:id="@+id/tv_name_user_toolbar"
+                    style="@style/TextView.Poppins16spBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    tools:text="Putra" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
         <com.google.android.material.tabs.TabLayout
@@ -187,8 +202,6 @@
             app:layout_constraintTop_toBottomOf="@+id/relative_click" />
 
     </com.google.android.material.appbar.AppBarLayout>
-
-
 
 
     <androidx.core.widget.NestedScrollView
