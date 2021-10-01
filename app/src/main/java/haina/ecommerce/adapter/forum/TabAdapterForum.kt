@@ -9,16 +9,16 @@ import haina.ecommerce.view.forum.tab.mypost.MyPostFragment
 import haina.ecommerce.view.history.historytransaction.unfinish.FragmentTransactionUnfinish
 
 class TabAdapterForum (fm: FragmentManager, behavior: Int) : FragmentStatePagerAdapter(fm, behavior) {
-    private val tabName: Array<String> = arrayOf("Home", "MyForum", "MyPost")
+    private val tabName: Array<String> = arrayOf("Home", "MyForum")
 
     override fun getItem(position: Int): Fragment = when (position) {
         0 -> ShowForumFragment()
         1 -> MySubforumFragment()
-        2 -> MyPostFragment()
+//        2 -> MyPostFragment()
         else -> FragmentTransactionUnfinish()
     }
 
-    override fun getCount(): Int = 3
+    override fun getCount(): Int = 2
 
     override fun getPageTitle(position: Int): CharSequence = tabName[position]
 

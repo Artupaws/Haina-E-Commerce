@@ -177,6 +177,7 @@ class ForumListPostFragment : Fragment(),ForumListPostContract.View, AdapterCate
 
     override fun getListForum(data: List<DataItemHotPost?>?) {
         if (data != null){
+            binding.swipeRefresh.isRefreshing = false
             showForumAdapter.clear()
             showForumAdapter.add(data)
         }

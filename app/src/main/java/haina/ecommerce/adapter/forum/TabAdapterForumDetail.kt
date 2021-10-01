@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import haina.ecommerce.model.forum.SubforumEngagement
 import haina.ecommerce.view.forum.tab.forumabout.ForumAboutFragment
+import haina.ecommerce.view.forum.tab.forummanage.ForumManageFragment
 import haina.ecommerce.view.forum.tab.forumpost.ForumListPostFragment
 import haina.ecommerce.view.forum.tab.forumpost.ForumListPostPresenter
 import haina.ecommerce.view.forum.tab.showforum.ShowForumFragment
@@ -20,7 +21,7 @@ class TabAdapterForumDetail (fm: FragmentManager, behavior: Int,idForum:Int,data
     var id:Int? =null
     var listPost:ForumListPostFragment = ForumListPostFragment()
     var about:ForumAboutFragment = ForumAboutFragment()
-    var manage:MyPostFragment = MyPostFragment()
+    var manage:ForumManageFragment = ForumManageFragment()
 
     init {
         id = idForum

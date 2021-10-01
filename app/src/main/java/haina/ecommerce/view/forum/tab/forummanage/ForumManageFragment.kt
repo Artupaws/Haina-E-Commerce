@@ -1,4 +1,4 @@
-package haina.ecommerce.view.forum.tab.forumabout
+package haina.ecommerce.view.forum.tab.forummanage
 
 import android.app.Dialog
 import android.os.Bundle
@@ -8,34 +8,38 @@ import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import haina.ecommerce.adapter.forum.AdapterListBannedUser
 import haina.ecommerce.adapter.forum.AdapterListHotPost
+import haina.ecommerce.adapter.forum.AdapterListManageModerator
 import haina.ecommerce.adapter.forum.AdapterListModerator
 import haina.ecommerce.databinding.FragmentForumAboutBinding
-import haina.ecommerce.model.forum.Moderator
-import haina.ecommerce.model.forum.SubforumEngagement
+import haina.ecommerce.databinding.FragmentForumManageBinding
+import haina.ecommerce.model.forum.*
 import haina.ecommerce.view.forum.tab.forumpost.ForumListPostPresenter
 import timber.log.Timber
 import java.util.ArrayList
 import kotlin.properties.Delegates
 
-class ForumAboutFragment : Fragment(),ForumAboutContract.View,AdapterListModerator.ItemAdapterCallback{
+class ForumManageFragment : Fragment(),ForumManageContract.View,AdapterListModerator.ItemAdapterCallback,AdapterListManageModerator.ItemAdapterCallback,AdapterListBannedUser.ItemAdapterCallback{
 
-    private lateinit var _binding: FragmentForumAboutBinding
+    private lateinit var _binding: FragmentForumManageBinding
     private val binding get() = _binding
     private var progressDialog: Dialog? = null
-    private lateinit var presenter: ForumAboutPresenter
+    private lateinit var presenter: ForumManagePresenter
     private var broadcaster: LocalBroadcastManager? = null
     private var idForum by Delegates.notNull<Int>()
-    private var dataEngagement:SubforumEngagement? = null
-
 
     private val moderatorAdapter by lazy {
-        AdapterListModerator(requireActivity(), arrayListOf(), this, 1)
+        AdapterListManageModerator(requireActivity(), arrayListOf(), this, 1)
+    }
+
+    private val banAdapter by lazy {
+        AdapterListBannedUser(requireActivity(), arrayListOf(), this, 1)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentForumAboutBinding.inflate(inflater, container, false)
-        presenter = ForumAboutPresenter(this, requireActivity())
+        _binding = FragmentForumManageBinding.inflate(inflater, container, false)
+        presenter = ForumManagePresenter(this, requireActivity())
         broadcaster = LocalBroadcastManager.getInstance(requireActivity())
 //        binding.relativeAllThreads.setOnClickListener(this)
 //        binding.relativeHotThreads.setOnClickListener(this)
@@ -45,15 +49,19 @@ class ForumAboutFragment : Fragment(),ForumAboutContract.View,AdapterListModerat
         super.onViewCreated(view, savedInstanceState)
 
         idForum = arguments?.getInt("idForum",0)!!
-        dataEngagement = arguments?.getParcelable("dataEngagement")!!
         presenter.getModList(idForum)
+        presenter.getBanList(idForum)
         binding.rvModerator.adapter = moderatorAdapter
+        binding.rvBan.adapter = banAdapter
+
         binding.rvModerator.visibility = View.VISIBLE
 
-        binding.tvFollowersCount.text = dataEngagement!!.followersCount.toString()
-        binding.tvLikeCount.text = dataEngagement!!.likes.toString()
-        binding.tvTotalView.text = dataEngagement!!.views.toString()
-        binding.tvPostCount.text = dataEngagement!!.postCount.toString()
+        binding.btnAddModerator.setOnClickListener {
+            showAddModeratorDialog()
+        }
+    }
+
+    private fun showAddModeratorDialog(){
 
     }
 
@@ -70,6 +78,19 @@ class ForumAboutFragment : Fragment(),ForumAboutContract.View,AdapterListModerat
         moderatorAdapter.add(data)
     }
 
+    override fun getListBannedUser(data: List<DataBannedUser?>?) {
+        banAdapter.clear()
+        banAdapter.add(data)
+    }
+
+    override fun getRemoveData(data: RemoveModeratorData) {
+        presenter.getModList(idForum)
+    }
+
+    override fun getRemoveBanned(data: DataRemoveBan) {
+        presenter.getBanList(idForum)
+    }
+
     override fun showLoading() {
 
     }
@@ -79,6 +100,16 @@ class ForumAboutFragment : Fragment(),ForumAboutContract.View,AdapterListModerat
     }
 
     override fun listProfileClick(view: View, isChecked: Boolean, data: Moderator) {
+    }
+
+    override fun removeModerator(data: Moderator) {
+        moderatorAdapter.clear()
+        presenter.removeModerator(data.subforumId!!,data.userId!!)
+    }
+
+    override fun removeBanned(data: DataBannedUser) {
+        banAdapter.clear()
+        presenter.removeBanned(data.subforumId!!,data.userId!!)
     }
 
 }

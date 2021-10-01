@@ -801,6 +801,35 @@ interface NetworkService {
     ):Call<ResponseModList>
 
     @FormUrlEncoded
+    @POST("api/forum/remove_mod")
+    fun removeMod(
+        @Field("subforum_id")IdForum:Int,
+        @Field("user_id")IdUser:Int
+    ):Call<ResponseRemoveModerator>
+
+    @FormUrlEncoded
+    @POST("api/forum/assign_mod")
+    fun addMod(
+        @Field("subforum_id")IdForum:Int,
+        @Field("user_id")IdUser:Int,
+        @Field("role")Role:String
+    ):Call<ResponseRemoveModerator>
+
+    //Get List Ban
+    @FormUrlEncoded
+    @POST("api/forum/banlist")
+    fun getForumBannedList(
+        @Field("subforum_id")IdForum:Int
+    ):Call<ResponseForumBannedList>
+
+    @FormUrlEncoded
+    @POST("api/forum/ban_remove")
+    fun removeUserBanned(
+        @Field("subforum_id")IdForum:Int,
+        @Field("user_id")IdUser:Int
+    ):Call<ResponseRemoveUserBan>
+
+    @FormUrlEncoded
     @POST("api/forum/home_post")
     fun getListHomePost(
         @Field("page")page:Int
@@ -923,6 +952,7 @@ interface NetworkService {
     @Headers("No-Authentication: true")
     @GET("api/forum/my_ban")
     fun getListBan():Call<ResponseGetListBan>
+
 
     //Search Forum
     @FormUrlEncoded
