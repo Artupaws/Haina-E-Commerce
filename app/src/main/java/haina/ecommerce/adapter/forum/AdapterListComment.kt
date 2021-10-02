@@ -53,6 +53,9 @@ class AdapterListComment(val context: Context,
                 tvOptionMenu.setOnClickListener {
                     itemAdapterCallback.listCommentClick(tvOptionMenu, listComment, adapterPosition, itemHaina)
                 }
+                ivImageUser.setOnClickListener {
+                    itemAdapterCallback.listCommentClick(ivImageUser, listComment, adapterPosition, itemHaina)
+                }
             }
         }
     }

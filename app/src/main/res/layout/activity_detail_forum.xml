@@ -48,6 +48,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="10dp"
+                    android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/tv_title_subforum"
                     tools:src="@drawable/ps5" />
 
@@ -66,8 +67,8 @@
                     style="@style/TextView.Poppins12spGrey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_image_subforum"
-                    android:layout_alignStart="@+id/iv_image_subforum"
+                    android:layout_below="@+id/tv_name_subforum"
+                    android:layout_alignStart="@+id/tv_name_subforum"
                     tools:text="member since : 2020-01-01" />
 
                 <FrameLayout
@@ -216,6 +217,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -227,23 +229,41 @@
                     android:layout_centerVertical="true"
                     android:text="Writer :" />
 
-                <TextView
-                    android:id="@+id/tv_name_user"
-                    style="@style/TextView.Poppins14spBlack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_image_profile"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/tv_title_poster"
-                    tools:text="Poster" />
 
-                <TextView
-                    android:id="@+id/tv_member_since"
-                    style="@style/TextView.Poppins12spGrey"
+                    tools:src="@drawable/ps5" />
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_name_user"
-                    android:layout_alignStart="@+id/tv_name_user"
-                    tools:text="member since : 2020-01-01" />
+                    android:layout_toEndOf="@id/iv_image_profile"
+                    android:layout_marginStart="10dp"
+
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_name_user"
+                        style="@style/TextView.Poppins14spBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/tv_title_poster"
+                        tools:text="Poster" />
+
+                    <TextView
+                        android:id="@+id/tv_member_since"
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_name_user"
+                        android:layout_alignStart="@+id/tv_name_user"
+                        tools:text="member since : 2020-01-01" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 

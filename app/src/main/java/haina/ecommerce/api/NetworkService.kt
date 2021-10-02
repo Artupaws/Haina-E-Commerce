@@ -890,6 +890,22 @@ interface NetworkService {
         @Field("user_id")userId:Int
     ):Call<ResponseGetProfileUserForum>
 
+    @FormUrlEncoded
+    @POST("api/forum/user_profile_post")
+    fun getUserPost(
+        @Field("user_id")userId:Int,
+        @Field("sort_by")sort:String,
+        @Field("page")page:Int
+    ):Call<ResponseGetAllThreads>
+
+    @FormUrlEncoded
+    @POST("api/forum/user_profile_comment")
+    fun getUserComment(
+        @Field("user_id")userId:Int,
+        @Field("sort_by")sort:String,
+        @Field("page")page:Int
+    ):Call<ResponseUserCommentList>
+
     //New Post
     @Multipart
     @Headers("No-Authentication: true")

@@ -12,11 +12,13 @@ import androidx.fragment.app.Fragment
 import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.TabAdapterForum
 import haina.ecommerce.databinding.FragmentForumBinding
+import haina.ecommerce.model.DataUser
 import haina.ecommerce.model.forum.DataSearch
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.forum.bottomsheet.BottomSheetSubforum
 import haina.ecommerce.view.forum.forumactivity.ActivityForumActivity
+import haina.ecommerce.view.forum.profilepage.ProfilePageActivity
 import haina.ecommerce.view.login.LoginActivity
 import timber.log.Timber
 
@@ -45,61 +47,41 @@ class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.Vi
         binding.vpTransaction.adapter = TabAdapterForum(childFragmentManager, 0)
         binding.vpTransaction.offscreenPageLimit = 3
         binding.tabTransaction.setupWithViewPager(binding.vpTransaction)
-        binding.toolbarFragmentForum.inflateMenu(R.menu.menu_search)
-        binding.toolbarFragmentForum.setOnMenuItemClickListener { menuItem ->
-            when(menuItem.itemId){
-                R.id.action_activity_forum -> {
-                    val intent = Intent(requireActivity(), ActivityForumActivity::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.action_search -> {
-                    val searchView = menuItem.actionView as androidx.appcompat.widget.SearchView
-                    searchView.queryHint = "Search"
-                    searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
-                        override fun onQueryTextSubmit(query: String?): Boolean {
-                            if (query?.length!! >= 2){
-                                query.let {presenter.getSearch(it)}
-                                requireActivity().currentFocus?.let { view ->
-                                    val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                                    imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        if (sharedPreferenceHelper.getValueBoolien(Constants.PREF_IS_LOGIN)) {
+            binding.toolbarFragmentForum.inflateMenu(R.menu.menu_search)
+            presenter.getDataUserProfile()
+        }else{
+            binding.toolbarFragmentForum.inflateMenu(R.menu.menu_search_forum_nologin)
+
+            binding.toolbarFragmentForum.setOnMenuItemClickListener { menuItem ->
+                when(menuItem.itemId){
+                    R.id.action_search -> {
+                        val searchView = menuItem.actionView as androidx.appcompat.widget.SearchView
+                        searchView.queryHint = "Search"
+                        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
+                            override fun onQueryTextSubmit(query: String?): Boolean {
+                                if (query?.length!! >= 2){
+                                    query.let {presenter.getSearch(it)}
+                                    requireActivity().currentFocus?.let { view ->
+                                        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                                        imm?.hideSoftInputFromWindow(view.windowToken, 0)
+                                    }
+                                } else {
+                                    Toast.makeText(requireActivity(), "minimum 2 characters", Toast.LENGTH_SHORT).show()
                                 }
-                            } else {
-                                Toast.makeText(requireActivity(), "minimum 2 characters", Toast.LENGTH_SHORT).show()
+                                return true
                             }
-                            return true
-                        }
-                        override fun onQueryTextChange(newText: String?): Boolean {
-                            return false
-                        }
-                    })
-                    true
+                            override fun onQueryTextChange(newText: String?): Boolean {
+                                return false
+                            }
+                        })
+                        true
+                    }
+                    else -> false
                 }
-                else -> false
             }
         }
-//        val menu = binding.toolbarFragmentForum.menu
-//        val search = menu.findItem(R.id.action_search)
-//        val searchView = search.actionView as androidx.appcompat.widget.SearchView
-//        searchView.queryHint = "Search"
-//        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                if (query?.length!! >= 2){
-//                    query.let {presenter.getSearch(it)}
-//                    requireActivity().currentFocus?.let { view ->
-//                        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-//                        imm?.hideSoftInputFromWindow(view.windowToken, 0)
-//                    }
-//                } else {
-//                    Toast.makeText(requireActivity(), "minimum 2 characters", Toast.LENGTH_SHORT).show()
-//                }
-//                return true
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//                return false
-//            }
-//        })
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -157,6 +139,47 @@ class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.Vi
                     show(it, tag)
                 }
             }
+    }
+
+    override fun messageGetDataUSer(msg: String) {
+        Timber.d(msg)
+    }
+
+    override fun getDataUser(data: DataUser?) {
+        binding.toolbarFragmentForum.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId){
+                R.id.action_activity_forum -> {
+                    startActivity(
+                        Intent(context, ProfilePageActivity::class.java)
+                            .putExtra("idUser", data!!.id)
+                    )
+                    true
+                }
+                R.id.action_search -> {
+                    val searchView = menuItem.actionView as androidx.appcompat.widget.SearchView
+                    searchView.queryHint = "Search"
+                    searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
+                        override fun onQueryTextSubmit(query: String?): Boolean {
+                            if (query?.length!! >= 2){
+                                query.let {presenter.getSearch(it)}
+                                requireActivity().currentFocus?.let { view ->
+                                    val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                                    imm?.hideSoftInputFromWindow(view.windowToken, 0)
+                                }
+                            } else {
+                                Toast.makeText(requireActivity(), "minimum 2 characters", Toast.LENGTH_SHORT).show()
+                            }
+                            return true
+                        }
+                        override fun onQueryTextChange(newText: String?): Boolean {
+                            return false
+                        }
+                    })
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun showLoading() {

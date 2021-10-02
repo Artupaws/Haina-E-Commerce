@@ -26,6 +26,9 @@ data class DataProfile(
 	@field:SerializedName("user_id")
 	val userId: Int? = null,
 
+	@field:SerializedName("member_since")
+	val memberSince: String? = null,
+
 	@field:SerializedName("following")
 	val following: Int? = null,
 

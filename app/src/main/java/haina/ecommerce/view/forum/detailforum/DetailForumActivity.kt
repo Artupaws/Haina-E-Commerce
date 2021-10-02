@@ -28,6 +28,7 @@ import haina.ecommerce.model.forum.DataItemHotPost
 import haina.ecommerce.model.forum.SubforumData
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.forum.profilepage.ProfilePageActivity
 import haina.ecommerce.view.forum.profileuser.ProfileUserActivity
 import haina.ecommerce.view.forum.tab.myforum.DetailMySubforum
 import timber.log.Timber
@@ -125,8 +126,11 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
         binding.tvDate.text = helper.dateTimeFormat(data.createdAt)
         binding.tvNameUser.text = data.author
         binding.tvContent.text = data.content?.replace("\\n", "\n")
-        Glide.with(applicationContext).load(subforumData.subforumImage).into(binding.ivImageSubforum)
+
+        Glide.with(applicationContext).load(data.authorPhoto).into(binding.ivImageProfile)
+
         binding.tvNameSubforum.text = subforumData.name
+        Glide.with(applicationContext).load(subforumData.subforumImage).into(binding.ivImageSubforum)
         val categorySubforum = if (sharedPref.getValueString(Constants.LANGUAGE_APP) == "en")"${getString(R.string.category)} : ${subforumData.category}"
         else "${getString(R.string.category)} : ${subforumData.categoryZh}"
         binding.tvCategory.text = categorySubforum
@@ -134,6 +138,13 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
         data.id?.let {
             presenter.getPostDetail(it)
             presenter.getListComment(it)
+        }
+
+        binding.ivImageProfile.setOnClickListener {
+            startActivity(
+                Intent(applicationContext, ProfilePageActivity::class.java)
+                    .putExtra("idUser", data.userId)
+            )
         }
     }
 
@@ -182,6 +193,37 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
 
     override fun getPostDetail(data: DataItemHotPost) {
 
+        binding.tvTitleForum.text = data.title
+        val memberSince = "Member since : ${data.memberSince}"
+        binding.tvMemberSince.text = memberSince
+        if (data.images != null) {
+            for (i in data.images) {
+                i?.path?.let { listParams.add(it) }
+                binding.vpImageForum.pageCount = listParams.size
+            }
+            imagesListener = ImageListener { _, imageView ->
+                Glide.with(applicationContext).load(listParams[0]).placeholder(R.drawable.ps5)
+                    .into(imageView)
+            }
+            binding.vpImageForum.setImageListener(imagesListener)
+            binding.vpImageForum.setImageListener(imagesListener)
+        }
+        if (data.images == null){
+            listParams.add("https://hainaservice.com/storage/empty.jpg")
+            binding.vpImageForum.pageCount = listParams.size
+            imagesListener = ImageListener { _, imageView ->
+                Glide.with(applicationContext).load(listParams[0]).placeholder(R.drawable.ps5)
+                    .into(imageView)
+            }
+            binding.vpImageForum.setImageListener(imagesListener)
+            binding.vpImageForum.setImageListener(imagesListener)
+        }
+        binding.tvDate.text = helper.dateTimeFormat(data.createdAt)
+        binding.tvNameUser.text = data.author
+        binding.tvContent.text = data.content?.replace("\\n", "\n")
+
+        Glide.with(applicationContext).load(data.authorPhoto).into(binding.ivImageProfile)
+
     }
 
     override fun showLoading() {
@@ -226,6 +268,13 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
                     true
                 }
                 popup.show()
+            }
+
+            R.id.iv_image_user -> {
+                startActivity(
+                    Intent(applicationContext, ProfilePageActivity::class.java)
+                        .putExtra("idUser", data.userId)
+                )
             }
         }
     }

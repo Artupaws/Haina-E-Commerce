@@ -2,6 +2,7 @@ package haina.ecommerce.view.forum
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
+import haina.ecommerce.model.ResponseGetDataUser
 import haina.ecommerce.model.forum.ResponseSearchForum
 import org.json.JSONObject
 import retrofit2.Call
@@ -31,6 +32,26 @@ class ForumFragmentPresenter(val view:ForumFragmentContract.View, val context:Co
             }
 
         })
+    }
+
+    fun getDataUserProfile(){
+        NetworkConfig().getConnectionHainaBearer(context).getDataUser()
+            .enqueue(object : retrofit2.Callback<ResponseGetDataUser>{
+                override fun onResponse(call: Call<ResponseGetDataUser>, response: Response<ResponseGetDataUser>) {
+                    if (response.isSuccessful && response.body()?.value == 1){
+                        val data = response.body()?.data
+                        view.getDataUser(data)
+                        view.messageGetDataUSer(response.body()?.message.toString())
+                    } else {
+                        val error = JSONObject(response.errorBody()?.string()!!)
+                        view.messageGetDataUSer(error.getString("message"))
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseGetDataUser>, t: Throwable) {
+                    view.messageGetDataUSer(t.localizedMessage.toString())
+                }
+            })
     }
 
 }

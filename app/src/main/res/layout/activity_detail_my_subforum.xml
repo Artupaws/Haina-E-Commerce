@@ -36,6 +36,8 @@
                 app:layout_collapseParallaxMultiplier="1">
 
                 <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/background_page"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:background="@color/yellow"/>
