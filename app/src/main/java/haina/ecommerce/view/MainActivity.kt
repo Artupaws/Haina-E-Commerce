@@ -49,17 +49,27 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         setContentView(binding.root)
 
         sharedPref = SharedPreferenceHelper(this)
+
+
+
+        broadcaster = LocalBroadcastManager.getInstance(this)
+        loginMethod = intent.getIntExtra("loginMethod", 0)
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
+
+        checkLanguage()
+
+        dialogFillData()
+        checkLoginMethod()
+        stateOpenFragment()
+    }
+
+//    check app language and implement language string
+    private fun checkLanguage(){
         when(sharedPref.getValueString(Constants.LANGUAGE_APP)){
             ""->{
                 sharedPref.save(Constants.LANGUAGE_APP, "en")
             }
         }
-        broadcaster = LocalBroadcastManager.getInstance(this)
-        loginMethod = intent.getIntExtra("loginMethod", 0)
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener(this)
-        dialogFillData()
-        checkLoginMethod()
-        stateOpenFragment()
         setLanguageApp(sharedPref.getValueString(Constants.LANGUAGE_APP).toString())
     }
 
@@ -73,12 +83,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 fragment = HistoryFragment()
             }
             R.id.postingFragment -> {
-//                fragment = PostingFragment()
                 fragment = ForumFragment()
             }
-//            R.id.cartFragment -> {
-//                fragment = CartFragment()
-//            }
             R.id.myAccountFragment -> {
                 fragment = MyAccountFragment()
             }

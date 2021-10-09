@@ -62,8 +62,12 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         presenter.getListPendingTransaction()
         presenter.getDataUserProfile()
+        presenter.loadListBaseCurrency()
+        presenter.loadCovidJkt()
+
         binding?.menuServices?.linearOther?.setOnClickListener(this)
         binding?.menuServices?.linearNews?.setOnClickListener(this)
         binding?.menuServices?.linearJob?.setOnClickListener(this)
@@ -73,8 +77,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
         binding?.menuServices?.linearHotel?.setOnClickListener(this)
         binding?.menuServices?.linearFlightTicket?.setOnClickListener(this)
         binding?.menuServices?.linearProperty?.setOnClickListener(this)
-        presenter.loadListBaseCurrency()
-        presenter.loadCovidJkt()
+
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
         refresh()
         hideOrShowPendingTransaction(sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN))
@@ -163,9 +166,8 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
 
     private fun refresh() {
         binding?.swipeRefresh?.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-//            presenter.loadCovidJkt()
-//            presenter.loadListBaseCurrency()
-//            presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
+            presenter.loadCovidJkt()
+            presenter.loadListBaseCurrency()
             presenter.getListPendingTransaction()
         })
     }

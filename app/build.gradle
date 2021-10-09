@@ -100,6 +100,7 @@ dependencies {
     //shimmer
     implementation "com.facebook.shimmer:shimmer:$shimmer_version"
 
+
     //swipe refresh layout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 

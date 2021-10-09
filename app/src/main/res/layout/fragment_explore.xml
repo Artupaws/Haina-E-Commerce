@@ -221,14 +221,10 @@
                     android:layout_height="wrap_content"
                     android:visibility="visible">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
-                        <include layout="@layout/list_item_shimmer_explore" />
-
-                    </LinearLayout>
+                    <include
+                        android:id="@+id/include_transaction_pending"
+                        layout="@layout/layout_pending_transaction" />
 
                 </com.facebook.shimmer.ShimmerFrameLayout>
 
@@ -268,9 +264,6 @@
 
                 </com.facebook.shimmer.ShimmerFrameLayout>
 
-                <include
-                    android:id="@+id/include_transaction_pending"
-                    layout="@layout/layout_pending_transaction" />
 
                 <include
                     android:id="@+id/include_currency"
