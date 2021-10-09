@@ -29,7 +29,7 @@ class AdapterTimeFlight(val context: Context, private val listAirlines: List<Tim
                 }
 
                 binding.tvNameCityCode.text = itemHaina.origin
-                val timeFlight = "${itemHaina.departureTime.substring(11, 19)} - ${itemHaina.arrivedTime.substring(11, 19)}"
+                val timeFlight = "${itemHaina.departureTime.substring(11, 16)} - ${itemHaina.arrivedTime.substring(11, 16)}"
                 binding.tvTime.text = timeFlight
                 binding.tvNameCityDestinationCode.text = itemHaina.destination
                 binding.circleImageDestination.setBackgroundResource(R.drawable.ic_complete_flight)

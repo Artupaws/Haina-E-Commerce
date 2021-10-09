@@ -92,6 +92,7 @@
             android:shadowDx="1.5"
             android:shadowDy="1.5"
             android:shadowRadius="1.5"
+            android:textAlignment="textEnd"
             android:textFontWeight="600"
             tools:text="IDR580.000" />
 

@@ -165,11 +165,18 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
     }
 
     private fun refresh() {
-        binding?.swipeRefresh?.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+        binding?.swipeRefresh?.setOnRefreshListener{
+            binding?.shimmerCovid?.visibility = View.VISIBLE
+            binding?.shimmerTransactionPending?.visibility = View.VISIBLE
+            binding?.shimmerCurrency?.visibility = View.VISIBLE
+            binding?.includeTransactionPending?.layoutTransactionPending?.visibility = View.GONE
+            binding?.includeCurrency?.constraintCurrency?.visibility = View.GONE
+            binding?.covidNews?.constraintCovid?.visibility = View.GONE
+
             presenter.loadCovidJkt()
             presenter.loadListBaseCurrency()
             presenter.getListPendingTransaction()
-        })
+        }
     }
 
     override fun onDestroyView() {

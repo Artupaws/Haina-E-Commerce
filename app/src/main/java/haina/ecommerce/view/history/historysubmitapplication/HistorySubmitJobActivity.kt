@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterHistorySubmitJob
 import haina.ecommerce.adapter.property.TabAdapterMyProperty
+import haina.ecommerce.adapter.vacancy.AdapterListMyApplication
 import haina.ecommerce.databinding.ActivityMyApplicationBinding
 import haina.ecommerce.databinding.ActivityMyPropertyBinding
 import haina.ecommerce.databinding.FragmentHistorySubmitApplicationBinding
@@ -23,8 +24,9 @@ import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.history.historymyproperty.MyPropertyPresenter
 import haina.ecommerce.view.login.LoginActivity
+import java.util.ArrayList
 
-class HistorySubmitJobActivity : AppCompatActivity(), HistorySubmitJobContract, View.OnClickListener {
+class HistorySubmitJobActivity : AppCompatActivity(), HistorySubmitJobContract, View.OnClickListener, AdapterListMyApplication.AdapterCallbackApplication {
 
     private var binding: ActivityMyApplicationBinding? = null
     private lateinit var presenter: HistorySubmitJobPresenter
@@ -82,14 +84,14 @@ class HistorySubmitJobActivity : AppCompatActivity(), HistorySubmitJobContract, 
     override fun getListSubmitJob(item: List<MyApplication?>?) {
 
 
-//        val adapterHistorySubmitJob =  AdapterHistorySubmitJob(this, item)
-//        binding?.rvHistoryJobSubmit?.apply {
-//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//            adapter = adapterHistorySubmitJob
-//            adapterHistorySubmitJob?.notifyDataSetChanged()
-//        }
-//        totalSubmit = "Total submit : ${item?.size.toString()} Application"
-//        binding?.tvTotalSubmit?.text = totalSubmit
+        val adapterListMyApplication =  AdapterListMyApplication(this, item as ArrayList<MyApplication?>,this)
+        binding?.rvHistoryJobSubmit?.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = adapterListMyApplication
+            adapterListMyApplication?.notifyDataSetChanged()
+        }
+        totalSubmit = "Total submit : ${item?.size.toString()} Application"
+        binding?.tvTotalSubmit?.text = totalSubmit
     }
 
     override fun messageGetSubmitJobSuccess(msg: String) {
@@ -119,6 +121,9 @@ class HistorySubmitJobActivity : AppCompatActivity(), HistorySubmitJobContract, 
         }
     }
 
+    override fun listApplicationClick(view: View, dataApplication: MyApplication) {
+
+    }
 
 
 }
