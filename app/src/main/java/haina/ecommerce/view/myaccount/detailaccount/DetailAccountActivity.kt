@@ -635,7 +635,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
             if (!isEmptyCompany && !isEmptyPosition && !isEmptyCity && !isEmptyCity && !isEmptyStart && !isEmptyEnd && !isEmptySalary){
                 presenter.updateWorkExperience(company, city, start, end, position, ".", Helper.changeFormatMoneyToValue(salary).toInt())
             } else {
-                Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.message_fill_data), Toast.LENGTH_SHORT).show()
             }
         } else {
             if (!isEmptyCompany && !isEmptyPosition && !isEmptyCity && !isEmptyCity && !isEmptyStart && !isEmptyEnd && !isEmptySalary){
@@ -654,7 +654,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
         var about = binding.etAbout.text.toString()
 
         if (fullname.isEmpty()){
-            binding.etFullname.error = "fullname can't be empty"
+            binding.etFullname.error = getString(R.string.cant_empty)
             isEmptyFullname = true
         } else {
             fullname = binding.etFullname.text.toString()
@@ -662,7 +662,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
         }
 
         if (birthdate.isEmpty()){
-            binding.etBirthdate.error = "birthdate can't be empty"
+            binding.etBirthdate.error = getString(R.string.cant_empty)
             isEmptyBirthdate = true
         } else {
             birthdate = binding.etBirthdate.text.toString()
@@ -670,8 +670,8 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
         }
 
         if (genderString == null){
-            binding.rbMale.error = "gender can't be empty"
-            binding.rbFemale.error = "gender can't be empty"
+            binding.rbMale.error = getString(R.string.cant_empty)
+            binding.rbFemale.error = getString(R.string.cant_empty)
             isEmptyGender = true
         } else {
             genderString = genderRadio
@@ -679,7 +679,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
         }
 
         if (address.isEmpty()){
-            binding.etAddress.error = "address can't be empty"
+            binding.etAddress.error = getString(R.string.cant_empty)
             isEmptyAddress = true
         } else {
             address = binding.etAddress.text.toString()
@@ -687,7 +687,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
         }
 
         if (about.isEmpty()){
-            binding.etAbout.error = "about can't be empty"
+            binding.etAbout.error = getString(R.string.cant_empty)
             isEmptyAbout = true
         } else {
             about = binding.etAbout.text.toString()
@@ -699,7 +699,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
             binding.ivLoading.visibility = View.VISIBLE
             binding.ivActionSavePersonalData.visibility = View.INVISIBLE
         } else {
-            Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.message_fill_data), Toast.LENGTH_SHORT).show()
             binding.ivLoading.visibility = View.INVISIBLE
             binding.ivActionSavePersonalData.visibility = View.VISIBLE
         }
@@ -778,12 +778,12 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
     override fun messageAddDataPersonalUser(msg: String) {
         Log.d("DataPersonal", msg)
         if(msg == "1"){
-            Toast.makeText(applicationContext, "Success Add Data Personal", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.personal_data_success), Toast.LENGTH_SHORT).show()
             binding.ivLoading.visibility = View.INVISIBLE
             binding.ivActionEditPersonalData.visibility = View.VISIBLE
             stateSave()
         } else {
-            Toast.makeText(applicationContext, "Failed Add Data Personal", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.personal_data_fail), Toast.LENGTH_SHORT).show()
             binding.ivLoading.visibility = View.INVISIBLE
             binding.ivActionEditPersonalData.visibility = View.VISIBLE
         }
@@ -793,20 +793,21 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
     override fun messageAddLastEducation(msg: String) {
         Timber.d(msg)
         if(msg == "1"){
-            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.add_education_success), Toast.LENGTH_SHORT).show()
             popupAddEducation?.dismiss()
         } else {
-            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.add_education_fail), Toast.LENGTH_SHORT).show()
         }
         presenter.getDataUserProfile()
     }
 
     override fun messageDeleteSkill(msg: String) {
+        //msg notif
         if (msg.contains("Success!")){
             presenter.getSkillsUser()
-            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.delete_skill_success), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.delete_skill_fail), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -820,12 +821,13 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun messageAddWorkExperience(msg: String) {
+        //msg notif
         Timber.d(msg)
         if(msg == "1"){
-            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.add_work_success), Toast.LENGTH_SHORT).show()
             stateSaveWorkExperience()
         } else {
-            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.add_work_fail), Toast.LENGTH_SHORT).show()
             stateEditWorkExperience()
         }
         presenter.getDataUserProfile()

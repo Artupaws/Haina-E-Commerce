@@ -53,7 +53,7 @@ class AddSkillRequiresActivity : AppCompatActivity(), View.OnClickListener, AddS
 
         if (nameSkill.isEmpty()){
             isEmptyNameSkill = true
-            binding.outlinedTextAddressCompany.error = "Name skill can't be empty"
+            binding.outlinedTextAddressCompany.error = getString(R.string.cant_empty)
         } else {
             nameSkill = binding.etSkills.text.toString()
             isEmptyNameSkill = false
@@ -62,7 +62,7 @@ class AddSkillRequiresActivity : AppCompatActivity(), View.OnClickListener, AddS
         if (!isEmptyNameSkill){
             presenter.addSkillRequires(nameSkill, idJobVacancy)
         } else {
-            Toast.makeText(applicationContext, "Failed to add skill", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.add_skill_fail), Toast.LENGTH_SHORT).show()
         }
 
     }

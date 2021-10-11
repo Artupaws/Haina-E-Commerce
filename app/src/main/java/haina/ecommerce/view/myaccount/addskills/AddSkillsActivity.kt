@@ -96,7 +96,7 @@ class AddSkillsActivity : AppCompatActivity(), AddSkillsContract, View.OnClickLi
 
         if (skillName.isEmpty()) {
             isEmptySkills = true
-            binding.outlinedTextAddressCompany.error = "skill name, can't empty"
+            binding.outlinedTextAddressCompany.error = getString(R.string.cant_empty)
         } else {
             isEmptySkills = false
             skillName = binding.etSkills.text.toString()
@@ -105,7 +105,7 @@ class AddSkillsActivity : AppCompatActivity(), AddSkillsContract, View.OnClickLi
         if (!isEmptySkills) {
             presenter.addSkills(skillName)
         } else {
-            Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.fill_data_alert), Toast.LENGTH_SHORT).show()
         }
 
     }

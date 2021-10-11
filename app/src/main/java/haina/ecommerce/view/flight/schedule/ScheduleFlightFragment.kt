@@ -194,7 +194,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         var totalPassengerParams = binding.tvTotalPassenger.text.toString()
 
         if (fromDestination.contains("Choose")){
-            binding.tvFromDestination.error = "Please input from"
+            binding.tvFromDestination.error = getString(R.string.fill_flight_departure_alert)
             isEmptyOrigin = true
         } else {
             fromDestination = binding.tvFromDestination.text.toString()
@@ -202,7 +202,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         }
 
         if (toDestination.contains("Choose")){
-            binding.tvToDestination.error = "Please input to"
+            binding.tvToDestination.error = getString(R.string.fill_flight_destination_alert)
             isEmptyDestination = true
         } else {
             toDestination = binding.tvToDestination.text.toString()
@@ -210,7 +210,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         }
 
         if (dateStart.contains("select date")){
-            binding.tvStartDate.error = "Please input date start"
+            binding.tvStartDate.error = getString(R.string.fill_departure_date_alert)
             isEmptyStart = true
         } else {
             dateStart =  binding.tvStartDate.text.toString()
@@ -219,7 +219,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
 
         if (dateFinish?.contains("select date") == true){
             if (roundTrip){
-                binding.tvFinishDate.error = "Please input return date"
+                binding.tvFinishDate.error = getString(R.string.fill_return_date_alert)
                 isEmptyFinish = true
             } else {
                 dateFinish = null
@@ -231,7 +231,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         }
 
         if (totalPassengerParams.contains(getString(R.string.input_total_passenger))){
-            binding.tvTotalPassenger.error = "Please input total passenger"
+            binding.tvTotalPassenger.error = getString(R.string.fill_total_passenger_alert)
             isEmptyTotalPassenger = true
         } else {
             totalPassengerParams = binding.tvTotalPassenger.text.toString()
@@ -246,7 +246,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
             bundle.putParcelable("data", data)
             Navigation.findNavController(binding.btnFindTicket).navigate(R.id.action_scheduleFlightFragment_to_chooseAirlinesFragment, bundle)
         } else {
-            Toast.makeText(requireActivity(), "Please complete form", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.message_fill_data), Toast.LENGTH_SHORT).show()
         }
     }
 

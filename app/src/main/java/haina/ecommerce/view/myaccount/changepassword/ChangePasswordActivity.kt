@@ -56,7 +56,7 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Change
         var confirmPassword = binding.etConfirmPassword.text.toString()
 
         if (oldPassword.isEmpty()){
-            binding.outlinedOldPassword.error = "old password must be filled"
+            binding.outlinedOldPassword.error = getString(R.string.cant_empty)
             isEmptyOldPassword = true
         } else {
             oldPassword = binding.etOldPassword.text.toString()
@@ -64,7 +64,7 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Change
         }
 
         if (newPassword.isEmpty()){
-            binding.outlinedNewPassword.error = "new password must be filled"
+            binding.outlinedNewPassword.error = getString(R.string.cant_empty)
             isEmptyNewPassword = true
         } else {
             newPassword = binding.etNewPassword.text.toString()
@@ -73,11 +73,11 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Change
 
         when {
             confirmPassword.isEmpty() -> {
-                binding.outlinedConfirmPassword.error = "confirm password must be filled"
+                binding.outlinedConfirmPassword.error = getString(R.string.cant_empty)
                 isEmptyConfirmPassword = true
             }
             confirmPassword!=newPassword -> {
-                binding.outlinedConfirmPassword.error = "confirm password doesn't match"
+                binding.outlinedConfirmPassword.error = getString(R.string.password_mismatch)
                 isEmptyOldPassword = false
             }
             else -> {
@@ -89,7 +89,7 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Change
         if (!isEmptyOldPassword && !isEmptyNewPassword && !isEmptyConfirmPassword){
             presenter.changePasswordUser(oldPassword, newPassword)
         } else {
-            Toast.makeText(applicationContext, "Please complete the form", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.message_fill_data), Toast.LENGTH_SHORT).show()
             binding.relativeLoading.visibility = View.INVISIBLE
             binding.btnChangePassword.visibility = View.VISIBLE
         }

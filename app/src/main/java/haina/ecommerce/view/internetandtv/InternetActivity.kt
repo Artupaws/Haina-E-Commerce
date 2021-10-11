@@ -206,7 +206,7 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
                 var customerNumberParams = customerNumber
 
                 if (customerNumberParams.isNullOrEmpty()) {
-                    binding.etCustomerNumber.error = "Please fill customer number"
+                    binding.etCustomerNumber.error = getString(R.string.fill_customer_number_alert)
                 } else {
                     customerNumberParams = customerNumber
                 }
@@ -238,7 +238,7 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
         btnInputAmountBill?.setOnClickListener {
             var amountBill = etInputAmountBill?.text.toString()
             if (amountBill.isNullOrEmpty() && amountBill.toInt() < 10000){
-                etInputAmountBill?.error = getString(R.string.please_input_amount_bill)
+                etInputAmountBill?.error = getString(R.string.fill_amount_alert)
             } else {
                 amountBill = etInputAmountBill?.text.toString()
             }

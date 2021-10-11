@@ -74,7 +74,7 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
                 presenter.getAirlinesData(tripType, data.fromDestination, data.toDestination, data.startDate, data.finishDate, data.totalAdult, data.totalChild,
                     data.totalBaby, etCaptcha?.text.toString())
             } else {
-                etCaptcha?.error = "Please input captcha here"
+                etCaptcha?.error = getString(R.string.captcha)
             }
         }
     }

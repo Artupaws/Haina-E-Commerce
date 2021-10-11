@@ -216,7 +216,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
 
         if (email.isNullOrEmpty()){
             isEmptyEmail = true
-            binding.includeContactDetail.etEmailContactDetail.error = "Can't empty"
+            binding.includeContactDetail.etEmailContactDetail.error = getString(R.string.cant_empty)
         } else {
             isEmptyEmail = false
             email = binding.includeContactDetail.etEmailContactDetail.text.toString()
@@ -224,7 +224,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
 
         if (name.isNullOrEmpty()){
             isEmptyName = true
-            binding.includeContactDetail.etNameContactDetail.error = "Can't empty"
+            binding.includeContactDetail.etNameContactDetail.error = getString(R.string.cant_empty)
         } else {
             isEmptyName = false
             name = binding.includeContactDetail.etNameContactDetail.text.toString()
@@ -237,7 +237,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
             binding.includeContactDetail.tvEmailContactDetail.text = contactEmail
             binding.includeContactDetail.tvPhoneNumber.text = contactName
         } else {
-            Toast.makeText(requireActivity(), "Please complete form", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.fill_data_alert), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -316,7 +316,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
         }else{
             Log.d("dataRequest", "$smokingRoom, ${binding.includeContactDetail.tvPhoneNumber.text}, ${binding.includeContactDetail.tvEmailContactDetail.text}," +
                     "$specialRequest, $listGuest")
-            Toast.makeText(requireActivity(), "Please complete all data", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.fill_data_alert), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -361,7 +361,7 @@ class FillInDetailFragment : Fragment(), View.OnClickListener, AdapterDataGuest.
         }else{
             Log.d("dataRequestArray", "$smokingRoom, ${binding.includeContactDetail.tvPhoneNumber.text}, ${binding.includeContactDetail.tvEmailContactDetail.text}," +
                     "$specialRequest, $listGuest")
-            Toast.makeText(requireActivity(), "Please complete all data", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.fill_data_alert), Toast.LENGTH_SHORT).show()
         }
     }
 

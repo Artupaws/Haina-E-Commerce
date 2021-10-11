@@ -161,10 +161,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract.V
         val deviceToken = sharedPreferenceHelper.getValueString(Constants.PREF_TOKEN_FIREBASE).toString()
 
         if (email.isEmpty()){
-            binding.etEmail.error = "Email can't empty"
+            binding.etEmail.error = getString(R.string.cant_empty)
             isEmailEmpty = true
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            binding.etEmail.error = "Email not valid"
+            binding.etEmail.error = getString(R.string.invalid_email)
             isEmailEmpty = true
         } else {
             email = binding.etEmail.text.toString()
@@ -172,7 +172,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract.V
         }
 
         if (password.isEmpty()){
-            binding.etPassword.error = "Password can't empty"
+            binding.etPassword.error = getString(R.string.cant_empty)
             isPasswordEmpty = true
         } else {
             password = binding.etPassword.text.toString()
@@ -187,7 +187,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract.V
             loginMethod = 0
             presenter.loginUser(email, password, deviceToken, manufacturer)
         } else {
-            Toast.makeText(applicationContext, "Please complete the form", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.message_fill_data), Toast.LENGTH_SHORT).show()
             binding.btnLogin.visibility = View.VISIBLE
             binding.relativeLoading.visibility = View.INVISIBLE
             binding.btnRegister.isEnabled = true

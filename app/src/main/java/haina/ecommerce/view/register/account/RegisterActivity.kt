@@ -81,7 +81,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         var password = binding.etPassword.text.toString()
         var confirmPassword = binding.etConfirmPassword.text.toString()
         if (fullname.isEmpty()) {
-            binding.etFullname.error = "Fullname can't empty"
+            binding.etFullname.error = getString(R.string.cant_empty)
             isEmptyFullname = true
         } else {
             fullname = binding.etFullname.text.toString()
@@ -89,10 +89,10 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         }
 
         if (email.isEmpty()) {
-            binding.etEmail.error = "Email can't empty"
+            binding.etEmail.error = getString(R.string.cant_empty)
             isEmptyEmail = true
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.etEmail.error = "Email not valid"
+            binding.etEmail.error = getString(R.string.invalid_email)
             isEmptyEmail = true
         } else {
             email = binding.etEmail.text.toString()
@@ -100,7 +100,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         }
 
         if (username.isEmpty()) {
-            binding.etUsername.error = "Username can't empty"
+            binding.etUsername.error = getString(R.string.cant_empty)
             isEmptyUsername = true
         } else {
             username = binding.etUsername.text.toString()
@@ -108,7 +108,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         }
 
         if (phone.isEmpty()) {
-            binding.etPhone.error = "Phone can't empty"
+            binding.etPhone.error = getString(R.string.cant_empty)
             isEmptyPhone = true
         } else {
             phone = binding.etPhone.text.toString()
@@ -116,7 +116,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         }
 
         if (password.isEmpty()) {
-            binding.etPassword.error = "Password can't empty"
+            binding.etPassword.error = getString(R.string.cant_empty)
             isEmptyPassword = true
         } else {
             password = binding.etPassword.text.toString()
@@ -125,11 +125,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
 
         when {
             confirmPassword.isEmpty() -> {
-                binding.etConfirmPassword.error = "Confrim password can't empty"
+                binding.etConfirmPassword.error = getString(R.string.cant_empty)
                 isEmptyConfirmPassword = true
             }
             confirmPassword != password -> {
-                binding.etConfirmPassword.error = "Confrim password must same with password"
+                binding.etConfirmPassword.error = getString(R.string.password_mismatch)
                 isEmptyConfirmPassword = true
             }
             else -> {
@@ -145,7 +145,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
         if (!isEmptyFullname && !isEmptyEmail && !isEmptyUsername && !isEmptyPhone && !isEmptyPassword && !isEmptyConfirmPassword && !isEmptyDeviceToken && !isDeviceNameEmpty) {
             presenter.createUser(fullname, email, username, phone, password, deviceToken, manufacturer)
         } else {
-            Toast.makeText(applicationContext, "Please Complete Form Register", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.message_fill_data), Toast.LENGTH_SHORT).show()
             binding.btnRegister.visibility = View.VISIBLE
             binding.relativeLoading.visibility = View.INVISIBLE
 //            binding.btnLoginGoogle.isEnabled = true

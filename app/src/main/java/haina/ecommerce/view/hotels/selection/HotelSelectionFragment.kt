@@ -140,7 +140,7 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
 
 
         if (totalPassengerParams.contains(getString(R.string.input_total_passenger))){
-            binding.tvTotalPax.error = "Please input total passenger"
+            binding.tvTotalPax.error = getString(R.string.fill_total_guest_alert)
 
         } else {
             selectionPresenter.getSearchHotelDone(binding.tvHotelName.text.toString(),checkInDate,checkOutDate)

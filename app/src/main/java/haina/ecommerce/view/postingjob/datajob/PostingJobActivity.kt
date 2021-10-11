@@ -146,7 +146,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         isEmptyImage = uri == Uri.EMPTY
 
         if (title.isEmpty()){
-            binding.outlinedTextFieldTitleJob.error = "Title can't empty"
+            binding.outlinedTextFieldTitleJob.error = getString(R.string.cant_empty)
             isEmptyTitle = true
         } else {
             binding.etTitleJob.text.toString()
@@ -154,7 +154,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         }
 
         if (location == null){
-            binding.tvChooseRv.error = "Please choose one your location company"
+            binding.tvChooseRv.error = getString(R.string.location)
             isEmptyLocation = true
         } else {
             location = idLocation
@@ -162,7 +162,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         }
 
         if (category.isEmpty()){
-            binding.outlinedFieldCategory.error = "Category can't empty"
+            binding.outlinedFieldCategory.error = getString(R.string.cant_empty)
             isEmptyCategory = true
         } else {
             binding.etCategoryJob.text.toString()
@@ -170,7 +170,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         }
 
         if (description.isEmpty()){
-            binding.outlinedFieldDescription.error = "Description can't empty"
+            binding.outlinedFieldDescription.error = getString(R.string.cant_empty)
             isEmptyDescription = true
         } else {
             binding.etDescriptionJob.text.toString()
@@ -178,7 +178,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         }
 
         if (salaryFrom.isEmpty()){
-            binding.outlinedFieldSalaryForm.error = "Salary from can't empty"
+            binding.outlinedFieldSalaryForm.error = getString(R.string.cant_empty)
             isEmptySalaryFrom = true
         } else {
             binding.etSalaryFrom.text.toString()
@@ -187,11 +187,11 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
 
         when {
             salaryTo.isEmpty() -> {
-                binding.outlinedFieldSalaryTo.error = "Salary to can't empty"
+                binding.outlinedFieldSalaryTo.error = getString(R.string.cant_empty)
                 isEmptySalaryTo = true
             }
             salaryTo < salaryFrom -> {
-                binding.outlinedFieldSalaryTo.error = "Salary to must bigger than salary from"
+                binding.outlinedFieldSalaryTo.error = getString(R.string.starting_salary_alert)
                 isEmptySalaryTo = false
             }
             else -> {
@@ -212,7 +212,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
             binding.btnPostingJob.visibility = View.VISIBLE
             binding.relativeLoading.visibility = View.INVISIBLE
             binding.cvAddImage.isEnabled = true
-            Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.message_fill_data), Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -367,7 +367,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         val attention = view.findViewById<TextView>(haina.ecommerce.R.id.tv_popup)
         popupCheckDataCompany = popup.create()
         popupCheckDataCompany?.dismiss()
-        attention.text = "You have not added your company address, please add it first to continue posting job vacancy"
+        attention.text = getString(R.string.company_address_alert)
         actionCancel.setOnClickListener {
             onBackPressed()
         }
