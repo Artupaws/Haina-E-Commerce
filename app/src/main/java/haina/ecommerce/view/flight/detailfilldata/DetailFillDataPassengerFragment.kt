@@ -113,7 +113,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         var isEmptyTitle = false
 
         if (firstname.isNullOrEmpty()){
-            binding.etFirstname.error = "Can't Empty"
+            binding.etFirstname.error = getString(R.string.cant_empty)
             isEmptFirstName = true
         } else {
             isEmptFirstName = false
@@ -122,7 +122,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         }
 
         if (lastname.isNullOrEmpty()){
-            binding.etLastName.error = "Can't Empty"
+            binding.etLastName.error = getString(R.string.cant_empty)
             isEmptLastName = true
         } else {
             isEmptLastName = false
@@ -131,7 +131,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         }
 
         if (title == null){
-            binding.rbMstr.error = ""
+            binding.rbMstr.error = getString(R.string.cant_empty)
             isEmptyTitle = true
         } else {
             title = "$titleRadio."
@@ -143,7 +143,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
               saveGuestHotel(DataGuest(0,title!!, firstname, lastname))
             findNavController().navigateUp()
         }else {
-            Toast.makeText(requireActivity(), "Please complete data guest", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.message_fill_data), Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -168,7 +168,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         var isEmptyTitle = false
         var isEmptyIdCard = false
         if (firstname.isNullOrEmpty()){
-            binding.etFirstname.error = "Can't Empty"
+            binding.etFirstname.error = getString(R.string.cant_empty)
             isEmptFirstName = true
         } else {
             isEmptFirstName = false
@@ -177,7 +177,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         }
 
         if (lastname.isNullOrEmpty()){
-            binding.etLastName.error = "Can't Empty"
+            binding.etLastName.error = getString(R.string.cant_empty)
             isEmptLastName = true
         } else {
             isEmptLastName = false
@@ -188,7 +188,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         if (birthdate.isNullOrEmpty()){
             isEmptyBirthdate = true
             isEmptyType = true
-            binding.etBirthdate.error = "Can't Empty"
+            binding.etBirthdate.error = getString(R.string.cant_empty)
         } else {
             isEmptyBirthdate = false
             isEmptyType = false
@@ -198,7 +198,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         }
 
         if (gender == null){
-            binding.rbFemale.error = ""
+            binding.rbFemale.error = getString(R.string.cant_empty)
             isEmptyGender = true
         } else {
             gender = genderRadio
@@ -207,7 +207,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
 
         if (birthCountry.isNullOrEmpty()){
             isEmptyBirthCountry = true
-            binding.acBirthNationality.error = ""
+            binding.acBirthNationality.error = getString(R.string.cant_empty)
         } else {
             birthCountry = binding.acBirthNationality.text.toString()
             isEmptyBirthCountry = false
@@ -216,7 +216,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
 
         if (nationality.isNullOrEmpty()){
             isEmptyNationality = true
-            binding.acNationality.error = ""
+            binding.acNationality.error = getString(R.string.cant_empty)
         } else {
             nationality = binding.acNationality.text.toString()
             isEmptyNationality = false
@@ -224,7 +224,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         }
 
         if (idCardNumber.isNullOrEmpty() && age > 16){
-            binding.etIdCard.error = "Can't Empty"
+            binding.etIdCard.error = getString(R.string.cant_empty)
             isEmptyIdCard = true
         } else if (idCardNumber.isNullOrEmpty() && age < 17 && totalPassenger == 0){
             isEmptyIdCard = true
@@ -234,7 +234,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
         }
 
         if (title == null){
-            binding.rbMstr.error = ""
+            binding.rbMstr.error = getString(R.string.cant_empty)
             isEmptyTitle = true
         } else {
             title = titleRadio
@@ -249,7 +249,7 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
                 )
             findNavController().navigateUp()
         }else {
-            Toast.makeText(requireActivity(), "Please complete data passenger", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.fill_passenger_data_alert), Toast.LENGTH_SHORT).show()
         }
 
     }

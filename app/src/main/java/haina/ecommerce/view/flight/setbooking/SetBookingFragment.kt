@@ -217,7 +217,7 @@ class SetBookingFragment : Fragment(), View.OnClickListener,
             if (etCaptcha?.text.toString().isNotEmpty()){
 //                presenter.getCalculationTicketPrice(RequestPrice(airlineCodeParams, departParams, returnParams, etCaptcha.toString()))
             } else {
-                etCaptcha?.error = "Please input captcha here"
+                etCaptcha?.error = getString(R.string.captcha)
             }
         }
     }

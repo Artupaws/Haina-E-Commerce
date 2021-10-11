@@ -112,10 +112,10 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         val totalPriceParams = totalPrice
         when{
          checkIn.isNullOrEmpty()->{
-             binding.tvCheckInDate.error = "Please choose your checkin date"
+             binding.tvCheckInDate.error = getString(R.string.fill_checkin_date_alert)
          }
          checkOut.isNullOrEmpty()->{
-             binding.tvCheckOutDate.error = "Please choose your checkin date"
+             binding.tvCheckOutDate.error = getString(R.string.fill_checkout_date_alert)
          }  else -> {
             val dataBookingHotel = Requesthotel(hotelId, roomId, checkIn, checkOut, totalGuest, helper.convertToFormatMoneyIDRFilter(totalPriceParams), null)
             val intentToPayment = Intent(applicationContext, PaymentActivity::class.java)

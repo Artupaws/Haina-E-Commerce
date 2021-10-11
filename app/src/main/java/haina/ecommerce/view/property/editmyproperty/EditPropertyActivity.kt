@@ -354,7 +354,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (typePropertyParams.isNullOrEmpty()) {
             isEmptyTypeProperty = true
-            binding.includeDataPropertyTop.tvTitleTypeProperty.error = "Can't Empty"
+            binding.includeDataPropertyTop.tvTitleTypeProperty.error = getString(R.string.cant_empty)
         } else {
             isEmptyTypeProperty = false
             binding.includeDataPropertyTop.tvTitleTypeProperty.error = null
@@ -363,7 +363,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (typePostingParams.isNullOrEmpty()) {
             isEmptyTypePosting = true
-            binding.includeDataPropertyTop.tvTitleTypePosting.error = "Can't Empty"
+            binding.includeDataPropertyTop.tvTitleTypePosting.error = getString(R.string.cant_empty)
         } else {
             isEmptyTypePosting = false
             binding.includeDataPropertyTop.tvTitleTypePosting.error = null
@@ -372,7 +372,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (buildingAreaParams.isNullOrEmpty()) {
             isEmptyBuildingArea = true
-            binding.includeDataPropertyTop.tvTitleBuildingArea.error = "Can't Empty"
+            binding.includeDataPropertyTop.tvTitleBuildingArea.error = getString(R.string.cant_empty)
         } else {
             isEmptyBuildingArea = false
             binding.includeDataPropertyTop.tvTitleBuildingArea.error = null
@@ -391,7 +391,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
                 }
                 else -> {
                     isEmptyLandArea = true
-                    binding.includeDataPropertyTop.tvTitleLandArea.error = "Can't Empty"
+                    binding.includeDataPropertyTop.tvTitleLandArea.error = getString(R.string.cant_empty)
                 }
             }
         } else {
@@ -412,7 +412,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
                 }
                 else -> {
                     isEmptyBedRoom = true
-                    binding.includeDataPropertyTop.tvTitleBedRoom.error = "Can't Empty"
+                    binding.includeDataPropertyTop.tvTitleBedRoom.error = getString(R.string.cant_empty)
                 }
             }
         } else {
@@ -423,7 +423,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (bathRoomParams.isNullOrEmpty()) {
             isEmptyBathRoom = true
-            binding.includeDataPropertyTop.tvTitleBathRoom.error = "Can't Empty"
+            binding.includeDataPropertyTop.tvTitleBathRoom.error = getString(R.string.cant_empty)
         } else {
             isEmptyBathRoom = false
             binding.includeDataPropertyTop.tvTitleBathRoom.error = null
@@ -432,7 +432,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (floorParams.isNullOrEmpty()) {
             isEmptyFloor = true
-            binding.includeDataPropertyTop.tvTitleFloor.error = "Can't Empty"
+            binding.includeDataPropertyTop.tvTitleFloor.error = getString(R.string.cant_empty)
         } else {
             isEmptyFloor = false
             binding.includeDataPropertyTop.tvTitleFloor.error = null
@@ -441,7 +441,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (yearParams.isNullOrEmpty()) {
             isEmptyYear = true
-            binding.includeDataPropertyTop.tvTitleYear.error = "Can't Empty"
+            binding.includeDataPropertyTop.tvTitleYear.error = getString(R.string.cant_empty)
         } else {
             isEmptyYear = false
             binding.includeDataPropertyTop.tvTitleYear.error = null
@@ -450,7 +450,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (facilityParams.isNullOrEmpty()) {
             isEmptyFacility = true
-            binding.includeDataPropertyTop.tvTitleFacility.error = "Can't Empty"
+            binding.includeDataPropertyTop.tvTitleFacility.error = getString(R.string.cant_empty)
 //            isEmptyFacility = false
         } else {
             isEmptyFacility = false
@@ -467,7 +467,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
                 }
                 else -> {
                     isEmptyTypeCertificate = true
-                    binding.includeDataPropertyTop.tvTitleTypeCertificate.error = "Can't Empty"
+                    binding.includeDataPropertyTop.tvTitleTypeCertificate.error = getString(R.string.cant_empty)
                 }
             }
         } else {
@@ -478,7 +478,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (provinceParams == 0) {
             isEmptyTypeProvince = true
-            binding.includeDataPropertyTop.tvTitleProvince.error = "Can't Empty"
+            binding.includeDataPropertyTop.tvTitleProvince.error = getString(R.string.cant_empty)
         } else {
             isEmptyTypeProvince = false
             binding.includeDataPropertyTop.tvTitleProvince.error = null
@@ -487,7 +487,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (cityParams == 0) {
             isEmptyTypeCity = true
-            binding.includeDataPropertyTop.tvTitleCity.error = "Can't Empty"
+            binding.includeDataPropertyTop.tvTitleCity.error = getString(R.string.cant_empty)
         } else {
             isEmptyTypeCity = false
             binding.includeDataPropertyTop.tvTitleCity.error = null
@@ -496,7 +496,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (addressParams.isNullOrEmpty()) {
             isEmptyAddress = true
-            binding.includeDataPropertyTop.tvTitleAddress.error = "Can't Empty"
+            binding.includeDataPropertyTop.tvTitleAddress.error = getString(R.string.cant_empty)
         } else {
             isEmptyAddress = false
             binding.includeDataPropertyTop.tvTitleAddress.error = null
@@ -505,7 +505,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (titleParams.isNullOrEmpty()) {
             isEmptyTitle = true
-            binding.includeDataPropertyTop.tvTitleAds.error = "Can't Empty"
+            binding.includeDataPropertyTop.tvTitleAds.error = getString(R.string.cant_empty)
         } else {
             isEmptyTitle = false
             binding.includeDataPropertyTop.tvTitleAds.error = null
@@ -514,7 +514,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (descriptionParams.isNullOrEmpty()) {
             isEmptyDescription = true
-            binding.includeDataPropertyTop.tvTitleDescription.error = "Can't Empty"
+            binding.includeDataPropertyTop.tvTitleDescription.error = getString(R.string.cant_empty)
         } else {
             isEmptyDescription = false
             binding.includeDataPropertyTop.tvTitleDescription.error = null
@@ -529,7 +529,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
                 }
                 else -> {
                     isEmptyPriceRent = true
-                    binding.includeDataPropertyTop.tvTitlePriceRent.error = "Can't Empty"
+                    binding.includeDataPropertyTop.tvTitlePriceRent.error = getString(R.string.cant_empty)
                 }
             }
         } else {
@@ -546,7 +546,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
                 }
                 else -> {
                     isEmptyPriceSell = true
-                    binding.includeDataPropertyTop.tvTitlePriceSell.error = "Can't Empty"
+                    binding.includeDataPropertyTop.tvTitlePriceSell.error = getString(R.string.cant_empty)
                 }
             }
         } else {

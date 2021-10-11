@@ -477,7 +477,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
                 isEmptyMaxSalary = true
             }
             minSalary.toInt() >= highSalary.toInt() -> {
-                binding.tvTitleSalary.error = "Max salary must higher then min salary!"
+                binding.tvTitleSalary.error = getString(R.string.starting_salary_alert)
                 isEmptyMaxSalary = true
             }
             else -> {

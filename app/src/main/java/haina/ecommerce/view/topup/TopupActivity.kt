@@ -76,7 +76,7 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract.V
                         presenter.getProviderName(phoneNumber!!)
                         sharedPref.save(Constants.PREF_PHONE_NUMBER_PULSA, phoneNumber!!)
                     } else {
-                        binding.etPhoneNumber.error = "input valid phone number"
+                        binding.etPhoneNumber.error = getString(R.string.invalid_phone)
                     }
                 }
             }
