@@ -17,20 +17,26 @@ import haina.ecommerce.util.Constants
 import haina.ecommerce.view.MainActivity
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActivity
+import haina.ecommerce.view.myaccount.MyAccountPresenter
 import haina.ecommerce.view.notification.NotificationActivity
 
-class SplashScreenActivity : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
 
     private lateinit var binding: ActivitySplashScreenBinding
     lateinit var handler: Handler
     private var broadcaster: LocalBroadcastManager? = null
     private var firebaseToken: String = ""
     private lateinit var sharedPref:SharedPreferenceHelper
+    private lateinit var presenter: SplashScreenPresenter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        presenter = SplashScreenPresenter(this, applicationContext)
+
 
         sharedPref = SharedPreferenceHelper(this)
         val dataParams= intent.extras
@@ -58,20 +64,18 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun letMeIn(){
-        handler = Handler()
-        handler.postDelayed({
-            if (isConnect()) {
-                goToExplore()
-            } else {
-                goToExplore()
-//                binding.viewLoading.visibility = View.INVISIBLE
-//                val snackbar = Snackbar.make(binding.viewLoading, "No connection!", Snackbar.LENGTH_INDEFINITE)
-//                        .setAction("Let Me In", View.OnClickListener { goToExplore()
-//                            binding.viewLoading.visibility = View.VISIBLE
-//                        })
-//                snackbar.show()
-            }
-        }, 2000)
+
+        if (isConnect()) {
+            presenter.getServerStatus()
+        } else {
+            binding.viewLoading.visibility = View.INVISIBLE
+            val snackbar = Snackbar.make(binding.viewLoading, "No connection!", Snackbar.LENGTH_INDEFINITE)
+                .setAction("Let Me In", View.OnClickListener { goToExplore()
+                    binding.viewLoading.visibility = View.VISIBLE
+                })
+            snackbar.show()
+        }
+
     }
 
     private fun goToExplore() {
@@ -88,5 +92,24 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun isConnect(): Boolean {
         val connect: ConnectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return connect.activeNetworkInfo != null && connect.activeNetworkInfo!!.isConnected
+    }
+
+
+    override fun serverOnline(msg: String) {
+        handler = Handler()
+        handler.postDelayed({
+            goToExplore()
+        }, 2000)
+    }
+
+    override fun serverOffline(msg: String) {
+    }
+
+    override fun showLoading() {
+        binding.viewLoading.visibility = View.VISIBLE
+    }
+
+    override fun dismissLoading() {
+        binding.viewLoading.visibility = View.INVISIBLE
     }
 }

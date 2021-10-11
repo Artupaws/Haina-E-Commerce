@@ -2,6 +2,8 @@ package haina.ecommerce.adapter.flight
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +11,11 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemAirlinesBinding
 import haina.ecommerce.helper.Helper
@@ -37,7 +43,29 @@ class AdapterAirlines(val context: Context, private val listAirlines: DataAirlin
                 } else {
                     tvTypeFlight.text = "Direct"
                 }
-                Glide.with(context).load(itemHaina.airlineDetail?.image).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding?.ivAirlineIcon!!)
+                Glide.with(context).load(itemHaina.airlineDetail?.image)
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            return false
+                        }
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            shimmerAirlineIcon.hideShimmer()
+                            skeletonAirlineIcon.visibility = View.GONE
+                            return false
+                        }
+                    })
+                    .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(binding?.ivAirlineIcon!!)
 
             }
         }

@@ -36,6 +36,10 @@ import java.util.ArrayList
 
 interface NetworkService {
 
+
+    @GET("api/news/get")
+    fun getServerStatus():Call<ResponseLogout>
+
     //Register
     @FormUrlEncoded
     @POST("api/register")
