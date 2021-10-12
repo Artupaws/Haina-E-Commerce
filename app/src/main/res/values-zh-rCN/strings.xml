@@ -243,8 +243,8 @@
     <string name="book_now">现在预订</string>
     <string name="facilities">设施</string>
     <string name="check_in_title">选择日期</string>
-    <string name="check_in">报到</string>
-    <string name="check_out">查看</string>
+    <string name="check_in">入住</string>
+    <string name="check_out">退房</string>
     <string name="type_room">类型间</string>
     <string name="address_hotel">地址酒店</string>
     <string name="night">总夜数</string>
@@ -285,7 +285,7 @@
     <string name="input_captcha_here">在这里输入验证码</string>
     <string name="insert_captcha_below">在下方插入验证码</string>
     <string name="captcha_is_needed_for_security_reason">出于安全原因需要验证码.</string>
-    <string name="input_adult">请输入成年乘客</string>
+    <string name="input_adult">请输入成人乘客</string>
     <string name="input_total_passenger">输入旅客总数</string>
     <string name="adult">成人</string>
     <string name="_12_or_above">12岁或以上</string>
@@ -379,7 +379,7 @@
     <string name="fill_departure_date_alert">请选择出发日期</string>
     <string name="fill_return_date_alert">请选择回程日期</string>
     <string name="fill_checkin_date_alert">请选择入住日期</string>
-    <string name="fill_checkout_date_alert">请选择出住日期</string>
+    <string name="fill_checkout_date_alert">请选择退房日期</string>
     <string name="fill_total_passenger_alert">请输入乘客总数</string>
     <string name="fill_total_guest_alert">请输入顾客总数</string>
     <string name="invalid_email">无效的邮件地址</string>
@@ -422,4 +422,14 @@
     <string name="company_overview">公司简介</string>
     <string name="company_gallery">公司照片库</string>
     <string name="work_location">工作地点</string>
+    <string name="following_subforum">关注的吧</string>
+    <string name="find_hotel">搜索酒店</string>
+    <string name="find_flight">搜索机票</string>
+    <string name="round_trip_ask">往返票?</string>
+    <string name="flight_from">出发地</string>
+    <string name="flight_to">目的地</string>
+    <string name="departure_date">出发日期</string>
+    <string name="select_date">选择日期</string>
+    <string name="total_passenger">乘客总数</string>
+    <string name="choose">选择</string>
 </resources>

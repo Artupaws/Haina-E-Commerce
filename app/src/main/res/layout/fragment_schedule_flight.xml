@@ -75,7 +75,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="From"
+                            android:text="@string/flight_from"
                             android:textSize="12sp" />
 
                         <TextView
@@ -83,7 +83,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="To"
+                            android:text="@string/flight_to"
                             android:textAlignment="textEnd" />
 
                     </LinearLayout>
@@ -101,7 +101,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Choose"
+                            android:text="@string/choose"
                             android:textAllCaps="true" />
 
                         <ImageView
@@ -117,7 +117,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Choose"
+                            android:text="@string/choose"
                             android:textAlignment="textEnd"
                             android:textAllCaps="true" />
 
@@ -174,7 +174,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Go to"
+                            android:text="@string/departure_date"
                             app:layout_constraintStart_toEndOf="@+id/imageView2"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -183,8 +183,8 @@
                             style="@style/TextView.Poppins12spGrey"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:text="@string/select_date"
                             android:textColor="@color/black"
-                            android:text="select date"
                             app:layout_constraintEnd_toStartOf="@+id/switch_destination"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="@+id/textView7"
@@ -195,7 +195,7 @@
                             style="@style/TextView.Poppins12spGrey"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Round Trip?"
+                            android:text="@string/round_trip_ask"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -290,7 +290,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Total Passenger"
+                            android:text="@string/total_passenger"
                             app:layout_constraintStart_toEndOf="@+id/icon_calendar"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -399,7 +399,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="Find Ticket" />
+                        android:text="@string/find_flight" />
 
                 </LinearLayout>
 
