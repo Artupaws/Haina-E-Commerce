@@ -128,7 +128,9 @@ class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.Vi
 
     override fun messageGetSearch(msg: String) {
         Timber.d(msg)
-        Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
+        if(!msg.contains("Completed")){
+            Toast.makeText(requireActivity(), getString(R.string.search_fail), Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun getDataSearch(data: DataSearch?) {

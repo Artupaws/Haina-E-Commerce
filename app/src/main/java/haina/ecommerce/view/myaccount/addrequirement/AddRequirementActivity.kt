@@ -268,12 +268,12 @@ class AddRequirementActivity : AppCompatActivity(), View.OnClickListener, AddReq
                     override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                         // check if all permissions are granted
                         if (report.areAllPermissionsGranted()) {
-                            Toast.makeText(applicationContext, "All permissions are granted, ready for upload!", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(applicationContext, "All permissions are granted, ready for upload!", Toast.LENGTH_SHORT).show()
                         }
 
                         // check for permanent denial of any permission
                         if (report.isAnyPermissionPermanentlyDenied) {
-                            Toast.makeText(applicationContext, "Please grant permission for storage!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext, getString(R.string.grant_permission), Toast.LENGTH_SHORT).show()
                         }
                     }
 

@@ -139,9 +139,9 @@ class AddSkillsActivity : AppCompatActivity(), AddSkillsContract, View.OnClickLi
     override fun messageDeleteSkills(msg: String) {
         if (msg.contains("Success!")) {
             presenter.showListSkill()
-            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.delete_skill_success), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.delete_skill_fail), Toast.LENGTH_SHORT).show()
         }
     }
 

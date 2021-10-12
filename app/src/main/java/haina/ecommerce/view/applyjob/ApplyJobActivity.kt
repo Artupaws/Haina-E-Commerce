@@ -242,7 +242,7 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener,
 
     override fun messageApplyJob(msg: String) {
         if (msg.contains("Success!")){
-            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.apply_job_success), Toast.LENGTH_SHORT).show()
             move()
         } else {
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
@@ -262,12 +262,12 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener,
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     // check if all permissions are granted
                     if (report.areAllPermissionsGranted()) {
-                        Toast.makeText(applicationContext, "All permissions are granted, ready for upload!", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(applicationContext, "All permissions are granted, ready for upload!", Toast.LENGTH_SHORT).show()
                     }
 
                     // check for permanent denial of any permission
                     if (report.isAnyPermissionPermanentlyDenied) {
-                        Toast.makeText(applicationContext, "Please grant permission for storage!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, getString(R.string.grant_permission), Toast.LENGTH_SHORT).show()
                     }
                 }
 
