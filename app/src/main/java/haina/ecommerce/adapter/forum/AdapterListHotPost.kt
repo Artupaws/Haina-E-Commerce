@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -69,16 +70,19 @@ class AdapterListHotPost(val context: Context,
                 tvDate.text = helper.getTimeAgo(itemHaina.createdAt)
                 Glide.with(context).load(itemHaina.subforumData.subforumImage).into(ivImageSubforum)
                 if (itemHaina.images != null){
-                    vpImageProperty.visibility = View.VISIBLE
+
                     for (i in itemHaina.images) {
-                        i?.path?.let { listParams.add(it) }
-                        vpImageProperty.pageCount = listParams.size
+
+                        val iv = ImageView(context)
+                        var params = iv.layoutParams
+                        params.width = glImageForum.width / 2
+                        params.height = glImageForum.height / 2
+
+                        iv.layoutParams = params
+                        Glide.with(context).load(i?.path).placeholder(R.drawable.ps5).into(iv)
+
+                        glImageForum.addView(iv)
                     }
-                    imagesListener = ImageListener { _, imageView ->
-                        Glide.with(context).load(listParams[0]).placeholder(R.drawable.ps5).into(imageView)
-                    }
-                    vpImageProperty.setImageListener(imagesListener)
-                    vpImageProperty.setImageListener(imagesListener)
                 }
 
                 relativeClick.setOnClickListener {

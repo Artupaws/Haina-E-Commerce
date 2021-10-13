@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -57,24 +58,19 @@ class AdapterListMyPost(val context: Context,
                 }
 
                 if (itemHaina.images != null){
+
                     for (i in itemHaina.images) {
-                        i?.path?.let { listParams.add(it) }
-                        vpImageProperty.pageCount = listParams.size
+
+                        val iv = ImageView(context)
+                        var params = iv.layoutParams
+                        params.width = glImageForum.width / 2
+                        params.height = glImageForum.height / 2
+
+                        iv.layoutParams = params
+                        Glide.with(context).load(i?.path).placeholder(R.drawable.ps5).into(iv)
+
+                        glImageForum.addView(iv)
                     }
-                    imagesListener = ImageListener { _, imageView ->
-                        Glide.with(context).load(listParams[0]).placeholder(R.drawable.ps5).into(imageView)
-                    }
-                    vpImageProperty.setImageListener(imagesListener)
-                    vpImageProperty.setImageListener(imagesListener)
-                }
-                if(itemHaina.images.isNullOrEmpty()) {
-                    listParams.add("https://hainaservice.com/storage/empty.jpg")
-                    vpImageProperty.pageCount = listParams.size
-                    imagesListener = ImageListener { _, imageView ->
-                        Glide.with(context).load(listParams[0]).placeholder(R.drawable.ps5).into(imageView)
-                    }
-                    vpImageProperty.setImageListener(imagesListener)
-                    vpImageProperty.setImageListener(imagesListener)
                 }
                 relativeClick.setOnClickListener {
                     itemAdapterCallback.listMyPostClick(relativeClick, false, itemHaina)

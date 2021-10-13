@@ -13,6 +13,9 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
         android:paddingTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:paddingBottom="5dp">
 
         <RelativeLayout
@@ -80,13 +83,15 @@
             android:text="&#8942;"
             android:textFontWeight="700" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/linear_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
             android:layout_below="@+id/layout_poster"
-            android:orientation="horizontal"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginVertical="10dp"
+            android:orientation="vertical"
             android:weightSum="2">
 
             <TextView
@@ -94,22 +99,22 @@
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:textColor="@color/black"
                 tools:text="Cari temen yang suka badminton hehe" />
 
-            <com.synnapps.carouselview.CarouselView
-                android:id="@+id/vp_image_property"
+
+            <GridLayout
+                android:id="@+id/gl_image_forum"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:visibility="gone"
-                android:layout_below="@id/tv_title"
                 android:layout_marginTop="10dp"
-                app:autoPlay="false" />
-        </RelativeLayout>
+                android:columnCount="2"
+                android:alignmentMode="alignBounds"
+                android:rowCount="2">
+            </GridLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ln_menu_forum"

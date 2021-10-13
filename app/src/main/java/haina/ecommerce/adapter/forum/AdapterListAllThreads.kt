@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
+import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -11,6 +13,7 @@ import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemForumBinding
 import haina.ecommerce.helper.Helper
+import haina.ecommerce.model.forum.ImagesItem
 import haina.ecommerce.model.forum.ThreadsItem
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
@@ -69,16 +72,39 @@ class AdapterListAllThreads(val context: Context,
                 Glide.with(context).load(itemHaina.subforumData.subforumImage).into(ivImageSubforum)
 
                 if(!itemHaina.images.isNullOrEmpty()){
-                    vpImageProperty.visibility=View.VISIBLE
-                    for (i in itemHaina.images) {
-                        i?.path?.let { listParams.add(it) }
-                        vpImageProperty.pageCount = listParams.size
+                    glImageForum.removeAllViews()
+                    for ((index, i) in itemHaina.images.withIndex()) {
+                        var colCount = 2
+                        var rowCount = 2
+                        if(itemHaina.images.size == 1||itemHaina.images.size == 2){
+                            rowCount = 1
+                        }
+                        if(itemHaina.images.size == 1){
+                            colCount = 1
+                        }
+
+                        val iv = ImageView(context)
+                        var params = GridLayout.LayoutParams()
+                        if(itemHaina.images.size == 3 && index == 0){
+                            params.width = glImageForum.width / colCount
+                            params.height = glImageForum.height
+                            params.rowSpec = GridLayout.spec(0,2)
+                        }else{
+                            params.width = glImageForum.width / colCount
+                            params.height = glImageForum.height / rowCount
+                        }
+
+                        iv.layoutParams = params
+                        iv.scaleType = ImageView.ScaleType.CENTER_CROP
+
+                        iv.setOnClickListener {
+                            itemAdapterCallback.detailPhoto(itemHaina.images,index)
+                        }
+
+                        Glide.with(context).load(i?.path).placeholder(R.drawable.ps5).into(iv)
+
+                        glImageForum.addView(iv)
                     }
-                    imagesListener = ImageListener { _, imageView ->
-                        Glide.with(context).load(listParams[0]).placeholder(R.drawable.ps5).into(imageView)
-                    }
-                    vpImageProperty.setImageListener(imagesListener)
-                    vpImageProperty.setImageListener(imagesListener)
                 }
 
                 relativeClick.setOnClickListener {
@@ -107,6 +133,7 @@ class AdapterListAllThreads(val context: Context,
 
     interface ItemAdapterCallback{
         fun listAllThreadsClick(view: View, isChecked:Boolean, data:ThreadsItem)
+        fun detailPhoto(listImage: List<ImagesItem?>?,position:Int)
     }
 
     fun add(data:List<ThreadsItem?>?){

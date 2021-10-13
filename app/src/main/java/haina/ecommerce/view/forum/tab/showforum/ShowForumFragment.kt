@@ -3,6 +3,7 @@ package haina.ecommerce.view.forum.tab.showforum
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -24,6 +25,7 @@ import haina.ecommerce.view.forum.detailforum.DetailForumActivity
 import timber.log.Timber
 import java.util.ArrayList
 import android.widget.Toast
+import haina.ecommerce.adapter.forum.AdapterDetailImage
 import haina.ecommerce.databinding.FragmentShowForumBinding
 
 class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryForum.ItemAdapterCallback,
@@ -94,11 +96,6 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
         })
     }
 
-
-    override fun onResume() {
-        super.onResume()
-        presenter.getHomePost(page)
-    }
 
     private fun dialogLoading(){
         progressDialog = Dialog(requireActivity())
@@ -289,6 +286,16 @@ class ShowForumFragment : Fragment(), ShowForumContract.View, AdapterCategoryFor
                 startActivity(intentDetail)
             }
         }
+    }
+
+    override fun detailPhoto(listImage: List<ImagesItem?>?, position: Int) {
+        startActivity(
+            AdapterDetailImage.createIntent(
+                requireContext(),
+                listImage!!,
+                position
+            )
+        )
     }
 
 }

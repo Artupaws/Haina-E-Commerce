@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.AdapterCategoryForum
+import haina.ecommerce.adapter.forum.AdapterDetailImage
 import haina.ecommerce.adapter.forum.AdapterListAllThreads
 import haina.ecommerce.adapter.forum.AdapterListHotPost
 import haina.ecommerce.model.forum.*
@@ -301,6 +302,14 @@ class ProfilePostListFragment : Fragment(),ProfilePostListContract.View, Adapter
                 startActivity(intentDetail)
             }
         }
+    }
+
+    override fun detailPhoto(listImage: List<ImagesItem?>?, position: Int) {
+
+        val intentDetailPhoto = Intent(requireActivity(), AdapterDetailImage::class.java)
+        intentDetailPhoto.putParcelableArrayListExtra("image_list",listImage as ArrayList<ImagesItem>)
+        intentDetailPhoto.putExtra("position",position)
+        startActivity(intentDetailPhoto)
     }
 
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import haina.ecommerce.R
+import haina.ecommerce.adapter.forum.AdapterDetailImage
 import haina.ecommerce.adapter.forum.AdapterListAllThreads
 import haina.ecommerce.adapter.forum.AdapterListSubforum
 import haina.ecommerce.databinding.FragmentBottomSheetSubforumBinding
@@ -105,5 +106,12 @@ class BottomSheetSubforum : BottomSheetDialogFragment(),View.OnClickListener,
                 startActivity(intentDetail)
             }
         }
+    }
+
+    override fun detailPhoto(listImage: List<ImagesItem?>?, position: Int) {
+        val intentDetailPhoto = Intent(requireActivity(), AdapterDetailImage::class.java)
+        intentDetailPhoto.putParcelableArrayListExtra("image_list",listImage as ArrayList<ImagesItem>)
+        intentDetailPhoto.putExtra("position",position)
+        startActivity(intentDetailPhoto)
     }
 }
