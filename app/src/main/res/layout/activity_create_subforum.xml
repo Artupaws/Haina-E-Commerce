@@ -35,7 +35,7 @@
                 style="@style/TextView.Poppins14spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Choose Category" />
+                android:text="@string/choose_category" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_category"
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Title Sub Forum" />
+                android:text="@string/subforum_title" />
 
             <EditText
                 android:id="@+id/et_title"
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Image Sub Forum" />
+                android:text="@string/subforum_image" />
 
             <ImageView
                 android:id="@+id/iv_image_subforum"
@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Description Sub Forum" />
+                android:text="@string/subforum_desc" />
 
             <EditText
                 android:id="@+id/et_description"
@@ -103,7 +103,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="Create Sub Forum"
+        android:text="@string/create_sub_forum"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

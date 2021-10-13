@@ -63,13 +63,13 @@
     <string name="idr">IDR</string>
     <string name="cny">CNY</string>
     <string name="eur">EUR</string>
-    <string name="fullname">fullname</string>
-    <string name="phone_title">phone</string>
-    <string name="confirm_password">confirm password</string>
-    <string name="username">username</string>
+    <string name="fullname">Full name</string>
+    <string name="phone_title">Phone</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="username">Username</string>
     <string name="usd">USD</string>
     <string name="news_full_title">News</string>
-    <string name="die_title">Die</string>
+    <string name="die_title">Died</string>
     <string name="covid_19_info">| Covid-19 Info</string>
     <string name="search_province_here">Search Province Here</string>
     <string name="title_job">Job Title</string>
@@ -115,7 +115,7 @@
     <string name="add">Add</string>
     <string name="add_company_address">Add company address</string>
     <string name="personal_data">Personal Data</string>
-    <string name="address">address</string>
+    <string name="address">Address</string>
     <string name="resume">Resume</string>
     <string name="birth_date">Birth date</string>
     <string name="male">Male</string>
@@ -125,12 +125,12 @@
     <string name="female">Female</string>
     <string name="portfolio">Portfolio</string>
     <string name="certificate">Certificate</string>
-    <string name="gender">gender</string>
+    <string name="gender">Gender</string>
     <string name="title_upload_document">Click here for upload your document (.pdf)</string>
     <string name="uploaded">Ready to upload :</string>
     <string name="upload_document">Upload Document</string>
     <string name="please_enter_your_date_of_birth">Please enter your date of birth</string>
-    <string name="about">about</string>
+    <string name="about">About</string>
     <string name="click_here_for_add_skill">Click here for add skill</string>
     <string name="your_skills">Your skills :</string>
     <string name="add_skills">Add Skills</string>
@@ -141,7 +141,7 @@
     <string name="requires_skill">Requires Skill :</string>
     <string name="edit_detail_job">Edit Detail Job</string>
     <string name="applicant">Who has applied for this job :</string>
-    <string name="name">name</string>
+    <string name="name">Name</string>
     <string name="empty_skill_requires">You are not added skill requires, for add it you can click edit button on top.</string>
     <string name="step_one_posting_job">Step One : Add Detail Job</string>
     <string name="step_two_posting_job">Step Two : Add Requires</string>
@@ -360,7 +360,7 @@
         \n 4.This transaction is beyond the control of Haina Service Indonesia.
         \n 5.You will be forwarded to WhatsApp chat, please mind your language during chat</string>
     <string name="forum">forum</string>
-    <string name="create_sub_forum">Create Sub Forum</string>
+    <string name="create_sub_forum">Create Subforum</string>
     <string name="new_post">New Post</string>
     <string name="cant_empty">Cannot be empty</string>
     <string name="follow">Follow</string>
@@ -430,4 +430,15 @@
     <string name="select_date">Select date</string>
     <string name="total_passenger">Total Passenger</string>
     <string name="choose">Choose</string>
+    <string name="search_hotel_hint">Search hotel here...</string>
+    <string name="subforum_image">Subforum Image</string>
+    <string name="subforum_title">Subforum Title</string>
+    <string name="subforum_desc">Subforum Description</string>
+    <string name="choose_category">Choose Category</string>
+    <string name="fullname_hint">Enter full name</string>
+    <string name="phone_hint">Enter phone number</string>
+    <string name="username_hint">Enter username</string>
+    <string name="email_hint">Enter email address</string>
+    <string name="password_hint">Enter new password</string>
+    <string name="confirm_password_hint">Please repeat the password</string>
 </resources>

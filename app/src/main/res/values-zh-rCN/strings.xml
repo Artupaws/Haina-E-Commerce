@@ -432,4 +432,15 @@
     <string name="select_date">选择日期</string>
     <string name="total_passenger">乘客总数</string>
     <string name="choose">选择</string>
+    <string name="search_hotel_hint">搜索酒店</string>
+    <string name="subforum_image">新吧头像</string>
+    <string name="subforum_title">新吧标题</string>
+    <string name="subforum_desc">新吧简介</string>
+    <string name="choose_category">新吧类型</string>
+    <string name="fullname_hint">请输入姓名</string>
+    <string name="phone_hint">请输入电话号码</string>
+    <string name="username_hint">请输入用户名</string>
+    <string name="email_hint">请输入电邮地址</string>
+    <string name="password_hint">请输入密码</string>
+    <string name="confirm_password_hint">再一次输入密码</string>
 </resources>

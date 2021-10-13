@@ -63,13 +63,13 @@
     <string name="idr">IDR</string>
     <string name="cny">CNY</string>
     <string name="eur">EUR</string>
-    <string name="fullname">fullname</string>
-    <string name="phone_title">phone</string>
-    <string name="confirm_password">confirm password</string>
-    <string name="username">username</string>
+    <string name="fullname">Full Name</string>
+    <string name="phone_title">Phone</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="username">Username</string>
     <string name="usd">USD</string>
     <string name="news_full_title">News</string>
-    <string name="die_title">Die</string>
+    <string name="die_title">Died</string>
     <string name="covid_19_info">| Covid-19 Info</string>
     <string name="search_province_here">Search Province Here</string>
     <string name="title_job">Title Job</string>
@@ -115,7 +115,7 @@
     <string name="add">Add</string>
     <string name="add_company_address">Add company address</string>
     <string name="personal_data">Personal Data</string>
-    <string name="address">address</string>
+    <string name="address">Address</string>
     <string name="resume">Resume</string>
     <string name="birth_date">Birth date</string>
     <string name="male">Male</string>
@@ -130,7 +130,7 @@
     <string name="uploaded">Ready to upload :</string>
     <string name="upload_document">Upload Document</string>
     <string name="please_enter_your_date_of_birth">Please enter your date of birth</string>
-    <string name="about">about</string>
+    <string name="about">About</string>
     <string name="click_here_for_add_skill">Click here for add skill</string>
     <string name="your_skills">Your skills :</string>
     <string name="add_skills">Add Skills</string>
@@ -189,12 +189,12 @@
     <string name="types_electricity">types of electrical products</string>
     <string name="meter_number">meter number/ID customer</string>
     <string name="nominal">Nominal</string>
-    <string name="province">province</string>
-    <string name="customer_id">customer id</string>
+    <string name="province">Province</string>
+    <string name="customer_id">Customer id</string>
     <string name="select_date_stay">Select the date of stay</string>
     <string name="water_management">water management</string>
     <string name="phone_number">Phone number</string>
-    <string name="internet_tv_services">internet provider</string>
+    <string name="internet_tv_services">Internet provider</string>
     <string name="customer_number_internet_tv">Customer number</string>
     <string name="postpaid">Postpaid</string>
     <string name="telkom">Telkom</string>
@@ -361,7 +361,7 @@
         \n 4.This transaction is beyond the control of Haina Service Indonesia.
         \n 5.You will be forwarded to wa chat, please use polite language</string>
     <string name="forum">forum</string>
-    <string name="create_sub_forum">Create Sub Forum</string>
+    <string name="create_sub_forum">Create Subforum</string>
     <string name="new_post">New Post</string>
     <string name="cant_empty">Can\'t Empty</string>
     <string name="follow">Follow</string>
@@ -431,4 +431,15 @@
     <string name="select_date">Select date</string>
     <string name="total_passenger">Total Passenger</string>
     <string name="choose">Choose</string>
+    <string name="search_hotel_hint">Search hotel here...</string>
+    <string name="subforum_image">Subforum Image</string>
+    <string name="subforum_title">Subforum Title</string>
+    <string name="subforum_desc">Subforum Description</string>
+    <string name="choose_category">Choose Category</string>
+    <string name="fullname_hint">Enter full name</string>
+    <string name="phone_hint">Enter phone number</string>
+    <string name="username_hint">Enter username</string>
+    <string name="email_hint">Enter email address</string>
+    <string name="password_hint">Enter new password</string>
+    <string name="confirm_password_hint">Please repeat the password</string>
 </resources>

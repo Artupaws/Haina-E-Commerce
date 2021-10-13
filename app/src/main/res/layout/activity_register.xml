@@ -71,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Full Name"
+                        android:text="@string/fullname"
                         app:layout_constraintStart_toEndOf="@+id/image_view_contact_person"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -80,9 +80,9 @@
                         style="@style/TextView.Poppins12spGrey"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:hint="Enter Full Name"
                         android:background="@null"
+                        android:hint="@string/fullname_hint"
+                        android:textColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_cp"
@@ -130,10 +130,10 @@
                         style="@style/TextView.Poppins12spGrey"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:inputType="phone"
-                        android:hint="Enter Phone Number"
                         android:background="@null"
+                        android:hint="@string/phone_hint"
+                        android:inputType="phone"
+                        android:textColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_cp_number"
@@ -173,7 +173,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Username"
+                        android:text="@string/username"
                         app:layout_constraintStart_toEndOf="@+id/image_view_location"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -182,9 +182,9 @@
                         style="@style/TextView.Poppins12spGrey"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:hint="Enter Profile Username"
                         android:background="@null"
+                        android:hint="@string/username_hint"
+                        android:textColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_location"
@@ -224,7 +224,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Email"
+                        android:text="@string/e_mail"
                         app:layout_constraintStart_toEndOf="@+id/image_view_email"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -233,10 +233,10 @@
                         style="@style/TextView.Poppins12spGrey"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:hint="Enter Profile Username"
-                        android:inputType="textEmailAddress"
                         android:background="@null"
+                        android:hint="@string/email_hint"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_email"
@@ -277,7 +277,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Password"
+                        android:text="@string/password"
                         app:layout_constraintStart_toEndOf="@+id/image_view_password"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -286,10 +286,10 @@
                         style="@style/TextView.Poppins12spGrey"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:inputType="textPassword"
-                        android:hint="Enter Password"
                         android:background="@null"
+                        android:hint="@string/password_hint"
+                        android:inputType="textPassword"
+                        android:textColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_password"
@@ -328,7 +328,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Confirm Password"
+                        android:text="@string/confirm_password"
                         app:layout_constraintStart_toEndOf="@+id/image_view_confirm_password"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -337,10 +337,10 @@
                         style="@style/TextView.Poppins12spGrey"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:hint="Confirm Password"
-                        android:inputType="textPassword"
                         android:background="@null"
+                        android:hint="@string/confirm_password_hint"
+                        android:inputType="textPassword"
+                        android:textColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_confirm_password"
@@ -382,6 +382,7 @@
                         app:lottie_loop="true"
                         app:lottie_rawRes="@raw/loading" />
                 </RelativeLayout>
+
                 <Button
                     android:id="@+id/btn_register"
                     android:layout_width="match_parent"
@@ -389,9 +390,9 @@
                     android:background="@drawable/backgroundbutton"
                     android:backgroundTint="@color/yellow"
                     android:fontFamily="@font/poppinssemibold"
-                    android:text="Register"
-                    android:textSize="14sp"
-                    android:textColor="#ffffff">
+                    android:text="@string/register"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp">
 
                 </Button>
             </FrameLayout>
