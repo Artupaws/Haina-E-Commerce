@@ -116,7 +116,7 @@
                 style="@style/TextView.Poppins12spGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apply" />
+                android:text="@string/applicant_count" />
 
         </LinearLayout>
 
@@ -158,7 +158,7 @@
                 style="@style/TextView.Poppins12spGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Choosed" />
+                android:text="@string/shortlist_count" />
         </LinearLayout>
 
 
@@ -199,7 +199,7 @@
                 style="@style/TextView.Poppins12spGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Interview" />
+                android:text="@string/interview_count" />
 
         </LinearLayout>
 
@@ -240,7 +240,7 @@
                 style="@style/TextView.Poppins12spGrey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Accepted" />
+                android:text="@string/accepted_count" />
 
         </LinearLayout>
 

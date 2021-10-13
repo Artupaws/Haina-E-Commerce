@@ -161,13 +161,13 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener, RegisterCont
 
     override fun successCreateUser(msg: String) {
         Log.d("successRegister", msg)
-        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, getString(R.string.registration_success), Toast.LENGTH_SHORT).show()
         move()
     }
 
     override fun errorCreateUser(msg: String) {
         Log.d("failedRegister", msg)
-        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, getString(R.string.registration_fail), Toast.LENGTH_SHORT).show()
         binding.btnRegister.visibility = View.VISIBLE
         binding.relativeLoading.visibility = View.INVISIBLE
 //        binding.btnLoginGoogle.isEnabled = true

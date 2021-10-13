@@ -171,14 +171,14 @@ Etiam at pharetra mi, eu mattis ante. Proin convallis ligula vel diam egestas pu
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Additional Info"
+                android:text="@string/basic_infomation"
                 android:textFontWeight="500" />
 
             <TextView
                 style="@style/TextView.Poppins14spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Position Level" />
+                android:text="@string/years_exp" />
 
             <TextView
                 android:id="@+id/tv_position_level"
@@ -198,7 +198,7 @@ Etiam at pharetra mi, eu mattis ante. Proin convallis ligula vel diam egestas pu
                 style="@style/TextView.Poppins14spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Qualification" />
+                android:text="@string/min_education" />
 
             <TextView
                 android:id="@+id/tv_qualification"
@@ -238,7 +238,7 @@ Etiam at pharetra mi, eu mattis ante. Proin convallis ligula vel diam egestas pu
                 style="@style/TextView.Poppins14spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Employment Type" />
+                android:text="@string/employment_type" />
 
             <TextView
                 android:id="@+id/tv_employment_type"
@@ -258,7 +258,7 @@ Etiam at pharetra mi, eu mattis ante. Proin convallis ligula vel diam egestas pu
                 style="@style/TextView.Poppins14spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Specializations" />
+                android:text="@string/job_specialization" />
 
             <TextView
                 android:id="@+id/tv_specialization"
@@ -278,7 +278,7 @@ Etiam at pharetra mi, eu mattis ante. Proin convallis ligula vel diam egestas pu
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company Overview"
+                android:text="@string/company_overview"
                 android:textFontWeight="500" />
 
             <TextView
@@ -307,7 +307,7 @@ Etiam at pharetra mi, eu mattis ante. Proin convallis ligula vel diam egestas pu
                 style="@style/TextView.Poppins14spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address" />
+                android:text="@string/company_address" />
 
             <TextView
                 android:id="@+id/tv_address"

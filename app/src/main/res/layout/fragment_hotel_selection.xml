@@ -83,7 +83,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Search"
+                            android:text="@string/search"
                             app:layout_constraintStart_toEndOf="@+id/imageViewLocation"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -133,7 +133,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Check-in Date"
+                            android:text="@string/check_in"
                             app:layout_constraintStart_toEndOf="@+id/imageView2"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -142,8 +142,8 @@
                             style="@style/TextView.Poppins12spGrey"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:text="@string/select_date_stay"
                             android:textColor="@color/black"
-                            android:text="select date"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="@+id/textView7"
@@ -345,7 +345,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:text="Find Hotel" />
+                        android:text="@string/find_hotel" />
 
                 </LinearLayout>
 

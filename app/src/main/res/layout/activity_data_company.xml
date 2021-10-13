@@ -173,7 +173,7 @@
                             android:layout_margin="10dp"
                             android:drawablePadding="5dp"
                             android:gravity="center"
-                            android:text="@string/address_company"
+                            android:text="@string/company_address"
                             app:drawableStartCompat="@drawable/ic_location"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
