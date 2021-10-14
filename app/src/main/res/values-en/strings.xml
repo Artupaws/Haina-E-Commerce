@@ -146,7 +146,7 @@
     <string name="step_one_posting_job">Step One : Add Detail Job</string>
     <string name="step_two_posting_job">Step Two : Add Requires</string>
     <string name="choose_company_location">Choose your company location :</string>
-    <string name="image_company">Image Company</string>
+    <string name="image_company">Company Image</string>
     <string name="next"><![CDATA[->]]></string>
     <string name="finish">Finish</string>
     <string name="decline">Decline</string>
@@ -233,7 +233,7 @@
     <string name="electronic_money_title">Electronic Money</string>
     <string name="card_number">Card Number</string>
     <string name="provider">Provider</string>
-    <string name="image_bank">Image Bank</string>
+    <string name="image_bank">Bank Image</string>
     <string name="cancel_transaction">Cancel Transaction</string>
     <string name="history_hotels">History Hotels</string>
     <string name="hotels">Hotels</string>
@@ -359,7 +359,7 @@
         \n3.Make sure the property matches what is advertised.
         \n 4.This transaction is beyond the control of Haina Service Indonesia.
         \n 5.You will be forwarded to WhatsApp chat, please mind your language during chat</string>
-    <string name="forum">forum</string>
+    <string name="forum">Forum</string>
     <string name="create_sub_forum">Create Subforum</string>
     <string name="new_post">New Post</string>
     <string name="cant_empty">Cannot be empty</string>
@@ -441,4 +441,16 @@
     <string name="email_hint">Enter email address</string>
     <string name="password_hint">Enter new password</string>
     <string name="confirm_password_hint">Please repeat the password</string>
+    <string name="post_title">Post title</string>
+    <string name="post_content">Post contents</string>
+    <string name="post_image">Image</string>
+    <string name="post_video">Video</string>
+    <string name="post_create">Create New Post</string>
+    <string name="home">Home</string>
+    <string name="create_property_success">Property listing created successfully</string>
+    <string name="check_myproperty">Property is now listed in \'My Property\'</string>
+    <string name="go_to_myproperty">Go to \'My Property\'</string>
+    <string name="back_to_home">Back to home</string>
+    <string name="guest_list">Guest List</string>
+    <string name="special_request">Special Request</string>
 </resources>

@@ -28,12 +28,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:gravity="center"
-        tools:text="Success Create Posting Property"
         android:textFontWeight="600"
-        android:textSize="20sp"
+        android:textSize="19sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lottie_success" />
+        app:layout_constraintTop_toBottomOf="@+id/lottie_success"
+        tools:text="@string/create_property_success" />
 
     <TextView
         android:id="@+id/tv_title_description_success"
@@ -41,11 +41,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        tools:text="can be seen on MyProperty page "
         android:textFontWeight="500"
         app:layout_constraintEnd_toEndOf="@+id/tv_title_success"
         app:layout_constraintStart_toStartOf="@+id/tv_title_success"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title_success" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_success"
+        tools:text="@string/check_myproperty" />
 
     <Button
         android:id="@+id/btn_action_goto"
@@ -54,11 +54,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:backgroundTint="@color/green"
-        tools:text="Go To MyProperty Page"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title_description_success" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_description_success"
+        tools:text="@string/go_to_myproperty" />
 
     <Button
         android:id="@+id/btn_to_dashboard"
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/broken_white"
-        android:text="Back To Dashboard"
+        android:text="@string/back_to_home"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btn_action_goto"
