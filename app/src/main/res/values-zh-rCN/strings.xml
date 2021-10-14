@@ -443,4 +443,9 @@
     <string name="email_hint">请输入电邮地址</string>
     <string name="password_hint">请输入密码</string>
     <string name="confirm_password_hint">再一次输入密码</string>
+    <string name="post_title">新帖标题</string>
+    <string name="post_content">新帖内容</string>
+    <string name="post_image">加照片</string>
+    <string name="post_video">加视频</string>
+    <string name="post_create">发布新帖</string>
 </resources>

@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Title" />
+                android:text="@string/post_title" />
 
             <EditText
                 android:id="@+id/et_title"
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Image" />
+                android:text="@string/post_image" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_images"
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Video" />
+                android:text="@string/post_video" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_video"
@@ -105,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Description Sub Forum" />
+                android:text="@string/post_content" />
 
             <EditText
                 android:id="@+id/et_description"
@@ -128,7 +128,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:text="Create New Post"
+        android:text="@string/post_create"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
