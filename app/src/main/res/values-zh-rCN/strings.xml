@@ -448,4 +448,11 @@
     <string name="post_image">加照片</string>
     <string name="post_video">加视频</string>
     <string name="post_create">发布新帖</string>
+    <string name="home">首页</string>
+    <string name="create_property_success">发布新物业广告成功！</string>
+    <string name="check_myproperty">物业现在已上市</string>
+    <string name="go_to_myproperty">观看我的物业列表</string>
+    <string name="back_to_home">返回首页</string>
+    <string name="guest_list">客人名单</string>
+    <string name="special_request">特殊要求</string>
 </resources>

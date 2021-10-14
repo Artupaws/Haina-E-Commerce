@@ -360,7 +360,7 @@
         \n3.Make sure the property matches what is advertised.
         \n 4.This transaction is beyond the control of Haina Service Indonesia.
         \n 5.You will be forwarded to wa chat, please use polite language</string>
-    <string name="forum">forum</string>
+    <string name="forum">Forum</string>
     <string name="create_sub_forum">Create Subforum</string>
     <string name="new_post">New Post</string>
     <string name="cant_empty">Can\'t Empty</string>
@@ -447,4 +447,11 @@
     <string name="post_image">Image</string>
     <string name="post_video">Video</string>
     <string name="post_create">Create New Post</string>
+    <string name="home">Home</string>
+    <string name="create_property_success">Property listing created successfully</string>
+    <string name="check_myproperty">Property is now listed in \'My Property\'</string>
+    <string name="go_to_myproperty">Go to \'My Property\'</string>
+    <string name="back_to_home">Back to home</string>
+    <string name="guest_list">Guest List</string>
+    <string name="special_request">Special Request</string>
 </resources>
