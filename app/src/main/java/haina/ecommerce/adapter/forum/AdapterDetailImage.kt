@@ -52,6 +52,40 @@ class AdapterDetailImage:AppCompatActivity() {
 
         initViewPager()
 
+        initToolbar()
+
+    }
+
+    private fun initToolbar() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeButtonEnabled(true)
+            title = ""
+        }
+    }
+    private fun showToolbar() {
+        binding.toolbar.animate()
+            .setInterpolator(AccelerateDecelerateInterpolator())
+            .translationY(0f)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+
+        return true
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(0, R.anim.fade_out_fast)
+
+    }
+
+    private fun hideToolbar() {
+        binding.toolbar.animate()
+            .setInterpolator(AccelerateDecelerateInterpolator())
+            .translationY(-binding.toolbar.height.toFloat())
     }
 
 
@@ -71,16 +105,6 @@ class AdapterDetailImage:AppCompatActivity() {
         binding.viewpager.currentItem = initialPos
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return true
-    }
-
-    override fun finish() {
-        super.finish()
-        overridePendingTransition(0, R.anim.fade_out_fast)
-
-    }
 
     inner class ImageAdapter(var context: Context, var images: List<ImagesItem?>) : PagerAdapter() {
 
@@ -147,6 +171,8 @@ class AdapterDetailImage:AppCompatActivity() {
                             viewDragFriction = Loupe.DEFAULT_VIEW_DRAG_FRICTION
 
                             setOnViewTranslateListener(
+                                onStart = { hideToolbar() },
+                                onRestore = { showToolbar() },
                                 onDismiss = { finish() }
                             )
                         }

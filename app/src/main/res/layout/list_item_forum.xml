@@ -104,16 +104,13 @@
                 android:textColor="@color/black"
                 tools:text="Cari temen yang suka badminton hehe" />
 
-
-            <GridLayout
-                android:id="@+id/gl_image_forum"
+            <LinearLayout
+                android:id="@+id/ll_image_forum"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="10dp"
-                android:columnCount="2"
-                android:alignmentMode="alignBounds"
-                android:rowCount="2">
-            </GridLayout>
+                android:orientation="vertical">
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
-import haina.ecommerce.databinding.ListItemForumBinding
+import haina.ecommerce.databinding.*
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.forum.DataItemHotPost
 import haina.ecommerce.preference.SharedPreferenceHelper
@@ -71,17 +71,38 @@ class AdapterListHotPost(val context: Context,
                 Glide.with(context).load(itemHaina.subforumData.subforumImage).into(ivImageSubforum)
                 if (itemHaina.images != null){
 
-                    for (i in itemHaina.images) {
+                    llImageForum.removeAllViewsInLayout()
+                    val inflater = LayoutInflater.from(context)
 
-                        val iv = ImageView(context)
-                        var params = iv.layoutParams
-                        params.width = glImageForum.width / 2
-                        params.height = glImageForum.height / 2
+                    when(itemHaina.images.size){
+                        1 -> {
+                            val imageview = LayoutOneImageForumBinding.inflate(inflater)
+                            Glide.with(context).load(itemHaina.images[0]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView1)
+                            llImageForum.addView(imageview.root)
+                        }
+                        2 -> {
+                            val imageview = LayoutTwoImageForumBinding.inflate(inflater)
+                            Glide.with(context).load(itemHaina.images[0]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView1)
+                            Glide.with(context).load(itemHaina.images[1]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView2)
+                            llImageForum.addView(imageview.root)
+                        }
 
-                        iv.layoutParams = params
-                        Glide.with(context).load(i?.path).placeholder(R.drawable.ps5).into(iv)
+                        3 -> {
+                            val imageview = LayoutThreeImageForumBinding.inflate(inflater)
+                            Glide.with(context).load(itemHaina.images[0]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView1)
+                            Glide.with(context).load(itemHaina.images[1]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView2)
+                            Glide.with(context).load(itemHaina.images[2]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView3)
+                            llImageForum.addView(imageview.root)
+                        }
 
-                        glImageForum.addView(iv)
+                        4 -> {
+                            val imageview = LayoutFourImageForumBinding.inflate(inflater)
+                            Glide.with(context).load(itemHaina.images[0]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView1)
+                            Glide.with(context).load(itemHaina.images[1]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView2)
+                            Glide.with(context).load(itemHaina.images[2]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView3)
+                            Glide.with(context).load(itemHaina.images[3]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView4)
+                            llImageForum.addView(imageview.root)
+                        }
                     }
                 }
 
