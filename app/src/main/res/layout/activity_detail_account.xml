@@ -593,9 +593,9 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2.2"
                             android:layout_marginStart="10dp"
-                            android:text="Work Experience"
+                            android:layout_weight="2.2"
+                            android:text="@string/work_experience"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 

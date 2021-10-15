@@ -48,8 +48,11 @@
                         style="@style/TextView.Poppins16spBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="My Mod Roles"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/my_mod_roles"
                         android:textFontWeight="600" />
 
                     <TextView
@@ -97,8 +100,11 @@
                         style="@style/TextView.Poppins16spBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="My Bans"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/my_bans"
                         android:textFontWeight="600" />
 
                     <TextView

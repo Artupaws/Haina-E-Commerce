@@ -39,11 +39,11 @@
                 android:padding="10dp"/>
 
             <TextView
+                style="@style/TextView.Poppins16spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextView.Poppins16spBlack"
                 android:layout_marginStart="10dp"
-                android:text="Orderer Data"/>
+                android:text="@string/orderer_data" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -96,11 +96,11 @@
                 android:background="@color/light_grey"/>
 
             <TextView
+                style="@style/TextView.Poppins16spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextView.Poppins16spBlack"
                 android:layout_marginStart="10dp"
-                android:text="Data Passenger"/>
+                android:text="@string/passenger_data" />
 
 
             <androidx.cardview.widget.CardView

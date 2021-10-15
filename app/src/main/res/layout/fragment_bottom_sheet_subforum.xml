@@ -45,7 +45,7 @@
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Subforum"
+                android:text="@string/subforum"
                 android:textFontWeight="600" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Post"
+                android:text="@string/post"
                 android:textFontWeight="600" />
 
             <androidx.recyclerview.widget.RecyclerView

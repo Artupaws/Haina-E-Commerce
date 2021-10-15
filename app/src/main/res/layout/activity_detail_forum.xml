@@ -227,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="Writer :" />
+                    android:text="@string/forum_writer" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/iv_image_profile"

@@ -23,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Contact Detail"
+            android:text="@string/contact_detail"
             app:layout_constraintStart_toStartOf="@+id/cardView3"
             app:layout_constraintTop_toTopOf="parent" />
 

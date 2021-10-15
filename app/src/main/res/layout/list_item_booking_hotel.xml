@@ -152,7 +152,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.9"
-                            android:text="Reservation No."
+                            android:text="@string/reservation_no"
                             android:textColor="@color/black" />
 
                         <TextView

@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <TextView
-            android:id="@+id/textView19"
-            style="@style/TextView.Poppins14spBlack"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Special Request"
-            app:layout_constraintStart_toStartOf="@+id/cardView3"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/textView19"
+        style="@style/TextView.Poppins14spBlack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/special_request"
+        app:layout_constraintStart_toStartOf="@+id/cardView3"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"

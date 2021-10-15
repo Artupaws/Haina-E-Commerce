@@ -36,11 +36,11 @@
                 android:padding="10dp"/>
 
             <TextView
+                style="@style/TextView.Poppins16spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextView.Poppins16spBlack"
                 android:layout_marginStart="10dp"
-                android:text="Orderer Data"/>
+                android:text="@string/orderer_data" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -87,12 +87,12 @@
 
 
             <TextView
+                style="@style/TextView.Poppins16spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextView.Poppins16spBlack"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
-                android:text="Data Passenger"/>
+                android:layout_marginTop="10dp"
+                android:text="@string/passenger_data" />
 
 
             <androidx.cardview.widget.CardView
@@ -192,7 +192,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="Book Now"></Button>
+                        android:text="@string/book_now"></Button>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
 

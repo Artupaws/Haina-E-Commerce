@@ -89,7 +89,7 @@
             android:layout_height="35dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:text="Remove"
+            android:text="@string/remove"
             android:textSize="11sp" />
     </RelativeLayout>
 </LinearLayout>
