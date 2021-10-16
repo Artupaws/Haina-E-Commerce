@@ -100,6 +100,11 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
                     presenter.loadCurrency(baseCurrency)
                 }
             }
+            for (i in 0 until binding?.includeCurrency?.spnCountry!!.count) {
+                if (binding?.includeCurrency?.spnCountry!!.getItemAtPosition(i).toString() == "DataCodeCurrency(rates=USD)") {
+                    binding?.includeCurrency?.spnCountry!!.setSelection(i)
+                }
+            }
         }
     }
 

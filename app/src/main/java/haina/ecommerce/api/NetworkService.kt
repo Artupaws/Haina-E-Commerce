@@ -16,6 +16,7 @@ import haina.ecommerce.model.hotels.transactionhotel.ResponseGetTransactionHotel
 import haina.ecommerce.model.howtopay.ResponseGetHowToPay
 import haina.ecommerce.model.news.ResponseGetListNews
 import haina.ecommerce.model.news.ResponseGetListNewsTable
+import haina.ecommerce.model.news.ResponseNewsCategory
 import haina.ecommerce.model.notification.ResponseGetNotification
 import haina.ecommerce.model.notification.ResponseOpenNotification
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
@@ -96,6 +97,16 @@ interface NetworkService {
     fun getNewsTable(
         @Field("lang")lang:String
     ):Call<ResponseGetListNewsTable>
+
+    @FormUrlEncoded
+    @POST("api/news/get-article")
+    fun getNewsTableWithCategory(
+        @Field("lang")lang:String,
+        @Field("id_category")category:Int
+    ):Call<ResponseGetListNewsTable>
+
+    @GET("api/news/category")
+    fun getNewsCategory():Call<ResponseNewsCategory>
 
     //Covid Indo
     @GET("api/covid")

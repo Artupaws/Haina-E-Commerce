@@ -10,8 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.transition.Hold
 import haina.ecommerce.R
-import haina.ecommerce.databinding.LayoutCurrencyBinding
-import haina.ecommerce.databinding.LayoutSpinnerCurrencyBinding
 import haina.ecommerce.model.DataCodeCurrency
 
 class AdapterSpinnerCurrency(val context: Context, private val listCountry: List<DataCodeCurrency?>?): BaseAdapter() {

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linear_click"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <LinearLayout
+        android:id="@+id/linear_category"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title_category"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="10sp"
+            android:layout_margin="10dp"
+            tools:text="@string/category_job"
+            style="@style/TextView.Poppins14spBlack"
+            tools:ignore="SmallSp" />
+        <View
+            android:id="@+id/view_selected"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black_60"></View>
+
+    </LinearLayout>
+
+
+</LinearLayout>
