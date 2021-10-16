@@ -83,11 +83,11 @@
                     android:weightSum="2">
 
                     <TextView
+                        style="@style/TextView.Poppins14spBlack"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Description Hotel"
-                        style="@style/TextView.Poppins14spBlack"/>
+                        android:text="@string/hotel_description" />
 
                     <FrameLayout
                         android:layout_width="0dp"
@@ -130,7 +130,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         style="@style/TextView.Poppins14spBlack"
-                        android:text="Common Facilities"/>
+                        android:text="@string/common_facilities"/>
 
                     <TextView
                         android:id="@+id/tv_see_all_facilites"

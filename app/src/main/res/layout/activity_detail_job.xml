@@ -149,7 +149,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Job Description"
+                android:text="@string/job_description"
                 android:textFontWeight="500" />
 
             <TextView

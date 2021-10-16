@@ -116,16 +116,15 @@
         </FrameLayout>
 
 
-
         <TextView
             android:id="@+id/btn_forgot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:text="Forgot Password"
-            android:textSize="12dp"
             android:layout_gravity="right"
-            android:fontFamily="@font/poppinssemibold">
+            android:layout_marginHorizontal="20dp"
+            android:fontFamily="@font/poppinssemibold"
+            android:text="@string/forgot_password"
+            android:textSize="12dp">
 
         </TextView>
         <LinearLayout
@@ -243,26 +242,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center">
+
                 <TextView
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Don't Have Account? "
-                    android:textSize="12dp"
                     android:layout_gravity="right"
-                    android:fontFamily="@font/poppinssemibold">
+                    android:fontFamily="@font/poppinssemibold"
+                    android:text="@string/dont_have_account"
+                    android:textSize="12dp">
 
                 </TextView>
+
                 <TextView
                     android:id="@+id/btn_register"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" Sign Up"
-                    android:textSize="12dp"
-                    android:textColor="@color/colorAccent"
                     android:layout_gravity="right"
                     android:fontFamily="@font/poppins"
-                    android:textFontWeight="600">
+                    android:text="@string/sign_up"
+                    android:textColor="@color/colorAccent"
+                    android:textFontWeight="600"
+                    android:textSize="12dp">
 
                 </TextView>
             </LinearLayout>

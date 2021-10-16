@@ -206,7 +206,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_weight="2.2"
-                            android:text="Additional Info"
+                            android:text="@string/additional_info"
                             android:textFontWeight="500" />
 
                     </LinearLayout>

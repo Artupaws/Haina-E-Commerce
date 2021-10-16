@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Company Name"
+                        android:text="@string/company_name"
                         app:layout_constraintStart_toEndOf="@+id/iv_company_name"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -145,7 +145,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Company Province Based"
+                        android:text="@string/company_province"
                         app:layout_constraintStart_toEndOf="@+id/iv_province"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -182,7 +182,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Company SIUP"
+                        android:text="@string/siup"
                         app:layout_constraintStart_toEndOf="@+id/iv_company_siup"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -191,9 +191,9 @@
                         style="@style/TextView.Poppins12spGrey"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:hint="Enter Company SIUP"
                         android:background="@null"
+                        android:hint="@string/siup_hint"
+                        android:textColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_company_siup"
@@ -233,7 +233,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
-                        android:text="Company Description"
+                        android:text="@string/description_company"
                         app:layout_constraintStart_toEndOf="@+id/ic_description"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -242,10 +242,9 @@
                         style="@style/TextView.Poppins12spGrey"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:hint="Enter Interview Location"
-                        android:lines="3"
                         android:background="@null"
+                        android:lines="3"
+                        android:textColor="@color/black"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/tv_description"

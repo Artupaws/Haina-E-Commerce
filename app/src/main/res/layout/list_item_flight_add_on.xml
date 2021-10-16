@@ -121,7 +121,7 @@
                 style="@style/Button.Primary"
                 android:layout_width="110dp"
                 android:layout_height="35dp"
-                android:text="baggage"
+                android:text="@string/baggage"
                 android:textSize="10sp" />
 
             <TextView
@@ -152,7 +152,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:text="Baggage"
+                android:text="@string/baggage"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -185,7 +185,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:text="Addons"
+                android:text="@string/add_ons"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -202,7 +202,7 @@
                     android:layout_width="110dp"
                     android:layout_marginStart="5dp"
                     android:layout_height="35dp"
-                    android:text="Add Addons"
+                    android:text="@string/add_add_ons"
                     android:textSize="10sp" />
 
 
@@ -236,7 +236,7 @@
                 android:id="@+id/layout_selected_addons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">ine
+                android:orientation="vertical">
 
             </LinearLayout>
 
@@ -256,7 +256,7 @@
             <TextView
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:text="Seat"
+                android:text="@string/seat"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -275,7 +275,7 @@
                 android:layout_width="110dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="5dp"
-                android:text="Choose Seat"
+                android:text="@string/choose_seat"
                 android:textSize="10sp" />
 
 

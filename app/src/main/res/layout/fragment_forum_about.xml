@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Engagement"
+            android:text="@string/engagement"
             style="@style/TextView.Poppins14spBlack"/>
 
         <View
@@ -41,7 +41,7 @@
                     style="@style/TextView.Poppins12spGrey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Posts"/>
+                    android:text="@string/posts"/>
             </LinearLayout>
 
             <LinearLayout
@@ -60,7 +60,7 @@
                     style="@style/TextView.Poppins12spGrey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Likes"/>
+                    android:text="@string/likes"/>
             </LinearLayout>
 
             <LinearLayout
@@ -94,11 +94,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1.421"/>
+
                 <TextView
                     style="@style/TextView.Poppins12spGrey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Followers"/>
+                    android:text="@string/followers" />
             </LinearLayout>
         </GridLayout>
 
@@ -117,7 +118,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Moderator"
+            android:text="@string/moderator"
             style="@style/TextView.Poppins14spBlack"/>
         <View
             android:layout_width="match_parent"
