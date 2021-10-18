@@ -79,7 +79,7 @@ class AdapterListAllThreads(val context: Context,
                     when(itemHaina.images.size){
                         1 -> {
                             val imageview = LayoutOneImageForumBinding.inflate(inflater)
-                            Glide.with(context).load(itemHaina.images[0]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView1)
+                            Glide.with(context).load(itemHaina.images[0]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView1)
                             imageview.imageView1.setOnClickListener {
                                 itemAdapterCallback.detailPhoto(itemHaina.images,0)
                             }
@@ -87,8 +87,8 @@ class AdapterListAllThreads(val context: Context,
                         }
                         2 -> {
                             val imageview = LayoutTwoImageForumBinding.inflate(inflater)
-                            Glide.with(context).load(itemHaina.images[0]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView1)
-                            Glide.with(context).load(itemHaina.images[1]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView2)
+                            Glide.with(context).load(itemHaina.images[0]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView1)
+                            Glide.with(context).load(itemHaina.images[1]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView2)
                             imageview.imageView1.setOnClickListener {
                                 itemAdapterCallback.detailPhoto(itemHaina.images,0)
                             }
@@ -100,9 +100,9 @@ class AdapterListAllThreads(val context: Context,
 
                         3 -> {
                             val imageview = LayoutThreeImageForumBinding.inflate(inflater)
-                            Glide.with(context).load(itemHaina.images[0]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView1)
-                            Glide.with(context).load(itemHaina.images[1]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView2)
-                            Glide.with(context).load(itemHaina.images[2]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView3)
+                            Glide.with(context).load(itemHaina.images[0]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView1)
+                            Glide.with(context).load(itemHaina.images[1]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView2)
+                            Glide.with(context).load(itemHaina.images[2]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView3)
                             imageview.imageView1.setOnClickListener {
                                 itemAdapterCallback.detailPhoto(itemHaina.images,0)
                             }
@@ -117,10 +117,10 @@ class AdapterListAllThreads(val context: Context,
 
                         4 -> {
                             val imageview = LayoutFourImageForumBinding.inflate(inflater)
-                            Glide.with(context).load(itemHaina.images[0]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView1)
-                            Glide.with(context).load(itemHaina.images[1]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView2)
-                            Glide.with(context).load(itemHaina.images[2]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView3)
-                            Glide.with(context).load(itemHaina.images[3]!!.path).placeholder(R.drawable.ps5).into(imageview.imageView4)
+                            Glide.with(context).load(itemHaina.images[0]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView1)
+                            Glide.with(context).load(itemHaina.images[1]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView2)
+                            Glide.with(context).load(itemHaina.images[2]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView3)
+                            Glide.with(context).load(itemHaina.images[3]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView4)
                             imageview.imageView1.setOnClickListener {
                                 itemAdapterCallback.detailPhoto(itemHaina.images,0)
                             }

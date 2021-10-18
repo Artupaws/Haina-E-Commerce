@@ -8,13 +8,16 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginBottom="10dp">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_image"
         android:layout_width="130dp"
         android:layout_height="80dp"
         android:layout_margin="5dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="0dp">
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/iv_news"
@@ -25,25 +28,31 @@
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/linearLayout19"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/card_image"
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/tv_title_news"
+            style="@style/TextView.Poppins16spBlack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            style="@style/TextView.Poppins16spBlack"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="3"
             tools:text="Penuhi Panggilan Polisi, Anies: Saya Datang Senagai Warga Negara" />
 
         <TextView
             android:id="@+id/tv_media_name"
+            style="@style/TextView.Poppins14spGrey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            style="@style/TextView.Poppins14spGrey"
             tools:text="Media Indonesia" />
 
     </LinearLayout>

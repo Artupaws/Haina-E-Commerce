@@ -8,10 +8,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
+import haina.ecommerce.adapter.forum.TabAdapterForum
 import haina.ecommerce.adapter.news.AdapterNews
 import haina.ecommerce.adapter.news.AdapterNewsCategory
+import haina.ecommerce.adapter.news.TabAdapterNewsCategory
 import haina.ecommerce.adapter.notification.AdapterNotification
 import haina.ecommerce.adapter.notification.AdapterNotificationCategory
 import haina.ecommerce.databinding.ActivityNewsBinding
@@ -38,71 +41,14 @@ class NewsActivity : AppCompatActivity(), NewsContract, AdapterNews.ItemAdapterC
         sharedPref = SharedPreferenceHelper(this)
         presenter = NewsPresenter(this, this)
         langParams = sharedPref.getValueString(Constants.LANGUAGE_APP).toString()
-        setPresenterBasedLanguage(langParams)
-        refresh(langParams)
-    }
+        presenter.getNewsCategory()
 
-    private val mMessageReceiver: BroadcastReceiver = object : BroadcastReceiver(){
-        override fun onReceive(context: Context?, intent: Intent?) {
-            when(intent?.action){
-                "CategoryFilter" -> {
-                    var idCategory = intent.getIntExtra("IdCategory",0)
-                    if(idCategory==0){
-                        setPresenterBasedLanguage(langParams)
-                    }else{
-
-                    }
-                }
-            }
-        }
-    }
-
-    private fun refresh(language: String) {
-        binding.swipeRefresh.setOnRefreshListener {
-            when (language) {
-                "en" -> {
-                    presenter.getNewsTable("eng")
-                }
-                "zh" -> {
-                    presenter.getNewsTable("zho")
-                }
-                else -> {
-                    presenter.getNewsTable("eng")
-                }
-            }
-        }
-    }
-
-    private fun setPresenterBasedLanguage(language: String) {
-        when (language) {
-            "en" -> {
-                presenter.getNewsTable("eng")
-            }
-            "zh" -> {
-                presenter.getNewsTable("zho")
-            }
-            else -> {
-                presenter.getNewsTable("eng")
-            }
+        binding.toolbarNews.setNavigationOnClickListener {
+            onBackPressed()
         }
     }
 
 
-    private fun getNewsByCategory(language: String,idCategory:Int) {
-        when (language) {
-            "en" -> {
-                presenter.getNewsTableWithCategory("eng",idCategory)
-            }
-            "zh" -> {
-                presenter.getNewsTableWithCategory("zho",idCategory)
-
-            }
-            else -> {
-                presenter.getNewsTableWithCategory("eng",idCategory)
-
-            }
-        }
-    }
 
     override fun messageGetNews(msg: String) {
         Log.d("news", msg)
@@ -112,19 +58,10 @@ class NewsActivity : AppCompatActivity(), NewsContract, AdapterNews.ItemAdapterC
     }
 
     override fun getNewsCategory(data: List<NewsCategory?>?) {
-        binding.rvCategory.apply {
-            adapter = AdapterNewsCategory(applicationContext, data)
-            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
-        }
+        binding.vpNews.adapter = TabAdapterNewsCategory(supportFragmentManager, 0, data!!)
+        binding.tabNews.setupWithViewPager(binding.vpNews)
     }
 
-    override fun getNews(data: List<DataNewsTable?>?) {
-        binding.rvNews.apply {
-            adapter = AdapterNews(this@NewsActivity, data, this@NewsActivity)
-            layoutManager =
-                LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
-        }
-    }
 
     override fun onClick(view: View, data: DataNewsTable) {
         when (view.id) {
