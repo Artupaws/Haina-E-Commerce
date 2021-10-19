@@ -501,4 +501,10 @@
     <string name="seat">Seat</string>
     <string name="choose_seat">Choose Seat</string>
     <string name="remove">Remove</string>
+    <string name="tab_national">National</string>
+    <string name="tab_international">International</string>
+    <string name="tab_economy">Economy</string>
+    <string name="tab_sport">Sport</string>
+    <string name="tab_technology">Technology</string>
+    <string name="tab_entertainment">Entertainment</string>
 </resources>
