@@ -16,7 +16,7 @@
     <string name="hint_search">今天的新闻，新冠肺炎新闻...</string>
     <string name="categories">分类目录</string>
     <string name="recomendations">推荐</string>
-    <string name="news_title">消息</string>
+    <string name="news_title">新闻</string>
     <string name="shipping_title">船运</string>
     <string name="topup_title">充值</string>
     <string name="job_vacancy">求职</string>
@@ -68,7 +68,7 @@
     <string name="confirm_password">确认密码</string>
     <string name="username">用户名</string>
     <string name="usd">美元</string>
-    <string name="news_full_title">消息</string>
+    <string name="news_full_title">新闻</string>
     <string name="die_title">死亡</string>
     <string name="covid_19_info">| 新冠肺炎信息</string>
     <string name="search_province_here">在这里搜索省</string>
@@ -278,7 +278,7 @@
     <string name="send_review">发送评论</string>
     <string name="please_input_amount_bill">请输入您的账单</string>
     <string name="bill_has_paid">帐单已付</string>
-    <string name="detail_news">详细新闻</string>
+    <string name="detail_news">新闻详细</string>
     <string name="the_number_of_guests">客人数量</string>
     <string name="transaction_hotel">交易酒店</string>
     <string name="change_review">变更审查</string>
@@ -503,4 +503,10 @@
     <string name="seat">座位</string>
     <string name="choose_seat">选择座位</string>
     <string name="remove">消除</string>
+    <string name="tab_national">国内</string>
+    <string name="tab_international">国际</string>
+    <string name="tab_economy">经济</string>
+    <string name="tab_sport">体育</string>
+    <string name="tab_technology">科技</string>
+    <string name="tab_entertainment">娱乐</string>
 </resources>
