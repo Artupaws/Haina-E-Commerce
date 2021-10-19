@@ -98,8 +98,9 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
 
     private fun showDataForum(subforumData: SubforumData, data:DataItemHotPost) {
 //        Glide.with(applicationContext).load(data.authorPhoto).into(binding.ivImageAuthor)
+        Timber.d(data.toString())
         binding.tvTitleForum.text = data.title
-        val memberSince = "Member since : ${data.memberSince}"
+        val memberSince = "Member since : "+data.memberSince
         binding.tvMemberSince.text = memberSince
         if (data.images != null) {
             for (i in data.images) {
@@ -194,8 +195,6 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
     override fun getPostDetail(data: DataItemHotPost) {
 
         binding.tvTitleForum.text = data.title
-        val memberSince = "Member since : ${data.memberSince}"
-        binding.tvMemberSince.text = memberSince
         if (data.images != null) {
             for (i in data.images) {
                 i?.path?.let { listParams.add(it) }
@@ -218,12 +217,6 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
             binding.vpImageForum.setImageListener(imagesListener)
             binding.vpImageForum.setImageListener(imagesListener)
         }
-        binding.tvDate.text = helper.dateTimeFormat(data.createdAt)
-        binding.tvNameUser.text = data.author
-        binding.tvContent.text = data.content?.replace("\\n", "\n")
-
-        Glide.with(applicationContext).load(data.authorPhoto).into(binding.ivImageProfile)
-
     }
 
     override fun showLoading() {
