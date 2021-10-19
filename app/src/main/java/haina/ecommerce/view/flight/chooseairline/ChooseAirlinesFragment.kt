@@ -20,7 +20,6 @@ import haina.ecommerce.adapter.flight.AdapterAirlines
 import haina.ecommerce.databinding.FragmentChooseAirlinesBinding
 import haina.ecommerce.model.flight.*
 
-
 class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, ChooseAirlineFirstContract {
 
     private lateinit var _binding: FragmentChooseAirlinesBinding

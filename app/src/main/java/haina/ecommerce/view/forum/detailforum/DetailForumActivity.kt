@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.widget.Toast
@@ -21,10 +22,12 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.bumptech.glide.Glide
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
+import haina.ecommerce.adapter.forum.AdapterDetailImage
 import haina.ecommerce.adapter.forum.AdapterListComment
-import haina.ecommerce.databinding.ActivityDetailForumBinding
+import haina.ecommerce.databinding.*
 import haina.ecommerce.model.forum.DataComment
 import haina.ecommerce.model.forum.DataItemHotPost
+import haina.ecommerce.model.forum.ImagesItem
 import haina.ecommerce.model.forum.SubforumData
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
@@ -102,28 +105,7 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
         binding.tvTitleForum.text = data.title
         val memberSince = "Member since : "+data.memberSince
         binding.tvMemberSince.text = memberSince
-        if (data.images != null) {
-            for (i in data.images) {
-                i?.path?.let { listParams.add(it) }
-                binding.vpImageForum.pageCount = listParams.size
-            }
-            imagesListener = ImageListener { _, imageView ->
-                Glide.with(applicationContext).load(listParams[0]).placeholder(R.drawable.ps5)
-                    .into(imageView)
-            }
-            binding.vpImageForum.setImageListener(imagesListener)
-            binding.vpImageForum.setImageListener(imagesListener)
-        }
-        if (data.images == null){
-            listParams.add("https://hainaservice.com/storage/empty.jpg")
-            binding.vpImageForum.pageCount = listParams.size
-            imagesListener = ImageListener { _, imageView ->
-                Glide.with(applicationContext).load(listParams[0]).placeholder(R.drawable.ps5)
-                    .into(imageView)
-            }
-            binding.vpImageForum.setImageListener(imagesListener)
-            binding.vpImageForum.setImageListener(imagesListener)
-        }
+
         binding.tvDate.text = helper.dateTimeFormat(data.createdAt)
         binding.tvNameUser.text = data.author
         binding.tvContent.text = data.content?.replace("\\n", "\n")
@@ -192,30 +174,82 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
         binding.tvCommentCount.text = data?.size.toString()
     }
 
+    fun detailPhoto(listImage: List<ImagesItem?>?, position: Int){
+        startActivity(
+            AdapterDetailImage.createIntent(
+                applicationContext,
+                listImage!!,
+                position
+            )
+        )
+    }
     override fun getPostDetail(data: DataItemHotPost) {
 
         binding.tvTitleForum.text = data.title
-        if (data.images != null) {
-            for (i in data.images) {
-                i?.path?.let { listParams.add(it) }
-                binding.vpImageForum.pageCount = listParams.size
+        if(!data.images.isNullOrEmpty()){
+            binding.llImageForum.removeAllViewsInLayout()
+            val inflater = LayoutInflater.from(applicationContext)
+
+            when(data.images.size){
+                1 -> {
+                    val imageview = LayoutOneImageForumBinding.inflate(inflater)
+                    Glide.with(applicationContext).load(data.images?.get(0)!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView1)
+                    imageview.imageView1.setOnClickListener {
+                        detailPhoto(data.images,0)
+                    }
+                    binding.llImageForum.addView(imageview.root)
+                }
+                2 -> {
+                    val imageview = LayoutTwoImageForumBinding.inflate(inflater)
+                    Glide.with(applicationContext).load(data.images?.get(0)!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView1)
+                    Glide.with(applicationContext).load(data.images[1]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView2)
+                    imageview.imageView1.setOnClickListener {
+                        detailPhoto(data.images,0)
+                    }
+                    imageview.imageView2.setOnClickListener {
+                        detailPhoto(data.images,1)
+                    }
+                    binding.llImageForum.addView(imageview.root)
+                }
+
+                3 -> {
+                    val imageview = LayoutThreeImageForumBinding.inflate(inflater)
+                    Glide.with(applicationContext).load(data.images?.get(0)!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView1)
+                    Glide.with(applicationContext).load(data.images[1]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView2)
+                    Glide.with(applicationContext).load(data.images[2]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView3)
+                    imageview.imageView1.setOnClickListener {
+                        detailPhoto(data.images,0)
+                    }
+                    imageview.imageView2.setOnClickListener {
+                        detailPhoto(data.images,1)
+                    }
+                    imageview.imageView3.setOnClickListener {
+                        detailPhoto(data.images,2)
+                    }
+                    binding.llImageForum.addView(imageview.root)
+                }
+
+                4 -> {
+                    val imageview = LayoutFourImageForumBinding.inflate(inflater)
+                    Glide.with(applicationContext).load(data.images?.get(0)!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView1)
+                    Glide.with(applicationContext).load(data.images[1]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView2)
+                    Glide.with(applicationContext).load(data.images[2]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView3)
+                    Glide.with(applicationContext).load(data.images[3]!!.path).placeholder(R.drawable.skeleton_image).into(imageview.imageView4)
+                    imageview.imageView1.setOnClickListener {
+                        detailPhoto(data.images,0)
+                    }
+                    imageview.imageView2.setOnClickListener {
+                        detailPhoto(data.images,1)
+                    }
+                    imageview.imageView3.setOnClickListener {
+                        detailPhoto(data.images,2)
+                    }
+                    imageview.imageView4.setOnClickListener {
+                        detailPhoto(data.images,3)
+                    }
+                    binding.llImageForum.addView(imageview.root)
+                }
             }
-            imagesListener = ImageListener { _, imageView ->
-                Glide.with(applicationContext).load(listParams[0]).placeholder(R.drawable.ps5)
-                    .into(imageView)
-            }
-            binding.vpImageForum.setImageListener(imagesListener)
-            binding.vpImageForum.setImageListener(imagesListener)
-        }
-        if (data.images == null){
-            listParams.add("https://hainaservice.com/storage/empty.jpg")
-            binding.vpImageForum.pageCount = listParams.size
-            imagesListener = ImageListener { _, imageView ->
-                Glide.with(applicationContext).load(listParams[0]).placeholder(R.drawable.ps5)
-                    .into(imageView)
-            }
-            binding.vpImageForum.setImageListener(imagesListener)
-            binding.vpImageForum.setImageListener(imagesListener)
         }
     }
 

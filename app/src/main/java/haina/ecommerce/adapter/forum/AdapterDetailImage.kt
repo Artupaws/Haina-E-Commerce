@@ -35,7 +35,6 @@ class AdapterDetailImage:AppCompatActivity() {
     private var adapter: ImageAdapter? = null
 
     companion object {
-
         fun createIntent(context: Context, urls: List<ImagesItem?>, initialPos: Int): Intent {
             return Intent(context, AdapterDetailImage::class.java).apply {
                 putParcelableArrayListExtra("image_list", urls as ArrayList<ImagesItem?>)
@@ -86,6 +85,7 @@ class AdapterDetailImage:AppCompatActivity() {
         binding.toolbar.animate()
             .setInterpolator(AccelerateDecelerateInterpolator())
             .translationY(-binding.toolbar.height.toFloat())
+
     }
 
 
