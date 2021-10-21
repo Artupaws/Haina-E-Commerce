@@ -22,7 +22,9 @@ import haina.ecommerce.model.DataJobApplication
 import haina.ecommerce.model.vacancy.MyApplication
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.forum.detailforum.DetailForumActivity
 import haina.ecommerce.view.history.historymyproperty.MyPropertyPresenter
+import haina.ecommerce.view.history.historysubmitapplication.detailapplication.DetailApplicationActivity
 import haina.ecommerce.view.login.LoginActivity
 import java.util.ArrayList
 
@@ -122,7 +124,9 @@ class HistorySubmitJobActivity : AppCompatActivity(), HistorySubmitJobContract, 
     }
 
     override fun listApplicationClick(view: View, dataApplication: MyApplication) {
-
+        val intentDetail = Intent(this, DetailApplicationActivity::class.java)
+        intentDetail.putExtra("applicationData", dataApplication)
+        startActivity(intentDetail)
     }
 
 

@@ -122,11 +122,14 @@ data class DataApplicationDetail(
 	val idUser: Int? = null,
 
 	@field:SerializedName("vacancy")
-	val vacancy: Vacancy? = null,
+	val vacancy: DataAllVacancy? = null,
 
 	@field:SerializedName("user")
 	val user: User? = null,
 
 	@field:SerializedName("status")
-	val status: String? = null
+	val status: String? = null,
+
+	@field:SerializedName("interview")
+	val interview: InterviewData? = null
 ) : Parcelable

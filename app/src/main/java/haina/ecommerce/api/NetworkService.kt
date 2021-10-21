@@ -333,6 +333,14 @@ interface NetworkService {
     @Headers("No-Authentiaction: true")
     fun getJobApplication():Call<ResponseGetJobApplications>
 
+    //Get Job Application Applicant
+    @FormUrlEncoded
+    @POST("api/job/vacancy/application_detail")
+    @Headers("No-Authentiaction: true")
+    fun getJobApplicationDetail(
+        @Field("id_application")idApplication:Int
+    ):Call<ResponseApplicationDetail>
+
     //Get List ShortList Applicant
     @FormUrlEncoded
     @POST("api/company/applicant")

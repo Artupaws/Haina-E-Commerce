@@ -53,7 +53,7 @@
                     android:id="@+id/rv_history_job_submit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/list_item_submit_application" />
+                    tools:listitem="@layout/list_item_history_application" />
 
                 <include
                     android:id="@+id/include_login"
