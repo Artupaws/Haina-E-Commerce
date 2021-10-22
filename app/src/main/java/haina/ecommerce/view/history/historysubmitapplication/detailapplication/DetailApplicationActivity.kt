@@ -14,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.github.barteksc.pdfviewer.PDFView
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityDetailApplicationBinding
@@ -25,6 +26,8 @@ import haina.ecommerce.model.vacancy.MyApplication
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
 import haina.ecommerce.view.applyjob.ApplyJobActivity
+import haina.ecommerce.view.pdf.PdfViewActivity
+import haina.ecommerce.view.webview.WebViewActivity
 import timber.log.Timber
 
 class DetailApplicationActivity : AppCompatActivity(), DetailApplicationContract {
@@ -109,6 +112,14 @@ class DetailApplicationActivity : AppCompatActivity(), DetailApplicationContract
         binding.toolbarDetailJob.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailJob.setNavigationOnClickListener{onBackPressed()}
 
+
+        val nameDocument = data.resume!!.docsName
+        binding.tvTitleDocument.text = nameDocument
+        binding.layoutResume.setOnClickListener {
+            val intent = Intent(this, PdfViewActivity::class.java)
+            intent.putExtra("url", data.resume!!.docsUrl)
+            startActivity(intent)
+        }
 
         binding.tvApplicationStatus.text = data.status
 

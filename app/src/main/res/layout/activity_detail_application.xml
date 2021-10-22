@@ -148,12 +148,38 @@
                 android:layout_height="wrap_content"
                 android:text="Resume" />
 
-            <TextView
-                android:id="@+id/tv_resume"
-                style="@style/TextView.Poppins12spGrey"
-                android:layout_width="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/layout_resume"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                tools:text="Staff(non-management &amp; non supervisor" />
+                android:layout_margin="5dp"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_click"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_title_document"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        tools:text="list"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/iv_action_delete"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 style="@style/TextView.Poppins14spBlack"

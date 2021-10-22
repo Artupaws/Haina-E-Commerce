@@ -30,6 +30,8 @@
         <!-- android:name=".view.job.detail.DetailJobActivity" -->
         <!-- android:exported="true" /> -->
         <activity android:name=".view.history.historyjobvacancy.ListApplicantActivity" />
+        <activity android:name=".view.pdf.PdfViewActivity" />
+
         <activity android:name=".view.history.historysubmitapplication.detailapplication.DetailApplicationActivity" />
         <activity android:name=".view.history.historysubmitapplication.HistorySubmitJobActivity" />
         <activity android:name=".view.posting.newvacancy.PackagePriceVacancyActivity" />

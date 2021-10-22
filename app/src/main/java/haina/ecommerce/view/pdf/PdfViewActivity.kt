@@ -26,29 +26,30 @@ class PdfViewActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPdfViewerBinding
     var pdfView:PDFView? = null
+    var getUrl:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPdfViewerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val getUrl: String = intent.extras?.get("url").toString()
+        getUrl = intent.extras?.get("url").toString()
         binding.toolbar3.setNavigationIcon(haina.ecommerce.R.drawable.ic_back_black)
         binding.toolbar3.setNavigationOnClickListener { onBackPressed() }
 
 
         pdfView = binding.pdfViewer
-        RetrivePDFfromUrl().execute(getUrl)
+        RetrivePDFfromUrl().execute()
     }
 
     inner class RetrivePDFfromUrl: AsyncTask<String, Void, InputStream>() {
         override fun doInBackground(vararg p0: String?): InputStream {
             var inputStream: InputStream? = null
             try {
-                val url = URL(p0[0])
+                val url = URL(getUrl)
                 // below is the step where we are
                 // creating our connection.
                 val urlConnection: HttpsURLConnection = url.openConnection() as HttpsURLConnection
-                if (urlConnection.getResponseCode() === 200) {
+                if (urlConnection.responseCode == 200) {
                     // response is success.
                     // we are getting input stream from url
                     // and storing it in our variable.
@@ -61,6 +62,7 @@ class PdfViewActivity : AppCompatActivity() {
         }
         override fun onPostExecute(inputStream: InputStream?) {
             // after the execution of our async task we are loading our pdf in our pdf view.
+            binding.ivLoading.visibility = View.GONE
             pdfView!!.fromStream(inputStream).load()
         }
 
