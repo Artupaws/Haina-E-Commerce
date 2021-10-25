@@ -36,7 +36,6 @@ class PdfViewActivity : AppCompatActivity() {
         binding.toolbar3.setNavigationIcon(haina.ecommerce.R.drawable.ic_back_black)
         binding.toolbar3.setNavigationOnClickListener { onBackPressed() }
 
-
         pdfView = binding.pdfViewer
         RetrivePDFfromUrl().execute()
     }
