@@ -24,6 +24,8 @@ import haina.ecommerce.model.productservice.ResponseGetProductService
 import haina.ecommerce.model.property.*
 import haina.ecommerce.model.property.FacilitiesItem
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
+import haina.ecommerce.model.restaurant.ResponseRestaurantDetail
+import haina.ecommerce.model.restaurant.ResponseRestaurantList
 import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
@@ -1238,5 +1240,44 @@ interface NetworkService {
 
     @GET("api/job/vacancy/my_applications")
     fun getMyApplication():Call<ResponseMyApplication>
+
+
+
+    //Restaurant Review
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/restaurant/show_restaurant")
+    fun showAllRestaurant(
+        @Field("cuisine_type")cuisineType:Int,
+        @Field("type")type:Int,
+        @Field("city_id")cityId:Int,
+        @Field("lat")latitude:Double,
+        @Field("long")longitude:Double
+    ):Call<ResponseRestaurantList>
+
+
+    @Multipart
+    @Headers("No-Authentication: true")
+    @POST("api/forum/add_new")
+    fun registerRestaurant(
+        @Part("name")name:Int,
+        @Part("address")address:String,
+        @Part("lat")latitude:Double,
+        @Part("long")longitude:Double,
+        @Part("city_id")cityId:Int,
+        @Part("phone")phone:String,
+        @Part("cuisine_type")cuisineType:ArrayList<String>,
+        @Part("restaurant_type")restaurantType:ArrayList<String>,
+        @Part("open_days")openDays:String,
+        @Part("weekdays_time_open")weekdaysOpen:String,
+        @Part("weekdays_time_close")weekdaysClose:String,
+        @Part("weekend_time_open")weekendOpen:String,
+        @Part("weekend_time_close")weekendClose:String,
+        @Part("halal")halal:Int,
+        @Part("menu_name")menuName:Int,
+        @Part menuImages :List<MultipartBody.Part>,
+        @Part restaurantImage :List<MultipartBody.Part>
+    ):Call<ResponseRestaurantDetail>
+
 
 }

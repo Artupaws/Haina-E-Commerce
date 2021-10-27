@@ -20,6 +20,7 @@
     <string name="shipping_title">Shipping</string>
     <string name="topup_title">Top-up</string>
     <string name="job_vacancy">Job</string>
+    <string name="restaurant_title">Restaurant</string>
     <string name="other_title">Other</string>
     <string name="rent_apartment">Apartment</string>
     <string name="title_scan_qr">Scan QR</string>

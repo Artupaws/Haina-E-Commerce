@@ -77,6 +77,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
         binding?.menuServices?.linearHotel?.setOnClickListener(this)
         binding?.menuServices?.linearFlightTicket?.setOnClickListener(this)
         binding?.menuServices?.linearProperty?.setOnClickListener(this)
+        binding?.menuServices?.linearRestaurant?.setOnClickListener(this)
 
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
         refresh()
@@ -154,6 +155,11 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
                 startActivity(intent)
             }
             R.id.linear_hotel -> {
+                val intent = Intent(requireContext(), HotelBaseActivity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.linear_restaurant -> {
                 val intent = Intent(requireContext(), HotelBaseActivity::class.java)
                 startActivity(intent)
             }

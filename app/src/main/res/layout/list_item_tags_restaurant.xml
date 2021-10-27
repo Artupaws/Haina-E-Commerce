@@ -9,13 +9,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardElevation="5dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="15dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            style="@style/TextView.Poppins12spGrey"
+            android:layout_marginVertical="5dp"
+            android:layout_marginHorizontal="10dp"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
             android:text="blabla">
 
         </TextView>
