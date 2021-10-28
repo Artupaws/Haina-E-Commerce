@@ -2,19 +2,18 @@ package haina.ecommerce.model.restaurant
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import haina.ecommerce.model.restaurant.master.RestaurantData
+import haina.ecommerce.model.restaurant.master.CuisineAndTypeData
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ResponseRestaurantDetail(
+data class ResponseCuisineAndTypeList(
 
     @field:SerializedName("data")
-    val data: RestaurantData? = null,
+    val data: List<CuisineAndTypeData?>? = null,
 
     @field:SerializedName("message")
     val message: String? = null,
 
     @field:SerializedName("value")
     val value: Int? = null
-) : Parcelable
-
+):Parcelable

@@ -1,4 +1,4 @@
-package haina.ecommerce.model.restaurant
+package haina.ecommerce.model.restaurant.master
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

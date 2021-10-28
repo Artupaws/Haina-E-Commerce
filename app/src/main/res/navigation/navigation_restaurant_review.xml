@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_restaurant_review"
+    app:startDestination="@id/restaurantDashboard">
+
+    <fragment
+        android:id="@+id/restaurantDashboard"
+        android:name="haina.ecommerce.view.restaurant.dashboard.RestaurantDashboardFragment"
+        android:label="fragment_restaurant_dashboard"
+        tools:layout="@layout/fragment_restaurant_review" >
+        <action
+            android:id="@+id/action_restaurantDashboard_to_restaurantDetail"
+            app:destination="@id/restaurantDetail" />
+        <action
+            android:id="@+id/action_restaurantDashboard_to_myRestaurant"
+            app:destination="@id/myRestaurant" />
+        <action
+            android:id="@+id/action_restaurantDashboard_to_savedRestaurant"
+            app:destination="@id/savedRestaurant" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/restaurantDetail"
+        android:name="haina.ecommerce.view.restaurant.detail.RestaurantDetailFragment"
+        android:label="fragment_restaurant_dashboard"
+        tools:layout="@layout/fragment_restaurant_detail" />
+
+    <fragment
+        android:id="@+id/myRestaurant"
+        android:name="haina.ecommerce.view.restaurant.detail.RestaurantDetailFragment"
+        android:label="fragment_restaurant_dashboard"
+        tools:layout="@layout/fragment_restaurant_my" />
+    <fragment
+        android:id="@+id/savedRestaurant"
+        android:name="haina.ecommerce.view.restaurant.detail.RestaurantDetailFragment"
+        android:label="fragment_restaurant_dashboard"
+        tools:layout="@layout/fragment_restaurant_my" />
+</navigation>

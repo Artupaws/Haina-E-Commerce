@@ -24,6 +24,7 @@ import haina.ecommerce.model.productservice.ResponseGetProductService
 import haina.ecommerce.model.property.*
 import haina.ecommerce.model.property.FacilitiesItem
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
+import haina.ecommerce.model.restaurant.ResponseCuisineAndTypeList
 import haina.ecommerce.model.restaurant.ResponseRestaurantDetail
 import haina.ecommerce.model.restaurant.ResponseRestaurantList
 import haina.ecommerce.model.service.ResponseGetService
@@ -1248,13 +1249,29 @@ interface NetworkService {
     @Headers("No-Authentication: true")
     @POST("/api/restaurant/show_restaurant")
     fun showAllRestaurant(
-        @Field("cuisine_type")cuisineType:Int,
-        @Field("type")type:Int,
-        @Field("city_id")cityId:Int,
-        @Field("lat")latitude:Double,
-        @Field("long")longitude:Double
+        @Field("cuisine_type")cuisineType:Int?,
+        @Field("type")type:Int?,
+        @Field("my_latitude")latitude:Double,
+        @Field("my_longitude")longitude:Double,
+        @Field("page")page:Int
     ):Call<ResponseRestaurantList>
 
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/restaurant/restaurant_detail")
+    fun getRestaurantDetail(
+        @Field("restaurant_id")restaurantId:Int?
+    ):Call<ResponseRestaurantDetail>
+
+
+    @Headers("No-Authentication: true")
+    @GET("api/restaurant/show_cuisine_type")
+    fun getRestaurantCuisineList():Call<ResponseCuisineAndTypeList>
+
+
+    @Headers("No-Authentication: true")
+    @GET("api/restaurant/show_restaurant_type")
+    fun getRestaurantTypeList():Call<ResponseCuisineAndTypeList>
 
     @Multipart
     @Headers("No-Authentication: true")
@@ -1264,7 +1281,6 @@ interface NetworkService {
         @Part("address")address:String,
         @Part("lat")latitude:Double,
         @Part("long")longitude:Double,
-        @Part("city_id")cityId:Int,
         @Part("phone")phone:String,
         @Part("cuisine_type")cuisineType:ArrayList<String>,
         @Part("restaurant_type")restaurantType:ArrayList<String>,

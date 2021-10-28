@@ -36,6 +36,7 @@ import haina.ecommerce.view.notification.NotificationActivity
 import haina.ecommerce.view.other.OtherActivity
 import haina.ecommerce.view.property.FinishPropertyActivity
 import haina.ecommerce.view.property.ShowPropertyActivity
+import haina.ecommerce.view.restaurant.RestaurantReviewActivity
 import timber.log.Timber
 
 class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, AdapterUnfinishTransactionExplore.ItemAdapterCallback {
@@ -160,7 +161,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
             }
 
             R.id.linear_restaurant -> {
-                val intent = Intent(requireContext(), HotelBaseActivity::class.java)
+                val intent = Intent(requireContext(), RestaurantReviewActivity::class.java)
                 startActivity(intent)
             }
 
