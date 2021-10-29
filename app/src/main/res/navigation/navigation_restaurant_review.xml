@@ -12,6 +12,7 @@
         tools:layout="@layout/fragment_restaurant_review" >
         <action
             android:id="@+id/action_restaurantDashboard_to_restaurantDetail"
+            app:popUpToSaveState="true"
             app:destination="@id/restaurantDetail" />
         <action
             android:id="@+id/action_restaurantDashboard_to_myRestaurant"

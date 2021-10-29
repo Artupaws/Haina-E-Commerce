@@ -57,14 +57,10 @@ class RestaurantDashboardFragment :
         presenter = RestaurantDashboardPresenter(this, requireActivity())
         broadcaster = LocalBroadcastManager.getInstance(requireActivity())
         ctx = container!!.context
-        return binding.root
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         dialogLoading()
-        refresh()
         getLocation()
+        refresh()
 
         binding.rvRestaurantList.adapter = adapterRestaurantList
 
@@ -85,8 +81,8 @@ class RestaurantDashboardFragment :
 
             }
         })
+        return binding.root
     }
-
 
     //View Function
     private fun dialogLoading(){
