@@ -1251,6 +1251,19 @@ interface NetworkService {
     fun showAllRestaurant(
         @Field("cuisine_type")cuisineType:Int?,
         @Field("type")type:Int?,
+        @Field("halal")halal:Int?,
+        @Field("my_latitude")latitude:Double,
+        @Field("my_longitude")longitude:Double,
+        @Field("page")page:Int
+    ):Call<ResponseRestaurantList>
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/restaurant/my_restaurant")
+    fun getMyRestaurant(
+        @Field("cuisine_type")cuisineType:Int?,
+        @Field("type")type:Int?,
+        @Field("halal")halal:Int?,
         @Field("my_latitude")latitude:Double,
         @Field("my_longitude")longitude:Double,
         @Field("page")page:Int
@@ -1263,6 +1276,12 @@ interface NetworkService {
         @Field("restaurant_id")restaurantId:Int?
     ):Call<ResponseRestaurantDetail>
 
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/restaurant/toggle-save")
+    fun setRestaurantSaved(
+        @Field("restaurant_id")restaurantId:Int?
+    ):Call<ResponseRestaurantDetail>
 
     @Headers("No-Authentication: true")
     @GET("api/restaurant/show_cuisine_type")

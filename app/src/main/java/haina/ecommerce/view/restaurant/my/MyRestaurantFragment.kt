@@ -1,4 +1,4 @@
-package haina.ecommerce.view.restaurant.dashboard
+package haina.ecommerce.view.restaurant.my
 
 import android.Manifest
 import android.app.Dialog
@@ -14,29 +14,29 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import haina.ecommerce.R
-import haina.ecommerce.adapter.forum.AdapterListAllThreads
 import haina.ecommerce.adapter.restaurant.AdapterRestaurantList
+import haina.ecommerce.databinding.FragmentRestaurantMyBinding
 import haina.ecommerce.databinding.FragmentRestaurantReviewBinding
 import haina.ecommerce.model.property.CityItem
 import haina.ecommerce.model.restaurant.master.CuisineAndTypeData
 import haina.ecommerce.model.restaurant.master.RestaurantData
 import haina.ecommerce.model.restaurant.master.RestaurantPagination
+import haina.ecommerce.view.restaurant.dashboard.RestaurantDashboardPresenter
 import timber.log.Timber
 
-class RestaurantDashboardFragment :
+class MyRestaurantFragment :
     Fragment()
-    ,RestaurantDashboardContract.View
+    ,MyRestaurantContract.View
     ,AdapterRestaurantList.ItemAdapterCallback
 {
-    private lateinit var _binding:FragmentRestaurantReviewBinding
+    private lateinit var _binding: FragmentRestaurantMyBinding
     private val binding get() = _binding
-    private lateinit var presenter: RestaurantDashboardPresenter
+    private lateinit var presenter: MyRestaurantPresenter
     private var progressDialog: Dialog? = null
-    private var broadcaster:LocalBroadcastManager? = null
-    private lateinit var ctx:Context
+    private var broadcaster: LocalBroadcastManager? = null
+    private lateinit var ctx: Context
 
     private var page:Int = 1
     private var totalPage:Int= 0
@@ -58,8 +58,8 @@ class RestaurantDashboardFragment :
         Timber.d("onCreate")
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentRestaurantReviewBinding.inflate(inflater, container, false)
-        presenter = RestaurantDashboardPresenter(this, requireActivity())
+        _binding = FragmentRestaurantMyBinding.inflate(inflater, container, false)
+        presenter = MyRestaurantPresenter(this, requireActivity())
         broadcaster = LocalBroadcastManager.getInstance(requireActivity())
         ctx = container!!.context
 
@@ -67,7 +67,7 @@ class RestaurantDashboardFragment :
         getLocation()
         refresh()
 
-        binding.rvRestaurantList.adapter = adapterRestaurantList
+        binding.rvMyRestaurant.adapter = adapterRestaurantList
 
         binding.scrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener {
                 v, _, scrollY, _, oldScrollY ->
@@ -81,17 +81,13 @@ class RestaurantDashboardFragment :
                 Timber.d("last")
                 if(page!=totalPage){
                     page++
-                    presenter.getRestaurantList(cuisineId,typeId,latitude!!,longitude!!,page)
+                    presenter.getMyRestaurant(cuisineId,typeId,latitude!!,longitude!!,page)
                 }
 
             }
         })
-
-        binding.ivMyRestaurant.setOnClickListener{
-            findNavController().navigate(R.id.action_restaurantDashboard_to_myRestaurant)
-        }
-        binding.ivSaved.setOnClickListener {
-            findNavController().navigate(R.id.action_restaurantDashboard_to_savedRestaurant)
+        binding.ivBack.setOnClickListener {
+            findNavController().navigateUp()
         }
         return binding.root
     }
@@ -110,7 +106,7 @@ class RestaurantDashboardFragment :
         binding.swipeRefresh.setOnRefreshListener {
             adapterRestaurantList.clear()
             page = 1
-            presenter.getRestaurantList(cuisineId,typeId,latitude!!,longitude!!,page)
+            presenter.getMyRestaurant(cuisineId,typeId,latitude!!,longitude!!,page)
         }
     }
     //End View Function
@@ -151,7 +147,7 @@ class RestaurantDashboardFragment :
             Timber.d(it.toString())
         }
         if(adapterRestaurantList.itemCount==0){
-            presenter.getRestaurantList(cuisineId,typeId,latitude!!,longitude!!,page)
+            presenter.getMyRestaurant(cuisineId,typeId,latitude!!,longitude!!,page)
         }
     }
     //End test function

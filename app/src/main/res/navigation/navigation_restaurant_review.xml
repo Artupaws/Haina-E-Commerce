@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/myRestaurant"
-        android:name="haina.ecommerce.view.restaurant.detail.RestaurantDetailFragment"
+        android:name="haina.ecommerce.view.restaurant.my.MyRestaurantFragment"
         android:label="fragment_restaurant_dashboard"
         tools:layout="@layout/fragment_restaurant_my" />
     <fragment

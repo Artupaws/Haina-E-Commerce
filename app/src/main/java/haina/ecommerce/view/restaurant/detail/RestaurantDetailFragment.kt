@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.navigation.fragment.findNavController
 import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.AdapterListAllThreads
 import haina.ecommerce.adapter.restaurant.AdapterRestaurantList
@@ -45,6 +46,15 @@ class RestaurantDetailFragment :
     private var cuisineId:Int? = null
     private var typeId:Int? = null
 
+    private var tab:Int = 1
+
+    private val overviewFragment:RestaurantOverviewFragment = RestaurantOverviewFragment()
+    private val reviewFragment:RestaurantReviewListFragment = RestaurantReviewListFragment()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Timber.d("onCreate")
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentRestaurantDetailBinding.inflate(inflater, container, false)
@@ -60,10 +70,54 @@ class RestaurantDetailFragment :
         val restaurantData = arguments?.getParcelable<RestaurantData>("RestaurantData")
 
         presenter.getRestaurantDetail(restaurantData!!.id!!)
+
+        binding.btnOverview.setOnClickListener { changeTab() }
+        binding.btnReview.setOnClickListener { changeTab() }
+        binding.ivBack.setOnClickListener{
+            findNavController().navigateUp()
+        }
+        binding.ivSave.setOnClickListener {
+            presenter.setRestaurantSaved(restaurantData!!.id!!)
+        }
+
+        childFragmentManager.beginTransaction()
+            .add(R.id.frame_restaurant_detail,overviewFragment)
+            .add(R.id.frame_restaurant_detail,reviewFragment)
+            .commit()
     }
 
-
     //View Function
+    private fun loadFragment(fragment: Fragment?): Boolean {
+        if (fragment != null) {
+            childFragmentManager.beginTransaction()
+                .hide(overviewFragment)
+                .hide(reviewFragment)
+                .show(fragment)
+                .commit()
+            return true
+        }
+        return false
+    }
+
+    private fun changeTab(){
+        if(tab == 1){
+            tab = 2
+            binding.tvReview.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.black))
+            binding.tvReview.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+            binding.tvOverview.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.white))
+            binding.tvOverview.setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
+
+            loadFragment(overviewFragment)
+        }else{
+            tab = 1
+            binding.tvReview.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.tvReview.setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
+            binding.tvOverview.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.black))
+            binding.tvOverview.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
+
+            loadFragment(reviewFragment)
+        }
+    }
     private fun dialogLoading(){
         progressDialog = Dialog(requireActivity())
         progressDialog?.setContentView(R.layout.dialog_loader)
@@ -74,7 +128,27 @@ class RestaurantDetailFragment :
     }
 
     private fun setRestaurantData(data:RestaurantData){
+        binding.tvRestaurantName.text = data.name
 
+        var cuisineString:String = ""
+        data.cuisine!!.forEach {
+            cuisineString += it!!.name
+            if(! it.equals(data.cuisine.lastIndex)){
+                cuisineString +=" "
+            }
+        }
+        var typeString:String = ""
+        data.type!!.forEach {
+            typeString += it!!.name
+
+            if(! it.equals(data.type.lastIndex)){
+                typeString +=" "
+            }
+        }
+        binding.tvTagline.text = "$cuisineString $typeString"
+        binding.tvLocation.text = data.address
+        binding.tvRating.text = data.rating
+        binding.tvPhotoCount.text = data.photo?.count().toString()
     }
     //End View Function
 

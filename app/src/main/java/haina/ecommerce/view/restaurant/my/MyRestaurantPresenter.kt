@@ -1,19 +1,18 @@
-package haina.ecommerce.view.restaurant.dashboard
+package haina.ecommerce.view.restaurant.my
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
-import haina.ecommerce.model.property.ResponseShowProperty
 import haina.ecommerce.model.restaurant.ResponseCuisineAndTypeList
 import haina.ecommerce.model.restaurant.ResponseRestaurantList
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class RestaurantDashboardPresenter(val view: RestaurantDashboardContract.View, val context: Context) {
+class MyRestaurantPresenter (val view: MyRestaurantContract.View, val context: Context){
 
-    fun getRestaurantList(cuisine:Int?,type:Int?,halal:Int?,lat:Double,long:Double,page:Int){
+    fun getMyRestaurant(cuisine:Int?,type:Int?,halal:Int?,lat:Double,long:Double,page:Int){
         view.showLoading()
-        val showProperty = NetworkConfig().getConnectionHainaBearer(context).showAllRestaurant(cuisine,type,halal,lat,long,page)
+        val showProperty = NetworkConfig().getConnectionHainaBearer(context).getMyRestaurant(cuisine,type,halal,lat,long,page)
         showProperty.enqueue(object : retrofit2.Callback<ResponseRestaurantList>{
             override fun onResponse(call: Call<ResponseRestaurantList>, response: Response<ResponseRestaurantList>) {
                 view.dismissLoading()
@@ -76,7 +75,5 @@ class RestaurantDashboardPresenter(val view: RestaurantDashboardContract.View, v
             }
         })
     }
-
-
 
 }

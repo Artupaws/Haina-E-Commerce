@@ -50,38 +50,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linear_header">
 
-        <LinearLayout
-            android:id="@+id/linearLayout4"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <FrameLayout
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/linearLayout4"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_my_restaurant"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:orientation="vertical"
-                    tools:listitem="@layout/list_item_restaurant"/>
+                    android:layout_height="match_parent">
 
-                <include
-                    android:id="@+id/include_empty"
-                    layout="@layout/layout_empty"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_my_restaurant"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="vertical"
+                        tools:listitem="@layout/list_item_restaurant"/>
 
-                <include
-                    android:id="@+id/include_login"
-                    layout="@layout/layout_not_login"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-            </FrameLayout>
+                    <include
+                        android:id="@+id/include_empty"
+                        layout="@layout/layout_empty"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
-        </LinearLayout>
+                    <include
+                        android:id="@+id/include_login"
+                        layout="@layout/layout_not_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                </FrameLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
