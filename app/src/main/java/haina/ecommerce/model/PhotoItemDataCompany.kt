@@ -13,6 +13,6 @@ data class PhotoItemDataCompany(
 	@field:SerializedName("id")
 	val id: Int? = null,
 
-	@field:SerializedName("photo_url")
+	@field:SerializedName("media_url")
 	val photoUrl: String? = null
 ) : Parcelable
