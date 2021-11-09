@@ -102,7 +102,7 @@ data class DataAllVacancy(
 	@field:SerializedName("pinned")
 	val pinned: String? = null,
 
-	@field:SerializedName("company_photo")
+	@field:SerializedName("company_media")
 	val companyPhoto: List<CompanyPhotoItem?>? = null,
 
 	@field:SerializedName("company_url")
@@ -115,7 +115,7 @@ data class CompanyPhotoItem(
 	val id:Int,
 	@field:SerializedName("id_company")
 	val idCompany:Int,
-	@field:SerializedName("photo_url")
+	@field:SerializedName("media_url")
 	val photoUrl:String,
 	@field:SerializedName("name")
 	val name:String
