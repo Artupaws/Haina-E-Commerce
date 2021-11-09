@@ -9,7 +9,6 @@ interface RestaurantDetailContract {
     interface View : BaseView {
         fun message(msg:String)
         fun getRestaurantData(data: RestaurantData?)
-        fun getReviewList(data: RestaurantData?)
     }
 
 }

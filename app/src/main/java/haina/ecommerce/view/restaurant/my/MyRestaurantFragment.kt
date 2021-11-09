@@ -40,9 +40,12 @@ class MyRestaurantFragment :
 
     private var page:Int = 1
     private var totalPage:Int= 0
+    private var halal:Int? = null
 
     private var latitude:Double? = null
     private var longitude:Double? = null
+
+
 
     private var cuisineId:Int? = null
     private var typeId:Int? = null
@@ -81,7 +84,7 @@ class MyRestaurantFragment :
                 Timber.d("last")
                 if(page!=totalPage){
                     page++
-                    presenter.getMyRestaurant(cuisineId,typeId,latitude!!,longitude!!,page)
+                    presenter.getMyRestaurant(cuisineId,typeId,halal,latitude!!,longitude!!,page)
                 }
 
             }
@@ -106,7 +109,7 @@ class MyRestaurantFragment :
         binding.swipeRefresh.setOnRefreshListener {
             adapterRestaurantList.clear()
             page = 1
-            presenter.getMyRestaurant(cuisineId,typeId,latitude!!,longitude!!,page)
+            presenter.getMyRestaurant(cuisineId,typeId,halal,latitude!!,longitude!!,page)
         }
     }
     //End View Function
@@ -147,7 +150,7 @@ class MyRestaurantFragment :
             Timber.d(it.toString())
         }
         if(adapterRestaurantList.itemCount==0){
-            presenter.getMyRestaurant(cuisineId,typeId,latitude!!,longitude!!,page)
+            presenter.getMyRestaurant(cuisineId,typeId,halal,latitude!!,longitude!!,page)
         }
     }
     //End test function

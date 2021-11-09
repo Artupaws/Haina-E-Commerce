@@ -1273,7 +1273,22 @@ interface NetworkService {
     @Headers("No-Authentication: true")
     @POST("/api/restaurant/restaurant_detail")
     fun getRestaurantDetail(
-        @Field("restaurant_id")restaurantId:Int?
+        @Field("restaurant_id")restaurantId:Int
+    ):Call<ResponseRestaurantDetail>
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/restaurant/restaurant_menu")
+    fun getRestaurantMenu(
+        @Field("restaurant_id")restaurantId:Int
+    ):Call<ResponseRestaurantDetail>
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/restaurant/restaurant_review")
+    fun getRestaurantReview(
+        @Field("restaurant_id")restaurantId:Int,
+        @Field("page")page:Int
     ):Call<ResponseRestaurantDetail>
 
     @FormUrlEncoded

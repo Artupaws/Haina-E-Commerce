@@ -55,6 +55,12 @@ data class RestaurantData(
     @field:SerializedName("id")
 	val id: Int? = null,
 
+    @field:SerializedName("reviews")
+    val reviews: Int? = null,
+
+    @field:SerializedName("bookmarked")
+    val bookmarked: Int? = null,
+
     @field:SerializedName("weekdays_time_close")
 	val weekdaysTimeClose: String? = null,
 

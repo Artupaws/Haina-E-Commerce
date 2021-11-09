@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".view.restaurant.detail.overview.RestaurantOverviewFragment">
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -31,7 +32,9 @@
                     android:layout_marginVertical="10dp"
                     style="@style/TextAppearance.MdcTypographyStyles.Overline"
                     android:text="Food Category"/>
+
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_food_category"
                     android:layout_width="match_parent"
                     tools:listitem="@layout/list_item_tags_restaurant"
                     android:orientation="horizontal"
@@ -48,6 +51,7 @@
                     android:layout_height="200dp">
 
                     <ImageView
+                        android:id="@+id/iv_restaurant_image"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:src="@drawable/ps5"
@@ -71,12 +75,14 @@
                         android:src="@drawable/ic_baseline_access_time_24"/>
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/tv_weekday_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.MdcTypographyStyles.Body2"
                     android:text="Weekdays 11.00 - 21.00"/>
 
                 <TextView
+                    android:id="@+id/tv_weekend_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.MdcTypographyStyles.Body2"
@@ -104,11 +110,12 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/tv_phone_number"
+                        style="@style/TextAppearance.MdcTypographyStyles.Body2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/TextAppearance.MdcTypographyStyles.Body2"
                         android:layout_alignParentStart="true"
-                        android:text="08124216421"/>
+                        android:text="08124216421" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -138,6 +145,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/tv_full_address"
                         style="@style/TextAppearance.MdcTypographyStyles.Body2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -178,59 +186,57 @@
                     android:text="Menu"
                     android:layout_marginHorizontal="10dp"
                     style="@style/TextAppearance.MdcTypographyStyles.Body1"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:layout_marginHorizontal="10dp"
-                    style="@style/TextAppearance.MdcTypographyStyles.Overline"
-                    android:text="Food Menu"/>
 
-                <androidx.recyclerview.widget.RecyclerView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    tools:listitem="@layout/list_item_restaurant_menu_image"
-                    android:orientation="horizontal"
-                    tools:itemCount="5"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_height="wrap_content">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_marginHorizontal="10dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    style="@style/TextAppearance.MdcTypographyStyles.Overline"
-                    android:text="Food Menu"/>
+                    android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginHorizontal="10dp"
+                        style="@style/TextAppearance.MdcTypographyStyles.Overline"
+                        android:text="Food Menu"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        tools:listitem="@layout/list_item_restaurant_menu_image"
+                        android:orientation="horizontal"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:layout_height="wrap_content">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    tools:listitem="@layout/list_item_restaurant_menu_image"
-                    android:orientation="horizontal"
-                    tools:itemCount="5"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_height="wrap_content">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:layout_marginHorizontal="10dp"
-                    style="@style/TextAppearance.MdcTypographyStyles.Overline"
-                    android:text="Food Menu"/>
+                    android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    tools:listitem="@layout/list_item_restaurant_menu_image"
-                    android:orientation="horizontal"
-                    tools:itemCount="5"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginHorizontal="10dp"
+                        style="@style/TextAppearance.MdcTypographyStyles.Overline"
+                        android:text="Food Menu"/>
 
-                </androidx.recyclerview.widget.RecyclerView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        tools:listitem="@layout/list_item_restaurant_menu_image"
+                        android:orientation="horizontal"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:layout_height="wrap_content">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

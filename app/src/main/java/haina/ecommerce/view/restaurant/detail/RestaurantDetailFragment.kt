@@ -24,6 +24,8 @@ import haina.ecommerce.model.property.CityItem
 import haina.ecommerce.model.restaurant.master.CuisineAndTypeData
 import haina.ecommerce.model.restaurant.master.RestaurantData
 import haina.ecommerce.model.restaurant.master.RestaurantPagination
+import haina.ecommerce.view.restaurant.detail.overview.RestaurantOverviewFragment
+import haina.ecommerce.view.restaurant.detail.review.RestaurantReviewListFragment
 import timber.log.Timber
 
 class RestaurantDetailFragment :
@@ -48,13 +50,8 @@ class RestaurantDetailFragment :
 
     private var tab:Int = 1
 
-    private val overviewFragment:RestaurantOverviewFragment = RestaurantOverviewFragment()
-    private val reviewFragment:RestaurantReviewListFragment = RestaurantReviewListFragment()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Timber.d("onCreate")
-    }
+    private lateinit var overviewFragment:RestaurantOverviewFragment
+    private lateinit var reviewFragment:RestaurantReviewListFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentRestaurantDetailBinding.inflate(inflater, container, false)
@@ -69,20 +66,28 @@ class RestaurantDetailFragment :
         dialogLoading()
         val restaurantData = arguments?.getParcelable<RestaurantData>("RestaurantData")
 
+
+        //api function
         presenter.getRestaurantDetail(restaurantData!!.id!!)
 
+        //binding action
         binding.btnOverview.setOnClickListener { changeTab() }
         binding.btnReview.setOnClickListener { changeTab() }
         binding.ivBack.setOnClickListener{
             findNavController().navigateUp()
         }
         binding.ivSave.setOnClickListener {
-            presenter.setRestaurantSaved(restaurantData!!.id!!)
+            presenter.setRestaurantSaved(restaurantData.id!!)
         }
 
+        //fragment initiation
+        overviewFragment = RestaurantOverviewFragment(restaurantData)
+        reviewFragment = RestaurantReviewListFragment(restaurantData)
         childFragmentManager.beginTransaction()
             .add(R.id.frame_restaurant_detail,overviewFragment)
             .add(R.id.frame_restaurant_detail,reviewFragment)
+            .hide(reviewFragment)
+            .show(overviewFragment)
             .commit()
     }
 
@@ -161,9 +166,6 @@ class RestaurantDetailFragment :
         setRestaurantData(data!!)
     }
 
-    override fun getReviewList(data: RestaurantData?) {
-        TODO("Not yet implemented")
-    }
 
     override fun showLoading() {
         progressDialog!!.show()
