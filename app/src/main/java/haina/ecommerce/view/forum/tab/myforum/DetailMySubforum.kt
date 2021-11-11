@@ -15,7 +15,6 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.AdapterListMyPost
 import haina.ecommerce.adapter.forum.TabAdapterForum
 import haina.ecommerce.adapter.forum.TabAdapterForumDetail
-import haina.ecommerce.databinding.ActivityDetailMySubforumBinding
 import haina.ecommerce.helper.Helper.dateFormat
 import haina.ecommerce.model.forum.*
 import haina.ecommerce.preference.SharedPreferenceHelper
@@ -28,6 +27,7 @@ import java.util.ArrayList
 import com.google.android.material.appbar.AppBarLayout
 
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
+import haina.ecommerce.databinding.ActivityDetailMySubforumBinding
 
 
 class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallback,

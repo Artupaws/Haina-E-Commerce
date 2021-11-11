@@ -67,6 +67,9 @@ data class RestaurantData(
     @field:SerializedName("open")
 	val open: Int? = null,
 
+    @field:SerializedName("open_24_hours")
+    val open24hours: Int? = null,
+
     @field:SerializedName("longitude")
 	val longitude: Double? = null,
 

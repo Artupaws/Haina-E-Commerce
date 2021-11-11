@@ -112,7 +112,7 @@ class RestaurantDetailFragment :
             binding.tvOverview.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.white))
             binding.tvOverview.setTextColor(ContextCompat.getColor(requireContext(),R.color.black))
 
-            loadFragment(overviewFragment)
+            loadFragment(reviewFragment)
         }else{
             tab = 1
             binding.tvReview.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
@@ -120,7 +120,7 @@ class RestaurantDetailFragment :
             binding.tvOverview.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.black))
             binding.tvOverview.setTextColor(ContextCompat.getColor(requireContext(),R.color.white))
 
-            loadFragment(reviewFragment)
+            loadFragment(overviewFragment)
         }
     }
     private fun dialogLoading(){
@@ -154,6 +154,9 @@ class RestaurantDetailFragment :
         binding.tvLocation.text = data.address
         binding.tvRating.text = data.rating
         binding.tvPhotoCount.text = data.photo?.count().toString()
+        binding.tvReviewCount.text = "${data.reviews} Reviews"
+
+
     }
     //End View Function
 

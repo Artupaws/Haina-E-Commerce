@@ -22,11 +22,8 @@ import haina.ecommerce.model.notification.ResponseOpenNotification
 import haina.ecommerce.model.paymentmethod.ResponsePaymentMethod
 import haina.ecommerce.model.productservice.ResponseGetProductService
 import haina.ecommerce.model.property.*
-import haina.ecommerce.model.property.FacilitiesItem
 import haina.ecommerce.model.pulsaanddata.ResponseGetProductPhone
-import haina.ecommerce.model.restaurant.ResponseCuisineAndTypeList
-import haina.ecommerce.model.restaurant.ResponseRestaurantDetail
-import haina.ecommerce.model.restaurant.ResponseRestaurantList
+import haina.ecommerce.model.restaurant.response.*
 import haina.ecommerce.model.service.ResponseGetService
 import haina.ecommerce.model.transaction.ResponseCreateTransactionProductPhone
 import haina.ecommerce.model.transactionlist.ResponseGetListTransaction
@@ -1281,7 +1278,7 @@ interface NetworkService {
     @POST("/api/restaurant/restaurant_menu")
     fun getRestaurantMenu(
         @Field("restaurant_id")restaurantId:Int
-    ):Call<ResponseRestaurantDetail>
+    ):Call<ResponseRestaurantMenu>
 
     @FormUrlEncoded
     @Headers("No-Authentication: true")
@@ -1289,7 +1286,7 @@ interface NetworkService {
     fun getRestaurantReview(
         @Field("restaurant_id")restaurantId:Int,
         @Field("page")page:Int
-    ):Call<ResponseRestaurantDetail>
+    ):Call<ResponseRestaurantReviewList>
 
     @FormUrlEncoded
     @Headers("No-Authentication: true")

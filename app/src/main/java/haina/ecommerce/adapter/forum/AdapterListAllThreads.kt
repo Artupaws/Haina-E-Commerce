@@ -21,6 +21,7 @@ import timber.log.Timber
 
 
 class AdapterListAllThreads(val context: Context,
+
                             private val listForum: java.util.ArrayList<ThreadsItem?>?,
                             val itemAdapterCallback: ItemAdapterCallback,
                             val viewType:Int):

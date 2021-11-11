@@ -2,8 +2,8 @@ package haina.ecommerce.view.restaurant.my
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
-import haina.ecommerce.model.restaurant.ResponseCuisineAndTypeList
-import haina.ecommerce.model.restaurant.ResponseRestaurantList
+import haina.ecommerce.model.restaurant.response.ResponseCuisineAndTypeList
+import haina.ecommerce.model.restaurant.response.ResponseRestaurantList
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response

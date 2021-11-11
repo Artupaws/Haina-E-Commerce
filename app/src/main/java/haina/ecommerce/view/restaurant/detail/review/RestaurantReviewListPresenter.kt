@@ -2,32 +2,28 @@ package haina.ecommerce.view.restaurant.detail.review
 
 import android.content.Context
 import haina.ecommerce.api.NetworkConfig
-import haina.ecommerce.model.restaurant.ResponseRestaurantDetail
-import haina.ecommerce.view.restaurant.detail.overview.RestaurantOverviewContract
+import haina.ecommerce.model.restaurant.response.ResponseRestaurantReviewList
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
-class RestaurantReviewListPresenter(val view: RestaurantReviewListContract.View, val context: Context)  {
+class RestaurantReviewListPresenter(val view: RestaurantReviewListContract, val context: Context)  {
 
     fun getReviewList(restaurantId:Int,page:Int){
-        view.showLoading()
         val showProperty = NetworkConfig().getConnectionHainaBearer(context).getRestaurantReview(restaurantId,page)
-        showProperty.enqueue(object : retrofit2.Callback<ResponseRestaurantDetail>{
-            override fun onResponse(call: Call<ResponseRestaurantDetail>, response: Response<ResponseRestaurantDetail>) {
-                view.dismissLoading()
+        showProperty.enqueue(object : retrofit2.Callback<ResponseRestaurantReviewList>{
+            override fun onResponse(call: Call<ResponseRestaurantReviewList>, response: Response<ResponseRestaurantReviewList>) {
                 if (response.isSuccessful && response.body()?.value == 1){
-                    view.message(response.body()?.message.toString())
+                    view.message(response.code(),response.body()?.message.toString())
                     val data = response.body()?.data
                     view.getReviewList(data)
                 } else {
                     val error = JSONObject(response.errorBody()?.string())
-                    view.message(error.getString("message"))
+                    view.message(response.code(),error.getString("message"))
                 }
             }
-            override fun onFailure(call: Call<ResponseRestaurantDetail>, t: Throwable) {
-                view.dismissLoading()
-                view.message(t.localizedMessage.toString())
+            override fun onFailure(call: Call<ResponseRestaurantReviewList>, t: Throwable) {
+                view.message(t.hashCode(),t.localizedMessage.toString())
             }
         })
     }

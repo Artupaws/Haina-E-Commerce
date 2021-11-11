@@ -140,6 +140,7 @@
                                     style="@style/TextAppearance.MdcTypographyStyles.Caption"
                                     tools:text="4.9"/>
                                 <ImageView
+                                    android:id="@+id/iv_image_review"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:src="@drawable/ic_baseline_star_24"
@@ -174,6 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <ImageView
+                            android:id="@+id/iv_image_photo"
                             android:layout_width="100dp"
                             android:layout_height="50dp"
                             android:scaleType="centerCrop"
