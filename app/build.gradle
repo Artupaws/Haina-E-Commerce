@@ -179,4 +179,7 @@ dependencies {
 
 
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
+
+
+    implementation 'com.github.ibnux:Location-Picker:1.9'
 }

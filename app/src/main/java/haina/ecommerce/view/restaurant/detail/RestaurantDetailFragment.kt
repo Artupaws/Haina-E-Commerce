@@ -31,6 +31,7 @@ import timber.log.Timber
 class RestaurantDetailFragment :
     Fragment()
     ,RestaurantDetailContract.View
+    ,RestaurantOverviewFragment.FragmentCallback
 {
     private lateinit var _binding:FragmentRestaurantDetailBinding
     private val binding get() = _binding
@@ -81,7 +82,7 @@ class RestaurantDetailFragment :
         }
 
         //fragment initiation
-        overviewFragment = RestaurantOverviewFragment(restaurantData)
+        overviewFragment = RestaurantOverviewFragment(restaurantData,this)
         reviewFragment = RestaurantReviewListFragment(restaurantData)
         childFragmentManager.beginTransaction()
             .add(R.id.frame_restaurant_detail,overviewFragment)
@@ -176,6 +177,14 @@ class RestaurantDetailFragment :
 
     override fun dismissLoading() {
         progressDialog!!.hide()
+    }
+
+    override fun fullPhoto(data: RestaurantData) {
+        val bundle = Bundle()
+        bundle.putParcelable("RestaurantData",data)
+
+        findNavController().navigate(R.id.action_restaurantDetail_to_restaurantPhotoGallery,bundle)
+
     }
     //End Contract Function
 

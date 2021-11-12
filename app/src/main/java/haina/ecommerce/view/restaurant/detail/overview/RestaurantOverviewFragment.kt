@@ -18,8 +18,14 @@ import haina.ecommerce.databinding.LayoutRestaurantOverviewBinding
 import haina.ecommerce.model.restaurant.master.MenuCategory
 import haina.ecommerce.model.restaurant.master.RestaurantData
 import timber.log.Timber
+import com.ibnux.locationpicker.LocationPickerActivity
 
-class RestaurantOverviewFragment(val data:RestaurantData):
+import android.content.Intent
+
+
+
+
+class RestaurantOverviewFragment(val data:RestaurantData,val fragmentCallback: FragmentCallback):
     Fragment()
     , RestaurantOverviewContract.View
 {
@@ -37,6 +43,10 @@ class RestaurantOverviewFragment(val data:RestaurantData):
     }
     //End Lazy Adapter
 
+    interface FragmentCallback{
+        fun fullPhoto(data:RestaurantData)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = LayoutRestaurantOverviewBinding.inflate(inflater, container, false)
         presenter = RestaurantOverviewPresenter(this, requireActivity())
@@ -53,6 +63,13 @@ class RestaurantOverviewFragment(val data:RestaurantData):
         presenter.getRestaurantMenu(data.id!!)
 
         binding.rvFoodCategory.adapter = adapterRestaurantCategory
+        binding.ivLocation.setOnClickListener {
+            startActivityForResult(Intent(requireActivity(), LocationPickerActivity::class.java), 4268)
+        }
+
+        binding.btnSeeAllPhoto.setOnClickListener {
+            fragmentCallback.fullPhoto(data)
+        }
     }
 
     //view function

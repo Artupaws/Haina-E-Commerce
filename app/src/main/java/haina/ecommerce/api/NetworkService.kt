@@ -1268,6 +1268,18 @@ interface NetworkService {
 
     @FormUrlEncoded
     @Headers("No-Authentication: true")
+    @POST("/api/restaurant/show_bookmark")
+    fun getSavedRestaurant(
+        @Field("cuisine_type")cuisineType:Int?,
+        @Field("type")type:Int?,
+        @Field("halal")halal:Int?,
+        @Field("my_latitude")latitude:Double,
+        @Field("my_longitude")longitude:Double,
+        @Field("page")page:Int
+    ):Call<ResponseRestaurantList>
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
     @POST("/api/restaurant/restaurant_detail")
     fun getRestaurantDetail(
         @Field("restaurant_id")restaurantId:Int

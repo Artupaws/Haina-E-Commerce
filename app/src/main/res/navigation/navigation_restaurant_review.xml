@@ -26,7 +26,17 @@
         android:id="@+id/restaurantDetail"
         android:name="haina.ecommerce.view.restaurant.detail.RestaurantDetailFragment"
         android:label="fragment_restaurant_dashboard"
-        tools:layout="@layout/fragment_restaurant_detail" />
+        tools:layout="@layout/fragment_restaurant_detail" >
+        <action
+            android:id="@+id/action_restaurantDetail_to_restaurantPhotoGallery"
+            app:destination="@id/restaurantPhotoGallery" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/restaurantPhotoGallery"
+        android:name="haina.ecommerce.view.restaurant.photogallery.RestaurantPhotoGalleryFragment"
+        android:label="fragment_restaurant_photo_gallery"
+        tools:layout="@layout/fragment_restaurant_photo_gallery" />
 
     <fragment
         android:id="@+id/myRestaurant"
@@ -35,7 +45,7 @@
         tools:layout="@layout/fragment_restaurant_my" />
     <fragment
         android:id="@+id/savedRestaurant"
-        android:name="haina.ecommerce.view.restaurant.detail.RestaurantDetailFragment"
+        android:name="haina.ecommerce.view.restaurant.saved.SavedRestaurantFragment"
         android:label="fragment_restaurant_dashboard"
         tools:layout="@layout/fragment_restaurant_my" />
 </navigation>
