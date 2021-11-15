@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/iv_back"
-                android:text="Gyu-kaku" />
+                tools:text="Gyu-kaku" />
 
         </RelativeLayout>
 
@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.MaterialComponents.Body1"
-                    android:text="187 Photos"
+                    tools:text="187 Photos"
                     android:layout_marginHorizontal="10dp"/>
 
 

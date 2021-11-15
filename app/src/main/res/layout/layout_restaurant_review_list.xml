@@ -44,7 +44,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Write a review"
+                            android:text="@string/write_a_review"
                             style="@style/TextAppearance.MdcTypographyStyles.Headline6"
                             android:textSize="14sp" />
 
@@ -52,7 +52,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="Share your expreience to help others"
+                            android:text="@string/share_your_experience"
                             style="@style/TextAppearance.MdcTypographyStyles.Caption" />
                     </LinearLayout>
 
@@ -120,7 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="100+ Review" />
+                        tools:text="100+ Review" />
                 </LinearLayout>
 
 
@@ -200,7 +200,7 @@
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Filter" />
+                android:text="@string/filter" />
 
             <ImageView
                 android:layout_width="25dp"

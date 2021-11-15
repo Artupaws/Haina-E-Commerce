@@ -23,14 +23,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="About the restaurant"
+                    android:text="@string/about_restaurant"
                     style="@style/TextAppearance.MdcTypographyStyles.Body1"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
                     style="@style/TextAppearance.MdcTypographyStyles.Overline"
-                    android:text="Food Category"/>
+                    android:text="@string/food_category"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_food_category"
@@ -70,7 +70,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="See All"
+                                android:text="@string/see_all"
                                 style="@style/TextAppearance.MdcTypographyStyles.Overline"
                                 android:layout_marginVertical="5dp"
                                 android:paddingRight="10dp"
@@ -89,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextAppearance.MdcTypographyStyles.Overline"
-                        android:text="Open Time"/>
+                        android:text="@string/opening_times"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -107,7 +107,7 @@
                         android:layout_marginEnd="2dp"
                         android:textColor="#e62727"
                         style="@style/TextAppearance.MdcTypographyStyles.Body2"
-                        android:text="Mon"/>
+                        android:text="@string/open_monday"/>
 
                     <TextView
                         android:id="@+id/tv_tuesday"
@@ -116,7 +116,7 @@
                         android:layout_marginHorizontal="2dp"
                         android:textColor="#e62727"
                         style="@style/TextAppearance.MdcTypographyStyles.Body2"
-                        android:text="Tue"/>
+                        android:text="@string/open_tuesday"/>
 
                     <TextView
                         android:id="@+id/tv_wednesday"
@@ -125,7 +125,7 @@
                         android:layout_marginHorizontal="2dp"
                         android:textColor="#e62727"
                         style="@style/TextAppearance.MdcTypographyStyles.Body2"
-                        android:text="Wed"/>
+                        android:text="@string/open_wednesday"/>
 
                     <TextView
                         android:id="@+id/tv_thursday"
@@ -134,7 +134,7 @@
                         android:layout_marginHorizontal="2dp"
                         android:textColor="#e62727"
                         style="@style/TextAppearance.MdcTypographyStyles.Body2"
-                        android:text="Thu"/>
+                        android:text="@string/open_thursday"/>
 
                     <TextView
                         android:id="@+id/tv_friday"
@@ -143,7 +143,7 @@
                         android:layout_marginHorizontal="2dp"
                         android:textColor="#e62727"
                         style="@style/TextAppearance.MdcTypographyStyles.Body2"
-                        android:text="Fri"/>
+                        android:text="@string/open_friday"/>
 
                     <TextView
                         android:id="@+id/tv_saturday"
@@ -152,7 +152,7 @@
                         android:layout_marginHorizontal="2dp"
                         android:textColor="#e62727"
                         style="@style/TextAppearance.MdcTypographyStyles.Body2"
-                        android:text="Sat"/>
+                        android:text="@string/open_saturday"/>
 
                     <TextView
                         android:id="@+id/tv_sunday"
@@ -161,21 +161,21 @@
                         android:layout_marginHorizontal="5dp"
                         android:textColor="#e62727"
                         style="@style/TextAppearance.MdcTypographyStyles.Body2"
-                        android:text="Sun"/>
+                        android:text="@string/open_sunday"/>
                 </LinearLayout>
                 <TextView
                     android:id="@+id/tv_weekday_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.MdcTypographyStyles.Body2"
-                    android:text="Weekdays 11.00 - 21.00"/>
+                    tools:text="Weekdays 11.00 - 21.00"/>
 
                 <TextView
                     android:id="@+id/tv_weekend_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextAppearance.MdcTypographyStyles.Body2"
-                    android:text="Weekends 10.00 - 23.00"/>
+                    tools:text="Weekends 10.00 - 23.00"/>
 
 
                 <LinearLayout
@@ -188,7 +188,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextAppearance.MdcTypographyStyles.Overline"
-                        android:text="Contact"/>
+                        android:text="@string/contact_detail"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -204,7 +204,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
-                        android:text="08124216421" />
+                        tools:text="08124216421" />
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -222,7 +222,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/TextAppearance.MdcTypographyStyles.Overline"
-                        android:text="Location"/>
+                        android:text="@string/location"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -238,7 +238,7 @@
                         style="@style/TextAppearance.MdcTypographyStyles.Body2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dimana mana hatiku senang"
+                        tools:text="Dimana mana hatiku senang"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -272,7 +272,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Menu"
+                    android:text="@string/restaurant_menu"
                     android:layout_marginHorizontal="10dp"
                     style="@style/TextAppearance.MdcTypographyStyles.Body1"/>
 
@@ -311,7 +311,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/TextAppearance.MdcTypographyStyles.Button"
-                        android:text="See All Menu"
+                        android:text="@string/see_all_menu"
                         android:textColor="@color/yellow"
                         android:textAlignment="center"
                         android:layout_margin="10dp"/>

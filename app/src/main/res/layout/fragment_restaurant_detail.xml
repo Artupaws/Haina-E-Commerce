@@ -157,7 +157,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@color/white"
                                 style="@style/TextAppearance.MdcTypographyStyles.Overline"
-                                android:text="100+ Review"/>
+                                tools:text="100+ Review"/>
                         </LinearLayout>
                     </FrameLayout>
 
@@ -210,7 +210,7 @@
                                 android:layout_gravity="center_vertical"
                                 android:textColor="@color/white"
                                 style="@style/TextAppearance.MdcTypographyStyles.Overline"
-                                android:text="Photos"/>
+                                android:text="@string/restaurant_photos"/>
                         </LinearLayout>
                     </FrameLayout>
                 </androidx.cardview.widget.CardView>
@@ -241,7 +241,7 @@
                             android:background="@color/black"
                             android:padding="10dp"
                             android:textAlignment="center"
-                            android:text="Overview"/>
+                            android:text="@string/restaurant_overview"/>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -260,7 +260,7 @@
                             android:textColor="@color/black"
                             android:padding="10dp"
                             android:textAlignment="center"
-                            android:text="Review"/>
+                            android:text="@string/restaurant_review"/>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
