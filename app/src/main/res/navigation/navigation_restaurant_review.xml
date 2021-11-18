@@ -30,6 +30,12 @@
         <action
             android:id="@+id/action_restaurantDetail_to_restaurantPhotoGallery"
             app:destination="@id/restaurantPhotoGallery" />
+        <action
+            android:id="@+id/action_restaurantDetail_to_restaurantAddReview"
+            app:destination="@id/restaurantAddReview" />
+        <action
+            android:id="@+id/action_restaurantDetail_to_restaurantMenuGallery"
+            app:destination="@id/restaurantMenuGallery" />
     </fragment>
 
     <fragment
@@ -39,13 +45,33 @@
         tools:layout="@layout/fragment_restaurant_photo_gallery" />
 
     <fragment
+        android:id="@+id/restaurantAddReview"
+        android:name="haina.ecommerce.view.restaurant.detail.review.addreview.RestaurantAddReviewFragment"
+        android:label="fragment_restaurant_add_review"
+        tools:layout="@layout/fragment_restaurant_add_review" />
+
+    <fragment
+        android:id="@+id/restaurantMenuGallery"
+        android:name="haina.ecommerce.view.restaurant.menu.RestaurantMenuGallery"
+        android:label="fragment_restaurant_menu_gallery"
+        tools:layout="@layout/fragment_restaurant_photo_gallery" />
+
+    <fragment
         android:id="@+id/myRestaurant"
         android:name="haina.ecommerce.view.restaurant.my.MyRestaurantFragment"
         android:label="fragment_restaurant_dashboard"
-        tools:layout="@layout/fragment_restaurant_my" />
+        tools:layout="@layout/fragment_restaurant_my" >
+        <action
+            android:id="@+id/action_myRestaurant_to_restaurantDetail"
+            app:destination="@id/restaurantDetail" />
+    </fragment>
     <fragment
         android:id="@+id/savedRestaurant"
         android:name="haina.ecommerce.view.restaurant.saved.SavedRestaurantFragment"
         android:label="fragment_restaurant_dashboard"
-        tools:layout="@layout/fragment_restaurant_my" />
+        tools:layout="@layout/fragment_restaurant_my" >
+        <action
+            android:id="@+id/action_savedRestaurant_to_restaurantDetail"
+            app:destination="@id/restaurantDetail" />
+    </fragment>
 </navigation>

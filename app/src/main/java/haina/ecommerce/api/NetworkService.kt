@@ -1246,8 +1246,8 @@ interface NetworkService {
     @Headers("No-Authentication: true")
     @POST("/api/restaurant/show_restaurant")
     fun showAllRestaurant(
-        @Field("cuisine_type")cuisineType:Int?,
-        @Field("type")type:Int?,
+        @Field("cuisine_type")cuisineType:String?,
+        @Field("type")type:String?,
         @Field("halal")halal:Int?,
         @Field("my_latitude")latitude:Double,
         @Field("my_longitude")longitude:Double,
@@ -1300,17 +1300,33 @@ interface NetworkService {
         @Field("page")page:Int
     ):Call<ResponseRestaurantReviewList>
 
+    @Multipart
+    @Headers("No-Authentication: true")
+    @POST("api/restaurant/add_review")
+    fun createRestaurantReview(
+        @Part("restaurant_id")restaurantId:Int,
+        @Part("rating")rating:Float,
+        @Part("review")review:String,
+        @Part images :List<MultipartBody.Part>,
+    ):Call<ResponseRestaurantAddReview>
+
     @FormUrlEncoded
     @Headers("No-Authentication: true")
-    @POST("/api/restaurant/toggle-save")
+    @POST("/api/restaurant/add_bookmark")
     fun setRestaurantSaved(
+        @Field("restaurant_id")restaurantId:Int?
+    ):Call<ResponseRestaurantDetail>
+
+    @FormUrlEncoded
+    @Headers("No-Authentication: true")
+    @POST("/api/restaurant/delete_bookmark")
+    fun removeRestaurantSaved(
         @Field("restaurant_id")restaurantId:Int?
     ):Call<ResponseRestaurantDetail>
 
     @Headers("No-Authentication: true")
     @GET("api/restaurant/show_cuisine_type")
     fun getRestaurantCuisineList():Call<ResponseCuisineAndTypeList>
-
 
     @Headers("No-Authentication: true")
     @GET("api/restaurant/show_restaurant_type")

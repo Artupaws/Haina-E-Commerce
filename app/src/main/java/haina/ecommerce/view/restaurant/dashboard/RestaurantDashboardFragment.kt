@@ -14,22 +14,22 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import haina.ecommerce.R
-import haina.ecommerce.adapter.forum.AdapterListAllThreads
 import haina.ecommerce.adapter.restaurant.AdapterRestaurantList
 import haina.ecommerce.databinding.FragmentRestaurantReviewBinding
 import haina.ecommerce.model.property.CityItem
 import haina.ecommerce.model.restaurant.master.CuisineAndTypeData
 import haina.ecommerce.model.restaurant.master.RestaurantData
 import haina.ecommerce.model.restaurant.master.RestaurantPagination
+import haina.ecommerce.view.restaurant.dashboard.filter.RestaurantDashboardFilter
 import timber.log.Timber
 
 class RestaurantDashboardFragment :
     Fragment()
     ,RestaurantDashboardContract.View
     ,AdapterRestaurantList.ItemAdapterCallback
+    ,RestaurantDashboardFilter.Callback
 {
     private lateinit var _binding:FragmentRestaurantReviewBinding
     private val binding get() = _binding
@@ -45,8 +45,10 @@ class RestaurantDashboardFragment :
     private var halal:Int? = null
     private var longitude:Double? = null
 
-    private var cuisineId:Int? = null
-    private var typeId:Int? = null
+    private var cuisineId:String? = null
+    private var typeId:String? = null
+    private var filterSheet: RestaurantDashboardFilter? = null
+
 
     //Lazy Adapter
     private val adapterRestaurantList by lazy {
@@ -58,7 +60,7 @@ class RestaurantDashboardFragment :
         super.onCreate(savedInstanceState)
         Timber.d("onCreate")
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentRestaurantReviewBinding.inflate(inflater, container, false)
         presenter = RestaurantDashboardPresenter(this, requireActivity())
         broadcaster = LocalBroadcastManager.getInstance(requireActivity())
@@ -68,16 +70,13 @@ class RestaurantDashboardFragment :
         getLocation()
         refresh()
 
+        filterSheet = RestaurantDashboardFilter(this)
+        filterSheet!!.isCancelable = false
+
         binding.rvRestaurantList.adapter = adapterRestaurantList
 
         binding.scrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener {
-                v, _, scrollY, _, oldScrollY ->
-            if (scrollY > oldScrollY){
-                //scrolldown
-            }
-            if (scrollY < oldScrollY){
-                //scrollup
-            }
+                v, _, _, _, _ ->
             if(!v.canScrollVertically(1)){
                 Timber.d("last")
                 if(page!=totalPage){
@@ -94,6 +93,14 @@ class RestaurantDashboardFragment :
         binding.ivSaved.setOnClickListener {
             findNavController().navigate(R.id.action_restaurantDashboard_to_savedRestaurant)
         }
+
+        binding.btnFilter.setOnClickListener {
+            filterSheet!!.show(parentFragmentManager, filterSheet!!.tag)
+        }
+
+        presenter.getRestaurantCuisineList()
+        presenter.getRestaurantTypeList()
+
         return binding.root
     }
 
@@ -133,9 +140,7 @@ class RestaurantDashboardFragment :
         }
 
 
-        var l: Location? = null
-
-        l = locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        val l: Location? = locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
         if (l != null) {
             latitude = l.latitude
@@ -170,11 +175,11 @@ class RestaurantDashboardFragment :
     }
 
     override fun getRestaurantCuisine(data: List<CuisineAndTypeData?>?) {
-        TODO("Not yet implemented")
+        filterSheet!!.updateCuisine(data)
     }
 
     override fun getRestaurantType(data: List<CuisineAndTypeData?>?) {
-        TODO("Not yet implemented")
+        filterSheet!!.updateType(data)
     }
 
     override fun getCity(data: List<CityItem?>?) {
@@ -196,6 +201,15 @@ class RestaurantDashboardFragment :
         bundle.putParcelable("RestaurantData",data)
 
         findNavController().navigate(R.id.action_restaurantDashboard_to_restaurantDetail,bundle)
+    }
+
+    override fun passFilterData(cuisineName: String?, typeName: String?, Halal: Int?) {
+        cuisineId = cuisineName
+        typeId = typeName
+        halal = Halal
+        adapterRestaurantList.clear()
+        page = 1
+        presenter.getRestaurantList(cuisineId,typeId,halal,latitude!!,longitude!!,page)
     }
     //End Adapter Callback
 

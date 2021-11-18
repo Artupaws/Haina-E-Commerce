@@ -194,7 +194,7 @@ class SavedRestaurantFragment :
         val bundle = Bundle()
         bundle.putParcelable("RestaurantData",data)
 
-        findNavController().navigate(R.id.action_restaurantDashboard_to_restaurantDetail,bundle)
+        findNavController().navigate(R.id.action_savedRestaurant_to_restaurantDetail,bundle)
     }
     //End Adapter Callback
 

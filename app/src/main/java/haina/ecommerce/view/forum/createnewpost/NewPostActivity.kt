@@ -36,16 +36,8 @@ import okhttp3.RequestBody
 import timber.log.Timber
 import java.io.File
 import java.util.ArrayList
-import androidx.core.content.FileProvider
-import android.webkit.MimeTypeMap
 
-
-
-
-
-
-
- class NewPostActivity : AppCompatActivity(), AdapterInputImages.InputImageClick,
+class NewPostActivity : AppCompatActivity(), AdapterInputImages.InputImageClick,
     CreateNewPostContract.View, AdapterListSubforum.ItemAdapterCallback,
      View.OnClickListener, AdapterInputVideos.InputVideoClick {
 
@@ -416,5 +408,4 @@ import android.webkit.MimeTypeMap
              }
          }
      }
-
- }
+}

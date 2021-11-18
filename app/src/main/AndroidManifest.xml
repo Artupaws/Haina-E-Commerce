@@ -47,6 +47,8 @@
         <activity android:name=".view.forum.tab.myforum.DetailMySubforum" />
         <activity android:name=".view.forum.profilepage.ProfilePageActivity" />
         <activity android:name=".adapter.forum.AdapterDetailImage" />
+        <activity android:name=".adapter.restaurant.menu.AdapterMenuImageDetail" />
+        <activity android:name=".adapter.restaurant.photogallery.AdapterRestaurantPhotoDetail" />
         <activity android:name=".view.forum.profileuser.ProfileUserActivity" />
         <activity android:name=".view.forum.createsubforum.CreateSubforumActivity" />
         <activity android:name=".view.forum.createnewpost.NewPostActivity" />

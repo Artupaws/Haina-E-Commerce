@@ -9,6 +9,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
@@ -24,6 +25,7 @@ import haina.ecommerce.model.property.CityItem
 import haina.ecommerce.model.restaurant.master.CuisineAndTypeData
 import haina.ecommerce.model.restaurant.master.RestaurantData
 import haina.ecommerce.model.restaurant.master.RestaurantPagination
+import haina.ecommerce.room.roomsavedproperty.DataSavedProperty
 import haina.ecommerce.view.restaurant.detail.overview.RestaurantOverviewFragment
 import haina.ecommerce.view.restaurant.detail.review.RestaurantReviewListFragment
 import timber.log.Timber
@@ -76,9 +78,6 @@ class RestaurantDetailFragment :
         binding.btnReview.setOnClickListener { changeTab() }
         binding.ivBack.setOnClickListener{
             findNavController().navigateUp()
-        }
-        binding.ivSave.setOnClickListener {
-            presenter.setRestaurantSaved(restaurantData.id!!)
         }
 
         //fragment initiation
@@ -157,7 +156,15 @@ class RestaurantDetailFragment :
         binding.tvPhotoCount.text = data.photo?.count().toString()
         binding.tvReviewCount.text = "${data.reviews} Reviews"
 
+        binding.ivSave.isChecked = data.bookmarked == 1
 
+        binding.ivSave.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                presenter.removeRestaurantSaved(data?.id!!)
+            }else{
+                presenter.setRestaurantSaved(data?.id!!)
+            }
+        }
     }
     //End View Function
 

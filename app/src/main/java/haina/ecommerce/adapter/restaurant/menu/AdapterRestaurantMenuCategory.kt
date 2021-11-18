@@ -18,6 +18,7 @@ import haina.ecommerce.model.forum.ImagesItem
 import haina.ecommerce.model.forum.ThreadsItem
 import haina.ecommerce.model.restaurant.master.CuisineAndTypeData
 import haina.ecommerce.model.restaurant.master.MenuCategory
+import haina.ecommerce.model.restaurant.master.MenuImage
 import haina.ecommerce.model.restaurant.master.RestaurantData
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
@@ -25,7 +26,7 @@ import timber.log.Timber
 
 
 class AdapterRestaurantMenuCategory(val context: Context,
-                                    private val listCategory: List<MenuCategory?>?):
+                                    private val listCategory: List<MenuCategory?>?, val callback:ItemAdapterCallback):
     RecyclerView.Adapter<AdapterRestaurantMenuCategory.Holder>() {
 
     private lateinit var sharedPref:SharedPreferenceHelper
@@ -43,19 +44,24 @@ class AdapterRestaurantMenuCategory(val context: Context,
         }
     }
 
-    inner class Holder(view: View): RecyclerView.ViewHolder(view){
+    inner class Holder(view: View): RecyclerView.ViewHolder(view),AdapterRestaurantMenuPhoto.ItemAdapterCallback{
         private val binding = ListItemRestaurantMenuCategoryBinding.bind(view)
 
         private val adapterPhoto by lazy {
+
         }
 
         fun bind(data: MenuCategory){
             with(binding){
                 tvCategoryName.text = data.menuName
-                rvMenuImage.adapter= AdapterRestaurantMenuPhoto(context, data.menuImages)
+                rvMenuImage.adapter= AdapterRestaurantMenuPhoto(context, data.menuImages,this@Holder)
                 rvMenuImage.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
 
             }
+        }
+
+        override fun detailPhoto(listImage: List<MenuImage?>?, position: Int) {
+            callback.detailPhoto(listImage,position)
         }
     }
 
@@ -72,5 +78,10 @@ class AdapterRestaurantMenuCategory(val context: Context,
     }
 
     override fun getItemCount(): Int = count
+
+    interface ItemAdapterCallback{
+        fun detailPhoto(listImage: List<MenuImage?>?,position:Int)
+    }
+
 
 }

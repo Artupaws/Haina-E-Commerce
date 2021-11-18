@@ -52,6 +52,28 @@ class RestaurantDetailPresenter(val view: RestaurantDetailContract.View, val con
         })
     }
 
+    fun removeRestaurantSaved(restaurantId:Int){
+        view.showLoading()
+        val showProperty = NetworkConfig().getConnectionHainaBearer(context).removeRestaurantSaved(restaurantId)
+        showProperty.enqueue(object : retrofit2.Callback<ResponseRestaurantDetail>{
+            override fun onResponse(call: Call<ResponseRestaurantDetail>, response: Response<ResponseRestaurantDetail>) {
+                view.dismissLoading()
+                if (response.isSuccessful && response.body()?.value == 1){
+                    view.message(response.body()?.message.toString())
+                    val data = response.body()?.data
+                    view.getRestaurantData(data)
+                } else {
+                    val error = JSONObject(response.errorBody()?.string())
+                    view.message(error.getString("message"))
+                }
+            }
+            override fun onFailure(call: Call<ResponseRestaurantDetail>, t: Throwable) {
+                view.dismissLoading()
+                view.message(t.localizedMessage.toString())
+            }
+        })
+    }
+
 
 
 }

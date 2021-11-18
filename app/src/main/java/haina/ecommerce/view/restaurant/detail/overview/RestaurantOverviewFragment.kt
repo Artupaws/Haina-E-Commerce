@@ -19,15 +19,15 @@ import haina.ecommerce.model.restaurant.master.MenuCategory
 import haina.ecommerce.model.restaurant.master.RestaurantData
 import timber.log.Timber
 import com.ibnux.locationpicker.LocationPickerActivity
-
 import android.content.Intent
-
-
+import haina.ecommerce.adapter.restaurant.menu.AdapterMenuImageDetail
+import haina.ecommerce.model.restaurant.master.MenuImage
 
 
 class RestaurantOverviewFragment(val data:RestaurantData,val fragmentCallback: FragmentCallback):
     Fragment()
     , RestaurantOverviewContract.View
+    ,AdapterRestaurantMenuCategory.ItemAdapterCallback
 {
 
     private lateinit var _binding:LayoutRestaurantOverviewBinding
@@ -131,7 +131,7 @@ class RestaurantOverviewFragment(val data:RestaurantData,val fragmentCallback: F
     }
 
     override fun getMenuList(data: List<MenuCategory?>?) {
-        binding.rvMenuCategory.adapter = AdapterRestaurantMenuCategory(requireActivity(), data)
+        binding.rvMenuCategory.adapter = AdapterRestaurantMenuCategory(requireActivity(), data, this)
         binding.rvMenuCategory.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
         if(data!!.size<3){
             binding.btnSeeAllMenu.visibility = View.GONE
@@ -146,6 +146,16 @@ class RestaurantOverviewFragment(val data:RestaurantData,val fragmentCallback: F
 
     override fun dismissLoading() {
 
+    }
+
+    override fun detailPhoto(listImage: List<MenuImage?>?, position: Int) {
+        startActivity(
+            AdapterMenuImageDetail.createIntent(
+                requireContext(),
+                listImage!!,
+                position
+            )
+        )
     }
 
 }

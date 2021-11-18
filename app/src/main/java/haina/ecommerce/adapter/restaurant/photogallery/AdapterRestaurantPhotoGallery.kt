@@ -4,22 +4,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
-import android.widget.ImageView
-import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
 import haina.ecommerce.databinding.*
 import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.forum.ImagesItem
-import haina.ecommerce.model.forum.ThreadsItem
-import haina.ecommerce.model.restaurant.master.RestaurantData
 import haina.ecommerce.model.restaurant.master.RestaurantPhoto
 import haina.ecommerce.preference.SharedPreferenceHelper
-import haina.ecommerce.util.Constants
-import timber.log.Timber
 
 
 class AdapterRestaurantPhotoGallery(val context: Context,
@@ -35,9 +27,10 @@ class AdapterRestaurantPhotoGallery(val context: Context,
 
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemRestaurantPhotoBinding.bind(view)
-        fun bind(data: RestaurantPhoto, itemAdapterCallback: ItemAdapterCallback){
+        fun bind(data: RestaurantPhoto, itemAdapterCallback: ItemAdapterCallback,position: Int){
             with(binding){
                 Glide.with(context).load(data.url).placeholder(R.drawable.skeleton_image).into(ivImage)
+                ivImage.setOnClickListener { itemAdapterCallback.photoDetail(listRestaurant,position) }
             }
         }
     }
@@ -51,13 +44,13 @@ class AdapterRestaurantPhotoGallery(val context: Context,
 
     override fun onBindViewHolder(holder: AdapterRestaurantPhotoGallery.Holder, position: Int) {
         val photo: RestaurantPhoto = listRestaurant?.get(position)!!
-        holder.bind(photo, itemAdapterCallback)
+        holder.bind(photo, itemAdapterCallback,position)
     }
 
     override fun getItemCount(): Int = listRestaurant?.size!!
 
     interface ItemAdapterCallback{
-        fun photoDetail(data:RestaurantPhoto)
+        fun photoDetail(listPhoto:List<RestaurantPhoto?>?,position:Int)
     }
 
 }

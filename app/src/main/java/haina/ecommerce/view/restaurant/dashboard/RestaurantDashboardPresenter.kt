@@ -10,7 +10,7 @@ import retrofit2.Response
 
 class RestaurantDashboardPresenter(val view: RestaurantDashboardContract.View, val context: Context) {
 
-    fun getRestaurantList(cuisine:Int?,type:Int?,halal:Int?,lat:Double,long:Double,page:Int){
+    fun getRestaurantList(cuisine:String?,type:String?,halal:Int?,lat:Double,long:Double,page:Int){
         view.showLoading()
         val showProperty = NetworkConfig().getConnectionHainaBearer(context).showAllRestaurant(cuisine,type,halal,lat,long,page)
         showProperty.enqueue(object : retrofit2.Callback<ResponseRestaurantList>{
