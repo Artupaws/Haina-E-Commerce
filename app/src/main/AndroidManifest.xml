@@ -97,6 +97,7 @@
         <activity android:name=".view.datacompany.address.AddAddressCompanyActivity" />
         <activity android:name=".view.datacompany.DataCompanyActivity" />
         <activity android:name=".view.register.company.RegisterCompanyActivity" />
+        <activity android:name=".view.companycatalog.CompanyCatalogActivity" />
         <activity
             android:name=".view.detailjob.DetailJobActivity"
             android:screenOrientation="nosensor" />

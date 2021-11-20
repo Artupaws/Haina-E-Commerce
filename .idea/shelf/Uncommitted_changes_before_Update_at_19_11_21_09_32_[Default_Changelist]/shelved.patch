@@ -1,0 +1,339 @@
+Index: app/src/main/res/layout/activity_company_catalog.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_company_catalog.xml b/app/src/main/res/layout/activity_company_catalog.xml
+new file mode 100644
+--- /dev/null	(date 1637052051083)
++++ b/app/src/main/res/layout/activity_company_catalog.xml	(date 1637052051083)
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".view.companycatalog.CompanyCatalogActivity">
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/haina/ecommerce/view/companycatalog/detail/CompanyOverviewFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/haina/ecommerce/view/companycatalog/detail/CompanyOverviewFragment.kt b/app/src/main/java/haina/ecommerce/view/companycatalog/detail/CompanyOverviewFragment.kt
+new file mode 100644
+--- /dev/null	(date 1637131273671)
++++ b/app/src/main/java/haina/ecommerce/view/companycatalog/detail/CompanyOverviewFragment.kt	(date 1637131273671)
+@@ -0,0 +1,60 @@
++package haina.ecommerce.view.companycatalog.detail
++
++import android.os.Bundle
++import androidx.fragment.app.Fragment
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++import haina.ecommerce.R
++
++// TODO: Rename parameter arguments, choose names that match
++// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
++private const val ARG_PARAM1 = "param1"
++private const val ARG_PARAM2 = "param2"
++
++/**
++ * A simple [Fragment] subclass.
++ * Use the [CompanyOverviewFragment.newInstance] factory method to
++ * create an instance of this fragment.
++ */
++class CompanyOverviewFragment : Fragment() {
++    // TODO: Rename and change types of parameters
++    private var param1: String? = null
++    private var param2: String? = null
++
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        arguments?.let {
++            param1 = it.getString(ARG_PARAM1)
++            param2 = it.getString(ARG_PARAM2)
++        }
++    }
++
++    override fun onCreateView(
++        inflater: LayoutInflater, container: ViewGroup?,
++        savedInstanceState: Bundle?
++    ): View? {
++        // Inflate the layout for this fragment
++        return inflater.inflate(R.layout.fragment_company_overview, container, false)
++    }
++
++    companion object {
++        /**
++         * Use this factory method to create a new instance of
++         * this fragment using the provided parameters.
++         *
++         * @param param1 Parameter 1.
++         * @param param2 Parameter 2.
++         * @return A new instance of fragment CompanyOverviewFragment.
++         */
++        // TODO: Rename and change types and number of parameters
++        @JvmStatic
++        fun newInstance(param1: String, param2: String) =
++            CompanyOverviewFragment().apply {
++                arguments = Bundle().apply {
++                    putString(ARG_PARAM1, param1)
++                    putString(ARG_PARAM2, param2)
++                }
++            }
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_company_dashboard.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_company_dashboard.xml b/app/src/main/res/layout/fragment_company_dashboard.xml
+new file mode 100644
+--- /dev/null	(date 1637054027385)
++++ b/app/src/main/res/layout/fragment_company_dashboard.xml	(date 1637054027385)
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".view.companycatalog.dashboard.CompanyDashboardFragment">
++
++    <!-- TODO: Update blank fragment layout -->
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:text="@string/hello_blank_fragment" />
++
++</FrameLayout>
+\ No newline at end of file
+Index: app/src/main/java/haina/ecommerce/view/companycatalog/dashboard/CompanyDashboardFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/haina/ecommerce/view/companycatalog/dashboard/CompanyDashboardFragment.kt b/app/src/main/java/haina/ecommerce/view/companycatalog/dashboard/CompanyDashboardFragment.kt
+new file mode 100644
+--- /dev/null	(date 1637054889645)
++++ b/app/src/main/java/haina/ecommerce/view/companycatalog/dashboard/CompanyDashboardFragment.kt	(date 1637054889645)
+@@ -0,0 +1,29 @@
++package haina.ecommerce.view.companycatalog.dashboard
++
++import android.os.Bundle
++import androidx.fragment.app.Fragment
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++import haina.ecommerce.R
++
++
++class CompanyDashboardFragment : Fragment() {
++    // TODO: Rename and change types of parameters
++    private var param1: String? = null
++    private var param2: String? = null
++
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++
++    }
++
++    override fun onCreateView(
++        inflater: LayoutInflater, container: ViewGroup?,
++        savedInstanceState: Bundle?
++    ): View? {
++        // Inflate the layout for this fragment
++        return inflater.inflate(R.layout.fragment_company_dashboard, container, false)
++    }
++
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/list_item_company_catalog.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/list_item_company_catalog.xml b/app/src/main/res/layout/list_item_company_catalog.xml
+new file mode 100644
+--- /dev/null	(date 1637130981966)
++++ b/app/src/main/res/layout/list_item_company_catalog.xml	(date 1637130981966)
+@@ -0,0 +1,72 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    xmlns:tools="http://schemas.android.com/tools"
++    xmlns:app="http://schemas.android.com/apk/res-auto">
++    <androidx.cardview.widget.CardView
++        android:id="@+id/cv_company"
++        android:layout_margin="10dp"
++        android:minHeight="100dp"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        app:cardElevation="5dp"
++        app:cardCornerRadius="15dp">
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:orientation="vertical"
++            android:layout_height="wrap_content">
++            <RelativeLayout
++                android:layout_width="match_parent"
++                android:layout_height="200dp">
++
++                <ImageView
++                    android:id="@+id/iv_company"
++                    android:layout_width="match_parent"
++                    android:layout_height="200dp"
++                    android:contentDescription="Company Image"
++                    android:scaleType="centerCrop"
++                    android:src="@drawable/skeleton_image" />
++
++            </RelativeLayout>
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:layout_margin="10dp"
++                android:orientation="vertical">
++
++                <RelativeLayout
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content">
++
++                    <TextView
++                        android:id="@+id/tv_company_name"
++                        style="@style/TextAppearance.MaterialComponents.Headline6"
++                        android:layout_width="wrap_content"
++                        android:layout_height="wrap_content"
++                        android:layout_centerVertical="true"
++                        tools:text="PT Maju Mundur Cantik" />
++
++                    <androidx.cardview.widget.CardView
++                        android:layout_width="wrap_content"
++                        android:layout_height="wrap_content"
++                        android:layout_alignParentEnd="true"
++                        android:layout_marginStart="5dp"
++                        android:layout_marginTop="5dp"
++                        android:layout_marginEnd="5dp"
++                        android:layout_marginBottom="5dp"
++                        app:cardBackgroundColor="@color/colorAccent">
++
++                    </androidx.cardview.widget.CardView>
++                </RelativeLayout>
++                <TextView
++                    android:id="@+id/tv_restaurant_address"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    style="@style/TextAppearance.MdcTypographyStyles.Caption"
++                    tools:text="Jl. Panjang, Jakarta Barat"/>
++            </LinearLayout>
++        </LinearLayout>
++    </androidx.cardview.widget.CardView>
++
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_company_overview.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_company_overview.xml b/app/src/main/res/layout/fragment_company_overview.xml
+new file mode 100644
+--- /dev/null	(date 1637131273534)
++++ b/app/src/main/res/layout/fragment_company_overview.xml	(date 1637131273534)
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".view.companycatalog.detail.CompanyOverviewFragment">
++
++    <!-- TODO: Update blank fragment layout -->
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:text="@string/hello_blank_fragment" />
++
++</FrameLayout>
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    package=\"haina.ecommerce\">\n\n    <uses-permission android:name=\"android.permission.INTERNET\" />\n    <uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />\n    <uses-permission android:name=\"android.permission.READ_PHONE_NUMBERS\" />\n    <uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\n    <uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />\n    <uses-permission android:name=\"android.permission.READ_CONTACTS\" />\n\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />\n    <uses-permission android:name=\"android.permission. ACCESS_COARSE_LOCATION\" />\n\n    <application\n        android:name=\".HainaApp\"\n        android:allowBackup=\"true\"\n        android:hardwareAccelerated=\"true\"\n        android:icon=\"@mipmap/ic_launcher\"\n        android:label=\"@string/app_name\"\n        android:networkSecurityConfig=\"@xml/network_security_config\"\n        android:requestLegacyExternalStorage=\"true\"\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\n        android:supportsRtl=\"true\"\n        android:theme=\"@style/Theme.HainaECommerce.Light\"\n        android:usesCleartextTraffic=\"true\">\n        <activity\n            android:name=\".view.history.historyjobvacancy.DetailProfileApplicant\"\n            android:exported=\"true\" />\n        <!-- <activity -->\n        <!-- android:name=\".view.job.detail.DetailJobActivity\" -->\n        <!-- android:exported=\"true\" /> -->\n        <activity android:name=\".view.history.historyjobvacancy.ListApplicantActivity\" />\n        <activity android:name=\".view.pdf.PdfViewActivity\" />\n\n        <activity android:name=\".view.history.historysubmitapplication.detailapplication.DetailApplicationActivity\" />\n        <activity android:name=\".view.history.historysubmitapplication.HistorySubmitJobActivity\" />\n        <activity android:name=\".view.posting.newvacancy.PackagePriceVacancyActivity\" />\n        <activity android:name=\".view.posting.newvacancy.SkillAndEducationActivity\" />\n        <activity android:name=\".view.forum.createnewpost.ShowVideoActivity\" /> <!-- <activity -->\n        <!-- android:name=\".view.forum.search.SearchForumActivity\" -->\n        <!-- android:exported=\"true\" /> -->\n        <activity android:name=\".view.forum.forumactivity.ActivityForumActivity\" />\n        <activity android:name=\".view.posting.newvacancy.NewPostVacancyActivity\" />\n        <activity android:name=\".view.forum.tab.myforum.DetailMySubforum\" />\n        <activity android:name=\".view.forum.profilepage.ProfilePageActivity\" />\n        <activity android:name=\".adapter.forum.AdapterDetailImage\" />\n        <activity android:name=\".view.forum.profileuser.ProfileUserActivity\" />\n        <activity android:name=\".view.forum.createsubforum.CreateSubforumActivity\" />\n        <activity android:name=\".view.forum.createnewpost.NewPostActivity\" />\n        <activity android:name=\".view.forum.detailforum.DetailForumActivity\" />\n        <activity android:name=\".view.property.editmyproperty.EditPropertyActivity\" />\n        <activity android:name=\".view.history.historymyproperty.saved.DetailMyPropertySavedActivity\" />\n        <activity android:name=\".view.property.detailmyproperty.DetailMyPropertyActivity\" />\n        <activity android:name=\".view.history.historymyproperty.MyPropertyActivity\" />\n        <activity android:name=\".view.property.ShowPropertyActivity\" />\n        <activity android:name=\".view.property.FinishPropertyActivity\" />\n        <activity android:name=\".view.categorypost.CategoryActivity\" />\n        <activity android:name=\".view.hotels.HotelBaseActivity\" />\n        <activity android:name=\".view.news.DetailNewsActivity\" />\n        <activity android:name=\".view.news.DetailNewsWebViewActivity\" />\n        <activity android:name=\".view.news.NewsActivity\" />\n        <activity android:name=\".view.onlinepayment.OnlinePaymentActivity\" />\n        <activity android:name=\".view.flight.FlightTicketActivity\" />\n        <activity android:name=\".view.hotels.transactionhotel.detailbook.DetailBookingsActivity\" />\n        <activity android:name=\".view.hotels.transactionhotel.HistoryTransactionHotelActivity\" />\n        <activity android:name=\".view.hotels.listphotohotels.ListPhotoHotelActivity\" />\n        <activity android:name=\".view.hotels.selectdate.SelectDateHotelActivity\" />\n        <activity android:name=\".view.hotels.detailhotel.DetailHotelsActivity\" />\n        <activity android:name=\".view.hotels.dashboardhotel.HotelsActivity\" />\n        <activity android:name=\".view.topup.electronicmoney.ElectronicMoneyActivity\" />\n        <activity android:name=\".view.detailtransaction.DetailTransactionActivity\" />\n        <activity android:name=\".view.history.historytransaction.HistoryTransactionActivity\" />\n        <activity android:name=\".view.history.historyjobvacancy.MyVacancyActivity\" />\n        <activity android:name=\".view.paymentmethod.PaymentActivity\" />\n        <activity android:name=\".view.postpaid.PostpaidActivity\" />\n        <activity android:name=\".view.internetandtv.InternetActivity\" />\n        <activity android:name=\".view.housephone.HousePhoneActivity\" />\n        <activity android:name=\".view.water.WaterActivity\" />\n        <activity android:name=\".view.electricity.ElectricityActivity\" />\n        <activity android:name=\".view.checkout.CheckoutActivity\" />\n        <activity android:name=\".view.topup.TopupActivity\" />\n        <activity android:name=\".view.myaccount.changepassword.ChangePasswordActivity\" />\n        <activity android:name=\".view.notification.NotificationActivity\" />\n        <activity android:name=\".view.posting.applyapplicant.ApplyApplicantActivity\" />\n        <activity android:name=\".view.postingjob.skillrequires.AddSkillRequiresActivity\" />\n        <activity android:name=\".view.posting.detailvacancy.DetailPostingJobActivity\" />\n        <activity android:name=\".view.applyjob.ApplyJobActivity\" />\n        <activity android:name=\".view.myaccount.addskills.AddSkillsActivity\" />\n        <activity android:name=\".view.myaccount.addrequirement.AddRequirementActivity\" />\n        <activity android:name=\".view.myaccount.detailaccount.DetailAccountActivity\" />\n        <activity android:name=\".view.datacompany.address.AddAddressCompanyActivity\" />\n        <activity android:name=\".view.datacompany.DataCompanyActivity\" />\n        <activity android:name=\".view.register.company.RegisterCompanyActivity\" />\n        <activity\n            android:name=\".view.detailjob.DetailJobActivity\"\n            android:screenOrientation=\"nosensor\" />\n        <activity\n            android:name=\".view.job.JobActivity\"\n            android:screenOrientation=\"nosensor\" />\n        <activity\n            android:name=\".view.job.bookmark.JobBookmarkActivity\"\n            android:screenOrientation=\"nosensor\" />\n        <activity\n            android:name=\".view.postingjob.datajob.PostingJobActivity\"\n            android:screenOrientation=\"nosensor\" />\n        <activity\n            android:name=\".view.covidlist.CovidListActivity\"\n            android:screenOrientation=\"nosensor\" />\n        <activity\n            android:name=\".view.webview.WebViewActivity\"\n            android:screenOrientation=\"nosensor\" />\n        <activity\n            android:name=\".view.register.account.RegisterActivity\"\n            android:screenOrientation=\"nosensor\"\n            android:theme=\"@style/TranslucentStatusBar\" />\n        <activity\n            android:name=\".view.login.LoginActivity\"\n            android:screenOrientation=\"nosensor\"\n            android:theme=\"@style/TranslucentStatusBar\" />\n        <activity\n            android:name=\".view.other.OtherActivity\"\n            android:screenOrientation=\"nosensor\" />\n        <activity\n            android:name=\".view.splashscreen.SplashScreenActivity\"\n            android:exported=\"true\"\n            android:screenOrientation=\"nosensor\"\n            android:theme=\"@style/TranslucentStatusBar\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\" />\n\n                <category android:name=\"android.intent.category.LAUNCHER\" />\n            </intent-filter>\n        </activity>\n\n\n        <activity android:name=\".view.restaurant.RestaurantReviewActivity\" />\n\n        <activity\n            android:name=\".view.MainActivity\"\n            android:screenOrientation=\"nosensor\" />\n\n        <provider\n            android:name=\"androidx.core.content.FileProvider\"\n            android:authorities=\"com.example.provider\"\n            android:grantUriPermissions=\"true\"\n            tools:replace=\"android:authorities\">\n            <meta-data\n                android:name=\"android.support.FILE_PROVIDER_PATHS\"\n                android:resource=\"@xml/file_path\"\n                tools:replace=\"android:resource\" />\n        </provider>\n\n        <service\n            android:name=\".fcm.NotifInstanceService\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"com.google.firebase.MESSAGING_EVENT\" />\n            </intent-filter>\n        </service>\n        <service android:name=\".broadcastcountdown.BroadcastService\" />\n\n        <meta-data\n            android:name=\"com.google.firebase.messaging.default_notification_icon\"\n            android:resource=\"@drawable/ic_haina_icon\" />\n        <meta-data\n            android:name=\"com.google.firebase.messaging.default_notification_channel_id\"\n            android:value=\"@string/default_notification_channel_id\" />\n        <meta-data\n            android:name=\"com.google.firebase.messaging.default_notification_color\"\n            android:resource=\"@color/white\" />\n        <meta-data\n            android:name=\"com.google.firebase.messaging.default_notification_text_color\"\n            android:resource=\"@color/yellow\" />\n        <meta-data\n            android:name=\"com.google.android.gms.version\"\n            android:value=\"@integer/google_play_services_version\" />\n        <meta-data\n            android:name=\"com.onesignal.NotificationOpened.DEFAULT\"\n            android:value=\"DISABLE\" />\n    </application>\n\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 21fa1c3506b64629b703f18dad3a40018bc9adb5)
++++ b/app/src/main/AndroidManifest.xml	(date 1637052051030)
+@@ -10,7 +10,6 @@
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+     <uses-permission android:name="android.permission.READ_CONTACTS" />
+-
+     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+     <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
+ 
+@@ -27,14 +26,15 @@
+         android:theme="@style/Theme.HainaECommerce.Light"
+         android:usesCleartextTraffic="true">
+         <activity
+-            android:name=".view.history.historyjobvacancy.DetailProfileApplicant"
++            android:name=".view.companycatalog.CompanyCatalogActivity"
+             android:exported="true" />
+-        <!-- <activity -->
++        <activity
++            android:name=".view.history.historyjobvacancy.DetailProfileApplicant"
++            android:exported="true" /> <!-- <activity -->
+         <!-- android:name=".view.job.detail.DetailJobActivity" -->
+         <!-- android:exported="true" /> -->
+         <activity android:name=".view.history.historyjobvacancy.ListApplicantActivity" />
+         <activity android:name=".view.pdf.PdfViewActivity" />
+-
+         <activity android:name=".view.history.historysubmitapplication.detailapplication.DetailApplicationActivity" />
+         <activity android:name=".view.history.historysubmitapplication.HistorySubmitJobActivity" />
+         <activity android:name=".view.posting.newvacancy.PackagePriceVacancyActivity" />
+@@ -134,10 +134,7 @@
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+-
+-
+         <activity android:name=".view.restaurant.RestaurantReviewActivity" />
+-
+         <activity
+             android:name=".view.MainActivity"
+             android:screenOrientation="nosensor" />
+Index: app/src/main/java/haina/ecommerce/view/companycatalog/CompanyCatalogActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/haina/ecommerce/view/companycatalog/CompanyCatalogActivity.kt b/app/src/main/java/haina/ecommerce/view/companycatalog/CompanyCatalogActivity.kt
+new file mode 100644
+--- /dev/null	(date 1637052551263)
++++ b/app/src/main/java/haina/ecommerce/view/companycatalog/CompanyCatalogActivity.kt	(date 1637052551263)
+@@ -0,0 +1,16 @@
++package haina.ecommerce.view.companycatalog
++
++import androidx.appcompat.app.AppCompatActivity
++import android.os.Bundle
++import haina.ecommerce.databinding.ActivityCompanyCatalogBinding
++
++class CompanyCatalogActivity : AppCompatActivity() {
++
++    private lateinit var binding: ActivityCompanyCatalogBinding
++
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        binding = ActivityCompanyCatalogBinding.inflate(layoutInflater)
++        setContentView(binding.root)
++    }
++}
+\ No newline at end of file
