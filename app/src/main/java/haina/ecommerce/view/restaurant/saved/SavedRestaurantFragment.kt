@@ -60,7 +60,7 @@ class SavedRestaurantFragment :
         super.onCreate(savedInstanceState)
         Timber.d("onCreate")
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentRestaurantMyBinding.inflate(inflater, container, false)
         presenter = SavedRestaurantPresenter(this, requireActivity())
         broadcaster = LocalBroadcastManager.getInstance(requireActivity())
@@ -73,14 +73,10 @@ class SavedRestaurantFragment :
         binding.rvMyRestaurant.adapter = adapterRestaurantList
         binding.tvTitle.text = "Saved Restaurant"
 
+        binding.fabRegisterRestaurant.visibility = View.GONE
+
         binding.scrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener {
-                v, _, scrollY, _, oldScrollY ->
-            if (scrollY > oldScrollY){
-                //scrolldown
-            }
-            if (scrollY < oldScrollY){
-                //scrollup
-            }
+                v, _, _, _, _ ->
             if(!v.canScrollVertically(1)){
                 Timber.d("last")
                 if(page!=totalPage){
@@ -132,9 +128,7 @@ class SavedRestaurantFragment :
         }
 
 
-        var l: Location? = null
-
-        l = locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        val l: Location? = locationManager!!.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
         if (l != null) {
             latitude = l.latitude
@@ -166,18 +160,6 @@ class SavedRestaurantFragment :
         binding.swipeRefresh.isRefreshing=false
         totalPage = data!!.totalPage!!
         adapterRestaurantList.add(data.restaurants)
-    }
-
-    override fun getRestaurantCuisine(data: List<CuisineAndTypeData?>?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getRestaurantType(data: List<CuisineAndTypeData?>?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun getCity(data: List<CityItem?>?) {
-        TODO("Not yet implemented")
     }
 
     override fun showLoading() {

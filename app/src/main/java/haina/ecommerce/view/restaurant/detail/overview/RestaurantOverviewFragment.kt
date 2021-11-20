@@ -14,14 +14,14 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import haina.ecommerce.R
 import haina.ecommerce.adapter.restaurant.AdapterRestaurantFoodCategory
 import haina.ecommerce.adapter.restaurant.menu.AdapterRestaurantMenuCategory
-import haina.ecommerce.databinding.LayoutRestaurantOverviewBinding
 import haina.ecommerce.model.restaurant.master.MenuCategory
 import haina.ecommerce.model.restaurant.master.RestaurantData
 import timber.log.Timber
 import com.ibnux.locationpicker.LocationPickerActivity
 import android.content.Intent
 import haina.ecommerce.adapter.restaurant.menu.AdapterMenuImageDetail
-import haina.ecommerce.model.restaurant.master.MenuImage
+import haina.ecommerce.databinding.LayoutRestaurantOverviewBinding
+import haina.ecommerce.model.restaurant.master.RestaurantPhoto
 
 
 class RestaurantOverviewFragment(val data:RestaurantData,val fragmentCallback: FragmentCallback):
@@ -30,7 +30,7 @@ class RestaurantOverviewFragment(val data:RestaurantData,val fragmentCallback: F
     ,AdapterRestaurantMenuCategory.ItemAdapterCallback
 {
 
-    private lateinit var _binding:LayoutRestaurantOverviewBinding
+    private lateinit var _binding: LayoutRestaurantOverviewBinding
     private val binding get() = _binding
     private lateinit var presenter: RestaurantOverviewPresenter
     private var broadcaster:LocalBroadcastManager? = null
@@ -64,7 +64,7 @@ class RestaurantOverviewFragment(val data:RestaurantData,val fragmentCallback: F
 
         binding.rvFoodCategory.adapter = adapterRestaurantCategory
         binding.ivLocation.setOnClickListener {
-            startActivityForResult(Intent(requireActivity(), LocationPickerActivity::class.java), 4268)
+            startActivityForResult(Intent(ctx, LocationPickerActivity::class.java), 4268)
         }
 
         binding.btnSeeAllPhoto.setOnClickListener {
@@ -131,7 +131,7 @@ class RestaurantOverviewFragment(val data:RestaurantData,val fragmentCallback: F
     }
 
     override fun getMenuList(data: List<MenuCategory?>?) {
-        binding.rvMenuCategory.adapter = AdapterRestaurantMenuCategory(requireActivity(), data, this)
+        binding.rvMenuCategory.adapter = AdapterRestaurantMenuCategory(ctx, data, this)
         binding.rvMenuCategory.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
         if(data!!.size<3){
             binding.btnSeeAllMenu.visibility = View.GONE
@@ -148,7 +148,7 @@ class RestaurantOverviewFragment(val data:RestaurantData,val fragmentCallback: F
 
     }
 
-    override fun detailPhoto(listImage: List<MenuImage?>?, position: Int) {
+    override fun detailPhoto(listImage: List<RestaurantPhoto?>?, position: Int) {
         startActivity(
             AdapterMenuImageDetail.createIntent(
                 requireContext(),

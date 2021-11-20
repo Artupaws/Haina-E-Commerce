@@ -23,4 +23,11 @@
     <color name="broken_white">#F4F4F4</color>
     <color name="gray_shimmer">#dddddd</color>
 
+    <color name="rating_5">#260c6e</color>
+    <color name="rating_4">#0c6e2d</color>
+    <color name="rating_3">#999015</color>
+    <color name="rating_2">#914511</color>
+    <color name="rating_1">#914511</color>
+    <color name="rating_0">#e62727</color>
+
 </resources>

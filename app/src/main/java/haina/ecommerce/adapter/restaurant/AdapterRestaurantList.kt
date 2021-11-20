@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.synnapps.carouselview.ImageListener
@@ -43,6 +44,19 @@ class AdapterRestaurantList(val context: Context,
                     distance = (data.distance!!*100).toString()+"m"
                 }
                 binding.tvDistance.text = distance
+                if(data.rating?.toFloat()!! >=5){
+                    cvRating.setCardBackgroundColor(ContextCompat.getColor(context, R.color.rating_5))
+                }else if(data.rating?.toFloat()!! >=4){
+                    cvRating.setCardBackgroundColor(ContextCompat.getColor(context, R.color.rating_4))
+                }else if(data.rating?.toFloat()!! >=3){
+                    cvRating.setCardBackgroundColor(ContextCompat.getColor(context, R.color.rating_3))
+                }else if(data.rating?.toFloat()!! >=2){
+                    cvRating.setCardBackgroundColor(ContextCompat.getColor(context, R.color.rating_2))
+                }else if(data.rating?.toFloat()!! >=1){
+                    cvRating.setCardBackgroundColor(ContextCompat.getColor(context, R.color.rating_1))
+                }else{
+                    cvRating.setCardBackgroundColor(ContextCompat.getColor(context, R.color.rating_0))
+                }
 
                 binding.tvRating.text = data.rating
 
@@ -51,19 +65,19 @@ class AdapterRestaurantList(val context: Context,
                 var cuisineString:String = ""
                 data.cuisine!!.forEach {
                     cuisineString += it!!.name
-                    if(! it.equals(data.cuisine.lastIndex)){
+                    if(it != data.cuisine.last()){
                         cuisineString +=", "
                     }
                 }
-                var typeString:String = ""
+                var typeString:String = ", "
                 data.type!!.forEach {
                     typeString += it!!.name
 
-                    if(! it.equals(data.type.lastIndex)){
+                    if(it != data.type.last()){
                         typeString +=", "
                     }
                 }
-                binding.tvRestaurantType.text = "$cuisineString $typeString"
+                binding.tvRestaurantType.text = "$cuisineString$typeString"
                 Glide.with(context).load(data.photo!![0]!!.url).placeholder(R.drawable.skeleton_image).into(binding.ivRestaurant)
 
                 binding.cvRestaurant.setOnClickListener {

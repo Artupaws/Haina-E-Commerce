@@ -70,55 +70,61 @@
             <RatingBar
                 android:id="@+id/rb_rating"
                 android:layout_width="wrap_content"
-                style="?android:attr/ratingBarStyleIndicator"
                 android:layout_height="wrap_content"
                 android:numStars="5"
                 android:stepSize="1"
                 android:layout_gravity="center"/>
 
-            <TextView
-                android:id="@+id/tv_title_description"
-                style="@style/TextAppearance.MdcTypographyStyles.Body2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="Review Comment" />
-
-            <EditText
-                style="@style/TextAppearance.MdcTypographyStyles.Body2"
-                android:id="@+id/et_review"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
-                android:lines="8"
-                android:maxLines="8"
-                android:inputType="textMultiLine" />
-
-            <TextView
-                style="@style/TextAppearance.MdcTypographyStyles.Body2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/post_image" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_images"
+            <LinearLayout
+                android:id="@+id/linear_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="4"
-                tools:listitem="@layout/list_item_input_image"
-                tools:itemCount="2"
-                android:src="@drawable/ic_add" />
+                android:visibility="gone"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn_submit_review"
-                android:layout_marginTop="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Button.Primary"
-                android:text="Submit Review"/>
+                <TextView
+                    android:id="@+id/tv_title_description"
+                    style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Review Comment" />
+
+                <EditText
+                    style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                    android:id="@+id/et_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:maxLines="8"
+                    android:inputType="textMultiLine" />
+
+                <TextView
+                    style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/post_image" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="4"
+                    tools:listitem="@layout/list_item_input_image"
+                    tools:itemCount="2"
+                    android:src="@drawable/ic_add" />
+
+                <Button
+                    android:id="@+id/btn_submit_review"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Button.Primary"
+                    android:text="Submit Review"/>
+            </LinearLayout>
 
         </LinearLayout>
 

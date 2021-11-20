@@ -22,20 +22,20 @@ import com.igreenwood.loupe.extensions.setOnViewTranslateListener
 import haina.ecommerce.R
 import haina.ecommerce.databinding.LayoutDetailImageForumBinding
 import haina.ecommerce.databinding.ListItemDetailImageBinding
-import haina.ecommerce.model.restaurant.master.MenuImage
+import haina.ecommerce.model.restaurant.master.RestaurantPhoto
 
 class AdapterMenuImageDetail: AppCompatActivity() {
 
     private lateinit var binding: LayoutDetailImageForumBinding
 
-    private val images:  List<MenuImage> by lazy { intent.getParcelableArrayListExtra<MenuImage>("image_list") as List<MenuImage>}
+    private val images:  List<RestaurantPhoto> by lazy { intent.getParcelableArrayListExtra<RestaurantPhoto>("image_list") as List<RestaurantPhoto>}
     private val initialPos: Int by lazy { intent.getIntExtra("position", 0) }
     private var adapter: ImageAdapter? = null
 
     companion object {
-        fun createIntent(context: Context, urls: List<MenuImage?>, initialPos: Int): Intent {
+        fun createIntent(context: Context, urls: List<RestaurantPhoto?>, initialPos: Int): Intent {
             return Intent(context, AdapterMenuImageDetail::class.java).apply {
-                putParcelableArrayListExtra("image_list", urls as ArrayList<MenuImage?>)
+                putParcelableArrayListExtra("image_list", urls as ArrayList<RestaurantPhoto?>)
                 putExtra("position", initialPos)
             }
         }
@@ -104,7 +104,7 @@ class AdapterMenuImageDetail: AppCompatActivity() {
         binding.viewpager.currentItem = initialPos
     }
 
-    inner class ImageAdapter(var context: Context, var images: List<MenuImage?>) : PagerAdapter() {
+    inner class ImageAdapter(var context: Context, var images: List<RestaurantPhoto?>) : PagerAdapter() {
 
         private var loupeMap = hashMapOf<Int, Loupe>()
         private var views = hashMapOf<Int, ImageView>()

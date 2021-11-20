@@ -26,14 +26,12 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_margin="10dp"
-                android:src="@drawable/back"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/cardView5"/>
+                android:src="@drawable/back"/>
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="2.8"
                 android:text="@string/my_restaurant"
                 style="@style/TextView.Poppins16spBlack"/>
 

@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.Adapter
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
@@ -23,7 +22,6 @@ import com.igreenwood.loupe.extensions.setOnViewTranslateListener
 import haina.ecommerce.R
 import haina.ecommerce.databinding.LayoutDetailImageForumBinding
 import haina.ecommerce.databinding.ListItemDetailImageBinding
-import haina.ecommerce.model.restaurant.master.MenuImage
 import haina.ecommerce.model.restaurant.master.RestaurantPhoto
 
 class AdapterRestaurantPhotoDetail: AppCompatActivity() {

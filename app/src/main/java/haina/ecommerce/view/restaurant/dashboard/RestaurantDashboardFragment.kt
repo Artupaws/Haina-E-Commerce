@@ -71,7 +71,6 @@ class RestaurantDashboardFragment :
         refresh()
 
         filterSheet = RestaurantDashboardFilter(this)
-        filterSheet!!.isCancelable = false
 
         binding.rvRestaurantList.adapter = adapterRestaurantList
 

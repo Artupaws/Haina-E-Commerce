@@ -1,6 +1,7 @@
 package haina.ecommerce.view.restaurant.detail.review.addreview
 
 import haina.ecommerce.base.BaseView
+import haina.ecommerce.model.restaurant.master.ReviewData
 import haina.ecommerce.model.restaurant.master.ReviewPagination
 
 interface RestaurantAddReviewContract {

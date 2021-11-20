@@ -17,4 +17,3 @@ data class ResponseRestaurantMenu(
 	@field:SerializedName("value")
 	val value: Int? = null
 ) : Parcelable
-

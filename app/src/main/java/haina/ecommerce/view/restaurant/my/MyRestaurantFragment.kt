@@ -92,6 +92,11 @@ class MyRestaurantFragment :
         binding.ivBack.setOnClickListener {
             findNavController().navigateUp()
         }
+
+        binding.fabRegisterRestaurant.setOnClickListener {
+            findNavController().navigate(R.id.action_myRestaurant_to_register_restaurant)
+        }
+
         return binding.root
     }
 

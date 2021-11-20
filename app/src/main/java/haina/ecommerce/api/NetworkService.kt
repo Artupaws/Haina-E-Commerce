@@ -1247,7 +1247,7 @@ interface NetworkService {
     @POST("/api/restaurant/show_restaurant")
     fun showAllRestaurant(
         @Field("cuisine_type")cuisineType:String?,
-        @Field("type")type:String?,
+        @Field("restaurant_type")type:String?,
         @Field("halal")halal:Int?,
         @Field("my_latitude")latitude:Double,
         @Field("my_longitude")longitude:Double,
@@ -1305,9 +1305,9 @@ interface NetworkService {
     @POST("api/restaurant/add_review")
     fun createRestaurantReview(
         @Part("restaurant_id")restaurantId:Int,
-        @Part("rating")rating:Float,
-        @Part("review")review:String,
-        @Part images :List<MultipartBody.Part>,
+        @Part("rating")rating:Int,
+        @Part("review")review:RequestBody,
+        @Part images :List<MultipartBody.Part>
     ):Call<ResponseRestaurantAddReview>
 
     @FormUrlEncoded

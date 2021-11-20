@@ -33,6 +33,7 @@
         <!-- android:name=".view.job.detail.DetailJobActivity" -->
         <!-- android:exported="true" /> -->
         <activity android:name=".view.history.historyjobvacancy.ListApplicantActivity" />
+
         <activity android:name=".view.pdf.PdfViewActivity" />
 
         <activity android:name=".view.history.historysubmitapplication.detailapplication.DetailApplicationActivity" />
@@ -47,8 +48,8 @@
         <activity android:name=".view.forum.tab.myforum.DetailMySubforum" />
         <activity android:name=".view.forum.profilepage.ProfilePageActivity" />
         <activity android:name=".adapter.forum.AdapterDetailImage" />
-        <activity android:name=".adapter.restaurant.menu.AdapterMenuImageDetail" />
-        <activity android:name=".adapter.restaurant.photogallery.AdapterRestaurantPhotoDetail" />
+        <activity android:name=".adapter.restaurant.menu.AdapterMenuImageDetail" android:theme="@style/Theme.HainaECommerce.WhiteStatusBar" />
+        <activity android:name=".adapter.restaurant.photogallery.AdapterRestaurantPhotoDetail" android:theme="@style/Theme.HainaECommerce.WhiteStatusBar"/>
         <activity android:name=".view.forum.profileuser.ProfileUserActivity" />
         <activity android:name=".view.forum.createsubforum.CreateSubforumActivity" />
         <activity android:name=".view.forum.createnewpost.NewPostActivity" />
@@ -137,8 +138,7 @@
             </intent-filter>
         </activity>
 
-
-        <activity android:name=".view.restaurant.RestaurantReviewActivity" />
+        <activity android:name=".view.restaurant.RestaurantReviewActivity" android:theme="@style/Theme.HainaECommerce.WhiteStatusBar"/>
 
         <activity
             android:name=".view.MainActivity"

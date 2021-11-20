@@ -9,12 +9,12 @@ import com.bumptech.glide.Glide
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.databinding.*
 import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.restaurant.master.MenuImage
+import haina.ecommerce.model.restaurant.master.RestaurantPhoto
 import haina.ecommerce.preference.SharedPreferenceHelper
 
 
 class AdapterRestaurantMenuPhoto(val context: Context,
-                                    private val listCategory: List<MenuImage?>?,val callback:ItemAdapterCallback):
+                                    private val listCategory: List<RestaurantPhoto?>?,val callback:ItemAdapterCallback):
     RecyclerView.Adapter<AdapterRestaurantMenuPhoto.Holder>() {
 
     private lateinit var sharedPref:SharedPreferenceHelper
@@ -26,7 +26,7 @@ class AdapterRestaurantMenuPhoto(val context: Context,
     inner class Holder(view: View): RecyclerView.ViewHolder(view){
         private val binding = ListItemRestaurantMenuImageBinding.bind(view)
 
-        fun bind(data: MenuImage, position: Int){
+        fun bind(data: RestaurantPhoto, position: Int){
             with(binding){
                 Glide.with(context).load(data.url).into(ivImage)
                 ivImage.setOnClickListener {
@@ -44,12 +44,12 @@ class AdapterRestaurantMenuPhoto(val context: Context,
     }
 
     override fun onBindViewHolder(holder: AdapterRestaurantMenuPhoto.Holder, position: Int) {
-        val photo: MenuImage = listCategory?.get(position)!!
+        val photo: RestaurantPhoto = listCategory?.get(position)!!
         holder.bind(photo,position)
     }
 
     interface ItemAdapterCallback{
-        fun detailPhoto(listImage: List<MenuImage?>?,position:Int)
+        fun detailPhoto(listImage: List<RestaurantPhoto?>?,position:Int)
     }
 
     override fun getItemCount(): Int = listCategory!!.size

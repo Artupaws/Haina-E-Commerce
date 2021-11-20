@@ -9,7 +9,7 @@ import kotlinx.android.parcel.Parcelize
 data class ResponseRestaurantAddReview(
 
     @field:SerializedName("data")
-    val data: List<ReviewData?>? = null,
+    val data: ReviewData? = null,
 
     @field:SerializedName("message")
     val message: String? = null,

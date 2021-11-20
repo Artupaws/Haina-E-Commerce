@@ -15,7 +15,7 @@ import haina.ecommerce.model.restaurant.master.RestaurantData
 import haina.ecommerce.model.restaurant.master.ReviewPagination
 import timber.log.Timber
 
-class RestaurantReviewListFragment(val data: RestaurantData):
+class RestaurantReviewListFragment(val data: RestaurantData,val callback:FragmentCallback):
     Fragment()
     ,RestaurantReviewListContract
 {
@@ -34,6 +34,10 @@ class RestaurantReviewListFragment(val data: RestaurantData):
         AdapterRestaurantReview(requireActivity(), arrayListOf())
     }
 //    End Lazy Adapter
+
+    interface FragmentCallback{
+        fun writeReview(data:RestaurantData)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = LayoutRestaurantReviewListBinding.inflate(inflater, container, false)
@@ -68,6 +72,9 @@ class RestaurantReviewListFragment(val data: RestaurantData):
                 }
             }
         })
+        binding.lnWriteReview.setOnClickListener {
+            callback.writeReview(data)
+        }
 
         setReviewData()
     }

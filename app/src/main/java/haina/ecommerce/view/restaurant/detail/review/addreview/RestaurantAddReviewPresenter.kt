@@ -7,13 +7,14 @@ import haina.ecommerce.model.restaurant.response.ResponseRestaurantAddReview
 import haina.ecommerce.model.restaurant.response.ResponseRestaurantReviewList
 import haina.ecommerce.view.restaurant.detail.review.RestaurantReviewListContract
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 
 class RestaurantAddReviewPresenter(val view: RestaurantAddReviewContract.View, val context: Context)  {
 
-    fun createReview(restaurantId:Int, rating:Float, content:String, images:List<MultipartBody.Part>){
+    fun createReview(restaurantId:Int, rating:Int, content: RequestBody, images:List<MultipartBody.Part>){
         view.showLoading()
         val createNewPost = NetworkConfig().getConnectionHainaBearer(context).createRestaurantReview(restaurantId, rating, content, images)
         createNewPost.enqueue(object : retrofit2.Callback<ResponseRestaurantAddReview>{

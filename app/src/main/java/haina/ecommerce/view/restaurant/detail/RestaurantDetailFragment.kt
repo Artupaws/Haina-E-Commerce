@@ -34,6 +34,7 @@ class RestaurantDetailFragment :
     Fragment()
     ,RestaurantDetailContract.View
     ,RestaurantOverviewFragment.FragmentCallback
+    ,RestaurantReviewListFragment.FragmentCallback
 {
     private lateinit var _binding:FragmentRestaurantDetailBinding
     private val binding get() = _binding
@@ -79,10 +80,12 @@ class RestaurantDetailFragment :
         binding.ivBack.setOnClickListener{
             findNavController().navigateUp()
         }
-
+        for (fragment in childFragmentManager.fragments) {
+            childFragmentManager.beginTransaction().remove(fragment).commit()
+        }
         //fragment initiation
         overviewFragment = RestaurantOverviewFragment(restaurantData,this)
-        reviewFragment = RestaurantReviewListFragment(restaurantData)
+        reviewFragment = RestaurantReviewListFragment(restaurantData, this)
         childFragmentManager.beginTransaction()
             .add(R.id.frame_restaurant_detail,overviewFragment)
             .add(R.id.frame_restaurant_detail,reviewFragment)
@@ -135,14 +138,14 @@ class RestaurantDetailFragment :
     private fun setRestaurantData(data:RestaurantData){
         binding.tvRestaurantName.text = data.name
 
-        var cuisineString:String = ""
+        var cuisineString = ""
         data.cuisine!!.forEach {
             cuisineString += it!!.name
             if(! it.equals(data.cuisine.lastIndex)){
                 cuisineString +=" "
             }
         }
-        var typeString:String = ""
+        var typeString = ""
         data.type!!.forEach {
             typeString += it!!.name
 
@@ -191,7 +194,13 @@ class RestaurantDetailFragment :
         bundle.putParcelable("RestaurantData",data)
 
         findNavController().navigate(R.id.action_restaurantDetail_to_restaurantPhotoGallery,bundle)
+    }
 
+    override fun writeReview(data: RestaurantData) {
+        val bundle = Bundle()
+        bundle.putParcelable("RestaurantData",data)
+
+        findNavController().navigate(R.id.action_restaurantDetail_to_restaurantAddReview,bundle)
     }
     //End Contract Function
 

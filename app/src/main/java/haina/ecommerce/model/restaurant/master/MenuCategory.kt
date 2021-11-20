@@ -17,7 +17,7 @@ data class MenuCategory(
 	val id: Int? = null,
 
 	@field:SerializedName("menu_images")
-	val menuImages: List<MenuImage?>? = null,
+	val menuImages: List<RestaurantPhoto?>? = null,
 
 	@field:SerializedName("restaurant_name")
 	val restaurantName: String? = null

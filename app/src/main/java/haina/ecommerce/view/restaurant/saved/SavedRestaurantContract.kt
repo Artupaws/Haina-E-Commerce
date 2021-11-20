@@ -9,8 +9,5 @@ interface SavedRestaurantContract {
     interface View : BaseView {
         fun message(msg:String)
         fun getRestaurantList(data: RestaurantPagination?)
-        fun getRestaurantCuisine(data:List<CuisineAndTypeData?>?)
-        fun getRestaurantType(data:List<CuisineAndTypeData?>?)
-        fun getCity(data:List<CityItem?>?)
     }
 }
