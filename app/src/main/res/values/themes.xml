@@ -169,6 +169,13 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="TextView.Poppins12spBlack">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
     <style name="TextView.Poppins14spGrey">
         <item name="fontFamily">@font/poppins</item>
         <item name="android:textSize">14sp</item>

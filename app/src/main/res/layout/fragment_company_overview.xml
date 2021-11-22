@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/tv_company_overview_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -40,7 +40,7 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Overview" />
+            android:text="Company Data" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -53,9 +53,13 @@
         android:id="@+id/rv_company_ads"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="194dp" />
+        tools:listitem="@layout/list_item_company_overview_ad"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_company_overview_name" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_company"
@@ -65,7 +69,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout2" >
+        app:layout_constraintTop_toBottomOf="@+id/rv_company_ads">
 
     </androidx.viewpager2.widget.ViewPager2>
 

@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import haina.ecommerce.R
 
 
-class CompanyOverviewFragment : Fragment() {
+class CompanyDataFragment : Fragment() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +21,7 @@ class CompanyOverviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_company_overview, container, false)
+        return inflater.inflate(R.layout.fragment_company_data, container, false)
     }
 
 
