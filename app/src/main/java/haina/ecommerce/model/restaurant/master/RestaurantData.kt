@@ -10,8 +10,8 @@ data class RestaurantData(
     @field:SerializedName("address")
 	val address: String? = null,
 
-    @field:SerializedName("owner_id")
-	val ownerId: Int? = null,
+    @field:SerializedName("owner")
+	val owner: Boolean? = null,
 
     @field:SerializedName("latitude")
 	val latitude: Double? = null,

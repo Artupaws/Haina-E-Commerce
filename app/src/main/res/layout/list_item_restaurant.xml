@@ -61,7 +61,7 @@
 
                     <TextView
                         android:id="@+id/tv_restaurant_name"
-                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        style="@style/TextAppearance.MdcTypographyStyles.Headline6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"

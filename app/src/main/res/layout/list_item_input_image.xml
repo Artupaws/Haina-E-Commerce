@@ -49,11 +49,11 @@
                 android:id="@+id/iv_action"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:background="@drawable/background_circle_black"
-                android:src="@drawable/ic_close"
-                android:layout_alignParentEnd="true"/>
+                android:src="@drawable/ic_close" />
 
         </RelativeLayout>
 
