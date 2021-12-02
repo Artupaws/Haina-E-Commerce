@@ -126,10 +126,10 @@
         android:id="@+id/tv_option_menu"
         style="@style/TextView.Poppins16spBlack"
         android:layout_width="40dp"
-        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:textFontWeight="700"
-        android:text="&#8942;" />
+        android:gravity="center"
+        android:text="&#8942;"
+        android:textFontWeight="700" />
 
 </RelativeLayout>

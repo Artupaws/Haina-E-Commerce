@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_company_data"
+    app:startDestination="@id/companyDashboardFragment">
+    <fragment
+        android:id="@+id/companyDashboardFragment"
+        android:name="haina.ecommerce.view.companycatalog.dashboard.CompanyDashboardFragment"
+        android:label="fragment_company_dashboard"
+        tools:layout="@layout/fragment_company_dashboard" >
+        <action
+            android:id="@+id/action_companyDashboardFragment_to_companyGlobalSearchFragment"
+            app:destination="@id/companyGlobalSearchFragment" />
+        <action
+            android:id="@+id/action_companyDashboardFragment_to_companyCatalogItemsFragment"
+            app:destination="@id/companyCatalogItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/companyAddItemFragment"
+        android:name="haina.ecommerce.view.companycatalog.item.CompanyAddItemFragment"
+        android:label="fragment_company_add_item"
+        tools:layout="@layout/fragment_company_add_item" />
+    <fragment
+        android:id="@+id/companyCatalogItemsFragment"
+        android:name="haina.ecommerce.view.companycatalog.catalog.CompanyCatalogItemsFragment"
+        android:label="fragment_company_catalog_items"
+        tools:layout="@layout/fragment_company_catalog_items" >
+        <action
+            android:id="@+id/action_companyCatalogItemsFragment_to_companyItemDetailFragment"
+            app:destination="@id/companyItemDetailFragment" />
+        <action
+            android:id="@+id/action_companyCatalogItemsFragment_to_companyAddItemFragment"
+            app:destination="@id/companyAddItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/companyOverviewFragment"
+        android:name="haina.ecommerce.view.companycatalog.detail.CompanyOverviewFragment"
+        android:label="fragment_company_overview"
+        tools:layout="@layout/fragment_company_overview" >
+        <action
+            android:id="@+id/action_companyOverviewFragment_to_companyItemDetailFragment"
+            app:destination="@id/companyItemDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/companyGlobalSearchFragment"
+        android:name="haina.ecommerce.view.companycatalog.dashboard.search.CompanyGlobalSearchFragment"
+        android:label="fragment_company_global_search"
+        tools:layout="@layout/fragment_company_global_search" >
+        <action
+            android:id="@+id/action_companyGlobalSearchFragment_to_companyOverviewFragment"
+            app:destination="@id/companyOverviewFragment" />
+        <action
+            android:id="@+id/action_companyGlobalSearchFragment_to_companyItemDetailFragment"
+            app:destination="@id/companyItemDetailFragment" />
+        <action
+            android:id="@+id/action_companyGlobalSearchFragment_to_companyCatalogItemsFragment"
+            app:destination="@id/companyCatalogItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/companyItemDetailFragment"
+        android:name="haina.ecommerce.view.companycatalog.item.CompanyItemDetailFragment"
+        android:label="fragment_company_item_detail"
+        tools:layout="@layout/fragment_company_item_detail" />
+</navigation>

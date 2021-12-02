@@ -1,4 +1,4 @@
-package haina.ecommerce.view.companycatalog.detail
+package haina.ecommerce.view.companycatalog.dashboard.search
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import haina.ecommerce.R
 
 
-class CompanyItemsFragment : Fragment() {
+class CompanyGlobalSearchFragment : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +21,7 @@ class CompanyItemsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_company_catalogs, container, false)
+        return inflater.inflate(R.layout.fragment_company_global_search, container, false)
     }
-
 
 }

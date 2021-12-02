@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:descendantFocusability="blocksDescendants"
+tools:context=".view.companycatalog.detail.CompanyItemsFilterFragment">
+
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar_item_selection"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/toolbar_item_selection"
+    app:layout_constraintVertical_bias="0.0"
+    android:orientation="vertical" >
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_catalog"
+            android:textColor="@color/black"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_catalog_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/show_all"
+            style="@style/TextAppearance.MdcTypographyStyles.Body1"
+            android:padding="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+        </TextView>
+
+
+        <ImageView
+            android:id="@+id/iv_cancel_cuisine"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_close"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/tv_catalog_filter"
+            app:layout_constraintEnd_toEndOf="@id/tv_catalog_filter"
+            app:layout_constraintTop_toTopOf="@id/tv_catalog_filter"
+            app:tint="@color/black">
+
+        </ImageView>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black_60" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_category"
+            android:textColor="@color/black"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_category_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/TextAppearance.MdcTypographyStyles.Body1"
+            android:padding="10dp"
+            android:text="@string/show_all"
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        </TextView>
+
+
+        <ImageView
+            android:id="@+id/iv_cancel_type"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_close"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_category_filter"
+            app:layout_constraintEnd_toEndOf="@+id/tv_category_filter"
+            app:layout_constraintTop_toTopOf="@+id/tv_category_filter"
+            app:tint="@color/black">
+
+        </ImageView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black_60" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_by"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/textView7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <RadioGroup
+                android:id="@+id/rg_sort_item_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rb_price_asc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lowest_price"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:textColor="@color/black"/>
+
+                <RadioButton
+                    android:id="@+id/rb_price_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/highest_price"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:textColor="@color/black"/>
+
+                <RadioButton
+                    android:id="@+id/rb_name_asc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name_ascending"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:textColor="@color/black"/>
+
+                <RadioButton
+                    android:id="@+id/rb_name_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name_descending"
+                    style="@style/TextView.Poppins12spGrey"
+                    android:textColor="@color/black"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black_60" />
+
+    <Button
+        android:layout_margin="10dp"
+        android:id="@+id/btn_apply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Button.Primary"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:layout_gravity="center"
+        android:text="@string/apply_filter"/>
+</LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

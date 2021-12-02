@@ -26,6 +26,7 @@
             android:orientation="horizontal">
             <RelativeLayout
                 android:id="@+id/rl_photo"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -43,17 +44,15 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginBottom="10dp"
-                android:layout_alignEnd="@id/rl_photo"
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_marginTop="10dp"
+                    android:id="@+id/rl_item_data"
+                    android:layout_weight="1.8"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.8">
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:id="@+id/ll_item_catalog"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -63,10 +62,10 @@
                             style="@style/TextView.Poppins14spBlack"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="Catalog" />
+                            tools:text="Item Name " />
 
                         <LinearLayout
-                            android:id="@+id/ll_start_price"
+                            android:id="@+id/ll_item_category"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -74,22 +73,22 @@
                                 style="@style/TextView.Poppins12spGrey"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.6"
-                                android:text="@string/starting_price"
+                                android:layout_weight="0.5"
+                                android:text="Catalog"
 
                                 />
 
                             <TextView
-                                android:id="@+id/tv_starting_price"
+                                android:id="@+id/tv_item_category"
                                 style="@style/TextView.Poppins12spBlack"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
-                                tools:text="Rp 800.000" />
+                                android:layout_weight="1.5"
+                                tools:text="Electronics" />
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/ll_item_count"
+                            android:id="@+id/ll_item_catalog"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -97,24 +96,32 @@
                                 style="@style/TextView.Poppins12spGrey"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="0.6"
-                                android:text="@string/item_count"
+                                android:layout_weight="0.5"
+                                android:text="Catalog"
 
                                 />
 
                             <TextView
-                                android:id="@+id/tv_item_count"
+                                android:id="@+id/tv_item_catalog"
                                 style="@style/TextView.Poppins12spBlack"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1.2"
-                                tools:text="20" />
+                                android:layout_weight="1.5"
+                                tools:text="Gaming Console" />
                         </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_price"
+                            style="@style/TextView.Poppins14spBlack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Rp 80.000" />
                     </LinearLayout>
 
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_option"
                     android:layout_weight="0.2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -129,8 +136,8 @@
                         android:textFontWeight="700" />
                 </RelativeLayout>
 
-            </LinearLayout>
 
+            </LinearLayout>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

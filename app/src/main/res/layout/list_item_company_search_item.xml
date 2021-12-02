@@ -26,7 +26,8 @@
             android:orientation="horizontal">
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
 
                 <ImageView
                     android:id="@+id/iv_media"
@@ -45,7 +46,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_name_catalog"
+                    android:id="@+id/tv_name_item"
                     style="@style/TextView.Poppins14spBlack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,6 +63,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:text="Catalog"
+
                         />
 
                     <TextView
@@ -70,7 +72,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.5"
-                        tools:text="Gaming Console" />
+                        tools:text="New Arrival" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -93,7 +95,30 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.5"
-                        tools:text="New Arrival" />
+                        tools:text="Game Console" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_item_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/TextView.Poppins12spGrey"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="Company"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_item_company"
+                        style="@style/TextView.Poppins12spBlack"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        tools:text="PT Maju Mundur Cantik" />
                 </LinearLayout>
 
                 <TextView
