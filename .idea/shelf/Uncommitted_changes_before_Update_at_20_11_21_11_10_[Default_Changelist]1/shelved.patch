@@ -1,0 +1,288 @@
+Index: app/src/main/java/haina/ecommerce/view/companycatalog/dashboard/CompanyDashboardFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/haina/ecommerce/view/companycatalog/dashboard/CompanyDashboardFragment.kt b/app/src/main/java/haina/ecommerce/view/companycatalog/dashboard/CompanyDashboardFragment.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/haina/ecommerce/view/companycatalog/dashboard/CompanyDashboardFragment.kt	
+@@ -0,0 +1,29 @@
++package haina.ecommerce.view.companycatalog.dashboard
++
++import android.os.Bundle
++import androidx.fragment.app.Fragment
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++import haina.ecommerce.R
++
++
++class CompanyDashboardFragment : Fragment() {
++    // TODO: Rename and change types of parameters
++    private var param1: String? = null
++    private var param2: String? = null
++
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++
++    }
++
++    override fun onCreateView(
++        inflater: LayoutInflater, container: ViewGroup?,
++        savedInstanceState: Bundle?
++    ): View? {
++        // Inflate the layout for this fragment
++        return inflater.inflate(R.layout.fragment_company_dashboard, container, false)
++    }
++
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/list_item_company_catalog.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/list_item_company_catalog.xml b/app/src/main/res/layout/list_item_company_catalog.xml
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/res/layout/list_item_company_catalog.xml	
+@@ -0,0 +1,61 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    xmlns:tools="http://schemas.android.com/tools"
++    xmlns:app="http://schemas.android.com/apk/res-auto">
++    <androidx.cardview.widget.CardView
++        android:id="@+id/cv_company"
++        android:layout_margin="10dp"
++        android:minHeight="100dp"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        app:cardElevation="5dp"
++        app:cardCornerRadius="15dp">
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:orientation="vertical"
++            android:layout_height="wrap_content">
++            <RelativeLayout
++                android:layout_width="match_parent"
++                android:layout_height="200dp">
++
++                <ImageView
++                    android:id="@+id/iv_company"
++                    android:layout_width="match_parent"
++                    android:layout_height="200dp"
++                    android:contentDescription="Company Image"
++                    android:scaleType="centerCrop"
++                    android:src="@drawable/skeleton_image" />
++
++            </RelativeLayout>
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:layout_margin="10dp"
++                android:orientation="vertical">
++
++                <RelativeLayout
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content">
++
++                    <TextView
++                        android:id="@+id/tv_company_name"
++                        style="@style/TextAppearance.MaterialComponents.Headline6"
++                        android:layout_width="wrap_content"
++                        android:layout_height="wrap_content"
++                        android:layout_centerVertical="true"
++                        tools:text="PT Maju Mundur Cantik" />
++
++                </RelativeLayout>
++                <TextView
++                    android:id="@+id/tv_company_address"
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    style="@style/TextAppearance.MdcTypographyStyles.Caption"
++                    tools:text="Jl. Panjang, Jakarta Barat"/>
++            </LinearLayout>
++        </LinearLayout>
++    </androidx.cardview.widget.CardView>
++
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_company_overview.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_company_overview.xml b/app/src/main/res/layout/fragment_company_overview.xml
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/res/layout/fragment_company_overview.xml	
+@@ -0,0 +1,73 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".view.companycatalog.detail.CompanyOverviewFragment">
++
++    <de.hdodenhof.circleimageview.CircleImageView
++        android:id="@+id/iv_company_logo"
++        android:layout_width="100dp"
++        android:layout_height="100dp"
++        android:layout_marginTop="20dp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
++
++    <TextView
++        android:id="@+id/textView10"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="30dp"
++        android:text=""
++        android:textSize="22sp"
++        app:layout_constraintEnd_toEndOf="@+id/iv_company_logo"
++        app:layout_constraintStart_toStartOf="@+id/iv_company_logo"
++        app:layout_constraintTop_toBottomOf="@+id/iv_company_logo"
++        tools:text="Company Name" />
++
++    <com.google.android.material.tabs.TabLayout
++        android:id="@+id/tabCompany"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="10dp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/rv_company_ads">
++
++        <com.google.android.material.tabs.TabItem
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Overview" />
++
++        <com.google.android.material.tabs.TabItem
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="Products" />
++
++    </com.google.android.material.tabs.TabLayout>
++
++    <androidx.recyclerview.widget.RecyclerView
++        android:id="@+id/rv_company_ads"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:orientation="horizontal"
++        tools:layout_editor_absoluteX="0dp"
++        tools:layout_editor_absoluteY="194dp" />
++
++    <androidx.viewpager2.widget.ViewPager2
++        android:id="@+id/vp_company"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="1dp"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@+id/tabLayout2" >
++
++    </androidx.viewpager2.widget.ViewPager2>
++
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/haina/ecommerce/view/companycatalog/detail/CompanyOverviewFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/haina/ecommerce/view/companycatalog/detail/CompanyOverviewFragment.kt b/app/src/main/java/haina/ecommerce/view/companycatalog/detail/CompanyOverviewFragment.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/haina/ecommerce/view/companycatalog/detail/CompanyOverviewFragment.kt	
+@@ -0,0 +1,60 @@
++package haina.ecommerce.view.companycatalog.detail
++
++import android.os.Bundle
++import androidx.fragment.app.Fragment
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++import haina.ecommerce.R
++
++// TODO: Rename parameter arguments, choose names that match
++// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
++private const val ARG_PARAM1 = "param1"
++private const val ARG_PARAM2 = "param2"
++
++/**
++ * A simple [Fragment] subclass.
++ * Use the [CompanyOverviewFragment.newInstance] factory method to
++ * create an instance of this fragment.
++ */
++class CompanyOverviewFragment : Fragment() {
++    // TODO: Rename and change types of parameters
++    private var param1: String? = null
++    private var param2: String? = null
++
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        arguments?.let {
++            param1 = it.getString(ARG_PARAM1)
++            param2 = it.getString(ARG_PARAM2)
++        }
++    }
++
++    override fun onCreateView(
++        inflater: LayoutInflater, container: ViewGroup?,
++        savedInstanceState: Bundle?
++    ): View? {
++        // Inflate the layout for this fragment
++        return inflater.inflate(R.layout.fragment_company_overview, container, false)
++    }
++
++    companion object {
++        /**
++         * Use this factory method to create a new instance of
++         * this fragment using the provided parameters.
++         *
++         * @param param1 Parameter 1.
++         * @param param2 Parameter 2.
++         * @return A new instance of fragment CompanyOverviewFragment.
++         */
++        // TODO: Rename and change types and number of parameters
++        @JvmStatic
++        fun newInstance(param1: String, param2: String) =
++            CompanyOverviewFragment().apply {
++                arguments = Bundle().apply {
++                    putString(ARG_PARAM1, param1)
++                    putString(ARG_PARAM2, param2)
++                }
++            }
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_company_dashboard.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_company_dashboard.xml b/app/src/main/res/layout/fragment_company_dashboard.xml
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/res/layout/fragment_company_dashboard.xml	
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".view.companycatalog.dashboard.CompanyDashboardFragment">
++
++
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
