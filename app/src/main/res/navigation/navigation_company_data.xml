@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_companyOverviewFragment_to_companyItemDetailFragment"
             app:destination="@id/companyItemDetailFragment" />
+        <action
+            android:id="@+id/action_companyOverviewFragment_to_companyCatalogItemsFragment"
+            app:destination="@id/companyCatalogItemsFragment" />
     </fragment>
     <fragment
         android:id="@+id/companyGlobalSearchFragment"
