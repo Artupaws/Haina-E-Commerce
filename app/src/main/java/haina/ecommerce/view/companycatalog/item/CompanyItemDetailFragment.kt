@@ -1,5 +1,7 @@
 package haina.ecommerce.view.companycatalog.item
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -47,6 +49,12 @@ class CompanyItemDetailFragment : Fragment(), View.OnClickListener {
 
         binding.rvItemMedia.adapter = adapter
         binding.rvItemMedia.layoutManager = GridLayoutManager(context, 3)
+
+        binding.btnCall.setOnClickListener {
+            val callIntent = Intent(Intent.ACTION_DIAL)
+            callIntent.setData(Uri.parse("tel:00001111"))
+            startActivity(callIntent)
+        }
 
         return binding.root
     }
