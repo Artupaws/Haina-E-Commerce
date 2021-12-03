@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.AdapterDetailImage
@@ -17,7 +15,6 @@ import haina.ecommerce.databinding.FragmentBottomSheetSubforumBinding
 import haina.ecommerce.model.forum.*
 import haina.ecommerce.view.forum.detailforum.DetailForumActivity
 import haina.ecommerce.view.forum.tab.myforum.DetailMySubforum
-import timber.log.Timber
 import java.util.ArrayList
 
 class BottomSheetSubforum : BottomSheetDialogFragment(),View.OnClickListener,

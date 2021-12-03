@@ -5,13 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import haina.ecommerce.R
+import haina.ecommerce.adapter.companycatalog.CompanyDashboardAdapter
+import haina.ecommerce.databinding.FragmentCompanyDashboardBinding
 
 
 class CompanyDashboardFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var _binding: FragmentCompanyDashboardBinding
+    private val binding get() = _binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +26,22 @@ class CompanyDashboardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_company_dashboard, container, false)
+        _binding = FragmentCompanyDashboardBinding.inflate(inflater, container, false)
+
+        val adapter = CompanyDashboardAdapter()
+        binding.rvCompanyCategories.adapter = adapter
+
+        binding.cardView6.setOnClickListener {
+            findNavController().navigate(R.id.action_companyDashboardFragment_to_companyGlobalSearchFragment)
+        }
+
+        adapter.setOnItemCallback(object: CompanyDashboardAdapter.ItemAdapterCallback{
+            override fun categoryOnClick() {
+                findNavController().navigate(R.id.action_companyDashboardFragment_to_companyCatalogItemsFragment)
+            }
+        })
+
+        return binding.root
     }
 
 }

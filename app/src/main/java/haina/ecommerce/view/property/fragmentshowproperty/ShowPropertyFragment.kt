@@ -22,7 +22,6 @@ import haina.ecommerce.adapter.property.AdapterShowProperty
 import haina.ecommerce.databinding.FragmentShowPropertyBinding
 import haina.ecommerce.model.property.DataShowProperty
 import haina.ecommerce.view.property.ShowPropertyActivity
-import timber.log.Timber
 
 
  class ShowPropertyFragment : Fragment(), ShowPropertyContract.View, View.OnClickListener, AdapterShowProperty.ItemAdapterCallback {

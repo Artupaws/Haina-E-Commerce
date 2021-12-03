@@ -568,4 +568,6 @@
     <string name="item_description">Item Description</string>
     <string name="item_media">Item Media</string>
     <string name="add_new_catalog">Add New Catalog</string>
+    <string name="company_title">Company</string>
+    <string name="billing">Billing</string>
 </resources>

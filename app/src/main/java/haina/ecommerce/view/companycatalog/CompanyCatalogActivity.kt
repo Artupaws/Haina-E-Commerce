@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivityCompanyCatalogBinding
 
-class CompanyCatalogActivity : AppCompatActivity(){
+class   CompanyCatalogActivity : AppCompatActivity(){
 
     private lateinit var binding: ActivityCompanyCatalogBinding
 

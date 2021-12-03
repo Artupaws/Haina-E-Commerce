@@ -20,7 +20,11 @@
         android:id="@+id/companyAddItemFragment"
         android:name="haina.ecommerce.view.companycatalog.item.CompanyAddItemFragment"
         android:label="fragment_company_add_item"
-        tools:layout="@layout/fragment_company_add_item" />
+        tools:layout="@layout/fragment_company_add_item" >
+        <action
+            android:id="@+id/action_companyAddItemFragment_to_companyCatalogItemsFragment"
+            app:destination="@id/companyCatalogItemsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/companyCatalogItemsFragment"
         android:name="haina.ecommerce.view.companycatalog.catalog.CompanyCatalogItemsFragment"
@@ -61,5 +65,9 @@
         android:id="@+id/companyItemDetailFragment"
         android:name="haina.ecommerce.view.companycatalog.item.CompanyItemDetailFragment"
         android:label="fragment_company_item_detail"
-        tools:layout="@layout/fragment_company_item_detail" />
+        tools:layout="@layout/fragment_company_item_detail" >
+        <action
+            android:id="@+id/action_companyItemDetailFragment_to_companyOverviewFragment"
+            app:destination="@id/companyOverviewFragment" />
+    </fragment>
 </navigation>

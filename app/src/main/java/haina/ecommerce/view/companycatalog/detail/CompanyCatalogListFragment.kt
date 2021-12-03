@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import haina.ecommerce.R
+import haina.ecommerce.databinding.FragmentCompanyCatalogsBinding
 
 
-class CompanyItemsFragment : Fragment() {
+class CompanyCatalogListFragment : Fragment() {
+
+    private lateinit var _binding : FragmentCompanyCatalogsBinding
+    private val binding get() = _binding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +25,9 @@ class CompanyItemsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_company_catalogs, container, false)
+        _binding = FragmentCompanyCatalogsBinding.inflate(inflater, container, false)
+
+        return binding.root
     }
 
 

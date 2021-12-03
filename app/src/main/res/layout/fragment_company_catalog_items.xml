@@ -7,7 +7,7 @@
     tools:context=".view.companycatalog.catalog.CompanyCatalogItemsFragment">
 
     <LinearLayout
-        android:id="@+id/company_header"
+        android:id="@+id/catalog_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -61,7 +61,7 @@
             </androidx.cardview.widget.CardView>
 
             <ImageView
-                android:id="@+id/tv_add_catalog"
+                android:id="@+id/tv_add_items"
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
@@ -74,13 +74,14 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvItemList"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company_header"
+        app:layout_constraintTop_toBottomOf="@+id/catalog_header"
         tools:listitem="@layout/list_item_company_catalog_items"/>
 
     <androidx.cardview.widget.CardView

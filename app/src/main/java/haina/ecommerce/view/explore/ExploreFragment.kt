@@ -24,6 +24,7 @@ import haina.ecommerce.model.DataUser
 import haina.ecommerce.model.transactionlist.DataAllTransactionPending
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import haina.ecommerce.view.companycatalog.CompanyCatalogActivity
 import haina.ecommerce.view.covidlist.CovidListActivity
 import haina.ecommerce.view.flight.FlightTicketActivity
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
@@ -67,9 +68,9 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
         presenter.getListPendingTransaction()
         presenter.getDataUserProfile()
         presenter.loadListBaseCurrency()
-        presenter.loadCovidJkt()
+        //presenter.loadCovidJkt()
 
-        binding?.menuServices?.linearOther?.setOnClickListener(this)
+        //binding?.menuServices?.linearOther?.setOnClickListener(this)
         binding?.menuServices?.linearNews?.setOnClickListener(this)
         binding?.menuServices?.linearJob?.setOnClickListener(this)
         binding?.covidNews?.tvDetailCovid?.setOnClickListener(this)
@@ -79,6 +80,7 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
         binding?.menuServices?.linearFlightTicket?.setOnClickListener(this)
         binding?.menuServices?.linearProperty?.setOnClickListener(this)
         binding?.menuServices?.linearRestaurant?.setOnClickListener(this)
+        binding?.menuServices?.linearCompany?.setOnClickListener(this)
 
 //        presenter.loadHeadlinesNews(Constants.API_HEADLINES_NEWS)
         refresh()
@@ -120,10 +122,10 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-            R.id.linear_other -> {
-                val intent = Intent(activity, OtherActivity::class.java)
-                startActivity(intent)
-            }
+//            R.id.linear_other -> {
+//                val intent = Intent(activity, OtherActivity::class.java)
+//                startActivity(intent)
+//            }
             R.id.linear_news -> {
                 val intent = Intent(activity, NewsActivity::class.java)
                 startActivity(intent)
@@ -172,6 +174,10 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
             R.id.linear_property -> {
                 val intentShowProperty = Intent(requireActivity(), ShowPropertyActivity::class.java)
                 startActivity(intentShowProperty)
+            }
+            R.id.linear_company -> {
+                val intentCompany = Intent(requireActivity(), CompanyCatalogActivity::class.java)
+                startActivity(intentCompany)
             }
         }
     }

@@ -8,7 +8,7 @@
     android:padding="10dp">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_click"
+            android:id="@+id/cv_promo_item"
             android:layout_width="100dp"
             android:layout_height="180dp"
             android:layout_marginStart="5dp"

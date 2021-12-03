@@ -12,12 +12,10 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import haina.ecommerce.R
-import haina.ecommerce.adapter.flight.AdapterFlightDestinationCity
 import haina.ecommerce.adapter.hotel.newAdapterHotel.AdapterListCity
 import haina.ecommerce.databinding.FragmentListCityHotelBinding
 import haina.ecommerce.helper.Helper.convertLongtoTime

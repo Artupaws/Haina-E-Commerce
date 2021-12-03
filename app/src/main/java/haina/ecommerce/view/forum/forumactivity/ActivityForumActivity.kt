@@ -15,7 +15,6 @@ import haina.ecommerce.adapter.forum.AdapterListBan
 import haina.ecommerce.adapter.forum.AdapterListRoleMod
 import haina.ecommerce.databinding.ActivityForumBinding
 import haina.ecommerce.model.forum.DataItemBan
-import haina.ecommerce.model.forum.DataModList
 import haina.ecommerce.model.forum.ModListItem
 import haina.ecommerce.model.forum.SubforumData
 import haina.ecommerce.view.forum.tab.myforum.DetailMySubforum

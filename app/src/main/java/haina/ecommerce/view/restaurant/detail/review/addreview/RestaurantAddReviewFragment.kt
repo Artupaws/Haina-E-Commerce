@@ -1,6 +1,5 @@
 package haina.ecommerce.view.restaurant.detail.review.addreview
 
-import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
@@ -8,7 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
@@ -26,10 +24,6 @@ import haina.ecommerce.model.restaurant.master.RestaurantData
 import haina.ecommerce.model.restaurant.master.ReviewData
 import haina.ecommerce.room.roomimagepost.ImagePostClient
 import haina.ecommerce.room.roomimagepost.ImagePostDao
-import haina.ecommerce.room.roomvideopost.VideoPostClient
-import haina.ecommerce.room.roomvideopost.VideoPostDao
-import haina.ecommerce.room.roomvideopost.VideoPostData
-import haina.ecommerce.view.forum.createnewpost.NewPostActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

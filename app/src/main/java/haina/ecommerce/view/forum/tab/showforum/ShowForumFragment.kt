@@ -3,7 +3,6 @@ package haina.ecommerce.view.forum.tab.showforum
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -12,19 +11,16 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.recyclerview.widget.RecyclerView
 import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.AdapterCategoryForum
 import haina.ecommerce.adapter.forum.AdapterListAllThreads
 import haina.ecommerce.adapter.forum.AdapterListHotPost
 import haina.ecommerce.model.forum.*
-import haina.ecommerce.view.forum.bottomsheet.BottomSheetSubforum
 import haina.ecommerce.view.forum.createnewpost.NewPostActivity
 import haina.ecommerce.view.forum.createsubforum.CreateSubforumActivity
 import haina.ecommerce.view.forum.detailforum.DetailForumActivity
 import timber.log.Timber
 import java.util.ArrayList
-import android.widget.Toast
 import haina.ecommerce.adapter.forum.AdapterDetailImage
 import haina.ecommerce.databinding.FragmentShowForumBinding
 

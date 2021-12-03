@@ -12,9 +12,6 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.AdapterListSubforum
 import haina.ecommerce.adapter.forum.AdapterListSubforumFollow
 import haina.ecommerce.databinding.FragmentMyForumBinding
-import haina.ecommerce.model.forum.DataMypost
-import haina.ecommerce.model.forum.DataSubforum
-import haina.ecommerce.model.forum.DataSubforumHotPost
 import haina.ecommerce.model.forum.SubforumData
 import timber.log.Timber
 

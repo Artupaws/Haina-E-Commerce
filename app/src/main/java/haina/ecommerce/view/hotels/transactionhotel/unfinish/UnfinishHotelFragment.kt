@@ -6,15 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.hotel.AdapterTransactionUnfinish
-import haina.ecommerce.broadcastcountdown.BroadcastService
 import haina.ecommerce.databinding.FragmentUnfinishHotelBinding
 import haina.ecommerce.model.hotels.newHotel.DataBooking
 import haina.ecommerce.model.hotels.newHotel.PaidItem

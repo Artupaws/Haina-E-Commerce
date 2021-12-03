@@ -22,7 +22,6 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.forum.AdapterCategoryForum
 import haina.ecommerce.databinding.ActivityCreateSubforumBinding
 import haina.ecommerce.model.forum.DataCategoryForum
-import haina.ecommerce.view.myaccount.MyAccountFragment
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

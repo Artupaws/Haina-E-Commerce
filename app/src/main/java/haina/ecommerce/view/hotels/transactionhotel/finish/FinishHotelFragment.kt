@@ -1,6 +1,5 @@
 package haina.ecommerce.view.hotels.transactionhotel.finish
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context

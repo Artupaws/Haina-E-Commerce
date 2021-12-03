@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:navigationIcon="@drawable/ic_back_black"
         app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -58,7 +59,7 @@
             android:text="@string/edit" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_company_ads"
+            android:id="@+id/rv_company_promoted_items"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -68,39 +69,46 @@
             tools:listitem="@layout/list_item_company_overview_ad" />
     </LinearLayout>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabCompany"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_promoted_items">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabCompany"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/company_data" />
+            android:layout_marginTop="10dp">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/company_data" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/catalogs" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_company"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/catalogs" />
+            android:layout_marginTop="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabCompany">
 
-    </com.google.android.material.tabs.TabLayout>
+        </androidx.viewpager2.widget.ViewPager2>
 
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vp_company"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabCompany">
-
-    </androidx.viewpager2.widget.ViewPager2>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
