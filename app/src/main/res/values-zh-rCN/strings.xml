@@ -564,12 +564,13 @@
     <string name="item_count">产品数:</string>
     <string name="add_education_data">加教育经历</string>
     <string name="catalog_name">目录名称</string>
-    <string name="add_new_item">Add New Item</string>
-    <string name="item_name">Item Name</string>
-    <string name="item_price">Item Price</string>
-    <string name="item_description">Item Description</string>
-    <string name="item_media">Item Media</string>
-    <string name="add_new_catalog">Add New Catalog</string>
-    <string name="company_title">Company</string>
-    <string name="billing">Billing</string>
+    <string name="add_new_item">加新产品</string>
+    <string name="item_name">产品名称</string>
+    <string name="item_price">价格</string>
+    <string name="item_description">产品简介</string>
+    <string name="item_media">图片/视频</string>
+    <string name="add_new_catalog">加新目录</string>
+    <string name="company_title">公司</string>
+    <string name="billing">帐单</string>
+    <string name="company_detail">公司</string>
 </resources>

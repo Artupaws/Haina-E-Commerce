@@ -50,8 +50,6 @@ class CompanyOverviewFragment : Fragment(), CompanyPromotedItemsAdapter.ItemAdap
         val overviewTabAdapter = CompanyOverviewPagerAdapter(this)
         binding.vpCompany.adapter = overviewTabAdapter
 
-        binding.toolbarDashboardCompany
-
         TabLayoutMediator(binding.tabCompany, binding.vpCompany){
             tab, position -> tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
