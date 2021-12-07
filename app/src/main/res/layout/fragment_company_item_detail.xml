@@ -29,7 +29,7 @@
             android:id="@+id/rv_item_media"
             android:orientation="horizontal"
             tools:itemCount="1"
-            tools:listitem="@layout/list_item_company_media"
+            tools:listitem="@layout/list_item_company_item_media"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
