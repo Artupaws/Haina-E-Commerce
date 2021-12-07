@@ -7,6 +7,8 @@ import haina.ecommerce.model.bill.ResponseGetBillAmount
 import haina.ecommerce.model.bill.ResponseGetBillDirect
 import haina.ecommerce.model.categorypost.ResponseGetCategoryPost
 import haina.ecommerce.model.checkout.ResponseCheckout
+import haina.ecommerce.model.companycatalog.ResponseGetCompanyItem
+import haina.ecommerce.model.companycatalog.ResponseGetCompanyItemCategory
 import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.flight.*
 import haina.ecommerce.model.forum.*
@@ -1354,5 +1356,15 @@ interface NetworkService {
         @Part restaurantImage :List<MultipartBody.Part>
     ):Call<ResponseRestaurantDetail>
 
+    //Company Catalog
+
+    @GET("api/company/item/category")
+    fun getCompanyItemCategory():Call<ResponseGetCompanyItemCategory>
+
+    @FormUrlEncoded
+    @POST("/api/company/item/show/category")
+    fun getCompanyItemByCategory(
+        @Field("id_item_category")idItemCategory:Int?
+    ):Call<ResponseGetCompanyItem>
 
 }

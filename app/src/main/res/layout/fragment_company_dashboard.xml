@@ -78,12 +78,11 @@
         android:id="@+id/rvCompanyCategories"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/company_header"
-        app:spanCount="3"
+        app:spanCount="4"
         tools:listitem="@layout/list_item_company_category" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
