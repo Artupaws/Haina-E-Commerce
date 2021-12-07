@@ -17,7 +17,7 @@ class CompanyItemMediaAdapter() : RecyclerView.Adapter<CompanyItemMediaAdapter.H
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        Glide.with(holder.binding.ivMedia.context).load(R.drawable.ps5).into(holder.binding.ivMedia)
+
     }
 
     override fun getItemCount() = 3
