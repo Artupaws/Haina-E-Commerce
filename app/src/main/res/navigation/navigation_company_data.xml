@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/companyAddItemFragment"
-        android:name="haina.ecommerce.view.companycatalog.item.CompanyAddItemFragment"
+        android:name="haina.ecommerce.view.companycatalog.item.add.CompanyAddItemFragment"
         android:label="fragment_company_add_item"
         tools:layout="@layout/fragment_company_add_item" >
         <action
@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/companyItemDetailFragment"
-        android:name="haina.ecommerce.view.companycatalog.item.CompanyItemDetailFragment"
+        android:name="haina.ecommerce.view.companycatalog.item.detail.CompanyItemDetailFragment"
         android:label="fragment_company_item_detail"
         tools:layout="@layout/fragment_company_item_detail" >
         <action

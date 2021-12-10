@@ -11,10 +11,24 @@ import retrofit2.Response
 
 class CompanyCatalogItemsPresenter(val view: CompanyCatalogItemsContract.View, val context: Context) {
 
-    fun getCompanyItem(idCategory:Int){
+    fun getCompanyItem(page:Int,idCategory:Int,sortBy:String?,sort:String?){
         view.showLoading()
-        val showProperty = NetworkConfig().getConnectionHainaBearer(context).getCompanyItemByCategory(idCategory)
-        showProperty.enqueue(object : retrofit2.Callback<ResponseGetCompanyItem>{
+        lateinit var companyItem:Call<ResponseGetCompanyItem>
+        when(sortBy){
+            "price" ->{
+                companyItem = NetworkConfig().getConnectionHainaBearer(context).getCompanyItemByCategory(page,idCategory,sort,null,null)
+            }
+            "name" ->{
+                companyItem = NetworkConfig().getConnectionHainaBearer(context).getCompanyItemByCategory(page,idCategory,null,sort,null)
+            }
+            "time" ->{
+                companyItem = NetworkConfig().getConnectionHainaBearer(context).getCompanyItemByCategory(page,idCategory,null,null,sort)
+            }
+            null ->{
+                companyItem = NetworkConfig().getConnectionHainaBearer(context).getCompanyItemByCategory(page,idCategory,null,null,null)
+            }
+        }
+        companyItem.enqueue(object : retrofit2.Callback<ResponseGetCompanyItem>{
             override fun onResponse(call: Call<ResponseGetCompanyItem>, response: Response<ResponseGetCompanyItem>) {
                 view.dismissLoading()
                 if (response.isSuccessful && response.body()?.value == 1){

@@ -34,6 +34,7 @@
         android:layout_marginTop="15dp"
         android:text=""
         android:textSize="22sp"
+        style="@style/TextAppearance.MdcTypographyStyles.Headline6"
         app:layout_constraintEnd_toEndOf="@+id/iv_company_logo"
         app:layout_constraintStart_toStartOf="@+id/iv_company_logo"
         app:layout_constraintTop_toBottomOf="@+id/iv_company_logo"

@@ -2,16 +2,14 @@ package haina.ecommerce.model.companycatalog
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import haina.ecommerce.model.companycatalog.master.CompanyData
 import haina.ecommerce.model.companycatalog.master.CompanyItem
-import haina.ecommerce.model.companycatalog.master.PaginationCompanyItem
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ResponseGetCompanyItem(
+data class ResponseGetItemDetail(
 
 	@field:SerializedName("data")
-	val data: PaginationCompanyItem? = null,
+	val data: CompanyItem? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,

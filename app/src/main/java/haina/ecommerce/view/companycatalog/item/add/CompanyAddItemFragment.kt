@@ -1,4 +1,4 @@
-package haina.ecommerce.view.companycatalog.item
+package haina.ecommerce.view.companycatalog.item.add
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

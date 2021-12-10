@@ -9,6 +9,7 @@ import haina.ecommerce.model.categorypost.ResponseGetCategoryPost
 import haina.ecommerce.model.checkout.ResponseCheckout
 import haina.ecommerce.model.companycatalog.ResponseGetCompanyItem
 import haina.ecommerce.model.companycatalog.ResponseGetCompanyItemCategory
+import haina.ecommerce.model.companycatalog.ResponseGetItemDetail
 import haina.ecommerce.model.currency.ResponseGetCurrency
 import haina.ecommerce.model.flight.*
 import haina.ecommerce.model.forum.*
@@ -1364,7 +1365,17 @@ interface NetworkService {
     @FormUrlEncoded
     @POST("/api/company/item/show/category")
     fun getCompanyItemByCategory(
-        @Field("id_item_category")idItemCategory:Int?
+        @Field("page")page:Int?,
+        @Field("id_item_category")idItemCategory:Int?,
+        @Field("sort_by_price")sortByPrice:String?,
+        @Field("sort_by_name")sortByName:String?,
+        @Field("sort_by_time")sortByTime:String?,
     ):Call<ResponseGetCompanyItem>
+
+    @FormUrlEncoded
+    @POST("/api/company/item/detail")
+    fun getItemDetail(
+        @Field("id_item")idItem:Int
+    ):Call<ResponseGetItemDetail>
 
 }

@@ -21,14 +21,23 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
             android:weightSum="3">
 
+            <ImageView
+                android:id="@+id/btn_back"
+                style="@style/TextView.Poppins16spBlack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:src="@drawable/back"
+                android:gravity="center" />
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_weight="3"
+                android:layout_weight="2.6"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="5dp"
                 app:layout_constraintEnd_toStartOf="parent"
@@ -63,8 +72,9 @@
             <ImageView
                 android:id="@+id/tv_add_items"
                 style="@style/TextView.Poppins16spBlack"
-                android:layout_width="50dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.2"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_add"
                 android:gravity="center"
@@ -73,15 +83,49 @@
         </LinearLayout>
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvItemList"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/catalog_header"
-        tools:listitem="@layout/list_item_company_catalog_items"/>
+        app:layout_constraintTop_toBottomOf="@+id/catalog_header">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_item_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="vertical"
+                    android:paddingBottom="30dp"
+                    android:clipToPadding="false"
+                    tools:listitem="@layout/list_item_company_catalog_items" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/iv_loading"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    android:layout_gravity="center"
+                    app:lottie_rawRes="@raw/load" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/btn_filter"
