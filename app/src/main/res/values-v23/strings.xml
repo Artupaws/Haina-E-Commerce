@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="warning_input_passport">If your nationality is not Indonesian, then just enter your passport number</string>
+    <string name="enter_interview_location">Enter Interview Location</string>
 </resources>

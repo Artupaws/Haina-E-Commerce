@@ -311,7 +311,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         val searchView = popupDialogLocation?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogLocation?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogLocation?.dismiss() }
-        title?.text = "Location"
+        title?.text = resources.getString(R.string.location)
         searchView?.queryHint = "Search City Here"
         rvDestination?.adapter = adapterLocation
         searchView?.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,

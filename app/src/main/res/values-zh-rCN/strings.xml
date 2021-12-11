@@ -573,4 +573,21 @@
     <string name="company_title">公司</string>
     <string name="billing">帐单</string>
     <string name="company_detail">公司</string>
+    <string name="find_job_here">搜索空缺</string>
+    <string name="vacancies_filter">空缺过滤</string>
+    <string name="interview_location">面试地址</string>
+    <string name="enter_interview_location">输入面试地址</string>
+    <string name="send_invitation">发送邀请</string>
+    <string name="enter_contact_person_number">输入联系号码</string>
+    <string name="contact_number">联系号码</string>
+    <string name="contact_person">联系人</string>
+    <string name="enter_contact_person_name">熟人联系人姓名</string>
+    <string name="interview_date">面试日期</string>
+    <string name="interview_method">面试方法</string>
+    <string name="invite_interview">面试邀请</string>
+    <string name="choose_last_education">选择最新教育</string>
+    <string name="job_full_time">全职工</string>
+    <string name="job_half_time">兼职工</string>
+    <string name="job_contract">合同工</string>
+    <string name="job_internship">实习</string>
 </resources>

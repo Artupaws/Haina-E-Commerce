@@ -92,28 +92,28 @@
                         style="@style/TextView.Poppins14spBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Full Time" />
+                        android:text="@string/job_full_time" />
 
                     <RadioButton
                         android:id="@+id/rb_halftime"
                         style="@style/TextView.Poppins14spBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Half Time" />
+                        android:text="@string/job_half_time" />
 
                     <RadioButton
                         android:id="@+id/rb_contract"
                         style="@style/TextView.Poppins14spBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Contract" />
+                        android:text="@string/job_contract" />
 
                     <RadioButton
                         android:id="@+id/rb_intern"
                         style="@style/TextView.Poppins14spBlack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Internship" />
+                        android:text="@string/job_internship" />
 
                 </RadioGroup>
 
@@ -199,7 +199,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="job"
+                    android:text="@string/company_address"
                     android:textFontWeight="500" />
 
                 <EditText
@@ -292,7 +292,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Description Job"
+                    android:text="@string/job_description"
                     android:textFontWeight="500" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -329,7 +329,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Skills"
+                    android:text="@string/skills"
                     android:textFontWeight="500" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -346,7 +346,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Last Education"
+                    android:text="@string/last_education"
                     android:textFontWeight="500" />
 
                 <EditText
@@ -356,7 +356,7 @@
                     android:layout_height="38dp"
                     android:focusable="false"
                     android:background="@drawable/background_line_corner_input_text_black"
-                    android:hint="Choose Last Education"
+                    android:hint="@string/choose_last_education"
                     android:inputType="text"
                     android:paddingStart="10dp" />
                 </LinearLayout>

@@ -90,7 +90,13 @@ class HistorySubmitFragment : Fragment(), HistorySubmitContract, View.OnClickLis
             adapter = adapterHistorySubmitJob
             adapterHistorySubmitJob?.notifyDataSetChanged()
         }
-        totalSubmit = "Total submit : ${item?.size.toString()} Application"
+        if(sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en"){
+            totalSubmit = "Total submit : ${item?.size.toString()} Application"
+        }
+        else{
+            totalSubmit = "申请职位数 : ${item?.size.toString()}"
+        }
+
         binding?.tvTotalSubmit?.text = totalSubmit
     }
 

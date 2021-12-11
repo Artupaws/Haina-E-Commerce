@@ -16,6 +16,8 @@ import haina.ecommerce.databinding.ListItemShowPropertyBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.property.DataCity
 import haina.ecommerce.model.property.DataShowProperty
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 
 class AdapterShowProperty(val context: Context, private var dataProperty: List<DataShowProperty?>?,
                           private val itemAdapterCallback: ItemAdapterCallback,
@@ -25,8 +27,11 @@ class AdapterShowProperty(val context: Context, private var dataProperty: List<D
     private var listResultProperty : List<DataShowProperty?>? = dataProperty
 
     private val helper:Helper=Helper
+    private lateinit var expiryDate: String
     private lateinit var imagesListener : ImageListener
     private lateinit var listParams: ArrayList<String>
+
+    private lateinit var sharedPref: SharedPreferenceHelper
 
     inner class Holder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ListItemShowPropertyBinding.bind(view)
@@ -40,7 +45,13 @@ class AdapterShowProperty(val context: Context, private var dataProperty: List<D
                     } false -> {
                     tvStatus.visibility = View.VISIBLE
                     tvStatus.text = itemHaina.status
-                    val expiryDate = "Expired on ${itemHaina.expiryDate?.substring(0,10)}"
+                    if (sharedPref.getValueString(Constants.LANGUAGE_APP) == "en") {
+                        expiryDate = "Expired on ${itemHaina.expiryDate?.substring(0, 10)}"
+                    }
+                    else{
+                        expiryDate = "广告到期： ${itemHaina.expiryDate?.substring(0, 10)}"
+                    }
+
                     tvExpiryDate.text = expiryDate
                     }
                 }
@@ -57,6 +68,8 @@ class AdapterShowProperty(val context: Context, private var dataProperty: List<D
                     vpImageProperty.setImageListener(imagesListener)
                 }
                 showPrice(binding, itemHaina)
+
+                //zh belum
                 val condition = "Condition : ${itemHaina.condition}"
                 tvConditionProperty.text = condition
                 tvNameProperty.text = itemHaina.title

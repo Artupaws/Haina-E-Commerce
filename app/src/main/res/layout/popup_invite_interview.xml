@@ -13,7 +13,7 @@
         style="@style/TextView.Poppins16spBlack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Invite Interview"
+        android:text="@string/invite_interview"
         android:textAllCaps="true"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -140,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="Interview Method"
+                    android:text="@string/interview_method"
                     app:layout_constraintStart_toEndOf="@+id/image_view_method"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -176,7 +176,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="Interview Date"
+                    android:text="@string/interview_date"
                     app:layout_constraintStart_toEndOf="@+id/image_view_date"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -186,7 +186,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:text="select date"
+                    android:text="@string/select_date"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/tv_date"
@@ -226,7 +226,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="Contact Person"
+                    android:text="@string/contact_person"
                     app:layout_constraintStart_toEndOf="@+id/image_view_contact_person"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -236,7 +236,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:hint="Enter Contact Person Name"
+                    android:hint="@string/enter_contact_person_name"
                     android:background="@null"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -276,7 +276,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="Contact Number"
+                    android:text="@string/contact_number"
                     app:layout_constraintStart_toEndOf="@+id/image_view_contact_number"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -286,7 +286,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:hint="Enter Contact Person Number"
+                    android:hint="@string/enter_contact_person_number"
                     android:background="@null"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -327,7 +327,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="Interview Location"
+                    android:text="@string/interview_location"
                     app:layout_constraintStart_toEndOf="@+id/image_view_location"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -337,7 +337,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:hint="Enter Interview Location"
+                    android:hint="@string/enter_interview_location"
                     android:lines="3"
                     android:background="@null"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -367,7 +367,7 @@
         android:layout_width="0dp"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
-        android:text="Send Invitation"
+        android:text="@string/send_invitation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

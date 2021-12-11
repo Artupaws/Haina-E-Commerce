@@ -571,4 +571,21 @@
     <string name="company_title">Company</string>
     <string name="billing">Billing</string>
     <string name="company_detail">Company Details</string>
+    <string name="find_job_here">Find your job here</string>
+    <string name="vacancies_filter">Vacancies Filter</string>
+    <string name="interview_location">Interview Location</string>
+    <string name="enter_interview_location">Enter Interview Location</string>
+    <string name="send_invitation">Send Invitation</string>
+    <string name="enter_contact_person_number">Enter Contact Person Number</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="contact_person">Contact Person</string>
+    <string name="enter_contact_person_name">Enter Contact Person Name</string>
+    <string name="interview_date">Interview Date</string>
+    <string name="interview_method">Interview Method</string>
+    <string name="invite_interview">Invite Interview</string>
+    <string name="choose_last_education">Choose Last Education</string>
+    <string name="job_full_time">Full Time</string>
+    <string name="job_half_time">Part Time</string>
+    <string name="job_contract">Contract</string>
+    <string name="job_internship">Internship</string>
 </resources>

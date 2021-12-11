@@ -63,7 +63,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), BottomSheetFilter
 
         binding.toolbarHotelSelection.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarHotelSelection.setNavigationOnClickListener { dismiss() }
-        binding.toolbarHotelSelection.title = "Vacancies Filter"
+        binding.toolbarHotelSelection.title = getString(R.string.vacancies_filter)
         binding.rsliderStartSalary.addOnChangeListener { _, value, _ ->
             minSalary = value.toInt()
             val stringSalary= helper.convertToFormatMoneyIDRFilter(value.toString())
@@ -218,7 +218,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), BottomSheetFilter
         val searchView = popupDialogLocation?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogLocation?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogLocation?.dismiss() }
-        title?.text = "Location"
+        title?.text = resources.getString(R.string.location)
         searchView?.queryHint = "Search City Here"
         rvDestination?.adapter = adapterLocation
         searchView?.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
