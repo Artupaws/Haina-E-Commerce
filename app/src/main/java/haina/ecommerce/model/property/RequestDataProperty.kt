@@ -23,10 +23,10 @@ data class RequestDataProperty (
     var surfaceArea:Int,
 
     @SerializedName("bed_room")
-    var bedRoom:Int?,
+    var bedRoom:Int,
 
     @SerializedName("bath_room")
-    var bathRoom:Int?,
+    var bathRoom:Int,
 
     @SerializedName("floor")
     var floor:Int,

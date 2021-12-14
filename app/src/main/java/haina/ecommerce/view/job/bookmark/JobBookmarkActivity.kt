@@ -107,7 +107,7 @@ class JobBookmarkActivity: AppCompatActivity(), JobBookmarkContract.View,
     override fun notAvailableBookmark() {
         binding.rvJobBookmark.visibility = View.INVISIBLE
         binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
-        binding.includeEmpty.tvEmpty.text="You don't have any bookmarked job"
+        binding.includeEmpty.tvEmpty.text=getString(R.string.no_vacancy_bookmark)
     }
 
 

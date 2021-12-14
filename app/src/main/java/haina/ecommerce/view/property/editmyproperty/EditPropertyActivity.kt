@@ -280,22 +280,25 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
     private fun radioButtonTypePosting(view: View) {
         val radio: RadioButton =
             findViewById(binding.includeDataPropertyTop.rdGroupTypePosting.checkedRadioButtonId)
-        typePosting = radio.text.toString()
-        when (typePosting) {
-            "For Sell" -> {
+        //typePosting = radio.text.toString()
+        when (radio.id) {
+            R.id.rb_for_sell -> {
                 binding.includeDataPropertyTop.linearPriceRent.visibility = View.GONE
                 binding.includeDataPropertyTop.linearPriceSell.visibility = View.VISIBLE
                 binding.includeDataPropertyTop.linearTypeCertificate.visibility = View.VISIBLE
+                typePosting = "sell"
             }
-            "For Rent" -> {
+            R.id.rb_for_rent -> {
                 binding.includeDataPropertyTop.linearPriceRent.visibility = View.VISIBLE
                 binding.includeDataPropertyTop.linearPriceSell.visibility = View.GONE
                 binding.includeDataPropertyTop.linearTypeCertificate.visibility = View.GONE
+                typePosting = "rent"
             }
-            "Both" -> {
+            R.id.rb_both -> {
                 binding.includeDataPropertyTop.linearPriceRent.visibility = View.VISIBLE
                 binding.includeDataPropertyTop.linearPriceSell.visibility = View.VISIBLE
                 binding.includeDataPropertyTop.linearTypeCertificate.visibility = View.VISIBLE
+                typePosting = "both"
             }
         }
     }
@@ -461,9 +464,10 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (typeCertificateParams.isNullOrEmpty()) {
             when (typePosting) {
-                "For Rent" -> {
+                "rent" -> {
                     isEmptyTypeCertificate = false
                     binding.includeDataPropertyTop.tvTitleTypeCertificate.error = null
+                    typeCertificateParams = "None"
                 }
                 else -> {
                     isEmptyTypeCertificate = true
@@ -523,7 +527,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (priceRentParams.isEmpty()) {
             when (typePosting) {
-                "For Sell" -> {
+                "sell" -> {
                     isEmptyPriceRent = false
                     binding.includeDataPropertyTop.tvTitlePriceRent.error = null
                 }
@@ -540,7 +544,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (priceSellParams.isNullOrEmpty()) {
             when (typePosting) {
-                "For Rent" -> {
+                "rent" -> {
                     isEmptyPriceSell = false
                     binding.includeDataPropertyTop.tvTitlePriceSell.error = null
                 }
@@ -557,7 +561,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
-            && typePropertyParams == "house" && typePostingParams == "For Sell"){
+            && typePropertyParams == "house" && typePostingParams == "sell"){
             dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(),
                 landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(), floorParams.toInt(), facilityParams,
                 typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams,
@@ -573,22 +577,22 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear
             && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent &&
-            typePropertyParams == "house" && typePostingParams == "For Rent"){
+            typePropertyParams == "house" && typePostingParams == "rent"){
             dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(),
-                floorParams.toInt(), facilityParams, null, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams,
+                floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams,
                 descriptionParams, "0", priceRentParams, null, null, condition,null)
             Log.d("houseRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
             presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
-                bedRoomParams.toInt(), bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), null, addressParams, null, null,
+                bedRoomParams.toInt(), bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), typeCertificateParams, addressParams, null, null,
                 "0", priceRentParams, facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
         if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell && !isEmptyPriceRent
-            && typePropertyParams == "house" && typePostingParams == "Both"
+            && typePropertyParams == "house" && typePostingParams == "both"
         ) {
             dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(), floorParams.toInt(), facilityParams,
                 typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams, descriptionParams, priceSellParams,
@@ -604,7 +608,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
-            && typePropertyParams == "apartment" && typePostingParams == "For Sell"
+            && typePropertyParams == "apartment" && typePostingParams == "sell"
         ) {
             dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, bedRoomParams.toInt(),
                 bathRoomParams.toInt(), floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(),
@@ -620,10 +624,10 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear
             && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent
-            && typePropertyParams == "apartment" && typePostingParams == "For Rent"
+            && typePropertyParams == "apartment" && typePostingParams == "rent"
         ) {
             dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, bedRoomParams.toInt(), bathRoomParams.toInt(), floorParams.toInt(),
-                facilityParams, null, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams, descriptionParams, "0",
+                facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams, descriptionParams, "0",
                 priceRentParams, null, null, condition, null)
             Log.d("ApartmentRent", dataRequest.toString())
             val bundle = Bundle()
@@ -636,7 +640,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell && !isEmptyPriceRent
-            && typePropertyParams == "apartment" && typePostingParams == "Both"
+            && typePropertyParams == "apartment" && typePostingParams == "both"
         ) {
             dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, bedRoomParams.toInt(), bathRoomParams.toInt(), floorParams.toInt(), facilityParams,
                 typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams, descriptionParams,
@@ -652,95 +656,95 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 
         if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
-            && typePropertyParams == "warehouse" && typePostingParams == "For Sell"
+            && typePropertyParams == "warehouse" && typePostingParams == "sell"
         ) {
-            dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), null, bathRoomParams.toInt(), floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(),
+            dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), 0, bathRoomParams.toInt(), floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(),
                 provinceParams, cityParams, addressParams, titleParams, descriptionParams, priceSellParams, "0",
                 null, null, condition, null)
             Log.d("WarehouseSell", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
             presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
-                null, bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), typeCertificateParams, addressParams, null, null,
+                0, bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), typeCertificateParams, addressParams, null, null,
                 priceSellParams, "0", facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
         if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent
-            && typePropertyParams == "warehouse" && typePostingParams == "For Rent"
+            && typePropertyParams == "warehouse" && typePostingParams == "rent"
         ) {
             dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(),
-                null, bathRoomParams.toInt(), floorParams.toInt(), facilityParams, null, yearParams.toInt(), provinceParams, cityParams, addressParams,
+                0, bathRoomParams.toInt(), floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
                 titleParams, descriptionParams, "0", priceRentParams, null, null, condition, null)
             Log.d("WarehouseRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
             presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
-                null, bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), null, addressParams, null, null,
+                null, bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), typeCertificateParams, addressParams, null, null,
                 "0", priceRentParams, facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
         if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
-            && !isEmptyPriceSell && typePropertyParams == "warehouse" && typePostingParams == "Both"
+            && !isEmptyPriceSell && typePropertyParams == "warehouse" && typePostingParams == "both"
         ) {
-            dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), null, bathRoomParams.toInt(), floorParams.toInt(),
+            dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), 0, bathRoomParams.toInt(), floorParams.toInt(),
                 facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams,
                 descriptionParams, priceSellParams, priceRentParams, null, null, condition, null)
             Log.d("WarehouseBoth", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
             presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
-                null, bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), typeCertificateParams, addressParams, null, null,
+                0, bathRoomParams.toInt(), buildingAreaParams.toInt(), landAreaParams.toInt(), typeCertificateParams, addressParams, null, null,
                 priceSellParams, priceRentParams, facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
         if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
-            && typePropertyParams == "office" && typePostingParams == "For Sell"
+            && typePropertyParams == "office" && typePostingParams == "sell"
         ) {
-            dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, null, bathRoomParams.toInt(),
+            dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, 0, bathRoomParams.toInt(),
                 floorParams.toInt(), facilityParams, typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams,
                 titleParams, descriptionParams, priceSellParams, "0", null, null, condition, null)
             Log.d("WarehouseSell", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
             presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
-                null, bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, typeCertificateParams, addressParams, null, null,
+                0, bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, typeCertificateParams, addressParams, null, null,
                 priceSellParams, "0", facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
         if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent
-            && typePropertyParams == "office" && typePostingParams == "For Rent"
+            && typePropertyParams == "office" && typePostingParams == "rent"
         ) {
-            dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, null, bathRoomParams.toInt(), floorParams.toInt(), facilityParams,
-                null, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams,
+            dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, 0, bathRoomParams.toInt(), floorParams.toInt(), facilityParams,
+                typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams,
                 descriptionParams, "0", priceRentParams, null, null, condition, null)
             Log.d("WarehouseRent", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
             presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
-                null, bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, null, addressParams, null, null,
+                0, bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, null, addressParams, null, null,
                 "0", priceRentParams, facilityParams, descriptionParams)
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
         if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeProvince && !isEmptyTypeCertificate && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent &&
-            !isEmptyPriceSell && typePropertyParams == "office" && typePostingParams == "Both") {
-            dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, null, bathRoomParams.toInt(), floorParams.toInt(), facilityParams,
+            !isEmptyPriceSell && typePropertyParams == "office" && typePostingParams == "both") {
+            dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, 0, bathRoomParams.toInt(), floorParams.toInt(), facilityParams,
                 typeCertificateParams, yearParams.toInt(), provinceParams, cityParams, addressParams, titleParams, descriptionParams, priceSellParams,
                 priceRentParams, null, null, condition, null)
             Log.d("WarehouseBoth", dataRequest.toString())
             val bundle = Bundle()
             bundle.putParcelable("dataRequest", dataRequest)
             presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
-                null, bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, typeCertificateParams, addressParams, null, null,
+                0, bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, typeCertificateParams, addressParams, null, null,
             priceSellParams, priceRentParams, facilityParams, descriptionParams)
         }
 

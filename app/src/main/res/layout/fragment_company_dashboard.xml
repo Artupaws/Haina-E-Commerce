@@ -114,7 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Recommended for you"/>
+                    android:text="@string/recommended_for_you"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvRecommendedItem"

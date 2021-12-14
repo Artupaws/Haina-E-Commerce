@@ -23,12 +23,12 @@ class FinishPropertyActivity : AppCompatActivity(), View.OnClickListener {
         binding.btnActionGoto.setOnClickListener(this)
         endProgress = intent?.getStringExtra("finish")
         if (endProgress == "vacancy"){
-            binding.tvTitleSuccess.text = "Success Create Posting Vacancy"
-            binding.tvTitleDescriptionSuccess.text = "Can be seen on MyVacancy Page"
+            binding.tvTitleSuccess.text = getString(R.string.vacancy_post_success)
+            binding.tvTitleDescriptionSuccess.text = getString(R.string.see_new_vacancy)
             binding.btnActionGoto.text = "Go To MyVacancy Page"
         } else if (endProgress == "property"){
-            binding.tvTitleSuccess.text = "Success Create Posting Property"
-            binding.tvTitleDescriptionSuccess.text = "Can be seen on MyProprety Page"
+            binding.tvTitleSuccess.text = getString(R.string.property_post_success)
+            binding.tvTitleDescriptionSuccess.text = getString(R.string.see_at_property)
             binding.btnActionGoto.text = "Go To MyProperty Page"
         }
     }

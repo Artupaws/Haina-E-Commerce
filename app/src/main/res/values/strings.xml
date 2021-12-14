@@ -13,7 +13,7 @@
     <string name="explore">Explore</string>
     <string name="posting">Forum</string>
     <string name="my_account">Profile</string>
-    <string name="hint_search">News Today, Covid-19 News...</string>
+    <string name="hint_search">News Today, Covid-19 News…</string>
     <string name="categories">Categories</string>
     <string name="recomendations">RECOMENDATIONS</string>
     <string name="news_title">News</string>
@@ -329,8 +329,8 @@
     <string name="description_ads">Ad Description*</string>
     <string name="set_price_required">Set Price for Rent*</string>
     <string name="set_price_sell_required">Set Price for Sale*</string>
-    <string name="sell_rent">Sell/Rent</string>
-    <string name="for_sell">For Sell</string>
+    <string name="sell_rent">Sale/Rent</string>
+    <string name="for_sell">For Sale</string>
     <string name="for_rent">For Rent</string>
     <string name="type_posting_required">Type Posting*</string>
     <string name="in_meters">In square meters</string>
@@ -347,8 +347,8 @@
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
     <string name="property_title">Property</string>
-    <string name="price_sell">Price Sell</string>
-    <string name="price_rent">Price Rent</string>
+    <string name="price_sell">Selling Price</string>
+    <string name="price_rent">Monthly Renting Price</string>
     <string name="type">Type</string>
     <string name="building_area">Building Area</string>
     <string name="land_area">Land Area</string>
@@ -433,7 +433,7 @@
     <string name="select_date">Select date</string>
     <string name="total_passenger">Total Passenger</string>
     <string name="choose">Choose</string>
-    <string name="search_hotel_hint">Search hotel here...</string>
+    <string name="search_hotel_hint">Search hotel here…</string>
     <string name="subforum_image">Subforum Image</string>
     <string name="subforum_title">Subforum Title</string>
     <string name="subforum_desc">Subforum Description</string>
@@ -476,10 +476,10 @@
     <string name="job_type">Job Type</string>
     <string name="minimum_experience">Minimum Experience</string>
     <string name="show_salary">Show Salary</string>
-    <string name="company_name_hint">Enter company name...</string>
+    <string name="company_name_hint">Enter company name…</string>
     <string name="company_province">Company Location (Province)</string>
     <string name="siup">SIUP (Company Registration No.)</string>
-    <string name="siup_hint">Enter SIUP number...</string>
+    <string name="siup_hint">Enter SIUP number…</string>
     <string name="add_photo">Add Photo</string>
     <string name="orderer_data">Orderer data</string>
     <string name="passenger_data">Passenger Data</string>
@@ -537,7 +537,7 @@
     <string name="number_of_staff">Number of staff(s)</string>
     <string name="contact">Contact</string>
     <string name="company_category">Category</string>
-    <string name="search_company_or_items">Search company or items...</string>
+    <string name="search_company_or_items">Search company or items…</string>
     <string name="cuisine_type">Cuisine Type</string>
     <string name="show_all">Show All</string>
     <string name="restaurant_type">Restaurant Type</string>
@@ -589,4 +589,19 @@
     <string name="job_half_time">Part Time</string>
     <string name="job_contract">Contract</string>
     <string name="job_internship">Internship</string>
+    <string name="total_submit">Total submit:</string>
+    <string name="expired_on">Expires on:</string>
+    <string name="please_pay_ad">Please finish payment to display ads</string>
+    <string name="make_payment">Make payment</string>
+    <string name="recommended_for_you">Recommended for you</string>
+    <string name="search_property_hint">Real Estate, Apartment and more…</string>
+    <string name="vacancy_post_success">Create Vacancy Posting Success</string>
+    <string name="property_post_success">Create Property Posting Success</string>
+    <string name="see_new_vacancy">Can be seen on \'My Vacancy\' Page</string>
+    <string name="see_at_property">Can be seen on \'My Property\' Page</string>
+    <string name="no_vacancy_bookmark">You do not have any bookmarked job</string>
+    <string name="interview_link">Interview Link</string>
+    <string name="enter_interview_link">Enter Interview Link</string>
+    <string name="upload_min_one">Please insert minimum 1 photo of property</string>
+    <string name="post_property">Post Property</string>
 </resources>

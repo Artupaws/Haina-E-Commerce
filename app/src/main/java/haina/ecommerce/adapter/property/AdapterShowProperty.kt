@@ -1,15 +1,14 @@
 package haina.ecommerce.adapter.property
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.synnapps.carouselview.ImageListener
 import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemShowPropertyBinding
@@ -18,6 +17,7 @@ import haina.ecommerce.model.property.DataCity
 import haina.ecommerce.model.property.DataShowProperty
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import timber.log.Timber
 
 class AdapterShowProperty(val context: Context, private var dataProperty: List<DataShowProperty?>?,
                           private val itemAdapterCallback: ItemAdapterCallback,
@@ -58,7 +58,7 @@ class AdapterShowProperty(val context: Context, private var dataProperty: List<D
                 if (itemHaina.images != null){
                     for (i in itemHaina.images) {
                         i?.path?.let { listParams.add(it) }
-                        Log.d("listImageProperty", listParams.toString())
+                        Timber.d(listParams.toString())
                         vpImageProperty.pageCount = listParams.size
                     }
                     imagesListener = ImageListener { _, imageView ->
@@ -70,7 +70,7 @@ class AdapterShowProperty(val context: Context, private var dataProperty: List<D
                 showPrice(binding, itemHaina)
 
                 //zh belum
-                val condition = "Condition : ${itemHaina.condition}"
+                val condition = "${itemHaina.condition}"
                 tvConditionProperty.text = condition
                 tvNameProperty.text = itemHaina.title
                 tvYear.text = itemHaina.year
@@ -86,6 +86,7 @@ class AdapterShowProperty(val context: Context, private var dataProperty: List<D
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterShowProperty.Holder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemShowPropertyBinding.inflate(inflater)
+        sharedPref = SharedPreferenceHelper(context)
         return Holder(binding.root)
     }
 

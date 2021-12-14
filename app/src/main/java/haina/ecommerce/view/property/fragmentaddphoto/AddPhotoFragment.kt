@@ -72,6 +72,7 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
             findNavController().navigateUp()
             deleteAll()
         }
+        deleteAll()
         request = arguments?.getParcelable("dataRequest")!!
         dialogMethodUpload()
         dialogLoading()
@@ -126,8 +127,8 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
         val year:RequestBody = RequestBody.create(MultipartBody.FORM, request.year.toString())
         val city:RequestBody = RequestBody.create(MultipartBody.FORM, request.city.toString())
         val floor:RequestBody = RequestBody.create(MultipartBody.FORM, request.floor.toString())
-        val bedRoom:RequestBody = RequestBody.create(MultipartBody.FORM, request.bedRoom.toString())
-        val bathRoom:RequestBody = RequestBody.create(MultipartBody.FORM, request.bathRoom.toString())
+        //val bedRoom:RequestBody = RequestBody.create(MultipartBody.FORM, request.bedRoom.toString())
+        //val bathRoom:RequestBody = RequestBody.create(MultipartBody.FORM, request.bathRoom.toString())
         val address:RequestBody = RequestBody.create(MultipartBody.FORM, request.address)
         val latitude:RequestBody = RequestBody.create(MultipartBody.FORM, "0")
         val longitude:RequestBody = RequestBody.create(MultipartBody.FORM, "0")
@@ -136,10 +137,10 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
         val description:RequestBody = RequestBody.create(MultipartBody.FORM, request.description)
         val facility:RequestBody = RequestBody.create(MultipartBody.FORM, request.facility)
         if (listPhotoArray.size == 0){
-            Toast.makeText(requireActivity(), "Please insert minimal 1 photo of property", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.upload_min_one), Toast.LENGTH_SHORT).show()
         }else {
             presenter.createPostProperty(typeProperty, condition, title, year, city, floor,
-                bedRoom, bathRoom, request.buildingArea, request.surfaceArea, request.typeCertificate, address, latitude, longitude,
+                request.bedRoom, request.bathRoom, request.buildingArea, request.surfaceArea, request.typeCertificate, address, latitude, longitude,
                 priceSell, priceRent, facility, description, listPhotoArray)
         }
     }

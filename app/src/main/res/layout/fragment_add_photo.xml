@@ -46,7 +46,7 @@
         style="@style/Button.Primary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/posting"
+        android:text="@string/post_property"
         android:layout_margin="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -384,13 +384,13 @@ class ListApplicantActivity : AppCompatActivity(),
             }
             interviewMethod[position] =="live" -> {
                 clLocation!!.visibility=View.VISIBLE
-                tvLocation!!.text="Interview Location"
-                etLocation!!.hint="Enter Interview Location"
+                tvLocation!!.text=resources.getString(R.string.interview_location)
+                etLocation!!.hint=resources.getString(R.string.enter_interview_location)
             }
             interviewMethod[position] =="online" -> {
                 clLocation!!.visibility=View.VISIBLE
-                tvLocation!!.text="Interview Link"
-                etLocation!!.hint="Enter Interview Link"
+                tvLocation!!.text=getString(R.string.interview_link)
+                etLocation!!.hint=getString(R.string.enter_interview_link)
 
             }
         }

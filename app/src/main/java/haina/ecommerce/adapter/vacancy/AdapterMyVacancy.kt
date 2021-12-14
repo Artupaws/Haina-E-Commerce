@@ -12,6 +12,7 @@ import haina.ecommerce.helper.Helper.convertToFormatMoneyIDRFilter
 import haina.ecommerce.helper.Helper.dateFormat
 import haina.ecommerce.model.vacancy.*
 import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.history.historytransaction.HistoryTransactionActivity
 import java.util.ArrayList
 
@@ -27,13 +28,18 @@ class AdapterMyVacancy(val context: Context,
             with(binding) {
                 binding.tvPositionJob.text = itemHaina.position
                 if (itemHaina.deletedAt!=null){
-                    binding.tvDateEnd.text = "Expired On: ${dateFormat(itemHaina.deletedAt)}"
+                    if (sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en") {
+                        binding.tvDateEnd.text = "Expired On: ${dateFormat(itemHaina.deletedAt)}"
+                    }
+                    else{
+                        binding.tvDateEnd.text = "空缺到期： ${dateFormat(itemHaina.deletedAt)}"
+                    }
                     binding.tvDateEnd.setTextColor(context.resources.getColor(android.R.color.black))
                 }
                 if (itemHaina.status == "pending"){
-                    binding.tvDateEnd.text = "Please do payment for showing this ads"
+                    binding.tvDateEnd.text = context.getString(R.string.please_pay_ad)
                     binding.tvDateEnd.setTextColor(context.resources.getColor(android.R.color.holo_red_dark))
-                    binding.btnShowAgain.text = "make payment"
+                    binding.btnShowAgain.text = context.getString(R.string.make_payment)
                     binding.btnShowAgain.visibility = View.VISIBLE
                     binding.btnShowAgain.setOnClickListener {
                         adapterCallbackMyVacancy.listMyVacancy(btnShowAgain, itemHaina, 2)
