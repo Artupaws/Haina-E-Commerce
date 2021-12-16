@@ -44,10 +44,10 @@ class WebViewActivity : AppCompatActivity() {
         when (intentFrom) {
             "document" -> {
                 binding.webView.loadUrl("http://docs.google.com/gview?embedded=true&url=${getUrl}")
-                binding.toolbar3.title = "Resume"
+                binding.toolbar3.title = getString(R.string.user_resume)
             }
             "help" -> {
-                binding.toolbar3.title = "Help & Support"
+                binding.toolbar3.title = getString(R.string.help_support)
                 binding.webView.loadUrl(getUrl)
             }
             else -> {

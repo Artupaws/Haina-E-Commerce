@@ -294,21 +294,38 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
     private fun setDetailPassenger(totalAdult:String, totalChildParams:String?, totalBabyParams:String?, totalPassenger:String){
         if (totalChildParams != "0"){
             binding.tvTotalChild.visibility = View.VISIBLE
-            binding.tvTotalChild.text = "$totalChild Child(s)"
+
+            if (sharedPref.getValueString(Constants.LANGUAGE_APP) == "en") {
+                binding.tvTotalChild.text = "$totalChild Child(s)"
+            }
+            else{
+                binding.tvTotalChild.text = "儿童 $totalChild 位"
+            }
         } else {
             binding.tvTotalChild.visibility = View.GONE
             totalChild = 0
         }
         if (totalBabyParams != "0"){
             binding.tvTotalBaby.visibility = View.VISIBLE
-            binding.tvTotalBaby.text = "$totalBaby Baby(s)"
+            if (sharedPref.getValueString(Constants.LANGUAGE_APP) == "en") {
+                binding.tvTotalBaby.text = "$totalBaby Baby(s)"
+            }
+            else{
+                binding.tvTotalBaby.text = "婴儿 $totalBaby 位"
+            }
         } else {
             binding.tvTotalBaby.visibility = View.GONE
             totalBaby = 0
         }
         binding.tvTotalPassenger.error = null
-        binding.tvTotalAdult.text = "$totalAdult Adult(s)"
-        binding.tvTotalPassenger.text = "$totalPassenger consists of : "
+        if (sharedPref.getValueString(Constants.LANGUAGE_APP) == "en") {
+            binding.tvTotalAdult.text = "$totalAdult Adult(s)"
+            binding.tvTotalPassenger.text = "$totalPassenger consists of : "
+        }
+        else{
+            binding.tvTotalAdult.text = "成人 $totalAdult 位"
+            binding.tvTotalPassenger.text = "$totalPassenger 位 - "
+        }
     }
 
     private fun onAddPostClicked() {
@@ -358,7 +375,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
     private fun setDateFlight(typeFlight: String) {
         val builder = MaterialDatePicker.Builder.datePicker()
         val now = Calendar.getInstance()
-        builder.setTitleText("Select Date Flight")
+        builder.setTitleText(getString(R.string.select_flight_date))
         builder.setSelection(now.timeInMillis)
         builder.setCalendarConstraints(limitRangeDate(typeFlight).build())
 

@@ -26,7 +26,7 @@ class WaterActivity : AppCompatActivity() {
 
         val idProductCategory = intent?.getIntExtra("idProductCategory", 0)
         presenter.getProductService(idProductCategory!!)
-        binding.toolbarWater.title = "Water PDAM"
+        binding.toolbarWater.title = getString(R.string.water_title)
         binding.toolbarWater.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarWater.setNavigationOnClickListener { onBackPressed() }
     }

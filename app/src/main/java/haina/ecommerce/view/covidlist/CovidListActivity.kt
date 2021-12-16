@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterCovid
 import haina.ecommerce.databinding.ActivityCovidListBinding
 import haina.ecommerce.model.DataCovid
@@ -21,7 +22,7 @@ class CovidListActivity : AppCompatActivity(), CovidListContract {
         setContentView(binding.root)
         presenter = CovidListPresenter(this)
 
-        binding.toolbar.title = "List Province"
+        binding.toolbar.title = getString(R.string.list_province)
         binding.toolbar.setNavigationIcon(haina.ecommerce.R.drawable.ic_back_black)
         binding.toolbar.setNavigationOnClickListener { onBackPressed() }
         presenter.loadCovidList()

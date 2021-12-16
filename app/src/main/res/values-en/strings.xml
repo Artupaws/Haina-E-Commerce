@@ -221,7 +221,7 @@
     <string name="border">|</string>
     <string name="status">Status</string>
     <string name="transaction_date">Transaction Date</string>
-    <string name="details">Details</string>
+    <string name="post_details">Details</string>
     <string name="customer_number">Customer Number</string>
     <string name="admin_fee">Admin Fee</string>
     <string name="payment_information">Payment Information</string>
@@ -603,4 +603,27 @@
     <string name="enter_interview_link">Enter Interview Link</string>
     <string name="upload_min_one">Please insert minimum 1 photo of property</string>
     <string name="post_property">Post Property</string>
+    <string name="insert_floor">Insert Total Floor(s) or Unit Floor</string>
+    <string name="choose_province">Choose Province</string>
+    <string name="insert_room">Insert Number of Room(s)</string>
+    <string name="select_flight_date">Select Flight Date</string>
+    <string name="detail_booking">Detail Booking</string>
+    <string name="help_support"><![CDATA[Help & Support]]></string>
+    <string name="user_resume">Resume</string>
+    <string name="list_province">List Province</string>
+    <string name="item_filter">Items Filter</string>
+    <string name="restaurant_filter">Restaurant Filter</string>
+    <string name="position">Position</string>
+    <string name="city">City</string>
+    <string name="work_start">Start</string>
+    <string name="work_end">End</string>
+    <string name="detail_account">Account Details</string>
+    <string name="add_resume">Add Resume</string>
+    <string name="add_portfolio">Add Portfolio</string>
+    <string name="add_certificate" />
+    <string name="member_since">Member since:</string>
+    <string name="comments">Comments</string>
+    <string name="reply">Reply</string>
+    <string name="posted_by">Posted by:</string>
+    <string name="banned_by">Banned By:</string>
 </resources>

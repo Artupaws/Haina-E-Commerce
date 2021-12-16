@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back_black"
-        app:title="Flight Ticket"
+        app:title="@string/flight_ticket"
         app:titleTextColor="@color/black" />
 
     <androidx.core.widget.NestedScrollView

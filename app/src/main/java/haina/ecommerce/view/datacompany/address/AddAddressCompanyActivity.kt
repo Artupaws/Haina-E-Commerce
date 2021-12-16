@@ -53,7 +53,7 @@ class AddAddressCompanyActivity : AppCompatActivity(), AddressCompanyContract, V
 
         binding.toolbarAddressCompany.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarAddressCompany.setNavigationOnClickListener { onBackPressed() }
-        binding.toolbarAddressCompany.title = "Address Company"
+        binding.toolbarAddressCompany.title = getString(R.string.company_address)
         binding.etLocationCompany.setOnClickListener(this)
         binding.btnAddAddressCompany.setOnClickListener(this)
 

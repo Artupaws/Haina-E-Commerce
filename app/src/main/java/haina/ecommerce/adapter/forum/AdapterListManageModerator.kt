@@ -37,7 +37,8 @@ class AdapterListManageModerator(val context: Context,
                 listParams = ArrayList()
                 Glide.with(context).load(itemHaina.photo).into(ivImage)
                 tvName.text = itemHaina.username
-                tvMemberSince.text = "Member Since ${itemHaina.memberSince}"
+                val memberSince = "${context.getString(R.string.member_since)} ${itemHaina.memberSince}"
+                tvMemberSince.text = memberSince
                 tvRole.text = itemHaina.role
                 btnRemoveMod.setOnClickListener {
                     itemAdapterCallback.removeModerator(itemHaina)

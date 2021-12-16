@@ -39,7 +39,7 @@ import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActiv
         presenter = DetailBookPresenter(this, this)
 
         val dataUnpaid = intent?.getParcelableExtra<PaidItem>("data")
-        binding.toolbarDetailBooking.title = "Detail Booking"
+        binding.toolbarDetailBooking.title = getString(R.string.detail_booking)
         binding.toolbarDetailBooking.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailBooking.setNavigationOnClickListener { onBackPressed() }
         binding.tvLocationHotel.setOnClickListener(this)

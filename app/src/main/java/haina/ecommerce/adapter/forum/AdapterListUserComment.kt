@@ -19,6 +19,7 @@ import haina.ecommerce.model.forum.DataComment
 import haina.ecommerce.model.forum.DataItemHotPost
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
+import timber.log.Timber
 
 
 class AdapterListUserComment(val context: Context,
@@ -43,7 +44,14 @@ class AdapterListUserComment(val context: Context,
                 tvContent.text = itemHaina.content
                 splitterPost.visibility = View.GONE
 
-                tvDate.text = helper.getTimeAgo(itemHaina.createdAt)
+                var datePost = helper.getTimeAgo(itemHaina.createdAt)
+                if(sharedPref.getValueString(Constants.LANGUAGE_APP) == "zh"){
+                    datePost = datePost.replace("d", "天")
+                    datePost = datePost.replace("h", "小时")
+                }
+
+
+                tvDate.text = datePost
 
                 Glide.with(context).load(itemHaina.postData.subforumData!!.subforumImage).into(ivImageSubforum)
 

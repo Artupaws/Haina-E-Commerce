@@ -222,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/details" />
+                    android:text="@string/post_details" />
 
                 <LinearLayout
                     android:id="@+id/linear_property_type"
@@ -419,7 +419,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.4"
-                        android:text="@string/details" />
+                        android:text="@string/post_details" />
 
                 </LinearLayout>
 

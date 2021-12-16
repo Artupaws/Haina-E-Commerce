@@ -29,7 +29,7 @@ class HistoryFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.toolbarHistory?.title = "History"
+        binding?.toolbarHistory?.title = getString(R.string.history)
         binding?.cvJobVacancy?.setOnClickListener(this)
         binding?.cvTransaction?.setOnClickListener(this)
         binding?.cvHistoryHotel?.setOnClickListener(this)

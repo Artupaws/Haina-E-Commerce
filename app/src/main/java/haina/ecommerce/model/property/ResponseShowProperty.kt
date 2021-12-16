@@ -216,5 +216,8 @@ data class CityItem(
 	var nameCity: String? = null,
 
 	@field:SerializedName("province")
-	var province: String? = null
+	var province: String? = null,
+
+	@field:SerializedName("id_province")
+	var idProvince: Int
 ):Parcelable

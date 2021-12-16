@@ -110,7 +110,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
 
         binding.toolbarDetailAccount.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailAccount.setNavigationOnClickListener { onBackPressed() }
-        binding.toolbarDetailAccount.title = "Detail Account"
+        binding.toolbarDetailAccount.title = getString(R.string.detail_account)
         binding.ivActionEditPersonalData.setOnClickListener(this)
         binding.ivActionSavePersonalData.setOnClickListener(this)
         binding.etBirthdate.setOnClickListener(this)
@@ -359,17 +359,20 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
             }
             R.id.tv_add_resume ->{
                 val intent = Intent(this, AddRequirementActivity::class.java)
-                intent.putExtra("title", "Add Resume")
+                val title = getString(R.string.add_resume)
+                intent.putExtra("title", title)
                 startActivity(intent)
             }
             R.id.tv_add_porto ->{
                 val intent = Intent(this, AddRequirementActivity::class.java)
-                intent.putExtra("title", "Add Portfolio")
+                val title = getString(R.string.add_portfolio)
+                intent.putExtra("title", title)
                 startActivity(intent)
             }
             R.id.tv_add_certificate ->{
                 val intent = Intent(this, AddRequirementActivity::class.java)
-                intent.putExtra("title", "Add Certificate")
+                val title = getString(R.string.add_certificate)
+                intent.putExtra("title", title)
                 startActivity(intent)
             }
             R.id.tv_add_skills ->{

@@ -537,7 +537,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="last education" />
+                            android:text="@string/last_education" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -679,7 +679,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Position" />
+                            android:text="@string/position" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -725,7 +725,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="City" />
+                            android:text="@string/city" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -771,7 +771,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Start" />
+                            android:text="@string/work_start" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -818,7 +818,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="End" />
+                            android:text="@string/work_end" />
 
                         <TextView
                             android:layout_width="0dp"

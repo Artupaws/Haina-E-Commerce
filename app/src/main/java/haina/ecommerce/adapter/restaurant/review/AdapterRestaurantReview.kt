@@ -12,6 +12,7 @@ import haina.ecommerce.databinding.*
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.restaurant.master.ReviewData
 import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 
 
 class AdapterRestaurantReview(val context: Context,
@@ -31,7 +32,13 @@ class AdapterRestaurantReview(val context: Context,
                 tvRating.text = data.rating.toString()
 
                 Glide.with(context).load(data.user.userPhoto).into(ivImagePoster)
-                tvReviewDate.text = helper.getTimeAgo(data.reviewDate)
+                var datePost = helper.getTimeAgo(data.reviewDate)
+                if(sharedPref.getValueString(Constants.LANGUAGE_APP) == "zh"){
+                    datePost = datePost.replace("d", "天")
+                    datePost = datePost.replace("h", "小时")
+                }
+
+                tvReviewDate.text = datePost
 
                 if(!data.photos?.isNullOrEmpty()!!){
                     llImageReview.removeAllViewsInLayout()

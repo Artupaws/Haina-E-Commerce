@@ -39,7 +39,7 @@ class BottomSheetFlightFragment : BottomSheetDialogFragment(), View.OnClickListe
         super.onActivityCreated(savedInstanceState)
         binding.toolbarFlight.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarFlight.setNavigationOnClickListener { dismiss() }
-        binding.toolbarFlight.title = "Select Passenger"
+        binding.toolbarFlight.title = getString(R.string.select_passenger)
         binding.includeSelectPassenger.cvAddAdult.setOnClickListener(this)
         binding.includeSelectPassenger.cvAddKid.setOnClickListener(this)
         binding.includeSelectPassenger.cvAddBaby.setOnClickListener(this)

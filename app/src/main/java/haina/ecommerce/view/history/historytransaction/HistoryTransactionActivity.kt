@@ -26,7 +26,7 @@ class HistoryTransactionActivity : AppCompatActivity(), HistoryTransactionContra
         presenter = HistoryTransactionPresenter(this, this)
         presenter.getListTransaction()
         broadcaster = LocalBroadcastManager.getInstance(this)
-        binding.toolbarTransaction.title = "History Transaction"
+        binding.toolbarTransaction.title = getString(R.string.history_transaction)
         binding.vpTransaction.adapter = TabAdapterHistoryTransaction(supportFragmentManager, 0)
         binding.vpTransaction.offscreenPageLimit = 3
         binding.tabTransaction.setupWithViewPager(binding.vpTransaction)

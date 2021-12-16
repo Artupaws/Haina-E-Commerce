@@ -19,6 +19,8 @@ import haina.ecommerce.R
 import haina.ecommerce.adapter.flight.AdapterAirlines
 import haina.ecommerce.databinding.FragmentChooseAirlinesBinding
 import haina.ecommerce.model.flight.*
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 
 class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, ChooseAirlineFirstContract {
 
@@ -29,6 +31,7 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
     private var tripType:String = ""
     private lateinit var presenter: ChooseAirlineFirstPresenter
     private var airlineCode:String = ""
+    private lateinit var sharedPref: SharedPreferenceHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentChooseAirlinesBinding.inflate(inflater, container, false)
@@ -45,10 +48,18 @@ class ChooseAirlinesFragment : Fragment(), AdapterAirlines.ItemAdapterCallback, 
         } else {
             "RoundTrip"
         }
+        sharedPref = SharedPreferenceHelper(requireContext())
         presenter.getAirlinesData(tripType, data.fromDestination, data.toDestination, data.startDate, data.finishDate, data.totalAdult, data.totalChild,
             data.totalBaby, "1")
         binding.toolbarChooseAirlines.title = "${data.fromDestination} - ${data.toDestination}"
-        binding.toolbarChooseAirlines.subtitle = "${data.startDate} | ${data.totalPassenger}"
+        if (sharedPref.getValueString(Constants.LANGUAGE_APP) == "en") {
+            val subtitle = "${data.startDate} | ${data.totalPassenger} persons"
+            binding.toolbarChooseAirlines.subtitle = subtitle
+        }
+        else{
+            val subtitle = "${data.startDate} | ${data.totalPassenger} 位"
+            binding.toolbarChooseAirlines.subtitle = subtitle
+        }
         binding.toolbarChooseAirlines.setNavigationOnClickListener {
             findNavController().navigateUp()
         }

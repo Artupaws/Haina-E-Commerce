@@ -47,7 +47,7 @@ class CompanyCatalogItemsFilterFragment(val ctx:Context,var category: CompanyIte
 
         binding.toolbarItemSelection.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarItemSelection.setNavigationOnClickListener { dismiss() }
-        binding.toolbarItemSelection.title = "Items Filter"
+        binding.toolbarItemSelection.title = getString(R.string.item_filter)
 
         binding.tvCategoryFilter.text = category.name
         when(selectedSort){

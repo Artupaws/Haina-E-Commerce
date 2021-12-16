@@ -40,8 +40,10 @@ class AdapterListSubforum  (
                 Glide.with(context).load(itemHaina.subforumImage).skipMemoryCache(true).diskCacheStrategy(
                     DiskCacheStrategy.NONE).into(ivImageUser)
                 tvNameUser.text = itemHaina.name
-                val category = if (sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en") "${context.getString(R.string.category)} : ${itemHaina.category}" else "Category : ${itemHaina.categoryZh}"
-                tvCategory.text = category
+                //val category = if (sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en") "${context.getString(R.string.category)} : ${itemHaina.category}" else "Category : ${itemHaina.categoryZh}"
+                val category = if (sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en") itemHaina.category else itemHaina.categoryZh
+                val categoryText = "${context.getString(R.string.category)} : $category"
+                tvCategory.text = categoryText
                 val created = "${context.getString(R.string.created_at)} : ${dateFormat(itemHaina.createdAt)}"
                 tvCreated.text = created
                 val totalPost = "${context.getString(R.string.total_post)} : ${itemHaina.totalPost}"
@@ -62,8 +64,10 @@ class AdapterListSubforum  (
                 Glide.with(context).load(itemHaina.subforumImage).skipMemoryCache(true).diskCacheStrategy(
                     DiskCacheStrategy.NONE).into(ivImageUser)
                 tvNameUser.text = itemHaina.name
-                val category = if (sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en") "${context.getString(R.string.category)} : ${itemHaina.category}" else "Category : ${itemHaina.categoryZh}"
-                tvCategory.text = category
+                //val category = if (sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en") "${context.getString(R.string.category)} : ${itemHaina.category}" else "Category : ${itemHaina.categoryZh}"
+                val category = if (sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en") itemHaina.category else itemHaina.categoryZh
+                val categoryText = "${context.getString(R.string.category)} : $category"
+                tvCategory.text = categoryText
                 val created = "${context.getString(R.string.created_at)} : ${dateFormat(itemHaina.createdAt)}"
                 tvCreated.text = created
                 val totalPost = "${context.getString(R.string.total_post)} : ${itemHaina.totalPost}"
@@ -83,8 +87,9 @@ class AdapterListSubforum  (
                 Glide.with(context).load(itemHaina.subforumImage).skipMemoryCache(true).diskCacheStrategy(
                     DiskCacheStrategy.NONE).into(ivImageUser)
                 tvNameUser.text = itemHaina.name
-                val category = if (sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en") "${context.getString(R.string.category)} : ${itemHaina.category}" else "Category : ${itemHaina.categoryZh}"
-                tvCategory.text = category
+                val category = if (sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en") itemHaina.category else itemHaina.categoryZh
+                val categoryText = "${context.getString(R.string.category)} : $category"
+                tvCategory.text = categoryText
                 val created = "${context.getString(R.string.created_at)} : ${dateFormat(itemHaina.createdAt)}"
                 tvCreated.text = created
                 val totalPost = "${context.getString(R.string.total_post)} : ${itemHaina.totalPost}"

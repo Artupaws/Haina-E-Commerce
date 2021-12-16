@@ -35,8 +35,15 @@ class AdapterListBannedUser(val context: Context,
                 listParams = ArrayList()
                 Glide.with(context).load(itemHaina.user!!.photo).into(ivImage)
                 tvName.text = itemHaina.user!!.username
-                tvMemberSince.text = "Banned By ${itemHaina.mod!!.username}"
-                tvRole.text = helper.getTimeAgo(itemHaina.createdAt)
+                tvMemberSince.text = "${context.getString(R.string.banned_by)} ${itemHaina.mod!!.username}"
+                //tvRole.text = helper.getTimeAgo(itemHaina.createdAt)
+                var datePost = helper.getTimeAgo(itemHaina.createdAt)
+                if(sharedPref.getValueString(Constants.LANGUAGE_APP) == "zh"){
+                    datePost = datePost.replace("d", "天")
+                    datePost = datePost.replace("h", "小时")
+                }
+
+                tvRole.text = datePost
                 btnRemoveMod.setOnClickListener {
                     itemAdapterCallback.removeBanned(itemHaina)
                 }

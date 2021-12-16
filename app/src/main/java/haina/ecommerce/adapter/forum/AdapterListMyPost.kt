@@ -41,7 +41,14 @@ class AdapterListMyPost(val context: Context,
                 tvLooks.text = itemHaina.viewCount.toString()
                 tvUpvote.text = itemHaina.likeCount.toString()
                 tvComment.text = itemHaina.commentCount.toString()
-                tvDate.text = helper.getTimeAgo(itemHaina.createdAt)
+                var datePost = helper.getTimeAgo(itemHaina.createdAt)
+
+                if(sharedPref.getValueString(Constants.LANGUAGE_APP) == "zh"){
+                    datePost = datePost.replace("d", "天")
+                    datePost = datePost.replace("h", "小时")
+                }
+                tvDate.text = datePost
+
                 ivUpvote.isChecked = itemHaina.upvoted == true
                 ivUpvote.isEnabled = sharedPref.getValueString(Constants.PREF_USERNAME) != itemHaina.author
                 ivUpvote.setOnCheckedChangeListener { _, isChecked ->

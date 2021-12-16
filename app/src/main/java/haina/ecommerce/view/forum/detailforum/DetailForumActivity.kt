@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -101,9 +100,9 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
 
     private fun showDataForum(subforumData: SubforumData, data:DataItemHotPost) {
 //        Glide.with(applicationContext).load(data.authorPhoto).into(binding.ivImageAuthor)
-        Timber.d(data.toString())
+
         binding.tvTitleForum.text = data.title
-        val memberSince = "Member since : "+data.memberSince
+        val memberSince = "${getString(R.string.member_since)} ${data.memberSince}"
         binding.tvMemberSince.text = memberSince
 
         binding.tvDate.text = helper.dateTimeFormat(data.createdAt)

@@ -37,7 +37,7 @@ class AddSkillsActivity : AppCompatActivity(), AddSkillsContract, View.OnClickLi
 
         binding.toolbarAddSkills.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarAddSkills.setNavigationOnClickListener { onBackPressed() }
-        binding.toolbarAddSkills.title = "Add Skills"
+        binding.toolbarAddSkills.title = getString(R.string.add_skills)
         binding.btnAddSkill.setOnClickListener(this)
 
         binding.etSkills.addTextChangedListener(object : TextWatcher {

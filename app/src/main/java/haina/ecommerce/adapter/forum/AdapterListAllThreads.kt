@@ -38,7 +38,7 @@ class AdapterListAllThreads(val context: Context,
         fun bind(itemHaina: ThreadsItem, itemAdapterCallback: ItemAdapterCallback){
             with(binding){
                 listParams = ArrayList()
-                tvNameUser.text = "Posted By ${itemHaina.author}"
+                tvNameUser.text = "${context.getString(R.string.posted_by)} ${itemHaina.author}"
                 tvTitle.text = itemHaina.title
                 tvLooks.text = itemHaina.viewCount.toString()
                 tvNameSubforum.text = itemHaina.subforumData!!.name
@@ -69,7 +69,15 @@ class AdapterListAllThreads(val context: Context,
                     }
                     popup.show()
                 }
-                tvDate.text = helper.getTimeAgo(itemHaina.createdAt)
+
+                var datePost = helper.getTimeAgo(itemHaina.createdAt)
+                Timber.e("Coba: " + itemHaina.createdAt.toString())
+                if(sharedPref.getValueString(Constants.LANGUAGE_APP) == "zh"){
+                    datePost = datePost.replace("d", "天")
+                    datePost = datePost.replace("h", "小时")
+                }
+
+                tvDate.text = datePost
 
                 Glide.with(context).load(itemHaina.subforumData.subforumImage).into(ivImageSubforum)
 

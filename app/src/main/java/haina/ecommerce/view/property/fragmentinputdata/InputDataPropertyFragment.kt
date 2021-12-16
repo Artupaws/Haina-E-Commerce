@@ -45,8 +45,8 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
     private var idCity:Int = 0
     private lateinit var presenter: InputDataPropertyPresenter
     private var listFacility = ArrayList<Int>()
-    private var amountRoom = listOf<Int>(1,2,3,4,5,6,7,8,9,10)
-    private var amountFloor = listOf<Int>()
+    private var amountRoom = listOf<Int>(0,1,2,3,4,5,6,7,8,9,10)
+    private var amountFloor = IntArray(50){it+1}.toList()
     private var propertyType:String = ""
     private var typePosting:String = ""
     //
@@ -85,9 +85,11 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
         binding.toolbar7.setNavigationOnClickListener {
             (requireActivity() as ShowPropertyActivity).onBackPressed()
         }
-        for (i in 1 until 100){
+        /*
+        for (i in 1 until 50){
             amountFloor = listOf(i)
         }
+         */
         binding.includeDataPropertyTop.etProvince.setOnClickListener(this)
         binding.includeDataPropertyTop.etCity.setOnClickListener(this)
         binding.includeDataPropertyTop.btnNext.setOnClickListener(this)
@@ -97,7 +99,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
         presenter.getFacilities()
         presenter.getProvince()
         radioGroup()
-        popupDialogFloor(amountRoom)
+        //popupDialogFloor(amountFloor)
         binding.includeDataPropertyTop.rbBoth.isChecked = true
         val locale = Locale("es", "IDR")
         val numDecs = 2 // Let's use 2 decimals
@@ -169,7 +171,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun popupDialogFloor(dataFloor: List<Int>) {
+    private fun popupDialogFloor(dataFloor: List<Int>, popTitle: String) {
         popupFloor = Dialog(requireActivity())
         popupFloor?.setContentView(R.layout.layout_popup_dialog_destination_flight)
         popupFloor?.setCancelable(true)
@@ -186,7 +188,8 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
                 layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
             }
         searchView?.visibility= View.GONE
-        title?.text = "Amount"
+        title?.textSize = 12.0f
+        title?.text = popTitle
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -202,7 +205,7 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
         val searchView = popupProvince?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupProvince?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupProvince?.dismiss() }
-        title?.text = getString(R.string.province)
+        title?.text = getString(R.string.choose_province)
         rvDestination?.apply {
             adapter = AdapterListProvince(requireActivity(), dataProvince, this@InputDataPropertyFragment)
             layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
@@ -803,14 +806,17 @@ AdapterListCity.ItemAdapterCallback, View.OnClickListener, AdapterListAmountRoom
             }
             R.id.et_floor -> {
                 typeAmountRoom = "Floor"
+                popupDialogFloor(amountFloor, getString(R.string.insert_floor))
                 popupFloor?.show()
             }
             R.id.et_bedroom -> {
                 typeAmountRoom = "BedRoom"
+                popupDialogFloor(amountRoom, getString(R.string.insert_room))
                 popupFloor?.show()
             }
             R.id.et_bathroom -> {
                 typeAmountRoom = "BathRoom"
+                popupDialogFloor(amountRoom, getString(R.string.insert_room))
                 popupFloor?.show()
             }
         }

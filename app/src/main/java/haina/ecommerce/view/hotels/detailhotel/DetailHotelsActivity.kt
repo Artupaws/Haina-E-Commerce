@@ -35,7 +35,7 @@ class DetailHotelsActivity : AppCompatActivity(), View.OnClickListener,
         setContentView(binding.root)
 
         dataHotel = intent.getParcelableExtra<DataHotel>("dataHotel")!!
-        binding.toolbarDetailHotels.title = "Detail"
+        binding.toolbarDetailHotels.title = getString(R.string.hotel_info)
         binding.toolbarDetailHotels.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailHotels.setNavigationOnClickListener { onBackPressed() }
         binding.tvSeeAllReview.setOnClickListener(this)

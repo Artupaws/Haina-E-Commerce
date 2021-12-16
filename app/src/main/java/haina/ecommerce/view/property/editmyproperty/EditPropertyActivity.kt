@@ -41,8 +41,8 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
     private var idCity: Int = 0
     private lateinit var presenter: EditPropertyPresenter
     private var listFacility = ArrayList<Int>()
-    private var amountRoom = listOf<Int>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-    private var amountFloor = listOf<Int>()
+    private var amountRoom = listOf<Int>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    private var amountFloor = IntArray(50){it+1}.toList()
     private var propertyType: String = ""
     private var typePosting: String = ""
     private var typeCertificate: String = ""
@@ -75,7 +75,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
         presenter.getFacilities()
         presenter.getProvince()
         radioGroup()
-        popupDialogFloor(amountRoom)
+        //popupDialogFloor(amountFloor)
         binding.toolbar7.setNavigationOnClickListener { onBackPressed() }
         val dataProperty = intent?.getParcelableExtra<DataShowProperty>("dataProperty")
         idProperty = dataProperty?.id!!
@@ -105,6 +105,9 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
         binding.includeDataPropertyTop.etProvince.setText(data.city.province)
         binding.includeDataPropertyTop.linearCity.visibility = View.VISIBLE
         binding.includeDataPropertyTop.etCity.setText(data.city.nameCity)
+
+        idProvince = data.city.idProvince
+        idCity = data.idCity!!
 
         when {
             data.propertyType?.contains("apartment")!! -> {
@@ -162,7 +165,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun popupDialogFloor(dataFloor: List<Int>) {
+    private fun popupDialogFloor(dataFloor: List<Int>, popTitle: String) {
         popupFloor = Dialog(this)
         popupFloor?.setContentView(R.layout.layout_popup_dialog_destination_flight)
         popupFloor?.setCancelable(true)
@@ -181,7 +184,8 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
                 LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
         }
         searchView?.visibility = View.GONE
-        title?.text = "Amount"
+        title?.textSize = 12.0f
+        title?.text = popTitle
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -575,7 +579,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
-        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear
+        else if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear
             && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent &&
             typePropertyParams == "house" && typePostingParams == "rent"){
             dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), landAreaParams.toInt(), bedRoomParams.toInt(), bathRoomParams.toInt(),
@@ -590,7 +594,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
-        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+        else if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell && !isEmptyPriceRent
             && typePropertyParams == "house" && typePostingParams == "both"
         ) {
@@ -606,7 +610,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
-        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+        else if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
             && typePropertyParams == "apartment" && typePostingParams == "sell"
         ) {
@@ -622,7 +626,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
-        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear
+        else if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear
             && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent
             && typePropertyParams == "apartment" && typePostingParams == "rent"
         ) {
@@ -638,7 +642,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
-        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+        else if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBedRoom && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell && !isEmptyPriceRent
             && typePropertyParams == "apartment" && typePostingParams == "both"
         ) {
@@ -654,7 +658,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
-        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+        else if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
             && typePropertyParams == "warehouse" && typePostingParams == "sell"
         ) {
@@ -670,7 +674,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
-        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+        else if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent
             && typePropertyParams == "warehouse" && typePostingParams == "rent"
         ) {
@@ -686,7 +690,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
-        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+        else if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyLandArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
             && !isEmptyPriceSell && typePropertyParams == "warehouse" && typePostingParams == "both"
         ) {
@@ -702,7 +706,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
-        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+        else if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeCertificate && !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceSell
             && typePropertyParams == "office" && typePostingParams == "sell"
         ) {
@@ -718,7 +722,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
-        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+        else if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeProvince && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent
             && typePropertyParams == "office" && typePostingParams == "rent"
         ) {
@@ -734,7 +738,7 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
 //            Navigation.findNavController(binding.root).navigate(R.id.action_inputDataPropertyFragment2_to_addPhotoFragment2, bundle)
         }
 
-        if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
+        else if (!isEmptyTypeProperty && !isEmptyTypePosting && !isEmptyBuildingArea && !isEmptyBathRoom && !isEmptyFloor && !isEmptyYear &&
             !isEmptyTypeProvince && !isEmptyTypeCertificate && !isEmptyTypeCity && !isEmptyAddress && !isEmptyTitle && !isEmptyDescription && !isEmptyPriceRent &&
             !isEmptyPriceSell && typePropertyParams == "office" && typePostingParams == "both") {
             dataRequest = RequestDataProperty(typePropertyParams, typePostingParams, buildingAreaParams.toInt(), 0, 0, bathRoomParams.toInt(), floorParams.toInt(), facilityParams,
@@ -746,6 +750,9 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             presenter.updateProperty(idProperty, propertyType, condition, titleParams, yearParams, idCity, floorParams.toInt(),
                 0, bathRoomParams.toInt(), buildingAreaParams.toInt(), 0, typeCertificateParams, addressParams, null, null,
             priceSellParams, priceRentParams, facilityParams, descriptionParams)
+        }
+        else {
+            Toast.makeText(this, getString(R.string.message_fill_data), Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -770,14 +777,17 @@ class EditPropertyActivity : AppCompatActivity(), View.OnClickListener,
             }
             R.id.et_floor -> {
                 typeAmountRoom = "Floor"
+                popupDialogFloor(amountFloor, getString(R.string.insert_floor))
                 popupFloor?.show()
             }
             R.id.et_bedroom -> {
                 typeAmountRoom = "BedRoom"
+                popupDialogFloor(amountRoom, getString(R.string.insert_room))
                 popupFloor?.show()
             }
             R.id.et_bathroom -> {
                 typeAmountRoom = "BathRoom"
+                popupDialogFloor(amountRoom, getString(R.string.insert_room))
                 popupFloor?.show()
             }
         }

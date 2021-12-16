@@ -30,7 +30,7 @@ class DetailPostingJobActivity : AppCompatActivity(),View.OnClickListener, Detai
         presenter = DetailPostingJobPresenter(this, this)
         binding.toolbarDetailJob.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarDetailJob.setNavigationOnClickListener { onBackPressed() }
-        binding.toolbarDetailJob.title = "Detail Job Vacancy"
+        binding.toolbarDetailJob.title = getString(R.string.detail_job)
         val item = intent.getParcelableExtra<DataMyJob>("item")
         if (item?.skill?.size == 0){
             binding.includeEmptySkill.clEmptySkill.visibility = View.VISIBLE

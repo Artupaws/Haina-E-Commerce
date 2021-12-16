@@ -46,7 +46,7 @@ class RegisterCompanyActivity
         presenter.getProvince()
         binding.toolbar.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbar.setNavigationOnClickListener { onBackPressed()}
-        binding.toolbar.title = "Register Company"
+        binding.toolbar.title = getString(R.string.register_my_company)
         binding.cvAddImage.setOnClickListener(this)
         binding.btnRegisterCompany.setOnClickListener(this)
     }

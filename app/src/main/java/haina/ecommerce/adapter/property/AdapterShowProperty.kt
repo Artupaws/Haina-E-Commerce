@@ -70,8 +70,18 @@ class AdapterShowProperty(val context: Context, private var dataProperty: List<D
                 showPrice(binding, itemHaina)
 
                 //zh belum
-                val condition = "${itemHaina.condition}"
-                tvConditionProperty.text = condition
+                var condition = ""
+                if(sharedPref.getValueString(Constants.LANGUAGE_APP) == "zh"){
+                    val trans = if(itemHaina.condition == "existing") "现有" else "新建"
+                    condition = trans
+                    tvConditionProperty.text = condition
+                    tvConditionProperty.textSize = 14.0f
+                }
+                else{
+                    condition = "${itemHaina.condition}"
+                    tvConditionProperty.text = condition
+                }
+
                 tvNameProperty.text = itemHaina.title
                 tvYear.text = itemHaina.year
                 val address = "${itemHaina.city.province}, ${itemHaina.city.nameCity}"

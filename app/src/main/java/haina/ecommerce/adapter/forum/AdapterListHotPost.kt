@@ -67,7 +67,14 @@ class AdapterListHotPost(val context: Context,
                     }
                     popup.show()
                 }
-                tvDate.text = helper.getTimeAgo(itemHaina.createdAt)
+                //tvDate.text = helper.getTimeAgo(itemHaina.createdAt)
+                var datePost = helper.getTimeAgo(itemHaina.createdAt)
+                if(sharedPref.getValueString(Constants.LANGUAGE_APP) == "zh"){
+                    datePost = datePost.replace("d", "天")
+                    datePost = datePost.replace("h", "小时")
+                }
+
+                tvDate.text = datePost
                 Glide.with(context).load(itemHaina.subforumData.subforumImage).into(ivImageSubforum)
                 if (itemHaina.images != null){
 

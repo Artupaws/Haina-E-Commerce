@@ -56,7 +56,7 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract.V
         presenter.getDataUserProfile()
         binding.toolbarTopup.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarTopup.setNavigationOnClickListener { onBackPressed() }
-        binding.toolbarTopup.title = "Internet"
+        binding.toolbarTopup.title = getString(R.string.topup_title)
         stateIconLoad(loadStatus!!)
         binding.imagePhoneBook.setOnClickListener(this)
         binding.viewPagerInternet.adapter = TabAdapterInternet(supportFragmentManager, 0)

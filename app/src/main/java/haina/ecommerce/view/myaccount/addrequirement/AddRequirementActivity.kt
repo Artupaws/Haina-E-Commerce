@@ -176,13 +176,13 @@ class AddRequirementActivity : AppCompatActivity(), View.OnClickListener, AddReq
 
     private fun setIdCategoryDocument(){
         when {
-            titleToolbar!!.contains("Add Resume") -> {
+            titleToolbar!!.contains(getString(R.string.add_resume)) -> {
                 idCategoryDocument = "1"
             }
-            titleToolbar!!.contains("Add Portfolio") -> {
+            titleToolbar!!.contains(getString(R.string.add_portfolio)) -> {
                 idCategoryDocument = "2"
             }
-            titleToolbar!!.contains("Add Certificate") -> {
+            titleToolbar!!.contains(getString(R.string.add_certificate)) -> {
                 idCategoryDocument = "3"
             }
         }

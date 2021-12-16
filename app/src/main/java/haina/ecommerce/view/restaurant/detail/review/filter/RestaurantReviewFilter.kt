@@ -64,7 +64,7 @@ class RestaurantReviewFilter(val callback:Callback) : BottomSheetDialogFragment(
 
         binding.toolbarRestaurantSelection.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarRestaurantSelection.setNavigationOnClickListener { dismiss()}
-        binding.toolbarRestaurantSelection.title = "Restaurant Filter"
+        binding.toolbarRestaurantSelection.title = getString(R.string.restaurant_filter)
         binding.rsliderRating.addOnChangeListener { _, value, _ ->
             minRating = value.toInt()
             binding.tvRating.text = "$value Stars or more"
