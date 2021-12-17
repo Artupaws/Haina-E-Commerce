@@ -54,7 +54,7 @@ class AdapterMyVacancy(val context: Context,
                 if (itemHaina.salaryDisplay == 1)
                     binding.tvSalary.text = "${convertToFormatMoneyIDRFilter(itemHaina.minSalary.toString())} - ${convertToFormatMoneyIDRFilter(itemHaina.maxSalary.toString())}"
                 else
-                    binding.tvSalary.text = "${convertToFormatMoneyIDRFilter(itemHaina.minSalary.toString())} - ${convertToFormatMoneyIDRFilter(itemHaina.maxSalary.toString())} - hidden for user"
+                    binding.tvSalary.text = "${convertToFormatMoneyIDRFilter(itemHaina.minSalary.toString())} - ${convertToFormatMoneyIDRFilter(itemHaina.maxSalary.toString())} ${context.getString(R.string.hidden_for_user)}"
                 relativeClick.setOnClickListener {
                     adapterCallbackMyVacancy.listMyVacancy(relativeClick, itemHaina, null)
                 }

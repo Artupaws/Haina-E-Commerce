@@ -369,7 +369,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/holo_red_dark"
-                android:text="reject"
+                android:text="@string/reject"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -400,7 +400,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/holo_red_dark"
-                android:text="reject"
+                android:text="@string/reject"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -422,7 +422,7 @@
                 android:layout_height="40dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:text="Accept" />
+                android:text="@string/accept" />
 
             <Button
                 android:id="@+id/btn_reject_interview"
@@ -432,7 +432,7 @@
                 android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/holo_red_dark"
-                android:text="reject"
+                android:text="@string/reject"
                 android:textColor="@color/white" />
 
         </LinearLayout>

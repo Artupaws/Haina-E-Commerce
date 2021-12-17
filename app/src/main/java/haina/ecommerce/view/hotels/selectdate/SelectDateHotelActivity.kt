@@ -53,13 +53,13 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
         dataRoom = intent.getParcelableExtra("dataRoom")!!
         dataHotel = intent.getParcelableExtra("dataHotel")!!
 
-        binding.toolbarSelectDate.title = "Complete Order"
+        binding.toolbarSelectDate.title = getString(R.string.complete_order_data)
         binding.toolbarSelectDate.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarSelectDate.setNavigationIcon(R.drawable.ic_back_black)
         val priceRoom = helper.convertToFormatMoneyIDRFilter(dataRoom.roomPrice.toString())
         binding.tvPriceRoom.text = priceRoom
         binding.tvNameRoom.text = dataRoom.roomName
-        binding.tvMaximumGuest.text = "Maximum Guest(s) : ${dataRoom.roomMaxguest.toString()}"
+        binding.tvMaximumGuest.text = "${getString(R.string.maximum_guest)} : ${dataRoom.roomMaxguest.toString()}"
         binding.tvTotalNight.text = "$totalNight"
         binding.tvTypeBed.text = dataRoom.roomBedType
         binding.tvAddressHotel.text = dataHotel.hotelAddress
@@ -131,7 +131,7 @@ class SelectDateHotelActivity : AppCompatActivity(), View.OnClickListener {
             totalGuests++
             binding.etTotalGuests.setText(totalGuests.toString())
         } else if (totalGuests == maxTotalGuests) {
-            Toast.makeText(applicationContext, "Maximum total guests", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.maximum_guests_reached), Toast.LENGTH_SHORT).show()
             binding.etTotalGuests.setText(totalGuests.toString())
         }
     }

@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back_black"
-        app:title="Package" />
+        app:title="@string/vacancy_package" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="0dp"
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
-                android:text="Please Choose Package First"
+                android:text="@string/please_choose_package_first"
                 android:textColor="@android:color/holo_red_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

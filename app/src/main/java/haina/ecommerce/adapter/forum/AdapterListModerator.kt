@@ -38,7 +38,7 @@ class AdapterListModerator(val context: Context,
                 listParams = ArrayList()
                 Glide.with(context).load(itemHaina.photo).into(ivImage)
                 tvName.text = itemHaina.username
-                tvMemberSince.text = "Member Since ${itemHaina.memberSince}"
+                tvMemberSince.text = "${context.getString(R.string.member_since)} ${itemHaina.memberSince}"
                 tvRole.text = itemHaina.role
                 relativeProfile.setOnClickListener {
                     itemAdapterCallback.listProfileClick(relativeProfile, false, itemHaina)

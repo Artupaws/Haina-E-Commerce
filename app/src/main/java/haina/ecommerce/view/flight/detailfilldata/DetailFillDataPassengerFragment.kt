@@ -297,7 +297,12 @@ class DetailFillDataPassengerFragment : Fragment(), View.OnClickListener, Detail
 
     private fun radioButtonGender(view: View){
         val radio: RadioButton = requireActivity().findViewById(binding.rdGroupGender.checkedRadioButtonId)
-        genderRadio = radio.text.toString()
+        if(radio.text.toString() ==  context?.getString(R.string.male)){
+            genderRadio = "Male"
+        }
+        else{
+            genderRadio = "Female"
+        }
         if(genderRadio!!.isNotEmpty()){
             binding.rbMale.error = null
             binding.rbFemale.error = null

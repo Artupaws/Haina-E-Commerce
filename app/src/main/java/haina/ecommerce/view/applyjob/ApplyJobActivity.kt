@@ -189,7 +189,7 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener,
         if (!isEmptyResume && !isEmptyNotes){
             presenter.applyJob(idJobVacancy, notes, resume)
         } else {
-            Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.please_complete_form), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -324,7 +324,7 @@ class ApplyJobActivity : AppCompatActivity(), View.OnClickListener,
         binding.tvName.text = data?.fullname
         binding.tvEmail.text = data?.email
         binding.tvPhone.text = data?.phone
-        if (data?.latestWork == null) binding.tvPosition.text = "No work experience" else  binding.tvPosition.text = data.latestWork.position
+        if (data?.latestWork == null) binding.tvPosition.text = getString(R.string.no_work_experience) else  binding.tvPosition.text = data.latestWork.position
     }
 
     override fun onResume() {

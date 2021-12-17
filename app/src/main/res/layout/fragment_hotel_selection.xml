@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back_black"
-        app:title="Hotel Accomodation"
+        app:title="@string/hotels"
         app:titleTextColor="@color/black" />
 
     <androidx.core.widget.NestedScrollView

@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemJobVacancyBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.property.DataShowProperty
@@ -43,7 +44,7 @@ class AdapterJobBookmark(val context: Context,
                     val salary = "${Helper.convertToFormatMoneyIDRFilter(itemHaina.minSalary.toString())}-${Helper.convertToFormatMoneyIDRFilter(itemHaina.maxSalary.toString())}"
                     tvSalary.text = salary
                 } else {
-                    tvSalary.text = "Salary hidden"
+                    tvSalary.text = context.getString(R.string.salary_hidden)
                 }
                 tvCompanyName.text = itemHaina.companyName
                 Glide.with(context).load(itemHaina.photoCompany).skipMemoryCache(true).diskCacheStrategy(

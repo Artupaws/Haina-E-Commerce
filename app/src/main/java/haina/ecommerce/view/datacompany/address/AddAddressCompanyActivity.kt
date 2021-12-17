@@ -110,7 +110,7 @@ class AddAddressCompanyActivity : AppCompatActivity(), AddressCompanyContract, V
         popupLocation = popup.create()
         popupLocation?.dismiss()
         action.setOnClickListener{popupLocation?.dismiss()}
-        title.text = "Job Location"
+        title.text = getString(R.string.work_location)
         rvJob.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = jobLocationAdapter
@@ -143,7 +143,7 @@ class AddAddressCompanyActivity : AppCompatActivity(), AddressCompanyContract, V
         binding.etAddressCompany.setText(address)
         binding.etLocationCompany.setText(nameLocation)
         if (binding.etAddressCompany.text!!.isNotEmpty() && binding.etLocationCompany.text!!.isNotEmpty()){
-            binding.btnAddAddressCompany.text = "update address company"
+            binding.btnAddAddressCompany.text = getString(R.string.update_company_address)
         }
     }
 }

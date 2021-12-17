@@ -71,7 +71,7 @@ class SavedRestaurantFragment :
         refresh()
 
         binding.rvMyRestaurant.adapter = adapterRestaurantList
-        binding.tvTitle.text = "Saved Restaurant"
+        binding.tvTitle.text = getString(R.string.saved_restaurant)
 
         binding.fabRegisterRestaurant.visibility = View.GONE
 

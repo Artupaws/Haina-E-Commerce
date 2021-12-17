@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
+import haina.ecommerce.R
 import haina.ecommerce.adapter.restaurant.review.AdapterRestaurantReview
 import haina.ecommerce.databinding.LayoutRestaurantReviewListBinding
 import haina.ecommerce.model.restaurant.master.RestaurantData
@@ -83,7 +84,7 @@ class RestaurantReviewListFragment(val data: RestaurantData,val callback:Fragmen
     @SuppressLint("SetTextI18n")
     private fun setReviewData(){
         binding.tvRating.text = data.rating
-        binding.tvReviewCount.text = "${data.reviews.toString()} Reviews"
+        binding.tvReviewCount.text = "${data.reviews.toString()} ${context?.getString(R.string.reviews)}"
     }
     //end of view function
 

@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/yellow"
-        app:title="Hotels"
+        app:title="@string/hotels"
         app:navigationIcon="@drawable/ic_back_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar4"
-        app:queryHint="Find Hotels Here" />
+        app:queryHint="@string/find_hotel" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_hotels"

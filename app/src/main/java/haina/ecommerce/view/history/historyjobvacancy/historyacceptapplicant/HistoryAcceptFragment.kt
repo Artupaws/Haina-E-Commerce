@@ -89,12 +89,12 @@ class HistoryAcceptFragment : Fragment(), HistoryInterviewContract, View.OnClick
         Log.d("acceptFailed", msg)
         if (msg == "null" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)){
             binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
-            binding?.includeEmpty?.tvEmpty?.text = "Empty"
+            binding?.includeEmpty?.tvEmpty?.text = getString(R.string.empty)
             binding?.rvAccept?.visibility = View.INVISIBLE
             binding?.swipeRefresh?.isRefreshing = false
         } else if (msg.contains("Doesn't Exist")){
             binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
-            binding?.includeEmpty?.tvEmpty?.text = "Empty"
+            binding?.includeEmpty?.tvEmpty?.text = getString(R.string.empty)
             binding?.rvAccept?.visibility = View.INVISIBLE
             binding?.swipeRefresh?.isRefreshing = false
         } else {

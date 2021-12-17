@@ -13,7 +13,7 @@
         android:background="@color/yellow"
         app:contentInsetStart="20dp"
         app:contentInsetEnd="0dp"
-        app:title="My Application"
+        app:title="@string/my_job_application"
         app:navigationIcon="@drawable/ic_back_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:title="Skills &amp; Education"
+        app:title="@string/skill_and_edu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -70,7 +70,7 @@
                 android:layout_height="38dp"
                 android:focusable="false"
                 android:background="@drawable/background_line_corner_input_text_black"
-                android:hint="Choose Last Education"
+                android:hint="@string/choose_last_education"
                 android:inputType="text"
                 android:paddingStart="10dp" />
 

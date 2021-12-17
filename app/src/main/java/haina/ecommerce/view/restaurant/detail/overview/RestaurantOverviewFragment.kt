@@ -117,7 +117,7 @@ class RestaurantOverviewFragment(val data:RestaurantData,val fragmentCallback: F
         }
         if(data.open24hours==1){
             binding.tvWeekendTime.visibility=View.GONE
-            binding.tvWeekdayTime.text = "Open 24 Hours"
+            binding.tvWeekdayTime.text = getString(R.string.open_24h)
         }else{
             binding.tvWeekdayTime.text = "Weekdays ${data.weekdaysTimeOpen} - ${data.weekdaysTimeClose}"
             binding.tvWeekendTime.text = "Weekdays ${data.weekendTimeOpen} - ${data.weekendTimeClose}"

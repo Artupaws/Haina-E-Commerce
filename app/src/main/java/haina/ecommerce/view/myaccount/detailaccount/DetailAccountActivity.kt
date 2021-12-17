@@ -205,7 +205,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
             etMajor?.setText(dataEducation.major)
             etLastEdu?.setText(dataEducation.degreeName)
             etCity?.setText(dataEducation.city)
-            buttonSave?.text = "update"
+            buttonSave?.text = getString(R.string.update)
         }
 
         buttonSave?.setOnClickListener {
@@ -223,7 +223,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
                             }
                         }
                 } else {
-                    Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.please_complete_form), Toast.LENGTH_SHORT).show()
                 }
             } else {
                 if (etInstitution?.text.toString().isNotEmpty() && etStartYear?.text.toString().isNotEmpty() && etEndYear?.text.toString().isNotEmpty() && etGpa?.text.toString().isNotEmpty()
@@ -260,7 +260,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
         val searchView = popupDialogLastEdu?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogLastEdu?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogLastEdu?.dismiss() }
-        title?.text = "Last Education"
+        title?.text = getString(R.string.last_education)
         searchView?.visibility = View.GONE
         rvDestination?.adapter = adapterLastEdu
     }

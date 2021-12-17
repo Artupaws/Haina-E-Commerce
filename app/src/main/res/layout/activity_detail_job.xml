@@ -178,7 +178,7 @@ Etiam at pharetra mi, eu mattis ante. Proin convallis ligula vel diam egestas pu
                 style="@style/TextView.Poppins14spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/years_exp" />
+                android:text="@string/position" />
 
             <TextView
                 android:id="@+id/tv_position_level"
@@ -218,7 +218,7 @@ Etiam at pharetra mi, eu mattis ante. Proin convallis ligula vel diam egestas pu
                 style="@style/TextView.Poppins14spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Years of Experience" />
+                android:text="@string/years_exp" />
 
             <TextView
                 android:id="@+id/tv_year_experience"
@@ -300,7 +300,7 @@ Etiam at pharetra mi, eu mattis ante. Proin convallis ligula vel diam egestas pu
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Work Location"
+                android:text="@string/work_location"
                 android:textFontWeight="500" />
 
             <TextView
@@ -327,7 +327,7 @@ Etiam at pharetra mi, eu mattis ante. Proin convallis ligula vel diam egestas pu
                 style="@style/TextView.Poppins16spBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company Gallery"
+                android:text="@string/company_gallery"
                 android:textFontWeight="500" />
 
             <com.synnapps.carouselview.CarouselView

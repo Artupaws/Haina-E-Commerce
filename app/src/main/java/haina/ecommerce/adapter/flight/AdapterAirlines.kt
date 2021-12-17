@@ -39,9 +39,9 @@ class AdapterAirlines(val context: Context, private val listAirlines: DataAirlin
                     itemAdapterCallback.onClick(binding.linearClick, itemHaina, itemHaina.flightTime, listAirlines.depart, listAirlines.returnParams) }
                 setupListTimeFlight(binding, itemHaina.flightTime)
                 if (itemHaina.flightTime?.size!! > 1){
-                    tvTypeFlight.text = "Transit"
+                    tvTypeFlight.text = context.getString(R.string.flight_transit)
                 } else {
-                    tvTypeFlight.text = "Direct"
+                    tvTypeFlight.text = context.getString(R.string.flight_direct)
                 }
                 Glide.with(context).load(itemHaina.airlineDetail?.image)
                     .listener(object : RequestListener<Drawable> {

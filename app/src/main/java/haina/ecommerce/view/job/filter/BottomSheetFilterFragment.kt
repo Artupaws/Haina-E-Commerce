@@ -79,9 +79,9 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), BottomSheetFilter
         binding.rsliderExperience.addOnChangeListener { _, value, _ ->
             experience = value.toInt()
             if(value.toInt()>=10){
-                binding.tvExperience.text = "${value.toInt()}+ Years Experience(s)"
+                binding.tvExperience.text = "${value.toInt()}+ ${context?.getString(R.string.year_displayer)}"
             }else{
-                binding.tvExperience.text = "${value.toInt()} Years Experience(s)"
+                binding.tvExperience.text = "${value.toInt()} ${context?.getString(R.string.year_displayer)}"
             }
         }
 
@@ -180,7 +180,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), BottomSheetFilter
         val searchView = popupDialogType?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogType?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogType?.dismiss() }
-        title?.text = "Type"
+        title?.text = "${context?.getString(R.string.job_type)}"
         searchView?.visibility = View.GONE
         rvDestination?.adapter = adapterType
     }
@@ -199,7 +199,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), BottomSheetFilter
         val searchView = popupDialogLevel?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogLevel?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogLevel?.dismiss() }
-        title?.text = "Level"
+        title?.text = "${context?.getString(R.string.job_level)}"
         searchView?.visibility = View.GONE
         rvDestination?.adapter = adapterLevel
     }
@@ -256,7 +256,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), BottomSheetFilter
         val searchView = popupDialogSpecialist?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogSpecialist?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogSpecialist?.dismiss() }
-        title?.text = "Specialist"
+        title?.text = "${context?.getString(R.string.job_specialization)}"
         searchView?.queryHint = "Search Specialist Here"
         rvDestination?.adapter = adapterSpecialist
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -288,7 +288,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), BottomSheetFilter
         val searchView = popupDialogLastEdu?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogLastEdu?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogLastEdu?.dismiss() }
-        title?.text = "Last Education"
+        title?.text = "${context?.getString(R.string.last_education)}"
         searchView?.visibility = View.GONE
         rvDestination?.adapter = adapterLastEdu
     }

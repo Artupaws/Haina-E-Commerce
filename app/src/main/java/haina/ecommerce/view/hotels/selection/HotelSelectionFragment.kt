@@ -91,7 +91,7 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
         checkOutDate = SimpleDateFormat("yyyy-MM-dd").format(dt)
         binding.tvStartDate?.text =
             SimpleDateFormat("dd MMM").format(Date()) + " - " + SimpleDateFormat("dd MMM").format(dt)
-        binding.tvTotalNight?.text = "1 Night(s)"
+        binding.tvTotalNight?.text = getString(R.string.one_night)
         totalNight = 1
 
 
@@ -117,7 +117,7 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
                 val totalDays: Long = (it.second?.minus(it.first!!)!!)
                 totalNight = TimeUnit.MILLISECONDS.toDays(totalDays).toInt()
 
-                binding.tvTotalNight?.text = "$totalNight Night(s)"
+                binding.tvTotalNight?.text = "$totalNight ${context?.getString(R.string.nights_counter)}"
                 picker.dismiss()
             }
         }

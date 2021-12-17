@@ -114,12 +114,12 @@ class SetAddOnFragment : Fragment(), SetAddOnContract, AdapterAddOn.ItemAdapterC
                 p0!!.setBackgroundResource(R.drawable.ic_seats_selected)
             }
         } else if (p0!!.tag as Int == STATUS_BOOKED) {
-            Toast.makeText(requireActivity(), "Seat " + p0!!.id.toString() + " is Booked", Toast.LENGTH_SHORT)
+            Toast.makeText(requireActivity(), "Seat " + p0!!.id.toString() + getString(R.string.is_booked), Toast.LENGTH_SHORT)
                 .show()
         } else if (p0!!.tag as Int == STATUS_RESERVED) {
             Toast.makeText(
                 requireActivity(),
-                "Seat " + p0!!.id.toString() + " is Reserved",
+                "Seat " + p0!!.id.toString() + getString(R.string.is_reserved),
                 Toast.LENGTH_SHORT
             ).show()
         }

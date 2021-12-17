@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-        app:title="Item Detail" />
+        app:title="@string/item_detail" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -120,7 +120,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="Category"
+                    android:text="@string/item_category"
                     />
 
                 <TextView
@@ -144,7 +144,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="Catalog"
+                    android:text="@string/item_catalog"
                     />
 
                 <TextView

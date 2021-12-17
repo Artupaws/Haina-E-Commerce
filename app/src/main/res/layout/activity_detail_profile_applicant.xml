@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back_black"
-        app:title="Profile Applicant" />
+        app:title="@string/applicant_profile" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
@@ -209,7 +209,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
                         style="@style/TextView.Poppins14spBlack"
-                        android:text="Last Salary"/>
+                        android:text="@string/last_salary"/>
 
                     <TextView
                         android:layout_width="0dp"

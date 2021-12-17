@@ -15,6 +15,7 @@ import haina.ecommerce.helper.Helper.convertToFormatMoneyIDRFilter
 import haina.ecommerce.model.DataItemHaina
 import haina.ecommerce.model.vacancy.*
 import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 import timber.log.Timber
 import java.util.ArrayList
 
@@ -45,7 +46,12 @@ class AdapterDataCreateVacancy(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(itemHaina: VacancyLevelItem, adapterCallbackFillDataVacancy: AdapterCallbackFillDataVacancy) {
             with(binding) {
-                tvNameFacilities.text = itemHaina.name
+                if(sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en") {
+                    tvNameFacilities.text = itemHaina.name
+                }
+                else{
+                    tvNameFacilities.text = itemHaina.nameZh
+                }
                 relativeClick.setOnClickListener {
                     adapterCallbackFillDataVacancy.listLevelClick(relativeClick, itemHaina)
                 }
@@ -57,7 +63,12 @@ class AdapterDataCreateVacancy(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(itemHaina: VacancyTypeItem, adapterCallbackFillDataVacancy: AdapterCallbackFillDataVacancy) {
             with(binding) {
-                tvNameFacilities.text = itemHaina.name
+                if(sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en") {
+                    tvNameFacilities.text = itemHaina.name
+                }
+                else{
+                    tvNameFacilities.text = itemHaina.nameZh
+                }
                 relativeClick.setOnClickListener {
                     adapterCallbackFillDataVacancy.listTypeClick(relativeClick, itemHaina)
                 }
@@ -93,7 +104,12 @@ class AdapterDataCreateVacancy(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(itemHaina: VacancySpecialistItem, adapterCallbackFillDataVacancy: AdapterCallbackFillDataVacancy) {
             with(binding) {
-                tvNameFacilities.text = itemHaina.name
+                if(sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en") {
+                    tvNameFacilities.text = itemHaina.name
+                }
+                else{
+                    tvNameFacilities.text = itemHaina.nameZh
+                }
                 relativeClick.setOnClickListener {
                     adapterCallbackFillDataVacancy.listSpecialistClick(relativeClick, itemHaina)
                 }
@@ -143,7 +159,12 @@ class AdapterDataCreateVacancy(
             with(binding) {
                tvNamePackage.text = itemHaina.name
                 tvPricePackage.text = convertToFormatMoneyIDRFilter(itemHaina.price.toString())
-                tvDescriptionPackage.text = itemHaina.description
+                if(sharedPreferenceHelper.getValueString(Constants.LANGUAGE_APP) == "en"){
+                    tvDescriptionPackage.text = itemHaina.description
+                }
+                else{
+                    tvDescriptionPackage.text = itemHaina.descriptionZh
+                }
                 cvClick.setOnClickListener { index = adapterPosition
                     notifyDataSetChanged()
                     dataVacancyCallbackPackage?.listPackageClick(cvClick, itemHaina)

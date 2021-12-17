@@ -249,7 +249,7 @@
     <string name="check_out">退房</string>
     <string name="type_room">类型间</string>
     <string name="address_hotel">地址酒店</string>
-    <string name="night">总夜数</string>
+    <string name="night">晚数</string>
     <string name="see_on_map"><u>在地图上看到</u></string>
     <string name="give_your_rating">给出您的评分</string>
     <string name="booking_id">预订号码</string>
@@ -357,12 +357,12 @@
     <string name="floor_level">楼层数/楼层位置</string>
     <string name="rent">我想租</string>
     <string name="my_property">我的物业</string>
-    <string name="warning_edit_property">请将您的财产状态更改为可用</string>
+    <string name="warning_edit_property">请将您的物业状态更改为"Available"</string>
     <string name="notes_transaction_property">请注意：\n1.转账以前，请请确认物业的存在
         \n2.确保交易有有效的买卖协议
         \n3.确保房产与广告相符
         \n4.本次交易不在海纳服务印尼的控制范围内
-        \n5.您将被转发到WhatsApp chat，请注意聊天语言</string>
+        \n5.您将被转发到WhatsApp chat，请礼貌沟通</string>
     <string name="forum">贴吧</string>
     <string name="create_sub_forum">创作新吧</string>
     <string name="new_post">发布新帖子</string>
@@ -410,7 +410,7 @@
     <string name="search_fail">未找到搜索结果</string>
     <string name="registration_success">登记成功</string>
     <string name="registration_fail">登记失败</string>
-    <string name="applicant_count">求职者</string>
+    <string name="applicant_count">申请人</string>
     <string name="shortlist_count">入围</string>
     <string name="interview_count">面试</string>
     <string name="accepted_count">接受</string>
@@ -627,5 +627,69 @@
     <string name="comments">评论</string>
     <string name="reply">回复</string>
     <string name="posted_by">发布者:</string>
-    <string name="banned_by">Banned By:</string>
+    <string name="banned_by">禁止决定由:</string>
+    <string name="one_night">1 晚</string>
+    <string name="nights_counter">晚</string>
+    <string name="add_passenger_data">加新乘客资料</string>
+    <string name="add_passenger_data_caution">注意：请正确填写乘客资料</string>
+    <string name="booking_details">预订详情</string>
+    <string name="set_add_on">添加额外服务</string>
+    <string name="choose_city">选择城市</string>
+    <string name="property_details">物业详情</string>
+    <string name="please_complete_form">请填写表格</string>
+    <string name="applicant_profile">申请者资料</string>
+    <string name="forum_activity">贴吧活动</string>
+    <string name="my_job_application">我申请的空缺</string>
+    <string name="my_job_vacancy">我发布的空缺</string>
+    <string name="vacancy_package">空缺广告套餐</string>
+    <string name="create_new_vacancy">发布新空缺</string>
+    <string name="subforum_information">吧的性情</string>
+    <string name="skill_and_edu"><![CDATA[技能和教育]]></string>
+    <string name="add_photo_btn">+ 上转更多照片</string>
+    <string name="property_images">物业图片</string>
+    <string name="flight_booking_details">航班预订详情</string>
+    <string name="search_result">搜索结果</string>
+    <string name="item_detail">产品详细</string>
+    <string name="add_new_property">加新物业</string>
+    <string name="please_choose_package_first">请选择套餐</string>
+    <string name="hidden_for_user">- 对用户隐藏</string>
+    <string name="salary_hidden">工资隐藏</string>
+    <string name="go_to_my_vacancy">去"我发布的空缺"的页面</string>
+    <string name="go_to_my_property">去"我的物业"的页面</string>
+    <string name="unprocessed_applicant">未处理申请者</string>
+    <string name="shortlisted_applicant">入围申请者</string>
+    <string name="applicant_to_interview">要面试申请者</string>
+    <string name="accepted_applicant">通过的申请者</string>
+    <string name="reject">拒绝申请</string>
+    <string name="select_passenger">选择乘客</string>
+    <string name="no_work_experience">无工作经历</string>
+    <string name="select_interview_date">选择面试日期</string>
+    <string name="phone_interview">电话面试</string>
+    <string name="live_interview">现场面试</string>
+    <string name="online_interview">在线面试</string>
+    <string name="select_start_time">开始时间</string>
+    <string name="select_end_time">结束时间</string>
+    <string name="waiting_reservation_no">等待预约号</string>
+    <string name="flight_transit">转接航班</string>
+    <string name="flight_direct">直达航班</string>
+    <string name="search_cuisine_hint">搜索菜式</string>
+    <string name="search_restaurant_type_hint">搜索餐厅分类</string>
+    <string name="stars_or_more">以上</string>
+    <string name="saved_restaurant">收藏的餐厅</string>
+    <string name="empty">未找到数据</string>
+    <string name="not_apply_yet">未申请工作</string>
+    <string name="no_cancelled_transaction">没有取消的交易</string>
+    <string name="vacancy_ads">职位空缺广告</string>
+    <string name="update_company_address">更新公司地址</string>
+    <string name="open_24h">24小时营业</string>
+    <string name="reviews">评论</string>
+    <string name="edit_forum_detail">编辑贴吧详情</string>
+    <string name="update">更新数据</string>
+    <string name="year_displayer">年</string>
+    <string name="complete_order_data">完整订单数据</string>
+    <string name="maximum_guests_reached">Maximum total guests reached</string>
+    <string name="maximum_guest">Maximum Guest(s)</string>
+    <string name="search_skill">Search Skill Here</string>
+    <string name="is_reserved">is Reserved</string>
+    <string name="is_booked">is Booked</string>
 </resources>

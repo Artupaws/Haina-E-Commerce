@@ -76,7 +76,7 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
             salary = "${Helper.convertToFormatMoneyIDRFilter(item.minSalary.toString())}-${Helper.convertToFormatMoneyIDRFilter(item.maxSalary.toString())}"
             binding.tvSalary.text = salary
         } else {
-            binding.tvSalary.text = "Salary hidden"
+            binding.tvSalary.text = getString(R.string.salary_hidden)
         }
         binding.tvSalary.text = salary
         binding.tvDatePublish.text = dateFormat(item?.createdAt)

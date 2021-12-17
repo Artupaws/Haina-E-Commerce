@@ -54,7 +54,7 @@ import haina.ecommerce.view.hotels.transactionhotel.HistoryTransactionHotelActiv
      private fun setToView(data:PaidItem){
 //         Glide.with(applicationContext).load(data.hotel?.hotelImage).into(binding.ivPhotoRoom)
          binding.tvPrice.text = helper.convertToFormatMoneyIDRFilter(data.totalPrice.toString())
-         binding.tvTotalNight.text = "${data.totalNight.toString()} Night(s)"
+         binding.tvTotalNight.text = "${data.totalNight.toString()} ${getString(R.string.nights_counter)}"
          binding.tvHotelNameAndLocation.text = "${data.hotel?.hotelName}"
          binding.tvAddressHotel.text = data.hotel?.hotelAddress
          binding.tvStatus.text = data.status

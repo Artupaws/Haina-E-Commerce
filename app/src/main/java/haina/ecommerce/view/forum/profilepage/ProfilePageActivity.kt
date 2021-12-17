@@ -136,7 +136,7 @@ class ProfilePageActivity : AppCompatActivity(), AdapterListMyPost.ItemAdapterCa
         binding.tvTotalFollowers.visibility = View.GONE
         binding.tvCategory.visibility = View.GONE
         Glide.with(applicationContext).load(data.photo).into(binding.ivImageUser)
-        binding.tvCreated.text = "Member Since "+data.memberSince
+        binding.tvCreated.text = "${getString(R.string.member_since)} ${data.memberSince}"
         binding.backgroundPage.setBackgroundColor(ContextCompat.getColor(this, R.color.chuck_colorAccent));
 
 

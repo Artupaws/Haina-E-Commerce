@@ -82,12 +82,12 @@ class HistoryInterviewFragment : Fragment(), HistoryInterviewContract, View.OnCl
         Log.d("interviewFailed", msg)
         if (msg == "null" && sharedPreferenceHelper.getValueBoolien(Constants.PREF_IS_LOGIN)){
             binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
-            binding?.includeEmpty?.tvEmpty?.text = "Empty"
+            binding?.includeEmpty?.tvEmpty?.text = getString(R.string.empty)
             binding?.rvInterview?.visibility = View.INVISIBLE
             binding?.swipeRefresh?.isRefreshing = false
         } else if (msg.contains("Doesn't Exist")){
             binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
-            binding?.includeEmpty?.tvEmpty?.text = "Empty"
+            binding?.includeEmpty?.tvEmpty?.text = getString(R.string.empty)
             binding?.rvInterview?.visibility = View.INVISIBLE
             binding?.swipeRefresh?.isRefreshing = false
         } else {

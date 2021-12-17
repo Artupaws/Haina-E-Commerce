@@ -70,7 +70,7 @@ class AdapterTransactionFinish(val context: Context,
                     }
                     "finish" -> {
                         if(itemHaina.reservationNo==null){
-                            tvIdBooking.text = "Waiting for reservation number"
+                            tvIdBooking.text = context.getString(R.string.waiting_reservation_no)
                         }else{
                             tvIdBooking.text = itemHaina.reservationNo?.toString()
                         }

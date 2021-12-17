@@ -10,7 +10,7 @@
         android:id="@+id/toolbar_fill_data_passenger"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:title="Fill Data Passenger"
+        app:title="@string/passenger_data"
         app:navigationIcon="@drawable/ic_back_black"
         android:background="@color/yellow"
         app:layout_constraintEnd_toEndOf="parent"

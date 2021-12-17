@@ -220,7 +220,7 @@ class PaymentActivity : AppCompatActivity(), View.OnClickListener,
         val title = popupPaymentMethod?.findViewById<TextView>(R.id.tv_title)
         val rvPaymentMethod = popupPaymentMethod?.findViewById<RecyclerView>(R.id.rv_popup)
         val cancel = popupPaymentMethod?.findViewById<TextView>(R.id.tv_action)
-        title?.text = "Payment Method"
+        title?.text = getString(R.string.payment_method)
         cancel?.visibility = View.GONE
 
         rvPaymentMethod?.apply {

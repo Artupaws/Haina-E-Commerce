@@ -25,11 +25,11 @@ class FinishPropertyActivity : AppCompatActivity(), View.OnClickListener {
         if (endProgress == "vacancy"){
             binding.tvTitleSuccess.text = getString(R.string.vacancy_post_success)
             binding.tvTitleDescriptionSuccess.text = getString(R.string.see_new_vacancy)
-            binding.btnActionGoto.text = "Go To MyVacancy Page"
+            binding.btnActionGoto.text = getString(R.string.go_to_my_vacancy)
         } else if (endProgress == "property"){
             binding.tvTitleSuccess.text = getString(R.string.property_post_success)
             binding.tvTitleDescriptionSuccess.text = getString(R.string.see_at_property)
-            binding.btnActionGoto.text = "Go To MyProperty Page"
+            binding.btnActionGoto.text = getString(R.string.go_to_my_property)
         }
     }
 

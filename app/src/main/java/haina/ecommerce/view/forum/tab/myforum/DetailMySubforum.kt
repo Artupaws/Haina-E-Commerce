@@ -161,25 +161,25 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
 
         if(data.following == null ){
             binding.btnFollow.setBackgroundColor(resources.getColor(R.color.yellow))
-            binding.btnFollow.text = "Follow"
+            binding.btnFollow.text = getString(R.string.follow)
         }else{
             if(data.role == "mod"||data.role == "submod"){
 
                 binding.btnFollow.setBackgroundColor(Color.WHITE)
-                binding.btnFollow.text = "Edit Forum Detail"
+                binding.btnFollow.text = getString(R.string.edit_forum_detail)
                 binding.btnFollow.setOnClickListener {
 
                 }
             } else{
                 if(data.following!!){
                     binding.btnFollow.setBackgroundColor(Color.WHITE)
-                    binding.btnFollow.text = "Unfollow"
+                    binding.btnFollow.text = getString(R.string.unfollow)
                     binding.btnFollow.setOnClickListener {
                         presenter.unfollowSubforum(data.subforumId!!)
                     }
                 }else{
                     binding.btnFollow.setBackgroundColor(resources.getColor(R.color.yellow))
-                    binding.btnFollow.text = "Follow"
+                    binding.btnFollow.text = getString(R.string.follow)
 
                     binding.btnFollow.setOnClickListener {
                         presenter.followSubforum(data.subforumId!!)
@@ -190,7 +190,7 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
 
         binding.tvNameUser.text = data.subforumName
         binding.tvAbout.text = data.description
-        binding.tvTotalFollowers.text = "${data.followersCount} Followers"
+        binding.tvTotalFollowers.text = "${data.followersCount} ${getString(R.string.followers)}"
         Glide.with(applicationContext).load(data.image).into(binding.ivImageUser)
 
 

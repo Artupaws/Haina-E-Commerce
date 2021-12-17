@@ -67,7 +67,7 @@ class RestaurantDashboardFilter(val callback:Callback) : BottomSheetDialogFragme
         binding.toolbarRestaurantSelection.title = getString(R.string.restaurant_filter)
         binding.rsliderRating.addOnChangeListener { _, value, _ ->
             minRating = value.toInt()
-            binding.tvRating.text = "$value Stars or more"
+            binding.tvRating.text = "$value ${context?.getString(R.string.stars_or_more)}"
         }
 
         binding.btnApply.setOnClickListener{
@@ -88,13 +88,13 @@ class RestaurantDashboardFilter(val callback:Callback) : BottomSheetDialogFragme
 
         binding.ivCancelCuisine.setOnClickListener {
             idCuisine = null
-            binding.tvCuisineType.text = "Show All"
+            binding.tvCuisineType.text = context?.getString(R.string.show_all)
             binding.ivCancelCuisine.visibility = View.GONE
         }
 
         binding.ivCancelType.setOnClickListener {
             idType = null
-            binding.tvRestaurantType.text = "Show All"
+            binding.tvRestaurantType.text = context?.getString(R.string.show_all)
             binding.ivCancelType.visibility = View.GONE
         }
         binding.cbHalal.setOnCheckedChangeListener { button, b ->
@@ -138,15 +138,15 @@ class RestaurantDashboardFilter(val callback:Callback) : BottomSheetDialogFragme
     private fun cuisineFilter(){
         val searchView = popupFilter?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupFilter?.findViewById<TextView>(R.id.tv_title_popup)
-        title?.text = "Cuisine Type"
-        searchView?.queryHint = "Search Cuisine Here"
+        title?.text = context?.getString(R.string.cuisine_type)
+        searchView?.queryHint = context?.getString(R.string.search_cuisine_hint)
     }
 
     private fun typeFilter(){
         val searchView = popupFilter?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupFilter?.findViewById<TextView>(R.id.tv_title_popup)
-        title?.text = "Restaurant Type"
-        searchView?.queryHint = "Search Restaurant Type Here"
+        title?.text = context?.getString(R.string.restaurant_type)
+        searchView?.queryHint = context?.getString(R.string.search_restaurant_type_hint)
     }
 
     fun updateCuisine(data: List<CuisineAndTypeData?>?){

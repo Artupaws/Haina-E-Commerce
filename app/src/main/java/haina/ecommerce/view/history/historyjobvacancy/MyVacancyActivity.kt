@@ -68,7 +68,7 @@ class MyVacancyActivity : AppCompatActivity(), MyVacancyContract.View, AdapterMy
         } else {
             binding.includeEmpty.linearEmpty.visibility = View.VISIBLE
             binding.rvMyVacancy.visibility = View.GONE
-            binding.includeEmpty.tvEmpty.text = "Empty"
+            binding.includeEmpty.tvEmpty.text = getString(R.string.empty)
         }
     }
 
@@ -120,28 +120,28 @@ class MyVacancyActivity : AppCompatActivity(), MyVacancyContract.View, AdapterMy
                     .putExtra("dataVacancy", dataMyVacancy)
                     .putExtra("dataCreateVacancy", dataCreateVacancy)
                     .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
-                    .putExtra("title", "Unprocess Applicant"))
+                    .putExtra("title", getString(R.string.unprocessed_applicant)))
             }
             R.id.linear_choosed -> {
                 startActivity(Intent(applicationContext, ListApplicantActivity::class.java)
                     .putExtra("dataVacancy", dataMyVacancy)
                     .putExtra("dataCreateVacancy", dataCreateVacancy)
                     .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
-                    .putExtra("title", "Choosed Applicant"))
+                    .putExtra("title", getString(R.string.shortlisted_applicant)))
             }
             R.id.linear_interview -> {
                 startActivity(Intent(applicationContext, ListApplicantActivity::class.java)
                     .putExtra("dataVacancy", dataMyVacancy)
                     .putExtra("dataCreateVacancy", dataCreateVacancy)
                     .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
-                    .putExtra("title", "Interview Applicant"))
+                    .putExtra("title", getString(R.string.applicant_to_interview)))
             }
             R.id.linear_accepted -> {
                 startActivity(Intent(applicationContext, ListApplicantActivity::class.java)
                     .putExtra("dataVacancy", dataMyVacancy)
                     .putExtra("dataCreateVacancy", dataCreateVacancy)
                     .putParcelableArrayListExtra("locationJob", listLocationFilter as ArrayList)
-                    .putExtra("title", "Accepted Applicant"))
+                    .putExtra("title", getString(R.string.accepted_applicant)))
             }
         }
     }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemSubmitApplicationBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.vacancy.*
@@ -37,13 +38,13 @@ class AdapterListApplicant(val context: Context,
                 tvLastCompanyAndExperience.text = companyAndExperience
                 if (itemHaina.user?.workExperience == null){
                     tvLastCompanyAndExperience.visibility = View.GONE
-                    tvLastPosition.text = "No Work Experience"
+                    tvLastPosition.text = context.getString(R.string.no_work_experience)
                     tvExpectedSalary.visibility = View.GONE
                 } else {
-                    val expectedSalary = "Last Salary : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user.workExperience.salary.toString())}"
+                    val expectedSalary = "${context.getString(R.string.last_salary)} : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user.workExperience.salary.toString())}"
                     tvExpectedSalary.text = expectedSalary
                 }
-                val lastEducation = "Last Education : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
+                val lastEducation = "${context.getString(R.string.last_education)} : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
                 tvLastEducation.text = lastEducation
                 btnReject.setOnClickListener {
                     adapterListApplicantCallback.rejectApplicantClick(btnReject, adapterPosition, itemHaina, listApplicant)
@@ -72,13 +73,13 @@ class AdapterListApplicant(val context: Context,
                 tvLastCompanyAndExperience.text = companyAndExperience
                 if (itemHaina.user?.workExperience == null){
                     tvLastCompanyAndExperience.visibility = View.GONE
-                    tvLastPosition.text = "No Work Experience"
+                    tvLastPosition.text = context.getString(R.string.no_work_experience)
                     tvExpectedSalary.visibility = View.GONE
                 } else {
-                    val expectedSalary = "Last Salary : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user.workExperience.salary.toString())}"
+                    val expectedSalary = "${context.getString(R.string.last_salary)} : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user.workExperience.salary.toString())}"
                     tvExpectedSalary.text = expectedSalary
                 }
-                val lastEducation = "Last Education : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
+                val lastEducation = "${context.getString(R.string.last_education)} : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
                 tvLastEducation.text = lastEducation
                 btnInterviewShortlisted.setOnClickListener {
                     adapterListApplicantCallback.rejectApplicantClick(btnInterview, adapterPosition, itemHaina, listApplicant)
@@ -105,13 +106,13 @@ class AdapterListApplicant(val context: Context,
                 tvLastCompanyAndExperience.text = companyAndExperience
                 if (itemHaina.user?.workExperience == null){
                     tvLastCompanyAndExperience.visibility = View.GONE
-                    tvLastPosition.text = "No Work Experience"
+                    tvLastPosition.text = context.getString(R.string.no_work_experience)
                     tvExpectedSalary.visibility = View.GONE
                 } else {
-                    val expectedSalary = "Last Salary : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user.workExperience.salary.toString())}"
+                    val expectedSalary = "${context.getString(R.string.last_salary)} : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user.workExperience.salary.toString())}"
                     tvExpectedSalary.text = expectedSalary
                 }
-                val lastEducation = "Last Education : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
+                val lastEducation = "${context.getString(R.string.last_education)} : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
                 tvLastEducation.text = lastEducation
                 btnAccept.setOnClickListener {
                     adapterListApplicantCallback.rejectApplicantClick(btnAccept, adapterPosition, itemHaina, listApplicant)
@@ -144,13 +145,13 @@ class AdapterListApplicant(val context: Context,
                 tvLastCompanyAndExperience.text = companyAndExperience
                 if (itemHaina.user?.workExperience == null){
                     tvLastCompanyAndExperience.visibility = View.GONE
-                    tvLastPosition.text = "No Work Experience"
+                    tvLastPosition.text = context.getString(R.string.no_work_experience)
                     tvExpectedSalary.visibility = View.GONE
                 } else {
-                    val expectedSalary = "Last Salary : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user.workExperience.salary.toString())}"
+                    val expectedSalary = "${context.getString(R.string.last_salary)} : ${Helper.convertToFormatMoneyIDRFilter(itemHaina.user.workExperience.salary.toString())}"
                     tvExpectedSalary.text = expectedSalary
                 }
-                val lastEducation = "Last Education : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
+                val lastEducation = "${context.getString(R.string.last_education)} : ${itemHaina.user?.education?.degreeName}-${itemHaina.user?.education?.major}"
                 tvLastEducation.text = lastEducation
             }
         }

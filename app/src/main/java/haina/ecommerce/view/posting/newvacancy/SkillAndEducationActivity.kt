@@ -110,8 +110,8 @@ class  SkillAndEducationActivity : AppCompatActivity(), View.OnClickListener,
         val searchView = popupDialogSkills?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogSkills?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogSkills?.dismiss() }
-        title?.text = "Skills"
-        searchView?.queryHint = "Search Skill Here"
+        title?.text = getString(R.string.skills)
+        searchView?.queryHint = getString(R.string.search_skill)
         rvDestination?.adapter = adapterSkills
     }
 
@@ -129,7 +129,7 @@ class  SkillAndEducationActivity : AppCompatActivity(), View.OnClickListener,
         val searchView = popupDialogLastEdu?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogLastEdu?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogLastEdu?.dismiss() }
-        title?.text = "Last Education"
+        title?.text = getString(R.string.last_education)
         searchView?.visibility = View.GONE
         rvDestination?.adapter = adapterLastEdu
     }

@@ -297,7 +297,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.Vi
         val actionYes = view.findViewById<TextView>(R.id.tv_action_yes)
         val title = view.findViewById<TextView>(R.id.tv_title)
         popupLogout = popup.create()
-        title.text = "Logout"
+        title.text = context?.getString(R.string.logout)
         actionCancel.setOnClickListener { popupLogout?.dismiss() }
         actionYes.setOnClickListener {
             popupLogout?.dismiss()

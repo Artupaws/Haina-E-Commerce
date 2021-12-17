@@ -273,7 +273,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         val searchView = popupDialogType?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogType?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogType?.dismiss() }
-        title?.text = "Type"
+        title?.text = getString(R.string.type)
         searchView?.visibility = View.GONE
         rvDestination?.adapter = adapterType
     }
@@ -292,7 +292,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         val searchView = popupDialogLevel?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogLevel?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogLevel?.dismiss() }
-        title?.text = "Level"
+        title?.text = getString(R.string.job_level)
         searchView?.visibility = View.GONE
         rvDestination?.adapter = adapterLevel
     }
@@ -348,7 +348,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         val searchView = popupDialogExperience?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogExperience?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogExperience?.dismiss() }
-        title?.text = "Year Experience"
+        title?.text = getString(R.string.years_exp)
         searchView?.visibility = View.GONE
         rvDestination?.adapter = adapterExperience
     }
@@ -367,7 +367,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         val searchView = popupDialogSpecialist?.findViewById<SearchView>(R.id.sv_destination)
         val title = popupDialogSpecialist?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogSpecialist?.dismiss() }
-        title?.text = "Specialist"
+        title?.text = getString(R.string.job_specialization)
         searchView?.queryHint = "Search Specialist Here"
         rvDestination?.adapter = adapterSpecialist
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{

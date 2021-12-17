@@ -54,7 +54,8 @@ class ListApplicantActivity : AppCompatActivity(),
     private var tvLocation:TextView? = null
     private var tvInterviewDate:TextView? = null
     private var etContactNumber:EditText? = null
-    private var interviewMethod = arrayOf("phone", "live", "online")
+    private var interviewMethod = arrayOf(getString(R.string.phone_interview), getString(R.string.live_interview), getString(
+            R.string.online_interview))
 
     private var date: String = Calendar.getInstance().get(Calendar.DATE).toString()
     private var month: String = Calendar.getInstance().get(Calendar.MONTH).toString()
@@ -78,19 +79,19 @@ class ListApplicantActivity : AppCompatActivity(),
         binding.toolbarListApplicant.title = title
         binding.toolbarListApplicant.setNavigationOnClickListener { onBackPressed() }
         when(title){
-            "Unprocess Applicant" -> {
+            getString(R.string.unprocessed_applicant) -> {
                 dataVacancy.let { it?.id?.let { it1 -> presenter.getListApplicant(it1) } }
                 AdapterListApplicant.VIEW_TYPE = 1
             }
-            "Choosed Applicant" -> {
+            getString(R.string.shortlisted_applicant) -> {
                 dataVacancy.let { it?.id?.let { it1 -> presenter.getListApplicantShortListed(it1) } }
                 AdapterListApplicant.VIEW_TYPE = 2
             }
-            "Interview Applicant" -> {
+            getString(R.string.applicant_to_interview) -> {
                 dataVacancy.let { it?.id?.let { it1 -> presenter.getListApplicantInterview(it1) } }
                 AdapterListApplicant.VIEW_TYPE = 3
             }
-            "Accepted Applicant" -> {
+            getString(R.string.accepted_applicant) -> {
                 dataVacancy.let { it?.id?.let { it1 -> presenter.getListApplicantAccepted(it1) } }
                 AdapterListApplicant.VIEW_TYPE = 4
             }
@@ -203,13 +204,13 @@ class ListApplicantActivity : AppCompatActivity(),
         tvLastCompany?.text = companyAndExperience
         if (dataApplicant.user?.workExperience == null){
             tvLastCompany?.visibility = View.GONE
-            tvLastPosition?.text = "No Work Experience"
+            tvLastPosition?.text = getString(R.string.no_work_experience)
             tvExpectedSalary?.visibility = View.GONE
         } else {
-            val expectedSalary = "Last Salary : ${Helper.convertToFormatMoneyIDRFilter(dataApplicant.user.workExperience.salary.toString())}"
+            val expectedSalary = "${getString(R.string.last_salary)} : ${Helper.convertToFormatMoneyIDRFilter(dataApplicant.user.workExperience.salary.toString())}"
             tvExpectedSalary?.text = expectedSalary
         }
-        val lastEducation = "Last Education : ${dataApplicant.user?.education?.degreeName}-${dataApplicant.user?.education?.major}"
+        val lastEducation = "${getString(R.string.last_education)} : ${dataApplicant.user?.education?.degreeName}-${dataApplicant.user?.education?.major}"
         tvLastEducation?.text = lastEducation
         tvInterviewDate = popupSetInterview?.findViewById<TextView>(R.id.tv_interview_date)
 
@@ -248,7 +249,7 @@ class ListApplicantActivity : AppCompatActivity(),
         var isContactNumberEmpty = true
         var isDateEmpty = true
 
-        if(spinnerMethod?.selectedItem != "phone"){
+        if(spinnerMethod?.selectedItem != getString(R.string.phone_interview)){
             if(etLocation?.text.isNullOrEmpty()){
                 isLocationEmpty=false
             }
@@ -260,7 +261,7 @@ class ListApplicantActivity : AppCompatActivity(),
         if(etContactPerson?.text.isNullOrEmpty()){
             isContactPersonEmpty=false
         }
-        if(tvInterviewDate?.text!!.equals("select date")){
+        if(tvInterviewDate?.text!!.equals(getString(R.string.select_interview_date))){
             isDateEmpty=false
         }
 
@@ -281,7 +282,7 @@ class ListApplicantActivity : AppCompatActivity(),
     private fun setDateInterview() {
         val datebuilder = MaterialDatePicker.Builder.datePicker()
         val now = Calendar.getInstance()
-        datebuilder.setTitleText("Select Date Interview")
+        datebuilder.setTitleText(getString(R.string.select_interview_date))
         datebuilder.setSelection(now.timeInMillis)
         datebuilder.setCalendarConstraints(limitRangeDate().build())
 
@@ -311,7 +312,7 @@ class ListApplicantActivity : AppCompatActivity(),
             datefull = it?.convertLongtoTime("yyyy-MM-dd").toString()
 
             val timebuilder = MaterialTimePicker.Builder()
-            timebuilder.setTitleText("Select Time From")
+            timebuilder.setTitleText(getString(R.string.select_start_time))
             timebuilder.setHour(10)
             timebuilder.setMinute(0)
             timebuilder.setTimeFormat(TimeFormat.CLOCK_24H)
@@ -325,7 +326,7 @@ class ListApplicantActivity : AppCompatActivity(),
                 minutefrom=timepicker.minute
 
                 val timetobuilder = MaterialTimePicker.Builder()
-                timetobuilder.setTitleText("Select Time To")
+                timetobuilder.setTitleText(getString(R.string.select_end_time))
                 timetobuilder.setHour(10)
                 timetobuilder.setMinute(0)
                 timetobuilder.setTimeFormat(TimeFormat.CLOCK_24H)
@@ -379,15 +380,15 @@ class ListApplicantActivity : AppCompatActivity(),
 
     override fun onItemSelected(arg0: AdapterView<*>, arg1: View, position: Int, id: Long) {
         when {
-            interviewMethod[position] =="phone" -> {
+            interviewMethod[position] == getString(R.string.phone_interview) -> {
                 clLocation!!.visibility=View.GONE
             }
-            interviewMethod[position] =="live" -> {
+            interviewMethod[position] == getString(R.string.live_interview) -> {
                 clLocation!!.visibility=View.VISIBLE
                 tvLocation!!.text=resources.getString(R.string.interview_location)
                 etLocation!!.hint=resources.getString(R.string.enter_interview_location)
             }
-            interviewMethod[position] =="online" -> {
+            interviewMethod[position] == getString(R.string.online_interview) -> {
                 clLocation!!.visibility=View.VISIBLE
                 tvLocation!!.text=getString(R.string.interview_link)
                 etLocation!!.hint=getString(R.string.enter_interview_link)

@@ -70,7 +70,7 @@ class FragmentTransactionCancel : Fragment(), View.OnClickListener {
         if (listItem == 0){
             binding?.rvTransactionCancel?.visibility = View.GONE
             binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
-            binding?.includeEmpty?.tvEmpty?.text = "You haven't cancel any transaction"
+            binding?.includeEmpty?.tvEmpty?.text = getString(R.string.no_cancelled_transaction)
         }
     }
 

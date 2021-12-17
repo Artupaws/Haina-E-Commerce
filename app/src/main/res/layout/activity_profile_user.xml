@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back_black"
-        app:title="Subforum Profile" />
+        app:title="@string/subforum_information" />
 
     <RelativeLayout
         android:id="@+id/relative_data_user"
@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="POST" />
+                android:text="@string/post" />
 
         </LinearLayout>
 
@@ -122,7 +122,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Followers" />
+                android:text="@string/followers" />
 
         </LinearLayout>
 

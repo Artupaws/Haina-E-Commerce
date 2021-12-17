@@ -39,7 +39,7 @@ class AdapterListUserComment(val context: Context,
         fun bind(itemHaina: CommentsItem, itemAdapterCallback: ItemAdapterCallback){
             with(binding){
                 listParams = ArrayList()
-                tvNameSubforum.text = "Posted By ${itemHaina.postData!!.subforumData!!.name}"
+                tvNameSubforum.text = "${context.getString(R.string.posted_by)} ${itemHaina.postData!!.subforumData!!.name}"
                 tvTitle.text = itemHaina.postData!!.title
                 tvContent.text = itemHaina.content
                 splitterPost.visibility = View.GONE

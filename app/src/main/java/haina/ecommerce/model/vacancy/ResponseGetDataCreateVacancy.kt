@@ -42,6 +42,9 @@ data class VacancyTypeItem(
 	@field:SerializedName("name")
 	val name: String? = null,
 
+	@field:SerializedName("name_zh")
+	val nameZh: String? = null,
+
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
 
@@ -74,6 +77,9 @@ data class VacancyLevelItem(
 	@field:SerializedName("name")
 	val name: String? = null,
 
+	@field:SerializedName("name_zh")
+	val nameZh: String? = null,
+
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
 
@@ -95,6 +101,9 @@ data class VacancyPackageItem(
 
 	@field:SerializedName("description")
 	val description: String? = null,
+
+	@field:SerializedName("description_zh")
+	val descriptionZh: String? = null,
 
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,

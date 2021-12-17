@@ -117,7 +117,7 @@ class HistorySubmitFragment : Fragment(), HistorySubmitContract, View.OnClickLis
         Log.d("historyJobSubmitError", msg)
         if (msg == "null" && sharedPreferenceHelper.getValueBoolien(Constants.PREF_IS_LOGIN)){
             binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
-            binding?.includeEmpty?.tvEmpty?.text = "You haven't applied"
+            binding?.includeEmpty?.tvEmpty?.text = getString(R.string.not_apply_yet)
             binding?.rvHistoryJobSubmit?.visibility = View.INVISIBLE
             binding?.swipeRefresh?.isRefreshing = false
         } else {

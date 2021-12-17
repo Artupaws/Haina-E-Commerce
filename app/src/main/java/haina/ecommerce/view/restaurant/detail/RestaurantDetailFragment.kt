@@ -157,7 +157,7 @@ class RestaurantDetailFragment :
         binding.tvLocation.text = data.address
         binding.tvRating.text = data.rating
         binding.tvPhotoCount.text = data.photo?.count().toString()
-        binding.tvReviewCount.text = "${data.reviews} Reviews"
+        binding.tvReviewCount.text = "${data.reviews} ${context?.getString(R.string.reviews)}"
 
         binding.ivSave.isChecked = data.bookmarked == 1
 

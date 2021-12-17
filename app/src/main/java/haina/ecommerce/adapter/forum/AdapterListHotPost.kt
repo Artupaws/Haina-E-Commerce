@@ -36,7 +36,7 @@ class AdapterListHotPost(val context: Context,
             with(binding){
                 listParams = ArrayList()
                 if (viewType == 1) tvOptionMenu.visibility = View.GONE else tvOptionMenu.visibility = View.VISIBLE
-                tvNameUser.text = "Posted By ${itemHaina.author}"
+                tvNameUser.text = "${context.getString(R.string.posted_by)} ${itemHaina.author}"
                 tvTitle.text = itemHaina.title
                 tvLooks.text = itemHaina.viewCount.toString()
                 tvNameSubforum.text = itemHaina.subforumData!!.name

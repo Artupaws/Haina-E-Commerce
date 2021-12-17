@@ -254,19 +254,19 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
     }
 
     private fun setDetailVacancy(pricePackageVacancy:Int, packageNameAds:String) {
-        binding.tvTitleService.text = "Vacancy Ads"
+        binding.tvTitleService.text = getString(R.string.vacancy_ads)
         binding.faIcon.text = getString(R.string.job)
         binding.includeDataProductBill.linearBill.visibility = View.GONE
         binding.includeDataProductBill.linearBillDate.visibility = View.GONE
         binding.includeDataProductBill.linearAdminFee.visibility = View.GONE
         binding.linearDataProductTopup.visibility = View.GONE
         binding.includeDataProductBill.linearDataProductBill.visibility = View.VISIBLE
-        binding.includeDataProductBill.tvTitleCustomerNumber.text = "Service type"
+        binding.includeDataProductBill.tvTitleCustomerNumber.text = getString(R.string.service_type)
         binding.includeDataProductBill.tvCustomerNumber.text = packageNameAds
-        binding.includeDataProductBill.tvTitleCustomerName.text = "Price"
+        binding.includeDataProductBill.tvTitleCustomerName.text = getString(R.string.price)
         binding.includeDataProductBill.tvNameCustomer.text = convertToFormatMoneyIDRFilter(pricePackageVacancy.toString())
         totalPay = changeMoneyToValue(pricePackageVacancy.toString()).toInt()
-        binding.tvProductName.text = "Vacancy"
+        binding.tvProductName.text = getString(R.string.job_vacancy)
         binding.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(pricePackageVacancy.toString())
     }
 

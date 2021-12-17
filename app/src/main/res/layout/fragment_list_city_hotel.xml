@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back_black"
-        app:title="Choose City" />
+        app:title="@string/choose_city" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/sv_destination"

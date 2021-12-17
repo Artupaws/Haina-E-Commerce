@@ -118,7 +118,7 @@ class DetailMyPropertySavedActivity : AppCompatActivity(), View.OnClickListener,
         val description = confirmDialog?.findViewById<TextView>(R.id.tv_popup)
         val yes = confirmDialog?.findViewById<TextView>(R.id.tv_action_yes)
         val cancel = confirmDialog?.findViewById<TextView>(R.id.tv_action_cancel)
-        title?.text = "Confirmation"
+        title?.text = getString(R.string.okay)
         description?.text = getString(R.string.notes_transaction_property)
         yes?.setOnClickListener{
             presenter.changeAvailability(idProperty, transactionType)

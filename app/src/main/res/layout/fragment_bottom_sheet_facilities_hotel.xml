@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_back_black"
-        app:title="Facilities" />
+        app:title="@string/facilities" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

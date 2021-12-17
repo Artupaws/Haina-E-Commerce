@@ -125,12 +125,12 @@ class HistoryShortListFragment : Fragment(), HistoryShortListContract, View.OnCl
         Log.d("shortlistErr", msg)
         if (msg == "null" && sharedPreferenceHelper.getValueBoolien(Constants.PREF_IS_LOGIN)) {
             binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
-            binding?.includeEmpty?.tvEmpty?.text = "Empty"
+            binding?.includeEmpty?.tvEmpty?.text = getString(R.string.empty)
             binding?.rvShortList?.visibility = View.INVISIBLE
             binding?.swipeRefresh?.isRefreshing = false
         } else if (msg.contains("Doesn't Exist")){
             binding?.includeEmpty?.linearEmpty?.visibility = View.VISIBLE
-            binding?.includeEmpty?.tvEmpty?.text = "Empty"
+            binding?.includeEmpty?.tvEmpty?.text = getString(R.string.empty)
             binding?.rvShortList?.visibility = View.INVISIBLE
             binding?.swipeRefresh?.isRefreshing = false
         } else {

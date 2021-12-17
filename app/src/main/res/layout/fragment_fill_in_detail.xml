@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@color/yellow"
         app:navigationIcon="@drawable/ic_back_black"
-        app:title="Fill in detail"
+        app:title="@string/booking_details"
         android:text="@string/hello_blank_fragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
