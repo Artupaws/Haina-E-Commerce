@@ -40,7 +40,7 @@ class BottomSheetHotelFragment : BottomSheetDialogFragment(), View.OnClickListen
         super.onActivityCreated(savedInstanceState)
         binding.toolbarHotelSelection.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarHotelSelection.setNavigationOnClickListener { dismiss() }
-        binding.toolbarHotelSelection.title = "Select Passenger"
+        binding.toolbarHotelSelection.title = getString(R.string.select_passenger)
         binding.includePax.cvAddAdult.setOnClickListener(this)
         binding.includePax.cvAddKid.setOnClickListener(this)
         binding.includePax.cvMinusAdult.setOnClickListener(this)

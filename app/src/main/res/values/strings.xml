@@ -15,7 +15,7 @@
     <string name="my_account">Profile</string>
     <string name="hint_search">News Today, Covid-19 News…</string>
     <string name="categories">Categories</string>
-    <string name="recomendations">RECOMENDATIONS</string>
+    <string name="recomendations">RECOMMENDATIONS</string>
     <string name="news_title">News</string>
     <string name="shipping_title">Shipping</string>
     <string name="topup_title">Top-up</string>
@@ -30,7 +30,7 @@
     <string name="today">Today</string>
     <string name="covid_19_indonesia">Covid-19 | Indonesia</string>
     <string name="total_cases">Total cases</string>
-    <string name="recover">Recover</string>
+    <string name="recover">Recovered</string>
     <string name="see_cases_other_countries"><u>See cases in other province ></u></string>
     <string name="house_maid_title">House Maid</string>
     <string name="car_service_title">Service Car</string>
@@ -58,7 +58,7 @@
     <string name="total_price">Total Price</string>
     <string name="buy">Buy</string>
     <string name="please_login_account">To view this page, please login first</string>
-    <string name="havent_transaction">You haven\'t done any transactions</string>
+    <string name="havent_transaction">You have not done any transactions</string>
     <string name="currency">| Currency</string>
     <string name="one">1</string>
     <string name="idr">IDR</string>
@@ -86,7 +86,7 @@
     <string name="please_wait">please wait</string>
     <string name="job_application">Job Application</string>
     <string name="logout">Logout</string>
-    <string name="view_or_edit_profile"><u>view or edit profile ></u></string>
+    <string name="view_or_edit_profile"><u>View or edit profile ></u></string>
     <string name="haina_help_support"><![CDATA[Haina Help & Support]]></string>
     <string name="help_center"><![CDATA[Help center and term & conditions]]></string>
     <string name="yes">Yes, I want</string>
@@ -95,7 +95,7 @@
     <string name="all_category">All Category</string>
     <string name="filter">Filter</string>
     <string name="colon">:</string>
-    <string name="date_publish">Date Publish</string>
+    <string name="date_publish">Publish date</string>
     <string name="apply_job">Apply Job</string>
     <string name="location">Location</string>
     <string name="job_title">Job</string>
@@ -105,7 +105,7 @@
     <string name="apply">Apply</string>
     <string name="apply_filter">Apply Filter</string>
     <string name="register_your_data_company_here">Register your data company here</string>
-    <string name="warning_data_company">You don\'t have data company, please register your company first for posting job vacancy.</string>
+    <string name="warning_data_company">You have not registered a company, please register your company first for posting job vacancy.</string>
     <string name="company_name">Company Name</string>
     <string name="register_my_company">Register My Company</string>
     <string name="data_company">Company Data</string>
@@ -139,13 +139,13 @@
     <string name="submit">Submit</string>
     <string name="the_job_you_wish_to_apply_for">the job you wish to apply for :</string>
     <string name="save_changes">Save Changes</string>
-    <string name="requires_skill">Requires Skill :</string>
+    <string name="requires_skill">Required Skills</string>
     <string name="edit_detail_job">Edit Detail Job</string>
     <string name="applicant">Who has applied for this job :</string>
-    <string name="name">name</string>
-    <string name="empty_skill_requires">You are not added skill requires, for add it you can click edit button on top.</string>
-    <string name="step_one_posting_job">Step One : Add Detail Job</string>
-    <string name="step_two_posting_job">Step Two : Add Requires</string>
+    <string name="name">Name</string>
+    <string name="empty_skill_requires">No required skills are set, you can add it by tapping "Edit".</string>
+    <string name="step_one_posting_job">Step One : Add Job Detail</string>
+    <string name="step_two_posting_job">Step Two : Add Required Skills</string>
     <string name="choose_company_location">Choose your company location :</string>
     <string name="image_company">Company Image</string>
     <string name="next"><![CDATA[->]]></string>
@@ -157,10 +157,10 @@
     <string name="pending">Pending</string>
     <string name="interview">Interview</string>
     <string name="accept">Accept</string>
-    <string name="description_short_list">Action <b>Short List</b> : enter applicants into your review queue</string>
-    <string name="description_interview">Action <b>Interview</b> : you invite applicants for an interview</string>
-    <string name="description_accept">Action <b>Accept</b> : you hired applicant</string>
-    <string name="description_decline">Action <b>Decline</b> : you decline applicant</string>
+    <string name="description_short_list">Action <b>Short List</b> : Enter applicants into your review queue</string>
+    <string name="description_interview">Action <b>Interview</b> : Invite applicant for an interview</string>
+    <string name="description_accept">Action <b>Accept</b> : You accepted the applicant</string>
+    <string name="description_decline">Action <b>Decline</b> : You decline the applicant</string>
     <string name="application_status">Application Status :</string>
     <string name="stand_dash">|</string>
     <string name="applying_for">Applying For :</string>
@@ -169,8 +169,8 @@
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
-    <string name="title_info_change_password">After success change password, you must to login with the new password</string>
-    <string name="title_info_old_password">We need your old password, to make sure you change your password</string>
+    <string name="title_info_change_password">After changing password, you must to login with the new password</string>
+    <string name="title_info_old_password">Please enter your old password</string>
     <string name="message_fill_data">Please fill your personal data for better experience :)</string>
     <string name="title_attention">Attention!</string>
     <string name="google">Google</string>
@@ -286,8 +286,8 @@
     <string name="your_review_on">Your review on</string>
     <string name="default_notification_channel_id" translatable="false">NOTIFICATION_CHANNEL_ID</string>
     <string name="input_captcha_here">Input captcha here</string>
-    <string name="insert_captcha_below">Insert Captcha Below</string>
-    <string name="captcha_is_needed_for_security_reason">captcha is needed for security reason.</string>
+    <string name="insert_captcha_below">Input CAPTCHA Below</string>
+    <string name="captcha_is_needed_for_security_reason">CAPTCHA is required for security reason.</string>
     <string name="input_adult">Please input adult passenger</string>
     <string name="input_total_passenger">Input total passenger</string>
     <string name="adult">Adult</string>
@@ -295,8 +295,8 @@
     <string name="child">Child</string>
     <string name="_2_age_12_age">2 Age - 12 Age</string>
     <string name="under_2_age">Under 2 Age</string>
-    <string name="baby">Baby</string>
-    <string name="warning_input_passport">If your nationality is not Indonesian, then just enter your passport number</string>
+    <string name="baby">Infant</string>
+    <string name="warning_input_passport">If your nationality is not Indonesian, enter your passport number</string>
     <string name="title">Title :</string>
     <string name="passenger_indentity">Passenger Identity</string>
     <string name="first_name">First Name</string>
@@ -358,14 +358,14 @@
     <string name="rent">Rent</string>
     <string name="my_property">My Property</string>
     <string name="warning_edit_property">Please change your property status to available</string>
-    <string name="notes_transaction_property">Please note :\n 1.Don\'t immediately transfer money when you haven\'t seen the property in person. \n2.make sure the transaction has a valid sale and purchase agreement.
+    <string name="notes_transaction_property">Please note :\n 1.Do not immediately transfer money when you have not seen the property in person. \n2.Make sure the transaction has a valid sale and purchase agreement.
         \n3.Make sure the property matches what is advertised.
         \n 4.This transaction is beyond the control of Haina Service Indonesia.
-        \n 5.You will be forwarded to wa chat, please use polite language</string>
+        \n 5.You will be forwarded to WhatsApp chat, please use polite language</string>
     <string name="forum">Forum</string>
     <string name="create_sub_forum">Create Subforum</string>
     <string name="new_post">New Post</string>
-    <string name="cant_empty">Can\'t Empty</string>
+    <string name="cant_empty">Must not be empty</string>
     <string name="follow">Follow</string>
     <string name="unfollow">Unfollow</string>
     <string name="category">Category</string>
@@ -691,4 +691,14 @@
     <string name="search_skill">Search Skill Here</string>
     <string name="is_reserved">is Reserved</string>
     <string name="is_booked">is Booked</string>
+    <string name="photos_counter">Photos</string>
+    <string name="confirmation_title">Confirmation</string>
+    <string name="check_out_cart">Checkout</string>
+    <string name="detail_transaction">Detail Transaction</string>
+    <string name="pulsa">Mobile Credits</string>
+    <string name="notification_title">Notifications</string>
+    <string name="please_login_notification">Please login to access notification</string>
+    <string name="please_login_password">Please login to change password</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="please_login_first">Please login first</string>
 </resources>

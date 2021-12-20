@@ -249,7 +249,7 @@ class AdapterListFlight(val context: Context, private val passengerId: Int,priva
             val btnSave = popupSetAddOn?.findViewById<Button>(R.id.btn_save)
             val ivClose = popupSetAddOn?.findViewById<ImageView>(R.id.iv_close)
             totalPrice = popupSetAddOn?.findViewById<TextView>(R.id.tv_total_price)
-            totalPrice?.text= "Total : $totalSum"
+            totalPrice?.text= "${context?.getString(R.string.total_price)} : $totalSum"
 
             rvAddOn?.apply {
                 adapter = AdapterAddOn(context, dataMeals,this@Holder)
@@ -484,7 +484,7 @@ class AdapterListFlight(val context: Context, private val passengerId: Int,priva
         fun checkTotal(){
             totalAddonsPrice-=totalSum
             totalSum=totalAddons+baggageFare+seatPrice+ticketPrice
-            tvTotalPrice?.text= "Total : $totalSum"
+            tvTotalPrice?.text= "${context?.getString(R.string.total_price)} : $totalSum"
             totalAddonsPrice+=totalSum
 
 

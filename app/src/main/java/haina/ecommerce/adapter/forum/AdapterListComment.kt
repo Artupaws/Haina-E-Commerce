@@ -39,7 +39,7 @@ class AdapterListComment(val context: Context,
                     .into(ivImageUser)
                 tvComment.text = itemHaina.content
                 tvUsername.text = itemHaina.username
-                val memberSince = "Member since : ${itemHaina.memberSince}"
+                val memberSince = "${context?.getString(R.string.member_since)} ${itemHaina.memberSince}"
                 tvMemberSince.text = helper.dateTimeFormat(itemHaina.createdAt)
                 if (!itemHaina.mod?.contains("none")!!){
                     binding.tvMod.text = itemHaina.mod

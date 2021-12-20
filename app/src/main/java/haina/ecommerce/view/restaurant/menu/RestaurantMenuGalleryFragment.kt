@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import haina.ecommerce.R
 import haina.ecommerce.adapter.restaurant.photogallery.AdapterRestaurantPhotoDetail
 import haina.ecommerce.adapter.restaurant.photogallery.AdapterRestaurantPhotoGallery
 import haina.ecommerce.databinding.FragmentRestaurantMenuGalleryBinding
@@ -41,7 +42,7 @@ class RestaurantMenuGalleryFragment :
 
         binding.rvPhotoGallery.adapter = AdapterRestaurantPhotoGallery(requireActivity(),restaurantData!!.photo!!,this)
         binding.rvPhotoGallery.layoutManager = GridLayoutManager(context, 3)
-        binding.tvTitle.text = "${restaurantData.photo!!.size} Photos"
+        binding.tvTitle.text = "${restaurantData.photo!!.size} ${getString(R.string.photos_counter)}"
         binding.tvRestaurantName.text = restaurantData.name
         binding.ivBack.setOnClickListener {
             findNavController().navigateUp()

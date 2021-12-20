@@ -21,11 +21,13 @@ import haina.ecommerce.adapter.property.AdapterListFacilityShow
 import haina.ecommerce.databinding.FragmentDetailPropertyBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.property.DataShowProperty
+import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.room.roomphotoproperty.DataProperty
 import haina.ecommerce.room.roomphotoproperty.PropertyDao
 import haina.ecommerce.room.roomsavedproperty.DataSavedProperty
 import haina.ecommerce.room.roomsavedproperty.RoomDataSavedProperty
 import haina.ecommerce.room.roomsavedproperty.SavedPropertyDao
+import haina.ecommerce.util.Constants
 import java.net.URLEncoder
 
 
@@ -45,12 +47,15 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener, DetailPropertyC
     private var transactionType:String = ""
     private var phoneNumber:String? = ""
     private var message :String = ""
+    private var messageZh :String = ""
+    private lateinit var sharedPref : SharedPreferenceHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentDetailPropertyBinding.inflate(inflater, container, false)
         database = RoomDataSavedProperty.getDatabase(requireActivity())
         dao = database.getDataPropertyDao()
         presenter = DetailPropertyPresenter(this, requireActivity())
+        sharedPref = SharedPreferenceHelper(requireActivity())
         return binding.root
     }
 
@@ -64,8 +69,11 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener, DetailPropertyC
         phoneNumber = dataProperty?.owner?.phone?.substring(0,1)?.replace("0",
             "+62${dataProperty?.owner?.phone?.length?.let {
                 dataProperty?.owner?.phone?.substring(1, it) }}")
-        message = "Hello, i'am interested in *${dataProperty?.title}*,\n" +
+        message = "Hello, I am interested in *${dataProperty?.title}*,\n" +
                 "I got this information from *Haina Service Indonesia App*, can we discuss it further?"
+        messageZh = "你好，我对你的*${dataProperty?.title}*感兴趣。 \n" +
+                "我从*海纳APP*得到了这个信息。我们可以讨论一下吗？"
+
         if (dataProperty?.images != null){
             for (i in dataProperty!!.images!!) {
                 i?.path?.let { listParams.add(it) }
@@ -126,7 +134,7 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener, DetailPropertyC
         binding.tvAddress.text = data.address
         binding.tvDescription.text = data.description
         binding.tvNameSeller.text = data.owner?.fullname
-        val memberSince = "Member since ${data.owner?.createdAt?.substring(0,10)}"
+        val memberSince = "${context?.getString(R.string.member_since)} ${data.owner?.createdAt?.substring(0,10)}"
         binding.tvSinceMember.text = memberSince
         Glide.with(requireActivity()).load("https://hainaservice.com/storage/${data.owner?.photo}").into(binding.ivSeller)
     }
@@ -151,7 +159,7 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener, DetailPropertyC
         val description = confirmDialog?.findViewById<TextView>(R.id.tv_popup)
         val yes = confirmDialog?.findViewById<TextView>(R.id.tv_action_yes)
         val cancel = confirmDialog?.findViewById<TextView>(R.id.tv_action_cancel)
-        title?.text = "Confirmation"
+        title?.text = getString(R.string.confirmation_title)
         description?.text = requireActivity().getString(R.string.notes_transaction_property)
         yes?.setOnClickListener{
             presenter.changeAvailability(idProperty, transactionType)
@@ -226,7 +234,12 @@ class DetailPropertyFragment : Fragment(), View.OnClickListener, DetailPropertyC
         Log.d("changeAvailability", msg)
         if (msg.contains("Success!")){
             Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
-            openWhatsApp(phoneNumber!!, message)
+            if (sharedPref.getValueString(Constants.LANGUAGE_APP) == "en") {
+                openWhatsApp(phoneNumber!!, message)
+            }
+            else{
+                openWhatsApp(phoneNumber!!, messageZh)
+            }
         }
     }
 

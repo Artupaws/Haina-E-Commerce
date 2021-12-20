@@ -70,7 +70,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         broadcaster = LocalBroadcastManager.getInstance(this)
 
         binding.etDescriptionJob.setLines(5)
-        binding.toolbar.title = "Posting Job"
+        binding.toolbar.title = getString(R.string.posting_job)
         binding.toolbar.setNavigationIcon(haina.ecommerce.R.drawable.ic_back_black)
         binding.toolbar.setNavigationOnClickListener {
             onBackPressed()
@@ -393,7 +393,7 @@ class PostingJobActivity : AppCompatActivity(), PostingJobContract, View.OnClick
         popupCategory = popup.create()
         popupCategory?.dismiss()
         action.setOnClickListener{popupCategory?.dismiss()}
-        title.text = "Job Category"
+        title.text = getString(R.string.job_specialization)
         rvJob.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = jobCategoryAdapter

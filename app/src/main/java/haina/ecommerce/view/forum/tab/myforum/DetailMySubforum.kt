@@ -93,9 +93,9 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
     private fun showData(data: SubforumData) {
         binding.tvNameUser.text = data.name
         binding.tvCategory.text = data.category
-        binding.tvCreated.text = "Created At : ${dateFormat(data.createdAt)}"
+        binding.tvCreated.text = "${getString(R.string.created_at)} : ${dateFormat(data.createdAt)}"
         binding.tvAbout.text = data.description
-        binding.tvTotalFollowers.text = "${data.totalFollowers} Followers"
+        binding.tvTotalFollowers.text = "${data.totalFollowers} ${getString(R.string.followers)}"
         Glide.with(applicationContext).load(data.subforumImage).into(binding.ivImageUser)
 
 //        presenter.getListForumPost(data.id!!,page)

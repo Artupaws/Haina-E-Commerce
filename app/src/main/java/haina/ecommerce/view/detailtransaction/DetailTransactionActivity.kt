@@ -38,7 +38,7 @@ class DetailTransactionActivity : AppCompatActivity() {
             setupDetailTransactionCancel(dataCancel)
         }
 
-        binding.toolbarDetailTransaction.title = "Detail Transaction"
+        binding.toolbarDetailTransaction.title = getString(R.string.detail_transaction)
         binding.toolbarDetailTransaction.setNavigationOnClickListener { onBackPressed() }
         binding.toolbarDetailTransaction.setNavigationIcon(R.drawable.ic_back_black)
     }

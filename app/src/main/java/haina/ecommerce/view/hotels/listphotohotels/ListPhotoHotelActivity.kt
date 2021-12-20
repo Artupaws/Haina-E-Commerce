@@ -22,7 +22,7 @@ class ListPhotoHotelActivity : AppCompatActivity() {
 
 //        initDataTypeRoom()
         val data = intent?.getParcelableExtra<DataHotel>("dataHotel")
-        binding.toolbarListPhotoHotel.title = "Detail Photo Rooms"
+        binding.toolbarListPhotoHotel.title = getString(R.string.image_room_hotel)
         binding.toolbarListPhotoHotel.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarListPhotoHotel.setNavigationOnClickListener { onBackPressed() }
 

@@ -32,7 +32,7 @@ class AddSkillRequiresActivity : AppCompatActivity(), View.OnClickListener, AddS
         idJobVacancy = intent.getIntExtra("idJobVacancy", 0)
         Log.d("idJobVacancy", idJobVacancy.toString())
         presenter = AddSkillRequiresPresenter(this, this)
-        binding.toolbarAddSkillRequires.title = "Add Requires"
+        binding.toolbarAddSkillRequires.title = getString(R.string.requires_skill)
         binding.btnDone.setOnClickListener(this)
         binding.btnAddSkill.setOnClickListener(this)
     }

@@ -82,7 +82,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.Vi
                     val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
                     startActivity(intent)
                 } else {
-                    val snackbar = Snackbar.make(binding?.ivNotificationAccount!!, "Please login for change password", Snackbar.LENGTH_SHORT)
+                    val snackbar = Snackbar.make(binding?.ivNotificationAccount!!, getString(R.string.please_login_password), Snackbar.LENGTH_SHORT)
                             .setAction("Close", null)
                     snackbar.show()
                 }
@@ -141,7 +141,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.Vi
                     val intent = Intent(activity, NotificationActivity::class.java)
                     startActivity(intent)
                 } else {
-                    val snackbar = Snackbar.make(binding?.ivNotificationAccount!!, "Please login for access notification", Snackbar.LENGTH_SHORT)
+                    val snackbar = Snackbar.make(binding?.ivNotificationAccount!!, getString(R.string.please_login_notification), Snackbar.LENGTH_SHORT)
                             .setAction("Close", null)
                     snackbar.show()
                 }
@@ -185,7 +185,8 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.Vi
                                 val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
                                 startActivity(intent)
                             } else {
-                                val snackbar = Snackbar.make(binding?.ivNotificationAccount!!, "Please login for change password", Snackbar.LENGTH_SHORT)
+                                val snackbar = Snackbar.make(binding?.ivNotificationAccount!!, getString(
+                                                                    R.string.please_login_password), Snackbar.LENGTH_SHORT)
                                         .setAction("Close", null)
                                 snackbar.show()
                             }
@@ -225,7 +226,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.Vi
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     pickImageFromGallery()
                 } else {
-                    Toast.makeText(activity, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -349,7 +350,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.Vi
             val intent = Intent(requireContext(), RegisterCompanyActivity::class.java)
             startActivity(intent)
         } else {
-            Toast.makeText(requireContext(), "Please Login First", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.please_login_first), Toast.LENGTH_SHORT).show()
         }
     }
 

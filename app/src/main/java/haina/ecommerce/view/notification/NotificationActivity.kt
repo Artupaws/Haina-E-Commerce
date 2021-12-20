@@ -41,7 +41,7 @@ class NotificationActivity : AppCompatActivity(), NotificationContract, AdapterN
 
         binding.toolbarNotification.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarNotification.setNavigationOnClickListener { onBackPressed() }
-        binding.toolbarNotification.title = "Notification"
+        binding.toolbarNotification.title = getString(R.string.notification_title)
         refresh()
     }
 

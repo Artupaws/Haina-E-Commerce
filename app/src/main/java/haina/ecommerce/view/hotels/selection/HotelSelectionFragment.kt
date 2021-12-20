@@ -33,6 +33,8 @@ import haina.ecommerce.model.hotels.newHotel.DataCities
 import haina.ecommerce.model.hotels.newHotel.DataHotelDarma
 import haina.ecommerce.model.hotels.newHotel.DataRoom
 import haina.ecommerce.model.hotels.newHotel.RequestBookingHotel
+import haina.ecommerce.preference.SharedPreferenceHelper
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.flight.fragment.BottomSheetFlightFragment
 import haina.ecommerce.view.hotels.HotelBaseActivity
 import timber.log.Timber
@@ -51,6 +53,7 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
     private var cityId: Int = 0
     private lateinit var requestHotel: RequestBookingHotel
     private var unfinishBookingSize: Int = 0
+    private lateinit var sharedPref : SharedPreferenceHelper
 
     private var totalAdult:Int = 0
     private var totalChild:Int = 0
@@ -71,6 +74,7 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
     ): View? {
         _binding = FragmentHotelSelectionBinding.inflate(inflater, container, false)
         selectionPresenter = HotelSelectionPresenter(this, requireActivity())
+        sharedPref = SharedPreferenceHelper(requireActivity())
         return binding.root
     }
 
@@ -322,14 +326,25 @@ class HotelSelectionFragment : Fragment(), HotelSelectionContract.View, AdapterL
     private fun setDetailPassenger(totalAdult:String, totalChildParams:String?, totalPassenger:String){
         if (totalChildParams != "0"){
             binding.tvTotalChild.visibility = View.VISIBLE
-            binding.tvTotalChild.text = "$totalChild Child(s)"
+            if (sharedPref.getValueString(Constants.LANGUAGE_APP) == "en") {
+                binding.tvTotalChild.text = "$totalChild Children"
+            }
+            else{
+                binding.tvTotalChild.text = "儿童 $totalChild 位"
+            }
         } else {
             binding.tvTotalChild.visibility = View.GONE
             totalChild = 0
         }
         binding.tvTotalPax.error = null
-        binding.tvTotalAdult.text = "$totalAdult Adult(s)"
-        binding.tvTotalPax.text = "$totalPassenger consists of : "
+        if (sharedPref.getValueString(Constants.LANGUAGE_APP) == "en") {
+            binding.tvTotalAdult.text = "$totalAdult Adult(s)"
+            binding.tvTotalPax.text = "$totalPassenger consists of : "
+        }
+        else{
+            binding.tvTotalAdult.text = "成人 $totalAdult 位"
+            binding.tvTotalPax.text = "$totalPassenger 位 - "
+        }
     }
 
     override fun onClick(view: View, idDarma: Int) {

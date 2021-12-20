@@ -21,9 +21,11 @@ import haina.ecommerce.adapter.property.AdapterListFacilityShow
 import haina.ecommerce.databinding.FragmentDetailPropertyBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.property.DataShowProperty
+import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.room.roomsavedproperty.DataSavedProperty
 import haina.ecommerce.room.roomsavedproperty.RoomDataSavedProperty
 import haina.ecommerce.room.roomsavedproperty.SavedPropertyDao
+import haina.ecommerce.util.Constants
 import haina.ecommerce.view.property.detailmyproperty.DetailMyPropertyContract
 import haina.ecommerce.view.property.detailmyproperty.DetailMyPropertyPresenter
 import haina.ecommerce.view.property.fragmentdetailproperty.DetailPropertyContract
@@ -45,12 +47,15 @@ class DetailMyPropertySavedActivity : AppCompatActivity(), View.OnClickListener,
     private lateinit var dao: SavedPropertyDao
     private lateinit var database: RoomDataSavedProperty
     private var transactionType:String = ""
+    private var messageZh :String = ""
+    private lateinit var sharedPref : SharedPreferenceHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentDetailPropertyBinding.inflate(layoutInflater)
         setContentView(binding.root)
         presenter = DetailPropertyPresenter(this, this)
+        sharedPref = SharedPreferenceHelper(this)
         listParams = ArrayList()
         database = RoomDataSavedProperty.getDatabase(this)
         dao = database.getDataPropertyDao()
@@ -62,8 +67,10 @@ class DetailMyPropertySavedActivity : AppCompatActivity(), View.OnClickListener,
         phoneNumber = dataProperty?.owner?.phone?.substring(0,1)?.replace("0",
             "+62${dataProperty.owner.phone.length.let {
                 dataProperty.owner.phone.substring(1, it) }}")
-        message = "Hello, i'am interested in *${dataProperty?.title}*,\n" +
+        message = "Hello, I am interested in *${dataProperty?.title}*,\n" +
                 "I got this information from *Haina Service Indonesia App*, can we discuss it further?"
+        messageZh = "你好，我对你的*${dataProperty?.title}*感兴趣。 \n" +
+                "我从*海纳APP*得到了这个信息。我们可以讨论一下吗？"
         if (dataProperty != null) {
             idProperty = dataProperty.id!!
             showData(dataProperty)
@@ -195,7 +202,12 @@ class DetailMyPropertySavedActivity : AppCompatActivity(), View.OnClickListener,
         Log.d("changeAvailability", msg)
         if (msg.contains("Success!")){
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
-            openWhatsApp(phoneNumber!!, message)
+            if (sharedPref.getValueString(Constants.LANGUAGE_APP) == "en") {
+                openWhatsApp(phoneNumber!!, message)
+            }
+            else{
+                openWhatsApp(phoneNumber!!, messageZh)
+            }
         }
     }
 

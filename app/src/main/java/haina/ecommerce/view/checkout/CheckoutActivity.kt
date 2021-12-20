@@ -63,7 +63,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
 
         binding.toolbarCheckout.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarCheckout.setNavigationOnClickListener { onBackPressed() }
-        binding.toolbarCheckout.title = "Checkout"
+        binding.toolbarCheckout.title = getString(R.string.check_out_cart)
         binding.btnPayment.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
         codeLanguage = sharedPref.getValueString(Constants.LANGUAGE_APP).toString()
@@ -134,7 +134,7 @@ class CheckoutActivity : AppCompatActivity(), View.OnClickListener, CheckoutCont
                 binding.tvPrice.text = requestPulsa?.totalPrice
                 binding.tvServiceType.text = requestPulsa?.typeService
                 binding.tvNumber.text = requestPulsa?.phoneNumber
-                titleService = "Pulsa"
+                titleService = getString(R.string.pulsa)
                 binding.tvTitleService.text = titleService
                 typeTransaction = 1
             }

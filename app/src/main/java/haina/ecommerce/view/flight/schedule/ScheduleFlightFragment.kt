@@ -296,7 +296,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
             binding.tvTotalChild.visibility = View.VISIBLE
 
             if (sharedPref.getValueString(Constants.LANGUAGE_APP) == "en") {
-                binding.tvTotalChild.text = "$totalChild Child(s)"
+                binding.tvTotalChild.text = "$totalChild Children"
             }
             else{
                 binding.tvTotalChild.text = "儿童 $totalChild 位"
@@ -308,7 +308,7 @@ class ScheduleFlightFragment : Fragment(), View.OnClickListener, ScheduleContrac
         if (totalBabyParams != "0"){
             binding.tvTotalBaby.visibility = View.VISIBLE
             if (sharedPref.getValueString(Constants.LANGUAGE_APP) == "en") {
-                binding.tvTotalBaby.text = "$totalBaby Baby(s)"
+                binding.tvTotalBaby.text = "$totalBaby Infants"
             }
             else{
                 binding.tvTotalBaby.text = "婴儿 $totalBaby 位"
