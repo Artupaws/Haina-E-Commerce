@@ -42,7 +42,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_popup"
-        app:queryHint="Find City" />
+        app:queryHint="@string/find_city" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_destination"

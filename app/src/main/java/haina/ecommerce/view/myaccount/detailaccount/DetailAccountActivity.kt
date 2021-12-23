@@ -239,7 +239,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
                         }
                     }
                 } else {
-                    Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.please_complete_form), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -644,7 +644,7 @@ class DetailAccountActivity : AppCompatActivity(), View.OnClickListener,
             if (!isEmptyCompany && !isEmptyPosition && !isEmptyCity && !isEmptyCity && !isEmptyStart && !isEmptyEnd && !isEmptySalary){
                 presenter.addWorkExperience(company, city, start, end, position, ".", Helper.changeFormatMoneyToValue(salary).toInt())
             } else {
-                Toast.makeText(applicationContext, "Please complete form", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.please_complete_form), Toast.LENGTH_SHORT).show()
             }
         }
     }

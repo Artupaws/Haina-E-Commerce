@@ -58,7 +58,7 @@ class NewsActivity : AppCompatActivity(), NewsContract, AdapterNews.ItemAdapterC
     }
 
     override fun getNewsCategory(data: List<NewsCategory?>?) {
-        binding.vpNews.adapter = TabAdapterNewsCategory(supportFragmentManager, 0, data!!)
+        binding.vpNews.adapter = TabAdapterNewsCategory(supportFragmentManager, 0, data!!, applicationContext)
         binding.tabNews.setupWithViewPager(binding.vpNews)
     }
 

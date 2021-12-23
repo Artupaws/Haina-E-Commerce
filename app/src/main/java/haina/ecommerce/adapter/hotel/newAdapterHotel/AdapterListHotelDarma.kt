@@ -5,22 +5,16 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import com.squareup.picasso.Picasso
+import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemHotelsBinding
 import haina.ecommerce.helper.Helper
-import haina.ecommerce.model.hotels.DataHotel
 import haina.ecommerce.model.hotels.newHotel.HotelsItem
 import timber.log.Timber
 
@@ -71,7 +65,7 @@ class AdapterListHotelDarma(val context: Context, private val listHotel: List<Ho
 //                wvHotels.loadData(frameVideo, "text/html", "utf-8")
 
                 ratingBarHotel.rating = hotelHaina.rating!!
-                val avgRating = "${hotelHaina.ratingAverage} - Avg Rating"
+                val avgRating = hotelHaina.ratingAverage.toString() + context.getString(R.string.avg_rating)
                 tvAvgRating.text = avgRating
             }
         }

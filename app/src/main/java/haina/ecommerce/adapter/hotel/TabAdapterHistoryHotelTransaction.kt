@@ -9,7 +9,7 @@ import haina.ecommerce.view.hotels.transactionhotel.cancel.CancelHotelFragment
 import haina.ecommerce.view.hotels.transactionhotel.unfinish.UnfinishHotelFragment
 
 class TabAdapterHistoryHotelTransaction (fm: FragmentManager, behavior: Int) : FragmentStatePagerAdapter(fm, behavior) {
-    private val tabName: Array<String> = arrayOf("Unfinish", "Finish", "Cancel")
+    private val tabName: Array<String> = arrayOf("Unfinished", "Finished", "Cancel")
 
     override fun getItem(position: Int): Fragment = when (position) {
         0 -> UnfinishHotelFragment()

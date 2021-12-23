@@ -84,7 +84,7 @@ class AdapterTransactionJobUnfinish(
             1 -> {
                 binding.includeVirtualAccount.linearVirtualAccount.visibility = View.VISIBLE
                 binding.includeBankTransfer.linearBankTransfer.visibility = View.GONE
-                binding.includeVirtualAccount.tvPaymentMethod.text = "Virtual Account"
+                binding.includeVirtualAccount.tvPaymentMethod.text = context.getString(R.string.virtual_account)
                 binding.includeVirtualAccount.tvVirtualAccountNumber.text = vaNumber
                 binding.includeVirtualAccount.tvTotalPay.text = totalPayment
             }
@@ -100,7 +100,7 @@ class AdapterTransactionJobUnfinish(
     private fun setLayoutVirtualAccount(binding: ListItemUnfinishTransactionBinding, itemHaina:PendingJobItem) {
         binding.includeVirtualAccount.linearVirtualAccount.visibility = View.VISIBLE
         binding.includeBankTransfer.linearBankTransfer.visibility = View.GONE
-        binding.includeVirtualAccount.tvPaymentMethod.text = "Virtual Account"
+        binding.includeVirtualAccount.tvPaymentMethod.text = context.getString(R.string.virtual_account)
         if (itemHaina.status.lowercase().contains("process")){
             binding.includeVirtualAccount.linearVirtualAccount.visibility = View.GONE
             binding.btnHowPay.visibility = View.GONE
@@ -124,7 +124,7 @@ class AdapterTransactionJobUnfinish(
             val myClipboard: ClipboardManager = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
             val myClip = ClipData.newPlainText("text", binding.includeVirtualAccount.tvVirtualAccountNumber.text)
             myClipboard.setPrimaryClip(myClip)
-            Toast.makeText(context, "Virtual Account Copied", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.va_copied), Toast.LENGTH_SHORT).show()
         }
     }
 

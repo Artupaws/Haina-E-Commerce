@@ -183,7 +183,7 @@ class UnfinishHotelFragment : Fragment(), AdapterTransactionUnfinish.ItemAdapter
             context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager;
         val myClip = ClipData.newPlainText("text", paymentNumber)
         myClipboard.setPrimaryClip(myClip)
-        Toast.makeText(context, "Virtual Account Copied", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context?.getString(R.string.va_copied), Toast.LENGTH_SHORT).show()
 
     }
 

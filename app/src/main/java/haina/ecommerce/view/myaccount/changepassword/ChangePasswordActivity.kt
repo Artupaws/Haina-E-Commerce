@@ -122,8 +122,8 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener, Change
         Log.d("changePassword", msg)
         if (msg.contains("Success")){
             move()
-            val snackbar = Snackbar.make(binding.btnChangePassword, "Please login for access notification", Snackbar.LENGTH_SHORT)
-                    .setAction("Close", null)
+            val snackbar = Snackbar.make(binding.btnChangePassword, getString(R.string.please_login_notification), Snackbar.LENGTH_SHORT)
+                    .setAction(getString(R.string.close), null)
             snackbar.show()
         }
     }

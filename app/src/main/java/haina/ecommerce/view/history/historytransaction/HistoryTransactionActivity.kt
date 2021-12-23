@@ -33,10 +33,10 @@ class HistoryTransactionActivity : AppCompatActivity(), HistoryTransactionContra
         binding.toolbarTransaction.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarTransaction.setNavigationOnClickListener { onBackPressed() }
         when(intent.getStringExtra("tabs")){
-            "unfinish" -> {
+            "unfinished" -> {
                 binding.vpTransaction.currentItem = 0
             }
-            "finish" -> {
+            "finished" -> {
                 binding.vpTransaction.currentItem = 1
             }
             "cancel" -> {

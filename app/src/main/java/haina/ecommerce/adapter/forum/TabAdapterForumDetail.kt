@@ -1,9 +1,11 @@
 package haina.ecommerce.adapter.forum
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import haina.ecommerce.R
 import haina.ecommerce.model.forum.SubforumEngagement
 import haina.ecommerce.view.forum.tab.forumabout.ForumAboutFragment
 import haina.ecommerce.view.forum.tab.forummanage.ForumManageFragment
@@ -14,8 +16,8 @@ import haina.ecommerce.view.forum.tab.myforum.MySubforumFragment
 import haina.ecommerce.view.forum.tab.mypost.MyPostFragment
 import haina.ecommerce.view.history.historytransaction.unfinish.FragmentTransactionUnfinish
 
-class TabAdapterForumDetail (fm: FragmentManager, behavior: Int,idForum:Int,data:SubforumEngagement) : FragmentStatePagerAdapter(fm, behavior) {
-    private val tabName: Array<String> = arrayOf("Post", "About", "Manage")
+class TabAdapterForumDetail (fm: FragmentManager, behavior: Int,idForum:Int,data:SubforumEngagement,context: Context) : FragmentStatePagerAdapter(fm, behavior) {
+    private val tabName: Array<String> = arrayOf(context.getString(R.string.tab_title_post), context.getString(R.string.tab_title_about), context.getString(R.string.tab_title_manage))
     private var tabCount:Int = 2
 
     var id:Int? =null

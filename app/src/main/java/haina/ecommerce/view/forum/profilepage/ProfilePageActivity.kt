@@ -123,7 +123,7 @@ class ProfilePageActivity : AppCompatActivity(), AdapterListMyPost.ItemAdapterCa
 
     override fun getProfileData(data: DataProfile) {
 
-        binding.vpTransaction.adapter = TabAdapterProfilePage(supportFragmentManager, 0,UserId)
+        binding.vpTransaction.adapter = TabAdapterProfilePage(supportFragmentManager, 0,UserId,applicationContext)
 
         binding.vpTransaction.offscreenPageLimit = 3
         binding.tabTransaction.setupWithViewPager(binding.vpTransaction)

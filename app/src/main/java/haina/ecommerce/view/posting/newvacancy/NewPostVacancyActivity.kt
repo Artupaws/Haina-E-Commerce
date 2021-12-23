@@ -520,7 +520,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
                     .putExtra("dataCreateVacancy", dataCreateVacancy)
                     .putExtra("detailVacancy", dataDetailVacancy))
         } else {
-            Toast.makeText(applicationContext, "Please complete the form", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.please_complete_form), Toast.LENGTH_SHORT).show()
         }
     }
 

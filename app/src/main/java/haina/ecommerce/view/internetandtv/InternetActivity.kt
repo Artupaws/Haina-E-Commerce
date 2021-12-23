@@ -82,48 +82,38 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
     }
 
     private fun setTitle(category: String) {
+        val titleCustomerNumber = getString(R.string.customer_number)
+        binding.tvTitleCustomerNumber.text = titleCustomerNumber
         when (category) {
             "Internet Service Provider" -> {
                 binding.toolbarInternet.title = nameCategory
-                val titleProvider = "$nameCategory Provider"
+                val titleProvider = "$nameCategory"
                 binding.tvTitleProvider.text = titleProvider
-                val titleCustomerNumber = "Customer Number $nameCategory"
-                binding.tvTitleCustomerNumber.text = titleCustomerNumber
             }
             "Electricity" -> {
                 binding.toolbarInternet.title = nameCategory
-                val titleProvider = "$nameCategory Provider"
+                val titleProvider = "$nameCategory"
                 binding.tvTitleProvider.text = titleProvider
-                val titleCustomerNumber = "Customer Number $nameCategory"
-                binding.tvTitleCustomerNumber.text = titleCustomerNumber
             }
             "Water" -> {
                 binding.toolbarInternet.title = nameCategory
-                val titleProvider = "$nameCategory Provider"
+                val titleProvider = "$nameCategory"
                 binding.tvTitleProvider.text = titleProvider
-                val titleCustomerNumber = "Customer Number $nameCategory"
-                binding.tvTitleCustomerNumber.text = titleCustomerNumber
             }
             "Telephone" -> {
                 binding.toolbarInternet.title = nameCategory
-                val titleProvider = "$nameCategory Provider"
+                val titleProvider = "$nameCategory"
                 binding.tvTitleProvider.text = titleProvider
-                val titleCustomerNumber = "Customer Number $nameCategory"
-                binding.tvTitleCustomerNumber.text = titleCustomerNumber
             }
             "TV Cable" -> {
                 binding.toolbarInternet.title = nameCategory
-                val titleProvider = "$nameCategory Provider"
+                val titleProvider = "$nameCategory"
                 binding.tvTitleProvider.text = titleProvider
-                val titleCustomerNumber = "Customer Number $nameCategory"
-                binding.tvTitleCustomerNumber.text = titleCustomerNumber
             }
             "Insurance" -> {
                 binding.toolbarInternet.title = nameCategory
-                val titleProvider = "$nameCategory Provider"
+                val titleProvider = "$nameCategory"
                 binding.tvTitleProvider.text = titleProvider
-                val titleCustomerNumber = "Customer Number $nameCategory"
-                binding.tvTitleCustomerNumber.text = titleCustomerNumber
             }
         }
     }
@@ -165,7 +155,7 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
     override fun messageGetBillAmount(msg: String) {
         when(msg){
             "Unauthorized!" -> {
-                Toast.makeText(applicationContext, "Please login to continue", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, getString(R.string.please_login_first), Toast.LENGTH_SHORT).show()
             } else -> {
             Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
             }
@@ -195,7 +185,7 @@ class InternetActivity : AppCompatActivity(), InternetContract, View.OnClickList
         if (!data.equals(null)){
             moveDirect(data)
         } else {
-            Toast.makeText(applicationContext, "Not Found!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.bill_data_not_found), Toast.LENGTH_SHORT).show()
         }
     }
 

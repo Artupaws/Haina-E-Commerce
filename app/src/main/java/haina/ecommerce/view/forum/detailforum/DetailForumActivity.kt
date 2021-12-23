@@ -337,7 +337,7 @@ class DetailForumActivity : AppCompatActivity(), DetailForumContract.View,
             R.id.iv_action_send -> {
                 when (comment) {
                     "" -> {
-                        Toast.makeText(applicationContext, "Input your comment first!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, getString(R.string.input_comment_first), Toast.LENGTH_SHORT).show()
                     }
                     else -> {
                         presenter.newComment(postId, comment)

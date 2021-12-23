@@ -122,12 +122,12 @@ class AddAddressCompanyActivity : AppCompatActivity(), AddressCompanyContract, V
         if (msg == "1"){
             binding.btnAddAddressCompany.visibility = View.VISIBLE
             binding.relativeLoading.visibility = View.INVISIBLE
-            Toast.makeText(this, "Success add address company", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.add_company_address_success), Toast.LENGTH_SHORT).show()
             move()
         } else {
             binding.btnAddAddressCompany.visibility = View.VISIBLE
             binding.relativeLoading.visibility = View.INVISIBLE
-            Toast.makeText(this, "Failed add address company", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.add_company_address_fail), Toast.LENGTH_SHORT).show()
         }
     }
 

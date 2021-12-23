@@ -148,13 +148,14 @@ class ExploreFragment : Fragment(), ExploreContract, View.OnClickListener, Adapt
                     val intent = Intent(activity, NotificationActivity::class.java)
                     startActivity(intent)
                 } else {
-                    val snackbar = Snackbar.make(binding?.ivNotification!!, "Please login for access notification", Snackbar.LENGTH_SHORT)
-                        .setAction("Close", null)
+                    val snackbar = Snackbar.make(binding?.ivNotification!!, getString(R.string.please_login_notification), Snackbar.LENGTH_SHORT)
+                        .setAction(getString(R.string.close), null)
                     snackbar.show()
                 }
             }
             R.id.linear_topup -> {
-                val intent = Intent(requireContext(), TopupActivity::class.java)
+                //val intent = Intent(requireContext(), TopupActivity::class.java)
+                val intent = Intent(requireContext(), OtherActivity::class.java)
                 startActivity(intent)
             }
             R.id.linear_hotel -> {

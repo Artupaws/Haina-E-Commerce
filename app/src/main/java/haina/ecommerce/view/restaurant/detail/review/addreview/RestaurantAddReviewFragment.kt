@@ -143,7 +143,7 @@ class RestaurantAddReviewFragment :
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     pickMediaFromGalery(typePick)
                 } else {
-                    Toast.makeText(ctx, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(ctx, getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
                 }
             }
         }

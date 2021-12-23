@@ -36,7 +36,7 @@ class MyPropertyActivity : AppCompatActivity(), MyPropertyContract.View {
         intentFromFinish = intent.getBooleanExtra("finish", false)
         binding.toolbarMyproperty.setNavigationOnClickListener { onBackPressed() }
         binding.vpPmyproperty.apply {
-            adapter = TabAdapterMyProperty(supportFragmentManager, 0)
+            adapter = TabAdapterMyProperty(supportFragmentManager, 0, context)
             offscreenPageLimit = 2
         }
         binding.tabMyproperty.setupWithViewPager(binding.vpPmyproperty)

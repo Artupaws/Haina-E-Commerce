@@ -104,7 +104,7 @@ class RegisterCompanyActivity
             binding.cvAddImage.isEnabled = false
             isRunningRegister = true
         } else {
-            Toast.makeText(applicationContext, "Please completed form", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.please_complete_form), Toast.LENGTH_SHORT).show()
             binding.ivLoading.visibility = View.INVISIBLE
             binding.btnRegisterCompany.visibility = View.VISIBLE
             binding.cvAddImage.isEnabled = true
@@ -137,7 +137,7 @@ class RegisterCompanyActivity
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     pickImageFromGallery()
                 } else {
-                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -166,7 +166,7 @@ class RegisterCompanyActivity
 
     override fun messageRegisterCompany(msg: String) {
         isRunningRegister = if (msg == "1") {
-            Toast.makeText(applicationContext, "Register Company Success", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.registration_company_success), Toast.LENGTH_SHORT).show()
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("loginStatus", "1")
             startActivity(intent)
@@ -175,7 +175,7 @@ class RegisterCompanyActivity
             binding.cvAddImage.isEnabled = true
             false
         } else{
-            Toast.makeText(applicationContext, "Register Company Failed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.registration_company_failed), Toast.LENGTH_SHORT).show()
             binding.btnRegisterCompany.visibility = View.VISIBLE
             binding.relativeLoading.visibility = View.INVISIBLE
             binding.cvAddImage.isEnabled = true
@@ -202,7 +202,7 @@ class RegisterCompanyActivity
 
     override fun onBackPressed() {
         if (isRunningRegister){
-            Toast.makeText(applicationContext, "Please wait, register on progress", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.please_wait_company_registering), Toast.LENGTH_SHORT).show()
         } else {
             super.onBackPressed()
         }

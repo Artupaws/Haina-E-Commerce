@@ -140,7 +140,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener, LoginContract.V
                     }
                 } else {
                     loginMethod = 0
-                    Snackbar.make(binding.linearGoogle, "Authentication Failed.", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.linearGoogle, getString(R.string.auth_failed), Snackbar.LENGTH_SHORT).show()
                 }
             }
     }

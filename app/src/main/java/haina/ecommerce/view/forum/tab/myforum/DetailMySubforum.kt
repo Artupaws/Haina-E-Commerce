@@ -154,7 +154,7 @@ class DetailMySubforum : AppCompatActivity(), AdapterListMyPost.ItemAdapterCallb
 
     override fun getSubforumData(data: SubforumEngagement) {
 
-        binding.vpTransaction.adapter = TabAdapterForumDetail(supportFragmentManager, 0,dataSubforum.id!!, data)
+        binding.vpTransaction.adapter = TabAdapterForumDetail(supportFragmentManager, 0,dataSubforum.id!!, data, applicationContext)
 
         binding.vpTransaction.offscreenPageLimit = 3
         binding.tabTransaction.setupWithViewPager(binding.vpTransaction)

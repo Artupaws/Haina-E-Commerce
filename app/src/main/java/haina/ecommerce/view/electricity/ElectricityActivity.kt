@@ -27,7 +27,7 @@ class ElectricityActivity : AppCompatActivity() {
         val idProductCategory = intent?.getIntExtra("idProductCategory", 0)
 //        presenter = InternetPresenter(this, this)
         presenter.getProductService(idProductCategory!!)
-        binding.toolbarElectricity.title = "PLN Electricity"
+        binding.toolbarElectricity.title = getString(R.string.electricity_title)
         binding.toolbarElectricity.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarElectricity.setNavigationOnClickListener { onBackPressed() }
 

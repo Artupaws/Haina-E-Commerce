@@ -96,7 +96,7 @@ class AddPhotoFragment : Fragment(),View.OnClickListener, AdapterListPhotoProper
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     pickImageFromGallery()
                 } else {
-                    Toast.makeText(activity, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
                 }
             }
         }

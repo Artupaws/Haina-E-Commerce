@@ -8,7 +8,7 @@ import haina.ecommerce.view.history.historytransaction.finish.FragmentTransactio
 import haina.ecommerce.view.history.historytransaction.unfinish.FragmentTransactionUnfinish
 
 class TabAdapterHistoryTransaction (fm: FragmentManager, behavior: Int) : FragmentStatePagerAdapter(fm, behavior) {
-    private val tabName: Array<String> = arrayOf("Unfinish", "Finish", "Cancel")
+    private val tabName: Array<String> = arrayOf("Unfinished", "Finished", "Cancel")
 
     override fun getItem(position: Int): Fragment = when (position) {
         0 -> FragmentTransactionUnfinish()

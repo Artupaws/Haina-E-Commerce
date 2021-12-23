@@ -151,7 +151,7 @@ class DataCompanyActivity : AppCompatActivity(), DataCompanyContract, View.OnCli
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     pickImageFromGallery()
                 } else {
-                    Toast.makeText(applicationContext, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -217,9 +217,9 @@ class DataCompanyActivity : AppCompatActivity(), DataCompanyContract, View.OnCli
     override fun messageDeleteImageCompany(msg: String) {
         if (msg == "1"){
             presenter.getDataCompany()
-            Toast.makeText(applicationContext, "Success delete image", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.delete_image_success), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(applicationContext, "Failed delete image", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.delete_image_fail), Toast.LENGTH_SHORT).show()
         }
     }
 }

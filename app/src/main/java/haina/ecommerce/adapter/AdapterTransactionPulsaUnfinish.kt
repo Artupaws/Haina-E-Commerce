@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemUnfinishTransactionBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.helper.Helper.dateFormat
@@ -95,7 +96,7 @@ class AdapterTransactionPulsaUnfinish(
             1 -> {
                 binding.includeVirtualAccount.linearVirtualAccount.visibility = View.VISIBLE
                 binding.includeBankTransfer.linearBankTransfer.visibility = View.GONE
-                binding.includeVirtualAccount.tvPaymentMethod.text = "Virtual Account"
+                binding.includeVirtualAccount.tvPaymentMethod.text = context?.getString(R.string.virtual_account)
                 binding.includeVirtualAccount.tvVirtualAccountNumber.text = vaNumber
                 binding.includeVirtualAccount.tvTotalPay.text = totalPayment
             }
@@ -110,7 +111,7 @@ class AdapterTransactionPulsaUnfinish(
 
     private fun setLayoutVirtualAccount(binding: ListItemUnfinishTransactionBinding, itemHaina: PendingItem?) {
         binding.includeBankTransfer.linearBankTransfer.visibility = View.GONE
-        binding.includeVirtualAccount.tvPaymentMethod.text = "Virtual Account"
+        binding.includeVirtualAccount.tvPaymentMethod.text = context?.getString(R.string.virtual_account)
         binding.includeVirtualAccount.tvTotalPay.text = helper.convertToFormatMoneyIDRFilter(itemHaina?.totalPayment.toString())
         if (itemHaina?.status?.lowercase()?.contains("process") == true){
             binding.includeVirtualAccount.linearVirtualAccount.visibility = View.GONE
@@ -134,7 +135,7 @@ class AdapterTransactionPulsaUnfinish(
             val myClipboard: ClipboardManager = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
             val myClip = ClipData.newPlainText("text", binding.includeVirtualAccount.tvVirtualAccountNumber.text)
             myClipboard.setPrimaryClip(myClip)
-            Toast.makeText(context, "Virtual Account Copied", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.va_copied), Toast.LENGTH_SHORT).show()
         }
     }
 

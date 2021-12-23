@@ -44,7 +44,7 @@ class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.Vi
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         dialogLoading()
-        binding.vpTransaction.adapter = TabAdapterForum(childFragmentManager, 0)
+        binding.vpTransaction.adapter = TabAdapterForum(childFragmentManager, 0, context)
         binding.vpTransaction.offscreenPageLimit = 3
         binding.tabTransaction.setupWithViewPager(binding.vpTransaction)
         if (sharedPreferenceHelper.getValueBoolien(Constants.PREF_IS_LOGIN)) {
@@ -67,7 +67,7 @@ class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.Vi
                                         imm?.hideSoftInputFromWindow(view.windowToken, 0)
                                     }
                                 } else {
-                                    Toast.makeText(requireActivity(), "minimum 2 characters", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(requireActivity(), getString(R.string.minimum_2_characters), Toast.LENGTH_SHORT).show()
                                 }
                                 return true
                             }
@@ -169,7 +169,7 @@ class ForumFragment : Fragment(), View.OnClickListener, ForumFragmentContract.Vi
                                     imm?.hideSoftInputFromWindow(view.windowToken, 0)
                                 }
                             } else {
-                                Toast.makeText(requireActivity(), "minimum 2 characters", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireActivity(), getString(R.string.minimum_2_characters), Toast.LENGTH_SHORT).show()
                             }
                             return true
                         }

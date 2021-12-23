@@ -83,7 +83,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.Vi
                     startActivity(intent)
                 } else {
                     val snackbar = Snackbar.make(binding?.ivNotificationAccount!!, getString(R.string.please_login_password), Snackbar.LENGTH_SHORT)
-                            .setAction("Close", null)
+                            .setAction(getString(R.string.close), null)
                     snackbar.show()
                 }
             }
@@ -142,7 +142,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.Vi
                     startActivity(intent)
                 } else {
                     val snackbar = Snackbar.make(binding?.ivNotificationAccount!!, getString(R.string.please_login_notification), Snackbar.LENGTH_SHORT)
-                            .setAction("Close", null)
+                            .setAction(getString(R.string.close), null)
                     snackbar.show()
                 }
             }
@@ -187,7 +187,7 @@ class MyAccountFragment : Fragment(), View.OnClickListener, MyAccountContract.Vi
                             } else {
                                 val snackbar = Snackbar.make(binding?.ivNotificationAccount!!, getString(
                                                                     R.string.please_login_password), Snackbar.LENGTH_SHORT)
-                                        .setAction("Close", null)
+                                        .setAction(getString(R.string.close), null)
                                 snackbar.show()
                             }
                             true

@@ -13,7 +13,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import haina.ecommerce.R
 import haina.ecommerce.adapter.AdapterHistorySubmitJob
-import haina.ecommerce.adapter.property.TabAdapterMyProperty
 import haina.ecommerce.adapter.vacancy.AdapterListMyApplication
 import haina.ecommerce.databinding.ActivityMyApplicationBinding
 import haina.ecommerce.databinding.ActivityMyPropertyBinding

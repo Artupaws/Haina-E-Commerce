@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import haina.ecommerce.R
 import haina.ecommerce.databinding.ListItemSellingBinding
 import haina.ecommerce.helper.Helper
 import haina.ecommerce.model.DataMyJob
@@ -28,9 +29,9 @@ class AdapterJobPosting(val context: Context, private val listJob: List<DataMyJo
                 tvStatus.text = item?.status
                 tvLocation.text = item?.location
                 tvCategory.text = item?.jobcategory
-                applicant = "${item?.jobapplicant?.size.toString()} Applicant"
+                applicant = "${item?.jobapplicant?.size.toString()} ${context.getString(R.string.applicant_count)}"
                 tvApplicant.text = applicant
-                datePublish = "Posted : ${item?.date}"
+                datePublish = "${context.getString(R.string.date_publish)} : ${item?.date}"
                 tvDatePublish.text = datePublish
                 salary = "${helper.convertToFormatMoneySalary(item?.salaryFrom.toString())} - ${helper.convertToFormatMoneySalary(item?.salaryTo.toString())}"
                 tvSalary.text = salary

@@ -131,7 +131,7 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
                     toggleSaveJob()
                 } else {
                     binding.ivSaveJob.isChecked = false
-                    Toast.makeText(applicationContext, "Login first for saving this job", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.please_login_first), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -140,9 +140,9 @@ class DetailJobActivity : AppCompatActivity(), View.OnClickListener, DetailJobCo
     private fun toggleSaveJob(){
         binding.ivSaveJob.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                Toast.makeText(applicationContext, "On", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(applicationContext, "On", Toast.LENGTH_SHORT).show()
             }else{
-                Toast.makeText(applicationContext, "Off", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(applicationContext, "Off", Toast.LENGTH_SHORT).show()
             }
         }
     }

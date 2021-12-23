@@ -234,10 +234,15 @@ class ListApplicantActivity : AppCompatActivity(),
 
         spinnerMethod?.onItemSelectedListener=this
 
-        val btnSave=popupSetInterview?.findViewById<Button>(R.id.btn_save)
+        val btnSave = popupSetInterview?.findViewById<Button>(R.id.btn_save)
+        val btnClose = popupSetInterview?.findViewById<ImageView>(R.id.iv_close)
 
         btnSave?.setOnClickListener {
             checkInterviewData(dataApplicant.id!!,adapterPosition)
+        }
+
+        btnClose?.setOnClickListener {
+            popupSetInterview?.hide()
         }
 
         popupSetInterview?.show()

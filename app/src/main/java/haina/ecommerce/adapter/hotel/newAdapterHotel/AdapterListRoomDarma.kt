@@ -35,9 +35,9 @@ class AdapterListRoomDarma(val context: Context, private val listRoom: List<Room
                 tvRoomPrice.text=helper.convertToFormatMoneyIDRFilter(itemHaina.price.toString())
                 var statusBreakfast = itemHaina.breakfast
                 statusBreakfast = if (!statusBreakfast?.toLowerCase()?.contains("breakfast")!!){
-                    "Breakfast : ${context.getString(R.string.breakfast_status_no)}"
+                    "${context.getString(R.string.breakfast)} : ${context.getString(R.string.breakfast_status_no)}"
                 } else {
-                    "Breakfast : ${context.getString(R.string.breakfast_status_yes)}"
+                    "${context.getString(R.string.breakfast)} : ${context.getString(R.string.breakfast_status_yes)}"
                 }
                 tvStatusBreakfast.text = statusBreakfast
                 btnSelect.setOnClickListener {

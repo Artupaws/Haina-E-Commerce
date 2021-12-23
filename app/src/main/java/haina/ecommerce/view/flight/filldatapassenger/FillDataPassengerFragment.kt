@@ -127,7 +127,7 @@ class FillDataPassengerFragment : Fragment(), View.OnClickListener,
         } else {
             binding.relativeLoading.visibility = View.GONE
             binding.btnContinuePayment.visibility = View.VISIBLE
-            Toast.makeText(requireActivity(), "Please complete data passenger", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.fill_passenger_data_alert), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.snackbar.Snackbar
+import haina.ecommerce.R
 import haina.ecommerce.databinding.ActivitySplashScreenBinding
 import haina.ecommerce.preference.SharedPreferenceHelper
 import haina.ecommerce.util.Constants
@@ -69,7 +70,7 @@ class SplashScreenActivity : AppCompatActivity(), SplashScreenContract.View {
             presenter.getServerStatus()
         } else {
             binding.viewLoading.visibility = View.INVISIBLE
-            val snackbar = Snackbar.make(binding.viewLoading, "No connection!", Snackbar.LENGTH_INDEFINITE)
+            val snackbar = Snackbar.make(binding.viewLoading, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
                 .setAction("Let Me In", View.OnClickListener { goToExplore()
                     binding.viewLoading.visibility = View.VISIBLE
                 })

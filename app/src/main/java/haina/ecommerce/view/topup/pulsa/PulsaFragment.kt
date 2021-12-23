@@ -69,10 +69,10 @@ class PulsaFragment : Fragment(), View.OnClickListener, PulsaContract.View, Adap
         val typeService = serviceType
         when {
             phoneNumber.isNullOrEmpty()->{
-                Toast.makeText(requireActivity(), "Phone number empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.fill_phone_number), Toast.LENGTH_SHORT).show()
             }
             idProductParams == null ->{
-                Toast.makeText(requireActivity(), "Please choose product", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), getString(R.string.please_choose_product), Toast.LENGTH_SHORT).show()
             } else -> {
             val dataPulsa = RequestPulsa(phoneNumber, idProductParams, null, totalPriceParams!!, typeService!!, 0)
             val intentToCheckOut = Intent(requireActivity(), CheckoutActivity::class.java)

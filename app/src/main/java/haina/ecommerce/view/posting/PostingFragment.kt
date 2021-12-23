@@ -2,7 +2,6 @@ package haina.ecommerce.view.posting
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -67,7 +66,7 @@ class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
         binding.floatingActionButton.setOnClickListener(this)
         binding.floatingActionButton2.setOnClickListener(this)
         binding.floatingActionButton3.setOnClickListener(this)
-        binding.viewPagerPosting.adapter = TabAdapterPosting(requireActivity().supportFragmentManager, 0)
+        binding.viewPagerPosting.adapter = TabAdapterPosting(requireActivity().supportFragmentManager, 0, context)
         binding.tabLayout.setupWithViewPager(binding.viewPagerPosting)
         showPopup()
     }
@@ -154,12 +153,12 @@ class PostingFragment : Fragment(), View.OnClickListener, PostingContract {
         } else if (msg == "Company Unregistered" && sharedPref.getValueBoolien(Constants.PREF_IS_LOGIN)) {
             popupCheckDataCompany?.show()
         } else {
-            Toast.makeText(requireContext(), "Please Login First", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.please_login_first), Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun checkRegisterCompanyFalse(msg: String) {
-        Log.d("anjayani", msg)
+
     }
 
 }

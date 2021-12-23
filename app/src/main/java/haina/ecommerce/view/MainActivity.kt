@@ -196,7 +196,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         if (doubleTap) {
             super.onBackPressed()
         } else {
-            Toast.makeText(this, "Please click once again to exit", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.tap_back_again), Toast.LENGTH_SHORT).show()
             doubleTap = true
             val handler: Handler = Handler()
             handler.postDelayed({ doubleTap = false }, 500)

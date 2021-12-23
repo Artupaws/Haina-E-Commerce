@@ -80,7 +80,7 @@ class AddSkillRequiresActivity : AppCompatActivity(), View.OnClickListener, AddS
 
     override fun messageAddSkillRequires(msg: String) {
         if (msg=="1"){
-            Toast.makeText(applicationContext, "Success Add Skill Requires", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, getString(R.string.required_skills_added), Toast.LENGTH_SHORT).show()
             presenter.getSkillRequires(idJobVacancy)
             binding.etSkills.setText("")
         }

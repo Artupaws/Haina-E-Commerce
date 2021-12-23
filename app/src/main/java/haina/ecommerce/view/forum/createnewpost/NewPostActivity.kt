@@ -141,7 +141,7 @@ class NewPostActivity : AppCompatActivity(), AdapterInputImages.InputImageClick,
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                         pickMediaFromGalery(typePick)
                 } else {
-                    Toast.makeText(applicationContext, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.permission_denied), Toast.LENGTH_SHORT).show()
                 }
             }
         }

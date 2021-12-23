@@ -35,7 +35,7 @@ class OtherActivity : AppCompatActivity(), OtherContract {
         presenter = OtherPresenter(this, this)
         presenter.getListService()
         binding.toolbarOther.setNavigationIcon(R.drawable.ic_back_black)
-        binding.toolbarOther.title = "All Categories"
+        binding.toolbarOther.title = getString(R.string.billing_title)
         binding.toolbarOther.setNavigationOnClickListener {
             onBackPressed()
         }

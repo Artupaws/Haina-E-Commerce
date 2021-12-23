@@ -59,7 +59,7 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract.V
         binding.toolbarTopup.title = getString(R.string.topup_title)
         stateIconLoad(loadStatus!!)
         binding.imagePhoneBook.setOnClickListener(this)
-        binding.viewPagerInternet.adapter = TabAdapterInternet(supportFragmentManager, 0)
+        binding.viewPagerInternet.adapter = TabAdapterInternet(supportFragmentManager, 0, applicationContext)
         binding.tabLayoutInternet.setupWithViewPager(binding.viewPagerInternet)
 
         binding.etPhoneNumber.addTextChangedListener(object : TextWatcher {
@@ -185,7 +185,7 @@ class TopupActivity : AppCompatActivity(), View.OnClickListener, TopupContract.V
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getContact()
                 } else {
-                    Toast.makeText(applicationContext, "Permission denied", Toast.LENGTH_SHORT)
+                    Toast.makeText(applicationContext, getString(R.string.permission_denied), Toast.LENGTH_SHORT)
                         .show()
                 }
             }

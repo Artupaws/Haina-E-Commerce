@@ -99,7 +99,7 @@ class AddRequirementActivity : AppCompatActivity(), View.OnClickListener, AddReq
                     binding.btnUploadDocument.visibility = View.INVISIBLE
                             checkUpload(path)
                 } else{
-                    Toast.makeText(applicationContext, "Please insert your document first!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, getString(R.string.select_doc_first), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -162,13 +162,13 @@ class AddRequirementActivity : AppCompatActivity(), View.OnClickListener, AddReq
 
     private fun setTitleFileName(){
         when {
-            titleToolbar!!.contains("Add Resume") -> {
+            titleToolbar!!.contains(getString(R.string.add_resume)) -> {
                 fileName = "Resume ${sharedPref.getValueString(Constants.PREF_FULLNAME)}.pdf"
             }
-            titleToolbar!!.contains("Add Portfolio") -> {
+            titleToolbar!!.contains(getString(R.string.add_portfolio)) -> {
                 fileName = "Portfolio ${sharedPref.getValueString(Constants.PREF_FULLNAME)}.pdf"
             }
-            titleToolbar!!.contains("Add Certificate") -> {
+            titleToolbar!!.contains(getString(R.string.add_certificate)) -> {
                 fileName = "Certificate ${sharedPref.getValueString(Constants.PREF_FULLNAME)}.pdf"
             }
         }

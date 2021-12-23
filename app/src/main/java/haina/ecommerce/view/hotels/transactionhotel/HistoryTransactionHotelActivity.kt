@@ -53,10 +53,10 @@ class HistoryTransactionHotelActivity : AppCompatActivity(), HistoryTransactionH
         binding.tabTransaction.setupWithViewPager(binding.vpTransaction)
         binding.includeLogin.btnLoginNotLogin.setOnClickListener(this)
         when(intent.getStringExtra("tabs")){
-            "unfinish" -> {
+            "unfinished" -> {
                 binding.vpTransaction.currentItem = 0
             }
-            "finish" -> {
+            "finished" -> {
                 binding.vpTransaction.currentItem = 1
             }
         }
