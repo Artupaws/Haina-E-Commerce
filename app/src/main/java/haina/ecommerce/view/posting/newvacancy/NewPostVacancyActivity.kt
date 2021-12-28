@@ -192,7 +192,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
 
     private fun setDataDetailVacancy(data:DataMyVacancy?){
         binding.linearSkillEducation.visibility = View.VISIBLE
-        binding.toolbarCreateVacancy.title = "Detail"
+        binding.toolbarCreateVacancy.title = getString(R.string.detail_job)
         binding.etPositionJob.setText(data?.position)
         binding.etType.setText(data?.typeName)
         binding.etLevel.setText(data?.levelName)
@@ -312,7 +312,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
         val title = popupDialogLocation?.findViewById<TextView>(R.id.tv_title_popup)
         actionClose?.setOnClickListener { popupDialogLocation?.dismiss() }
         title?.text = resources.getString(R.string.location)
-        searchView?.queryHint = "Search City Here"
+        searchView?.queryHint = getString(R.string.search_city_here)
         rvDestination?.adapter = adapterLocation
         searchView?.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener,
             SearchView.OnQueryTextListener{
@@ -585,7 +585,7 @@ class NewPostVacancyActivity : AppCompatActivity(), VacancyContract, View.OnClic
     override fun listChipsSkillClick(view: View, data: VacancySkillItem) {
         when(view.id){
             R.id.chip -> {
-                Toast.makeText(applicationContext, "Click edit button for remove this skills", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Click edit button to remove these skills", Toast.LENGTH_SHORT).show()
 //                (dataDetailVacancy?.skill as ArrayList).remove(data)
 //                AdapterDataCreateVacancy.VIEW_TYPE = 8
 //                adapterSkillChoosed.clear()

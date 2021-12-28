@@ -42,7 +42,7 @@ class ApplyApplicantActivity : AppCompatActivity(), View.OnClickListener, ApplyA
 
         binding.toolbarApplyApplicant.setNavigationIcon(R.drawable.ic_back_black)
         binding.toolbarApplyApplicant.setNavigationOnClickListener { onBackPressed() }
-        binding.toolbarApplyApplicant.title = "Apply Applicant"
+        binding.toolbarApplyApplicant.title = getString(R.string.apply_applicant_title)
         binding.btnShortList.setOnClickListener(this)
         presenter = ApplyApplicantPresenter(this, this)
         popupDeclineApplicant()

@@ -730,4 +730,7 @@
     <string name="tab_title_about">关于</string>
     <string name="tab_title_manage">管理</string>
     <string name="find_city">搜索城市</string>
+    <string name="search_city_here">搜索城市</string>
+    <string name="add_skill_back_pressed">无法返回上一步，可以跳过此步过程</string>
+    <string name="apply_applicant_title">Apply Applicant</string>
 </resources>

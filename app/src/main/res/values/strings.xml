@@ -729,4 +729,7 @@
     <string name="tab_title_about">About</string>
     <string name="tab_title_manage">Manage</string>
     <string name="find_city">Find City</string>
+    <string name="search_city_here">Search City Here</string>
+    <string name="add_skill_back_pressed">Cannot go back to previous step, you can skip this step instead</string>
+    <string name="apply_applicant_title">Apply Applicant</string>
 </resources>

@@ -75,7 +75,7 @@ class AddSkillRequiresActivity : AppCompatActivity(), View.OnClickListener, AddS
     }
 
     override fun onBackPressed() {
-        Toast.makeText(applicationContext, "Can't back to step one, but you can skip this step", Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, getString(R.string.add_skill_back_pressed), Toast.LENGTH_LONG).show()
     }
 
     override fun messageAddSkillRequires(msg: String) {
